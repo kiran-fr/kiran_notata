@@ -1,0 +1,33 @@
+.invited_email {
+  display: flex;
+  padding: 7px 9px;
+  position: relative;
+  margin-bottom: 2px;
+  width: 100%;
+  font-weight: 300;
+  font-size: 15px;
+  justify-content: space-between;
+  background: #ece9e9;
+}
+
+.linkText {
+  font-size: 12px;
+  border: 1px solid;
+  padding: 10px;
+  margin-top: 14px;
+}
+
+.copyLink {
+  color: #367f8f;
+  font-size: 22px;
+  line-height: 0;
+  position: relative;
+  left: 5px;
+  top: 1px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.kill_invitation {
+  cursor: pointer;
+}

@@ -1,0 +1,59 @@
+.container {
+  /*color: white;*/
+  /*margin-bottom: 35px;*/
+  /*margin-top: 15px;*/
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.each {
+  padding: 8px 11px 7px 11px;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  margin: 3px;
+  border: 1px solid #999;
+  border-radius: 0px;
+  font-weight: 300;
+}
+
+.each .icon {
+  font-size: 27px;
+  position: absolute;
+  right: 10px;
+  top: -1px;
+  /*  right: 11px;
+  top: 2px;*/
+  /*display: none;*/
+}
+
+.hamburger_container {
+  padding: 7px;
+  margin-bottom: 1px;
+  position: relative;
+  cursor: pointer;
+  min-height: 50px;
+}
+
+.hamburger {
+  text-align: right;
+  position: relative;
+  top: 2px;
+  right: 3px;
+  font-size: 28px;
+}
+
+.open_container {
+  /*padding: 10px 16px;*/
+}
+
+.icons {
+  position: absolute;
+  top: 7px;
+  left: 20px;
+  font-size: 27px;
+}
+
+.icons i {
+  margin-right: 15px;
+}

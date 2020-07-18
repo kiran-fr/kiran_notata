@@ -1,0 +1,59 @@
+.container {
+  padding-bottom: 300px;
+}
+
+.invited_class {
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  color: #999;
+  font-weight: 300;
+}
+
+.invited_class span {
+  color: #d84b6f;
+}
+
+.not_invited_class {
+  padding: 20px;
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  color: #367f8f;
+  font-weight: 300;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.saving_buttons {
+  text-align: right;
+}
+
+.saved_button {
+}
+
+.saving_button,
+.saved_button {
+  /*background: gray;*/
+  background: rgb(162, 214, 162);
+  padding: 5px 11px;
+  margin: 5px;
+  border-radius: 3px;
+  display: inline-block;
+  color: white;
+  width: 145px;
+  text-align: center;
+  position: relative;
+}
+
+.saving_button i,
+.saved_button i {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+}
+
+.saving_button {
+  /*background: rgb(162, 214, 162);*/
+}

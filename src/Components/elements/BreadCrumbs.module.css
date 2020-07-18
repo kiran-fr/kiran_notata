@@ -1,0 +1,27 @@
+.breadcrumb_container {
+  position: absolute;
+  left: 30px;
+  font-size: 14px;
+}
+
+.breadcrumb_link {
+  margin-right: 10px;
+/*  text-decoration: none;
+  color: #306f7a;
+  text-transform: lowercase;*/
+  display: inline-block;
+}
+
+.breadcrumb_link a,
+.breadcrumb_link i {
+  text-decoration: none;
+  color: #306f7a;
+  text-transform: lowercase;  
+}
+
+.breadcrumb_link i {
+  padding-right: 5px;
+  font-size: 18px;
+  position: relative;
+  top: 2px;
+}

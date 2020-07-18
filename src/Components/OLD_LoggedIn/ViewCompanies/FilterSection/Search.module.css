@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+  padding: 10px 2px;
+  margin-bottom: 22px;
+  vertical-align: top;
+  display: inline-block;
+  /*width: 50%;*/
+  width: 100%;
+}
+
+.input_style {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 18px;
+  padding: 10px 0px;
+  color: #666;
+  border-bottom: 1px solid;
+  font-weight: 300;
+}
+
+.icon {
+  position: absolute;
+  right: 8px;
+  top: 16px;
+  z-index: 99;
+  color: #999;
+  font-size: 22px;
+}
+
+@media screen and (max-width: 700px) {
+  .container {
+    width: 100%;
+  }
+}

@@ -1,0 +1,65 @@
+.modal_outer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+}
+
+.modal_inner {
+  position: relative;
+  background: white;
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px 40px;
+}
+
+.button_section {
+  margin-bottom: -10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #ddd;
+}
+
+.button {
+  padding: 8px 20px;
+  font-size: 15px;
+  display: inline-block;
+  width: auto;
+  margin-right: 2px;
+}
+
+.close_modal {
+  position: absolute;
+  color: #c80000;
+  cursor: pointer;
+  top: 6px;
+  right: 10px;
+  font-size: 14px;
+}
+
+.similar_names {
+}
+
+.similar_names_title {
+  font-size: 14px;
+  color: #999;
+}
+
+.similar_name {
+  display: inline-block;
+  padding: 1px 8px;
+  background: #dadada;
+  margin-right: 2px;
+  margin-top: 2px;
+  color: #666;
+  font-size: 16px;
+}

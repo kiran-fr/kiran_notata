@@ -1,0 +1,76 @@
+.cards_class {
+  margin-top: 2px;
+}
+
+.no_content_container {
+  width: 250px;
+  text-align: center;
+  margin: auto;
+}
+
+.boo_icon {
+  font-size: 96px;
+}
+
+.boo_text {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 15px;
+}
+
+.boo_text_2 {
+  font-size: 14px;
+  padding-bottom: 35px;
+}
+
+.go_to_report {
+  position: fixed;
+  bottom: 10px;
+  right: auto;
+  left: 10px;
+  width: 300px;
+  text-align: center;
+  height: 75px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: white;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  z-index: 9999999;
+}
+
+.go_to_report_inner {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgb(223, 113, 93);
+}
+
+.count_line {
+  margin: 3px;
+  font-size: 14px;
+  font-weight: 300;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mark_as_seen {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 900px) {
+  .go_to_report {
+    display: none;
+  }
+}

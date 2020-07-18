@@ -1,0 +1,15 @@
+.skip_answer_class {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.section_class {
+  border: 1px solid;
+  padding: 0px 20px;
+  margin-top: 5px;
+  position: relative;
+  /* margin-left: -10px; */
+  /* margin-right: -10px; */
+}

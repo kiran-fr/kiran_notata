@@ -1,0 +1,44 @@
+.page_header {
+  /*position: fixed;*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  z-index: 99999;
+}
+
+.page_header h1 {
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  padding-top: 2px;
+}
+
+.progress_bars {
+  height: 5px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress_bar {
+  width: 100%;
+}
+
+.page_title {
+  text-align: center;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-size: 36px;
+  font-weight: 300;
+  top: 42px;
+}

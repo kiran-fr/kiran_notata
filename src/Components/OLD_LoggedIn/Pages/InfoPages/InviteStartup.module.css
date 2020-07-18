@@ -1,0 +1,90 @@
+.invited_email {
+  display: flex;
+  padding: 7px 9px;
+  position: relative;
+  margin-bottom: 2px;
+  width: 100%;
+  font-weight: 300;
+  font-size: 15px;
+  justify-content: space-between;
+  background: #ece9e9;
+}
+
+.linkText {
+  font-size: 12px;
+  border: 1px solid;
+  padding: 10px;
+  margin-top: 14px;
+}
+
+.copyLink {
+  color: #367f8f;
+  font-size: 22px;
+  line-height: 0;
+  position: relative;
+  left: 5px;
+  top: 1px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.kill_invitation {
+  cursor: pointer;
+}
+
+.section {
+  margin-top: 10px;
+}
+
+.section_title {
+  font-size: 12px;
+  font-weight: 400;
+  padding-bottom: 3px;
+  color: #999;
+}
+
+.tag_container {
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 2px;
+  flex-wrap: wrap;
+  margin: -2px;
+}
+
+.tag {
+  padding: 4px 8px;
+  border-radius: 2px;
+  margin: 2px;
+  font-weight: 600;
+  color: #333;
+  color: white;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.tag span {
+  position: relative;
+  left: 3px;
+  top: 1px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.link_copyer {
+  position: absolute !important;
+  right: 0px !important;
+  top: 5px !important;
+  background: #45988b;
+  width: 39px;
+  text-align: center;
+  height: 38px;
+  cursor: pointer;
+}
+
+.link_copyer i {
+  position: relative !important;
+  right: initial !important;
+  top: 7px !important;
+  font-size: 22px !important;
+}

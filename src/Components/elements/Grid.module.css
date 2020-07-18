@@ -1,0 +1,139 @@
+.gridContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: auto;
+}
+
+.gridContainer a {
+  text-decoration: none !important;
+}
+
+.gridItem {
+  width: 220px;
+  height: 220px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+  /*color: white;*/
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.notSelected {
+  background: white;
+}
+
+.gridTitle {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 36px;
+  font-weight: 300;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gridDescription {
+  color: #666;
+  text-align: center;
+  position: relative;
+  margin-bottom: 40px;
+  line-height: 2.5;
+  top: -9px;
+}
+
+.progress_container {
+  position: absolute;
+  left: 20px;
+  bottom: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  width: calc(100% - 40px);
+  height: 6px;
+  border-radius: 5px;
+  padding: 1px;
+}
+
+.progress_inner {
+  position: absolute;
+  left: 1px;
+  height: 4px;
+  background: white;
+  border-radius: 5px;
+}
+
+.page_title {
+  text-align: center;
+  position: relative;
+  margin-top: 28px;
+  margin-bottom: 36px;
+  font-size: 36px;
+  font-weight: 300;
+}
+
+.edit_title {
+  font-size: 18px;
+  position: relative;
+  top: -4px;
+  right: -9px;
+  cursor: pointer;
+}
+
+.traffic_lights {
+  display: flex;
+}
+
+.traffic_red,
+.traffic_yellow,
+.traffic_green {
+  width: 150px;
+  height: 150px;
+  /*background: white;*/
+  padding: 20px;
+  position: relative;
+}
+
+.traffic_red:before,
+.traffic_yellow:before,
+.traffic_green:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  box-shadow: 0 0 0 5px white;
+}
+
+.traffic_red:before {
+  background: red;
+}
+
+.traffic_yellow:before {
+  background: gold;
+}
+
+.traffic_green:before {
+  background: green;
+}
+
+@media screen and (max-width: 500px) {
+  .gridItem {
+    width: 150px;
+    height: 150px;
+    font-size: 16px;
+  }
+  .traffic_red,
+  .traffic_yellow,
+  .traffic_green {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -1,0 +1,61 @@
+.section {
+  padding: 7px;
+  padding-bottom: 15px;
+  margin-bottom: 1px;
+  position: relative;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagClass,
+.groupClass,
+.funnelClass {
+  background: rgba(255, 255, 255, 0.2) !important;
+  font-size: 14px !important;
+}
+
+.selectedTag {
+  opacity: 0.4 !important;
+}
+
+.filter_tag {
+  display: inline-block;
+  border-radius: 2px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 9px;
+  margin: 3px;
+}
+
+.suggested_container {
+}
+
+.suggested_each {
+  padding: 4px 10px;
+  background: rgba(200, 200, 200, 0.3);
+  margin-bottom: 1px;
+  color: #666;
+  cursor: pointer;
+}
+
+.suggested_each:hover {
+  background: rgba(200, 200, 200, 0.5);
+}
+
+.tags_filter_container {
+  border: 1px solid #999999;
+  padding: 0px 20px 10px;
+  margin: 3px;
+  margin-top: 15px;
+  position: relative;
+}
+
+.tags_filter_close {
+  position: absolute;
+  top: 3px;
+  right: 9px;
+  font-size: 14px;
+  color: #c80000;
+  cursor: pointer;
+}

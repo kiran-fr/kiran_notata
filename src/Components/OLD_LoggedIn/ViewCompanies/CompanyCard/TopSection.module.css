@@ -1,0 +1,58 @@
+.title {
+  font-weight: 300;
+  font-size: 18px;
+  padding-top: 5px;
+  padding-bottom: 2px;
+  padding-right: 105px;
+}
+
+.icons {
+  display: inline-block;
+}
+
+.icons i {
+  margin-left: 10px;
+  color: #ddd;
+}
+
+.info_container {
+  font-size: 12px;
+  display: flex;
+  justify-content: left;
+  color: #999;
+  font-weight: 300;
+  font-style: italic;
+  position: absolute;
+  top: 6px;
+  left: 19px;
+  width: calc(100% - 38px);
+}
+
+.info {
+  position: absolute;
+  right: 0;
+}
+
+.expand_class {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 17px;
+  font-size: 28px;
+  color: #37a737;
+}
+
+.expand_class i {
+}
+
+.progress_bar_wrapper {
+  position: absolute;
+  right: 19px;
+  top: 25px;
+}
+
+/*@media screen and (max-width: 500px) {*/
+.title {
+  padding-right: 60px;
+}
+/*}*/

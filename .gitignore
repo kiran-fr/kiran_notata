@@ -1,0 +1,6 @@
+/node_modules
+/package-lock.json
+/.serverless
+/.dynamodb
+.idea
+.DS_Store

@@ -1,0 +1,35 @@
+.container {
+    background: #d84c6f;
+    margin-bottom: 1px;
+    position: relative;
+    padding: 7px 12px;
+    font-size: 25px;
+    color: white;
+    display: flex;
+    justify-content: space-between;    
+}
+
+.container i {
+  cursor: pointer;
+}
+
+.left {
+
+}
+
+.left span {
+    padding: 1px 8px;
+    border-radius: 6px;
+}
+
+.right {
+
+}
+
+.icon {
+
+}
+
+.sort {
+  background: rgba(255,255,255,0.3);
+}

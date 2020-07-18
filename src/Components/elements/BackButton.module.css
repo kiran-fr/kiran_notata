@@ -1,0 +1,37 @@
+.backButton {
+  position: fixed;
+  bottom: 10px;
+  left: auto;
+  right: 10px;
+  width: 300px;
+  text-align: center;
+  height: 75px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: white;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.backButtonInner {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .backButton {
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+  }
+}

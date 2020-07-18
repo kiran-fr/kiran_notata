@@ -1,0 +1,35 @@
+.section_style {
+    padding-bottom: 50px;
+    padding-top: 50px;
+    position: relative;  
+    text-align: center;
+}
+
+
+.delete_option {
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  font-size: 10px;
+  color: #C80000;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.input_score {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  font-size: 12px;
+  font-weight: 300;  
+}
+
+.input_score label {
+    font-size: 12px !important;
+    color: #377f8f !important;
+}
+
+.input_score input {
+    display: inline-block !important;
+    width: 25px;
+}
