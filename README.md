@@ -7,7 +7,14 @@ An app for investors and startups
 1. Install Node.js from [here](https://nodejs.org/en/)
 2. Install project dependencies by running `npm install` from project root
 3. Run `npm start`. App should be running form http://localhost:3000/
-4. To deploy install the serverless cli by running `npm i -g serverless`
+
+# Deployment
+
+1. Install the serverless cli by running `npm i -g serverless`
+2. Install AWS SDK by running `npm i -g aws-sdk`
+3. Install Python from [here](https://www.python.org/downloads/)
+4. Install AWS CLI by running `sudo pip3 install awscli`
+5. Configure AWS by running `aws configure`
 
 # Notes
 
