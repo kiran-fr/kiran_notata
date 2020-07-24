@@ -4,7 +4,7 @@ import React from "react";
 import moment from "moment";
 
 // API
-import { Query, Mutation } from "react-apollo";
+import { Query, Mutation } from "@apollo/client/react/components";
 import { adopt } from "react-adopt";
 import { connectionsGet, userGet } from "../../../Apollo/Queries";
 
@@ -14,101 +14,78 @@ import { GhostLoader } from "../../elements/GhostLoader";
 
 // STYLES
 import classnames from "classnames";
-  
+
 import {
   standard_form,
   shady_list,
   shady_list_item,
   shady_list_byLine,
   shady_list_name,
-  shady_list_open_close  
+  shady_list_open_close
 } from "../../elements/Style.module.css";
 
-
-
-
 class Connections extends React.Component {
-
   state = {
-    openConnecion: null
-  }
+    openConnecion: this.props.createdConnection
+  };
 
   render() {
-
     let { connections, user } = this.props;
 
     return (
       <div className={shady_list}>
-        {
-          connections.map((connection, i) => {
+        {connections
+          .slice()
+          .sort((a, b) => b.createdAt - a.createdAt)
+          .map((connection, i) => {
             return (
-
               <div
                 key={`connection-${connection.id}`}
                 className={shady_list_item}
-                >
+              >
                 <div className={shady_list_byLine}>
                   <div>
-                    <span>{moment(connection.createdAt).format('ll')} - </span>
+                    <span>{moment(connection.createdAt).format("ll")} - </span>
                     <span>{connection.createdByUser.given_name} </span>
                     <span>{connection.createdByUser.family_name}</span>
                   </div>
                 </div>
                 <div className={shady_list_name}>
-
                   <div
                     className={shady_list_open_close}
                     onClick={() => {
-
                       this.setState({
                         openConnecion:
                           this.state.openConnecion === connection.id
-                          ? null : connection.id
-                      })
-
-                    }}                      
-                    >
-                    {
-                      this.state.openConnecion === connection.id && 
-                      <span style={{left: '-5px', position: 'relative'}}>
+                            ? null
+                            : connection.id
+                      });
+                    }}
+                  >
+                    {(this.state.openConnecion === connection.id && (
+                      <span style={{ left: "-5px", position: "relative" }}>
                         <i className="fas fa-caret-down" />
-                      </span> ||
-                      <i className="fas fa-caret-right" />
-                    }
+                      </span>
+                    )) || <i className="fas fa-caret-right" />}
                   </div>
-                  
+
                   {connection.creative.name}
-
                 </div>
-                
 
-                {
-                  this.state.openConnecion === connection.id && (
-                  <ConnectionCard
-                    id={connection.id}
-                    user={user}
-                  />
-                  )
-                }
-
-
+                {this.state.openConnecion === connection.id && (
+                  <ConnectionCard id={connection.id} user={user} />
+                )}
               </div>
-            )
-          })
-        }
-      </div>      
-    )
+            );
+          })}
+      </div>
+    );
   }
 }
 
-
-
-const ComposedComponent = () => {
-
+const ComposedComponent = ({ createdConnection }) => {
   const Composed = adopt({
-    userQuery: ({ render }) => (
-      <Query query={userGet}>{render}</Query>
-    ),
+    userQuery: ({ render }) => <Query query={userGet}>{render}</Query>,
     connectionsQuery: ({ render }) => (
       <Query query={connectionsGet}>{render}</Query>
     )
@@ -116,7 +93,7 @@ const ComposedComponent = () => {
 
   return (
     <Composed>
-      {({connectionsQuery, userQuery}) => {
+      {({ connectionsQuery, userQuery }) => {
         const loading = connectionsQuery.loading || userQuery.loading;
         const error = connectionsQuery.error || userQuery.error;
 
@@ -131,6 +108,7 @@ const ComposedComponent = () => {
           <Connections
             connections={connections || []}
             user={user}
+            createdConnection={createdConnection}
           />
         );
       }}
@@ -139,7 +117,3 @@ const ComposedComponent = () => {
 };
 
 export default ComposedComponent;
-
-
-
-

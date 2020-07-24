@@ -1,10 +1,15 @@
 import AWS from "aws-sdk";
-import AWSAppSyncClient from "aws-appsync";
+import { AUTH_TYPE } from "aws-appsync";
 import Amplify, { Auth } from "aws-amplify";
-import { AUTH_TYPE } from "aws-appsync/lib/link/auth-link";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloLink,
+  HttpLink
+} from "@apollo/client";
+import { createAuthLink } from "aws-appsync-auth-link";
 
 const STAGE = process.env.REACT_APP_STAGE;
-
 
 export const awsconfig = {
   region: "eu-west-1",
@@ -48,13 +53,12 @@ Amplify.configure({
   }
 });
 
-
-
 // const devURL = "https://gwv2lgcqinetjg3ariygacjv64.appsync-api.eu-west-1.amazonaws.com/graphql";
 // const prodURL = "https://kiyq3umvb5h2vc7w2cmjxmdneq.appsync-api.eu-west-1.amazonaws.com/graphql";
 // let appsyncUrl = STAGE === 'dev' ? devURL : prodURL;
 
-const dev2URL = "https://qisjxuphbjaihfdty2yc7wwjam.appsync-api.eu-west-1.amazonaws.com/graphql"
+const dev2URL =
+  "https://qisjxuphbjaihfdty2yc7wwjam.appsync-api.eu-west-1.amazonaws.com/graphql";
 let appsyncUrl = dev2URL;
 
 const config = {
@@ -62,19 +66,19 @@ const config = {
   region: awsconfig.region,
   auth: {
     type: AUTH_TYPE.AWS_IAM,
-    credentials: () => Auth.currentCredentials()
-  },
-  complexObjectsCredentials: () => Auth.currentCredentials(),
-  disableOffline: true
+    credentials: Auth.currentCredentials
+  }
 };
-const options = {
+
+export const appsyncClient = new ApolloClient({
+  link: ApolloLink.from([
+    createAuthLink(config),
+    new HttpLink({ uri: config.url })
+  ]),
+  cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: "cache-and-network"
     }
   }
-};
-
-export const appsyncClient = new AWSAppSyncClient(config, options);
-
-
+});

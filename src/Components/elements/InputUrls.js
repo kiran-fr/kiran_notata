@@ -9,7 +9,7 @@ import {
   delete_link
 } from "./Form.module.css";
 import { color3 } from "./Colors.module.css";
-import { Query } from "react-apollo";
+import { Query } from "@apollo/client/react/components";
 import { getPageMeta } from "../../Apollo/Queries";
 
 class InputUrls extends React.Component {

@@ -1,11 +1,7 @@
 import React from "react";
-import { Mutation } from "react-apollo";
+import { Mutation } from "@apollo/client/react/components";
 
-
-
-import {
-  evaluationQuestionPut
-} from "../../../../Apollo/Mutations";
+import { evaluationQuestionPut } from "../../../../Apollo/Mutations";
 
 import { omit } from "lodash";
 
@@ -13,7 +9,6 @@ import DeleteQuestion from "./DeleteQuestionComp";
 import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
 import InputTrafficLights from "../../../elements/InputTrafficLights";
 import InputNumeric from "../../../elements/InputNumeric";
-
 
 // STYLES
 import classnames from "classnames";
@@ -37,67 +32,243 @@ import {
   gridDescription
 } from "../../../elements/Grid.module.css";
 
-import {
-  color1,
-} from "../../../elements/Colors.module.css";
+import { color1 } from "../../../elements/Colors.module.css";
 
 const inputMap = [
   {
-    label: 'Multiple choice',
-    val: 'CHECK'
+    label: "Multiple choice",
+    val: "CHECK"
   },
   {
-    label: 'Single answer',
-    val: 'RADIO'
+    label: "Single answer",
+    val: "RADIO"
   },
   {
-    label: 'Traffic lights',
-    val: 'TRAFFIC_LIGHTS'
+    label: "Traffic lights",
+    val: "TRAFFIC_LIGHTS"
   },
   {
-    label: 'Free text',
-    val: 'INPUT_TEXT'
+    label: "Free text",
+    val: "INPUT_TEXT"
   }
-]
+];
 
-
-const QuestionNameAndDescription = ({templateId, sectionId, question}) => {
+const QuestionNameAndDescription = ({ templateId, sectionId, question }) => {
   return (
-      <Mutation mutation={evaluationQuestionPut}>
-        {(mutate, {error, loading, data}) => {
-          return (
-            <form
-              onSubmit={e => e.preventDefault()}
-              className={focus_form}
-              >
+    <Mutation mutation={evaluationQuestionPut}>
+      {(mutate, { error, loading, data }) => {
+        return (
+          <form onSubmit={e => e.preventDefault()} className={focus_form}>
+            <div
+              style={{
+                marginTop: "50px",
+                textAlign: "center"
+              }}
+            >
+              <div style={{ position: "relative" }}>
+                <DeleteQuestion
+                  templateId={templateId}
+                  sectionId={sectionId}
+                  question={question}
+                />
 
-              <div
-                style={{
-                  marginTop: '50px',
-                  textAlign: 'center'
-                }}
-                >
+                <h2>
+                  <TextAreaAutoHeight
+                    placeholder="Question name"
+                    value={question.name}
+                    onBlur={value => {
+                      if (question.name === value) return;
 
-                 <div style={{position: 'relative'}}>
+                      let variables = {
+                        id: question.id,
+                        input: { name: value }
+                      };
 
-                  <DeleteQuestion
-                    templateId={templateId}
-                    sectionId={sectionId}
-                    question={question}
+                      mutate({
+                        variables,
+                        optimisticResponse: {
+                          __typename: "Mutation",
+                          evaluationQuestionPut: {
+                            ...question,
+                            name: value
+                          }
+                        }
+                      });
+                    }}
                   />
 
-                  <h2>
-                    <TextAreaAutoHeight
-                      placeholder="Question name"
-                      value={question.name}
-                      onBlur={value => {
+                  <span />
+                </h2>
+              </div>
+            </div>
 
-                        if (question.name === value) return;
+            <div
+              style={{
+                marginTop: "50px",
+                textAlign: "center"
+              }}
+            >
+              <p className={gridDescription} style={{ fontSize: "16px" }}>
+                <TextAreaAutoHeight
+                  placeholder='I.e. "Template for evaluating early stage startups"'
+                  value={question.description}
+                  onBlur={value => {
+                    if (value === question.description) return;
+
+                    let variables = {
+                      id: question.id,
+                      input: {
+                        description: value
+                      }
+                    };
+
+                    mutate({
+                      variables,
+                      optimisticResponse: {
+                        __typename: "Mutation",
+                        evaluationQuestionPut: {
+                          ...question,
+                          description: value
+                        }
+                      }
+                    });
+                  }}
+                />
+                <span />
+              </p>
+            </div>
+          </form>
+        );
+      }}
+    </Mutation>
+  );
+};
+
+const ToggleInputType = ({ question }) => {
+  return (
+    <Mutation mutation={evaluationQuestionPut}>
+      {(mutate, { error, loading, data }) => {
+        return (
+          <div
+            className={tag_list_small}
+            style={{
+              marginBottom: "15px",
+              top: "-10px",
+              position: "relative"
+            }}
+          >
+            {inputMap.map((inp, i) => {
+              return (
+                <div
+                  className={classnames(
+                    tag,
+                    question.inputType === inp.val && active_tag
+                  )}
+                  key={`inputMap-${question.id}-${i}`}
+                  onClick={() => {
+                    let inputType = inp.val;
+
+                    let variables = {
+                      id: question.id,
+                      input: { inputType }
+                    };
+
+                    mutate({
+                      variables,
+                      optimisticResponse: {
+                        __typename: "Mutation",
+                        evaluationQuestionPut: {
+                          ...question,
+                          inputType
+                        }
+                      }
+                    });
+                  }}
+                >
+                  {inp.label}
+                </div>
+              );
+            })}
+          </div>
+        );
+      }}
+    </Mutation>
+  );
+};
+
+const TrafficLightOption = () => {
+  return (
+    <div>
+      <div className={gridContainer}>
+        {["red", "yellow", "green"].map((color, i) => (
+          <InputTrafficLights
+            key={`traffic-${color}-${i}`}
+            active={false}
+            onClick={() => {}}
+            color={color}
+          />
+        ))}
+      </div>
+
+      <div className={color1} style={{ marginTop: "15px" }}>
+        Red = 0 points. Yellow = 1 point. Green = 2 points.
+      </div>
+    </div>
+  );
+};
+
+const InputTextOption = () => {
+  return (
+    <div
+      className={color1}
+      style={{
+        marginTop: "15px",
+        lineHeight: "2",
+        marginTop: "35px"
+      }}
+    >
+      All questions will by default have the option for additional comments,
+      regardless of it being multiple choice, single answer or traffic lights.
+      By choosing the "free text" option you simply remove the possibilty of
+      giving an input score while keeping the comments field.
+    </div>
+  );
+};
+
+const CheckOrRadioOption = ({ question }) => {
+  return (
+    <Mutation mutation={evaluationQuestionPut}>
+      {(mutate, { error, loading, data }) => {
+        return (
+          <form onSubmit={e => e.preventDefault()} className={focus_form}>
+            <div className={gridContainer}>
+              {question.options.map((option, i) => {
+                return (
+                  <div
+                    key={`option-${i}`}
+                    className={classnames(gridItem, color1)}
+                  >
+                    <TextAreaAutoHeight
+                      placeholder='I.e. "Template for evaluating early stage startups"'
+                      value={option.val}
+                      onBlur={value => {
+                        // let newVal = option.val;
+                        let oldVal = (question.options[i] || {}).val;
+                        if (value === oldVal) return;
 
                         let variables = {
                           id: question.id,
-                          input: { name: value }
-                        }
+                          input: {
+                            editOption: {
+                              ...omit(option, ["__typename"]),
+                              val: value
+                            }
+                          }
+                        };
+
+                        let optimisticOptions = question.options.map(o =>
+                          o.sid !== option.sid ? o : { ...o, val: value }
+                        );
 
                         mutate({
                           variables,
@@ -105,204 +276,34 @@ const QuestionNameAndDescription = ({templateId, sectionId, question}) => {
                             __typename: "Mutation",
                             evaluationQuestionPut: {
                               ...question,
-                              name: value
+                              options: optimisticOptions
                             }
                           }
-                        })
+                        });
                       }}
                     />
 
-                    <span/>
-                  </h2>
-
-                </div>
-
-              </div>
-
-              <div
-                style={{
-                  marginTop: '50px',
-                  textAlign: 'center'
-                }}
-                >
-                <p
-                  className={gridDescription}
-                  style={{fontSize: "16px"}}
-                  >
-
-                  <TextAreaAutoHeight
-                    placeholder='I.e. "Template for evaluating early stage startups"'
-                    value={question.description}
-                    onBlur={value => {
-                      if (value === question.description) return;
-
-                      let variables = {
-                        id: question.id,
-                        input: {
-                          description: value
-                        }
-                      }
-
-                      mutate({
-                        variables,
-                        optimisticResponse: {
-                          __typename: "Mutation",
-                          evaluationQuestionPut: {
-                            ...question,
-                            description: value
-                          }
-                        }
-                      })
-
-                    }}
-                  />
-                  <span/>
-                </p>
-              </div>
-            </form>
-          )
-        }}
-      </Mutation>
-  )
-}
-
-const ToggleInputType = ({question}) => {
-  return (
-    <Mutation mutation={evaluationQuestionPut}>
-      {(mutate, {error, loading, data}) => {
-        return (
-          <div
-            className={tag_list_small}
-            style={{
-              marginBottom: '15px',
-              top: '-10px',
-              position: 'relative'
-            }}
-            >
-            {
-              inputMap.map((inp, i) => {
-                return (
-                  <div
-                    className={classnames(
-                      tag,
-                      question.inputType === inp.val && active_tag
-                    )}
-                    key={`inputMap-${question.id}-${i}`}
-                    onClick={() => {
-                      let inputType = inp.val
-                      
-                      let variables = {
-                        id: question.id,
-                        input: { inputType }
-                      }
-
-                      mutate({
-                        variables,
-                        optimisticResponse: {
-                          __typename: "Mutation",
-                          evaluationQuestionPut: {
-                            ...question,
-                            inputType
-                          }
-                        }
-                      })
-
-                    }}
-                    >
-                    {inp.label}
-                  </div>
-                )
-              })
-            }
-          </div>
-        )
-      }}
-    </Mutation>
-  )
-}
-
-const TrafficLightOption = () => {
-  return (
-    <div>
-      <div className={gridContainer}>
-        {
-          ["red", "yellow", "green"].map((color, i) => (
-            <InputTrafficLights
-              key={`traffic-${color}-${i}`}
-              active={false}
-              onClick={() => {}}
-              color={color}
-            />
-          ))
-        }
-      </div>
-
-      <div
-        className={color1}
-        style={{marginTop: '15px'}}
-        >
-        Red = 0 points. Yellow = 1 point. Green = 2 points.
-      </div>
-
-    </div>
-  )
-}
-
-const InputTextOption = () => {
-  return (
-    <div
-      className={color1}
-      style={{
-        marginTop: '15px',
-        lineHeight: '2',
-        marginTop: '35px'
-      }}
-      >
-      All questions will by default have the option for additional comments, regardless of it being multiple choice, single answer or traffic lights. By choosing the "free text" option you simply remove the possibilty of giving an input score while keeping the comments field.
-    </div>
-  ) 
-}
-
-const CheckOrRadioOption = ({question}) => {
-  return (
-      <Mutation mutation={evaluationQuestionPut}>
-        {(mutate, {error, loading, data}) => {
-          return (
-            <form
-              onSubmit={e => e.preventDefault()}
-              className={focus_form}
-              >
-              <div className={gridContainer}>
-                {
-                  question.options.map((option, i) => {
-                    return (
-                      <div
-                        key={`option-${i}`}
-                        className={classnames(gridItem, color1)}
-                        >
-
-                        <TextAreaAutoHeight
-                          placeholder='I.e. "Template for evaluating early stage startups"'
-                          value={option.val}
+                    <div className={input_score}>
+                      <label>
+                        score:
+                        <InputNumeric
+                          value={(option.score || 0).toString()}
+                          className="no-class"
+                          placeholder="0"
+                          selectOnFocus
                           onBlur={value => {
-
-                            // let newVal = option.val;
-                            let oldVal = (question.options[i] || {}).val;
-                            if (value === oldVal) return;
+                            if (!option.sid) return;
+                            if (value === option.score) return;
 
                             let variables = {
                               id: question.id,
                               input: {
                                 editOption: {
                                   ...omit(option, ["__typename"]),
-                                  val: value
+                                  score: value
                                 }
                               }
-                            }
-
-                            let optimisticOptions = question.options.map(o =>
-                              o.sid !== option.sid ? o : { ...o, val: value }
-                            )
+                            };
 
                             mutate({
                               variables,
@@ -310,206 +311,132 @@ const CheckOrRadioOption = ({question}) => {
                                 __typename: "Mutation",
                                 evaluationQuestionPut: {
                                   ...question,
-                                  options: optimisticOptions
+                                  options: question.options.map(o =>
+                                    o.sid === option.sid
+                                      ? { ...o, score: value }
+                                      : o
+                                  )
                                 }
                               }
-                            })
-
-
+                            });
                           }}
                         />
+                      </label>
+                    </div>
 
-                        <div className={input_score} >
-                          <label>score:
-                            <InputNumeric
-                              value={(option.score || 0).toString()}
-                              className="no-class"
-                              placeholder="0"
-                              selectOnFocus
-                              onBlur={value => {
-                                if (!option.sid) return;
-                                if (value === option.score) return;
-
-                                let variables = {
-                                  id: question.id,
-                                  input: {
-                                    editOption: {
-                                      ...omit(option, ["__typename"]),
-                                      score: value
-                                    }
-                                  }
-                                }
-
-                                mutate({
-                                  variables,
-                                  optimisticResponse: {
-                                    __typename: "Mutation",
-                                    evaluationQuestionPut: {
-                                      ...question,
-                                      options: question.options.map(o => (
-                                        o.sid === option.sid
-                                          ? { ...o, score: value }
-                                          : o
-                                      ))
-                                    }
-                                  }
-                                })
-
-                              }}
-                            />
-                          </label>
-                        </div>
-
-                        <div
-                          className={delete_option}
-                          onClick={() => {
-                            let variables = {
-                              id: question.id,
-                              input: {
-                                deleteOption: option.sid
-                              }
+                    <div
+                      className={delete_option}
+                      onClick={() => {
+                        let variables = {
+                          id: question.id,
+                          input: {
+                            deleteOption: option.sid
+                          }
+                        };
+                        mutate({
+                          variables,
+                          optimisticResponse: {
+                            __typename: "Mutation",
+                            evaluationQuestionPut: {
+                              ...question,
+                              options: question.options.filter(
+                                o => o.sid !== option.sid
+                              )
                             }
-                            mutate({
-                              variables,
-                              optimisticResponse: {
-                                __typename: "Mutation",
-                                evaluationQuestionPut: {
-                                  ...question,
-                                  options: question.options.filter(o => o.sid !== option.sid)
-                                }
-                              }
-                            })
+                          }
+                        });
+                      }}
+                    >
+                      delete
+                    </div>
+                  </div>
+                );
+              })}
 
-                          }}
-                          >
-                          delete
-                        </div>
+              {
+                <div
+                  className={classnames(gridItem, color1)}
+                  onClick={() => {
+                    let variables = {
+                      id: question.id,
+                      input: {
+                        newOptions: [
+                          {
+                            val: "New option",
+                            score: 0,
+                            index: question.options.length + 1
+                          }
+                        ]
+                      }
+                    };
 
-                      </div>
-                    )
-                  })
-                }
+                    let optimisticOptions = [
+                      ...question.options,
+                      {
+                        val: "New option",
+                        score: 0,
+                        index: question.options.length + 1,
+                        sid: "temp",
+                        __typename: "EvaluationQuestionOption"
+                      }
+                    ];
 
-
-
-                {
-                  <div
-                    className={classnames(gridItem, color1)}
-                    onClick={() => {
-
-                      let variables = {
-                        id: question.id,
-                        input: {
-                          newOptions: [
-                            {
-                              val: 'New option',
-                              score: 0,
-                              index: question.options.length + 1
-                            }
-                          ]
+                    mutate({
+                      variables,
+                      optimisticResponse: {
+                        __typename: "Mutation",
+                        evaluationQuestionPut: {
+                          ...question,
+                          options: optimisticOptions
                         }
                       }
-
-                      let optimisticOptions = [
-                        ...question.options,
-                        {
-                          val: 'New option',
-                          score: 0,
-                          index: question.options.length + 1,
-                          sid: 'temp',
-                          __typename: "EvaluationQuestionOption"
-                        }
-                      ]
-
-                      mutate({
-                        variables,
-                        optimisticResponse: {
-                          __typename: "Mutation",
-                          evaluationQuestionPut: {
-                            ...question,
-                            options: optimisticOptions
-                          }
-                        }
-                      })
-
-
-                    }}
-                    >
-                    <i
-                      className="fal fa-plus-circle"
-                      style={{fontSize: "90px"}}
-                    />
-                    <div className={input_score}>
-                      add new option
-                    </div>
-                  </div>              
-                }
-
-
-              </div>
-            </form>
-          )
-        }}
-      </Mutation>
-  )
-}
+                    });
+                  }}
+                >
+                  <i
+                    className="fal fa-plus-circle"
+                    style={{ fontSize: "90px" }}
+                  />
+                  <div className={input_score}>add new option</div>
+                </div>
+              }
+            </div>
+          </form>
+        );
+      }}
+    </Mutation>
+  );
+};
 
 class Question extends React.Component {
-
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 
   render() {
-
-    let {
-      templateId,
-      sectionId,
-      question,
-      mutate
-    } = this.props;
+    let { templateId, sectionId, question, mutate } = this.props;
 
     return (
       <div className={section_style}>
-
         <QuestionNameAndDescription
           templateId={templateId}
           sectionId={sectionId}
           question={question}
         />
 
-        <ToggleInputType
-          question={question}
-        />
+        <ToggleInputType question={question} />
 
+        {question.inputType === "INPUT_TEXT" && <InputTextOption />}
 
-        {
-          question.inputType === "INPUT_TEXT" && (
-            <InputTextOption />
-          )
-        }
-        
+        {question.inputType === "TRAFFIC_LIGHTS" && <TrafficLightOption />}
 
-        {
-          question.inputType === "TRAFFIC_LIGHTS" && (
-            <TrafficLightOption />
-          )
-        }
-
-        {
-          ["CHECK", "RADIO"].some(q => q === question.inputType) && (
-            <CheckOrRadioOption
-              question={ question || {} }
-            />
-          )
-        }
+        {["CHECK", "RADIO"].some(q => q === question.inputType) && (
+          <CheckOrRadioOption question={question || {}} />
+        )}
       </div>
-    )
+    );
   }
 }
 
-
 export default Question;
-
-

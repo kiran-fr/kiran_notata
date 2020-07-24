@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { cloneDeep, omit } from "lodash";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { GhostLoader } from "../../../elements/GhostLoader";
-import { Query, Mutation } from "react-apollo";
+import { Query, Mutation } from "@apollo/client/react/components";
 import { getTags } from "../../../../Apollo/Queries";
 import { updateTags, createTag, deleteTag } from "../../../../Apollo/Mutations";
 import {
@@ -32,6 +32,7 @@ import {
   color5_bg,
   color6_bg
 } from "../../../elements/Colors.module.css";
+import { content_tag } from "../../../../routes.module.css";
 
 // *****************************
 // * GETS TAGS THAT ARE GROUPS *
@@ -753,14 +754,14 @@ class Comp extends Component {
 }
 
 const CompWithQuery = ({ ...props }) => (
-  <content>
+  <div className={content_tag}>
     <Query query={getTags} fetchPolicy="cache-and-network">
       {({ data, error, loading }) => {
         if (loading || error || !data.getTags) return <GhostLoader />;
         return <Comp data={data.getTags} {...props} />;
       }}
     </Query>
-  </content>
+  </div>
 );
 
 const CompWithMutation = ({ ...props }) => (

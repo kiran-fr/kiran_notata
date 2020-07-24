@@ -7,14 +7,9 @@ import { Redirect, Link } from "react-router-dom";
 
 // API STUFF
 import { adopt } from "react-adopt";
-import { Mutation, Query } from "react-apollo";
-import {
-  accountGet,
-  userGet
-} from "../../../../Apollo/Queries";
-import {
-  userUpdate
-} from "../../../../Apollo/Mutations";
+import { Mutation, Query } from "@apollo/client/react/components";
+import { accountGet, userGet } from "../../../../Apollo/Queries";
+import { userUpdate } from "../../../../Apollo/Mutations";
 import {
   dashboard,
   evaluation_templates,
@@ -42,114 +37,94 @@ import {
   standard_form
 } from "../../../elements/Style.module.css";
 
-import {
-  sub_header
-} from "./Profile.module.css"
-
+import { sub_header } from "./Profile.module.css";
 
 class VerifyPhoneNumberComp extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       verification_code: "",
       error: false,
       resend: false,
       loading: false
-    }
+    };
   }
 
   render() {
     return (
-      <div style={{
+      <div
+        style={{
           marginTop: "50px",
           marginBottom: "50px",
           borderBottom: "1px solid rgb(238, 238, 238)",
           paddingBottom: "30px"
-        }}>
-        <form onSubmit={e => {
-          e.preventDefault();
-          if (this.state.loading) return;
-          this.setState({loading: true})
-          Auth.verifyCurrentUserAttributeSubmit('phone_number', this.state.verification_code)
-            .then(() => {
-              this.props.confirmed()
-              this.setState({loading: false})
-            })
-            .catch(error => this.setState({error, loading: false}) )
-
-        }}>
+        }}
+      >
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            if (this.state.loading) return;
+            this.setState({ loading: true });
+            Auth.verifyCurrentUserAttributeSubmit(
+              "phone_number",
+              this.state.verification_code
+            )
+              .then(() => {
+                this.props.confirmed();
+                this.setState({ loading: false });
+              })
+              .catch(error => this.setState({ error, loading: false }));
+          }}
+        >
           <div>
+            <div className={sub_header}>Please verify your phone number</div>
 
-            <div className={sub_header}>
-              Please verify your phone number
-            </div>
-
-            {
-              this.state.error && (
-                <div style={{color: "#c80000"}}>
-                  Something went wrong. Try again, or get a new code.
-                </div>
-              )
-            }
+            {this.state.error && (
+              <div style={{ color: "#c80000" }}>
+                Something went wrong. Try again, or get a new code.
+              </div>
+            )}
 
             <input
               placeholder="Verification code"
               type="text"
               value={this.state.verification_code}
               onChange={e => {
-                this.setState({verification_code: e.target.value})
+                this.setState({ verification_code: e.target.value });
               }}
             />
 
-
-            <div style={{marginTop: "20px"}}>
+            <div style={{ marginTop: "20px" }}>
               <input type="submit" value="Send" />
-              {
-                this.state.loading && <i className="fa fa-spinner fa-spin" />
-              }
+              {this.state.loading && <i className="fa fa-spinner fa-spin" />}
             </div>
 
+            {!this.state.resend && (
+              <div
+                style={{
+                  textAlign: "right",
+                  color: "blue",
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  Auth.verifyCurrentUserAttribute("phone_number")
+                    .then(() => this.setState({ resend: true }))
+                    .catch(() => {});
+                }}
+              >
+                Get a new code
+              </div>
+            )}
 
-            { !this.state.resend && (
-                <div
-                  style={{
-                    textAlign: "right",
-                    color: "blue",
-                    cursor: "pointer"
-                  }}
-                  onClick={() => {
-                    Auth
-                      .verifyCurrentUserAttribute('phone_number')
-                      .then(() => this.setState({resend: true}) )
-                      .catch(() => { })
-                  }}
-                  >
-                  Get a new code
-                </div>
-              )
-            }
-
-            {
-              this.state.resend && (
-                <div>
-                  Code has been sent you your phone
-                </div>
-              )
-            }
-
+            {this.state.resend && <div>Code has been sent you your phone</div>}
           </div>
         </form>
       </div>
-
-    )
+    );
   }
 }
 
-
-
-
 class ProfileComp extends Component {
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -166,34 +141,30 @@ class ProfileComp extends Component {
   }
 
   componentDidMount() {
+    Auth.currentAuthenticatedUser().then(cognitoUser => {
+      Auth.userAttributes(cognitoUser).then(userAttributes => {
+        let ua = {};
+        for (let attrib of userAttributes) {
+          ua[attrib.Name] = attrib.Value;
+        }
+        this.setState({ ...ua });
+      });
 
-    Auth
-      .currentAuthenticatedUser()
-      .then(cognitoUser => {
-        Auth.userAttributes(cognitoUser).then(userAttributes => {
-          let ua = {}
-          for (let attrib of userAttributes) {
-            ua[attrib.Name] = attrib.Value;
-          }
-          this.setState({...ua})
-        });     
-
-        Auth.getPreferredMFA(cognitoUser).then((MFA) => {
-          this.setState(oldState => ({
-            email: oldState.email || cognitoUser.attributes.email,
-            cognitoUser, MFA
-          }));
-        })
-      })
-  } 
+      Auth.getPreferredMFA(cognitoUser).then(MFA => {
+        this.setState(oldState => ({
+          email: oldState.email || cognitoUser.attributes.email,
+          cognitoUser,
+          MFA
+        }));
+      });
+    });
+  }
 
   componentWillUpdate(newProps) {
-
     if (newProps !== this.props) {
-
       // Got user data after mutataion
       if (newProps.data) {
-        this.setState({gotUser: true})
+        this.setState({ gotUser: true });
       }
 
       let userData;
@@ -205,17 +176,13 @@ class ProfileComp extends Component {
       if (userData && userData.email) {
         this.setState({ gotUser: true });
       }
-
     }
-
   }
-
 
   render() {
     const { updateUser, data } = this.props;
 
     const submit = async e => {
-
       e.preventDefault();
 
       let input = {};
@@ -230,21 +197,22 @@ class ProfileComp extends Component {
       }
 
       if (!this.state.gotUser) {
-        input.email = this.state.email
+        input.email = this.state.email;
       }
 
       try {
         await Auth.updateUserAttributes(this.state.cognitoUser, input);
         let userAttributes = await Auth.userAttributes(this.state.cognitoUser);
-        let ua = {}
-        for (let attrib of userAttributes) { ua[attrib.Name] = attrib.Value; }
-        this.setState({...ua})
+        let ua = {};
+        for (let attrib of userAttributes) {
+          ua[attrib.Name] = attrib.Value;
+        }
+        this.setState({ ...ua });
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
 
-      updateUser({variables: { input }});
-
+      updateUser({ variables: { input } });
     };
 
     const setData = data => {
@@ -254,13 +222,12 @@ class ProfileComp extends Component {
       });
     };
 
-    let userExists = !!((this.props.queryProps.data || {}).userGet || {}).cognitoIdentityId;
+    let userExists = !!((this.props.queryProps.data || {}).userGet || {})
+      .cognitoIdentityId;
 
     return (
       <div>
-
         <form onSubmit={submit} className={standard_form}>
-          
           <div>
             <h1>Who are you?</h1>
 
@@ -271,14 +238,10 @@ class ProfileComp extends Component {
                 value={this.state.email}
                 disabled
               />
-            </div>        
+            </div>
 
             <div style={{ marginBottom: "50px", display: "none" }}>
-              <input
-                placeholder="email"
-                type="text"
-                value={this.state.email}
-              />
+              <input placeholder="email" type="text" value={this.state.email} />
             </div>
 
             <div style={{ marginBottom: "50px" }}>
@@ -299,7 +262,6 @@ class ProfileComp extends Component {
               />
             </div>
 
-
             <div>
               <input type="submit" value="Save" />
               {this.props.loading && <i className="fa fa-spinner fa-spin" />}
@@ -308,69 +270,50 @@ class ProfileComp extends Component {
             {this.state.error && (
               <div className={error_box}>{this.state.error}</div>
             )}
-
           </div>
         </form>
 
+        {this.state.gotUser && (
+          <div
+            style={{
+              // marginTop: '10px'
+              borderTop: "1px solid #999",
+              paddingTop: "20px"
+            }}
+          >
+            <Link to={evaluation_templates} className={button_class}>
+              Evaluation templates
+            </Link>
 
+            <Link to={team_management} className={button_class}>
+              Manage team
+            </Link>
 
-        {
-          this.state.gotUser && (
             <div
               style={{
-                // marginTop: '10px'
-                borderTop: '1px solid #999',
-                paddingTop: '20px'
+                width: "100%",
+                textAlign: "right"
               }}
-              >
-
-              <Link
-                to={evaluation_templates}
-                className={button_class}
-                >
-                Evaluation templates
-              </Link>
-
-              <Link
-                to={team_management}
-                className={button_class}
-                >
-                Manage team
-              </Link>              
-
-
-              <div
-                style={{
-                  width: '100%',
-                  textAlign: 'right'
-                }}              
-                >
-                <Link to={dashboard}>
-                  Go to dashboard
-                </Link>
-              </div>
-
+            >
+              <Link to={dashboard}>Go to dashboard</Link>
             </div>
-          )
-        }
+          </div>
+        )}
       </div>
     );
   }
 }
 
-
 class Profile extends React.Component {
-
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 
   render() {
     return (
       <Query query={userGet} fetchPolicy="cache-and-network">
         {({ ...queryProps }) => {
-
           return (
             <Mutation mutation={userUpdate}>
               {(mutation, { data, error, loading }) => (
@@ -386,29 +329,18 @@ class Profile extends React.Component {
           );
         }}
       </Query>
-    )
+    );
   }
 }
 
-const Comp = ({...props}) => {
+const Comp = ({ ...props }) => {
   return (
-    <div
-      className={
-        classnames(
-          container,
-          center_container,
-          small_container
-        )
-      }>
+    <div className={classnames(container, center_container, small_container)}>
       <div className={inner_container}>
         <Profile {...props} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Comp;
-
-
-
-

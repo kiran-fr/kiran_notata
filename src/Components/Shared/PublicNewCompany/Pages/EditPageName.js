@@ -16,7 +16,7 @@ import BigButton from "../../../elements/BigButton";
 import { color1, color3 } from "../../../elements/Colors.module.css";
 
 import { public_new_company } from "../../../../routes";
-import { Query, Mutation } from "react-apollo";
+import { Query, Mutation } from "@apollo/client/react/components";
 import { GhostLoader } from "../../../elements/GhostLoader";
 import { error_box } from "../../../elements/Style.module.css";
 

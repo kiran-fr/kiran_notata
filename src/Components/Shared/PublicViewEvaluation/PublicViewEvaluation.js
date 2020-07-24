@@ -37,7 +37,7 @@ import {
   comment_class
 } from "./PublicViewEvaluation.module.css";
 
-import { Query } from "react-apollo";
+import { Query } from "@apollo/client/react/components";
 import { public_getSharedEvaluation } from "../../../Apollo/Queries";
 
 import {

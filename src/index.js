@@ -4,7 +4,7 @@ import { create } from "jss";
 import { createGenerateClassName, jssPreset } from "@material-ui/styles";
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
@@ -16,13 +16,12 @@ import {
   userLoggedIn,
   userNotLoggedIn
 } from "./Modules/user";
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
 import "babel-polyfill";
 import "./fonts/font-awesome-4.7.0/css/font-awesome.min.css";
 import "./fonts/fontawesome-pro-5.13.0-web/css/all.min.css";
 import "./style.css";
-
 
 initializeAwsConfig();
 console.log(

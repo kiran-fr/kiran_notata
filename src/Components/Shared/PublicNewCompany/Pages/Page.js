@@ -1,5 +1,5 @@
 import React from "react";
-import { Query, Mutation } from "react-apollo";
+import { Query, Mutation } from "@apollo/client/react/components";
 import qp from "../../../../utils/queryParams";
 import { GhostLoader } from "../../../elements/GhostLoader";
 import { public_getOrganization } from "../../../../Apollo/Queries";

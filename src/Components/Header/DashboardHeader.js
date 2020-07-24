@@ -1,14 +1,9 @@
 import React from "react";
 import { Auth } from "aws-amplify";
 import { Link, Redirect } from "react-router-dom";
-import { Query } from "react-apollo";
+import { Query } from "@apollo/client/react/components";
 import { userGet } from "../../Apollo/Queries";
-import {
-  profile,
-  signOut,
-  reporting,
-  dashboard
-} from "../../routes";
+import { profile, signOut, reporting, dashboard } from "../../routes";
 
 import {
   container,
@@ -54,7 +49,6 @@ export class DashboardHeader extends React.Component {
                     <Link to={dashboard}>
                       <i className="fal fa-list-alt" />
                     </Link>
-
                   </div>
                 )}
               </div>

@@ -7,7 +7,7 @@ import { Auth } from "aws-amplify";
 
 // API STUFF
 import { adopt } from "react-adopt";
-import { Mutation, Query } from "react-apollo";
+import { Mutation, Query } from "@apollo/client/react/components";
 import {
   userGet,
   userInvitationsGet,
@@ -15,13 +15,10 @@ import {
   accountInvitationsGet
 } from "../../../../Apollo/Queries";
 
-
 import {
   accountInvite,
   userInvitationResponse
 } from "../../../../Apollo/Mutations";
-
-
 
 // COMPONENTS
 import { GhostLoader } from "../../../elements/GhostLoader";
@@ -34,14 +31,12 @@ import {
   small_container,
   center_container,
   inner_container,
-  button_class,  
+  button_class,
   standard_form,
   submit_button
 } from "../../../elements/Style.module.css";
 
-import {
-  sub_header
-} from "../Profile/Profile.module.css";
+import { sub_header } from "../Profile/Profile.module.css";
 
 import {
   members_list,
@@ -54,11 +49,9 @@ import {
 } from "./TeamManagement.module.css";
 
 class Comp extends React.Component {
-
-  state = { value: '' }
+  state = { value: "" };
 
   render() {
-    
     let {
       user,
       userInvitations,
@@ -72,200 +65,182 @@ class Comp extends React.Component {
 
     return (
       <div>
+        {/* YOUR EXTERNAL INVITATIONS */}
 
+        {!!userInvitations.length && (
+          <Mutation mutation={userInvitationResponse}>
+            {(mutate, { data, error, loading }) => {
+              if (!error && !loading && data) {
+                window.location.reload();
+              }
+              return (
+                <div style={{ marginTop: "50px" }}>
+                  <h1>Team invitations</h1>
+                  {userInvitations.map((invitation, i) => {
+                    let {
+                      given_name,
+                      family_name,
+                      email
+                    } = invitation.createdByUser;
+                    return (
+                      <div key={`invitation-${invitation.email}`}>
+                        <div>
+                          You have been invited to a team by{" "}
+                          {`${given_name} ${family_name} (${email})`}!
+                        </div>
 
-        { /* YOUR EXTERNAL INVITATIONS */  }
-
-        {
-          !!userInvitations.length && (
-            <Mutation mutation={userInvitationResponse}>
-              {(mutate, { data, error, loading}) => {
-                if (!error && !loading && data) {
-                  window.location.reload()
-                }
-                return (
-                  <div style={{marginTop: "50px"}}>
-                    <h1>Team invitations</h1>
-                    {
-                      userInvitations.map((invitation, i) => {
-                        let { given_name, family_name, email } = invitation.createdByUser;
-                        return (
+                        <div className={submit_reject_buttons_container}>
                           <div
-                            key={`invitation-${invitation.email}`}
+                            className={classnames(
+                              submit_button,
+                              submit_reject_buttons
+                            )}
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  "Are you sure you want to leave your current team?"
+                                )
+                              ) {
+                                /* Do nothing */
+                              } else {
+                                return;
+                              }
+
+                              let variables = {
+                                accountId: invitation.accountId,
+                                response: "ACCEPT"
+                              };
+                              mutate({ variables });
+                            }}
                           >
-                            <div>You have been invited to a team by {`${given_name} ${family_name} (${email})`}!</div>
-
-                            <div className={submit_reject_buttons_container}>
-                              
-                              <div
-                                className={classnames(
-                                  submit_button,
-                                  submit_reject_buttons
-                                )}
-                                onClick={() => {
-
-                                  if (window.confirm(
-                                    'Are you sure you want to leave your current team?'
-                                  )) { /* Do nothing */ } else { return; }
-
-                                  let variables = {
-                                    accountId: invitation.accountId,
-                                    response: "ACCEPT"
-                                  }
-                                  mutate({variables})
-                                }}
-                                >
-                                Accept
-                              </div>
-
-                              <div
-                                className={classnames(
-                                  submit_button,
-                                  submit_reject_buttons,
-                                  reject_button
-                                )}
-                                onClick={() => {
-                                  let variables = {
-                                    accountId: invitation.accountId,
-                                    response: "REJECT"
-                                  }
-                                  mutate({variables})
-                                }}
-                                >
-                                Reject
-                              </div>
-
-                            </div>
-
+                            Accept
                           </div>
-                        )
-                      })
-                    }
-                  </div>
-                )
-              }}
-            </Mutation>
-          )
-        }
 
-        <div style={{marginTop: "50px"}}>
+                          <div
+                            className={classnames(
+                              submit_button,
+                              submit_reject_buttons,
+                              reject_button
+                            )}
+                            onClick={() => {
+                              let variables = {
+                                accountId: invitation.accountId,
+                                response: "REJECT"
+                              };
+                              mutate({ variables });
+                            }}
+                          >
+                            Reject
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            }}
+          </Mutation>
+        )}
 
+        <div style={{ marginTop: "50px" }}>
           <h1>Your team</h1>
 
-          {
-            members.length === 1 && (
-              <div>
-                You are currently the only member of this team.
-              </div>
-            )
-          }
+          {members.length === 1 && (
+            <div>You are currently the only member of this team.</div>
+          )}
 
-          {
-            members.length !== 1 && (
-              <div>
-                <div className={sub_header}>
-                  Team members
-                </div>
-                {
-                  members.map((m, i) => (
-                    <div
-                      key={`team_member-${m.email}`}
-                      className={member_of_team}
-                    >
-                      <span>
-                        <span>{m.email}</span>
-                        {m.email === user.email && <span> (you)</span>}
-                      </span>
-
-                      {
-                        // m.email !== user.email && (
-                        //   <i className="fas fa-minus-circle" />
-                        // )
-                      }
-
-                    </div>
-                  ))
-                }
-              </div>
-            )
-          }
-
-
-
-          { /* ACCOUNT TEAM MANAGEMENT */ }
-
-          <Mutation mutation={accountInvite}>
-            {(mutate, { data, error, loading}) => {
-
-              return (
-                <div style={{marginTop: '50px'}}>
+          {members.length !== 1 && (
+            <div>
+              <div className={sub_header}>Team members</div>
+              {members.map((m, i) => (
+                <div key={`team_member-${m.email}`} className={member_of_team}>
+                  <span>
+                    <span>{m.email}</span>
+                    {m.email === user.email && <span> (you)</span>}
+                  </span>
 
                   {
-                    !!accountInvitations.length && (
-                      <div className={sub_header}>
-                        Pending invitations
-                      </div>
-                    )
+                    // m.email !== user.email && (
+                    //   <i className="fas fa-minus-circle" />
+                    // )
                   }
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ACCOUNT TEAM MANAGEMENT */}
+
+          <Mutation mutation={accountInvite}>
+            {(mutate, { data, error, loading }) => {
+              return (
+                <div style={{ marginTop: "50px" }}>
+                  {!!accountInvitations.length && (
+                    <div className={sub_header}>Pending invitations</div>
+                  )}
 
                   <div className={members_list}>
-                    {
-                      accountInvitations.map((invitation, i) => (
-                        <div
-                          key={`invitation-${invitation.email}`}
-                          className={member_of_team}
-                          >
-                          <span>{invitation.email}</span>
+                    {accountInvitations.map((invitation, i) => (
+                      <div
+                        key={`invitation-${invitation.email}`}
+                        className={member_of_team}
+                      >
+                        <span>{invitation.email}</span>
 
-                          <i
-                            className="fas fa-minus-circle"
-                            onClick={() => {
-
-                              if (window.confirm(
+                        <i
+                          className="fas fa-minus-circle"
+                          onClick={() => {
+                            if (
+                              window.confirm(
                                 `Are you sure you want to delete the team invitation for ${invitation.email}`
-                              )) { /* Do nothing */ } else { return; }
+                              )
+                            ) {
+                              /* Do nothing */
+                            } else {
+                              return;
+                            }
 
-                              let variables = { email: invitation.email }
-                              mutate({
-                                variables,
-                                update: (proxy, { data: { accountInvite } }) => {
-                                  let data = proxy.readQuery({
-                                    query: accountInvitationsGet
-                                  })
-                                  data.accountInvitationsGet = accountInvite
-                                }
-                              })
-                            }}
-                          />
-                        </div>
-                      ))
-                    }
+                            let variables = { email: invitation.email };
+                            mutate({
+                              variables,
+                              update: (proxy, { data: { accountInvite } }) => {
+                                let data = proxy.readQuery({
+                                  query: accountInvitationsGet
+                                });
+                                data.accountInvitationsGet = accountInvite;
+                              }
+                            });
+                          }}
+                        />
+                      </div>
+                    ))}
                   </div>
 
-                  <form className={standard_form} onSubmit={e => {
-                    e.preventDefault();
-                    if (!validEmail) return;
-                    let variables = { email: this.state.value }
-                    mutate({
-                      variables,
-                      update: (proxy, { data: { accountInvite } }) => {
-                        let data = proxy.readQuery({
-                          query: accountInvitationsGet
-                        })
-                        data.accountInvitationsGet = accountInvite
-                        this.setState({value: ''})
-                      }
-                    })
-                    
-
-                  }}>
+                  <form
+                    className={standard_form}
+                    onSubmit={e => {
+                      e.preventDefault();
+                      if (!validEmail) return;
+                      let variables = { email: this.state.value };
+                      mutate({
+                        variables,
+                        update: (proxy, { data: { accountInvite } }) => {
+                          let data = proxy.readQuery({
+                            query: accountInvitationsGet
+                          });
+                          data.accountInvitationsGet = accountInvite;
+                          this.setState({ value: "" });
+                        }
+                      });
+                    }}
+                  >
                     <input
                       type="text"
                       placeholder="Invite to team (email)"
                       value={this.state.value}
-                      onChange={e => this.setState({value: e.target.value})}
+                      onChange={e => this.setState({ value: e.target.value })}
                     />
-                    <div style={{marginTop: '10px'}}>
+                    <div style={{ marginTop: "10px" }}>
                       <input
                         style={{
                           opacity: validEmail ? 1 : 0.2,
@@ -276,40 +251,27 @@ class Comp extends React.Component {
                       />
                       {loading && <i className="fa fa-spinner fa-spin" />}
                     </div>
-
                   </form>
-
                 </div>
-              )
+              );
             }}
           </Mutation>
-
-
         </div>
-
-
-
       </div>
-    )
+    );
   }
 }
 
-
-const ComposedComponent = ({id, user}) => {
-
+const ComposedComponent = ({ id, user }) => {
   const Composed = adopt({
-    userQuery: ({ render }) => (
-      <Query query={userGet} >{render}</Query>
-    ),
+    userQuery: ({ render }) => <Query query={userGet}>{render}</Query>,
     userInvitationsQuery: ({ render }) => (
-      <Query query={userInvitationsGet} >{render}</Query>
-    ),        
-    accountQuery: ({ render }) => (
-      <Query query={accountGet} >{render}</Query>
+      <Query query={userInvitationsGet}>{render}</Query>
     ),
+    accountQuery: ({ render }) => <Query query={accountGet}>{render}</Query>,
     accountInvitationsQuery: ({ render }) => (
-      <Query query={accountInvitationsGet} >{render}</Query>
-    ),
+      <Query query={accountInvitationsGet}>{render}</Query>
+    )
   });
 
   return (
@@ -320,7 +282,6 @@ const ComposedComponent = ({id, user}) => {
         accountQuery,
         accountInvitationsQuery
       }) => {
-
         const loading =
           userQuery.loading ||
           userInvitationsQuery.loading ||
@@ -333,43 +294,34 @@ const ComposedComponent = ({id, user}) => {
           accountQuery.error ||
           accountInvitationsQuery.error;
 
-        if (error) return <div>We're updating</div>
+        if (error) return <div>We're updating</div>;
 
-        if (loading) return <GhostLoader />
+        if (loading) return <GhostLoader />;
 
-        const user = userQuery.data.userGet;          
+        const user = userQuery.data.userGet;
         const userInvitations = userInvitationsQuery.data.userInvitationsGet;
 
         const account = accountQuery.data.accountGet;
-        const accountInvitations = accountInvitationsQuery.data.accountInvitationsGet;
+        const accountInvitations =
+          accountInvitationsQuery.data.accountInvitationsGet;
 
         return (
           <div
-            className={
-              classnames(
-                container,
-                center_container,
-                small_container
-              )
-            }>
+            className={classnames(container, center_container, small_container)}
+          >
             <div className={inner_container}>
-            <Comp
-              user={user}
-              userInvitations={userInvitations || []}
-              account={account}
-              accountInvitations={accountInvitations || []}
-            />
+              <Comp
+                user={user}
+                userInvitations={userInvitations || []}
+                account={account}
+                accountInvitations={accountInvitations || []}
+              />
             </div>
           </div>
-        )
-
+        );
       }}
     </Composed>
   );
 };
 
-export default ComposedComponent
-
-
-
-
+export default ComposedComponent;

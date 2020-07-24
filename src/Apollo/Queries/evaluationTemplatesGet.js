@@ -1,39 +1,32 @@
 import gql from "graphql-tag";
 
-import { 
+import {
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
   evaluationQuestionFragments
-} from '../Fragments';
+} from "../Fragments";
 
 export default gql`
-  query accountGet {
-
+  query evaluationTemplatesGet {
     accountGet {
-    
       evaluationTemplates {
         ...evaluationTemplateFields
 
         sections {
-
           ...evaluationTemplateSectionFields
 
           questions {
             ...evaluationQuestionFields
           }
-
         }
-
       }
-    
+
       evaluationQuestions {
         ...evaluationQuestionFields
       }
-
     }
   }
   ${evaluationTemplateFragments}
   ${evaluationTemplateSectionFragments}
   ${evaluationQuestionFragments}
-`
-
+`;

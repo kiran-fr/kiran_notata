@@ -178,7 +178,7 @@
   text-decoration: none;
 }
 
-.container content {
+.content_tag {
   max-width: 1000px;
   display: block;
   margin: auto;

@@ -24,7 +24,7 @@ import {
   public_edit_company_name
 } from "../../../../routes";
 
-import { Query, Mutation } from "react-apollo";
+import { Query, Mutation } from "@apollo/client/react/components";
 import data from "../../../LoggedIn/Pages/InfoPages/combinedData";
 import { GhostLoader } from "../../../elements/GhostLoader";
 import { centerBox, error_box } from "../../../elements/Style.module.css";
@@ -32,13 +32,13 @@ import {
   invited_class,
   not_invited_class
 } from "../../../LoggedIn/Pages/Page.module.css";
+import { content_tag } from "../../../../routes.module.css";
 
 import { public_getOrganization } from "../../../../Apollo/Queries";
 import { public_updateOrganization } from "../../../../Apollo/Mutations";
 
-
-const terms = "By accepting the terms and conditions you grant the receiver of this data full rights to share and distribute the data with people inside and outside their organization as they see fit. You may change, edit and delete information after you have submitted this data by accessing this url."
-
+const terms =
+  "By accepting the terms and conditions you grant the receiver of this data full rights to share and distribute the data with people inside and outside their organization as they see fit. You may change, edit and delete information after you have submitted this data by accessing this url.";
 
 const TermsButton = props => {
   let outerStyle = {
@@ -78,20 +78,16 @@ const TermsButton = props => {
     color: "gray",
     maxWidth: "600px",
     marginTop: "50px"
-  }
+  };
 
   return (
     <Mutation mutation={public_updateOrganization}>
       {(mutate, mRes) => {
         return (
           <div>
-
-            <div style={terms_style}>
-              {terms}
-            </div>            
+            <div style={terms_style}>{terms}</div>
 
             <div style={outerStyle}>
-
               <div style={innerStyle}>
                 <span>Accept terms and conditions</span>
                 <div
@@ -119,11 +115,12 @@ const TermsButton = props => {
                 >
                   {(props.data.accepted_terms && (
                     <i class="fal fa-toggle-on" style={{ color: "green" }} />
-                  )) || <i class="fal fa-toggle-off" style={{ color: "gray" }} />}
+                  )) || (
+                    <i class="fal fa-toggle-off" style={{ color: "gray" }} />
+                  )}
                 </div>
               </div>
             </div>
-
           </div>
         );
       }}
@@ -169,7 +166,7 @@ const DoneButton = props => {
     color: "gray",
     maxWidth: "600px",
     marginTop: "50px"
-  }
+  };
 
   return (
     <Mutation mutation={public_updateOrganization}>
@@ -177,7 +174,11 @@ const DoneButton = props => {
         return (
           <div>
             <div style={terms_style}>
-              By toggeling the button below to the "on" state an email will be sent to the person that invited you to fill out this form. You will still have access to edit the information after clicking this button. If you toggle it to "off" and then back to "on" again, another email will be sent.
+              By toggeling the button below to the "on" state an email will be
+              sent to the person that invited you to fill out this form. You
+              will still have access to edit the information after clicking this
+              button. If you toggle it to "off" and then back to "on" again,
+              another email will be sent.
             </div>
             <div style={outerStyle}>
               <div style={innerStyle}>
@@ -205,7 +206,9 @@ const DoneButton = props => {
                 >
                   {(props.data.isFinished && (
                     <i class="fal fa-toggle-on" style={{ color: "green" }} />
-                  )) || <i class="fal fa-toggle-off" style={{ color: "gray" }} />}
+                  )) || (
+                    <i class="fal fa-toggle-off" style={{ color: "gray" }} />
+                  )}
                 </div>
               </div>
             </div>
@@ -247,7 +250,7 @@ export class InfoOverviewComp extends React.Component {
     }
 
     return (
-      <content>
+      <div className={content_tag}>
         {loading && <GhostLoader />}
         <div className={classnames(page_title, color1)}>
           {qData.name || <span>&nbsp;</span>}
@@ -281,10 +284,9 @@ export class InfoOverviewComp extends React.Component {
           </div>
         }
 
-        <TermsButton data={qData} email={email} orgId={orgId} /> 
+        <TermsButton data={qData} email={email} orgId={orgId} />
         <DoneButton data={qData} email={email} orgId={orgId} />
-
-      </content>
+      </div>
     );
   }
 }

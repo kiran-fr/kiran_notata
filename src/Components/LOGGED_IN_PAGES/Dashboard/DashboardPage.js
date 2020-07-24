@@ -1,201 +1,96 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import classnames from "classnames";
 
-// RESOURCES
-import moment from "moment";
-
-// API
-import { Query, Mutation } from "react-apollo";
-import { adopt } from "react-adopt";
-import {
-  accountGet,
-  userGet
-} from "../../../Apollo/Queries";
-import {
-  creativePut,
-  connectionPut
-} from "../../../Apollo/Mutations";
-
-// COMPONENTS
 import { GhostLoader } from "../../elements/GhostLoader";
 import Connections from "./Connections";
 
-// STYLES
-import classnames from "classnames";
+import { creativePut, connectionPut } from "../../../Apollo/Mutations";
 
-import {
-  standard_form
-} from "../../elements/Style.module.css";
+import { standard_form, button_class } from "../../elements/Style.module.css";
+import { content_tag } from "../../../routes.module.css";
+import { action_row, action, input_icon } from "./DashboardPage.module.css";
 
+function AddCreatives({ mutateConnection, setCreatedConnection }) {
+  const [showInput, setShowInput] = useState(false);
+  const [mutateCreative] = useMutation(creativePut);
+  const { register, handleSubmit, formState } = useForm();
+  const { isSubmitting } = formState;
 
-
-
-
-class NewCreative extends React.Component {
-
-  state = { value: '' }
-
-  render() {
-
-    return (
-      <Mutation mutation={creativePut}>
-      {(mutate, { data, error, loading }) => (
-        <div>
-
-          <form
-            className={standard_form}
-            onSubmit={e => {
-              e.preventDefault();
-              if (!this.state.value.length) return;
-              let variables = {
-                input: { name: this.state.value }
-              }
-              mutate({variables})
-            }}
-            >
-            <input
-              type="text"
-              placeholde="Dollar Press Ltd."
-              value={this.state.value}
-              onChange={e => this.setState({value: e.target.value})}
-            />
-
-            <div>
-              <input type="submit" value="Save" />
-              {loading && <i className="fa fa-spinner fa-spin" />}
-            </div>
-
-          </form>
-        </div>
-      )}
-      </Mutation>
-    )
-  }
-}
-
-
-const Creatives = ({creatives}) => {
-  return (
-    <div>
-      <Mutation mutation={connectionPut}>
-        {(mutate, { data, error, loading }) => {
-          return (
-            <div>
-              {
-                creatives.map((creative, i) => {
-                  return (
-                    <div
-                      key={`creative-${creative.id}`}
-                      >
-                      <div>
-                        <span>{creative.name} </span>
-                        {
-                          // !connections.some(c => c.creativeId === creative.id) && (
-                            <span
-                              onClick={() => {
-                                let variables = { creativeId: creative.id }
-                                mutate({variables})
-                              }}
-                              >
-                              (evaluate)
-                            </span>
-                          // )
-                        }
-                      </div>
-                    </div>
-                  )
-                })
-              }
-            </div>
-        )}}
-      </Mutation>
-      <NewCreative />
-    </div> 
-  )
-}
-
-
-class DashboardPage extends React.Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      openConnecion: null
+  const onSubmit = async data => {
+    try {
+      const {
+        data: {
+          creativePut: { id: creativeId }
+        }
+      } = await mutateCreative(data);
+      const {
+        data: {
+          connectionPut: { id }
+        }
+      } = await mutateConnection({ variables: { creativeId } });
+      setCreatedConnection(id);
+      setShowInput(false);
+    } catch (error) {
+      console.log(error);
     }
-  }
-
-  render() {
-    
-    const { user } = this.props;
-    const {
-      connections,
-      creatives
-    } = this.props.data;
-
-    let noData = (!creatives || !creatives.length) && (!connections || connections.length);
-
-    return (
-      <content>
-
-
-        {
-          noData && (
-            <div>
-              <div>Ain't nothing here...</div>
-            </div>
-          )
-        }
-
-        {
-          <Creatives creatives={creatives} user={user} />
-        }
-        
-        <Connections user={user} />
-
-      </content>
-    )
-  }
-
-}
-
-
-
-const ComposedComponent = () => {
-
-  const Composed = adopt({
-    accountQuery: ({ render }) => (
-      <Query query={accountGet}>{render}</Query>
-    ),
-    userQuery: ({ render }) => (
-      <Query query={userGet}>{render}</Query>
-    ),    
-  });
+  };
 
   return (
-    <Composed>
-      {({accountQuery, userQuery}) => {
-        const loading = accountQuery.loading || userQuery.loading;
-        const error = accountQuery.error || userQuery.error;
-
-        if (error) console.log("error", error);
-        if (loading) return <GhostLoader />;
-        if (error) return <div>We are updating </div>;
-
-        const data = accountQuery.data.accountGet;
-        const user = userQuery.data.userGet;
-
-        return (
-          <DashboardPage
-            data={data}
-            user={user}
-          />
-        );
-      }}
-    </Composed>
+    <>
+      {isSubmitting && <GhostLoader />}
+      <div className={action_row}>
+        <button
+          onClick={() => setShowInput(true)}
+          className={classnames(button_class, action)}
+        >
+          add startup
+        </button>
+      </div>
+      <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
+        {showInput && (
+          <>
+            <div>
+              <i
+                className={classnames(input_icon, "fa fa-close")}
+                onClick={() => setShowInput(false)}
+              />
+              <input
+                placeholder="Dollar Press Ltd."
+                type="text"
+                name="variables.input.name"
+                ref={register({ required: true })}
+              />
+            </div>
+            <div>
+              <input type="submit" value="save" />
+              {isSubmitting && <i className="fa fa-spinner fa-spin" />}
+            </div>
+          </>
+        )}
+      </form>
+    </>
   );
-};
+}
 
-export default ComposedComponent;
+export default function DashboardPage() {
+  const [createdConnection, setCreatedConnection] = useState();
+  const [mutateConnection, { loading: connectionLoading }] = useMutation(
+    connectionPut
+  );
 
-
-
-
+  return (
+    <>
+      <div className={content_tag}>
+        <AddCreatives
+          mutateConnection={mutateConnection}
+          setCreatedConnection={setCreatedConnection}
+        />
+        {!connectionLoading && (
+          <Connections createdConnection={createdConnection} />
+        )}
+      </div>
+    </>
+  );
+}

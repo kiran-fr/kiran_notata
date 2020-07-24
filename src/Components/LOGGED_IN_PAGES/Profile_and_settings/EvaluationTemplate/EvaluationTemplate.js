@@ -6,11 +6,9 @@ import { Redirect, Link } from "react-router-dom";
 
 // API STUFF
 import { adopt } from "react-adopt";
-import { Mutation, Query } from "react-apollo";
+import { Mutation, Query } from "@apollo/client/react/components";
 
-import {
-  evaluationTemplateGet
-} from "../../../../Apollo/Queries";
+import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 
 import {
   evaluationTemplatePut,
@@ -25,7 +23,6 @@ import {
   evaluation_templates
 } from "../../../../routes";
 
-
 // UTILS
 import qp from "../../../../utils/queryParams";
 
@@ -35,7 +32,6 @@ import BigButton from "../../../elements/BigButton";
 import BreadCrumbs from "../../../elements/BreadCrumbs";
 import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
 import Saver from "../../../elements/Saver";
-
 
 // STYLES
 import classnames from "classnames";
@@ -50,16 +46,10 @@ import {
   focus_form
 } from "../../../elements/Style.module.css";
 
-import {
-  gridContainer
-} from "../../../elements/Grid.module.css";      
+import { gridContainer } from "../../../elements/Grid.module.css";
 
-import {
-  delete_option,
-  section_style
-} from "./EvaluationTemplate.module.css";
-
-
+import { delete_option, section_style } from "./EvaluationTemplate.module.css";
+import { content_tag } from "../../../../routes.module.css";
 
 import {
   color1,
@@ -92,31 +82,22 @@ const getColor = i => {
 };
 
 class NameAndDescription extends React.Component {
-
   render() {
-
     let data = this.props.data || {};
     let { name, description, id } = this.props.data;
 
     return (
-
       <Mutation mutation={evaluationTemplatePut}>
-        {(mutate, {error, loading, data}) => {
-
+        {(mutate, { error, loading, data }) => {
           return (
-            <form
-              onSubmit={e => e.preventDefault()}
-              className={focus_form}
-              >
-
+            <form onSubmit={e => e.preventDefault()} className={focus_form}>
               <div
                 style={{
-                  marginTop: '50px',
-                  textAlign: 'center'
-                }}>
-
+                  marginTop: "50px",
+                  textAlign: "center"
+                }}
+              >
                 <h1>
-
                   <TextAreaAutoHeight
                     placeholder='I.e. "Early stage evaluations"'
                     value={name}
@@ -125,7 +106,7 @@ class NameAndDescription extends React.Component {
                       let variables = {
                         id: id,
                         input: { name: value }
-                      }
+                      };
                       mutate({
                         variables,
                         optimisticResponse: {
@@ -135,23 +116,23 @@ class NameAndDescription extends React.Component {
                             name: value
                           }
                         }
-                      })
+                      });
                     }}
                   />
 
-                  <div><span/></div>
+                  <div>
+                    <span />
+                  </div>
                 </h1>
-
               </div>
 
               <div
                 style={{
-                  marginTop: '50px',
-                  textAlign: 'center'
+                  marginTop: "50px",
+                  textAlign: "center"
                 }}
-                >
+              >
                 <p>
-
                   <TextAreaAutoHeight
                     placeholder='I.e. "Template for evaluating early stage startups"'
                     value={description}
@@ -160,7 +141,7 @@ class NameAndDescription extends React.Component {
                       let variables = {
                         id: id,
                         input: { description: value }
-                      }
+                      };
                       mutate({
                         variables,
                         optimisticResponse: {
@@ -170,62 +151,56 @@ class NameAndDescription extends React.Component {
                             description: value
                           }
                         }
-                      })
+                      });
                     }}
                   />
-                  <div><span/></div>
+                  <div>
+                    <span />
+                  </div>
                 </p>
               </div>
-
             </form>
-          )
+          );
         }}
-
       </Mutation>
-
-    )
+    );
   }
 }
 
-
-
 class AddNewSection extends React.Component {
-
   state = {
-    name: ''
-  }
+    name: ""
+  };
 
   render() {
-
     const { id, data } = this.props;
 
     return (
       <Mutation mutation={evaluationTemplateSectionPut}>
-        {(mutate, {error, loading}) => {
-
+        {(mutate, { error, loading }) => {
           return (
             <form
               className={standard_form}
               onSubmit={e => {
-                e.preventDefault()
+                e.preventDefault();
 
                 let variables = {
                   templateId: id,
                   input: {
                     name: this.state.name
                   }
-                }
+                };
 
                 let fakeObject = {
                   name: this.state.name,
-                  description: '',
+                  description: "",
                   __typename: "EvaluationTemplateSection",
                   createdAt: new Date().getTime(),
                   updatedAt: new Date().getTime(),
-                  createdBy: 'tmp',
-                  id: 'tmp',
+                  createdBy: "tmp",
+                  id: "tmp",
                   questions: []
-                }
+                };
 
                 mutate({
                   variables,
@@ -233,34 +208,25 @@ class AddNewSection extends React.Component {
                     __typename: "Mutation",
                     evaluationTemplateSectionPut: {
                       ...data,
-                      sections: [
-                        ...data.sections,
-                        fakeObject
-                      ]
+                      sections: [...data.sections, fakeObject]
                     }
                   }
+                });
 
-                })
-
-                this.setState({name: ""})
-
+                this.setState({ name: "" });
               }}
-              >
-              <div style={{marginTop: '30px'}}>
+            >
+              <div style={{ marginTop: "30px" }}>
                 <input
                   type="text"
                   placeholder='I.e. "Team"'
                   value={this.state.name}
-                  onChange={e => this.setState({name: e.target.value})}
+                  onChange={e => this.setState({ name: e.target.value })}
                 />
               </div>
 
-
-              <div style={{marginTop: '30px'}}>
-                <input
-                  type="submit"
-                  value="Add new section"
-                />
+              <div style={{ marginTop: "30px" }}>
+                <input type="submit" value="Add new section" />
                 {
                   // loading && (
                   //   <i className="fa fa-spinner fa-spin" />
@@ -268,150 +234,118 @@ class AddNewSection extends React.Component {
                 }
               </div>
             </form>
-          )
-
+          );
         }}
-      </Mutation>      
-    )
+      </Mutation>
+    );
   }
 }
 
-
-
-
 class Sections extends React.Component {
-
   constructor(props) {
-    super(props)
-    this.state = { name: '' }
+    super(props);
+    this.state = { name: "" };
   }
 
   render() {
-
     let { id, data } = this.props;
 
     return (
       <div>
-        <div
-          className={gridContainer}
-          style={{margin: "0px -30px"}}
-          >
+        <div className={gridContainer} style={{ margin: "0px -30px" }}>
+          {(data.sections || []).map((section, i) => (
+            <div key={`section-${section.id}`} style={{ position: "relative" }}>
+              <BigButton
+                className={getColor(i)}
+                label={section.name}
+                subLabel={`${section.questions.length} ${
+                  section.questions.length === 1 ? "question" : "questions"
+                } `}
+                link={`${evaluation_template}/${id}/${section.id}`}
+              />
 
-          {
-            (data.sections || []).map((section, i) => (
-              <div
-                key={`section-${section.id}`}
-                style={{position: "relative"}}
-                >
-                <BigButton
-                  className={getColor(i)}
-                  label={section.name}
-                  subLabel={
-                    `${section.questions.length} ${section.questions.length === 1 ? 'question' : 'questions'} `
-                  }
-                  link={`${evaluation_template}/${id}/${section.id}`}
-                />
+              <Mutation mutation={evaluationTemplateSectionDelete}>
+                {(mutate, { error, data, loading }) => {
+                  if (loading) return <GhostLoader />;
+                  return (
+                    <div
+                      className={delete_option}
+                      onClick={() => {
+                        if (section.questions.length) {
+                          return window.alert(
+                            "You have to delete all the questions in a section before you can delete the section"
+                          );
+                        }
+                        let variables = {
+                          id: section.id
+                        };
+                        mutate({
+                          variables,
+                          update: proxy => {
+                            let data = proxy.readQuery({
+                              query: evaluationTemplateGet,
+                              variables: { id }
+                            });
 
+                            let { sections } = data.evaluationTemplateGet;
 
-                <Mutation mutation={evaluationTemplateSectionDelete}>
-                  {(mutate, {error, data, loading}) => {
-
-                    if (loading) return <GhostLoader/>
-                    return (
-                      <div
-                        className={delete_option}
-                        onClick={() => {
-                          if (section.questions.length) {
-                            return window.alert(
-                              'You have to delete all the questions in a section before you can delete the section'
-                            )
+                            data.evaluationTemplateGet.sections = sections.filter(
+                              s => s.id !== section.id
+                            );
                           }
-                          let variables = {
-                            id: section.id
-                          }
-                          mutate({
-                            variables,
-                            update: (proxy) => {
-                              let data = proxy.readQuery({
-                                query: evaluationTemplateGet,
-                                variables: { id }
-                              })
-
-                              let { sections } = data.evaluationTemplateGet;
-
-                              data.evaluationTemplateGet.sections = sections.filter(s => s.id !== section.id)
-                            }
-                          })
-                        }}
-                        >
-                        delete
-                      </div>
-                    )
-                  }}
-                </Mutation>
-
-
-
-              </div>
-            ))
-          }
-
+                        });
+                      }}
+                    >
+                      delete
+                    </div>
+                  );
+                }}
+              </Mutation>
+            </div>
+          ))}
         </div>
 
-        <AddNewSection
-          data={data}
-          id={id}
-        />
-
+        <AddNewSection data={data} id={id} />
       </div>
-    )
+    );
   }
 }
 
-
-
 class Comp extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       id: null
-    }
+    };
   }
 
   componentDidMount() {
     let { id } = this.props.match.params;
-    if (id !== 'new') {
+    if (id !== "new") {
       this.setState({ id });
     }
-  }  
+  }
 
   render() {
-
-    let skip = !this.state.id || this.state.id === 'new';
-
+    let skip = !this.state.id || this.state.id === "new";
 
     const Composed = adopt({
       evaluationTemplateQuery: ({ render }) => (
         <Query
           query={evaluationTemplateGet}
-          variables={{id: this.state.id}}
+          variables={{ id: this.state.id }}
           skip={skip}
-          >
+        >
           {render}
         </Query>
-      ),
-    });    
-
+      )
+    });
 
     return (
-
-
       <Composed>
-        {({evaluationTemplateQuery}) => {
+        {({ evaluationTemplateQuery }) => {
           const loading = evaluationTemplateQuery.loading;
           const error = evaluationTemplateQuery.error;
-
 
           if (error) console.log("error", error);
           if (this.state.id && loading) return <GhostLoader />;
@@ -420,8 +354,7 @@ class Comp extends React.Component {
           const data = evaluationTemplateQuery.data.evaluationTemplateGet;
 
           return (
-            <content>
-
+            <div className={content_tag}>
               <Saver />
 
               <BreadCrumbs
@@ -442,45 +375,23 @@ class Comp extends React.Component {
               />
 
               <div
-                className={
-                  classnames(container, small_container)
-                }
-                style={{maxWidth: '650px'}}
-                >
+                className={classnames(container, small_container)}
+                style={{ maxWidth: "650px" }}
+              >
                 <div className={inner_container}>
+                  <NameAndDescription data={data || {}} />
 
-                  <NameAndDescription
-                    data={data || {}}
-                  />
-
-                  {
-                    this.state.id && data && (
-                      <Sections
-                        data={data}
-                        id={this.state.id}
-                      />
-                    )
-                  }
-
+                  {this.state.id && data && (
+                    <Sections data={data} id={this.state.id} />
+                  )}
                 </div>
               </div>
-
-
-            </content>
-          )
-
-
+            </div>
+          );
         }}
-
       </Composed>
-
-    )
+    );
   }
-
 }
 
 export default Comp;
-
-
-
-
