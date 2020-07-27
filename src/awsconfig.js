@@ -5,9 +5,10 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloLink,
-  HttpLink
+  createHttpLink
 } from "@apollo/client";
 import { createAuthLink } from "aws-appsync-auth-link";
+import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 
 const STAGE = process.env.REACT_APP_STAGE;
 
@@ -67,13 +68,14 @@ const config = {
   auth: {
     type: AUTH_TYPE.AWS_IAM,
     credentials: Auth.currentCredentials
-  }
+  },
+  disableOffline: true
 };
 
 export const appsyncClient = new ApolloClient({
   link: ApolloLink.from([
     createAuthLink(config),
-    new HttpLink({ uri: config.url })
+    createSubscriptionHandshakeLink(config)
   ]),
   cache: new InMemoryCache(),
   defaultOptions: {
