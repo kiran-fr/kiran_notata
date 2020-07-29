@@ -46,18 +46,7 @@
   top: 14px;
 }
 
-
 /* ************************* */
-
-
-
-
-
-
-
-
-
-
 
 /* COLORS */
 .bgBlue {
@@ -290,8 +279,6 @@
   text-decoration: none;
 }
 
-
-
 .error_class {
   color: #c80000 !important;
   background: #c800001f !important;
@@ -307,9 +294,6 @@
 
 .label_class {
 }
-
-
-
 
 .standard_form input[type="text"],
 .standard_form input[type="password"],
@@ -346,7 +330,6 @@
   font-size: 27px;
 }
 
-
 .submit_button,
 .standard_form input[type="submit"] {
   border: none;
@@ -366,19 +349,8 @@
   background: #2c922c;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-.focus_form {}
-
+.focus_form {
+}
 
 /* HEADER */
 .focus_form p,
@@ -406,7 +378,6 @@
   font-style: italic;
 }
 
-
 .focus_form textarea {
   resize: none;
 }
@@ -424,7 +395,7 @@
   display: block;
   font-weight: 400;
   top: -27px;
-  position: absolute;  
+  position: absolute;
 }
 
 /*
@@ -448,8 +419,8 @@
 
 */
 
-
-.tag_list_small {}
+.tag_list_small {
+}
 
 .tag {
   color: white;
@@ -457,7 +428,7 @@
   padding: 2px 7px;
   border-radius: 2px;
   cursor: pointer;
-  opacity: .8;
+  opacity: 0.8;
   margin: 2px;
 }
 
@@ -474,23 +445,26 @@
   background: #306f7a;
 }
 
-
-
 /* SHADY LIST */
 .shady_list_list {
-
 }
 
 .shady_list_item {
   margin-bottom: 1px;
-  position: relative;
   background: #fff;
-  box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-  padding: 23px 18px 10px;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  overflow: hidden;
+  padding: 12px 10px;
+  position: relative;
+  border-top: 1px solid #f2f5f6;
+  margin: 0px -24px;
+}
+
+.shady_list_star {
+  position: absolute;
+  top: 15px;
+  left: 17px;
+  color: #dadee2;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .shady_list_byLine {
@@ -508,12 +482,12 @@
 
 .shady_list_name {
   font-weight: 300;
-  font-size: 18px;
+  font-size: 15px;
   padding-top: 5px;
   padding-bottom: 2px;
   padding-right: 105px;
   position: relative;
-  padding-left: 18px;
+  padding-left: 35px;
 }
 
 .shady_list_name a {
@@ -521,16 +495,20 @@
   text-decoration: none;
 }
 
-.shady_list_open_close {
+.shady_list_chevron_button {
+  position: absolute;
+  right: 26px;
+  top: 20px;
+  cursor: pointer;
+  color: #ff6969;
+  font-size: 10px;
+}
+
+/*.shady_list_open_close {
     cursor: pointer;
     position: absolute;
     left: 0px;
     font-size: 23px;
     top: 0px;
     color: green;
-}
-
-
-
-
-
+}*/

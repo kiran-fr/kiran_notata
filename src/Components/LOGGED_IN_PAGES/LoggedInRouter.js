@@ -4,7 +4,8 @@ import { Redirect, Switch, withRouter } from "react-router-dom";
 import Route from "react-router/es/Route";
 
 // API
-import { Query } from "@apollo/client/react/components";
+// import { Query } from "@apollo/client/react/components";
+import { useQuery } from "@apollo/client";
 import { userGet } from "../../Apollo/Queries";
 
 // ROUTES
@@ -33,6 +34,14 @@ import { GhostLoader } from "../elements/GhostLoader";
 
 // Styles
 import { container, inner_container } from "../elements/Style.module.css";
+
+import SideBar from "../SideBar/SideBar";
+import HeaderComponent from "../HeaderComponent/HeaderComponent";
+
+import { Layout, Menu, Breadcrumb } from "antd";
+
+const { SubMenu } = Menu;
+const { Content } = Layout;
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -68,6 +77,10 @@ export const RouterComponent = ({ history }) => {
 const WrapperComponent = ({ ...props }) => {
   const [userLoggedIn, setUserLoggedIn] = useState(undefined);
 
+  const { data, loading, error } = useQuery(userGet, {
+    notifyOnNetworkStatusChange: true
+  });
+
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then(() => setUserLoggedIn(true))
@@ -78,19 +91,33 @@ const WrapperComponent = ({ ...props }) => {
     return <Redirect to={signup} />;
   }
 
+  if (loading) return <GhostLoader />;
+
+  if (!loading && !error && data) {
+    let user = data.userGet || {};
+    if (user.email === null) {
+      return <Redirect to={profile} />;
+    }
+  }
+
   return (
-    <Query query={userGet} fetchPolicy="cache-and-network">
-      {({ data, loading, error }) => {
-        if (loading) return <GhostLoader />;
-        if (!loading && !error && data) {
-          let user = data.userGet || {};
-          if (user.email === null) {
-            return <Redirect to={profile} />;
-          }
-        }
-        return <RouterComponent {...props} />;
-      }}
-    </Query>
+    <Layout theme="light">
+      <HeaderComponent />
+      <Layout>
+        <SideBar />
+        <Layout style={{ padding: "0 24px 24px" }}>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: "100vh"
+            }}
+          >
+            <RouterComponent {...props} />
+          </Content>
+        </Layout>
+      </Layout>
+    </Layout>
   );
 };
 

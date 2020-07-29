@@ -10,9 +10,13 @@ import { creativePut, connectionPut } from "../../../Apollo/Mutations";
 
 import { standard_form, button_class } from "../../elements/Style.module.css";
 import { content_tag } from "../../../routes.module.css";
-import { action_row, action, input_icon } from "./DashboardPage.module.css";
 
-function AddCreatives({ mutateConnection, setCreatedConnection }) {
+import { action, input_icon } from "./DashboardPage.module.css";
+
+import { Button } from "antd";
+import { button_chevron_icon } from "../../elements/Ant.module.css";
+
+const AddCreatives = ({ mutateConnection, setCreatedConnection }) => {
   const [showInput, setShowInput] = useState(false);
   const [mutateCreative] = useMutation(creativePut);
   const { register, handleSubmit, formState } = useForm();
@@ -40,14 +44,21 @@ function AddCreatives({ mutateConnection, setCreatedConnection }) {
   return (
     <>
       {isSubmitting && <GhostLoader />}
-      <div className={action_row}>
-        <button
+
+      <div style={{ position: "relative", top: "-10px" }}>
+        <Button
+          type="primary"
+          shape="round"
+          size="large"
           onClick={() => setShowInput(true)}
-          className={classnames(button_class, action)}
         >
-          add startup
-        </button>
+          ADD NEW STARTUP
+          <span className={button_chevron_icon}>
+            <i className="fal fa-chevron-right" />
+          </span>
+        </Button>
       </div>
+
       <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
         {showInput && (
           <>
@@ -72,7 +83,7 @@ function AddCreatives({ mutateConnection, setCreatedConnection }) {
       </form>
     </>
   );
-}
+};
 
 export default function DashboardPage() {
   const [createdConnection, setCreatedConnection] = useState();

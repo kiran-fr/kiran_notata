@@ -4,115 +4,159 @@ import React from "react";
 import moment from "moment";
 
 // API
-import { Query, Mutation } from "@apollo/client/react/components";
-import { adopt } from "react-adopt";
-import { connectionsGet, userGet } from "../../../Apollo/Queries";
+import { useQuery } from "@apollo/client";
+import { connectionsGet } from "../../../Apollo/Queries";
 
 // COMPONENTS
-import ConnectionCard from "./ConnectionCard";
 import { GhostLoader } from "../../elements/GhostLoader";
+import { Card, List, Button, Table, Tag } from "antd";
 
 // STYLES
 import classnames from "classnames";
 
 import {
-  standard_form,
-  shady_list,
-  shady_list_item,
-  shady_list_byLine,
-  shady_list_name,
-  shady_list_open_close
-} from "../../elements/Style.module.css";
-
-class Connections extends React.Component {
-  state = {
-    openConnecion: this.props.createdConnection
-  };
-
-  render() {
-    let { connections, user } = this.props;
-
-    return (
-      <div className={shady_list}>
-        {connections
-          .slice()
-          .sort((a, b) => b.createdAt - a.createdAt)
-          .map((connection, i) => {
-            return (
-              <div
-                key={`connection-${connection.id}`}
-                className={shady_list_item}
-              >
-                <div className={shady_list_byLine}>
-                  <div>
-                    <span>{moment(connection.createdAt).format("ll")} - </span>
-                    <span>{connection.createdByUser.given_name} </span>
-                    <span>{connection.createdByUser.family_name}</span>
-                  </div>
-                </div>
-                <div className={shady_list_name}>
-                  <div
-                    className={shady_list_open_close}
-                    onClick={() => {
-                      this.setState({
-                        openConnecion:
-                          this.state.openConnecion === connection.id
-                            ? null
-                            : connection.id
-                      });
-                    }}
-                  >
-                    {(this.state.openConnecion === connection.id && (
-                      <span style={{ left: "-5px", position: "relative" }}>
-                        <i className="fas fa-caret-down" />
-                      </span>
-                    )) || <i className="fas fa-caret-right" />}
-                  </div>
-
-                  {connection.creative.name}
-                </div>
-
-                {this.state.openConnecion === connection.id && (
-                  <ConnectionCard id={connection.id} user={user} />
-                )}
-              </div>
-            );
-          })}
-      </div>
-    );
-  }
-}
+  list_star,
+  ant_tag,
+  average_score
+} from "../../elements/Ant.module.css";
 
 const ComposedComponent = ({ createdConnection }) => {
-  const Composed = adopt({
-    userQuery: ({ render }) => <Query query={userGet}>{render}</Query>,
-    connectionsQuery: ({ render }) => (
-      <Query query={connectionsGet}>{render}</Query>
-    )
+  const connectionsQuery = useQuery(connectionsGet, {
+    notifyOnNetworkStatusChange: true
   });
 
-  return (
-    <Composed>
-      {({ connectionsQuery, userQuery }) => {
-        const loading = connectionsQuery.loading || userQuery.loading;
-        const error = connectionsQuery.error || userQuery.error;
+  const loading = connectionsQuery.loading; // || userQuery.loading;
+  const error = connectionsQuery.error; // || userQuery.error;
 
-        if (error) console.log("error", error);
-        if (loading) return <GhostLoader />;
-        if (error) return <div>We are updating </div>;
+  if (error) console.log("error", error);
+  if (error) return <div>We are updating </div>;
 
-        const connections = connectionsQuery.data.connectionsGet;
-        const user = userQuery.data.userGet;
+  let connections = [];
+
+  if (!error && !loading) {
+    connections = connectionsQuery.data.connectionsGet;
+  }
+
+  const columns = [
+    {
+      title: "",
+      dataIndex: "star",
+      key: "star",
+      width: 20,
+      className: list_star,
+      render: () => <i className="fal fa-star" style={{ color: "#DADEE2" }} />
+    },
+
+    {
+      title: "Company name",
+      dataIndex: "creative",
+      key: "creative",
+      render: creative => creative.name
+    },
+
+    {
+      title: "Stage",
+      dataIndex: "funnelTags",
+      key: "funnelTags",
+      responsive: ["sm"],
+      render: funnelTags => (
+        <>
+          {["funnel tag"].map(tag => (
+            <Tag className={ant_tag} key={tag}>
+              {tag}
+            </Tag>
+          ))}
+        </>
+      )
+    },
+
+    {
+      title: "Source of Dealflow",
+      dataIndex: "tags",
+      key: "tags",
+      responsive: ["md"],
+      render: tags => (
+        <>
+          {["dummy tag"].map(tag => (
+            <Tag className={ant_tag} border={false} key={tag}>
+              {tag}
+            </Tag>
+          ))}
+        </>
+      )
+    },
+
+    {
+      title: "Subjective score",
+      dataIndex: "subjectiveScores",
+      key: "subjectiveScores",
+      responsive: ["md"],
+      render: scores => {
+        if (!scores || !scores.length) {
+          return <span style={{ color: "#DADEE2" }}>n/a</span>;
+        }
+
+        let { score: ttl } = scores.reduce((a, b) => ({
+          score: a.score + b.score
+        }));
+        let avg = (ttl / scores.length).toFixed(1);
 
         return (
-          <Connections
-            connections={connections || []}
-            user={user}
-            createdConnection={createdConnection}
-          />
+          <div className={average_score}>
+            <span>{avg}</span>
+          </div>
         );
+      }
+    },
+
+    {
+      title: "Last updated",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      responsive: ["lg"],
+      render: date => (
+        <span
+          style={{
+            color: "#A0A8B1",
+            fontWeight: "300"
+          }}
+        >
+          {moment(date).format("ll")}
+        </span>
+      )
+    },
+
+    {
+      title: "",
+      dataIndex: "id",
+      key: "id",
+      width: 30,
+      render: id => (
+        <Button type="link" size="small">
+          <i className="fal fa-chevron-right" />
+        </Button>
+      )
+    }
+  ];
+
+  return (
+    <Card
+      style={{
+        borderRadius: "10px",
+        overflow: "hidden"
       }}
-    </Composed>
+      bodyStyle={{
+        padding: "0px"
+      }}
+    >
+      <Table
+        dataSource={connections}
+        columns={columns}
+        // showHeader={false}
+        pagination={false}
+        loading={loading}
+      />
+    </Card>
   );
 };
 

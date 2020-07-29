@@ -1,0 +1,27 @@
+.sidebar_container {
+  padding-top: 20px;
+
+  user-select: none;
+  background: white;
+  border-top: 1px solid #f2f5f6;
+}
+
+.menu_container {
+  height: 100%;
+
+  border-right: 0 !important;
+  background: white;
+}
+
+.menu_item {
+  color: #515c6f;
+  padding-left: 40px !important;
+  margin-bottom: 18px !important;
+}
+
+.menu_item i {
+  font-size: 17px;
+  padding-right: 10px;
+  position: relative;
+  top: 1px;
+}

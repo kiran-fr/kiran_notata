@@ -8,7 +8,6 @@ import {
   Switch
 } from "react-router-dom";
 
-
 // **************
 // * COMPONENTS *
 // **************
@@ -38,12 +37,9 @@ import { LoggedInRouter } from "./Components/LOGGED_IN_PAGES/LoggedInRouter";
 // PROFILE PAGE & OTHER SETTINGS
 import ProfilePage from "./Components/LOGGED_IN_PAGES/Profile_and_settings/Profile/Profile";
 
-
-
 // **********
 // * ROUTES *
 // **********
-
 
 // PUBLIC
 export const frontpage = "/";
@@ -55,8 +51,6 @@ export const login = "/login";
 export const forgotPassword = "/forgotPassword";
 export const signup = "/signup";
 export const awaiting = "/awaiting";
-
-
 
 // SHARING
 export const link_bridge = `/link`;
@@ -71,7 +65,6 @@ export const evaluation_template = `${evaluation_templates}/edit`;
 
 export const team_management = `${dashboard}/teamManagement`;
 
-
 // // SHARING
 // export const publicSubmitForm = "/submit";
 
@@ -83,7 +76,6 @@ export const team_management = `${dashboard}/teamManagement`;
 // export const public_new_company_page_materials = `${public_new_company}/materials`;
 // export const public_new_company_page_info = `${public_new_company}/info`;
 // export const public_edit_company_name = `${public_new_company}/edit_name`;
-
 
 // // LOGGED IN PAGES
 // export const dashboard = "/dashboard";
@@ -108,50 +100,71 @@ export const team_management = `${dashboard}/teamManagement`;
 // export const evaluation_new = `${dashboard}/evaluation_new`;
 // export const evaluation_settings = `${dashboard}/evaluation_settings`;
 
+// export const Routes = () => (
+//   <Router basename="/">
+//     <ScrollToTop>
+//       <div className={container}>
+//         <Header />
+//         <div className={content}>
+//           <Switch>
 
+//             <Route exact path={frontpage} component={FrontPage} />
+//             <Route exact path={aboutpage} component={AboutPage} />
 
+//             <Route exact path={signup} component={Signup} />
+//             <Route exact path={login} component={Login} />
+//             <Route exact path={signOut} component={SignOut} />
+//             <Route exact path={forgotPassword} component={ForgotPassword} />
+//             <Route exact path={awaiting} component={Awaiting} />
 
+//             <Route path={link_bridge} component={LinkBridge} />
+
+//             <Route exact path={profile} component={ProfilePage} />
+
+//             <Route path={dashboard} component={LoggedInRouter} />
+
+//             <Route render={() => <div>404</div>} />
+
+//             {
+//               // <Route render={() => <Redirect to={frontpage} />} />
+//             }
+
+//           </Switch>
+//         </div>
+//         <Switch>
+//           <FooterSection />
+//         </Switch>
+//       </div>
+//     </ScrollToTop>
+//   </Router>
+
+// );
 
 export const Routes = () => (
   <Router basename="/">
     <ScrollToTop>
-      <div className={container}>
-        <Header />
-        <div className={content}>
-          <Switch>
+      <Switch>
+        <Route exact path={frontpage} component={FrontPage} />
+        <Route exact path={aboutpage} component={AboutPage} />
 
-            <Route exact path={frontpage} component={FrontPage} />
-            <Route exact path={aboutpage} component={AboutPage} />
+        <Route exact path={signup} component={Signup} />
+        <Route exact path={login} component={Login} />
+        <Route exact path={signOut} component={SignOut} />
+        <Route exact path={forgotPassword} component={ForgotPassword} />
+        <Route exact path={awaiting} component={Awaiting} />
 
-            <Route exact path={signup} component={Signup} />
-            <Route exact path={login} component={Login} />
-            <Route exact path={signOut} component={SignOut} />
-            <Route exact path={forgotPassword} component={ForgotPassword} />
-            <Route exact path={awaiting} component={Awaiting} />
+        <Route path={link_bridge} component={LinkBridge} />
 
-            <Route path={link_bridge} component={LinkBridge} />
+        <Route exact path={profile} component={ProfilePage} />
 
-            <Route exact path={profile} component={ProfilePage} />
-            
-            <Route path={dashboard} component={LoggedInRouter} />
-            
-            <Route render={() => <div>404</div>} />
+        <Route path={dashboard} component={LoggedInRouter} />
 
-            {
-              // <Route render={() => <Redirect to={frontpage} />} />
-            }
+        <Route render={() => <div>404</div>} />
 
-          </Switch>
-        </div>
-        <Switch>
-          <FooterSection />
-        </Switch>
-      </div>
+        {
+          // <Route render={() => <Redirect to={frontpage} />} />
+        }
+      </Switch>
     </ScrollToTop>
   </Router>
-
 );
-
-
-
-

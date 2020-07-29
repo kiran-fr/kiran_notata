@@ -80,6 +80,7 @@
     "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.9.12",
     "@material-ui/pickers": "^3.2.10",
+    "antd": "^4.5.1",
     "apollo-link": "^1.2.14",
     "aws-amplify": "^3.0.20",
     "aws-appsync": "^4.0.0",

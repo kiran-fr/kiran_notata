@@ -1,4 +1,4 @@
-.red {
+/*.red {
   color: #9c2a6c;
 }
 .bg_red {
@@ -18,12 +18,14 @@
 .bg_blue {
   background-color: #006ca0;
 }
+*/
 
 .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  background: #f2f5f6;
 }
 
 .container h1 {
@@ -160,7 +162,7 @@
 }
 
 /* FOR BLUE BACKGROUND */
-
+/*
 .container .inverse h1,
 .container .inverse h2,
 .container .inverse h3,
@@ -177,13 +179,14 @@
 .container .inverse a:active {
   text-decoration: none;
 }
+*/
 
-.content_tag {
+/*.content_tag {
   max-width: 1000px;
   display: block;
   margin: auto;
 }
-
+*/
 .container main {
   margin-top: 50px;
 }

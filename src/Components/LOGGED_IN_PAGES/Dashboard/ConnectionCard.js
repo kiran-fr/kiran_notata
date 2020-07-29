@@ -63,12 +63,6 @@ const GeneralConnection = props => {
 
         return (
           <div>
-            {
-              // <EvaluationsBox
-              //   evaluations={connection.evaluations}
-              // />
-            }
-
             <SubjectivityBox connection={connection} user={user} />
           </div>
         );

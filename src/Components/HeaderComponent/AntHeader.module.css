@@ -1,0 +1,27 @@
+.header_container {
+  background: white !important;
+  padding: 0 !important;
+}
+
+.menu_container {
+  /*background: red !important;*/
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.item_label {
+  text-align: center;
+}
+
+.item_label .label_icon {
+  font-size: 20px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: -11px;
+}
+
+.item_label .label_text {
+  position: relative;
+  top: 10px;
+}

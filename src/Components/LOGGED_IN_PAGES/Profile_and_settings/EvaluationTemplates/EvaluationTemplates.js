@@ -31,11 +31,12 @@ import {
   evaluation_templates
 } from "../../../../routes";
 
-function CreateNewTemplate() {
+const CreateNewTemplate = () => {
   const [mutate] = useMutation(evaluationTemplatePut, {
     refetchQueries: [{ query: accountGet }],
     awaitRefetchQueries: true
   });
+
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
@@ -65,7 +66,7 @@ function CreateNewTemplate() {
       </div>
     </form>
   );
-}
+};
 
 function Delete({ template }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
