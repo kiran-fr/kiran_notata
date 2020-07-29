@@ -1,15 +1,16 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import classnames from "classnames";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { Mutation } from "@apollo/client/react/components";
+import { useForm } from "react-hook-form";
 
-// REACT STUFF
-// import { connect } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
-
-// API STUFF
-import { adopt } from "react-adopt";
-import { Mutation, Query } from "@apollo/client/react/components";
+import { GhostLoader } from "../../../elements/GhostLoader";
+import BreadCrumbs from "../../../elements/BreadCrumbs";
+import Saver from "../../../elements/Saver";
+import NameAndDescription from "./NameAndDescriptionComp";
+import Question from "./QuestionComp";
 
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
-
 import { evaluationQuestionPut } from "../../../../Apollo/Mutations";
 
 import {
@@ -18,20 +19,6 @@ import {
   evaluation_template,
   evaluation_templates
 } from "../../../../routes";
-
-// UTILS
-import qp from "../../../../utils/queryParams";
-
-// COMPONENTS
-import { GhostLoader } from "../../../elements/GhostLoader";
-import BreadCrumbs from "../../../elements/BreadCrumbs";
-import Saver from "../../../elements/Saver";
-import NameAndDescription from "./NameAndDescriptionComp";
-import Question from "./QuestionComp";
-
-// STYLES
-import classnames from "classnames";
-
 import {
   container,
   small_container,
@@ -39,203 +26,139 @@ import {
   inner_container,
   standard_form
 } from "../../../elements/Style.module.css";
-
 import { section_style } from "./EvaluationTemplateSection.module.css";
-
 import { color3 } from "../../../elements/Colors.module.css";
 import { content_tag } from "../../../../routes.module.css";
+import EvaluationTemplate from "../EvaluationTemplate/EvaluationTemplate";
 
-class NewQuestion extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { name: "" };
-  }
+function NewQuestion({ templateId, sectionId }) {
+  const [mutate] = useMutation(evaluationQuestionPut, {
+    refetchQueries: [
+      {
+        query: evaluationTemplateGet,
+        variables: { id: templateId }
+      }
+    ],
+    awaitRefetchQueries: true
+  });
+  const { register, handleSubmit, formState } = useForm();
+  const { isSubmitting } = formState;
 
-  render() {
-    let { templateId, sectionId } = this.props;
-
-    return (
-      <div className={section_style}>
-        {
-          <Mutation mutation={evaluationQuestionPut}>
-            {(mutate, { error, loading, data }) => {
-              return (
-                <form
-                  className={standard_form}
-                  onSubmit={e => {
-                    e.preventDefault();
-                    if (!this.state.name.length) return;
-                    let variables = {
-                      sectionId: sectionId,
-                      input: {
-                        name: this.state.name,
-                        inputType: "CHECK"
-                      }
-                    };
-                    mutate({
-                      variables,
-                      refetchQueries: [
-                        {
-                          query: evaluationTemplateGet,
-                          variables: { id: templateId }
-                        }
-                      ],
-                      update: (proxy, { data: { evaluationQuestionPut } }) => {
-                        let data = proxy.readQuery({
-                          query: evaluationTemplateGet,
-                          variables: { id: templateId }
-                        });
-                        let sections = data.evaluationTemplateGet.sections;
-                        data.evaluationTemplateGet.sections = sections.map(
-                          s => {
-                            if (s.id !== sectionId) return s;
-                            return {
-                              ...s,
-                              questions: [...s.questions, evaluationQuestionPut]
-                            };
-                          }
-                        );
-                        this.setState({ name: "" });
-                      }
-                    });
-                  }}
-                >
-                  <div style={{ marginTop: "30px" }}>
-                    <input
-                      type="text"
-                      placeholder="Question name"
-                      value={this.state.name}
-                      onChange={e => this.setState({ name: e.target.value })}
-                    />
-                  </div>
-
-                  <div style={{ marginTop: "30px" }}>
-                    <input type="submit" value="Add new question" />
-                    {loading && <i className="fa fa-spinner fa-spin" />}
-                  </div>
-                </form>
-              );
-            }}
-          </Mutation>
+  async function onSubmit({ name }, event) {
+    await mutate({
+      variables: {
+        sectionId: sectionId,
+        input: {
+          name,
+          inputType: "CHECK"
         }
-      </div>
-    );
-  }
-}
-
-class Comp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: null,
-      sectionId: null,
-      saving: false
-    };
-  }
-
-  componentDidMount() {
-    let { id, sectionId } = this.props.match.params;
-    if (id !== "new") {
-      this.setState({ id, sectionId });
-    }
-  }
-
-  render() {
-    let skip = !this.state.id || this.state.id === "new";
-
-    const Composed = adopt({
-      evaluationTemplateQuery: ({ render }) => (
-        <Query
-          query={evaluationTemplateGet}
-          variables={{ id: this.state.id }}
-          skip={skip}
-        >
-          {render}
-        </Query>
-      )
+      }
     });
 
-    return (
-      <Composed>
-        {({ evaluationTemplateQuery }) => {
-          const loading = evaluationTemplateQuery.loading;
-          const error = evaluationTemplateQuery.error;
-
-          if (error) console.log("error", error);
-          if (loading) return <GhostLoader />;
-          if (error) return <div>We are updating </div>;
-
-          const data = evaluationTemplateQuery.data.evaluationTemplateGet;
-
-          if (!data) {
-            return <div>no data</div>;
-          }
-
-          let section = {};
-          if (this.state.sectionId) {
-            section = (data.sections || []).find(
-              s => s.id === this.state.sectionId
-            );
-          }
-
-          return (
-            <div className={content_tag}>
-              <Saver />
-
-              <BreadCrumbs
-                list={[
-                  {
-                    val: "profile",
-                    link: profile
-                  },
-                  {
-                    val: "all templates",
-                    link: `${evaluation_templates}`
-                  },
-                  {
-                    val: "template overview",
-                    link: `${evaluation_template}/${this.state.id}`
-                  },
-                  {
-                    val: "template section",
-                    link: `${evaluation_template}/${this.state.id}/${this.state.sectionId}`
-                  }
-                ]}
-              />
-
-              <div
-                className={classnames(container, small_container)}
-                style={{ maxWidth: "650px" }}
-              >
-                <div className={inner_container}>
-                  <NameAndDescription
-                    template={data}
-                    section={section || {}}
-                    id={this.state.id}
-                    sectionId={this.state.sectionId}
-                  />
-
-                  {(section.questions || []).map((question, i) => (
-                    <Question
-                      key={`question-${i}-${question.id}`}
-                      question={question || {}}
-                      templateId={this.state.id}
-                      sectionId={this.state.sectionId}
-                    />
-                  ))}
-
-                  <NewQuestion
-                    templateId={this.state.id}
-                    sectionId={this.state.sectionId}
-                  />
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      </Composed>
-    );
+    event.target.reset();
   }
+
+  return (
+    <div className={section_style}>
+      <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
+        <div style={{ marginTop: "30px" }}>
+          <input
+            type="text"
+            placeholder="Question name"
+            ref={register({ required: true })}
+            name="name"
+          />
+        </div>
+
+        <div style={{ marginTop: "30px" }}>
+          <input
+            type="submit"
+            value="Add new question"
+            disabled={isSubmitting}
+          />
+          {isSubmitting && <i className="fa fa-spinner fa-spin" />}
+        </div>
+      </form>
+    </div>
+  );
 }
 
-export default Comp;
+export default function EvaluationTemplateSection({ match }) {
+  const { id, sectionId } = match.params;
+  const [getData, { data, loading, error }] = useLazyQuery(
+    evaluationTemplateGet
+  );
+
+  useEffect(() => {
+    if (id !== "new") {
+      getData({ variables: { id } });
+    }
+  }, []);
+
+  if (error) console.log("error", error);
+  if (loading) return <GhostLoader />;
+  if (error) return <div>We are updating </div>;
+
+  if (!data) {
+    return <div>no data</div>;
+  }
+
+  let section = {};
+  if (sectionId) {
+    section = (data.evaluationTemplateGet.sections || []).find(
+      s => s.id === sectionId
+    );
+  }
+
+  return (
+    <div className={content_tag}>
+      <Saver />
+
+      <BreadCrumbs
+        list={[
+          {
+            val: "profile",
+            link: profile
+          },
+          {
+            val: "all templates",
+            link: `${evaluation_templates}`
+          },
+          {
+            val: "template overview",
+            link: `${evaluation_template}/${id}`
+          },
+          {
+            val: "template section",
+            link: `${evaluation_template}/${id}/${sectionId}`
+          }
+        ]}
+      />
+
+      <div
+        className={classnames(container, small_container)}
+        style={{ maxWidth: "650px" }}
+      >
+        <div className={inner_container}>
+          <NameAndDescription
+            template={data.evaluationTemplateGet}
+            section={section || {}}
+            id={id}
+            sectionId={sectionId}
+          />
+
+          {(section.questions || []).map((question, i) => (
+            <Question
+              key={`question-${i}-${question.id}`}
+              question={question || {}}
+              templateId={id}
+              sectionId={sectionId}
+            />
+          ))}
+
+          <NewQuestion templateId={id} sectionId={sectionId} />
+        </div>
+      </div>
+    </div>
+  );
+}

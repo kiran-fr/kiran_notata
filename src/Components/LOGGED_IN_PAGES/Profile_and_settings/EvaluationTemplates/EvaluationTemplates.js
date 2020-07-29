@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import classnames from "classnames";
+import { useForm } from "react-hook-form";
 
 import { GhostLoader } from "../../../elements/GhostLoader";
 import BreadCrumbs from "../../../elements/BreadCrumbs";
@@ -30,52 +31,46 @@ import {
   evaluation_templates
 } from "../../../../routes";
 
-function CreateNewTemplate({ accountRefetch }) {
-  const [name, setName] = useState();
-  const [description] = useState();
-  const [mutate, { loading }] = useMutation(evaluationTemplatePut, {
-    refetchQueries: [{ query: accountGet }]
+function CreateNewTemplate() {
+  const [mutate] = useMutation(evaluationTemplatePut, {
+    refetchQueries: [{ query: accountGet }],
+    awaitRefetchQueries: true
   });
+  const { register, handleSubmit, formState } = useForm();
+  const { isSubmitting } = formState;
+
+  const onSubmit = async (data, event) => {
+    try {
+      await mutate(data);
+      event.target.reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <form
-      className={standard_form}
-      onSubmit={e => {
-        e.preventDefault();
-
-        let variables = {
-          input: {
-            name: name,
-            description: description
-          }
-        };
-
-        mutate({
-          variables
-        });
-        setName("");
-      }}
-    >
+    <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
       <div style={{ marginTop: "30px" }}>
         <input
           type="text"
-          placeholder='I.e. "Early Stage Companies"'
-          value={name}
-          onChange={e => setName(e.target.value)}
+          placeholder={`I.e. "Early Stage Companies"`}
+          ref={register({ required: true })}
+          name="variables.input.name"
         />
       </div>
 
       <div style={{ marginTop: "30px" }}>
         <input type="submit" value="Create new template" />
-        {loading && <i className="fa fa-spinner fa-spin" />}
+        {isSubmitting && <i className="fa fa-spinner fa-spin" />}
       </div>
     </form>
   );
 }
 
-function Delete({ template, accountRefetch }) {
+function Delete({ template }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
-    refetchQueries: ["accountGet"]
+    refetchQueries: [{ query: accountGet }],
+    awaitRefetchQueries: true
   });
 
   return (
