@@ -1,0 +1,47 @@
+.big_button_container {
+  border: none;
+  outline: none;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 20px;
+  padding: 13px 50px 13px 30px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+@media screen and (max-width: 600px) {
+  .big_button_container {
+    width: 100%;
+  }
+}
+
+.big_button_chevron_icon {
+  background: white;
+  border-radius: 100%;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 5px;
+  top: 5px;
+}
+
+.big_button_chevron_icon i {
+  color: var(--color-primary);
+  position: relative;
+  top: 8px;
+  left: 2px;
+  font-size: 14px;
+}
+
+.tiny_right_button_container {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  user-select: none;
+}
+
+.tiny_right_button_container i {
+  color: var(--color-primary);
+}

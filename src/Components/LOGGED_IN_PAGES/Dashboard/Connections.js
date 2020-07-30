@@ -9,30 +9,24 @@ import { connectionsGet } from "../../../Apollo/Queries";
 
 // COMPONENTS
 import { GhostLoader } from "../../elements/GhostLoader";
-import { Card, List, Button, Table, Tag } from "antd";
+
+import { Button, Table, Card, Tag } from "../../elements/NotataComponents/";
 
 // STYLES
 import classnames from "classnames";
 
-import {
-  list_star,
-  ant_tag,
-  average_score
-} from "../../elements/Ant.module.css";
+import { list_star, average_score, date_style } from "./Connections.module.css";
 
 const ComposedComponent = ({ createdConnection }) => {
-  const connectionsQuery = useQuery(connectionsGet, {
-    notifyOnNetworkStatusChange: true
-  });
+  const connectionsQuery = useQuery(connectionsGet);
 
-  const loading = connectionsQuery.loading; // || userQuery.loading;
-  const error = connectionsQuery.error; // || userQuery.error;
+  const loading = connectionsQuery.loading;
+  const error = connectionsQuery.error;
 
   if (error) console.log("error", error);
   if (error) return <div>We are updating </div>;
 
-  let connections = [];
-
+  let connections;
   if (!error && !loading) {
     connections = connectionsQuery.data.connectionsGet;
   }
@@ -44,7 +38,7 @@ const ComposedComponent = ({ createdConnection }) => {
       key: "star",
       width: 20,
       className: list_star,
-      render: () => <i className="fal fa-star" style={{ color: "#DADEE2" }} />
+      render: () => <i className="fal fa-star" />
     },
 
     {
@@ -58,13 +52,11 @@ const ComposedComponent = ({ createdConnection }) => {
       title: "Stage",
       dataIndex: "funnelTags",
       key: "funnelTags",
-      responsive: ["sm"],
+      responsive: "sm",
       render: funnelTags => (
         <>
           {["funnel tag"].map(tag => (
-            <Tag className={ant_tag} key={tag}>
-              {tag}
-            </Tag>
+            <Tag key={tag}>{tag}</Tag>
           ))}
         </>
       )
@@ -74,13 +66,11 @@ const ComposedComponent = ({ createdConnection }) => {
       title: "Source of Dealflow",
       dataIndex: "tags",
       key: "tags",
-      responsive: ["md"],
+      responsive: "md",
       render: tags => (
         <>
           {["dummy tag"].map(tag => (
-            <Tag className={ant_tag} border={false} key={tag}>
-              {tag}
-            </Tag>
+            <Tag key={tag}>{tag}</Tag>
           ))}
         </>
       )
@@ -90,7 +80,7 @@ const ComposedComponent = ({ createdConnection }) => {
       title: "Subjective score",
       dataIndex: "subjectiveScores",
       key: "subjectiveScores",
-      responsive: ["md"],
+      responsive: "sm",
       render: scores => {
         if (!scores || !scores.length) {
           return <span style={{ color: "#DADEE2" }}>n/a</span>;
@@ -113,16 +103,9 @@ const ComposedComponent = ({ createdConnection }) => {
       title: "Last updated",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      responsive: ["lg"],
+      responsive: "lg",
       render: date => (
-        <span
-          style={{
-            color: "#A0A8B1",
-            fontWeight: "300"
-          }}
-        >
-          {moment(date).format("ll")}
-        </span>
+        <span className={date_style}>{moment(date).format("ll")}</span>
       )
     },
 
@@ -131,28 +114,15 @@ const ComposedComponent = ({ createdConnection }) => {
       dataIndex: "id",
       key: "id",
       width: 30,
-      render: id => (
-        <Button type="link" size="small">
-          <i className="fal fa-chevron-right" />
-        </Button>
-      )
+      render: id => <Button type="tiny_right" />
     }
   ];
 
   return (
-    <Card
-      style={{
-        borderRadius: "10px",
-        overflow: "hidden"
-      }}
-      bodyStyle={{
-        padding: "0px"
-      }}
-    >
+    <Card maxWidth={1200}>
       <Table
-        dataSource={connections}
+        dataSource={connections || []}
         columns={columns}
-        // showHeader={false}
         pagination={false}
         loading={loading}
       />

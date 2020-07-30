@@ -8,13 +8,15 @@ import Connections from "./Connections";
 
 import { creativePut, connectionPut } from "../../../Apollo/Mutations";
 
-import { standard_form, button_class } from "../../elements/Style.module.css";
+import { standard_form } from "../../elements/Style.module.css";
 import { content_tag } from "../../../routes.module.css";
 
 import { action, input_icon } from "./DashboardPage.module.css";
 
-import { Button } from "antd";
-import { button_chevron_icon } from "../../elements/Ant.module.css";
+import { Button, Content } from "../../elements/NotataComponents/";
+
+// import { Button } from "antd";
+// import { button_chevron_icon } from "../../elements/Ant.module.css";
 
 const AddCreatives = ({ mutateConnection, setCreatedConnection }) => {
   const [showInput, setShowInput] = useState(false);
@@ -45,17 +47,18 @@ const AddCreatives = ({ mutateConnection, setCreatedConnection }) => {
     <>
       {isSubmitting && <GhostLoader />}
 
-      <div style={{ position: "relative", top: "-10px" }}>
+      <div
+        style={{
+          position: "relative",
+          marginBottom: "30px"
+        }}
+      >
         <Button
-          type="primary"
-          shape="round"
-          size="large"
           onClick={() => setShowInput(true)}
+          type="right_arrow"
+          size="large"
         >
           ADD NEW STARTUP
-          <span className={button_chevron_icon}>
-            <i className="fal fa-chevron-right" />
-          </span>
         </Button>
       </div>
 
@@ -92,16 +95,21 @@ export default function DashboardPage() {
   );
 
   return (
-    <>
-      <div className={content_tag}>
-        <AddCreatives
-          mutateConnection={mutateConnection}
-          setCreatedConnection={setCreatedConnection}
-        />
-        {!connectionLoading && (
-          <Connections createdConnection={createdConnection} />
-        )}
-      </div>
-    </>
+    <Content maxWidth={1200}>
+      <AddCreatives
+        mutateConnection={mutateConnection}
+        setCreatedConnection={setCreatedConnection}
+      />
+
+      <Connections createdConnection={createdConnection} />
+
+      {/*
+          {
+            !connectionLoading && (
+            <Connections createdConnection={createdConnection} />
+            )
+          }
+        */}
+    </Content>
   );
 }

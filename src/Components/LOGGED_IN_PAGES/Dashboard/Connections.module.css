@@ -1,0 +1,28 @@
+.list_star {
+  position: relative;
+  left: 6px;
+  color: var(--color-gray-light);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.average_score {
+  background: #ffaf52;
+  display: inline-block;
+  border-radius: 100%;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+}
+
+.average_score span {
+  position: relative;
+  top: 3px;
+  font-size: 12px;
+}
+
+.date_style {
+  font-size: 12px;
+}

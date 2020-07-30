@@ -2,9 +2,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding-right: 15px;
   padding-bottom: 150px;
   padding-top: 75px;
+  padding-left: 225px;
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding-left: 15px;
+  }
 }
 
 .small_container {
@@ -18,6 +25,7 @@
 
 .inner_container {
   width: 100vw;
+  overflow: hidden;
 }
 
 .button_class {

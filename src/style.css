@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i");
 /*@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i");*/
 
-::after,
-::before {
+* {
   box-sizing: border-box;
 }
 
-html {
+::after,
+::before {
+  box-sizing: border-box;
 }
 
 html,
@@ -136,6 +137,48 @@ body,
 html,
 textarea {
   font-family: "Roboto", sans-serif !important;
+  background-color: var(--color-gray-pale);
+  color: var(--color-gray-dark);
+}
+
+:root {
+  --color-primary: #ff6969;
+  --color-secondary: #367f8f;
+
+  /*--color-gray-dark: #202124;*/
+  --color-gray-dark: #515c6f;
+  --color-gray-medium: #a0a8b1;
+  --color-gray-light: #dadee2;
+  --color-gray-pale: #f2f5f6;
+
+  --color-message-bg: #f7f6f3;
+  --color-green: #478339;
+  --color-red: #e5646a;
+
+  --color-yellow: #ffd700;
+  --color-orange: #ffaf52;
+  --color-turquoise: #4ad1c7;
+
+  --font-weight-light: 200;
+  --font-weight-regular: 300;
+  --font-weight-bold: 500;
+}
+
+h1 {
+  font-weight: var(--font-weight-regular);
+  margin-top: 0;
+}
+
+@media screen and (min-width: 900px) {
+  .mobile_only {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .desktop_only {
+    display: none;
+  }
 }
 
 /**

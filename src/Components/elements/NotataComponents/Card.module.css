@@ -1,0 +1,12 @@
+.container {
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+}
+
+.no_margin .content {
+  margin: -20px;
+}
+
+.content {
+}

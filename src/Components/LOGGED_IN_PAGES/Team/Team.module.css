@@ -1,0 +1,63 @@
+.members_list {
+  margin-bottom: 30px;
+}
+
+.member_of_team {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  border-bottom: 1px solid;
+  color: #666;
+}
+
+.member_of_team input {
+  opacity: 0.8 !important;
+}
+
+.member_of_team i {
+  color: red !important;
+  top: 2px !important;
+  cursor: pointer !important;
+  font-size: 22px;
+  position: relative;
+}
+
+/*.member_of_team_new i {
+  color: green !important;
+  top: 17px !important;
+  cursor: pointer !important;
+}*/
+
+.pending_invitation {
+}
+
+.submit_reject_buttons_container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-right: -2px;
+  margin-left: -2px;
+}
+
+.submit_reject_buttons {
+  margin-bottom: 2px;
+  padding: 7px 14px;
+  font-size: 14px;
+  margin: 1px;
+}
+
+.reject_button {
+  background: red;
+}
+
+.reject_button:hover {
+  background: #c80000;
+}
+
+.sub_header {
+  margin: 18px 0px;
+  font-size: 22px;
+  font-weight: 300;
+  color: #306f7a;
+}

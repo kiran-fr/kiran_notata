@@ -1,101 +1,100 @@
 import React from "react";
-import { Layout, Menu } from "antd";
-import {
-  sidebar_container,
-  menu_container,
-  menu_item
-} from "./SideBar.module.css";
 
-const { Sider } = Layout;
+import classnames from "classnames";
+
+// import {
+//   dashboard,
+//   profile,
+//   report,
+//   inbox,
+//   activities,
+//   tags,
+//   groups,
+//   settings,
+//   team,
+//   templates,
+//   signOut,
+// } from "../../routes";
+
+import { sidebar_container, menu_container } from "./SideBar.module.css";
+
+import { MenuIconItem } from "../elements/NotataComponents/";
+
+let dashboard = "/dashboard";
+let profile = "/dashboard/profile";
+let report = "/dashboard/report";
+let inbox = "/dashboard/inbox";
+let activities = "/dashboard/activities";
+let tags = "/dashboard/tags";
+let groups = "/dashboard/groups";
+let settings = "/dashboard/settings";
+let team = "/dashboard/team";
+let templates = "/dashboard/templates";
+let signOut = "/signout";
+
+const menuItems = [
+  {
+    label: "Home",
+    iconClass: "fal fa-home",
+    link: dashboard
+  },
+  {
+    label: "Inbox",
+    iconClass: "fal fa-inbox",
+    notifications: 0,
+    link: inbox
+  },
+  {
+    label: "Activities",
+    iconClass: "fal fa-tasks",
+    notifications: 0,
+    link: activities
+  },
+  {
+    label: "Reports",
+    iconClass: "fal fa-chart-bar",
+    link: report
+  },
+  {
+    label: "Templates",
+    iconClass: "fal fa-copy",
+    link: templates
+  },
+  {
+    label: "Tags",
+    iconClass: "fal fa-tag",
+    link: tags
+  },
+  {
+    label: "Groups",
+    iconClass: "fal fa-share-alt",
+    link: groups
+  },
+  {
+    label: "Profile",
+    iconClass: "fal fa-user",
+    link: profile
+  },
+  {
+    label: "Settings",
+    iconClass: "fal fa-cog",
+    link: settings
+  },
+  {
+    label: "Log out",
+    iconClass: "fal fa-sign-out-alt",
+    link: signOut
+  }
+];
 
 const SideBar = () => (
-  <Sider
-    width={200}
-    className={sidebar_container}
-    breakpoint="lg"
-    collapsedWidth="0"
-    theme="light"
-    trigger={null}
-  >
-    <Menu
-      mode="inline"
-      // defaultSelectedKeys={['1']}
-      // defaultOpenKeys={['sub1']}
-      className={menu_container}
-    >
-      <Menu.Item
-        key="1"
-        className={menu_item}
-        icon={<i className="fal fa-inbox" />}
-      >
-        Inbox
-      </Menu.Item>
-
-      <Menu.Item
-        key="2"
-        className={menu_item}
-        icon={<i className="fal fa-tasks" />}
-      >
-        Activities
-      </Menu.Item>
-
-      <Menu.Item
-        key="3"
-        className={menu_item}
-        icon={<i className="fal fa-chart-bar" />}
-      >
-        Reports
-      </Menu.Item>
-
-      <Menu.Item
-        key="4"
-        className={menu_item}
-        icon={<i className="fal fa-copy" />}
-      >
-        Templates
-      </Menu.Item>
-
-      <Menu.Item
-        key="5"
-        className={menu_item}
-        icon={<i className="fal fa-tag" />}
-      >
-        Tags
-      </Menu.Item>
-
-      <Menu.Item
-        key="6"
-        className={menu_item}
-        icon={<i className="fal fa-share-alt" />}
-      >
-        Groups
-      </Menu.Item>
-
-      <Menu.Item
-        key="7"
-        className={menu_item}
-        icon={<i className="fal fa-user" />}
-      >
-        Profile
-      </Menu.Item>
-
-      <Menu.Item
-        key="8"
-        className={menu_item}
-        icon={<i className="fal fa-cog" />}
-      >
-        Settings
-      </Menu.Item>
-
-      <Menu.Item
-        key="9"
-        className={menu_item}
-        icon={<i className="fal fa-sign-out-alt" />}
-      >
-        Log out
-      </Menu.Item>
-    </Menu>
-  </Sider>
+  <div className={classnames(sidebar_container, "desktop_only")}>
+    <div className={menu_container}>
+      {menuItems.map((item, i) => (
+        <MenuIconItem key={`m-${i}`} horizontal large {...item} />
+      ))}
+    </div>
+  </div>
 );
 
 export default SideBar;
