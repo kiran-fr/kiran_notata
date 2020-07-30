@@ -1,38 +1,178 @@
-.big_button_container {
+.button_container {
   border: none;
   outline: none;
   background-color: var(--color-primary);
   color: white;
   border-radius: 20px;
-  padding: 13px 50px 13px 30px;
+  padding: 13px 30px 13px 30px;
   position: relative;
   cursor: pointer;
   user-select: none;
+  text-transform: uppercase;
+  margin: 2px;
 }
 
-@media screen and (max-width: 600px) {
-  .big_button_container {
-    width: 100%;
+.secondary_style {
+  color: var(--color-gray-dark);
+  background: var(--color-gray-light);
+}
+
+/*
+  @media screen and (max-width: 600px) {
+    .button_container {
+      width: 100%;
+    }
   }
+*/
+
+/* Default (large) */
+.icon_padding {
+  padding-right: 50px;
 }
 
-.big_button_chevron_icon {
+.chevron_icon {
   background: white;
   border-radius: 100%;
   position: absolute;
+
   width: 30px;
   height: 30px;
   right: 5px;
   top: 5px;
 }
 
-.big_button_chevron_icon i {
+.chevron_icon i {
   color: var(--color-primary);
   position: relative;
   top: 8px;
   left: 2px;
   font-size: 14px;
 }
+
+.loading_icon {
+  border-radius: 100%;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  right: 6px;
+  top: 3px;
+}
+
+.loading_icon i {
+  position: relative;
+  top: 8px;
+  left: 2px;
+  font-size: 19px;
+}
+
+/* Large button */
+.large_button {
+  padding: 13px 50px 13px 30px;
+}
+
+.large_button.icon_padding {
+  padding-right: 50px;
+}
+
+.large_button .chevron_icon {
+  width: 30px;
+  height: 30px;
+  right: 5px;
+  top: 5px;
+}
+
+.large_button .chevron_icon i {
+  top: 8px;
+  left: 2px;
+  font-size: 14px;
+}
+
+.large_button .loading_icon {
+  width: 35px;
+  height: 35px;
+  right: 6px;
+  top: 3px;
+}
+
+.large_button .loading_icon i {
+  top: 8px;
+  left: 2px;
+  font-size: 19px;
+}
+
+/* Medium button */
+.medium_button {
+  padding: 8px 30px 8px 30px;
+  font-size: 12px;
+}
+
+.medium_button.icon_padding {
+  padding-right: 40px;
+}
+
+.medium_button .chevron_icon {
+  width: 24px;
+  height: 24px;
+  right: 3px;
+  top: 3px;
+}
+
+.medium_button .chevron_icon i {
+  top: 6px;
+  left: 2px;
+  font-size: 13px;
+}
+
+.medium_button .loading_icon {
+  width: 30px;
+  height: 30px;
+  right: 3px;
+  top: 0px;
+}
+
+.medium_button .loading_icon i {
+  top: 8px;
+  left: 2px;
+  font-size: 14px;
+}
+
+/* Small button */
+.small_button {
+  padding: 6px 20px 6px 20px;
+  font-size: 10px;
+}
+
+.small_button.icon_padding {
+  padding-right: 30px;
+}
+
+.small_button .chevron_icon {
+  width: 19px;
+  height: 19px;
+  right: 2px;
+  top: 2px;
+}
+
+.small_button .chevron_icon i {
+  top: 4px;
+  left: 1px;
+  font-size: 9px;
+}
+
+.small_button .loading_icon {
+  width: 22px;
+  height: 22px;
+  right: 3px;
+  top: 0px;
+}
+
+.small_button .loading_icon i {
+  top: 6px;
+  left: 2px;
+  font-size: 12px;
+}
+
+/* Other button */
 
 .tiny_right_button_container {
   cursor: pointer;

@@ -14,11 +14,11 @@
 
 .logo {
   color: var(--color-gray-light);
-  font-size: 40px;
+  font-size: 28px;
   font-weight: var(--font-weight-light);
   position: relative;
-  top: -11px;
-  left: 30px;
+  top: -4px;
+  left: 31px;
 }
 
 .icons {

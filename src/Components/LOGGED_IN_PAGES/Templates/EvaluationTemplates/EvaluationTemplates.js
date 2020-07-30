@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import classnames from "classnames";
@@ -10,7 +10,8 @@ import {
   Card,
   Button,
   Table,
-  Content
+  Content,
+  Modal
 } from "../../../elements/NotataComponents/";
 
 import { standard_form } from "../../../elements/Style.module.css";
@@ -96,6 +97,8 @@ function Delete({ id, templates }) {
 }
 
 export default function EvaluationTemplates() {
+  const [showModal, setShowModal] = useState(false);
+
   const { data, loading, error } = useQuery(accountGet);
   if (error) return <div>We are updating </div>;
 
@@ -152,11 +155,27 @@ export default function EvaluationTemplates() {
           columns={columns}
           pagination={false}
           loading={loading}
-          // diableHead
         />
       </Card>
 
       <CreateNewTemplate />
+
+      <div style={{ marginTop: "20px" }}>
+        <Button
+          onClick={() => setShowModal(true)}
+          type="right_arrow"
+          size="large"
+        >
+          New Evaluation Template
+        </Button>
+      </div>
+
+      {showModal && (
+        <Modal
+          title="New Evaluation Template"
+          close={() => setShowModal(false)}
+        />
+      )}
     </Content>
   );
 }
