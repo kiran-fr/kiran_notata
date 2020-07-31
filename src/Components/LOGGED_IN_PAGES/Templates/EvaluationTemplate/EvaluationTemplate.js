@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,7 @@ import { GhostLoader } from "../../../elements/GhostLoader";
 import BigButton from "../../../elements/BigButton";
 import BreadCrumbs from "../../../elements/BreadCrumbs";
 import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
-import Saver from "../../../elements/Saver";
+// import Saver from "../../../elements/Saver";
 
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 import {
@@ -22,209 +22,163 @@ import {
 } from "../../../../routes";
 
 import {
-  container,
-  small_container,
-  inner_container,
-  standard_form,
-  focus_form
-} from "../../../elements/Style.module.css";
-import { gridContainer } from "../../../elements/Grid.module.css";
-import { delete_option } from "./EvaluationTemplate.module.css";
-import { content_tag } from "../../../../routes.module.css";
-import {
-  color1_bg,
-  color2_bg,
-  color3_bg,
-  color4_bg,
-  color5_bg,
-  color6_bg,
-  color7_bg,
-  color8_bg,
-  color9_bg
-} from "../../../elements/Colors.module.css";
+  Card,
+  Button,
+  Table,
+  Content,
+  Modal
+} from "../../../elements/NotataComponents/";
 
-const colors = [
-  color1_bg,
-  color2_bg,
-  color3_bg,
-  color4_bg,
-  color5_bg,
-  color6_bg,
-  color7_bg,
-  color8_bg,
-  color9_bg
-];
+import { delete_bucket, delete_option } from "./EvaluationTemplate.module.css";
 
-function getColor(i) {
-  if (i >= colors.length) i = i - colors.length;
-  return colors[i];
-}
-
-function NameAndDescription({ data }) {
+function NameAndDescription({ template }) {
   const [mutate] = useMutation(evaluationTemplatePut);
-  const { name, description, id } = data;
+  const { name, description, id } = template;
+
+  const { register, handleSubmit, formState, setValue } = useForm();
+  const { isSubmitting } = formState;
+
+  useEffect(() => {
+    setValue("input.name", name);
+    setValue("input.description", description);
+  });
+
+  const onSubmit = async (data, event) => {
+    let variables = {
+      id: template.id,
+      ...data
+    };
+    try {
+      let res = await mutate({
+        variables,
+        optimisticResponse: {
+          __typename: "Mutation",
+          evaluationTemplatePut: {
+            ...template,
+            ...data.input
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <form className={focus_form}>
-      <div
-        style={{
-          marginTop: "50px",
-          textAlign: "center"
-        }}
-      >
-        <h1>
-          <TextAreaAutoHeight
-            placeholder='I.e. "Early stage evaluations"'
-            value={name}
-            onBlur={value => {
-              if (name === value) return;
-              let variables = {
-                id: id,
-                input: { name: value }
-              };
-              mutate({
-                variables,
-                optimisticResponse: {
-                  __typename: "Mutation",
-                  evaluationTemplatePut: {
-                    ...data,
-                    name: value
-                  }
-                }
-              });
-            }}
-          />
+    <form
+      className="focus_form"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ marginBottom: "20px" }}
+    >
+      <textarea
+        className="form_h1"
+        rows={1}
+        placeholder='I.e. "Early stage evaluations"'
+        name="input.name"
+        ref={register}
+        onBlur={handleSubmit(onSubmit)}
+      />
 
-          <div>
-            <span />
-          </div>
-        </h1>
-      </div>
-
-      <div
-        style={{
-          marginTop: "50px",
-          textAlign: "center"
-        }}
-      >
-        <p>
-          <TextAreaAutoHeight
-            placeholder='I.e. "Template for evaluating early stage startups"'
-            value={description}
-            onBlur={value => {
-              if (description === value) return;
-              let variables = {
-                id: id,
-                input: { description: value }
-              };
-              mutate({
-                variables,
-                optimisticResponse: {
-                  __typename: "Mutation",
-                  evaluationTemplatePut: {
-                    ...data,
-                    description: value
-                  }
-                }
-              });
-            }}
-          />
-          <div>
-            <span />
-          </div>
-        </p>
-      </div>
+      <textarea
+        className="form_p1"
+        rows={1}
+        placeholder='I.e. "Template for evaluating early stage startups"'
+        name="input.description"
+        ref={register}
+        onBlur={handleSubmit(onSubmit)}
+      />
     </form>
   );
 }
 
-function AddNewSection({ id, data }) {
+function AddNewSection({ id, setDone }) {
   const [mutate] = useMutation(evaluationTemplateSectionPut);
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   async function onSubmit(name, event) {
-    await mutate({
-      variables: {
-        templateId: id,
-        input: name
-      }
-    });
-
-    event.target.reset();
+    try {
+      let res = await mutate({
+        variables: {
+          templateId: id,
+          input: name
+        }
+      });
+      let item = res.data.evaluationTemplateSectionPut;
+      setDone(item.id);
+      // event.target.reset();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
-    <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
+    <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
       <div style={{ marginTop: "30px" }}>
         <input
           type="text"
           placeholder='I.e. "Team"'
+          autoComplete="off"
           ref={register({ required: true })}
           name="name"
         />
       </div>
 
-      <div style={{ marginTop: "30px" }}>
-        <input type="submit" value="Add new section" disabled={isSubmitting} />
-        {isSubmitting && <i className="fa fa-spinner fa-spin" />}
+      <div
+        style={{
+          marginTop: "5px",
+          textAlign: "right"
+        }}
+      >
+        <Button type="input" value="OK" loading={isSubmitting} />
       </div>
     </form>
   );
 }
 
-function Sections({ id, data }) {
+function Delete({ sectionId, template }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateSectionDelete, {
-    refetchQueries: [{ query: evaluationTemplateGet, variables: { id } }],
+    refetchQueries: [
+      { query: evaluationTemplateGet, variables: { id: template.id } }
+    ],
     awaitRefetchQueries: true
   });
 
-  return (
-    <div>
-      <div className={gridContainer} style={{ margin: "0px -30px" }}>
-        {(data.sections || []).map((section, i) => (
-          <div key={`section-${section.id}`} style={{ position: "relative" }}>
-            <BigButton
-              className={getColor(i)}
-              label={section.name}
-              subLabel={`${section.questions.length} ${
-                section.questions.length === 1 ? "question" : "questions"
-              } `}
-              link={`${evaluation_template}/${id}/${section.id}`}
-            />
-            {loading && <GhostLoader />}
-            <div
-              className={delete_option}
-              onClick={() => {
-                if (section.questions.length) {
-                  return window.alert(
-                    "You have to delete all the questions in a section before you can delete the section"
-                  );
-                }
-                let variables = {
-                  id: section.id
-                };
-                mutate({
-                  variables
-                });
-              }}
-            >
-              delete
-            </div>
-          </div>
-        ))}
-      </div>
+  let section = (template.sections || []).find(s => s.id === sectionId);
 
-      <AddNewSection data={data} id={id} />
+  return (
+    <div
+      onClick={() => {
+        if (loading) return;
+        if (section.questions.length) {
+          return window.alert(
+            "You have to delete all the questions in a section before you can delete the section"
+          );
+        }
+
+        let variables = { id: sectionId };
+        mutate({ variables });
+      }}
+    >
+      {(loading && <i className="fa fa-spinner fa-spin" />) || (
+        <i className="fal fa-trash-alt" />
+      )}
     </div>
   );
 }
 
-export default function EvaluationTemplate({ match }) {
+export default function EvaluationTemplate({ match, history }) {
+  const [showModal, setShowModal] = useState(false);
+
   const id = match.params.id;
   const [getData, { data, loading, error }] = useLazyQuery(
     evaluationTemplateGet
   );
+
+  let template = {};
+  if (data) {
+    template = data.evaluationTemplateGet;
+  }
 
   useEffect(() => {
     if (id && id !== "new") {
@@ -233,36 +187,83 @@ export default function EvaluationTemplate({ match }) {
   }, []);
 
   if (error) return <div>We are updating </div>;
-  if (!data || loading) return <GhostLoader />;
+
+  const columns = [
+    {
+      title: "",
+      dataIndex: "id",
+      key: "delete",
+      width: 20,
+      className: delete_bucket,
+      render: sectionId => <Delete sectionId={sectionId} template={template} />
+    },
+
+    {
+      title: "Section name",
+      dataIndex: "name",
+      key: "name",
+      render: name => <span>{name}</span>
+    },
+
+    {
+      title: "",
+      dataIndex: "id",
+      key: "section_button",
+      width: 30,
+      render: sectionId => {
+        return (
+          <Button
+            type="tiny_right"
+            onClick={() => {
+              let path = `${evaluation_template}/${id}/${sectionId}`;
+              history.push(path);
+            }}
+          />
+        );
+      }
+    }
+  ];
 
   return (
-    <div className={content_tag}>
-      <Saver />
-      <BreadCrumbs
-        list={[
-          {
-            val: "profile",
-            link: profile
-          },
-          {
-            val: "all templates",
-            link: `${evaluation_templates}`
-          },
-          {
-            val: "template overview",
-            link: `${evaluation_template}/${id}`
-          }
-        ]}
-      />
-      <div
-        className={classnames(container, small_container)}
-        style={{ maxWidth: "650px" }}
-      >
-        <div className={inner_container}>
-          <NameAndDescription data={data.evaluationTemplateGet || {}} />
-          <Sections data={data.evaluationTemplateGet} id={id} />
-        </div>
+    <Content maxWidth={1200}>
+      <NameAndDescription template={template} />
+
+      <Card style={{ paddingTop: "5px" }}>
+        <Table
+          dataSource={template.sections || []}
+          columns={columns}
+          pagination={false}
+          loading={loading.toString()}
+          diableHead={true}
+        />
+      </Card>
+
+      <div style={{ marginTop: "20px" }}>
+        <Button
+          onClick={() => setShowModal(true)}
+          type="right_arrow"
+          size="large"
+        >
+          Create New Section
+        </Button>
       </div>
-    </div>
+
+      {showModal && (
+        <Modal
+          title="New Evaluation Template"
+          close={() => setShowModal(false)}
+          disableFoot={true}
+        >
+          <AddNewSection
+            id={id}
+            //setDone={() => setShowModal(false)}
+            setDone={sectionId => {
+              let path = `${evaluation_template}/${id}/${sectionId}`;
+              history.push(path);
+            }}
+          />
+        </Modal>
+      )}
+    </Content>
   );
 }

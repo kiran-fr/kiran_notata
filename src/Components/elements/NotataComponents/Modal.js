@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classnames from "classnames";
 
 import {
@@ -15,7 +15,18 @@ import {
 
 import { Button } from "../NotataComponents/";
 
-export const Modal = ({ close, title, ...children }) => {
+export const Modal = ({ close, submit, title, disableFoot, ...children }) => {
+  function downHandler({ key }) {
+    key === "Escape" && close();
+  }
+
+  useEffect(() => {
+    window.addEventListener("keydown", downHandler);
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+    };
+  }, []);
+
   return (
     <div className={container}>
       <div className={ghost} />
@@ -32,15 +43,21 @@ export const Modal = ({ close, title, ...children }) => {
 
           <div className={main_content} {...children} />
 
-          <div className={modal_footer}>
-            <Button onClick={close} size="medium" buttonStyle="secondary">
-              Canncel
-            </Button>
+          {(close || submit) && !disableFoot && (
+            <div className={modal_footer}>
+              {close && (
+                <Button onClick={close} size="medium" buttonStyle="secondary">
+                  Canncel
+                </Button>
+              )}
 
-            <Button size="medium" type="right_arrow">
-              Save
-            </Button>
-          </div>
+              {submit && (
+                <Button onClick={submit} size="medium" type="right_arrow">
+                  OK
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

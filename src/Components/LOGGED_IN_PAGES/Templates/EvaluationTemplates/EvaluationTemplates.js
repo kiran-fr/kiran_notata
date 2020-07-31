@@ -14,8 +14,6 @@ import {
   Modal
 } from "../../../elements/NotataComponents/";
 
-import { standard_form } from "../../../elements/Style.module.css";
-
 import { delete_bucket } from "./EvaluationTemplates.module.css";
 
 import { accountGet } from "../../../../Apollo/Queries";
@@ -30,43 +28,6 @@ import {
   evaluation_template,
   evaluation_templates
 } from "../../../../routes";
-
-const CreateNewTemplate = () => {
-  const [mutate] = useMutation(evaluationTemplatePut, {
-    refetchQueries: [{ query: accountGet }],
-    awaitRefetchQueries: true
-  });
-
-  const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting } = formState;
-
-  const onSubmit = async (data, event) => {
-    try {
-      await mutate(data);
-      event.target.reset();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return (
-    <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
-      <div style={{ marginTop: "30px" }}>
-        <input
-          type="text"
-          placeholder={`I.e. "Early Stage Companies"`}
-          ref={register({ required: true })}
-          name="variables.input.name"
-        />
-      </div>
-
-      <div style={{ marginTop: "30px" }}>
-        <input type="submit" value="Create new template" />
-        {isSubmitting && <i className="fa fa-spinner fa-spin" />}
-      </div>
-    </form>
-  );
-};
 
 function Delete({ id, templates }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
@@ -96,7 +57,48 @@ function Delete({ id, templates }) {
   );
 }
 
-export default function EvaluationTemplates() {
+const CreateNewTemplate = ({ setDone }) => {
+  const [loading, setLoading] = useState(false);
+  const [mutate] = useMutation(evaluationTemplatePut);
+  const { register, handleSubmit, formState } = useForm();
+  const { isSubmitting } = formState;
+
+  const onSubmit = async (data, event) => {
+    try {
+      let res = await mutate(data);
+      let item = res.data.evaluationTemplatePut;
+      setDone(item.id);
+      event.target.reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
+      <div style={{ marginTop: "30px" }}>
+        <input
+          type="text"
+          placeholder={`I.e. "Early Stage Companies"`}
+          autoComplete="off"
+          ref={register({ required: true })}
+          name="variables.input.name"
+        />
+
+        <div
+          style={{
+            marginTop: "5px",
+            textAlign: "right"
+          }}
+        >
+          <Button type="input" value="OK" loading={isSubmitting} />
+        </div>
+      </div>
+    </form>
+  );
+};
+
+export default function EvaluationTemplates(props) {
   const [showModal, setShowModal] = useState(false);
 
   const { data, loading, error } = useQuery(accountGet);
@@ -141,7 +143,15 @@ export default function EvaluationTemplates() {
       dataIndex: "id",
       key: "id",
       width: 30,
-      render: id => <Button type="tiny_right" />
+      render: id => (
+        <Button
+          type="tiny_right"
+          onClick={() => {
+            let path = `${evaluation_template}/${id}`;
+            props.history.push(path);
+          }}
+        />
+      )
     }
   ];
 
@@ -149,16 +159,14 @@ export default function EvaluationTemplates() {
     <Content maxWidth={1200}>
       <h1>Evaluation templates</h1>
 
-      <Card>
+      <Card style={{ paddingTop: "5px" }}>
         <Table
           dataSource={templates || []}
           columns={columns}
-          pagination={false}
-          loading={loading}
+          loading={loading.toString()}
+          diableHead={true}
         />
       </Card>
-
-      <CreateNewTemplate />
 
       <div style={{ marginTop: "20px" }}>
         <Button
@@ -174,7 +182,15 @@ export default function EvaluationTemplates() {
         <Modal
           title="New Evaluation Template"
           close={() => setShowModal(false)}
-        />
+          disableFoot={true}
+        >
+          <CreateNewTemplate
+            setDone={id => {
+              let path = `${evaluation_template}/${id}`;
+              props.history.push(path);
+            }}
+          />
+        </Modal>
       )}
     </Content>
   );

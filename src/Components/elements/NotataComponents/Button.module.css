@@ -34,6 +34,7 @@
   background: white;
   border-radius: 100%;
   position: absolute;
+  text-align: center;
 
   width: 30px;
   height: 30px;
@@ -50,8 +51,10 @@
 }
 
 .loading_icon {
+  color: white;
   border-radius: 100%;
   position: absolute;
+  text-align: center;
   width: 35px;
   height: 35px;
   right: 6px;
@@ -172,8 +175,28 @@
   font-size: 12px;
 }
 
-/* Other button */
+/* Input button */
+.input_button_wrapper {
+  position: relative;
+  display: inline-block;
+}
 
+.input_button_icon {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  pointer-events: none;
+}
+
+.input_button_wrapper .medium_button .loading_icon i {
+  top: 6px;
+}
+
+.input_button_wrapper .medium_button .chevron_icon i {
+  top: 4px;
+}
+
+/* Other button */
 .tiny_right_button_container {
   cursor: pointer;
   border: none;

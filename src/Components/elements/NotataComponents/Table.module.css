@@ -40,6 +40,10 @@
   /*border-bottom: 1px solid var(--color-gray-pale);*/
 }
 
+.no_head tbody tr:first-child {
+  border-top: none;
+}
+
 @media screen and (max-width: 600px) {
   .responsive_sm {
     display: none;

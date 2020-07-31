@@ -7,11 +7,14 @@ import { useForm } from "react-hook-form";
 import { GhostLoader } from "../../../elements/GhostLoader";
 import BreadCrumbs from "../../../elements/BreadCrumbs";
 import Saver from "../../../elements/Saver";
-import NameAndDescription from "./NameAndDescriptionComp";
+// import NameAndDescription from "./NameAndDescriptionComp";
 import Question from "./QuestionComp";
 
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
-import { evaluationQuestionPut } from "../../../../Apollo/Mutations";
+import {
+  evaluationQuestionPut,
+  evaluationTemplateSectionPut
+} from "../../../../Apollo/Mutations";
 
 import {
   //   dashboard,
@@ -19,17 +22,82 @@ import {
   evaluation_template,
   evaluation_templates
 } from "../../../../routes";
+
 import {
-  container,
-  small_container,
-  center_container,
-  inner_container,
+  // container,
+  // small_container,
+  // center_container,
+  // inner_container,
   standard_form
 } from "../../../elements/Style.module.css";
+
 import { section_style } from "./EvaluationTemplateSection.module.css";
-import { color3 } from "../../../elements/Colors.module.css";
-import { content_tag } from "../../../../routes.module.css";
+// import { color3 } from "../../../elements/Colors.module.css";
+// import { content_tag } from "../../../../routes.module.css";
 import EvaluationTemplate from "../EvaluationTemplate/EvaluationTemplate";
+
+import {
+  Card,
+  Button,
+  Table,
+  Content,
+  Modal
+} from "../../../elements/NotataComponents/";
+
+function NameAndDescription({ template, section }) {
+  const [mutate] = useMutation(evaluationTemplateSectionPut);
+  const { name, description, id } = section;
+
+  const { register, handleSubmit, formState, setValue } = useForm();
+  const { isSubmitting } = formState;
+
+  useEffect(() => {
+    setValue("input.name", name);
+    setValue("input.description", description);
+  });
+
+  const onSubmit = async (data, event) => {
+    let variables = {
+      id: section.id,
+      ...data
+    };
+
+    console.log("variables", JSON.stringify(variables, null, 2));
+
+    try {
+      let res = await mutate({ variables });
+      console.log("res", res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <form
+      className="focus_form"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ marginBottom: "20px" }}
+    >
+      <textarea
+        className="form_h1"
+        rows={1}
+        placeholder='I.e. "Team"'
+        name="input.name"
+        ref={register}
+        onBlur={handleSubmit(onSubmit)}
+      />
+
+      <textarea
+        className="form_p1"
+        rows={1}
+        placeholder='I.e. "Section to evaluate team"'
+        name="input.description"
+        ref={register}
+        onBlur={handleSubmit(onSubmit)}
+      />
+    </form>
+  );
+}
 
 function NewQuestion({ templateId, sectionId }) {
   const [mutate] = useMutation(evaluationQuestionPut, {
@@ -89,6 +157,11 @@ export default function EvaluationTemplateSection({ match }) {
     evaluationTemplateGet
   );
 
+  let template = {};
+  if (data) {
+    template = data.evaluationTemplateGet;
+  }
+
   useEffect(() => {
     if (id !== "new") {
       getData({ variables: { id } });
@@ -96,69 +169,29 @@ export default function EvaluationTemplateSection({ match }) {
   }, []);
 
   if (error) console.log("error", error);
-  if (loading) return <GhostLoader />;
   if (error) return <div>We are updating </div>;
-
-  if (!data) {
-    return <div>no data</div>;
-  }
 
   let section = {};
   if (sectionId) {
-    section = (data.evaluationTemplateGet.sections || []).find(
-      s => s.id === sectionId
-    );
+    section = (template.sections || []).find(s => s.id === sectionId) || {};
   }
 
   return (
-    <div className={content_tag}>
-      <Saver />
+    <Content maxWidth={1200}>
+      <NameAndDescription template={template} section={section} />
 
-      <BreadCrumbs
-        list={[
-          {
-            val: "profile",
-            link: profile
-          },
-          {
-            val: "all templates",
-            link: `${evaluation_templates}`
-          },
-          {
-            val: "template overview",
-            link: `${evaluation_template}/${id}`
-          },
-          {
-            val: "template section",
-            link: `${evaluation_template}/${id}/${sectionId}`
-          }
-        ]}
-      />
-
-      <div
-        className={classnames(container, small_container)}
-        style={{ maxWidth: "650px" }}
-      >
-        <div className={inner_container}>
-          <NameAndDescription
-            template={data.evaluationTemplateGet}
-            section={section || {}}
-            id={id}
+      {(section.questions || []).map((question, i) => (
+        <Card>
+          <Question
+            key={`question-${i}-${question.id}`}
+            question={question || {}}
+            templateId={id}
             sectionId={sectionId}
           />
+        </Card>
+      ))}
 
-          {(section.questions || []).map((question, i) => (
-            <Question
-              key={`question-${i}-${question.id}`}
-              question={question || {}}
-              templateId={id}
-              sectionId={sectionId}
-            />
-          ))}
-
-          <NewQuestion templateId={id} sectionId={sectionId} />
-        </div>
-      </div>
-    </div>
+      <NewQuestion templateId={id} sectionId={sectionId} />
+    </Content>
   );
 }

@@ -7,7 +7,8 @@ import {
   responsive_sm,
   responsive_md,
   responsive_lg,
-  no_margin
+  no_margin,
+  no_head
 } from "./Table.module.css";
 
 let responsive_map = {
@@ -25,7 +26,13 @@ export const Table = ({
   noMargin
 }) => {
   return (
-    <table className={classnames(container, noMargin && no_margin)}>
+    <table
+      className={classnames(
+        container,
+        diableHead && no_head,
+        noMargin && no_margin
+      )}
+    >
       {!diableHead && (
         <thead>
           <tr>

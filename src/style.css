@@ -167,7 +167,120 @@ textarea {
 h1 {
   font-weight: var(--font-weight-regular);
   margin-top: 0;
+  font-size: 32px;
 }
+
+.notata_form {
+}
+
+.notata_form input[type="text"],
+.notata_form input[type="password"],
+.notata_form textarea {
+  border: 0;
+  outline: none;
+  /*font-size: 15px;*/
+  padding: 12px 20px;
+  text-align: left;
+  border-radius: 20px;
+  width: 100%;
+  margin-top: 5px;
+  color: var(--color-gray-dark);
+  background: var(--color-gray-pale);
+}
+
+.notata_form input[type="text"]::placeholder,
+.notata_form input[type="password"]::placeholder,
+.notata_form textarea::placeholder {
+  color: var(--color-gray-medium);
+}
+
+.focus_form {
+}
+
+.focus_form input[type="text"],
+.focus_form input[type="password"],
+.focus_form textarea {
+  border: 0;
+  outline: none;
+  /*font-size: 15px;*/
+  padding: 12px 20px;
+  text-align: left;
+  /*border-radius: 20px;*/
+  width: 100%;
+  margin-top: 5px;
+  color: var(--color-gray-dark);
+  /*background: var(--color-gray-pale);*/
+  border: 2px dashed var(--color-gray-light);
+  resize: none;
+}
+
+.focus_form input[type="text"]::placeholder,
+.focus_form input[type="password"]::placeholder,
+.focus_form textarea::placeholder {
+  color: var(--color-gray-medium);
+}
+
+.form_h1 {
+  font-size: 32px;
+}
+
+.form_p1 {
+}
+
+/*
+.standard_form input[type="text"],
+.standard_form input[type="password"],
+.standard_form textarea {
+  border: 0;
+  outline: none;
+  font-size: 18px;
+  padding: 15px;
+  text-align: left;
+  border-radius: 0;
+  color: #000;
+  width: 100%;
+  margin-top: 5px;
+  background: white;
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.standard_form input[type="text"]::placeholder,
+.standard_form input[type="password"]::placeholder,
+.standard_form textarea::placeholder {
+  color: #aaa;
+}
+
+.standard_form div {
+  position: relative;
+}
+
+.standard_form i {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  color: white;
+  font-size: 27px;
+}
+
+.submit_button,
+.standard_form input[type="submit"] {
+  border: none;
+  background: #37a737;
+  padding: 15px 24px;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 20px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  -webkit-appearance: none;
+}
+
+.submit_button:hover,
+.standard_form input[type="submit"]:hover {
+  background: #2c922c;
+}*/
 
 @media screen and (min-width: 900px) {
   .mobile_only {
