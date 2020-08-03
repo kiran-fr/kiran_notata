@@ -6,19 +6,15 @@ import {
   breadcrumb_link
 } from "./BreadCrumbs.module.css";
 
-const Component = ({ list }) => {
+export function BreadCrumbs({ list }) {
   return (
     <div className={breadcrumb_container}>
       {list.map((listItem, i) => (
-        <div className={breadcrumb_link}>
-          <i className="fal fa-caret-right" />
-          <Link key={`bc-${i}`} to={listItem.link}>
-            {listItem.val}
-          </Link>
+        <div className={breadcrumb_link} key={`crumb-${i}`}>
+          <i className="fas fa-caret-right" />
+          <Link to={listItem.link}>{listItem.val}</Link>
         </div>
       ))}
     </div>
   );
-};
-
-export default Component;
+}

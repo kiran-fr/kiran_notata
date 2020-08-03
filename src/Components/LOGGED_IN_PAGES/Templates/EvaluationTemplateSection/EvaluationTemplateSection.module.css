@@ -5,16 +5,6 @@
   text-align: center;
 }
 
-.delete_option {
-  position: absolute;
-  top: 7px;
-  right: 9px;
-  font-size: 10px;
-  color: #c80000;
-  cursor: pointer;
-  font-weight: 600;
-}
-
 .input_score {
   position: absolute;
   width: 100%;
@@ -31,4 +21,13 @@
 .input_score input {
   display: inline-block !important;
   width: 25px;
+}
+
+.delete_question {
+  position: absolute;
+  bottom: 7px;
+  left: 0px;
+  font-size: 10px;
+  color: var(--color-primary);
+  cursor: pointer;
 }

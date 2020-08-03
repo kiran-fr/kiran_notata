@@ -9,3 +9,12 @@
 
 .content {
 }
+
+.active_tag {
+  background: var(--color-primary);
+  color: white;
+}
+
+.button_tag {
+  cursor: pointer;
+}

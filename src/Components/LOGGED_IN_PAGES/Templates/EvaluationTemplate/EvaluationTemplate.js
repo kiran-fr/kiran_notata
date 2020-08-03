@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { GhostLoader } from "../../../elements/GhostLoader";
 import BigButton from "../../../elements/BigButton";
-import BreadCrumbs from "../../../elements/BreadCrumbs";
+
 import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
 // import Saver from "../../../elements/Saver";
 
@@ -26,7 +26,8 @@ import {
   Button,
   Table,
   Content,
-  Modal
+  Modal,
+  BreadCrumbs
 } from "../../../elements/NotataComponents/";
 
 import { delete_bucket, delete_option } from "./EvaluationTemplate.module.css";
@@ -200,9 +201,42 @@ export default function EvaluationTemplate({ match, history }) {
 
     {
       title: "Section name",
-      dataIndex: "name",
+      dataIndex: "id",
       key: "name",
-      render: name => <span>{name}</span>
+      render: id => {
+        let section = (template.sections || []).find(s => s.id === id) || {};
+        let questions = section.questions || [];
+
+        let possibleScore = 0;
+        for (let q of questions) {
+          if (q.inputType === "TRAFFIC_LIGHTS") {
+            possibleScore += 2;
+          }
+
+          if (q.inputType === "RADIO") {
+            let max = Math.max.apply(
+              Math,
+              q.options.map(o => o.score || 0)
+            );
+            possibleScore += max;
+          }
+
+          if (q.inputType === "CHECK") {
+            for (let o of q.options) {
+              possibleScore += o.score;
+            }
+          }
+        }
+
+        return (
+          <div>
+            <div>{section.name}</div>
+            <div style={{ opacity: 0.5, fontSize: "12px" }}>
+              {questions.length} questions - {possibleScore} points
+            </div>
+          </div>
+        );
+      }
     },
 
     {
@@ -225,45 +259,59 @@ export default function EvaluationTemplate({ match, history }) {
   ];
 
   return (
-    <Content maxWidth={1200}>
-      <NameAndDescription template={template} />
+    <>
+      <BreadCrumbs
+        list={[
+          {
+            val: "all templates",
+            link: `${evaluation_templates}`
+          },
+          {
+            val: `Template: ${template.name}`,
+            link: `${evaluation_template}/${id}`
+          }
+        ]}
+      />
+      <Content maxWidth={1200}>
+        <NameAndDescription template={template} />
 
-      <Card style={{ paddingTop: "5px" }}>
-        <Table
-          dataSource={template.sections || []}
-          columns={columns}
-          pagination={false}
-          loading={loading.toString()}
-          diableHead={true}
-        />
-      </Card>
-
-      <div style={{ marginTop: "20px" }}>
-        <Button
-          onClick={() => setShowModal(true)}
-          type="right_arrow"
-          size="large"
-        >
-          Create New Section
-        </Button>
-      </div>
-
-      {showModal && (
-        <Modal
-          title="New Evaluation Template"
-          close={() => setShowModal(false)}
-          disableFoot={true}
-        >
-          <AddNewSection
-            id={id}
-            //setDone={() => setShowModal(false)}
-            setDone={sectionId => {
-              let path = `${evaluation_template}/${id}/${sectionId}`;
-              history.push(path);
-            }}
+        <Card style={{ paddingTop: "5px" }}>
+          <Table
+            dataSource={template.sections || []}
+            columns={columns}
+            pagination={false}
+            loading={loading.toString()}
+            diableHead={true}
           />
-        </Modal>
-      )}
-    </Content>
+        </Card>
+
+        <div style={{ marginTop: "20px" }}>
+          <Button
+            onClick={() => setShowModal(true)}
+            type="right_arrow"
+            size="large"
+          >
+            Create New Section
+          </Button>
+        </div>
+
+        {showModal && (
+          <Modal
+            title="New Evaluation Template"
+            close={() => setShowModal(false)}
+            disableFoot={true}
+          >
+            <AddNewSection
+              id={id}
+              //setDone={() => setShowModal(false)}
+              setDone={sectionId => {
+                let path = `${evaluation_template}/${id}/${sectionId}`;
+                history.push(path);
+              }}
+            />
+          </Modal>
+        )}
+      </Content>
+    </>
   );
 }

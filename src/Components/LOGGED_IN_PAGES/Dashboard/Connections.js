@@ -6,6 +6,7 @@ import moment from "moment";
 // API
 import { useQuery } from "@apollo/client";
 import { connectionsGet } from "../../../Apollo/Queries";
+import { startup_page } from "../../../routes";
 
 // COMPONENTS
 import { GhostLoader } from "../../elements/GhostLoader";
@@ -17,7 +18,7 @@ import classnames from "classnames";
 
 import { list_star, average_score, date_style } from "./Connections.module.css";
 
-const ComposedComponent = ({ createdConnection }) => {
+export default function Connections({ history }) {
   const connectionsQuery = useQuery(connectionsGet);
 
   const loading = connectionsQuery.loading;
@@ -114,7 +115,14 @@ const ComposedComponent = ({ createdConnection }) => {
       dataIndex: "id",
       key: "id",
       width: 30,
-      render: id => <Button type="tiny_right" />
+      render: id => (
+        <Button
+          type="tiny_right"
+          onClick={() => {
+            history.push(`${startup_page}/${id}`);
+          }}
+        />
+      )
     }
   ];
 
@@ -128,6 +136,4 @@ const ComposedComponent = ({ createdConnection }) => {
       />
     </Card>
   );
-};
-
-export default ComposedComponent;
+}

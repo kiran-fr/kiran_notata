@@ -1,13 +1,11 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import validateEmail from "../../../utils/validateEmail";
 
-// REACT STUFF
-import { Auth } from "aws-amplify";
+import { useQuery, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
 
 // API STUFF
-import { adopt } from "react-adopt";
-import { Mutation, Query } from "@apollo/client/react/components";
 import {
   userGet,
   userInvitationsGet,
@@ -27,10 +25,6 @@ import { GhostLoader } from "../../elements/GhostLoader";
 import classnames from "classnames";
 
 import {
-  container,
-  small_container,
-  center_container,
-  inner_container,
   button_class,
   standard_form,
   submit_button
@@ -44,283 +38,421 @@ import {
   submit_reject_buttons,
   reject_button,
   submit_reject_buttons_container,
-  sub_header
+  sub_header,
+  delete_bucket,
+  external_invitation_head,
+  external_invitations,
+  external_invitation_each,
+  external_invitation_company,
+  external_invitation_name,
+  external_invitation_email,
+  external_invitation_buttons
 } from "./Team.module.css";
 
-class Comp extends React.Component {
-  state = { value: "" };
+import {
+  Content,
+  Card,
+  Table,
+  Button,
+  Modal
+} from "../../elements/NotataComponents/";
 
-  render() {
-    let {
-      user,
-      userInvitations,
+function Invite({ account, user }) {
+  const [showModal, setShowModal] = useState(false);
+  const [mutate, { loading }] = useMutation(accountInvite);
 
-      account,
-      accountInvitations
-    } = this.props;
-    let { members } = account;
+  const { register, handleSubmit, formState } = useForm();
+  const { isSubmitting } = formState;
 
-    let validEmail = validateEmail(this.state.value);
+  const onSubmit = async ({ email }, event) => {
+    if (!validateEmail(email)) return;
+    let variables = { email };
 
-    return (
-      <div>
-        {/* YOUR EXTERNAL INVITATIONS */}
+    try {
+      await mutate({
+        variables,
+        updateQueries: {
+          accountInvitationsGet: (prev, { mutationResult, queryVariables }) => {
+            return {
+              accountInvitationsGet: [
+                ...prev.accountInvitationsGet,
+                {
+                  email,
+                  createdAt: new Date().getTime(),
+                  __typename: "AccountInvitation",
+                  accountId: account.id,
+                  createdBy: user.cognitoIdentityId
+                }
+              ]
+            };
+          }
+        }
+      });
+      event.target.reset();
+      setShowModal(false);
+    } catch (error) {
+      return console.log("error", error);
+    }
+  };
 
-        {!!userInvitations.length && (
-          <Mutation mutation={userInvitationResponse}>
-            {(mutate, { data, error, loading }) => {
-              if (!error && !loading && data) {
-                window.location.reload();
-              }
-              return (
-                <div style={{ marginTop: "50px" }}>
-                  <h1>Team invitations</h1>
-                  {userInvitations.map((invitation, i) => {
-                    let {
-                      given_name,
-                      family_name,
-                      email
-                    } = invitation.createdByUser;
-                    return (
-                      <div key={`invitation-${invitation.email}`}>
-                        <div>
-                          You have been invited to a team by{" "}
-                          {`${given_name} ${family_name} (${email})`}!
-                        </div>
+  return (
+    <>
+      <Button
+        onClick={() => setShowModal(true)}
+        type="right_arrow"
+        size="large"
+      >
+        Invite new member
+      </Button>
 
-                        <div className={submit_reject_buttons_container}>
-                          <div
-                            className={classnames(
-                              submit_button,
-                              submit_reject_buttons
-                            )}
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  "Are you sure you want to leave your current team?"
-                                )
-                              ) {
-                                /* Do nothing */
-                              } else {
-                                return;
-                              }
+      {showModal && (
+        <Modal
+          title="Invite new member"
+          close={() => setShowModal(false)}
+          disableFoot={true}
+        >
+          <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
+            <div style={{ marginTop: "30px" }}>
+              <input
+                type="text"
+                placeholder={"name@email.com"}
+                autoComplete="off"
+                ref={register({ required: true })}
+                name="email"
+              />
 
-                              let variables = {
-                                accountId: invitation.accountId,
-                                response: "ACCEPT"
-                              };
-                              mutate({ variables });
-                            }}
-                          >
-                            Accept
-                          </div>
-
-                          <div
-                            className={classnames(
-                              submit_button,
-                              submit_reject_buttons,
-                              reject_button
-                            )}
-                            onClick={() => {
-                              let variables = {
-                                accountId: invitation.accountId,
-                                response: "REJECT"
-                              };
-                              mutate({ variables });
-                            }}
-                          >
-                            Reject
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            }}
-          </Mutation>
-        )}
-
-        <div style={{ marginTop: "50px" }}>
-          <h1>Your team</h1>
-
-          {members.length === 1 && (
-            <div>You are currently the only member of this team.</div>
-          )}
-
-          {members.length !== 1 && (
-            <div>
-              <div className={sub_header}>Team members</div>
-              {members.map((m, i) => (
-                <div key={`team_member-${m.email}`} className={member_of_team}>
-                  <span>
-                    <span>{m.email}</span>
-                    {m.email === user.email && <span> (you)</span>}
-                  </span>
-
-                  {
-                    // m.email !== user.email && (
-                    //   <i className="fas fa-minus-circle" />
-                    // )
-                  }
-                </div>
-              ))}
+              <div
+                style={{
+                  marginTop: "5px",
+                  textAlign: "right"
+                }}
+              >
+                <Button type="input" value="OK" loading={isSubmitting} />
+              </div>
             </div>
-          )}
+          </form>
+        </Modal>
+      )}
+    </>
+  );
+}
 
-          {/* ACCOUNT TEAM MANAGEMENT */}
+function PendingInvitations({ accountInvitations }) {
+  const [mutate, { loading }] = useMutation(accountInvite);
 
-          <Mutation mutation={accountInvite}>
-            {(mutate, { data, error, loading }) => {
-              return (
-                <div style={{ marginTop: "50px" }}>
-                  {!!accountInvitations.length && (
-                    <div className={sub_header}>Pending invitations</div>
-                  )}
+  const columns = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: email => <span>{email}</span>
+    },
 
-                  <div className={members_list}>
-                    {accountInvitations.map((invitation, i) => (
-                      <div
-                        key={`invitation-${invitation.email}`}
-                        className={member_of_team}
-                      >
-                        <span>{invitation.email}</span>
+    {
+      title: "",
+      dataIndex: "email",
+      key: "delete",
+      width: 20,
+      className: delete_bucket,
+      render: email => {
+        return (
+          <i
+            className="fal fa-trash-alt"
+            onClick={() => {
+              if (
+                window.confirm(
+                  `Are you sure you want to delete the team invitation for ${email}`
+                )
+              ) {
+                /* Do nothing */
+              } else {
+                return;
+              }
 
-                        <i
-                          className="fas fa-minus-circle"
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                `Are you sure you want to delete the team invitation for ${invitation.email}`
-                              )
-                            ) {
-                              /* Do nothing */
-                            } else {
-                              return;
-                            }
-
-                            let variables = { email: invitation.email };
-                            mutate({
-                              variables,
-                              update: (proxy, { data: { accountInvite } }) => {
-                                let data = proxy.readQuery({
-                                  query: accountInvitationsGet
-                                });
-                                data.accountInvitationsGet = accountInvite;
-                              }
-                            });
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <form
-                    className={standard_form}
-                    onSubmit={e => {
-                      e.preventDefault();
-                      if (!validEmail) return;
-                      let variables = { email: this.state.value };
-                      mutate({
-                        variables,
-                        update: (proxy, { data: { accountInvite } }) => {
-                          let data = proxy.readQuery({
-                            query: accountInvitationsGet
-                          });
-                          data.accountInvitationsGet = accountInvite;
-                          this.setState({ value: "" });
-                        }
-                      });
-                    }}
-                  >
-                    <input
-                      type="text"
-                      placeholder="Invite to team (email)"
-                      value={this.state.value}
-                      onChange={e => this.setState({ value: e.target.value })}
-                    />
-                    <div style={{ marginTop: "10px" }}>
-                      <input
-                        style={{
-                          opacity: validEmail ? 1 : 0.2,
-                          cursor: validEmail ? "pointer" : "default"
-                        }}
-                        type="submit"
-                        value="Invite"
-                      />
-                      {loading && <i className="fa fa-spinner fa-spin" />}
-                    </div>
-                  </form>
-                </div>
-              );
+              let variables = { email: email };
+              mutate({
+                variables,
+                updateQueries: {
+                  accountInvitationsGet: (
+                    prev,
+                    { mutationResult, queryVariables }
+                  ) => ({
+                    accountInvitationsGet: prev.accountInvitationsGet.filter(
+                      ai => ai.email !== email
+                    )
+                  })
+                }
+              });
             }}
-          </Mutation>
-        </div>
+          />
+        );
+      }
+    }
+  ];
+
+  return (
+    <Table
+      dataSource={accountInvitations}
+      columns={columns}
+      loading={loading.toString()}
+      diableHead={true}
+      pagination={false}
+    />
+  );
+}
+
+function TeamMembers({ user, account }) {
+  // TODO: Create mutation backend
+  // let [ mutate, { loading } ] = useMutation();
+  let members = account.members || [];
+
+  const columns = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: email => <span>{email}</span>
+    }
+
+    // {
+    //   title: "",
+    //   dataIndex: "email",
+    //   key: "delete",
+    //   width: 20,
+    //   className: delete_bucket,
+    //   render: email => {
+    //     return (
+    //       <i
+    //         className="fal fa-trash-alt"
+    //         onClick={() => {
+    //           if (
+    //             window.confirm(
+    //               `Are you sure you want to delete the team invitation for ${email}`
+    //             )
+    //           ) {
+    //             /* Do nothing */
+    //           } else {
+    //             return;
+    //           }
+
+    //           let variables = { email: email };
+    //           mutate({
+    //             variables,
+    //             update: (proxy, { data: { accountInvite } }) => {
+    //               let data = proxy.readQuery({
+    //                 query: accountInvitationsGet
+    //               });
+    //               data.accountInvitationsGet = accountInvite;
+    //             }
+    //           });
+    //         }}
+    //       />
+    //     )
+    //   }
+    // }
+  ];
+
+  if (members.length <= 1) {
+    return (
+      <div
+        style={{
+          padding: "10px",
+          color: "var(--color-orange)"
+        }}
+      >
+        You are currently the only member of this team.
       </div>
     );
   }
-}
-
-const ComposedComponent = ({ id, user }) => {
-  const Composed = adopt({
-    userQuery: ({ render }) => <Query query={userGet}>{render}</Query>,
-    userInvitationsQuery: ({ render }) => (
-      <Query query={userInvitationsGet}>{render}</Query>
-    ),
-    accountQuery: ({ render }) => <Query query={accountGet}>{render}</Query>,
-    accountInvitationsQuery: ({ render }) => (
-      <Query query={accountInvitationsGet}>{render}</Query>
-    )
-  });
 
   return (
-    <Composed>
-      {({
-        userQuery,
-        userInvitationsQuery,
-        accountQuery,
-        accountInvitationsQuery
-      }) => {
-        const loading =
-          userQuery.loading ||
-          userInvitationsQuery.loading ||
-          accountQuery.loading ||
-          accountInvitationsQuery.loading;
-
-        const error =
-          userQuery.error ||
-          userInvitationsQuery.error ||
-          accountQuery.error ||
-          accountInvitationsQuery.error;
-
-        if (error) return <div>We're updating</div>;
-
-        if (loading) return <GhostLoader />;
-
-        const user = userQuery.data.userGet;
-        const userInvitations = userInvitationsQuery.data.userInvitationsGet;
-
-        const account = accountQuery.data.accountGet;
-        const accountInvitations =
-          accountInvitationsQuery.data.accountInvitationsGet;
-
-        return (
-          <div
-            className={classnames(container, center_container, small_container)}
-          >
-            <div className={inner_container}>
-              <Comp
-                user={user}
-                userInvitations={userInvitations || []}
-                account={account}
-                accountInvitations={accountInvitations || []}
-              />
-            </div>
-          </div>
-        );
-      }}
-    </Composed>
+    <Table
+      dataSource={members}
+      columns={columns}
+      // loading={loading.toString()}
+      diableHead={true}
+      pagination={false}
+    />
   );
-};
+}
 
-export default ComposedComponent;
+function ExternalInvitations({ userInvitations }) {
+  const [loadReject, setLoadReject] = useState(false);
+  const [loadAccept, setLoadAccept] = useState(false);
+
+  const [mutate] = useMutation(userInvitationResponse);
+
+  return (
+    <div style={{ marginBottom: "20px", fontSize: "14px" }}>
+      <div className={external_invitation_head}>
+        <div style={{ fontSize: "16px", marginBottom: "10px" }}>
+          You have been invited to a team!
+        </div>
+
+        <div style={{ color: "var(--color-primary)" }}>
+          By accepting the invitation below you will abandon your team. If you
+          are the only person on your team, you will loose your data.
+        </div>
+      </div>
+
+      <div className={external_invitations}>
+        {userInvitations.map((invitation, i) => {
+          let {
+            given_name,
+            family_name,
+            company,
+            email
+          } = invitation.createdByUser;
+
+          return (
+            <div
+              className={external_invitation_each}
+              key={`invitation-${invitation.email}`}
+            >
+              <div className={external_invitation_company}>{company}</div>
+
+              <div className={external_invitation_name}>
+                {`${given_name} ${family_name}`}
+              </div>
+
+              <div className={external_invitation_email}>{email}</div>
+
+              <div className={external_invitation_buttons}>
+                <Button
+                  size="small"
+                  buttonStyle="secondary"
+                  loading={loadAccept}
+                  onClick={async () => {
+                    if (
+                      window.confirm(
+                        "Are you sure you want to leave your current team?"
+                      )
+                    ) {
+                      /* Do nothing */
+                    } else {
+                      return;
+                    }
+
+                    let variables = {
+                      accountId: invitation.accountId,
+                      response: "ACCEPT"
+                    };
+
+                    try {
+                      setLoadAccept(true);
+                      await mutate({ variables });
+                      window.location.reload();
+                    } catch (error) {
+                      console.log("error", error);
+                    }
+                    setLoadAccept(false);
+                  }}
+                >
+                  accept
+                </Button>
+
+                <Button
+                  size="small"
+                  loading={loadReject}
+                  onClick={async () => {
+                    let variables = {
+                      accountId: invitation.accountId,
+                      response: "REJECT"
+                    };
+                    try {
+                      setLoadReject(true);
+                      await mutate({
+                        variables,
+                        updateQueries: {
+                          userInvitationsGet: (
+                            prev,
+                            { mutationResult, queryVariables }
+                          ) => {
+                            return {
+                              userInvitationsGet: prev.userInvitationsGet.filter(
+                                ui => ui.accountId !== invitation.accountId
+                              )
+                            };
+                          }
+                        }
+                      });
+                    } catch (error) {
+                      console.log("error", error);
+                    }
+                    setLoadReject(false);
+                  }}
+                >
+                  reject
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default function Team() {
+  const userQuery = useQuery(userGet);
+  let user = {};
+  if (!userQuery.loading && !userQuery.error && userQuery.data) {
+    user = userQuery.data.userGet;
+  }
+
+  const accountQuery = useQuery(accountGet);
+  let account = {};
+  if (!accountQuery.loading && !accountQuery.error && accountQuery.data) {
+    account = accountQuery.data.accountGet;
+  }
+
+  const accountInvitationsQuery = useQuery(accountInvitationsGet);
+  let accountInvitations = [];
+  if (
+    !accountInvitationsQuery.loading &&
+    !accountInvitationsQuery.error &&
+    accountInvitationsQuery.data
+  ) {
+    accountInvitations = accountInvitationsQuery.data.accountInvitationsGet;
+  }
+
+  const userInvitationsQuery = useQuery(userInvitationsGet);
+  let userInvitations = [];
+  if (
+    !userInvitationsQuery.loading &&
+    !userInvitationsQuery.error &&
+    userInvitationsQuery.data
+  ) {
+    userInvitations = userInvitationsQuery.data.userInvitationsGet;
+  }
+
+  return (
+    <Content maxWidth={600}>
+      <div style={{ marginBottom: "40px" }}>
+        <h1>Your team</h1>
+      </div>
+
+      {!!userInvitations.length && (
+        <Card>
+          <ExternalInvitations userInvitations={userInvitations} />
+        </Card>
+      )}
+
+      <Card style={{ paddingTop: "5px" }} label="Team members">
+        <TeamMembers user={user} account={account} />
+      </Card>
+
+      {!!accountInvitations.length && (
+        <Card style={{ paddingTop: "5px" }} label="Pending invitations">
+          <PendingInvitations accountInvitations={accountInvitations} />
+        </Card>
+      )}
+
+      <Invite
+        user={user}
+        account={account}
+        accountInvitations={accountInvitations}
+      />
+    </Content>
+  );
+}

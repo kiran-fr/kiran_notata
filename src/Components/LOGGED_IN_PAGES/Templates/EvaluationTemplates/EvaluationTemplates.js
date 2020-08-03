@@ -4,14 +4,13 @@ import { useQuery, useMutation } from "@apollo/client";
 import classnames from "classnames";
 import { useForm } from "react-hook-form";
 
-import BreadCrumbs from "../../../elements/BreadCrumbs";
-
 import {
   Card,
   Button,
   Table,
   Content,
-  Modal
+  Modal,
+  BreadCrumbs
 } from "../../../elements/NotataComponents/";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
@@ -129,10 +128,10 @@ export default function EvaluationTemplates(props) {
         let { name, sections } = template;
         return (
           <span>
-            <span>{name} </span>
-            <span style={{ opacity: 0.5 }}>
-              ({(sections || []).length} sections)
-            </span>
+            <div>{name}</div>
+            <div style={{ opacity: 0.5, fontSize: "12px" }}>
+              {(sections || []).length} sections
+            </div>
           </span>
         );
       }
@@ -156,42 +155,52 @@ export default function EvaluationTemplates(props) {
   ];
 
   return (
-    <Content maxWidth={1200}>
-      <h1>Evaluation templates</h1>
+    <>
+      <BreadCrumbs
+        list={[
+          {
+            val: "all templates",
+            link: `${evaluation_templates}`
+          }
+        ]}
+      />
+      <Content maxWidth={1200}>
+        <h1>Evaluation templates</h1>
 
-      <Card style={{ paddingTop: "5px" }}>
-        <Table
-          dataSource={templates || []}
-          columns={columns}
-          loading={loading.toString()}
-          diableHead={true}
-        />
-      </Card>
-
-      <div style={{ marginTop: "20px" }}>
-        <Button
-          onClick={() => setShowModal(true)}
-          type="right_arrow"
-          size="large"
-        >
-          New Evaluation Template
-        </Button>
-      </div>
-
-      {showModal && (
-        <Modal
-          title="New Evaluation Template"
-          close={() => setShowModal(false)}
-          disableFoot={true}
-        >
-          <CreateNewTemplate
-            setDone={id => {
-              let path = `${evaluation_template}/${id}`;
-              props.history.push(path);
-            }}
+        <Card style={{ paddingTop: "5px" }}>
+          <Table
+            dataSource={templates || []}
+            columns={columns}
+            loading={loading.toString()}
+            diableHead={true}
           />
-        </Modal>
-      )}
-    </Content>
+        </Card>
+
+        <div style={{ marginTop: "20px" }}>
+          <Button
+            onClick={() => setShowModal(true)}
+            type="right_arrow"
+            size="large"
+          >
+            New Evaluation Template
+          </Button>
+        </div>
+
+        {showModal && (
+          <Modal
+            title="New Evaluation Template"
+            close={() => setShowModal(false)}
+            disableFoot={true}
+          >
+            <CreateNewTemplate
+              setDone={id => {
+                let path = `${evaluation_template}/${id}`;
+                props.history.push(path);
+              }}
+            />
+          </Modal>
+        )}
+      </Content>
+    </>
   );
 }

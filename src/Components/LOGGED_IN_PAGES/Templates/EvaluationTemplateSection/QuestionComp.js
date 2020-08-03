@@ -1,135 +1,116 @@
-import React from "react";
-import { omit } from "lodash";
-import classnames from "classnames";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 
-import DeleteQuestion from "./DeleteQuestionComp";
-import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
-import InputTrafficLights from "../../../elements/InputTrafficLights";
-import InputNumeric from "../../../elements/InputNumeric";
+import { omit } from "lodash";
+import classnames from "classnames";
 
-import { evaluationQuestionPut } from "../../../../Apollo/Mutations";
+// import DeleteQuestion from "./DeleteQuestionComp";
+// import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
+// import InputNumeric from "../../../elements/InputNumeric";
+
+import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 
 import {
-  focus_form,
-  tag_list_small,
-  active_tag,
-  tag
-} from "../../../elements/Style.module.css";
+  evaluationQuestionPut,
+  evaluationQuestionDelete
+} from "../../../../Apollo/Mutations";
+
+import { delete_question } from "./EvaluationTemplateSection.module.css";
+
 import {
-  section_style,
-  delete_option,
-  input_score
-} from "./EvaluationTemplateSection.module.css";
+  tag_list,
+  question_footer,
+  hr,
+  list_order,
+  list_order_button,
+  order_up,
+  order_down,
+  option_dashed_container,
+  option_radio_check,
+  option_name,
+  option_right_container,
+  option_score_container,
+  option_delete_container,
+  option_score_toggler,
+  option_score_toggle_up,
+  option_score_toggle_down,
+  option_traffic_light_points,
+  option_save
+} from "./QuestionComp.module.css";
+
 import {
-  gridContainer,
-  gridItem,
-  gridDescription
-} from "../../../elements/Grid.module.css";
-import { color1 } from "../../../elements/Colors.module.css";
+  Tag,
+  SimpleInputForm,
+  InputTrafficLight
+} from "../../../elements/NotataComponents/";
 
 const inputMap = [
   {
-    label: "Multiple choice",
+    label: "multiple choice",
     val: "CHECK"
   },
   {
-    label: "Single answer",
+    label: "single answer",
     val: "RADIO"
   },
   {
-    label: "Traffic lights",
+    label: "traffic lights",
     val: "TRAFFIC_LIGHTS"
   },
   {
-    label: "Free text",
+    label: "free text",
     val: "INPUT_TEXT"
+  },
+  {
+    label: "text lines",
+    val: "INPUT_MUTLIPLE_LINES"
   }
 ];
 
 function QuestionNameAndDescription({ templateId, sectionId, question }) {
   const [mutate] = useMutation(evaluationQuestionPut);
+  const { register, handleSubmit, formState, setValue } = useForm();
+  const { isSubmitting } = formState;
+
+  const { name, description, id } = question;
+
+  useEffect(() => {
+    setValue("input.name", name);
+    setValue("input.description", description);
+  }, []);
+
+  const onSubmit = async (data, event) => {
+    let variables = {
+      id: question.id,
+      ...data
+    };
+
+    try {
+      let res = await mutate({ variables });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <form onSubmit={e => e.preventDefault()} className={focus_form}>
-      <div
-        style={{
-          marginTop: "50px",
-          textAlign: "center"
-        }}
-      >
-        <div style={{ position: "relative" }}>
-          <DeleteQuestion
-            templateId={templateId}
-            sectionId={sectionId}
-            question={question}
-          />
+    <form className="focus_form" onSubmit={handleSubmit(onSubmit)}>
+      <textarea
+        className="form_h2"
+        placeholder="Question name"
+        rows={1}
+        name="input.name"
+        ref={register}
+        onBlur={handleSubmit(onSubmit)}
+      />
 
-          <h2>
-            <TextAreaAutoHeight
-              placeholder="Question name"
-              value={question.name}
-              onBlur={value => {
-                if (question.name === value) return;
-
-                let variables = {
-                  id: question.id,
-                  input: { name: value }
-                };
-
-                mutate({
-                  variables,
-                  optimisticResponse: {
-                    __typename: "Mutation",
-                    evaluationQuestionPut: {
-                      ...question,
-                      name: value
-                    }
-                  }
-                });
-              }}
-            />
-
-            <span />
-          </h2>
-        </div>
-      </div>
-
-      <div
-        style={{
-          marginTop: "50px",
-          textAlign: "center"
-        }}
-      >
-        <p className={gridDescription} style={{ fontSize: "16px" }}>
-          <TextAreaAutoHeight
-            placeholder='I.e. "Template for evaluating early stage startups"'
-            value={question.description}
-            onBlur={value => {
-              if (value === question.description) return;
-
-              let variables = {
-                id: question.id,
-                input: {
-                  description: value
-                }
-              };
-
-              mutate({
-                variables,
-                optimisticResponse: {
-                  __typename: "Mutation",
-                  evaluationQuestionPut: {
-                    ...question,
-                    description: value
-                  }
-                }
-              });
-            }}
-          />
-          <span />
-        </p>
-      </div>
+      <textarea
+        className="form_p2"
+        placeholder='I.e. "Template for evaluating early stage startups"'
+        rows={1}
+        name="input.description"
+        onBlur={handleSubmit(onSubmit)}
+      />
     </form>
   );
 }
@@ -138,30 +119,19 @@ function ToggleInputType({ question }) {
   const [mutate] = useMutation(evaluationQuestionPut);
 
   return (
-    <div
-      className={tag_list_small}
-      style={{
-        marginBottom: "15px",
-        top: "-10px",
-        position: "relative"
-      }}
-    >
+    <div className={tag_list}>
       {inputMap.map((inp, i) => {
         return (
-          <div
-            className={classnames(
-              tag,
-              question.inputType === inp.val && active_tag
-            )}
-            key={`inputMap-${question.id}-${i}`}
+          <Tag
+            key={`toggle-${i}`}
+            active={question.inputType === inp.val}
+            isButton={true}
             onClick={() => {
               let inputType = inp.val;
-
               let variables = {
                 id: question.id,
                 input: { inputType }
               };
-
               mutate({
                 variables,
                 optimisticResponse: {
@@ -175,7 +145,7 @@ function ToggleInputType({ question }) {
             }}
           >
             {inp.label}
-          </div>
+          </Tag>
         );
       })}
     </div>
@@ -185,19 +155,22 @@ function ToggleInputType({ question }) {
 function TrafficLightOption() {
   return (
     <div>
-      <div className={gridContainer}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         {["red", "yellow", "green"].map((color, i) => (
-          <InputTrafficLights
-            key={`traffic-${color}-${i}`}
-            active={false}
-            onClick={() => {}}
-            color={color}
-          />
+          <div>
+            <InputTrafficLight
+              key={`traffic-${color}-${i}`}
+              active={false}
+              onClick={() => {}}
+              color={color}
+            />
+            <div className={option_traffic_light_points}>
+              {color === "red" && <span>0 points</span>}
+              {color === "yellow" && <span>1 points</span>}
+              {color === "green" && <span>2 points</span>}
+            </div>
+          </div>
         ))}
-      </div>
-
-      <div className={color1} style={{ marginTop: "15px" }}>
-        Red = 0 points. Yellow = 1 point. Green = 2 points.
       </div>
     </div>
   );
@@ -205,84 +178,130 @@ function TrafficLightOption() {
 
 function InputTextOption() {
   return (
-    <div
-      className={color1}
-      style={{
-        marginTop: "15px",
-        lineHeight: "2",
-        marginTop: "35px"
-      }}
-    >
-      All questions will by default have the option for additional comments,
-      regardless of it being multiple choice, single answer or traffic lights.
-      By choosing the "free text" option you simply remove the possibility of
-      giving an input score while keeping the comments field.
-    </div>
+    <form className="notata_form" onSubmit={e => e.preventDefault()}>
+      <textarea
+        rows={7}
+        style={{ resize: "none" }}
+        placeholder="Say something..."
+      />
+    </form>
   );
 }
 
-function CheckOrRadioOption({ question }) {
+function InputTextLinesOption() {
+  return (
+    <form className="notata_form" onSubmit={e => e.preventDefault()}>
+      <div style={{ position: "relative" }}>
+        <input
+          style={{
+            color: "var(--color-primary)",
+            marginBottom: "10px"
+          }}
+          type="text"
+          value="https://notata.io"
+          onChange={() => {
+            /* do nothing */
+          }}
+        />
+        <i
+          className="fal fa-times"
+          style={{
+            position: "absolute",
+            right: "12px",
+            fontSize: "28px",
+            color: "var(--color-gray-light)",
+            top: "11px"
+          }}
+        />
+      </div>
+
+      <div style={{ position: "relative" }}>
+        <input
+          type="text"
+          placeholder="New line..."
+          value=""
+          onChange={() => {
+            /* do nothing */
+          }}
+        />
+        <i
+          className="fas fa-plus-circle"
+          style={{
+            position: "absolute",
+            right: "4px",
+            fontSize: "30px",
+            color: "var(--color-gray-light)",
+            top: "10px"
+          }}
+        />
+      </div>
+    </form>
+  );
+}
+
+function RadioOption({ question, inputType }) {
   const [mutate] = useMutation(evaluationQuestionPut);
 
   return (
-    <form onSubmit={e => e.preventDefault()} className={focus_form}>
-      <div className={gridContainer}>
-        {question.options.map((option, i) => {
-          return (
-            <div key={`option-${i}`} className={classnames(gridItem, color1)}>
-              <TextAreaAutoHeight
-                placeholder='I.e. "Template for evaluating early stage startups"'
-                value={option.val}
-                onBlur={value => {
-                  // let newVal = option.val;
-                  let oldVal = (question.options[i] || {}).val;
-                  if (value === oldVal) return;
+    <div>
+      {question.options.map((option, i) => {
+        return (
+          <div key={`option-${i}`} className={option_dashed_container}>
+            <input
+              className={option_radio_check}
+              type={inputType.toLowerCase()}
+              name={`option-${i}`}
+              disabled
+            />
 
-                  let variables = {
-                    id: question.id,
-                    input: {
-                      editOption: {
-                        ...omit(option, ["__typename"]),
-                        val: value
-                      }
+            <SimpleInputForm
+              placeholder="option name..."
+              val={option.val}
+              submit={({ input_val }) => {
+                let oldVal = (question.options[i] || {}).val;
+                if (input_val === oldVal) return;
+
+                let variables = {
+                  id: question.id,
+                  input: {
+                    editOption: {
+                      ...omit(option, ["__typename"]),
+                      val: input_val
                     }
-                  };
+                  }
+                };
 
-                  let optimisticOptions = question.options.map(o =>
-                    o.sid !== option.sid ? o : { ...o, val: value }
-                  );
+                let optimisticOptions = question.options.map(o =>
+                  o.sid !== option.sid ? o : { ...o, val: input_val }
+                );
 
-                  mutate({
-                    variables,
-                    optimisticResponse: {
-                      __typename: "Mutation",
-                      evaluationQuestionPut: {
-                        ...question,
-                        options: optimisticOptions
-                      }
+                mutate({
+                  variables,
+                  optimisticResponse: {
+                    __typename: "Mutation",
+                    evaluationQuestionPut: {
+                      ...question,
+                      options: optimisticOptions
                     }
-                  });
-                }}
-              />
+                  }
+                });
+              }}
+            />
 
-              <div className={input_score}>
-                <label>
-                  score:
-                  <InputNumeric
-                    value={(option.score || 0).toString()}
-                    className="no-class"
-                    placeholder="0"
-                    selectOnFocus
-                    onBlur={value => {
-                      if (!option.sid) return;
-                      if (value === option.score) return;
+            <div className={option_right_container}>
+              <div className={option_score_container}>
+                <div className={option_score_toggler}>
+                  <div
+                    className={option_score_toggle_up}
+                    onClick={() => {
+                      let score = option.score + 1;
 
                       let variables = {
                         id: question.id,
                         input: {
                           editOption: {
                             ...omit(option, ["__typename"]),
-                            score: value
+                            score
                           }
                         }
                       };
@@ -294,18 +313,54 @@ function CheckOrRadioOption({ question }) {
                           evaluationQuestionPut: {
                             ...question,
                             options: question.options.map(o =>
-                              o.sid === option.sid ? { ...o, score: value } : o
+                              o.sid === option.sid ? { ...o, score } : o
                             )
                           }
                         }
                       });
                     }}
-                  />
-                </label>
+                  >
+                    <i className="fas fa-caret-up" />
+                  </div>
+                  <div
+                    className={option_score_toggle_down}
+                    onClick={() => {
+                      let score = option.score - 1;
+
+                      let variables = {
+                        id: question.id,
+                        input: {
+                          editOption: {
+                            ...omit(option, ["__typename"]),
+                            score
+                          }
+                        }
+                      };
+
+                      mutate({
+                        variables,
+                        optimisticResponse: {
+                          __typename: "Mutation",
+                          evaluationQuestionPut: {
+                            ...question,
+                            options: question.options.map(o =>
+                              o.sid === option.sid ? { ...o, score } : o
+                            )
+                          }
+                        }
+                      });
+                    }}
+                  >
+                    <i className="fas fa-caret-down" />
+                  </div>
+                </div>
+
+                <span>points:</span>
+                <span style={{ paddingLeft: "5px" }}>{option.score || 0}</span>
               </div>
 
               <div
-                className={delete_option}
+                className={option_delete_container}
                 onClick={() => {
                   let variables = {
                     id: question.id,
@@ -327,77 +382,166 @@ function CheckOrRadioOption({ question }) {
                   });
                 }}
               >
-                delete
+                <i className="fal fa-trash-alt" />
               </div>
             </div>
-          );
-        })}
-
-        {
-          <div
-            className={classnames(gridItem, color1)}
-            onClick={() => {
-              let variables = {
-                id: question.id,
-                input: {
-                  newOptions: [
-                    {
-                      val: "New option",
-                      score: 0,
-                      index: question.options.length + 1
-                    }
-                  ]
-                }
-              };
-
-              let optimisticOptions = [
-                ...question.options,
-                {
-                  val: "New option",
-                  score: 0,
-                  index: question.options.length + 1,
-                  sid: "temp",
-                  __typename: "EvaluationQuestionOption"
-                }
-              ];
-
-              mutate({
-                variables,
-                optimisticResponse: {
-                  __typename: "Mutation",
-                  evaluationQuestionPut: {
-                    ...question,
-                    options: optimisticOptions
-                  }
-                }
-              });
-            }}
-          >
-            <i className="fal fa-plus-circle" style={{ fontSize: "90px" }} />
-            <div className={input_score}>add new option</div>
           </div>
-        }
+        );
+      })}
+
+      <div className={option_dashed_container}>
+        <input
+          className={option_radio_check}
+          type={inputType.toLowerCase()}
+          name="new_option"
+          disabled
+        />
+
+        <SimpleInputForm
+          placeholder="Add new option..."
+          val=""
+          submit={({ input_val }) => {
+            if (!input_val.length) return;
+
+            let variables = {
+              id: question.id,
+              input: {
+                newOptions: [
+                  {
+                    val: input_val
+                  }
+                ]
+              }
+            };
+
+            let optimisticOptions = [
+              ...question.options,
+              {
+                sid: "tmp_sid",
+                val: input_val,
+                score: 0,
+                __typename: "EvaluationQuestionOption"
+              }
+            ];
+
+            mutate({
+              variables,
+              optimisticResponse: {
+                __typename: "Mutation",
+                evaluationQuestionPut: {
+                  ...question,
+                  options: optimisticOptions
+                }
+              }
+            });
+          }}
+        />
+
+        <div className={option_save}>add</div>
       </div>
-    </form>
+    </div>
+  );
+}
+
+function DeleteQuestion({ templateId, sectionId, question }) {
+  const [mutate] = useMutation(evaluationQuestionDelete);
+
+  return (
+    <div
+      className={delete_question}
+      onClick={() => {
+        if (
+          ["RADIO", "CHECK"].some(s => s === question.inputType) &&
+          question.options.length
+        ) {
+          return window.alert(
+            "You have to delete the options below before you can delete this question:\n\n" +
+              question.options.map(o => `"${o.val}"`).join(", ")
+          );
+        }
+        if (
+          window.confirm(
+            "Are you sure you want to delte this question permanently?"
+          )
+        ) {
+          let variables = { id: question.id };
+          mutate({
+            variables,
+            //            update: (proxy, { data: { evaluationQuestionDelete } }) => {
+            //              let data = proxy.readQuery({
+            //                query: evaluationTemplateGet,
+            //                variables: { id: templateId }
+            //              });
+            //              let sections = data.evaluationTemplateGet.sections;
+            //              data.evaluationTemplateGet.sections = sections.map(s => {
+            //                if (s.id !== sectionId) return s;
+            //                return {
+            //                  ...s,
+            //                  questions: s.questions.filter(q => q.id !== question.id)
+            //                };
+            //              });
+            //            },
+            refetchQueries: [
+              {
+                query: evaluationTemplateGet,
+                variables: { id: templateId }
+              }
+            ]
+          });
+        }
+      }}
+    >
+      delete question
+    </div>
   );
 }
 
 export default function Question({ templateId, sectionId, question }) {
   return (
-    <div className={section_style}>
+    <div>
       <QuestionNameAndDescription
         templateId={templateId}
         sectionId={sectionId}
         question={question}
       />
 
+      <hr className={hr} />
+
       <ToggleInputType question={question} />
 
-      {question.inputType === "INPUT_TEXT" && <InputTextOption />}
-      {question.inputType === "TRAFFIC_LIGHTS" && <TrafficLightOption />}
-      {["CHECK", "RADIO"].some(type => type === question.inputType) && (
-        <CheckOrRadioOption question={question || {}} />
+      <hr className={hr} />
+
+      {(question.inputType === "RADIO" || question.inputType === "CHECK") && (
+        <RadioOption question={question || {}} inputType={question.inputType} />
       )}
+
+      {question.inputType === "TRAFFIC_LIGHTS" && <TrafficLightOption />}
+
+      {question.inputType === "INPUT_TEXT" && <InputTextOption />}
+
+      {question.inputType === "INPUT_MUTLIPLE_LINES" && (
+        <InputTextLinesOption />
+      )}
+
+      <hr className={hr} />
+
+      <div className={question_footer}>
+        <DeleteQuestion
+          templateId={templateId}
+          sectionId={sectionId}
+          question={question}
+        />
+
+        <div className={list_order}>
+          <div className={classnames(list_order_button, order_up)}>
+            <i className="fas fa-arrow-alt-circle-up" />
+          </div>
+
+          <div className={classnames(list_order_button, order_down)}>
+            <i className="fas fa-arrow-alt-circle-down" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

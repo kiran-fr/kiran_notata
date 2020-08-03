@@ -21,13 +21,16 @@ import {
   settings,
   team,
   evaluation_templates,
-  evaluation_template
+  evaluation_template,
+  startup_page,
+  pre_profile
 } from "../../routes";
 
 // Landing page / list
 import Dashboard from "./Dashboard/DashboardPage";
 
 import Profile from "./Profile/Profile";
+
 import Report from "./Report/Report";
 import Inbox from "./Inbox/Inbox";
 import Activities from "./Activities/Activities";
@@ -35,6 +38,8 @@ import Tags from "./Tags/Tags";
 import Groups from "./Groups/Groups";
 import Settings from "./Settings/Settings";
 import Team from "./Team/Team";
+
+import StartupPage from "./StartupPage/StartupPage";
 
 // Evaluation templates
 import EvaluationTemplates from "./Templates/EvaluationTemplates/EvaluationTemplates";
@@ -77,16 +82,20 @@ export const RouterComponent = ({ history }) => {
           path={evaluation_templates}
           component={EvaluationTemplates}
         />
+
         <Route
           exact
           path={`${evaluation_template}/:id`}
           component={EvaluationTemplate}
         />
+
         <Route
           exact
           path={`${evaluation_template}/:id/:sectionId`}
           component={EvaluationTemplateSection}
         />
+
+        <Route exact path={`${startup_page}/:id`} component={StartupPage} />
 
         <Route exact path={team} component={Team} />
 
@@ -116,7 +125,7 @@ const WrapperComponent = ({ ...props }) => {
   if (!loading && !error && data) {
     let user = data.userGet || {};
     if (user.email === null) {
-      return <Redirect to={profile} />;
+      return <Redirect to={pre_profile} />;
     }
   }
 

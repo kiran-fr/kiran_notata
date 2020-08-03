@@ -1,13 +1,10 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 
 // REACT STUFF
 import { Auth } from "aws-amplify";
-import { Redirect, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 // API STUFF
-import { adopt } from "react-adopt";
-// import { Mutation, Query } from "@apollo/client/react/components";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { accountGet, userGet } from "../../../Apollo/Queries";
@@ -29,347 +26,273 @@ import classnames from "classnames";
 import validateEmail from "../../../utils/validateEmail";
 import validatePhoneNumber from "../../../utils/validatePhoneNumber";
 
-import { Content } from "../../elements/NotataComponents/";
+import { omit } from "lodash";
 
-// STYLES
-// import {
-//   container,
-//   small_container,
-//   center_container,
-//   inner_container,
-//   button_class,
-//   standard_form
-// } from "../../../elements/Style.module.css";
+import { Content, Card, Button } from "../../elements/NotataComponents/";
 
-// import { sub_header } from "./Profile.module.css";
+import {
+  verified_phone_number,
+  get_new_code,
+  new_code,
+  verify_title,
+  success_message
+} from "./Profile.module.css";
 
-// class VerifyPhoneNumberComp extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       verification_code: "",
-//       error: false,
-//       resend: false,
-//       loading: false
-//     };
-//   }
+function VerifyPhoneNumberComp({ phoneVerified }) {
+  const [resend, setResend] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-//   render() {
-//     return (
-//       <div
-//         style={{
-//           marginTop: "50px",
-//           marginBottom: "50px",
-//           borderBottom: "1px solid rgb(238, 238, 238)",
-//           paddingBottom: "30px"
-//         }}
-//       >
-//         <form
-//           onSubmit={e => {
-//             e.preventDefault();
-//             if (this.state.loading) return;
-//             this.setState({ loading: true });
-//             Auth.verifyCurrentUserAttributeSubmit(
-//               "phone_number",
-//               this.state.verification_code
-//             )
-//               .then(() => {
-//                 this.props.confirmed();
-//                 this.setState({ loading: false });
-//               })
-//               .catch(error => this.setState({ error, loading: false }));
-//           }}
-//         >
-//           <div>
-//             <div className={sub_header}>Please verify your phone number</div>
+  const { register, handleSubmit, formState, getValues, setValue } = useForm();
 
-//             {this.state.error && (
-//               <div style={{ color: "#c80000" }}>
-//                 Something went wrong. Try again, or get a new code.
-//               </div>
-//             )}
+  const { isSubmitting } = formState;
 
-//             <input
-//               placeholder="Verification code"
-//               type="text"
-//               value={this.state.verification_code}
-//               onChange={e => {
-//                 this.setState({ verification_code: e.target.value });
-//               }}
-//             />
+  const onSubmit = async (data, event) => {
+    try {
+      await Auth.verifyCurrentUserAttributeSubmit(
+        "phone_number",
+        data.verification_code
+      );
+      setSuccess(true);
+      phoneVerified();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
-//             <div style={{ marginTop: "20px" }}>
-//               <input type="submit" value="Send" />
-//               {this.state.loading && <i className="fa fa-spinner fa-spin" />}
-//             </div>
-
-//             {!this.state.resend && (
-//               <div
-//                 style={{
-//                   textAlign: "right",
-//                   color: "blue",
-//                   cursor: "pointer"
-//                 }}
-//                 onClick={() => {
-//                   Auth.verifyCurrentUserAttribute("phone_number")
-//                     .then(() => this.setState({ resend: true }))
-//                     .catch(() => {});
-//                 }}
-//               >
-//                 Get a new code
-//               </div>
-//             )}
-
-//             {this.state.resend && <div>Code has been sent you your phone</div>}
-//           </div>
-//         </form>
-//       </div>
-//     );
-//   }
-// }
-
-// class ProfileComp extends Component {
-
-//   constructor(props, context) {
-//     super(props, context);
-//     this.state = {
-//       email: "",
-//       given_name: "",
-//       family_name: "",
-//       phone_number: "",
-//       error: false,
-//       loading: false,
-//       MFA: undefined,
-//       cognitoUser: undefined,
-//       verification_code: ""
-//     };
-//   }
-
-//   componentDidMount() {
-
-//     Auth.currentAuthenticatedUser().then(cognitoUser => {
-//       Auth.userAttributes(cognitoUser).then(userAttributes => {
-//         let ua = {};
-//         for (let attrib of userAttributes) {
-//           ua[attrib.Name] = attrib.Value;
-//         }
-//         this.setState({ ...ua });
-//       });
-
-//       Auth.getPreferredMFA(cognitoUser).then(MFA => {
-//         this.setState(oldState => ({
-//           email: oldState.email || cognitoUser.attributes.email,
-//           cognitoUser,
-//           MFA
-//         }));
-//       });
-//     });
-
-//   }
-
-//   componentWillUpdate(newProps) {
-//     if (newProps !== this.props) {
-//       // Got user data after mutataion
-//       if (newProps.data) {
-//         this.setState({ gotUser: true });
-//       }
-
-//       let userData;
-//       if (newProps.queryProps && newProps.queryProps.data.userGet) {
-//         userData = newProps.queryProps.data.userGet;
-//       }
-
-//       // Got user data after query
-//       if (userData && userData.email) {
-//         this.setState({ gotUser: true });
-//       }
-//     }
-//   }
-
-//   render() {
-//     const { updateUser, data } = this.props;
-
-//     const submit = async e => {
-//       e.preventDefault();
-
-//       let input = {};
-//       if (this.state.given_name) {
-//         input.given_name = this.state.given_name.trim();
-//       }
-//       if (this.state.family_name) {
-//         input.family_name = this.state.family_name.trim();
-//       }
-//       if (this.state.phone_number) {
-//         input.phone_number = this.state.phone_number.trim();
-//       }
-
-//       if (!this.state.gotUser) {
-//         input.email = this.state.email;
-//       }
-
-//       try {
-//         await Auth.updateUserAttributes(this.state.cognitoUser, input);
-//         let userAttributes = await Auth.userAttributes(this.state.cognitoUser);
-//         let ua = {};
-//         for (let attrib of userAttributes) {
-//           ua[attrib.Name] = attrib.Value;
-//         }
-//         this.setState({ ...ua });
-//       } catch (error) {
-//         console.log("error", error);
-//       }
-
-//       updateUser({ variables: { input } });
-//     };
-
-//     const setData = data => {
-//       this.setState({
-//         ...data,
-//         error: false
-//       });
-//     };
-
-//     let userExists = !!((this.props.queryProps.data || {}).userGet || {})
-//       .cognitoIdentityId;
-
-//     return (
-//       <div>
-//         <form onSubmit={submit} className={standard_form}>
-//           <div>
-//             <h1>Who are you?</h1>
-
-//             <div style={{ marginBottom: "50px", opacity: 0.3 }}>
-//               <input
-//                 placeholder="Email"
-//                 type="text"
-//                 value={this.state.email}
-//                 disabled
-//               />
-//             </div>
-
-//             <div style={{ marginBottom: "50px", display: "none" }}>
-//               <input placeholder="email" type="text" value={this.state.email} />
-//             </div>
-
-//             <div style={{ marginBottom: "50px" }}>
-//               <input
-//                 placeholder="Given name"
-//                 type="text"
-//                 value={this.state.given_name}
-//                 onChange={e => setData({ given_name: e.target.value })}
-//               />
-//             </div>
-
-//             <div style={{ marginBottom: "50px" }}>
-//               <input
-//                 placeholder="Family name"
-//                 type="text"
-//                 value={this.state.family_name}
-//                 onChange={e => setData({ family_name: e.target.value })}
-//               />
-//             </div>
-
-//             <div>
-//               <input type="submit" value="Save" />
-//               {this.props.loading && <i className="fa fa-spinner fa-spin" />}
-//             </div>
-
-//             {this.state.error && (
-//               <div className={error_box}>{this.state.error}</div>
-//             )}
-//           </div>
-//         </form>
-
-//         {this.state.gotUser && (
-//           <div
-//             style={{
-//               // marginTop: '10px'
-//               borderTop: "1px solid #999",
-//               paddingTop: "20px"
-//             }}
-//           >
-//             <Link to={evaluation_templates} className={button_class}>
-//               Evaluation templates
-//             </Link>
-
-//             <Link to={team_management} className={button_class}>
-//               Manage team
-//             </Link>
-
-//             <div
-//               style={{
-//                 width: "100%",
-//                 textAlign: "right"
-//               }}
-//             >
-//               <Link to={dashboard}>Go to dashboard</Link>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     );
-//   }
-// }
-
-// class Profile extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {};
-//   }
-
-//   render() {
-//     return (
-//       <Query query={userGet} fetchPolicy="cache-and-network">
-//         {({ ...queryProps }) => {
-//           return (
-//             <Mutation mutation={userUpdate}>
-//               {(mutation, { data, error, loading }) => (
-//                 <ProfileComp
-//                   updateUser={mutation}
-//                   error={error}
-//                   loading={loading}
-//                   data={data}
-//                   queryProps={queryProps}
-//                 />
-//               )}
-//             </Mutation>
-//           );
-//         }}
-//       </Query>
-//     );
-//   }
-// }
-
-export default function Profile() {
-  const { data, loading, error } = useQuery(userGet);
-
-  let user;
-  if (!loading && !error && data) {
-    user = data.userGet;
+  if (success) {
+    return (
+      <div className={success_message}>
+        Your phone number has been verified. You can now enable SMS verification
+        when loggin in for extra security.
+      </div>
+    );
   }
 
   return (
-    <Content maxWidth={1200}>
-      <h1>Profile</h1>
+    <form
+      className="notata_form"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ marginBottom: "20px" }}
+    >
+      <div>
+        <div className={verify_title}>Please verify your phone number</div>
 
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-    </Content>
+        <input
+          placeholder="Verification code"
+          type="text"
+          name="verification_code"
+          autoComplete="off"
+          ref={register({ required: true })}
+        />
+
+        <div
+          style={{
+            marginTop: "5px",
+            textAlign: "right"
+          }}
+        >
+          <Button type="input" value="VERIFY" loading={isSubmitting} />
+        </div>
+
+        {!resend && (
+          <div
+            className={get_new_code}
+            onClick={async () => {
+              try {
+                await Auth.verifyCurrentUserAttribute("phone_number");
+                setResend(true);
+              } catch (error) {
+                return console.log("error", error);
+              }
+            }}
+          >
+            Get a new code
+          </div>
+        )}
+
+        {resend && (
+          <div className={new_code}>
+            A new code has been sent you your phone
+          </div>
+        )}
+      </div>
+    </form>
   );
 }
 
-// const Comp = ({ ...props }) => {
+export default function Profile() {
+  const { data, loading, error } = useQuery(userGet);
+  const [mutate] = useMutation(userUpdate);
 
-//   const { data, loading, error } = useQuery(accountGet, {
-//     notifyOnNetworkStatusChange: true
-//   });
+  const [verifiedPhoneNumber, setVerifiedPhoneNumber] = useState(false);
+  const [hasPhoneNumber, setHasPhoneNumber] = useState(false);
+  const [cognitoUser, setCognitoUser] = useState();
 
-//   return (
-//     <div className={classnames(container, center_container, small_container)}>
-//       <div className={inner_container}>
-//         <Profile {...props} />
-//       </div>
-//     </div>
-//   );
-// };
+  const { register, handleSubmit, formState, getValues, setValue } = useForm();
 
-// export default Comp;
+  const { isSubmitting } = formState;
+
+  useEffect(() => {
+    let user = data.userGet;
+
+    for (let a in user) {
+      setValue(`input.${a}`, user[a]);
+    }
+
+    Auth.currentAuthenticatedUser().then(cognitoUser => {
+      setCognitoUser(cognitoUser);
+      Auth.userAttributes(cognitoUser).then(userAttributes => {
+        let ua = {};
+        for (let attrib of userAttributes) {
+          ua[attrib.Name] = attrib.Value;
+        }
+
+        if (ua.phone_number) setHasPhoneNumber(true);
+        if (ua.phone_number_verified === "true") {
+          setVerifiedPhoneNumber(true);
+        }
+
+        console.log("ua", ua);
+
+        // for (let a in ua) {
+        //   setValue(`input.${a}`, ua[a])
+        // }
+      });
+
+      Auth.getPreferredMFA(cognitoUser).then(MFA => {
+        console.log("MFA", MFA);
+        setValue("input.MFA", MFA);
+      });
+    });
+  }, []);
+
+  const onSubmit = async (data, event) => {
+    let { input } = data;
+
+    try {
+      await Auth.updateUserAttributes(
+        cognitoUser,
+        omit(input, ["email", "company"])
+      );
+    } catch (error) {
+      console.log("error", error);
+    }
+
+    try {
+      await mutate({ variables: { input } });
+    } catch (error) {
+      console.log("error", error);
+    }
+
+    if (input.phone_number) {
+      setHasPhoneNumber(true);
+    }
+  };
+
+  const values = getValues();
+  console.log("values", values);
+
+  return (
+    <Content maxWidth={600}>
+      <h1>Profile</h1>
+
+      {hasPhoneNumber && !verifiedPhoneNumber && (
+        <Card>
+          <VerifyPhoneNumberComp
+            phoneVerified={() => {
+              setVerifiedPhoneNumber(true);
+            }}
+          />
+        </Card>
+      )}
+
+      <Card>
+        <form
+          className="notata_form"
+          onSubmit={handleSubmit(onSubmit)}
+          style={{ marginBottom: "20px" }}
+        >
+          <label for="input.given_name">Given name</label>
+          <input
+            type="text"
+            placeholder={"Given name"}
+            autoComplete="off"
+            ref={register({ required: true })}
+            id="input.given_name"
+            name="input.given_name"
+          />
+
+          <label for="input.family_name">Family name</label>
+          <input
+            type="text"
+            placeholder={"Family name"}
+            autoComplete="off"
+            ref={register({ required: true })}
+            id="input.family_name"
+            name="input.family_name"
+          />
+
+          <label for="input.company">Company</label>
+          <input
+            type="text"
+            placeholder={"Company"}
+            autoComplete="off"
+            ref={register}
+            id="input.company"
+            name="input.company"
+          />
+
+          <label for="input.company">Email</label>
+          <input
+            type="text"
+            placeholder={"Email"}
+            autoComplete="off"
+            ref={register}
+            disabled
+            id="input.email"
+            name="input.email"
+          />
+
+          <label for="input.phone_number">Phone number</label>
+          <input
+            type="text"
+            placeholder={"Phone number"}
+            autoComplete="off"
+            ref={register}
+            id="input.phone_number"
+            name="input.phone_number"
+          />
+
+          {verifiedPhoneNumber && (
+            <>
+              <div className={verified_phone_number}>
+                phone number is verified
+              </div>
+
+              <div className="check_container">
+                <input
+                  type="checkbox"
+                  id="input.MFA"
+                  name="input.MFA"
+                  ref={register}
+                />
+                <label for="input.MFA">
+                  Enable SMS for two factor security when logging in.
+                </label>
+              </div>
+            </>
+          )}
+
+          <div
+            style={{
+              marginTop: "5px",
+              textAlign: "right"
+            }}
+          >
+            <Button type="input" value="SAVE" loading={isSubmitting} />
+          </div>
+        </form>
+      </Card>
+    </Content>
+  );
+}

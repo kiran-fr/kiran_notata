@@ -27,6 +27,7 @@ import { Login } from "./Components/User/Login/Login";
 import { ForgotPassword } from "./Components/User/ForgotPassword/ForgotPassword";
 import { Awaiting } from "./Components/User/Awaiting/Awaiting";
 import { SignOut } from "./Components/User/SignOut/SignOut";
+import PreProfile from "./Components/User/PreProfile/Profile";
 
 // SHARING
 import LinkBridge from "./Components/Shared/LinkBridge/LinkBridge";
@@ -49,11 +50,16 @@ export const forgotPassword = "/forgotPassword";
 export const signup = "/signup";
 export const awaiting = "/awaiting";
 
+export const pre_profile = "/profile";
+
 // SHARING
 export const link_bridge = `/link`;
 
 // LOGGED IN PAGES
 export const dashboard = "/dashboard";
+
+export const startup_page = `${dashboard}/startup_page`;
+
 export const profile = `${dashboard}/profile`;
 export const report = `${dashboard}/report`;
 export const inbox = `${dashboard}/inbox`;
@@ -78,6 +84,8 @@ export const Routes = () => (
         <Route exact path={signOut} component={SignOut} />
         <Route exact path={forgotPassword} component={ForgotPassword} />
         <Route exact path={awaiting} component={Awaiting} />
+
+        <Route exact path={pre_profile} component={PreProfile} />
 
         <Route path={link_bridge} component={LinkBridge} />
 

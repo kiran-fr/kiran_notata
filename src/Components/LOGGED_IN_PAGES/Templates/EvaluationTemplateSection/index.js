@@ -5,9 +5,8 @@ import { Mutation } from "@apollo/client/react/components";
 import { useForm } from "react-hook-form";
 
 import { GhostLoader } from "../../../elements/GhostLoader";
-import BreadCrumbs from "../../../elements/BreadCrumbs";
+
 import Saver from "../../../elements/Saver";
-// import NameAndDescription from "./NameAndDescriptionComp";
 import Question from "./QuestionComp";
 
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
@@ -17,23 +16,14 @@ import {
 } from "../../../../Apollo/Mutations";
 
 import {
-  //   dashboard,
   profile,
   evaluation_template,
   evaluation_templates
 } from "../../../../routes";
 
-import {
-  // container,
-  // small_container,
-  // center_container,
-  // inner_container,
-  standard_form
-} from "../../../elements/Style.module.css";
+import { standard_form } from "../../../elements/Style.module.css";
 
 import { section_style } from "./EvaluationTemplateSection.module.css";
-// import { color3 } from "../../../elements/Colors.module.css";
-// import { content_tag } from "../../../../routes.module.css";
 import EvaluationTemplate from "../EvaluationTemplate/EvaluationTemplate";
 
 import {
@@ -41,16 +31,16 @@ import {
   Button,
   Table,
   Content,
-  Modal
+  Modal,
+  BreadCrumbs
 } from "../../../elements/NotataComponents/";
 
 function NameAndDescription({ template, section }) {
   const [mutate] = useMutation(evaluationTemplateSectionPut);
-  const { name, description, id } = section;
-
   const { register, handleSubmit, formState, setValue } = useForm();
   const { isSubmitting } = formState;
 
+  const { name, description, id } = section;
   useEffect(() => {
     setValue("input.name", name);
     setValue("input.description", description);
@@ -61,8 +51,6 @@ function NameAndDescription({ template, section }) {
       id: section.id,
       ...data
     };
-
-    console.log("variables", JSON.stringify(variables, null, 2));
 
     try {
       let res = await mutate({ variables });
@@ -99,60 +87,52 @@ function NameAndDescription({ template, section }) {
   );
 }
 
-function NewQuestion({ templateId, sectionId }) {
-  const [mutate] = useMutation(evaluationQuestionPut, {
-    refetchQueries: [
-      {
-        query: evaluationTemplateGet,
-        variables: { id: templateId }
-      }
-    ],
-    awaitRefetchQueries: true
-  });
-  const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting } = formState;
-
-  async function onSubmit({ name }, event) {
-    await mutate({
-      variables: {
-        sectionId: sectionId,
-        input: {
-          name,
-          inputType: "CHECK"
-        }
-      }
-    });
-
-    event.target.reset();
-  }
+function NewQuestion({ sectionId, templateId }) {
+  const [loading, setLoading] = useState(false);
+  const [mutate] = useMutation(evaluationQuestionPut);
 
   return (
-    <div className={section_style}>
-      <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
-        <div style={{ marginTop: "30px" }}>
-          <input
-            type="text"
-            placeholder="Question name"
-            ref={register({ required: true })}
-            name="name"
-          />
-        </div>
+    <Button
+      onClick={async () => {
+        if (loading) return;
+        setLoading(true);
 
-        <div style={{ marginTop: "30px" }}>
-          <input
-            type="submit"
-            value="Add new question"
-            disabled={isSubmitting}
-          />
-          {isSubmitting && <i className="fa fa-spinner fa-spin" />}
-        </div>
-      </form>
-    </div>
+        let variables = {
+          sectionId: sectionId,
+          input: {
+            name: "New question",
+            inputType: "CHECK"
+          }
+        };
+
+        try {
+          await mutate({
+            variables,
+            refetchQueries: [
+              {
+                query: evaluationTemplateGet,
+                variables: { id: templateId }
+              }
+            ]
+          });
+        } catch (error) {
+          console.log("error", error);
+        }
+
+        setLoading(false);
+      }}
+      type="right_arrow"
+      loading={loading}
+      size="large"
+    >
+      New question
+    </Button>
   );
 }
 
 export default function EvaluationTemplateSection({ match }) {
   const { id, sectionId } = match.params;
+
   const [getData, { data, loading, error }] = useLazyQuery(
     evaluationTemplateGet
   );
@@ -177,21 +157,38 @@ export default function EvaluationTemplateSection({ match }) {
   }
 
   return (
-    <Content maxWidth={1200}>
-      <NameAndDescription template={template} section={section} />
+    <>
+      <BreadCrumbs
+        list={[
+          {
+            val: "all templates",
+            link: `${evaluation_templates}`
+          },
+          {
+            val: `Template: ${template.name}`,
+            link: `${evaluation_template}/${id}`
+          },
+          {
+            val: `Section: ${section.name}`,
+            link: `${evaluation_template}/${id}/${sectionId}`
+          }
+        ]}
+      />
+      <Content maxWidth={1200}>
+        <NameAndDescription template={template} section={section} />
 
-      {(section.questions || []).map((question, i) => (
-        <Card>
-          <Question
-            key={`question-${i}-${question.id}`}
-            question={question || {}}
-            templateId={id}
-            sectionId={sectionId}
-          />
-        </Card>
-      ))}
+        {(section.questions || []).map((question, i) => (
+          <Card key={`question-${i}-${question.id}`}>
+            <Question
+              question={question || {}}
+              templateId={id}
+              sectionId={sectionId}
+            />
+          </Card>
+        ))}
 
-      <NewQuestion templateId={id} sectionId={sectionId} />
-    </Content>
+        <NewQuestion sectionId={sectionId} templateId={id} />
+      </Content>
+    </>
   );
 }

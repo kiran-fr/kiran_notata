@@ -84,14 +84,19 @@ const moreMenuItems = [
     link: tags
   },
   {
-    label: "Groups",
-    iconClass: "fal fa-share-alt",
-    link: groups
-  },
-  {
     label: "Profile",
     iconClass: "fal fa-user",
     link: profile
+  },
+  {
+    label: "Team",
+    iconClass: "fal fa-users",
+    link: team
+  },
+  {
+    label: "Groups",
+    iconClass: "fal fa-share-alt",
+    link: groups
   },
   {
     label: "Settings",

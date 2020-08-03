@@ -1,18 +1,37 @@
-.container {
+.verified_phone_number {
+  font-size: 10px;
+  color: var(--color-turquoise);
+  position: relative;
+  text-align: right;
+  top: -6px;
+  right: 5px;
 }
 
-.error_box {
-  color: #c80000;
-  margin: 10px 0px;
-  background: rgb(255, 215, 215);
-  padding: 10px;
-  font-size: 15px;
-  margin-top: 35px;
+.verify_title {
+  position: relative;
+  padding-bottom: 10px;
+  padding-top: 4px;
 }
 
-.sub_header {
-  margin: 18px 0px;
-  font-size: 22px;
-  font-weight: 300;
-  color: #306f7a;
+.get_new_code {
+  position: absolute;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-primary);
+  bottom: 18px;
+}
+
+.new_code {
+  position: absolute;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-secondary);
+  bottom: 18px;
+}
+
+.success_message {
+  padding-bottom: 16px;
+  font-size: 16px;
+  color: var(--color-secondary);
+  line-height: 1.5;
 }
