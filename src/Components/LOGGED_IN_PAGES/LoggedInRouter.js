@@ -4,7 +4,8 @@ import { Redirect, Switch, withRouter } from "react-router-dom";
 import Route from "react-router/es/Route";
 
 // API
-import { Query } from "@apollo/client/react/components";
+// import { Query } from "@apollo/client/react/components";
+import { useQuery } from "@apollo/client";
 import { userGet } from "../../Apollo/Queries";
 
 // ROUTES
@@ -12,21 +13,38 @@ import {
   signup,
   dashboard,
   profile,
+  report,
+  inbox,
+  activities,
+  tags,
+  groups,
+  settings,
+  team,
   evaluation_templates,
   evaluation_template,
-  team_management
+  startup_page,
+  pre_profile
 } from "../../routes";
 
 // Landing page / list
-import DashboardPage from "./Dashboard/DashboardPage";
+import Dashboard from "./Dashboard/DashboardPage";
+
+import Profile from "./Profile/Profile";
+
+import Report from "./Report/Report";
+import Inbox from "./Inbox/Inbox";
+import Activities from "./Activities/Activities";
+import Tags from "./Tags/Tags";
+import Groups from "./Groups/Groups";
+import Settings from "./Settings/Settings";
+import Team from "./Team/Team";
+
+import StartupPage from "./StartupPage/StartupPage";
 
 // Evaluation templates
-import EvaluationTemplates from "./Profile_and_settings/EvaluationTemplates/EvaluationTemplates";
-import EvaluationTemplate from "./Profile_and_settings/EvaluationTemplate/EvaluationTemplate";
-import EvaluationTemplateSection from "./Profile_and_settings/EvaluationTemplateSection/";
-
-// Team Management
-import TeamManagement from "./Profile_and_settings/TeamManagement/TeamManagement";
+import EvaluationTemplates from "./Templates/EvaluationTemplates/EvaluationTemplates";
+import EvaluationTemplate from "./Templates/EvaluationTemplate/EvaluationTemplate";
+import EvaluationTemplateSection from "./Templates/EvaluationTemplateSection/";
 
 // Loader
 import { GhostLoader } from "../elements/GhostLoader";
@@ -34,39 +52,63 @@ import { GhostLoader } from "../elements/GhostLoader";
 // Styles
 import { container, inner_container } from "../elements/Style.module.css";
 
+import SideBar from "../SideBar/SideBar";
+import Header from "../Header/Header";
+
 export const RouterComponent = ({ history }) => {
   return (
-    <div className={container}>
-      <div className={inner_container}>
-        <Switch>
-          <Route exact path={dashboard} component={DashboardPage} />
-          <Route
-            exact
-            path={evaluation_templates}
-            component={EvaluationTemplates}
-          />
-          <Route
-            exact
-            path={`${evaluation_template}/:id`}
-            component={EvaluationTemplate}
-          />
-          <Route
-            exact
-            path={`${evaluation_template}/:id/:sectionId`}
-            component={EvaluationTemplateSection}
-          />
+    <div className={inner_container}>
+      <Switch>
+        <Route exact path={dashboard} component={Dashboard} />
 
-          <Route exact path={team_management} component={TeamManagement} />
+        <Route exact path={profile} component={Profile} />
 
-          <Route render={() => <div>404</div>} />
-        </Switch>
-      </div>
+        <Route exact path={report} component={Report} />
+
+        <Route exact path={inbox} component={Inbox} />
+
+        <Route exact path={activities} component={Activities} />
+
+        <Route exact path={tags} component={Tags} />
+
+        <Route exact path={groups} component={Groups} />
+
+        <Route exact path={settings} component={Settings} />
+
+        <Route exact path={team} component={Team} />
+
+        <Route
+          exact
+          path={evaluation_templates}
+          component={EvaluationTemplates}
+        />
+
+        <Route
+          exact
+          path={`${evaluation_template}/:id`}
+          component={EvaluationTemplate}
+        />
+
+        <Route
+          exact
+          path={`${evaluation_template}/:id/:sectionId`}
+          component={EvaluationTemplateSection}
+        />
+
+        <Route exact path={`${startup_page}/:id`} component={StartupPage} />
+
+        <Route exact path={team} component={Team} />
+
+        <Route render={() => <div>404</div>} />
+      </Switch>
     </div>
   );
 };
 
 const WrapperComponent = ({ ...props }) => {
   const [userLoggedIn, setUserLoggedIn] = useState(undefined);
+
+  const { data, loading, error } = useQuery(userGet);
 
   useEffect(() => {
     Auth.currentAuthenticatedUser()
@@ -78,19 +120,23 @@ const WrapperComponent = ({ ...props }) => {
     return <Redirect to={signup} />;
   }
 
+  if (loading) return <GhostLoader />;
+
+  if (!loading && !error && data) {
+    let user = data.userGet || {};
+    if (user.email === null) {
+      return <Redirect to={pre_profile} />;
+    }
+  }
+
   return (
-    <Query query={userGet} fetchPolicy="cache-and-network">
-      {({ data, loading, error }) => {
-        if (loading) return <GhostLoader />;
-        if (!loading && !error && data) {
-          let user = data.userGet || {};
-          if (user.email === null) {
-            return <Redirect to={profile} />;
-          }
-        }
-        return <RouterComponent {...props} />;
-      }}
-    </Query>
+    <>
+      <Header />
+      <SideBar />
+      <div className={container}>
+        <RouterComponent {...props} />
+      </div>
+    </>
   );
 };
 

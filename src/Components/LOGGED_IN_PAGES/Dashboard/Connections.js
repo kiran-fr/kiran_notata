@@ -4,116 +4,136 @@ import React from "react";
 import moment from "moment";
 
 // API
-import { Query, Mutation } from "@apollo/client/react/components";
-import { adopt } from "react-adopt";
-import { connectionsGet, userGet } from "../../../Apollo/Queries";
+import { useQuery } from "@apollo/client";
+import { connectionsGet } from "../../../Apollo/Queries";
+import { startup_page } from "../../../routes";
 
 // COMPONENTS
-import ConnectionCard from "./ConnectionCard";
 import { GhostLoader } from "../../elements/GhostLoader";
+
+import { Button, Table, Card, Tag } from "../../elements/NotataComponents/";
 
 // STYLES
 import classnames from "classnames";
 
-import {
-  standard_form,
-  shady_list,
-  shady_list_item,
-  shady_list_byLine,
-  shady_list_name,
-  shady_list_open_close
-} from "../../elements/Style.module.css";
+import { list_star, average_score, date_style } from "./Connections.module.css";
 
-class Connections extends React.Component {
-  state = {
-    openConnecion: this.props.createdConnection
-  };
+export default function Connections({ history }) {
+  const connectionsQuery = useQuery(connectionsGet);
 
-  render() {
-    let { connections, user } = this.props;
+  const loading = connectionsQuery.loading;
+  const error = connectionsQuery.error;
 
-    return (
-      <div className={shady_list}>
-        {connections
-          .slice()
-          .sort((a, b) => b.createdAt - a.createdAt)
-          .map((connection, i) => {
-            return (
-              <div
-                key={`connection-${connection.id}`}
-                className={shady_list_item}
-              >
-                <div className={shady_list_byLine}>
-                  <div>
-                    <span>{moment(connection.createdAt).format("ll")} - </span>
-                    <span>{connection.createdByUser.given_name} </span>
-                    <span>{connection.createdByUser.family_name}</span>
-                  </div>
-                </div>
-                <div className={shady_list_name}>
-                  <div
-                    className={shady_list_open_close}
-                    onClick={() => {
-                      this.setState({
-                        openConnecion:
-                          this.state.openConnecion === connection.id
-                            ? null
-                            : connection.id
-                      });
-                    }}
-                  >
-                    {(this.state.openConnecion === connection.id && (
-                      <span style={{ left: "-5px", position: "relative" }}>
-                        <i className="fas fa-caret-down" />
-                      </span>
-                    )) || <i className="fas fa-caret-right" />}
-                  </div>
+  if (error) console.log("error", error);
+  if (error) return <div>We are updating </div>;
 
-                  {connection.creative.name}
-                </div>
-
-                {this.state.openConnecion === connection.id && (
-                  <ConnectionCard id={connection.id} user={user} />
-                )}
-              </div>
-            );
-          })}
-      </div>
-    );
+  let connections;
+  if (!error && !loading) {
+    connections = connectionsQuery.data.connectionsGet;
   }
-}
 
-const ComposedComponent = ({ createdConnection }) => {
-  const Composed = adopt({
-    userQuery: ({ render }) => <Query query={userGet}>{render}</Query>,
-    connectionsQuery: ({ render }) => (
-      <Query query={connectionsGet}>{render}</Query>
-    )
-  });
+  const columns = [
+    {
+      title: "",
+      dataIndex: "star",
+      key: "star",
+      width: 20,
+      className: list_star,
+      render: () => <i className="fal fa-star" />
+    },
 
-  return (
-    <Composed>
-      {({ connectionsQuery, userQuery }) => {
-        const loading = connectionsQuery.loading || userQuery.loading;
-        const error = connectionsQuery.error || userQuery.error;
+    {
+      title: "Company name",
+      dataIndex: "creative",
+      key: "creative",
+      render: creative => creative.name
+    },
 
-        if (error) console.log("error", error);
-        if (loading) return <GhostLoader />;
-        if (error) return <div>We are updating </div>;
+    {
+      title: "Stage",
+      dataIndex: "funnelTags",
+      key: "funnelTags",
+      responsive: "sm",
+      render: funnelTags => (
+        <>
+          {["funnel tag"].map(tag => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </>
+      )
+    },
 
-        const connections = connectionsQuery.data.connectionsGet;
-        const user = userQuery.data.userGet;
+    {
+      title: "Source of Dealflow",
+      dataIndex: "tags",
+      key: "tags",
+      responsive: "md",
+      render: tags => (
+        <>
+          {["dummy tag"].map(tag => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </>
+      )
+    },
+
+    {
+      title: "Subjective score",
+      dataIndex: "subjectiveScores",
+      key: "subjectiveScores",
+      responsive: "sm",
+      render: scores => {
+        if (!scores || !scores.length) {
+          return <span style={{ color: "#DADEE2" }}>n/a</span>;
+        }
+
+        let { score: ttl } = scores.reduce((a, b) => ({
+          score: a.score + b.score
+        }));
+        let avg = (ttl / scores.length).toFixed(1);
 
         return (
-          <Connections
-            connections={connections || []}
-            user={user}
-            createdConnection={createdConnection}
-          />
+          <div className={average_score}>
+            <span>{avg}</span>
+          </div>
         );
-      }}
-    </Composed>
-  );
-};
+      }
+    },
 
-export default ComposedComponent;
+    {
+      title: "Last updated",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      responsive: "lg",
+      render: date => (
+        <span className={date_style}>{moment(date).format("ll")}</span>
+      )
+    },
+
+    {
+      title: "",
+      dataIndex: "id",
+      key: "id",
+      width: 30,
+      render: id => (
+        <Button
+          type="tiny_right"
+          onClick={() => {
+            history.push(`${startup_page}/${id}`);
+          }}
+        />
+      )
+    }
+  ];
+
+  return (
+    <Card maxWidth={1200}>
+      <Table
+        dataSource={connections || []}
+        columns={columns}
+        pagination={false}
+        loading={loading}
+      />
+    </Card>
+  );
+}

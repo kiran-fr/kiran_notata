@@ -1,0 +1,458 @@
+import React, { useState } from "react";
+
+import validateEmail from "../../../utils/validateEmail";
+
+import { useQuery, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+
+// API STUFF
+import {
+  userGet,
+  userInvitationsGet,
+  accountGet,
+  accountInvitationsGet
+} from "../../../Apollo/Queries";
+
+import {
+  accountInvite,
+  userInvitationResponse
+} from "../../../Apollo/Mutations";
+
+// COMPONENTS
+import { GhostLoader } from "../../elements/GhostLoader";
+
+// STYLES
+import classnames from "classnames";
+
+import {
+  button_class,
+  standard_form,
+  submit_button
+} from "../../elements/Style.module.css";
+
+import {
+  members_list,
+  member_of_team,
+  member_of_team_new,
+  pending_invitation,
+  submit_reject_buttons,
+  reject_button,
+  submit_reject_buttons_container,
+  sub_header,
+  delete_bucket,
+  external_invitation_head,
+  external_invitations,
+  external_invitation_each,
+  external_invitation_company,
+  external_invitation_name,
+  external_invitation_email,
+  external_invitation_buttons
+} from "./Team.module.css";
+
+import {
+  Content,
+  Card,
+  Table,
+  Button,
+  Modal
+} from "../../elements/NotataComponents/";
+
+function Invite({ account, user }) {
+  const [showModal, setShowModal] = useState(false);
+  const [mutate, { loading }] = useMutation(accountInvite);
+
+  const { register, handleSubmit, formState } = useForm();
+  const { isSubmitting } = formState;
+
+  const onSubmit = async ({ email }, event) => {
+    if (!validateEmail(email)) return;
+    let variables = { email };
+
+    try {
+      await mutate({
+        variables,
+        updateQueries: {
+          accountInvitationsGet: (prev, { mutationResult, queryVariables }) => {
+            return {
+              accountInvitationsGet: [
+                ...prev.accountInvitationsGet,
+                {
+                  email,
+                  createdAt: new Date().getTime(),
+                  __typename: "AccountInvitation",
+                  accountId: account.id,
+                  createdBy: user.cognitoIdentityId
+                }
+              ]
+            };
+          }
+        }
+      });
+      event.target.reset();
+      setShowModal(false);
+    } catch (error) {
+      return console.log("error", error);
+    }
+  };
+
+  return (
+    <>
+      <Button
+        onClick={() => setShowModal(true)}
+        type="right_arrow"
+        size="large"
+      >
+        Invite new member
+      </Button>
+
+      {showModal && (
+        <Modal
+          title="Invite new member"
+          close={() => setShowModal(false)}
+          disableFoot={true}
+        >
+          <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
+            <div style={{ marginTop: "30px" }}>
+              <input
+                type="text"
+                placeholder={"name@email.com"}
+                autoComplete="off"
+                ref={register({ required: true })}
+                name="email"
+              />
+
+              <div
+                style={{
+                  marginTop: "5px",
+                  textAlign: "right"
+                }}
+              >
+                <Button type="input" value="OK" loading={isSubmitting} />
+              </div>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </>
+  );
+}
+
+function PendingInvitations({ accountInvitations }) {
+  const [mutate, { loading }] = useMutation(accountInvite);
+
+  const columns = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: email => <span>{email}</span>
+    },
+
+    {
+      title: "",
+      dataIndex: "email",
+      key: "delete",
+      width: 20,
+      className: delete_bucket,
+      render: email => {
+        return (
+          <i
+            className="fal fa-trash-alt"
+            onClick={() => {
+              if (
+                window.confirm(
+                  `Are you sure you want to delete the team invitation for ${email}`
+                )
+              ) {
+                /* Do nothing */
+              } else {
+                return;
+              }
+
+              let variables = { email: email };
+              mutate({
+                variables,
+                updateQueries: {
+                  accountInvitationsGet: (
+                    prev,
+                    { mutationResult, queryVariables }
+                  ) => ({
+                    accountInvitationsGet: prev.accountInvitationsGet.filter(
+                      ai => ai.email !== email
+                    )
+                  })
+                }
+              });
+            }}
+          />
+        );
+      }
+    }
+  ];
+
+  return (
+    <Table
+      dataSource={accountInvitations}
+      columns={columns}
+      loading={loading.toString()}
+      diableHead={true}
+      pagination={false}
+    />
+  );
+}
+
+function TeamMembers({ user, account }) {
+  // TODO: Create mutation backend
+  // let [ mutate, { loading } ] = useMutation();
+  let members = account.members || [];
+
+  const columns = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: email => <span>{email}</span>
+    }
+
+    // {
+    //   title: "",
+    //   dataIndex: "email",
+    //   key: "delete",
+    //   width: 20,
+    //   className: delete_bucket,
+    //   render: email => {
+    //     return (
+    //       <i
+    //         className="fal fa-trash-alt"
+    //         onClick={() => {
+    //           if (
+    //             window.confirm(
+    //               `Are you sure you want to delete the team invitation for ${email}`
+    //             )
+    //           ) {
+    //             /* Do nothing */
+    //           } else {
+    //             return;
+    //           }
+
+    //           let variables = { email: email };
+    //           mutate({
+    //             variables,
+    //             update: (proxy, { data: { accountInvite } }) => {
+    //               let data = proxy.readQuery({
+    //                 query: accountInvitationsGet
+    //               });
+    //               data.accountInvitationsGet = accountInvite;
+    //             }
+    //           });
+    //         }}
+    //       />
+    //     )
+    //   }
+    // }
+  ];
+
+  if (members.length <= 1) {
+    return (
+      <div
+        style={{
+          padding: "10px",
+          color: "var(--color-orange)"
+        }}
+      >
+        You are currently the only member of this team.
+      </div>
+    );
+  }
+
+  return (
+    <Table
+      dataSource={members}
+      columns={columns}
+      // loading={loading.toString()}
+      diableHead={true}
+      pagination={false}
+    />
+  );
+}
+
+function ExternalInvitations({ userInvitations }) {
+  const [loadReject, setLoadReject] = useState(false);
+  const [loadAccept, setLoadAccept] = useState(false);
+
+  const [mutate] = useMutation(userInvitationResponse);
+
+  return (
+    <div style={{ marginBottom: "20px", fontSize: "14px" }}>
+      <div className={external_invitation_head}>
+        <div style={{ fontSize: "16px", marginBottom: "10px" }}>
+          You have been invited to a team!
+        </div>
+
+        <div style={{ color: "var(--color-primary)" }}>
+          By accepting the invitation below you will abandon your team. If you
+          are the only person on your team, you will loose your data.
+        </div>
+      </div>
+
+      <div className={external_invitations}>
+        {userInvitations.map((invitation, i) => {
+          let {
+            given_name,
+            family_name,
+            company,
+            email
+          } = invitation.createdByUser;
+
+          return (
+            <div
+              className={external_invitation_each}
+              key={`invitation-${invitation.email}`}
+            >
+              <div className={external_invitation_company}>{company}</div>
+
+              <div className={external_invitation_name}>
+                {`${given_name} ${family_name}`}
+              </div>
+
+              <div className={external_invitation_email}>{email}</div>
+
+              <div className={external_invitation_buttons}>
+                <Button
+                  size="small"
+                  buttonStyle="secondary"
+                  loading={loadAccept}
+                  onClick={async () => {
+                    if (
+                      window.confirm(
+                        "Are you sure you want to leave your current team?"
+                      )
+                    ) {
+                      /* Do nothing */
+                    } else {
+                      return;
+                    }
+
+                    let variables = {
+                      accountId: invitation.accountId,
+                      response: "ACCEPT"
+                    };
+
+                    try {
+                      setLoadAccept(true);
+                      await mutate({ variables });
+                      window.location.reload();
+                    } catch (error) {
+                      console.log("error", error);
+                    }
+                    setLoadAccept(false);
+                  }}
+                >
+                  accept
+                </Button>
+
+                <Button
+                  size="small"
+                  loading={loadReject}
+                  onClick={async () => {
+                    let variables = {
+                      accountId: invitation.accountId,
+                      response: "REJECT"
+                    };
+                    try {
+                      setLoadReject(true);
+                      await mutate({
+                        variables,
+                        updateQueries: {
+                          userInvitationsGet: (
+                            prev,
+                            { mutationResult, queryVariables }
+                          ) => {
+                            return {
+                              userInvitationsGet: prev.userInvitationsGet.filter(
+                                ui => ui.accountId !== invitation.accountId
+                              )
+                            };
+                          }
+                        }
+                      });
+                    } catch (error) {
+                      console.log("error", error);
+                    }
+                    setLoadReject(false);
+                  }}
+                >
+                  reject
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default function Team() {
+  const userQuery = useQuery(userGet);
+  let user = {};
+  if (!userQuery.loading && !userQuery.error && userQuery.data) {
+    user = userQuery.data.userGet;
+  }
+
+  const accountQuery = useQuery(accountGet);
+  let account = {};
+  if (!accountQuery.loading && !accountQuery.error && accountQuery.data) {
+    account = accountQuery.data.accountGet;
+  }
+
+  const accountInvitationsQuery = useQuery(accountInvitationsGet);
+  let accountInvitations = [];
+  if (
+    !accountInvitationsQuery.loading &&
+    !accountInvitationsQuery.error &&
+    accountInvitationsQuery.data
+  ) {
+    accountInvitations = accountInvitationsQuery.data.accountInvitationsGet;
+  }
+
+  const userInvitationsQuery = useQuery(userInvitationsGet);
+  let userInvitations = [];
+  if (
+    !userInvitationsQuery.loading &&
+    !userInvitationsQuery.error &&
+    userInvitationsQuery.data
+  ) {
+    userInvitations = userInvitationsQuery.data.userInvitationsGet;
+  }
+
+  return (
+    <Content maxWidth={600}>
+      <div style={{ marginBottom: "40px" }}>
+        <h1>Your team</h1>
+      </div>
+
+      {!!userInvitations.length && (
+        <Card>
+          <ExternalInvitations userInvitations={userInvitations} />
+        </Card>
+      )}
+
+      <Card style={{ paddingTop: "5px" }} label="Team members">
+        <TeamMembers user={user} account={account} />
+      </Card>
+
+      {!!accountInvitations.length && (
+        <Card style={{ paddingTop: "5px" }} label="Pending invitations">
+          <PendingInvitations accountInvitations={accountInvitations} />
+        </Card>
+      )}
+
+      <Invite
+        user={user}
+        account={account}
+        accountInvitations={accountInvitations}
+      />
+    </Content>
+  );
+}

@@ -1,0 +1,20 @@
+.header_comp {
+  color: white;
+  position: relative;
+  background-color: var(--color-secondary);
+  padding: 14px;
+  padding-left: 25px;
+  margin-left: -20px;
+  margin-top: -20px;
+  margin-right: -20px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  border-radius: 7px 7px 0px 0px;
+}
+
+.sub_header {
+  color: var(--color-gray-medium);
+  margin-bottom: 20px;
+  padding: 5px;
+  line-height: 2;
+}

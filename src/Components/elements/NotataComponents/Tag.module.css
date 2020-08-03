@@ -1,0 +1,20 @@
+.container {
+  border-radius: 20px;
+  color: var(--color-gray-dark);
+  background: var(--color-gray-pale);
+  padding: 3px 12px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.content {
+}
+
+.active_tag {
+  background: var(--color-primary);
+  color: white;
+}
+
+.button_tag {
+  cursor: pointer;
+}

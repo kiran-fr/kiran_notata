@@ -1,0 +1,22 @@
+.container {
+  padding: 20px;
+  background: white;
+  border-radius: 7px;
+  padding-bottom: 2px;
+  margin: 10px 2px 50px 2px;
+  position: relative;
+}
+
+.no_margin .content {
+  margin: -20px;
+}
+
+.content {
+}
+
+.card_label {
+  position: absolute;
+  top: -22px;
+  left: 0px;
+  font-size: 12px;
+}

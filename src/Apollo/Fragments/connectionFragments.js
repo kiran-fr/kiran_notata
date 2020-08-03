@@ -8,6 +8,11 @@ export default gql`
     createdAt
     updatedAt
     createdBy
+    createdByUser {
+      email
+      given_name
+      family_name
+    }
     accountId
     creativeId
     subjectiveScores {

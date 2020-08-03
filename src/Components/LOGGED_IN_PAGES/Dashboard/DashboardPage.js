@@ -8,17 +8,23 @@ import Connections from "./Connections";
 
 import { creativePut, connectionPut } from "../../../Apollo/Mutations";
 
-import { standard_form, button_class } from "../../elements/Style.module.css";
-import { content_tag } from "../../../routes.module.css";
-import { action_row, action, input_icon } from "./DashboardPage.module.css";
+import { standard_form } from "../../elements/Style.module.css";
 
-function AddCreatives({ mutateConnection, setCreatedConnection }) {
-  const [showInput, setShowInput] = useState(false);
+import { input_icon } from "./DashboardPage.module.css";
+
+import { startup_page } from "../../../routes";
+
+import { Button, Content, Modal } from "../../elements/NotataComponents/";
+
+const CreateNewStartup = ({ setDone }) => {
+  const [showModal, setShowModal] = useState(false);
   const [mutateCreative] = useMutation(creativePut);
+  const [mutateConnection] = useMutation(connectionPut);
+
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
-  const onSubmit = async data => {
+  const onSubmit = async (data, event) => {
     try {
       const {
         data: {
@@ -30,8 +36,7 @@ function AddCreatives({ mutateConnection, setCreatedConnection }) {
           connectionPut: { id }
         }
       } = await mutateConnection({ variables: { creativeId } });
-      setCreatedConnection(id);
-      setShowInput(false);
+      setDone(id);
     } catch (error) {
       console.log(error);
     }
@@ -39,58 +44,64 @@ function AddCreatives({ mutateConnection, setCreatedConnection }) {
 
   return (
     <>
-      {isSubmitting && <GhostLoader />}
-      <div className={action_row}>
-        <button
-          onClick={() => setShowInput(true)}
-          className={classnames(button_class, action)}
+      <div
+        style={{
+          position: "relative",
+          marginBottom: "30px"
+        }}
+      >
+        <Button
+          onClick={() => setShowModal(true)}
+          type="right_arrow"
+          size="large"
         >
-          add startup
-        </button>
+          ADD NEW STARTUP
+        </Button>
       </div>
-      <form className={standard_form} onSubmit={handleSubmit(onSubmit)}>
-        {showInput && (
-          <>
-            <div>
-              <i
-                className={classnames(input_icon, "fa fa-close")}
-                onClick={() => setShowInput(false)}
-              />
+
+      {showModal && (
+        <Modal
+          title="Add startup"
+          close={() => setShowModal(false)}
+          disableFoot={true}
+        >
+          <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
+            <div style={{ marginTop: "30px" }}>
               <input
-                placeholder="Dollar Press Ltd."
                 type="text"
-                name="variables.input.name"
+                placeholder={`I.e. "Money Press Inc."`}
+                autoComplete="off"
                 ref={register({ required: true })}
+                name="variables.input.name"
               />
+
+              <div
+                style={{
+                  marginTop: "5px",
+                  textAlign: "right"
+                }}
+              >
+                <Button type="input" value="OK" loading={isSubmitting} />
+              </div>
             </div>
-            <div>
-              <input type="submit" value="save" />
-              {isSubmitting && <i className="fa fa-spinner fa-spin" />}
-            </div>
-          </>
-        )}
-      </form>
+          </form>
+        </Modal>
+      )}
     </>
   );
-}
+};
 
-export default function DashboardPage() {
-  const [createdConnection, setCreatedConnection] = useState();
-  const [mutateConnection, { loading: connectionLoading }] = useMutation(
-    connectionPut
-  );
-
+export default function DashboardPage({ history }) {
   return (
-    <>
-      <div className={content_tag}>
-        <AddCreatives
-          mutateConnection={mutateConnection}
-          setCreatedConnection={setCreatedConnection}
-        />
-        {!connectionLoading && (
-          <Connections createdConnection={createdConnection} />
-        )}
-      </div>
-    </>
+    <Content maxWidth={1200}>
+      <CreateNewStartup
+        setDone={connectionId => {
+          console.log("connectionId...", connectionId);
+          history.push(`${startup_page}/${connectionId}`);
+        }}
+      />
+
+      <Connections history={history} />
+    </Content>
   );
 }
