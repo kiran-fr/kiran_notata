@@ -10,12 +10,12 @@ import {
   userGet,
   userInvitationsGet,
   accountGet,
-  accountInvitationsGet
+  accountInvitationsGet,
 } from "../../../Apollo/Queries";
 
 import {
   accountInvite,
-  userInvitationResponse
+  userInvitationResponse,
 } from "../../../Apollo/Mutations";
 
 // COMPONENTS
@@ -27,7 +27,7 @@ import classnames from "classnames";
 import {
   button_class,
   standard_form,
-  submit_button
+  submit_button,
 } from "../../elements/Style.module.css";
 
 import {
@@ -46,7 +46,7 @@ import {
   external_invitation_company,
   external_invitation_name,
   external_invitation_email,
-  external_invitation_buttons
+  external_invitation_buttons,
 } from "./Team.module.css";
 
 import {
@@ -54,7 +54,7 @@ import {
   Card,
   Table,
   Button,
-  Modal
+  Modal,
 } from "../../elements/NotataComponents/";
 
 function Invite({ account, user }) {
@@ -81,12 +81,12 @@ function Invite({ account, user }) {
                   createdAt: new Date().getTime(),
                   __typename: "AccountInvitation",
                   accountId: account.id,
-                  createdBy: user.cognitoIdentityId
-                }
-              ]
+                  createdBy: user.cognitoIdentityId,
+                },
+              ],
             };
-          }
-        }
+          },
+        },
       });
       event.target.reset();
       setShowModal(false);
@@ -124,7 +124,7 @@ function Invite({ account, user }) {
               <div
                 style={{
                   marginTop: "5px",
-                  textAlign: "right"
+                  textAlign: "right",
                 }}
               >
                 <Button type="input" value="OK" loading={isSubmitting} />
@@ -145,7 +145,7 @@ function PendingInvitations({ accountInvitations }) {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: email => <span>{email}</span>
+      render: email => <span>{email}</span>,
     },
 
     {
@@ -179,15 +179,15 @@ function PendingInvitations({ accountInvitations }) {
                   ) => ({
                     accountInvitationsGet: prev.accountInvitationsGet.filter(
                       ai => ai.email !== email
-                    )
-                  })
-                }
+                    ),
+                  }),
+                },
               });
             }}
           />
         );
-      }
-    }
+      },
+    },
   ];
 
   return (
@@ -211,8 +211,8 @@ function TeamMembers({ user, account }) {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: email => <span>{email}</span>
-    }
+      render: email => <span>{email}</span>,
+    },
 
     // {
     //   title: "",
@@ -257,7 +257,7 @@ function TeamMembers({ user, account }) {
       <div
         style={{
           padding: "10px",
-          color: "var(--color-orange)"
+          color: "var(--color-orange)",
         }}
       >
         You are currently the only member of this team.
@@ -301,7 +301,7 @@ function ExternalInvitations({ userInvitations }) {
             given_name,
             family_name,
             company,
-            email
+            email,
           } = invitation.createdByUser;
 
           return (
@@ -335,7 +335,7 @@ function ExternalInvitations({ userInvitations }) {
 
                     let variables = {
                       accountId: invitation.accountId,
-                      response: "ACCEPT"
+                      response: "ACCEPT",
                     };
 
                     try {
@@ -357,7 +357,7 @@ function ExternalInvitations({ userInvitations }) {
                   onClick={async () => {
                     let variables = {
                       accountId: invitation.accountId,
-                      response: "REJECT"
+                      response: "REJECT",
                     };
                     try {
                       setLoadReject(true);
@@ -371,10 +371,10 @@ function ExternalInvitations({ userInvitations }) {
                             return {
                               userInvitationsGet: prev.userInvitationsGet.filter(
                                 ui => ui.accountId !== invitation.accountId
-                              )
+                              ),
                             };
-                          }
-                        }
+                          },
+                        },
                       });
                     } catch (error) {
                       console.log("error", error);

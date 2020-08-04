@@ -28,7 +28,7 @@ import {
   drop_down,
   drop_down_ghost,
   drop_down_list,
-  drop_down_close
+  drop_down_close,
 } from "./Header.module.css";
 
 import { MenuIconItem } from "../elements/NotataComponents/";
@@ -51,63 +51,63 @@ const menuItems = [
   {
     label: "Home",
     iconClass: "fal fa-home",
-    link: dashboard
+    link: dashboard,
   },
   {
     label: "Reports",
     iconClass: "fal fa-chart-bar",
-    link: report
+    link: report,
   },
   {
     label: "Activities",
     iconClass: "fal fa-tasks",
     link: activities,
-    notifications: 0
+    notifications: 0,
   },
   {
     label: "Inbox",
     iconClass: "fal fa-inbox",
     link: inbox,
-    notifications: 0
-  }
+    notifications: 0,
+  },
 ];
 
 const moreMenuItems = [
   {
     label: "Templates",
     iconClass: "fal fa-copy",
-    link: templates
+    link: templates,
   },
   {
     label: "Tags",
     iconClass: "fal fa-tag",
-    link: tags
+    link: tags,
   },
   {
     label: "Profile",
     iconClass: "fal fa-user",
-    link: profile
+    link: profile,
   },
   {
     label: "Team",
     iconClass: "fal fa-users",
-    link: team
+    link: team,
   },
   {
     label: "Groups",
     iconClass: "fal fa-share-alt",
-    link: groups
+    link: groups,
   },
   {
     label: "Settings",
     iconClass: "fal fa-cog",
-    link: settings
+    link: settings,
   },
   {
     label: "Log out",
     iconClass: "fal fa-sign-out-alt",
-    link: signOut
-  }
+    link: signOut,
+  },
 ];
 
 export const DashboardHeader = () => {

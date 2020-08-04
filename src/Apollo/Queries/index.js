@@ -9,3 +9,4 @@ export { default as userInvitationsGet } from "./userInvitationsGet";
 export { default as logGet } from "./logGet";
 
 export { default as evaluationTemplateGet } from "./evaluationTemplateGet";
+export { default as evaluationTemplatesGet } from "./evaluationTemplatesGet";

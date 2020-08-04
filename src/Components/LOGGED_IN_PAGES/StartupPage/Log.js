@@ -22,7 +22,7 @@ import {
   not_ready,
   log_feed_type_SUBJECTIVE_SCORE,
   event_toggle_button,
-  empty_message
+  empty_message,
 } from "./Log.module.css";
 
 function LogInput({ user, connection }) {
@@ -54,10 +54,10 @@ function LogInput({ user, connection }) {
         dataPairs: [
           {
             key: "TEXT",
-            val: data.val
-          }
-        ]
-      }
+            val: data.val,
+          },
+        ],
+      },
     };
 
     mutate({
@@ -80,22 +80,22 @@ function LogInput({ user, connection }) {
             __typename: "SimpleUser",
             given_name: user.given_name,
             family_name: user.family_name,
-            email: user.email
+            email: user.email,
           },
           dataPairs: [
             {
               key: "TEXT",
               val: data.val,
-              __typename: "KeyVal"
-            }
-          ]
-        }
+              __typename: "KeyVal",
+            },
+          ],
+        },
       },
       updateQueries: {
         logGet: (prev, { mutationResult, queryVariables }) => ({
-          logGet: [...prev.logGet, mutationResult.data.logPut]
-        })
-      }
+          logGet: [...prev.logGet, mutationResult.data.logPut],
+        }),
+      },
     });
 
     event.target.reset();
@@ -127,7 +127,7 @@ function LogInput({ user, connection }) {
 export function Log({ connection, user }) {
   const [viewEvents, setViewEvents] = useState(false);
   const logQuery = useQuery(logGet, {
-    variables: { connectionId: connection.id }
+    variables: { connectionId: connection.id },
   });
 
   let log = [];

@@ -12,6 +12,7 @@ import { Content, Card, BreadCrumbs } from "../../elements/NotataComponents/";
 import { header_comp, sub_header } from "./StartupPage.module.css";
 
 import { SubjectiveScore } from "./SubjectiveScore";
+import { EvaluationBox } from "./EvaluationBox";
 import { Log } from "./Log";
 
 export default function StartupPage({ match, history }) {
@@ -27,7 +28,7 @@ export default function StartupPage({ match, history }) {
 
   let connection = {
     creative: {},
-    createdByUser: {}
+    createdByUser: {},
   };
   if (data) {
     connection = data.connectionGet;
@@ -45,12 +46,12 @@ export default function StartupPage({ match, history }) {
         list={[
           {
             val: "Dashboard",
-            link: `${dashboard}`
+            link: `${dashboard}`,
           },
           {
             val: `Startup: ${connection.creative.name}`,
-            link: `${startup_page}/${id}`
-          }
+            link: `${startup_page}/${id}`,
+          },
         ]}
       />
 
@@ -78,7 +79,9 @@ export default function StartupPage({ match, history }) {
           <SubjectiveScore connection={connection} user={user} />
         </Card>
 
-        <Card label="EVALUATIONS"></Card>
+        <Card label="EVALUATIONS">
+          <EvaluationBox connection={connection} user={user} />
+        </Card>
 
         <Card label="LOG/COMMENTS">
           <Log connection={connection} user={user} />

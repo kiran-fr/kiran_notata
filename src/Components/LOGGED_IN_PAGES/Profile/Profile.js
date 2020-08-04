@@ -12,7 +12,7 @@ import { userUpdate } from "../../../Apollo/Mutations";
 import {
   dashboard,
   evaluation_templates,
-  team_management
+  team_management,
 } from "../../../routes";
 
 // STYLES
@@ -35,7 +35,7 @@ import {
   get_new_code,
   new_code,
   verify_title,
-  success_message
+  success_message,
 } from "./Profile.module.css";
 
 function VerifyPhoneNumberComp({ phoneVerified }) {
@@ -88,7 +88,7 @@ function VerifyPhoneNumberComp({ phoneVerified }) {
         <div
           style={{
             marginTop: "5px",
-            textAlign: "right"
+            textAlign: "right",
           }}
         >
           <Button type="input" value="VERIFY" loading={isSubmitting} />
@@ -286,7 +286,7 @@ export default function Profile() {
           <div
             style={{
               marginTop: "5px",
-              textAlign: "right"
+              textAlign: "right",
             }}
           >
             <Button type="input" value="SAVE" loading={isSubmitting} />

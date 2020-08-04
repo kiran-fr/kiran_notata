@@ -8,13 +8,13 @@ import {
   responsive_md,
   responsive_lg,
   no_margin,
-  no_head
+  no_head,
 } from "./Table.module.css";
 
 let responsive_map = {
   sm: responsive_sm,
   md: responsive_md,
-  lg: responsive_lg
+  lg: responsive_lg,
 };
 
 export const Table = ({
@@ -23,7 +23,7 @@ export const Table = ({
   cell_content,
   loading,
   diableHead,
-  noMargin
+  noMargin,
 }) => {
   return (
     <table
@@ -51,7 +51,7 @@ export const Table = ({
                       cell_content
                     )}
                     style={{
-                      textAlign: c.centered ? "center" : "left"
+                      textAlign: c.centered ? "center" : "left",
                     }}
                   >
                     {c.title}
@@ -80,7 +80,7 @@ export const Table = ({
                     cell_content
                   )}
                   style={{
-                    textAlign: c.centered ? "center" : "left"
+                    textAlign: c.centered ? "center" : "left",
                   }}
                 >
                   {c.render(d[c.dataIndex])}

@@ -124,7 +124,7 @@ export default function PreProfile({ history }) {
           <div
             style={{
               marginTop: "5px",
-              textAlign: "right"
+              textAlign: "right",
             }}
           >
             <Button type="input" value="SAVE" loading={isSubmitting} />

@@ -9,7 +9,7 @@ export const Card = ({ maxWidth, noMargin, label, style, ...children }) => {
       className={classnames(container, noMargin && no_margin)}
       style={{
         ...style,
-        maxWidth: maxWidth ? maxWidth : "auto"
+        maxWidth: maxWidth ? maxWidth : "auto",
       }}
     >
       {label && <div className={card_label}>{label}</div>}

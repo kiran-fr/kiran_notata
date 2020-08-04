@@ -13,12 +13,12 @@ import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 import {
   evaluationTemplatePut,
   evaluationTemplateSectionPut,
-  evaluationTemplateSectionDelete
+  evaluationTemplateSectionDelete,
 } from "../../../../Apollo/Mutations";
 import {
   profile,
   evaluation_template,
-  evaluation_templates
+  evaluation_templates,
 } from "../../../../routes";
 
 import {
@@ -27,7 +27,7 @@ import {
   Table,
   Content,
   Modal,
-  BreadCrumbs
+  BreadCrumbs,
 } from "../../../elements/NotataComponents/";
 
 import { delete_bucket, delete_option } from "./EvaluationTemplate.module.css";
@@ -47,7 +47,7 @@ function NameAndDescription({ template }) {
   const onSubmit = async (data, event) => {
     let variables = {
       id: template.id,
-      ...data
+      ...data,
     };
     try {
       let res = await mutate({
@@ -56,9 +56,9 @@ function NameAndDescription({ template }) {
           __typename: "Mutation",
           evaluationTemplatePut: {
             ...template,
-            ...data.input
-          }
-        }
+            ...data.input,
+          },
+        },
       });
     } catch (error) {
       console.log(error);
@@ -102,8 +102,8 @@ function AddNewSection({ id, setDone }) {
       let res = await mutate({
         variables: {
           templateId: id,
-          input: name
-        }
+          input: name,
+        },
       });
       let item = res.data.evaluationTemplateSectionPut;
       setDone(item.id);
@@ -128,7 +128,7 @@ function AddNewSection({ id, setDone }) {
       <div
         style={{
           marginTop: "5px",
-          textAlign: "right"
+          textAlign: "right",
         }}
       >
         <Button type="input" value="OK" loading={isSubmitting} />
@@ -140,9 +140,9 @@ function AddNewSection({ id, setDone }) {
 function Delete({ sectionId, template }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateSectionDelete, {
     refetchQueries: [
-      { query: evaluationTemplateGet, variables: { id: template.id } }
+      { query: evaluationTemplateGet, variables: { id: template.id } },
     ],
-    awaitRefetchQueries: true
+    awaitRefetchQueries: true,
   });
 
   let section = (template.sections || []).find(s => s.id === sectionId);
@@ -196,7 +196,7 @@ export default function EvaluationTemplate({ match, history }) {
       key: "delete",
       width: 20,
       className: delete_bucket,
-      render: sectionId => <Delete sectionId={sectionId} template={template} />
+      render: sectionId => <Delete sectionId={sectionId} template={template} />,
     },
 
     {
@@ -236,7 +236,7 @@ export default function EvaluationTemplate({ match, history }) {
             </div>
           </div>
         );
-      }
+      },
     },
 
     {
@@ -254,8 +254,8 @@ export default function EvaluationTemplate({ match, history }) {
             }}
           />
         );
-      }
-    }
+      },
+    },
   ];
 
   return (
@@ -264,12 +264,12 @@ export default function EvaluationTemplate({ match, history }) {
         list={[
           {
             val: "all templates",
-            link: `${evaluation_templates}`
+            link: `${evaluation_templates}`,
           },
           {
             val: `Template: ${template.name}`,
-            link: `${evaluation_template}/${id}`
-          }
+            link: `${evaluation_template}/${id}`,
+          },
         ]}
       />
       <Content maxWidth={600}>

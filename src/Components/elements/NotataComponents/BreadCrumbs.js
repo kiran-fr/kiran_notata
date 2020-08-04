@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import {
   breadcrumb_container,
-  breadcrumb_link
+  breadcrumb_link,
 } from "./BreadCrumbs.module.css";
 
 export function BreadCrumbs({ list }) {

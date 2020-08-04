@@ -12,13 +12,13 @@ import Question from "./QuestionComp";
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 import {
   evaluationQuestionPut,
-  evaluationTemplateSectionPut
+  evaluationTemplateSectionPut,
 } from "../../../../Apollo/Mutations";
 
 import {
   profile,
   evaluation_template,
-  evaluation_templates
+  evaluation_templates,
 } from "../../../../routes";
 
 import { standard_form } from "../../../elements/Style.module.css";
@@ -32,7 +32,7 @@ import {
   Table,
   Content,
   Modal,
-  BreadCrumbs
+  BreadCrumbs,
 } from "../../../elements/NotataComponents/";
 
 function NameAndDescription({ template, section }) {
@@ -49,7 +49,7 @@ function NameAndDescription({ template, section }) {
   const onSubmit = async (data, event) => {
     let variables = {
       id: section.id,
-      ...data
+      ...data,
     };
 
     try {
@@ -101,8 +101,8 @@ function NewQuestion({ sectionId, templateId }) {
           sectionId: sectionId,
           input: {
             name: "New question",
-            inputType: "CHECK"
-          }
+            inputType: "CHECK",
+          },
         };
 
         try {
@@ -111,9 +111,9 @@ function NewQuestion({ sectionId, templateId }) {
             refetchQueries: [
               {
                 query: evaluationTemplateGet,
-                variables: { id: templateId }
-              }
-            ]
+                variables: { id: templateId },
+              },
+            ],
           });
         } catch (error) {
           console.log("error", error);
@@ -162,16 +162,16 @@ export default function EvaluationTemplateSection({ match }) {
         list={[
           {
             val: "all templates",
-            link: `${evaluation_templates}`
+            link: `${evaluation_templates}`,
           },
           {
             val: `Template: ${template.name}`,
-            link: `${evaluation_template}/${id}`
+            link: `${evaluation_template}/${id}`,
           },
           {
             val: `Section: ${section.name}`,
-            link: `${evaluation_template}/${id}/${sectionId}`
-          }
+            link: `${evaluation_template}/${id}/${sectionId}`,
+          },
         ]}
       />
       <Content maxWidth={600}>

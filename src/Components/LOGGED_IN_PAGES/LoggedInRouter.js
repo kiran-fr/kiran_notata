@@ -23,7 +23,7 @@ import {
   evaluation_templates,
   evaluation_template,
   startup_page,
-  pre_profile
+  pre_profile,
 } from "../../routes";
 
 // Landing page / list
