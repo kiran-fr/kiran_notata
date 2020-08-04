@@ -272,7 +272,7 @@ export default function EvaluationTemplate({ match, history }) {
           }
         ]}
       />
-      <Content maxWidth={1200}>
+      <Content maxWidth={600}>
         <NameAndDescription template={template} />
 
         <Card style={{ paddingTop: "5px" }}>

@@ -174,7 +174,7 @@ export default function EvaluationTemplateSection({ match }) {
           }
         ]}
       />
-      <Content maxWidth={1200}>
+      <Content maxWidth={600}>
         <NameAndDescription template={template} section={section} />
 
         {(section.questions || []).map((question, i) => (

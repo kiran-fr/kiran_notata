@@ -164,7 +164,7 @@ export default function EvaluationTemplates(props) {
           }
         ]}
       />
-      <Content maxWidth={1200}>
+      <Content maxWidth={600}>
         <h1>Evaluation templates</h1>
 
         <Card style={{ paddingTop: "5px" }}>
