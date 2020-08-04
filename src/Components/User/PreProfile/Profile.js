@@ -20,7 +20,7 @@ import validatePhoneNumber from "../../../utils/validatePhoneNumber";
 
 import { omit } from "lodash";
 
-import { Content, Card, Button } from "../../elements/NotataComponents/";
+import { Content, Card, Button } from "../../elements/";
 
 export default function PreProfile({ history }) {
   const [mutate] = useMutation(userUpdate);

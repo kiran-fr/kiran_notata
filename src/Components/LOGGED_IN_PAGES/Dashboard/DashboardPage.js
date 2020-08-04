@@ -3,18 +3,15 @@ import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import classnames from "classnames";
 
-import { GhostLoader } from "../../elements/GhostLoader";
 import Connections from "./Connections";
 
 import { creativePut, connectionPut } from "../../../Apollo/Mutations";
-
-import { standard_form } from "../../elements/Style.module.css";
 
 import { input_icon } from "./DashboardPage.module.css";
 
 import { startup_page } from "../../../routes";
 
-import { Button, Content, Modal } from "../../elements/NotataComponents/";
+import { Button, Content, Modal, GhostLoader } from "../../elements/";
 
 const CreateNewStartup = ({ setDone }) => {
   const [showModal, setShowModal] = useState(false);

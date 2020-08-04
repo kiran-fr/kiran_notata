@@ -1,35 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { EnterUsername } from "./EnterUsername";
 import { ConfirmUser } from "./ConfirmUser";
 
-export class ForgotPassword extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      state: "enterUsername"
-    };
+export function ForgotPassword({ location }) {
+  // const [ enterUsername, setEnterUsername ] = useState(false);
+  const [confirmEmail, setConfirmEmail] = useState(false);
+  const [email, setEmail] = useState();
+
+  if (!confirmEmail) {
+    return (
+      <EnterUsername
+        location={location}
+        done={email => {
+          setEmail(email);
+          setConfirmEmail(true);
+        }}
+      />
+    );
   }
 
-  render() {
-    const { state } = this.state;
-    const { location } = this.props;
-
-    if (state === "enterUsername") {
-      return (
-        <EnterUsername
-          location={location}
-          done={email => {
-            this.setState({
-              email,
-              state: "confirmEmail"
-            });
-          }}
-        />
-      );
-    }
-    if (state === "confirmEmail") {
-      return <ConfirmUser email={this.state.email} />;
-    }
-    return null;
+  if (confirmEmail) {
+    return <ConfirmUser email={email} />;
   }
+
+  return <span>?</span>;
 }

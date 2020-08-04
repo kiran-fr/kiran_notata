@@ -3,12 +3,6 @@ import classnames from "classnames";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import { GhostLoader } from "../../../elements/GhostLoader";
-import BigButton from "../../../elements/BigButton";
-
-import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
-// import Saver from "../../../elements/Saver";
-
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 import {
   evaluationTemplatePut,
@@ -28,7 +22,8 @@ import {
   Content,
   Modal,
   BreadCrumbs,
-} from "../../../elements/NotataComponents/";
+  GhostLoader,
+} from "../../../elements/";
 
 import { delete_bucket, delete_option } from "./EvaluationTemplate.module.css";
 

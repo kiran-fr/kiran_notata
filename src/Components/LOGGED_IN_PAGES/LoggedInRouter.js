@@ -47,61 +47,57 @@ import EvaluationTemplate from "./Templates/EvaluationTemplate/EvaluationTemplat
 import EvaluationTemplateSection from "./Templates/EvaluationTemplateSection/";
 
 // Loader
-import { GhostLoader } from "../elements/GhostLoader";
+import { GhostLoader } from "../elements/";
 
 // Styles
-import { container, inner_container } from "../elements/Style.module.css";
-
 import SideBar from "../SideBar/SideBar";
 import Header from "../Header/Header";
 
 export const RouterComponent = ({ history }) => {
   return (
-    <div className={inner_container}>
-      <Switch>
-        <Route exact path={dashboard} component={Dashboard} />
+    <Switch>
+      <Route exact path={dashboard} component={Dashboard} />
 
-        <Route exact path={profile} component={Profile} />
+      <Route exact path={profile} component={Profile} />
 
-        <Route exact path={report} component={Report} />
+      <Route exact path={report} component={Report} />
 
-        <Route exact path={inbox} component={Inbox} />
+      <Route exact path={inbox} component={Inbox} />
 
-        <Route exact path={activities} component={Activities} />
+      <Route exact path={activities} component={Activities} />
 
-        <Route exact path={tags} component={Tags} />
+      <Route exact path={tags} component={Tags} />
 
-        <Route exact path={groups} component={Groups} />
+      <Route exact path={groups} component={Groups} />
 
-        <Route exact path={settings} component={Settings} />
+      <Route exact path={settings} component={Settings} />
 
-        <Route exact path={team} component={Team} />
+      <Route exact path={team} component={Team} />
 
-        <Route
-          exact
-          path={evaluation_templates}
-          component={EvaluationTemplates}
-        />
+      <Route
+        exact
+        path={evaluation_templates}
+        component={EvaluationTemplates}
+      />
 
-        <Route
-          exact
-          path={`${evaluation_template}/:id`}
-          component={EvaluationTemplate}
-        />
+      <Route
+        exact
+        path={`${evaluation_template}/:id`}
+        component={EvaluationTemplate}
+      />
 
-        <Route
-          exact
-          path={`${evaluation_template}/:id/:sectionId`}
-          component={EvaluationTemplateSection}
-        />
+      <Route
+        exact
+        path={`${evaluation_template}/:id/:sectionId`}
+        component={EvaluationTemplateSection}
+      />
 
-        <Route exact path={`${startup_page}/:id`} component={StartupPage} />
+      <Route exact path={`${startup_page}/:id`} component={StartupPage} />
 
-        <Route exact path={team} component={Team} />
+      <Route exact path={team} component={Team} />
 
-        <Route render={() => <div>404</div>} />
-      </Switch>
-    </div>
+      <Route render={() => <div>404</div>} />
+    </Switch>
   );
 };
 
@@ -133,7 +129,7 @@ const WrapperComponent = ({ ...props }) => {
     <>
       <Header />
       <SideBar />
-      <div className={container}>
+      <div className="logged_in_page_content">
         <RouterComponent {...props} />
       </div>
     </>

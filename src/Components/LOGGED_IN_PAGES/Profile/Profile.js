@@ -28,7 +28,7 @@ import validatePhoneNumber from "../../../utils/validatePhoneNumber";
 
 import { omit } from "lodash";
 
-import { Content, Card, Button } from "../../elements/NotataComponents/";
+import { Content, Card, Button } from "../../elements/";
 
 import {
   verified_phone_number,
@@ -43,7 +43,6 @@ function VerifyPhoneNumberComp({ phoneVerified }) {
   const [success, setSuccess] = useState(false);
 
   const { register, handleSubmit, formState, getValues, setValue } = useForm();
-
   const { isSubmitting } = formState;
 
   const onSubmit = async (data, event) => {

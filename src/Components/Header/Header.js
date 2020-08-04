@@ -10,7 +10,6 @@ const HeaderComponent = () => {
         <div>
           <Switch>
             <Route path={dashboard} component={DashboardHeader} />
-            {/*<Route path={profile} component={DashboardHeader} />*/}
             <Route render={() => null} />
           </Switch>
         </div>

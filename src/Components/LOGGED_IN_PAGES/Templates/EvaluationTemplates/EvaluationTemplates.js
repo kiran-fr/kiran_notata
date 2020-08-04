@@ -11,7 +11,7 @@ import {
   Content,
   Modal,
   BreadCrumbs,
-} from "../../../elements/NotataComponents/";
+} from "../../../elements/";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
 

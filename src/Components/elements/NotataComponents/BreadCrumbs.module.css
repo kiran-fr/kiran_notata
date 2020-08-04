@@ -1,6 +1,8 @@
 .breadcrumb_container {
-  left: 30px;
+  left: 12px;
   font-size: 12px;
+  position: relative;
+  top: 12px;
 }
 
 .breadcrumb_link {

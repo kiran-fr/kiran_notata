@@ -3,111 +3,56 @@ import { Auth } from "aws-amplify";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import {
-  container,
-  small_container,
-  center_container,
-  inner_container,
-  success_box,
-  error_box
-} from "../../elements/Style.module.css";
 import { login } from "../../../routes";
+import { useForm } from "react-hook-form";
 
+import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
 
-export class EnterUsername extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      loading: false
-    };
-  }
+export function EnterUsername({ done }) {
+  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { isSubmitting } = formState;
 
-  render() {
-    const submit = e => {
-      e.preventDefault();
+  const onSubmit = async (data, event) => {
+    const { username } = data;
+    try {
+      await Auth.forgotPassword(username);
+      done(username);
+    } catch (error) {
+      /* Will not throw errors */
+    }
+  };
 
-      this.setState({ loading: true });
+  return (
+    <Content maxWidth={600} center>
+      <h1>Forgot your password?</h1>
+      <Card style={{ paddingBottom: "20px" }}>
+        <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
+          <label for="username">Your email</label>
+          <input
+            type="text"
+            placeholder="name@mail.com"
+            autoComplete="off"
+            ref={register({ required: true })}
+            name="username"
+            id="username"
+          />
 
-      const username = this.state.email;
-      Auth.forgotPassword(username)
-        .then(data => {
-          this.props.done(username);
-          this.setState({
-            loading: false
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          if (err.code === "UserNotFoundException") {
-            this.setState({
-              error: "User not found.",
-              loading: false
-            });
-          } else if (err.code === "LimitExceededException") {
-            this.setState({
-              error:
-                "You have tried to many times. Wait a few minutes, and try again.",
-              loading: false
-            });
-          } else {
-            this.setState({
-              error: "Oops... something went wrong...",
-              loading: false
-            });
-          }
-        });
-    };
+          <div style={{ textAlign: "right" }}>
+            <Button type="input" value="Log in" loading={isSubmitting} />
+          </div>
+        </form>
 
-    const setData = data => {
-      this.setState({
-        ...data,
-        error: false,
-        loading: false
-      });
-    };
-
-    const { location } = this.props;
-
-    return (
-      <div className={classnames(container, small_container, center_container)}>
-        <div className={inner_container}>
-          <form onSubmit={submit}>
-            <div>
-              <h1>Forgot your password?</h1>
-              <div style={{ marginBottom: "20px" }}>
-                <input
-                  type="text"
-                  placeholder="email"
-                  autoComplete="off"
-                  value={this.state.email}
-                  onChange={e => setData({ email: e.target.value })}
-                />
-              </div>
-
-              <div>
-                <input type="submit" value="Reset" />
-                {this.state.loading && <i className="fa fa-spinner fa-spin" />}
-              </div>
-
-              <div>
-                <Link
-                  to={{
-                    pathname: login,
-                    state: location.state
-                  }}
-                >
-                  Login
-                </Link>
-              </div>
-
-              {this.state.error && (
-                <div className={error_box}>{this.state.error}</div>
-              )}
-            </div>
-          </form>
+        <div
+          style={{
+            position: "absolute",
+            fontSize: "12px",
+            bottom: "-23px",
+            left: "2px",
+          }}
+        >
+          <Link to={login}>Send</Link>
         </div>
-      </div>
-    );
-  }
+      </Card>
+    </Content>
+  );
 }

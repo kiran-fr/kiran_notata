@@ -85,11 +85,11 @@ time,
 mark,
 audio,
 video {
-  /*  margin: 0;
+  margin: 0;
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;*/
+  font: inherit;
 }
 
 article,
@@ -168,6 +168,30 @@ h1 {
   font-weight: var(--font-weight-regular);
   margin-top: 0;
   font-size: 32px;
+}
+
+.logged_in_page_content {
+  padding-top: 50px;
+  padding-left: 205px;
+  position: relative;
+  margin-right: 205px;
+}
+
+@media screen and (min-width: 900px) {
+  .mobile_only {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .desktop_only {
+    display: none;
+  }
+
+  .logged_in_page_content {
+    padding-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 .notata_form {
@@ -303,18 +327,6 @@ h1 {
 .standard_form input[type="submit"]:hover {
   background: #2c922c;
 }*/
-
-@media screen and (min-width: 900px) {
-  .mobile_only {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .desktop_only {
-    display: none;
-  }
-}
 
 /**
 

@@ -4,9 +4,6 @@ import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { Mutation } from "@apollo/client/react/components";
 import { useForm } from "react-hook-form";
 
-import { GhostLoader } from "../../../elements/GhostLoader";
-
-import Saver from "../../../elements/Saver";
 import Question from "./QuestionComp";
 
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
@@ -21,8 +18,6 @@ import {
   evaluation_templates,
 } from "../../../../routes";
 
-import { standard_form } from "../../../elements/Style.module.css";
-
 import { section_style } from "./EvaluationTemplateSection.module.css";
 import EvaluationTemplate from "../EvaluationTemplate/EvaluationTemplate";
 
@@ -33,7 +28,8 @@ import {
   Content,
   Modal,
   BreadCrumbs,
-} from "../../../elements/NotataComponents/";
+  GhostLoader,
+} from "../../../elements/";
 
 function NameAndDescription({ template, section }) {
   const [mutate] = useMutation(evaluationTemplateSectionPut);

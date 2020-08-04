@@ -13,7 +13,7 @@ import {
   modal_footer,
 } from "./Modal.module.css";
 
-import { Button } from "../NotataComponents/";
+import { Button } from "../";
 
 export const Modal = ({ close, submit, title, disableFoot, ...children }) => {
   function downHandler({ key }) {

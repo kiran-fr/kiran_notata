@@ -17,9 +17,7 @@ import ScrollToTop from "./ScrollToTop";
 
 // PUBLIC
 import FrontPage from "./Containers/FrontPage";
-import AboutPage from "./Components/AboutPage/AboutPage";
 import { FooterSection } from "./Components/Footer/Footer";
-// import { Header } from "./Components/Header/Header";
 
 // USER
 import { Signup } from "./Components/User/Signup/Signup";
@@ -41,7 +39,6 @@ import { LoggedInRouter } from "./Components/LOGGED_IN_PAGES/LoggedInRouter";
 
 // PUBLIC
 export const frontpage = "/";
-export const aboutpage = "/about";
 
 // USER
 export const signOut = "/signout";
@@ -77,7 +74,6 @@ export const Routes = () => (
     <ScrollToTop>
       <Switch>
         <Route exact path={frontpage} component={FrontPage} />
-        <Route exact path={aboutpage} component={AboutPage} />
 
         <Route exact path={signup} component={Signup} />
         <Route exact path={login} component={Login} />

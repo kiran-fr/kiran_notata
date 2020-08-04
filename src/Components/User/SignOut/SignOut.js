@@ -1,22 +1,14 @@
 import React from "react";
 import { Auth } from "aws-amplify";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
-import { login } from "../../../routes";
-import {
-  container,
-  center_container,
-  small_container,
-  inner_container,
-  success_box
-} from "../../elements/Style.module.css";
+import { Content, SuccessBox } from "../../elements/";
 
 export class SignOut extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       signOut: false,
-      signOutError: false
+      signOutError: false,
     };
   }
 
@@ -32,18 +24,13 @@ export class SignOut extends React.Component {
 
   render() {
     return (
-      <div className={classnames(container, small_container, center_container)}>
-        <div className={inner_container}>
-          <div className={success_box}>
-            <h4>Bye bye 😭</h4>
-            <div>You have been logged out!</div>
-          </div>
+      <Content center maxWidth={600}>
+        <SuccessBox title="Bye bye 😭">You have been logged out!</SuccessBox>
 
-          <div>
-            <a href="/login">Log in</a>
-          </div>
+        <div style={{ textAlign: "right" }}>
+          <a href="/login">Log in</a>
         </div>
-      </div>
+      </Content>
     );
   }
 }

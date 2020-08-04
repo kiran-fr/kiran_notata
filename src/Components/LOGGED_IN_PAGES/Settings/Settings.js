@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Content } from "../../elements/NotataComponents/";
+import { Content } from "../../elements/";
 
 const Comp = () => {
   return (

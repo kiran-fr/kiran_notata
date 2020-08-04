@@ -3,5 +3,16 @@
   margin-top: 50px;
 }
 
+.center_content {
+  display: flex;
+  min-height: 100vh;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -50px;
+}
+
 .content {
+  width: 100%;
 }

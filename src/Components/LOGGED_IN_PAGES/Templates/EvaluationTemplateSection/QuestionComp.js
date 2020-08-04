@@ -5,10 +5,6 @@ import { useMutation } from "@apollo/client";
 import { omit } from "lodash";
 import classnames from "classnames";
 
-// import DeleteQuestion from "./DeleteQuestionComp";
-// import TextAreaAutoHeight from "../../../elements/TextAreaAutoHeight";
-// import InputNumeric from "../../../elements/InputNumeric";
-
 import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 
 import {
@@ -39,11 +35,7 @@ import {
   option_save,
 } from "./QuestionComp.module.css";
 
-import {
-  Tag,
-  SimpleInputForm,
-  InputTrafficLight,
-} from "../../../elements/NotataComponents/";
+import { Tag, SimpleInputForm, InputTrafficLight } from "../../../elements/";
 
 const inputMap = [
   {

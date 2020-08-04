@@ -6,7 +6,7 @@ import { useQuery } from "@apollo/client";
 import { connectionsGet } from "../../../Apollo/Queries";
 import { startup_page } from "../../../routes";
 
-import { Button, Table, Card, Tag } from "../../elements/NotataComponents/";
+import { Button, Table, Card, Tag } from "../../elements/";
 
 // STYLES
 import classnames from "classnames";

@@ -18,17 +18,8 @@ import {
   userInvitationResponse,
 } from "../../../Apollo/Mutations";
 
-// COMPONENTS
-import { GhostLoader } from "../../elements/GhostLoader";
-
 // STYLES
 import classnames from "classnames";
-
-import {
-  button_class,
-  standard_form,
-  submit_button,
-} from "../../elements/Style.module.css";
 
 import {
   members_list,
@@ -55,7 +46,8 @@ import {
   Table,
   Button,
   Modal,
-} from "../../elements/NotataComponents/";
+  GhostLoader,
+} from "../../elements/";
 
 function Invite({ account, user }) {
   const [showModal, setShowModal] = useState(false);

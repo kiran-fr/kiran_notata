@@ -18,7 +18,7 @@ import classnames from "classnames";
 
 import { sidebar_container, menu_container } from "./SideBar.module.css";
 
-import { MenuIconItem } from "../elements/NotataComponents/";
+import { MenuIconItem } from "../elements/";
 
 let dashboard = "/dashboard";
 let profile = "/dashboard/profile";

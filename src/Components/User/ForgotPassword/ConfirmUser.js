@@ -1,17 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { Link, Redirect } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import {
-  container,
-  small_container,
-  center_container,
-  inner_container,
-  success_box,
-  error_box
-} from "../../elements/Style.module.css";
 import { login } from "../../../routes";
+import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
 
 const makeid = length => {
   var result = "";
@@ -24,115 +18,90 @@ const makeid = length => {
   return result;
 };
 
-export class ConfirmUser extends React.Component {
-  submit = e => {
-    e.preventDefault();
+export function ConfirmUser({ email }) {
+  const [errorMessage, setErrorMessage] = useState();
+  const [successMessage, setSuccessMessage] = useState();
 
-    this.setState({ loading: true });
+  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { isSubmitting } = formState;
 
-    Auth.forgotPasswordSubmit(
-      this.props.email,
-      this.state.code,
-      this.state.newPassword
-    )
-      .then(data => {
-        this.setState({
-          message: "New password has been reset. You can now log in!",
-          loading: false,
-          success: true
-        });
-      })
-      .catch(err => {
-        console.log("failed with error", err);
-        this.setState({
-          error: "Something went wrong...",
-          loading: false
-        });
-      });
+  const ids = {
+    form: makeid(8),
+    code: makeid(8),
+    password: makeid(8),
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: "",
-      newPassword: "",
-      message: "Code has been sent to your email",
-      loading: false,
-      success: false
-    };
-  }
+  const onSubmit = async (data, event) => {
+    // const { code, password } = data;
+    const code = data[ids.code];
+    const password = data[ids.password];
 
-  render() {
-    const setData = data => {
-      this.setState({
-        ...data,
-        error: "",
-        loading: false
-      });
-    };
+    try {
+      await Auth.forgotPasswordSubmit(email, code, password);
+      setSuccessMessage("New password has been reset. You can now log in!");
+      setErrorMessage(null);
+    } catch (error) {
+      console.log("failed with error", error);
+      setErrorMessage("Something went wrong...");
+      setSuccessMessage(null);
+    }
+  };
 
-    return (
-      <div className={classnames(container, small_container, center_container)}>
-        <div className={inner_container}>
+  return (
+    <Content maxWidth={600} center>
+      <h1>Set new password</h1>
+
+      {!successMessage && (
+        <Card style={{ paddingBottom: "20px" }}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="notata_form"
+            name={ids.form}
+            id={ids.form}
+          >
+            <label for={ids.code}>Code sent to your mail</label>
+            <input
+              autoComplete="new-password"
+              type="text"
+              placeholder="Code"
+              ref={register({ required: true })}
+              autoComplete="off"
+              name={ids.code}
+              id={ids.code}
+            />
+
+            <label for={ids.password}>Your new password</label>
+            <input
+              autoComplete="new-password"
+              type="password"
+              placeholder="Shh... it's a secret..."
+              ref={register({ required: true })}
+              autoComplete="off"
+              name={ids.password}
+              id={ids.password}
+            />
+
+            <div style={{ textAlign: "right" }}>
+              <Button
+                type="input"
+                value="Set password"
+                loading={isSubmitting}
+              />
+            </div>
+          </form>
+        </Card>
+      )}
+
+      {errorMessage && <ErrorBox>{errorMessage}</ErrorBox>}
+
+      {successMessage && (
+        <>
+          <SuccessBox>{successMessage}</SuccessBox>
           <div>
-            <h1>Set new password</h1>
-
-            {this.state.message && (
-              <div className={success_box} style={{ marginBottom: "20px" }}>
-                {this.state.message}
-              </div>
-            )}
-
-            {this.state.success && (
-              <div>
-                <Link to={login}>Log in</Link>
-              </div>
-            )}
-
-            {!this.state.success && (
-              <div>
-                <form onSubmit={this.submit} name={makeid(8)} id={makeid(8)}>
-                  <div style={{ marginBottom: "20px" }}>
-                    <input
-                      autoComplete="new-password"
-                      type="text"
-                      placeholder="Verification code"
-                      name={makeid(8)}
-                      id={makeid(8)}
-                      value={this.state.code}
-                      onChange={e => setData({ code: e.target.value })}
-                    />
-                  </div>
-
-                  <div style={{ marginBottom: "20px" }}>
-                    <input
-                      autoComplete="new-password"
-                      type="password"
-                      placeholder="New password"
-                      name={makeid(8)}
-                      id={makeid(8)}
-                      value={this.state.newPassword}
-                      onChange={e => setData({ newPassword: e.target.value })}
-                    />
-                  </div>
-
-                  <div>
-                    <input type="submit" value="Set new password" />
-                    {this.state.loading && (
-                      <i className="fa fa-spinner fa-spin" />
-                    )}
-                  </div>
-                </form>
-
-                {this.state.error && (
-                  <div className={error_box}>{this.state.error}</div>
-                )}
-              </div>
-            )}
+            <Link to={login}>Log in</Link>
           </div>
-        </div>
-      </div>
-    );
-
-  }
+        </>
+      )}
+    </Content>
+  );
 }

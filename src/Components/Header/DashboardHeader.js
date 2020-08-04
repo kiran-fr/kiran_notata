@@ -6,6 +6,7 @@ import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { userGet } from "../../Apollo/Queries";
 
 // import {
+//   frontpage,
 //   dashboard,
 //   profile,
 //   report,
@@ -31,10 +32,11 @@ import {
   drop_down_close,
 } from "./Header.module.css";
 
-import { MenuIconItem } from "../elements/NotataComponents/";
+import { MenuIconItem } from "../elements/";
 
 import classnames from "classnames";
 
+let frontpage = "/";
 let dashboard = "/dashboard";
 let profile = "/dashboard/profile";
 let report = "/dashboard/report";
@@ -110,7 +112,7 @@ const moreMenuItems = [
   },
 ];
 
-export const DashboardHeader = () => {
+export const DashboardHeader = ({ history }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data, loading, error } = useQuery(userGet);
 
@@ -122,7 +124,12 @@ export const DashboardHeader = () => {
 
   return (
     <div className={container}>
-      <div className={classnames(logo, "desktop_only")}>NOTATA</div>
+      <div
+        className={classnames(logo, "desktop_only")}
+        onClick={() => history.push(frontpage)}
+      >
+        NOTATA
+      </div>
 
       <div className={classnames(icons, "mobile_only")}>
         {menuItems.map((item, i) => (

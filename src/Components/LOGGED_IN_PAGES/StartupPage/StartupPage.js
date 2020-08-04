@@ -7,7 +7,7 @@ import { userGet, connectionGet } from "../../../Apollo/Queries";
 
 import { dashboard, startup_page } from "../../../routes";
 
-import { Content, Card, BreadCrumbs } from "../../elements/NotataComponents/";
+import { Content, Card, BreadCrumbs } from "../../elements/";
 
 import { header_comp, sub_header } from "./StartupPage.module.css";
 
