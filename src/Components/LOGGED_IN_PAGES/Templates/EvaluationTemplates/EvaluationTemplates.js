@@ -10,7 +10,7 @@ import {
   Table,
   Content,
   Modal,
-  BreadCrumbs
+  BreadCrumbs,
 } from "../../../elements/NotataComponents/";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
@@ -19,19 +19,19 @@ import { accountGet } from "../../../../Apollo/Queries";
 
 import {
   evaluationTemplatePut,
-  evaluationTemplateDelete
+  evaluationTemplateDelete,
 } from "../../../../Apollo/Mutations";
 
 import {
   profile,
   evaluation_template,
-  evaluation_templates
+  evaluation_templates,
 } from "../../../../routes";
 
 function Delete({ id, templates }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
     refetchQueries: [{ query: accountGet }],
-    awaitRefetchQueries: true
+    awaitRefetchQueries: true,
   });
 
   let template = (templates || []).find(t => t.id === id);
@@ -87,7 +87,7 @@ const CreateNewTemplate = ({ setDone }) => {
         <div
           style={{
             marginTop: "5px",
-            textAlign: "right"
+            textAlign: "right",
           }}
         >
           <Button type="input" value="OK" loading={isSubmitting} />
@@ -116,7 +116,7 @@ export default function EvaluationTemplates(props) {
       key: "delete",
       width: 20,
       className: delete_bucket,
-      render: id => <Delete id={id} templates={templates} />
+      render: id => <Delete id={id} templates={templates} />,
     },
 
     {
@@ -134,7 +134,7 @@ export default function EvaluationTemplates(props) {
             </div>
           </span>
         );
-      }
+      },
     },
 
     {
@@ -150,8 +150,8 @@ export default function EvaluationTemplates(props) {
             props.history.push(path);
           }}
         />
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -160,11 +160,11 @@ export default function EvaluationTemplates(props) {
         list={[
           {
             val: "all templates",
-            link: `${evaluation_templates}`
-          }
+            link: `${evaluation_templates}`,
+          },
         ]}
       />
-      <Content maxWidth={1200}>
+      <Content maxWidth={600}>
         <h1>Evaluation templates</h1>
 
         <Card style={{ paddingTop: "5px" }}>

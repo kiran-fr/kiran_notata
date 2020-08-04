@@ -11,7 +11,7 @@ import {
   subjective_score_each,
   set_score_container,
   set_score_each,
-  active_score
+  active_score,
 } from "./SubjectiveScore.module.css";
 import classnames from "classnames";
 
@@ -22,7 +22,7 @@ export function SubjectiveScore({ connection, user }) {
   let averageScore;
   if (subjectiveScores.length) {
     let { score: ttl } = subjectiveScores.reduce((a, b) => ({
-      score: a.score + b.score
+      score: a.score + b.score,
     }));
     averageScore = (ttl / subjectiveScores.length).toFixed(1);
   }
@@ -69,7 +69,7 @@ export function SubjectiveScore({ connection, user }) {
             onClick={() => {
               let variables = {
                 id: connection.id,
-                score: sc
+                score: sc,
               };
 
               let sS = subjectiveScores || [];
@@ -96,8 +96,8 @@ export function SubjectiveScore({ connection, user }) {
                     email: user.email,
                     family_name: user.family_name,
                     given_name: user.given_name,
-                    __typename: "SimpleUser"
-                  }
+                    __typename: "SimpleUser",
+                  },
                 };
                 sS = [...subjectiveScores, optimisticItem];
               }
@@ -117,9 +117,9 @@ export function SubjectiveScore({ connection, user }) {
                   __typename: "Mutation",
                   connectionSubjectiveScorePut: {
                     ...connection,
-                    subjectiveScores: sS
-                  }
-                }
+                    subjectiveScores: sS,
+                  },
+                },
               });
             }}
           >

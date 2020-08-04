@@ -1,15 +1,10 @@
-import React from "react";
-
-// RESOURCES
+import React, { useState } from "react";
 import moment from "moment";
 
 // API
 import { useQuery } from "@apollo/client";
 import { connectionsGet } from "../../../Apollo/Queries";
 import { startup_page } from "../../../routes";
-
-// COMPONENTS
-import { GhostLoader } from "../../elements/GhostLoader";
 
 import { Button, Table, Card, Tag } from "../../elements/NotataComponents/";
 
@@ -39,14 +34,14 @@ export default function Connections({ history }) {
       key: "star",
       width: 20,
       className: list_star,
-      render: () => <i className="fal fa-star" />
+      render: () => <i className="fal fa-star" />,
     },
 
     {
       title: "Company name",
       dataIndex: "creative",
       key: "creative",
-      render: creative => creative.name
+      render: creative => creative.name,
     },
 
     {
@@ -60,7 +55,7 @@ export default function Connections({ history }) {
             <Tag key={tag}>{tag}</Tag>
           ))}
         </>
-      )
+      ),
     },
 
     {
@@ -74,7 +69,7 @@ export default function Connections({ history }) {
             <Tag key={tag}>{tag}</Tag>
           ))}
         </>
-      )
+      ),
     },
 
     {
@@ -88,7 +83,7 @@ export default function Connections({ history }) {
         }
 
         let { score: ttl } = scores.reduce((a, b) => ({
-          score: a.score + b.score
+          score: a.score + b.score,
         }));
         let avg = (ttl / scores.length).toFixed(1);
 
@@ -97,7 +92,7 @@ export default function Connections({ history }) {
             <span>{avg}</span>
           </div>
         );
-      }
+      },
     },
 
     {
@@ -107,7 +102,7 @@ export default function Connections({ history }) {
       responsive: "lg",
       render: date => (
         <span className={date_style}>{moment(date).format("ll")}</span>
-      )
+      ),
     },
 
     {
@@ -122,8 +117,8 @@ export default function Connections({ history }) {
             history.push(`${startup_page}/${id}`);
           }}
         />
-      )
-    }
+      ),
+    },
   ];
 
   return (

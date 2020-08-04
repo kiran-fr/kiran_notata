@@ -10,7 +10,7 @@ import {
   main_content,
   modal_header,
   modal_title,
-  modal_footer
+  modal_footer,
 } from "./Modal.module.css";
 
 import { Button } from "../NotataComponents/";

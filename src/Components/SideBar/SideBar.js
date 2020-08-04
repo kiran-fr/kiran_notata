@@ -36,60 +36,60 @@ const menuItems = [
   {
     label: "Home",
     iconClass: "fal fa-home",
-    link: dashboard
+    link: dashboard,
   },
   {
     label: "Inbox",
     iconClass: "fal fa-inbox",
     notifications: 0,
-    link: inbox
+    link: inbox,
   },
   {
     label: "Activities",
     iconClass: "fal fa-tasks",
     notifications: 0,
-    link: activities
+    link: activities,
   },
   {
     label: "Reports",
     iconClass: "fal fa-chart-bar",
-    link: report
+    link: report,
   },
   {
     label: "Templates",
     iconClass: "fal fa-copy",
-    link: templates
+    link: templates,
   },
   {
     label: "Tags",
     iconClass: "fal fa-tag",
-    link: tags
+    link: tags,
   },
   {
     label: "Profile",
     iconClass: "fal fa-user",
-    link: profile
+    link: profile,
   },
   {
     label: "Team",
     iconClass: "fal fa-users",
-    link: team
+    link: team,
   },
   {
     label: "Groups",
     iconClass: "fal fa-share-alt",
-    link: groups
+    link: groups,
   },
   {
     label: "Settings",
     iconClass: "fal fa-cog",
-    link: settings
+    link: settings,
   },
   {
     label: "Log out",
     iconClass: "fal fa-sign-out-alt",
-    link: signOut
-  }
+    link: signOut,
+  },
 ];
 
 const SideBar = () => (

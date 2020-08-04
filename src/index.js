@@ -14,7 +14,7 @@ import rootReducer from "./Modules/index";
 import {
   setUserAttributes,
   userLoggedIn,
-  userNotLoggedIn
+  userNotLoggedIn,
 } from "./Modules/user";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
@@ -54,7 +54,7 @@ const store = createStore(
 const generateClassName = createGenerateClassName();
 const jss = create({
   ...jssPreset(),
-  insertionPoint: document.getElementById("jss-insertion-point")
+  insertionPoint: document.getElementById("jss-insertion-point"),
 });
 
 Auth.currentAuthenticatedUser()

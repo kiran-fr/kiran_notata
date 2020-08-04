@@ -9,7 +9,7 @@ import {
   large_style,
   label_style,
   horizontal_style,
-  current_route
+  current_route,
 } from "./MenuIconItem.module.css";
 
 export const MenuIconItem = ({

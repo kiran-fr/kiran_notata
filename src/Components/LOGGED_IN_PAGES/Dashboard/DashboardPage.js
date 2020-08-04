@@ -28,13 +28,13 @@ const CreateNewStartup = ({ setDone }) => {
     try {
       const {
         data: {
-          creativePut: { id: creativeId }
-        }
+          creativePut: { id: creativeId },
+        },
       } = await mutateCreative(data);
       const {
         data: {
-          connectionPut: { id }
-        }
+          connectionPut: { id },
+        },
       } = await mutateConnection({ variables: { creativeId } });
       setDone(id);
     } catch (error) {
@@ -47,7 +47,7 @@ const CreateNewStartup = ({ setDone }) => {
       <div
         style={{
           position: "relative",
-          marginBottom: "30px"
+          marginBottom: "30px",
         }}
       >
         <Button
@@ -78,7 +78,7 @@ const CreateNewStartup = ({ setDone }) => {
               <div
                 style={{
                   marginTop: "5px",
-                  textAlign: "right"
+                  textAlign: "right",
                 }}
               >
                 <Button type="input" value="OK" loading={isSubmitting} />

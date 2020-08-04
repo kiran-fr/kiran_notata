@@ -13,7 +13,7 @@ import { evaluationTemplateGet } from "../../../../Apollo/Queries";
 
 import {
   evaluationQuestionPut,
-  evaluationQuestionDelete
+  evaluationQuestionDelete,
 } from "../../../../Apollo/Mutations";
 
 import { delete_question } from "./EvaluationTemplateSection.module.css";
@@ -36,36 +36,36 @@ import {
   option_score_toggle_up,
   option_score_toggle_down,
   option_traffic_light_points,
-  option_save
+  option_save,
 } from "./QuestionComp.module.css";
 
 import {
   Tag,
   SimpleInputForm,
-  InputTrafficLight
+  InputTrafficLight,
 } from "../../../elements/NotataComponents/";
 
 const inputMap = [
   {
     label: "multiple choice",
-    val: "CHECK"
+    val: "CHECK",
   },
   {
     label: "single answer",
-    val: "RADIO"
+    val: "RADIO",
   },
   {
     label: "traffic lights",
-    val: "TRAFFIC_LIGHTS"
+    val: "TRAFFIC_LIGHTS",
   },
   {
     label: "free text",
-    val: "INPUT_TEXT"
+    val: "INPUT_TEXT",
   },
   {
     label: "text lines",
-    val: "INPUT_MUTLIPLE_LINES"
-  }
+    val: "INPUT_MUTLIPLE_LINES",
+  },
 ];
 
 function QuestionNameAndDescription({ templateId, sectionId, question }) {
@@ -83,7 +83,7 @@ function QuestionNameAndDescription({ templateId, sectionId, question }) {
   const onSubmit = async (data, event) => {
     let variables = {
       id: question.id,
-      ...data
+      ...data,
     };
 
     try {
@@ -130,7 +130,7 @@ function ToggleInputType({ question }) {
               let inputType = inp.val;
               let variables = {
                 id: question.id,
-                input: { inputType }
+                input: { inputType },
               };
               mutate({
                 variables,
@@ -138,9 +138,9 @@ function ToggleInputType({ question }) {
                   __typename: "Mutation",
                   evaluationQuestionPut: {
                     ...question,
-                    inputType
-                  }
-                }
+                    inputType,
+                  },
+                },
               });
             }}
           >
@@ -195,7 +195,7 @@ function InputTextLinesOption() {
         <input
           style={{
             color: "var(--color-primary)",
-            marginBottom: "10px"
+            marginBottom: "10px",
           }}
           type="text"
           value="https://notata.io"
@@ -210,7 +210,7 @@ function InputTextLinesOption() {
             right: "12px",
             fontSize: "28px",
             color: "var(--color-gray-light)",
-            top: "11px"
+            top: "11px",
           }}
         />
       </div>
@@ -231,7 +231,7 @@ function InputTextLinesOption() {
             right: "4px",
             fontSize: "30px",
             color: "var(--color-gray-light)",
-            top: "10px"
+            top: "10px",
           }}
         />
       </div>
@@ -266,9 +266,9 @@ function RadioOption({ question, inputType }) {
                   input: {
                     editOption: {
                       ...omit(option, ["__typename"]),
-                      val: input_val
-                    }
-                  }
+                      val: input_val,
+                    },
+                  },
                 };
 
                 let optimisticOptions = question.options.map(o =>
@@ -281,9 +281,9 @@ function RadioOption({ question, inputType }) {
                     __typename: "Mutation",
                     evaluationQuestionPut: {
                       ...question,
-                      options: optimisticOptions
-                    }
-                  }
+                      options: optimisticOptions,
+                    },
+                  },
                 });
               }}
             />
@@ -301,9 +301,9 @@ function RadioOption({ question, inputType }) {
                         input: {
                           editOption: {
                             ...omit(option, ["__typename"]),
-                            score
-                          }
-                        }
+                            score,
+                          },
+                        },
                       };
 
                       mutate({
@@ -314,9 +314,9 @@ function RadioOption({ question, inputType }) {
                             ...question,
                             options: question.options.map(o =>
                               o.sid === option.sid ? { ...o, score } : o
-                            )
-                          }
-                        }
+                            ),
+                          },
+                        },
                       });
                     }}
                   >
@@ -332,9 +332,9 @@ function RadioOption({ question, inputType }) {
                         input: {
                           editOption: {
                             ...omit(option, ["__typename"]),
-                            score
-                          }
-                        }
+                            score,
+                          },
+                        },
                       };
 
                       mutate({
@@ -345,9 +345,9 @@ function RadioOption({ question, inputType }) {
                             ...question,
                             options: question.options.map(o =>
                               o.sid === option.sid ? { ...o, score } : o
-                            )
-                          }
-                        }
+                            ),
+                          },
+                        },
                       });
                     }}
                   >
@@ -365,8 +365,8 @@ function RadioOption({ question, inputType }) {
                   let variables = {
                     id: question.id,
                     input: {
-                      deleteOption: option.sid
-                    }
+                      deleteOption: option.sid,
+                    },
                   };
                   mutate({
                     variables,
@@ -376,9 +376,9 @@ function RadioOption({ question, inputType }) {
                         ...question,
                         options: question.options.filter(
                           o => o.sid !== option.sid
-                        )
-                      }
-                    }
+                        ),
+                      },
+                    },
                   });
                 }}
               >
@@ -408,10 +408,10 @@ function RadioOption({ question, inputType }) {
               input: {
                 newOptions: [
                   {
-                    val: input_val
-                  }
-                ]
-              }
+                    val: input_val,
+                  },
+                ],
+              },
             };
 
             let optimisticOptions = [
@@ -420,8 +420,8 @@ function RadioOption({ question, inputType }) {
                 sid: "tmp_sid",
                 val: input_val,
                 score: 0,
-                __typename: "EvaluationQuestionOption"
-              }
+                __typename: "EvaluationQuestionOption",
+              },
             ];
 
             mutate({
@@ -430,9 +430,9 @@ function RadioOption({ question, inputType }) {
                 __typename: "Mutation",
                 evaluationQuestionPut: {
                   ...question,
-                  options: optimisticOptions
-                }
-              }
+                  options: optimisticOptions,
+                },
+              },
             });
           }}
         />
@@ -484,9 +484,9 @@ function DeleteQuestion({ templateId, sectionId, question }) {
             refetchQueries: [
               {
                 query: evaluationTemplateGet,
-                variables: { id: templateId }
-              }
-            ]
+                variables: { id: templateId },
+              },
+            ],
           });
         }
       }}

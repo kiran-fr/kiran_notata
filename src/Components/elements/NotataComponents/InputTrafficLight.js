@@ -5,7 +5,7 @@ import {
   traffic_red,
   traffic_yellow,
   traffic_green,
-  selected_traffic_light
+  selected_traffic_light,
 } from "./InputTrafficLight.module.css";
 
 export function InputTrafficLight({ active, onClick, color }) {

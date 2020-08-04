@@ -12,7 +12,7 @@ import {
   tiny_right_button_container,
   secondary_style,
   input_button_wrapper,
-  input_button_icon
+  input_button_icon,
 } from "./Button.module.css";
 
 const StandardButton = ({
