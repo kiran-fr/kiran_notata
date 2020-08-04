@@ -91,10 +91,19 @@ function LogInput({ user, connection }) {
           ],
         },
       },
-      updateQueries: {
-        logGet: (prev, { mutationResult, queryVariables }) => ({
-          logGet: [...prev.logGet, mutationResult.data.logPut],
-        }),
+      update: (proxy, { data: { logPut } }) => {
+        const data = proxy.readQuery({
+          query: logGet,
+          variables: { connectionId: connection.id },
+        });
+
+        proxy.writeQuery({
+          query: logGet,
+          variables: { connectionId: connection.id },
+          data: {
+            logGet: [...data.logGet, logPut],
+          },
+        });
       },
     });
 
