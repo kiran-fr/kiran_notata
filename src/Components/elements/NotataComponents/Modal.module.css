@@ -7,7 +7,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1001;
+  z-index: 1002;
   overflow: auto;
   outline: 0;
   padding: 20px;
@@ -65,7 +65,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1001;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.45);
 }

@@ -128,6 +128,14 @@ q:after {
   content: none;
 }
 
+.delete_bucket {
+  position: relative;
+  left: 6px;
+  color: var(--color-primary);
+  font-size: 18px;
+  cursor: pointer;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -172,7 +180,7 @@ h1 {
 
 .logged_in_page_content {
   padding-top: 50px;
-  padding-left: 205px;
+  padding-left: 215px;
   position: relative;
   margin-right: 205px;
 }

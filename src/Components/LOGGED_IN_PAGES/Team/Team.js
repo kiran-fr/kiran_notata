@@ -51,8 +51,8 @@ import {
 
 function Invite({ account, user }) {
   const [showModal, setShowModal] = useState(false);
-  const [mutate, { loading }] = useMutation(accountInvite);
 
+  const [mutate, { loading }] = useMutation(accountInvite);
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
@@ -387,36 +387,18 @@ function ExternalInvitations({ userInvitations }) {
 
 export default function Team() {
   const userQuery = useQuery(userGet);
-  let user = {};
-  if (!userQuery.loading && !userQuery.error && userQuery.data) {
-    user = userQuery.data.userGet;
-  }
+  let user = (userQuery.data || {}).userGet || {};
 
   const accountQuery = useQuery(accountGet);
-  let account = {};
-  if (!accountQuery.loading && !accountQuery.error && accountQuery.data) {
-    account = accountQuery.data.accountGet;
-  }
+  let account = (accountQuery.data || {}).accountGet || {};
 
   const accountInvitationsQuery = useQuery(accountInvitationsGet);
-  let accountInvitations = [];
-  if (
-    !accountInvitationsQuery.loading &&
-    !accountInvitationsQuery.error &&
-    accountInvitationsQuery.data
-  ) {
-    accountInvitations = accountInvitationsQuery.data.accountInvitationsGet;
-  }
+  let accountInvitations =
+    (accountInvitationsQuery.data || {}).accountInvitationsGet || [];
 
   const userInvitationsQuery = useQuery(userInvitationsGet);
-  let userInvitations = [];
-  if (
-    !userInvitationsQuery.loading &&
-    !userInvitationsQuery.error &&
-    userInvitationsQuery.data
-  ) {
-    userInvitations = userInvitationsQuery.data.userInvitationsGet;
-  }
+  let userInvitations =
+    (userInvitationsQuery.data || {}).userInvitationsGet || [];
 
   return (
     <Content maxWidth={600}>

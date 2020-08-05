@@ -14,7 +14,6 @@ import {
 } from "../../../elements/";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
-
 import { accountGet } from "../../../../Apollo/Queries";
 
 import {
@@ -57,7 +56,6 @@ function Delete({ id, templates }) {
 }
 
 const CreateNewTemplate = ({ setDone }) => {
-  const [loading, setLoading] = useState(false);
   const [mutate] = useMutation(evaluationTemplatePut);
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;

@@ -83,7 +83,7 @@ export const Table = ({
                     textAlign: c.centered ? "center" : "left",
                   }}
                 >
-                  {c.render(d[c.dataIndex])}
+                  {c.render(c.dataIndex ? d[c.dataIndex] : d)}
                 </div>
               </td>
             ))}

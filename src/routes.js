@@ -62,12 +62,13 @@ export const report = `${dashboard}/report`;
 export const inbox = `${dashboard}/inbox`;
 export const activities = `${dashboard}/activities`;
 export const tags = `${dashboard}/tags`;
-export const groups = `${dashboard}/groups`;
 export const settings = `${dashboard}/settings`;
 export const team = `${dashboard}/team`;
 
 export const evaluation_templates = `${dashboard}/templates`;
 export const evaluation_template = `${evaluation_templates}/edit`;
+
+export const group = `${dashboard}/group`;
 
 export const Routes = () => (
   <Router basename="/">

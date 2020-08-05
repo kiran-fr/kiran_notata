@@ -18,3 +18,5 @@ export { default as evaluationTemplateSectionDelete } from "./evaluationTemplate
 
 export { default as evaluationQuestionPut } from "./evaluationQuestionPut";
 export { default as evaluationQuestionDelete } from "./evaluationQuestionDelete";
+
+export { default as groupPut } from "./groupPut";

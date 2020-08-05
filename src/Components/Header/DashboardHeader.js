@@ -13,7 +13,7 @@ import { userGet } from "../../Apollo/Queries";
 //   inbox,
 //   activities,
 //   tags,
-//   groups,
+//   group,
 //   settings,
 //   team,
 //   evaluation_templates,
@@ -43,7 +43,7 @@ let report = "/dashboard/report";
 let inbox = "/dashboard/inbox";
 let activities = "/dashboard/activities";
 let tags = "/dashboard/tags";
-let groups = "/dashboard/groups";
+let group = "/dashboard/group";
 let settings = "/dashboard/settings";
 let team = "/dashboard/team";
 let templates = "/dashboard/templates";
@@ -98,7 +98,7 @@ const moreMenuItems = [
   {
     label: "Groups",
     iconClass: "fal fa-share-alt",
-    link: groups,
+    link: group,
   },
   {
     label: "Settings",
