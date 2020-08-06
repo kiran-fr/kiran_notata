@@ -22,10 +22,10 @@ export default function Connections({ history }) {
   if (error) console.log("error", error);
   if (error) return <div>We are updating </div>;
 
-  let connections;
-  if (!error && !loading) {
-    connections = connectionsQuery.data.connectionsGet;
-  }
+  let connections = (connectionsQuery.data || {}).connectionsGet;
+  // if (!error && !loading) {
+  //   connections = connectionsQuery.data.connectionsGet;
+  // }
 
   const columns = [
     {

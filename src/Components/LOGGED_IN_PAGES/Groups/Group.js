@@ -129,6 +129,7 @@ function MemberList({ group, user, mutate, isOwner }) {
                 id: group.id,
                 input: { removeMember: email },
               };
+              console.log("variables", variables);
               mutate({
                 variables,
                 update: (proxy, { data: { groupPut } }) => {
@@ -406,12 +407,11 @@ function StartupList({ group, user, mutate, history }) {
   const columns = [
     {
       title: "",
-      // dataIndex: "connectionId",
       key: "delete",
       width: 20,
       className: "delete_bucket",
-      render: group => {
-        let connection = group.connection || {};
+      render: startup => {
+        let connection = startup.connection || {};
         if (connection.createdBy !== user.cognitoIdentityId) return <span />;
 
         return (
@@ -422,6 +422,8 @@ function StartupList({ group, user, mutate, history }) {
                 id: group.id,
                 input: { removeStartup: connection.id },
               };
+
+              console.log("variables", variables);
 
               mutate({
                 variables,
@@ -449,42 +451,6 @@ function StartupList({ group, user, mutate, history }) {
           />
         );
       },
-      // render: connectionId => {
-      //   return (
-      //     <i
-      //       className="fal fa-trash-alt"
-      //       onClick={() => {
-      //         let variables = {
-      //           id: group.id,
-      //           input: { removeStartup: connectionId },
-      //         };
-
-      //         mutate({
-      //           variables,
-      //           update: (proxy, { data: { groupPut } }) => {
-      //             const data = proxy.readQuery({
-      //               query: groupGet,
-      //               variables: { id: group.id },
-      //             });
-
-      //             proxy.writeQuery({
-      //               query: groupGet,
-      //               variables: { id: group.id },
-      //               data: {
-      //                 groupGet: {
-      //                   ...data.groupGet,
-      //                   startups: data.groupGet.startups.filter(
-      //                     s => s.connectionId !== connectionId
-      //                   )
-      //                 }
-      //               }
-      //             });
-      //           }
-      //         });
-      //       }}
-      //     />
-      //   );
-      // }
     },
     {
       title: "Name",

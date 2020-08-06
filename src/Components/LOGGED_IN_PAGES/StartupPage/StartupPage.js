@@ -18,11 +18,9 @@ import { Log } from "./Log";
 export default function StartupPage({ match, history }) {
   const id = match.params.id;
 
-  let user = {};
   const userQuery = useQuery(userGet);
-  if (!userQuery.loading && userQuery.data) {
-    user = userQuery.data.userGet;
-  }
+
+  let user = (userQuery.data || {}).userGet || {};
 
   const [getData, { data, loading, error }] = useLazyQuery(connectionGet);
 
