@@ -1,22 +1,32 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
+import { Link } from "react-router-dom";
+
 import { evaluationTemplatesGet, connectionGet } from "../../../Apollo/Queries";
 import { evaluationPut } from "../../../Apollo/Mutations";
 
-function EvaluationList({ evaluations }) {
+import { item } from "./EvaluationBox.module.css";
+import { startup_page } from "../../../routes";
+
+function EvaluationList({ evaluations, connectionId }) {
   return (
     <div>
-      <h3>Evaluations</h3>
-      <ul>
-        {evaluations.map(evaluation => (
-          <li key={`evaluation-${evaluation.id}`}>
-            <label>name: {evaluation.name}</label>
-            <br />
-            <label>created by: {evaluation.createdByUser.email}</label>
-          </li>
-        ))}
-      </ul>
+      {evaluations.map(evaluation => (
+        <div key={`evaluation-${evaluation.id}`} className={item}>
+          <span>
+            <label>
+              {evaluation.name}{" "}
+              <Link
+                to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}`}
+              >
+                <i className="fa fas fa-edit" />
+              </Link>
+            </label>
+            <label>{moment(evaluation.createdAt).format("lll")}</label>
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -29,8 +39,6 @@ export function EvaluationBox({ connection, user }) {
     loading: evaluationTemplatesLoading,
     error: evaluationTemplatesError,
   } = useQuery(evaluationTemplatesGet);
-
-  console.log("evaluationTemplates", evaluationTemplates);
 
   let templates = [];
   if (
@@ -55,29 +63,32 @@ export function EvaluationBox({ connection, user }) {
 
   return (
     <>
-      <EvaluationList evaluations={evaluations} />
+      <EvaluationList evaluations={evaluations} connectionId={connection.id} />
 
       <button onClick={() => setShow(true)}>evaluate startup</button>
-      {show && (
-        <ul>
-          {templates.map(({ id: templateId, name, description }) => (
-            <li
-              key={templateId}
-              onClick={async () => {
-                await mutate({
-                  variables: {
-                    connectionId: connection.id,
-                    input: { templateId, name, description },
-                  },
-                });
-                !mutationError && setShow(false);
-              }}
-            >
-              {name}
-            </li>
-          ))}
-        </ul>
-      )}
+      {show &&
+        (mutationLoading ? (
+          <p>...loading</p>
+        ) : (
+          <ul>
+            {templates.map(({ id: templateId, name, description }) => (
+              <li
+                key={templateId}
+                onClick={async () => {
+                  await mutate({
+                    variables: {
+                      connectionId: connection.id,
+                      input: { templateId, name, description },
+                    },
+                  });
+                  !mutationError && setShow(false);
+                }}
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        ))}
     </>
   );
 }

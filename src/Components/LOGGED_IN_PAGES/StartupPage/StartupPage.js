@@ -7,7 +7,7 @@ import { userGet, connectionGet } from "../../../Apollo/Queries";
 
 import { dashboard, startup_page } from "../../../routes";
 
-import { Content, Card, BreadCrumbs } from "../../elements/";
+import { Content, Card, BreadCrumbs, GhostLoader } from "../../elements/";
 
 import { header_comp, sub_header } from "./StartupPage.module.css";
 
@@ -15,7 +15,7 @@ import { SubjectiveScore } from "./SubjectiveScore";
 import { EvaluationBox } from "./EvaluationBox";
 import { Log } from "./Log";
 
-export default function StartupPage({ match, history }) {
+export default function StartupPage({ match }) {
   const id = match.params.id;
 
   const userQuery = useQuery(userGet);
@@ -37,6 +37,15 @@ export default function StartupPage({ match, history }) {
       getData({ variables: { id } });
     }
   }, []);
+
+  if (loading) {
+    return <GhostLoader />;
+  }
+
+  if (error) {
+    console.log(error);
+    return <div>We are updating</div>;
+  }
 
   return (
     <>
