@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import classnames from "classnames";
 import moment from "moment";
 
-import { logPut } from "../../../Apollo/Mutations";
-import { logGet } from "../../../Apollo/Queries";
+import { logPut } from "../../../../Apollo/Mutations";
+import { logGet } from "../../../../Apollo/Queries";
 
 import {
   container,
@@ -15,10 +15,8 @@ import {
   log_feed_byline,
   name,
   date,
-  submit_wrapper,
   log_feed_text,
   log_item_edited,
-  input_form,
   not_ready,
   log_feed_type_SUBJECTIVE_SCORE,
   event_toggle_button,
@@ -111,7 +109,7 @@ function LogInput({ user, connection }) {
   };
 
   return (
-    <div className={input_form}>
+    <div className="comment_form">
       <form onSubmit={handleSubmit(onSubmit)}>
         <textarea
           placeholder="Write a comment..."
@@ -120,13 +118,9 @@ function LogInput({ user, connection }) {
           ref={register({ required: true })}
         />
 
-        <div className={submit_wrapper}>
+        <div className="comment_sumbit">
           <i className="fas fa-arrow-alt-circle-up" />
-          <input
-            type="submit"
-            value=""
-            className={isSubmitting ? not_ready : ""}
-          />
+          <input type="submit" value="" />
         </div>
       </form>
     </div>

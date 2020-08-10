@@ -9,7 +9,6 @@ import {
   connectionGet,
 } from "../../../Apollo/Queries";
 
-
 import GeneralInput from "./GeneralInput";
 import { startup_page } from "../../../routes";
 
@@ -94,7 +93,6 @@ export default function Section({ match }) {
         >
           Go to summary
         </Link>
-
       </Content>
     </div>
   );

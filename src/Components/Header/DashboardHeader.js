@@ -55,35 +55,28 @@ const menuItems = [
     iconClass: "fal fa-home",
     link: dashboard,
   },
-  {
-    label: "Reports",
-    iconClass: "fal fa-chart-bar",
-    link: report,
-  },
-  {
-    label: "Activities",
-    iconClass: "fal fa-tasks",
-    link: activities,
-    notifications: 0,
-  },
-  {
-    label: "Inbox",
-    iconClass: "fal fa-inbox",
-    link: inbox,
-    notifications: 0,
-  },
-];
+  // {
+  //   label: "Reports",
+  //   iconClass: "fal fa-chart-bar",
+  //   link: report,
+  // },
+  // {
+  //   label: "Activities",
+  //   iconClass: "fal fa-tasks",
+  //   link: activities,
+  //   notifications: 0,
+  // },
+  // {
+  //   label: "Inbox",
+  //   iconClass: "fal fa-inbox",
+  //   link: inbox,
+  //   notifications: 0,
+  // },
 
-const moreMenuItems = [
   {
     label: "Templates",
     iconClass: "fal fa-copy",
     link: templates,
-  },
-  {
-    label: "Tags",
-    iconClass: "fal fa-tag",
-    link: tags,
   },
   {
     label: "Profile",
@@ -91,20 +84,43 @@ const moreMenuItems = [
     link: profile,
   },
   {
-    label: "Team",
-    iconClass: "fal fa-users",
-    link: team,
-  },
-  {
     label: "Groups",
     iconClass: "fal fa-share-alt",
     link: group,
   },
+];
+
+const moreMenuItems = [
+  // {
+  //   label: "Templates",
+  //   iconClass: "fal fa-copy",
+  //   link: templates,
+  // },
   {
-    label: "Settings",
-    iconClass: "fal fa-cog",
-    link: settings,
+    label: "Tags",
+    iconClass: "fal fa-tag",
+    link: tags,
   },
+  // {
+  //   label: "Profile",
+  //   iconClass: "fal fa-user",
+  //   link: profile,
+  // },
+  {
+    label: "Team",
+    iconClass: "fal fa-users",
+    link: team,
+  },
+  // {
+  //   label: "Groups",
+  //   iconClass: "fal fa-share-alt",
+  //   link: group,
+  // },
+  // {
+  //   label: "Settings",
+  //   iconClass: "fal fa-cog",
+  //   link: settings,
+  // },
   {
     label: "Log out",
     iconClass: "fal fa-sign-out-alt",

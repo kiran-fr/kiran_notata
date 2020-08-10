@@ -1,0 +1,14 @@
+.share_title {
+  font-size: 18px;
+}
+
+.share_text {
+  padding: 20px 0px;
+  color: var(--color-gray-medium);
+}
+
+.copy_link {
+  padding-top: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}

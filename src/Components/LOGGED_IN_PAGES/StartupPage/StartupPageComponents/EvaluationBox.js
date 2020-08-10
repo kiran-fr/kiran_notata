@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
 import { Link } from "react-router-dom";
-
-import { evaluationTemplatesGet, connectionGet } from "../../../Apollo/Queries";
-import { evaluationPut } from "../../../Apollo/Mutations";
-
-import { item } from "./EvaluationBox.module.css";
-import { startup_page } from "../../../routes";
-import { getPossibleScore, getScore } from "../Evaluation/util";
+import {
+  evaluationTemplatesGet,
+  connectionGet,
+} from "../../../../Apollo/Queries";
+import { evaluationPut } from "../../../../Apollo/Mutations";
+import { item } from "../EvaluationBox.module.css";
+import { startup_page } from "../../../../routes";
+import { getPossibleScore, getScore } from "../../Evaluation/util";
 
 function EvaluationList({ evaluations, connectionId, templates }) {
   return (

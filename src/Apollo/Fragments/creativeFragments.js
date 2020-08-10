@@ -5,5 +5,11 @@ export default gql`
     id
     name
     description
+    templateId
+    sharedWithEmail
+    answers {
+      key
+      val
+    }
   }
 `;

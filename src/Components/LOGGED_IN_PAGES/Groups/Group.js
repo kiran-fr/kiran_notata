@@ -26,9 +26,12 @@ function AddNewMember({ group, mutate }) {
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
-  const onSubmit = async (data, event) => {
-    let email = data.email.toLowerCase().trim();
+  const [changeGroupName, setChangeGroupName] = useState(
+    group.members.some(m => m.email === group.name)
+  );
 
+  const onSubmitInvite = async (data, event) => {
+    let email = data.email.toLowerCase().trim();
     if (!validateEmail(email)) return;
 
     let variables = {
@@ -63,6 +66,40 @@ function AddNewMember({ group, mutate }) {
     }
   };
 
+  const onSubmitGroupName = async (data, event) => {
+    let variables = {
+      id: group.id,
+      input: { name: data.name },
+    };
+
+    try {
+      await mutate({
+        variables,
+        update: (proxy, { data: { groupPut } }) => {
+          const data = proxy.readQuery({
+            query: groupGet,
+            variables: { id: group.id },
+          });
+
+          proxy.writeQuery({
+            query: groupGet,
+            variables: { id: group.id },
+            data: {
+              groupGet: {
+                ...data.groupGet,
+                ...data.groupPut,
+              },
+            },
+          });
+        },
+      });
+      event.target.reset();
+      setChangeGroupName(null);
+    } catch (error) {
+      return console.log("error", error);
+    }
+  };
+
   return (
     <div
       style={{
@@ -84,26 +121,63 @@ function AddNewMember({ group, mutate }) {
           close={() => setShowModal(false)}
           disableFoot={true}
         >
-          <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-            <div style={{ marginTop: "30px" }}>
-              <input
-                type="text"
-                placeholder={"name@email.com"}
-                autoComplete="off"
-                ref={register({ required: true })}
-                name="email"
-              />
-
-              <div
-                style={{
-                  marginTop: "5px",
-                  textAlign: "right",
-                }}
-              >
-                <Button type="input" value="OK" loading={isSubmitting} />
+          {changeGroupName && (
+            <div>
+              <div>
+                Before adding a new member to this group we should change the
+                group name, as all members will be able to see it.
               </div>
+              <form
+                className="notata_form"
+                onSubmit={handleSubmit(onSubmitGroupName)}
+              >
+                <div style={{ marginTop: "30px" }}>
+                  <input
+                    type="text"
+                    placeholder={"Group name"}
+                    autoComplete="off"
+                    ref={register({ required: true })}
+                    name="name"
+                  />
+
+                  <div
+                    style={{
+                      marginTop: "5px",
+                      textAlign: "right",
+                    }}
+                  >
+                    <Button type="input" value="OK" loading={isSubmitting} />
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
+          )}
+
+          {!changeGroupName && (
+            <form
+              className="notata_form"
+              onSubmit={handleSubmit(onSubmitInvite)}
+            >
+              <div style={{ marginTop: "30px" }}>
+                <input
+                  type="text"
+                  placeholder={"name@email.com"}
+                  autoComplete="off"
+                  ref={register({ required: true })}
+                  name="email"
+                />
+
+                <div
+                  style={{
+                    marginTop: "5px",
+                    textAlign: "right",
+                  }}
+                >
+                  <Button type="input" value="OK" loading={isSubmitting} />
+                </div>
+              </div>
+            </form>
+          )}
         </Modal>
       )}
     </div>
@@ -120,6 +194,7 @@ function MemberList({ group, user, mutate, isOwner }) {
       className: "delete_bucket",
       render: email => {
         if (!isOwner) return <span />;
+        if (email === user.email) return <span />;
 
         return (
           <i
@@ -278,9 +353,6 @@ function AddNewStartup({ group, connections, mutate }) {
   const [showShareSettings, setShowShareSettings] = useState(null);
 
   let [filter, setFilter] = useState("");
-
-  // const connectionsQuery = useQuery(connectionsGet);
-  // let connections = (connectionsQuery.data || {}).connectionsGet || [];
 
   connections = connections.filter(
     c => !(group.startups || []).some(gs => gs.connectionId === c.id)
@@ -560,7 +632,12 @@ export default function Group({ match, history }) {
         </div>
 
         <Card label="Members" style={{ paddingTop: "5px" }}>
-          <MemberList group={group} mutate={mutate} isOwner={isOwner} />
+          <MemberList
+            group={group}
+            mutate={mutate}
+            isOwner={isOwner}
+            user={user}
+          />
         </Card>
 
         {isOwner && <AddNewMember group={group} mutate={mutate} />}
@@ -579,8 +656,6 @@ export default function Group({ match, history }) {
           group={group}
           mutate={mutate}
         />
-
-        <pre>{JSON.stringify(group, null, 2)}</pre>
       </Content>
     </>
   );

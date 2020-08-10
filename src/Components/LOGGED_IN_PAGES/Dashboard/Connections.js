@@ -6,7 +6,7 @@ import { useQuery } from "@apollo/client";
 import { connectionsGet } from "../../../Apollo/Queries";
 import { startup_page } from "../../../routes";
 
-import { Button, Table, Card, Tag } from "../../elements/";
+import { Button, Table, Card, Tag, GhostLoader } from "../../elements/";
 
 // STYLES
 import classnames from "classnames";
@@ -16,16 +16,12 @@ import { list_star, average_score, date_style } from "./Connections.module.css";
 export default function Connections({ history }) {
   const connectionsQuery = useQuery(connectionsGet);
 
-  const loading = connectionsQuery.loading;
-  const error = connectionsQuery.error;
+  const { data, loading, error, called } = connectionsQuery;
 
   if (error) console.log("error", error);
   if (error) return <div>We are updating </div>;
 
-  let connections = (connectionsQuery.data || {}).connectionsGet;
-  // if (!error && !loading) {
-  //   connections = connectionsQuery.data.connectionsGet;
-  // }
+  let connections = (data || {}).connectionsGet;
 
   const columns = [
     {

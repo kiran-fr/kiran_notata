@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
 
-import { groupsGet } from "../../../Apollo/Queries";
+import { groupsGet, userGet } from "../../../Apollo/Queries";
 import { groupPut } from "../../../Apollo/Mutations";
 
 import { group } from "../../../routes";
@@ -16,10 +16,7 @@ import {
   BreadCrumbs,
 } from "../../elements/";
 
-const CreateNewGroup = ({ setDone }) => {
-  // const [loading, setLoading] = useState(false);
-  const [mutate] = useMutation(groupPut);
-
+const CreateNewGroup = ({ setDone, mutate }) => {
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
@@ -62,13 +59,52 @@ const CreateNewGroup = ({ setDone }) => {
 export default function Groups({ history }) {
   const [showModal, setShowModal] = useState();
 
+  const [mutate] = useMutation(groupPut);
   const { data, loading, error } = useQuery(groupsGet);
+
+  const userQuery = useQuery(userGet);
+  let user = (userQuery.data || {}).userGet || {};
 
   if (error) return <div>We are updating </div>;
 
   let groups = (data || {}).groupsGet || [];
 
   const columns = [
+    {
+      title: "",
+      key: "delete",
+      width: 20,
+      className: "delete_bucket",
+      render: group => {
+        let isOwner = group.createdBy === user.cognitoIdentityId;
+        if (!isOwner) return <span />;
+        return (
+          <i
+            className="fal fa-trash-alt"
+            onClick={() => {
+              let variables = {
+                id: group.id,
+                input: { deleteGroup: true },
+              };
+              mutate({
+                variables,
+                update: (proxy, { data: { groupPut } }) => {
+                  const data = proxy.readQuery({
+                    query: groupsGet,
+                  });
+                  proxy.writeQuery({
+                    query: groupsGet,
+                    data: {
+                      groupsGet: data.groupsGet.filter(g => g.id !== group.id),
+                    },
+                  });
+                },
+              });
+            }}
+          />
+        );
+      },
+    },
     {
       title: "Group name",
       dataIndex: "id",
@@ -143,6 +179,7 @@ export default function Groups({ history }) {
             disableFoot={true}
           >
             <CreateNewGroup
+              mutate={mutate}
               setDone={id => {
                 let path = `${group}/${id}`;
                 history.push(path);
@@ -150,6 +187,8 @@ export default function Groups({ history }) {
             />
           </Modal>
         )}
+
+        <pre>{JSON.stringify(groups, null, 2)}</pre>
       </Content>
     </>
   );

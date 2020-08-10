@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 
-import { connectionSubjectiveScorePut } from "../../../Apollo/Mutations";
+import { connectionSubjectiveScorePut } from "../../../../Apollo/Mutations";
 
 import {
   subjective_score_name,

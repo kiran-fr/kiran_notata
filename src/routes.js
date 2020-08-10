@@ -33,6 +33,9 @@ import LinkBridge from "./Components/Shared/LinkBridge/LinkBridge";
 // LOGGED IN PAGES
 import { LoggedInRouter } from "./Components/LOGGED_IN_PAGES/LoggedInRouter";
 
+// PUBLIC SHARED PAGES
+import { PublicRouter } from "./Components/PUBLIC_SHARED_PAGES/PublicRouter";
+
 // **********
 // * ROUTES *
 // **********
@@ -70,6 +73,10 @@ export const evaluation_template = `${evaluation_templates}/edit`;
 
 export const group = `${dashboard}/group`;
 
+// PUBLIC ROUTES
+export const public_pages = `/public`;
+export const public_creative = `${public_pages}/creative`;
+
 export const Routes = () => (
   <Router basename="/">
     <ScrollToTop>
@@ -89,6 +96,8 @@ export const Routes = () => (
         {/*<Route exact path={profile} component={ProfilePage} />*/}
 
         <Route path={dashboard} component={LoggedInRouter} />
+
+        <Route path={public_pages} component={PublicRouter} />
 
         <Route render={() => <div>404</div>} />
 

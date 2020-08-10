@@ -2,26 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import classnames from "classnames";
 import moment from "moment";
-
 import { userGet, connectionGet } from "../../../Apollo/Queries";
-
 import { dashboard, startup_page } from "../../../routes";
-
-import { Content, Card, BreadCrumbs, GhostLoader } from "../../elements/";
+import {
+  Content,
+  Card,
+  BreadCrumbs,
+  GhostLoader,
+  Button,
+} from "../../elements/";
 
 import { header_comp, sub_header } from "./StartupPage.module.css";
 
-import { SubjectiveScore } from "./SubjectiveScore";
-import { EvaluationBox } from "./EvaluationBox";
-import { Log } from "./Log";
+import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
+import { EvaluationBox } from "./StartupPageComponents/EvaluationBox";
+import { Log } from "./StartupPageComponents/Log";
+import { Share } from "./StartupPageComponents/Share";
 
-export default function StartupPage({ match }) {
+export default function StartupPage({ match, history }) {
   const id = match.params.id;
-
   const userQuery = useQuery(userGet);
-
   let user = (userQuery.data || {}).userGet || {};
-
   const [getData, { data, loading, error }] = useLazyQuery(connectionGet);
 
   let connection = {
@@ -33,9 +34,7 @@ export default function StartupPage({ match }) {
   }
 
   useEffect(() => {
-    if (id && id !== "new") {
-      getData({ variables: { id } });
-    }
+    id && getData({ variables: { id } });
   }, []);
 
   if (loading) {
@@ -78,6 +77,11 @@ export default function StartupPage({ match }) {
           </div>
         </Card>
 
+        {/*GROUPS*/}
+        <Card label="SHARE">
+          <Share connection={connection} user={user} history={history} />
+        </Card>
+
         {/*TAGS*/}
         <Card label="TAGS"></Card>
 
@@ -94,7 +98,16 @@ export default function StartupPage({ match }) {
           <Log connection={connection} user={user} />
         </Card>
 
-        <Card label="..."></Card>
+        <Card label="...">
+          <Button
+            onClick={() => {
+              const path = `${startup_page}/${id}/creative/${connection.creative.id}`;
+              history.push(path);
+            }}
+          >
+            Go to facts
+          </Button>
+        </Card>
 
         <pre>{JSON.stringify(connection, null, 2)}</pre>
       </Content>
