@@ -20,43 +20,45 @@ export default function TrafficLightInput({
 
   return (
     <form className="notata_form">
-      {["red", "yellow", "green"].map(color => (
-        <InputTrafficLight
-          key={color}
-          color={color}
-          active={!loading && answer && answer.val === color}
-          onClick={() => {
-            const variables = {
-              id: evaluation.id,
-              input: {
-                name: section.name,
-                description: section.description,
-                templateId,
-              },
-            };
-
-            if (answer) {
-              variables.input.answerUpdate = {
-                id: answer.id,
-                question: question.name,
-                val: color,
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {["red", "yellow", "green"].map(color => (
+          <InputTrafficLight
+            key={color}
+            color={color}
+            active={!loading && answer && answer.val === color}
+            onClick={() => {
+              const variables = {
+                id: evaluation.id,
+                input: {
+                  name: section.name,
+                  description: section.description,
+                  templateId,
+                },
               };
-            } else {
-              variables.input.answerNew = {
-                inputType: question.inputType,
-                questionId: question.id,
-                question: question.name,
-                val: color,
-              };
-            }
 
-            !loading &&
-              mutate({
-                variables,
-              });
-          }}
-        />
-      ))}
+              if (answer) {
+                variables.input.answerUpdate = {
+                  id: answer.id,
+                  question: question.name,
+                  val: color,
+                };
+              } else {
+                variables.input.answerNew = {
+                  inputType: question.inputType,
+                  questionId: question.id,
+                  question: question.name,
+                  val: color,
+                };
+              }
+
+              !loading &&
+                mutate({
+                  variables,
+                });
+            }}
+          />
+        ))}
+      </div>
     </form>
   );
 }

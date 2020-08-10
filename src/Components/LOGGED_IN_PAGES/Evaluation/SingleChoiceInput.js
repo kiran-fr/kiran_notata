@@ -17,50 +17,54 @@ export default function SingleChoiceInput({
   );
 
   return (
-    <form className="notata_form">
-      {question.options.map(({ val, sid }, i) => {
-        return (
-          <label key={i}>
-            <input
-              type="radio"
-              disabled={loading}
-              checked={answer ? answer.val === val : false}
-              onChange={() => {
-                const variables = {
-                  id: evaluation.id,
-                  input: {
-                    name: section.name,
-                    description: section.description,
-                    templateId,
-                  },
-                };
+    <div style={{ padding: "10px" }}>
+      <form className="notata_form">
+        {question.options.map(({ val, sid }, i) => {
+          return (
+            <div key={i} className="check_container">
+              <label>
+                <input
+                  type="radio"
+                  disabled={loading}
+                  checked={answer ? answer.val === val : false}
+                  onChange={() => {
+                    const variables = {
+                      id: evaluation.id,
+                      input: {
+                        name: section.name,
+                        description: section.description,
+                        templateId,
+                      },
+                    };
 
-                if (answer) {
-                  variables.input.answerUpdate = {
-                    id: answer.id,
-                    question: question.name,
-                    val,
-                    sid,
-                  };
-                } else {
-                  variables.input.answerNew = {
-                    inputType: question.inputType,
-                    questionId: question.id,
-                    question: question.name,
-                    val,
-                    sid,
-                  };
-                }
+                    if (answer) {
+                      variables.input.answerUpdate = {
+                        id: answer.id,
+                        question: question.name,
+                        val,
+                        sid,
+                      };
+                    } else {
+                      variables.input.answerNew = {
+                        inputType: question.inputType,
+                        questionId: question.id,
+                        question: question.name,
+                        val,
+                        sid,
+                      };
+                    }
 
-                mutate({
-                  variables,
-                });
-              }}
-            />
-            {val}
-          </label>
-        );
-      })}
-    </form>
+                    mutate({
+                      variables,
+                    });
+                  }}
+                />
+                {val}
+              </label>
+            </div>
+          );
+        })}
+      </form>
+    </div>
   );
 }

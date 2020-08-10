@@ -24,6 +24,9 @@ export default function TextInput({
   return (
     <form className="notata_form">
       <textarea
+        rows={7}
+        style={{ resize: "none" }}
+        placeholder="Say something..."
         disabled={loading}
         defaultValue={answer && answer.val}
         onChange={event => {
@@ -50,7 +53,6 @@ export default function TextInput({
               val: event.target.value,
             };
           }
-
           delayedMutation({
             variables,
           });

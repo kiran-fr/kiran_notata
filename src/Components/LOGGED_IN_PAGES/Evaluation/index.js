@@ -140,9 +140,9 @@ export default function Evaluation({ match, history }) {
         ]}
       />
       <Content maxWidth={600}>
-        <h1>{evaluation.name}</h1>
-        <h3>{evaluation.description}</h3>
-        <Card maxWidth={1200}>
+        <div className="form_h1">{evaluation.name}</div>
+        <div className="form_p1">{evaluation.description}</div>
+        <Card>
           <Table
             dataSource={
               evaluationTemplateGetData.evaluationTemplateGet.sections || []

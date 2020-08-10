@@ -53,14 +53,7 @@ function CommentSection({ question, section }) {
   };
 
   return (
-    <div
-      className="comment_form"
-      // className="notata_form"
-      style={{
-        // marginTop: "-10px",
-        padding: "15px",
-      }}
-    >
+    <div className="comment_form" style={{ padding: "15px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <textarea
           placeholder="Write a comment..."

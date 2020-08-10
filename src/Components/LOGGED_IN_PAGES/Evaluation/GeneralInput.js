@@ -27,8 +27,9 @@ function MapInput(props) {
 export default function GeneralInput(props) {
   return (
     <div>
-      <h1>{props.question.name}</h1>
-      <p>{props.question.description}</p>
+      <div className="form_h2">{props.question.name}</div>
+      <div className="form_p2">{props.question.description}</div>
+      <hr />
       <MapInput {...props} />
       <CommentInput {...props} />
     </div>

@@ -62,21 +62,24 @@ export default function Section({ match }) {
         ]}
       />
       <Content maxWidth={600}>
-        <h1>
+        <div className="form_h1">
           {evaluationTemplateSectionGetData.evaluationTemplateSectionGet.name}
-        </h1>
-        <p>
+        </div>
+        <div className="form_p1">
           {
             evaluationTemplateSectionGetData.evaluationTemplateSectionGet
               .description
           }
-        </p>
+        </div>
 
         {(
           evaluationTemplateSectionGetData.evaluationTemplateSectionGet
             .questions || []
         ).map((question, i) => (
-          <Card key={`question-${i}-${question.id}`}>
+          <Card
+            key={`question-${i}-${question.id}`}
+            style={{ marginBottom: "10px" }}
+          >
             <GeneralInput
               section={
                 evaluationTemplateSectionGetData.evaluationTemplateSectionGet
