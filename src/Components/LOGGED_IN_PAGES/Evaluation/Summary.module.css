@@ -1,0 +1,9 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row span {
+  display: flex;
+  flex-direction: column;
+}

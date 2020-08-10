@@ -39,13 +39,15 @@ import Tags from "./Tags/Tags";
 import Settings from "./Settings/Settings";
 import Team from "./Team/Team";
 import StartupPage from "./StartupPage/StartupPage";
-import EvaluationPage from "./Evaluation";
-import SectionPage from "./Evaluation/Section";
 
 // Evaluation templates
 import EvaluationTemplates from "./Templates/EvaluationTemplates/EvaluationTemplates";
 import EvaluationTemplate from "./Templates/EvaluationTemplate/EvaluationTemplate";
 import EvaluationTemplateSection from "./Templates/EvaluationTemplateSection/";
+
+import EvaluationPage from "./Evaluation";
+import SectionPage from "./Evaluation/Section";
+import SummaryPage from "./Evaluation/Summary";
 
 // Groups
 import Groups from "./Groups/Groups";
@@ -107,10 +109,16 @@ export const RouterComponent = ({ history }) => {
       />
 
       <Route exact path={`${startup_page}/:id`} component={StartupPage} />
+
       <Route
         exact
         path={`${startup_page}/:connectionId/evaluation/:evaluationId`}
         component={EvaluationPage}
+      />
+      <Route
+        exact
+        path={`${startup_page}/:connectionId/evaluation/:evaluationId/summary`}
+        component={SummaryPage}
       />
       <Route
         exact

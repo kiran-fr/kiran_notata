@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 import { Card, Content, BreadCrumbs, GhostLoader } from "../../elements";
 
@@ -8,8 +9,9 @@ import {
   connectionGet,
 } from "../../../Apollo/Queries";
 
-import { startup_page } from "../../../routes";
+
 import GeneralInput from "./GeneralInput";
+import { startup_page } from "../../../routes";
 
 export default function Section({ match }) {
   const {
@@ -86,6 +88,13 @@ export default function Section({ match }) {
             />
           </Card>
         ))}
+
+        <Link
+          to={`${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}/summary`}
+        >
+          Go to summary
+        </Link>
+
       </Content>
     </div>
   );

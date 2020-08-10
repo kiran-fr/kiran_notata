@@ -26,9 +26,9 @@ export default function Evaluation({ match, history }) {
   const [
     getData,
     {
-      data: evaluationTemplatesGetData,
-      loading: evaluationTemplatesGetLoading,
-      error: evaluationTemplatesGetError,
+      data: evaluationTemplateGetData,
+      loading: evaluationTemplateGetLoading,
+      error: evaluationTemplateGetError,
       called,
     },
   ] = useLazyQuery(evaluationTemplateGet);
@@ -50,14 +50,14 @@ export default function Evaluation({ match, history }) {
   if (
     (!connectionGetData && connectionGetLoading) ||
     !called ||
-    (!evaluationTemplatesGetData && evaluationTemplatesGetLoading)
+    (!evaluationTemplateGetData && evaluationTemplateGetLoading)
   ) {
     return <GhostLoader />;
   }
 
-  if (connectionGetError || evaluationTemplatesGetError) {
+  if (connectionGetError || evaluationTemplateGetError) {
     console.log(connectionGetError);
-    console.log(evaluationTemplatesGetError);
+    console.log(evaluationTemplateGetError);
 
     return <p>We are updating</p>;
   }
@@ -73,9 +73,9 @@ export default function Evaluation({ match, history }) {
       key: "name",
       render: id => {
         let section =
-          (
-            evaluationTemplatesGetData.evaluationTemplateGet.sections || []
-          ).find(s => s.id === id) || {};
+          (evaluationTemplateGetData.evaluationTemplateGet.sections || []).find(
+            s => s.id === id
+          ) || {};
         let questions = section.questions || [];
 
         let possibleScore = 0;
@@ -145,11 +145,11 @@ export default function Evaluation({ match, history }) {
         <Card maxWidth={1200}>
           <Table
             dataSource={
-              evaluationTemplatesGetData.evaluationTemplateGet.sections || []
+              evaluationTemplateGetData.evaluationTemplateGet.sections || []
             }
             columns={columns}
             pagination={false}
-            loading={evaluationTemplatesGetLoading}
+            loading={evaluationTemplateGetLoading}
             diableHead={true}
           />
         </Card>

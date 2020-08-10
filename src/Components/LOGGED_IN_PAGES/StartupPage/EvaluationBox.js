@@ -8,25 +8,58 @@ import { evaluationPut } from "../../../Apollo/Mutations";
 
 import { item } from "./EvaluationBox.module.css";
 import { startup_page } from "../../../routes";
+import { getPossibleScore, getScore } from "../Evaluation/util";
 
-function EvaluationList({ evaluations, connectionId }) {
+function EvaluationList({ evaluations, connectionId, templates }) {
   return (
     <div>
-      {evaluations.map(evaluation => (
-        <div key={`evaluation-${evaluation.id}`} className={item}>
-          <span>
-            <label>
-              {evaluation.name}{" "}
-              <Link
-                to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}`}
-              >
-                <i className="fa fas fa-edit" />
-              </Link>
-            </label>
-            <label>{moment(evaluation.createdAt).format("lll")}</label>
-          </span>
-        </div>
-      ))}
+      {evaluations.map(evaluation => {
+        const template = templates.find(
+          ({ id }) => id === evaluation.templateId
+        );
+
+        return (
+          <div key={`evaluation-${evaluation.id}`} className={item}>
+            <span>
+              <label>
+                {evaluation.name}{" "}
+                <Link
+                  to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}`}
+                >
+                  <i className="fa fas fa-edit" />
+                </Link>
+              </label>
+              <label>{moment(evaluation.createdAt).format("lll")}</label>
+            </span>
+            {template && [
+              ...template.sections.map(({ name, questions, id }) => (
+                <div key={id}>
+                  <label>{name}</label>
+                  <label>
+                    {getScore(questions, evaluation.answers)}/
+                    {getPossibleScore(questions)}
+                  </label>
+                </div>
+              )),
+              <div key="total">
+                <label>Total</label>
+                <label>
+                  {template.sections.reduce(
+                    (acc, { questions }) =>
+                      acc + getScore(questions, evaluation.answers),
+                    0
+                  )}
+                  /
+                  {template.sections.reduce(
+                    (acc, { questions }) => acc + getPossibleScore(questions),
+                    0
+                  )}
+                </label>
+              </div>,
+            ]}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -63,7 +96,11 @@ export function EvaluationBox({ connection, user }) {
 
   return (
     <>
-      <EvaluationList evaluations={evaluations} connectionId={connection.id} />
+      <EvaluationList
+        evaluations={evaluations}
+        connectionId={connection.id}
+        templates={templates}
+      />
 
       <button onClick={() => setShow(true)}>evaluate startup</button>
       {show &&

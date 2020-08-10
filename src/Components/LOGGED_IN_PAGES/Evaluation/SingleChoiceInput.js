@@ -18,7 +18,7 @@ export default function SingleChoiceInput({
 
   return (
     <form className="notata_form">
-      {question.options.map(({ val }, i) => {
+      {question.options.map(({ val, sid }, i) => {
         return (
           <label key={i}>
             <input
@@ -40,6 +40,7 @@ export default function SingleChoiceInput({
                     id: answer.id,
                     question: question.name,
                     val,
+                    sid,
                   };
                 } else {
                   variables.input.answerNew = {
@@ -47,6 +48,7 @@ export default function SingleChoiceInput({
                     questionId: question.id,
                     question: question.name,
                     val,
+                    sid,
                   };
                 }
 
