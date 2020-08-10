@@ -8,10 +8,10 @@ export default gql`
     createdAt
     updatedAt
     createdBy
+    templateId
     answers {
       id
       inputType
-      templateId
       questionId
       sid
       question
@@ -21,6 +21,6 @@ export default gql`
       email
       given_name
       family_name
-    }    
+    }
   }
 `;

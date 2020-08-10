@@ -1,11 +1,18 @@
-import React from "react";
-import { useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
+import { useQuery, useLazyQuery } from "@apollo/client";
 
-import { connectionGet, evaluationTemplatesGet } from "../../../Apollo/Queries";
+import { connectionGet, evaluationTemplateGet } from "../../../Apollo/Queries";
 
-import { startup_page, evaluation_template } from "../../../routes";
+import { startup_page } from "../../../routes";
 
-import { Card, BreadCrumbs, GhostLoader, Table, Button } from "../../elements/";
+import {
+  Card,
+  BreadCrumbs,
+  GhostLoader,
+  Table,
+  Button,
+  Content,
+} from "../../elements/";
 
 export default function Evaluation({ match, history }) {
   const {
@@ -16,14 +23,33 @@ export default function Evaluation({ match, history }) {
     variables: { id: match.params.connectionId },
   });
 
-  const {
-    data: evaluationTemplatesGetData,
-    loading: evaluationTemplatesGetLoading,
-    error: evaluationTemplatesGetError,
-  } = useQuery(evaluationTemplatesGet);
+  const [
+    getData,
+    {
+      data: evaluationTemplatesGetData,
+      loading: evaluationTemplatesGetLoading,
+      error: evaluationTemplatesGetError,
+      called,
+    },
+  ] = useLazyQuery(evaluationTemplateGet);
+
+  useEffect(() => {
+    if (connectionGetData) {
+      const evaluation = connectionGetData.connectionGet.evaluations.find(
+        ({ id }) => id === match.params.evaluationId
+      );
+
+      getData({
+        variables: {
+          id: evaluation.templateId,
+        },
+      });
+    }
+  }, [connectionGetData]);
 
   if (
     (!connectionGetData && connectionGetLoading) ||
+    !called ||
     (!evaluationTemplatesGetData && evaluationTemplatesGetLoading)
   ) {
     return <GhostLoader />;
@@ -39,9 +65,6 @@ export default function Evaluation({ match, history }) {
   const evaluation = connectionGetData.connectionGet.evaluations.find(
     ({ id }) => id === match.params.evaluationId
   );
-  const template = evaluationTemplatesGetData.accountGet.evaluationTemplates.find(
-    ({ name }) => name === evaluation.name
-  );
 
   const columns = [
     {
@@ -49,7 +72,10 @@ export default function Evaluation({ match, history }) {
       dataIndex: "id",
       key: "name",
       render: id => {
-        let section = (template.sections || []).find(s => s.id === id) || {};
+        let section =
+          (
+            evaluationTemplatesGetData.evaluationTemplateGet.sections || []
+          ).find(s => s.id === id) || {};
         let questions = section.questions || [];
 
         let possibleScore = 0;
@@ -94,7 +120,7 @@ export default function Evaluation({ match, history }) {
           <Button
             type="tiny_right"
             onClick={() => {
-              let path = `${evaluation_template}/${template.id}/${sectionId}`;
+              let path = `${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}/section/${sectionId}`;
               history.push(path);
             }}
           />
@@ -113,19 +139,21 @@ export default function Evaluation({ match, history }) {
           },
         ]}
       />
-      <div>
+      <Content maxWidth={600}>
         <h1>{evaluation.name}</h1>
         <h3>{evaluation.description}</h3>
         <Card maxWidth={1200}>
           <Table
-            dataSource={template.sections || []}
+            dataSource={
+              evaluationTemplatesGetData.evaluationTemplateGet.sections || []
+            }
             columns={columns}
             pagination={false}
             loading={evaluationTemplatesGetLoading}
             diableHead={true}
           />
         </Card>
-      </div>
+      </Content>
     </div>
   );
 }

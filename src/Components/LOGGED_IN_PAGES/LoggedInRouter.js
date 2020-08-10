@@ -40,6 +40,7 @@ import Settings from "./Settings/Settings";
 import Team from "./Team/Team";
 import StartupPage from "./StartupPage/StartupPage";
 import EvaluationPage from "./Evaluation";
+import SectionPage from "./Evaluation/Section";
 
 // Evaluation templates
 import EvaluationTemplates from "./Templates/EvaluationTemplates/EvaluationTemplates";
@@ -110,6 +111,11 @@ export const RouterComponent = ({ history }) => {
         exact
         path={`${startup_page}/:connectionId/evaluation/:evaluationId`}
         component={EvaluationPage}
+      />
+      <Route
+        exact
+        path={`${startup_page}/:connectionId/evaluation/:evaluationId/section/:sectionId`}
+        component={SectionPage}
       />
 
       <Route exact path={team} component={Team} />
