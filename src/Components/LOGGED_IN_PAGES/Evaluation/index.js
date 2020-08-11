@@ -15,56 +15,43 @@ import {
 } from "../../elements/";
 
 export default function Evaluation({ match, history }) {
-  const {
-    data: connectionGetData,
-    loading: connectionGetLoading,
-    error: connectionGetError,
-  } = useQuery(connectionGet, {
-    variables: { id: match.params.connectionId },
+  const { connectionId, evaluationId } = match.params;
+  const connectionQuery = useQuery(connectionGet, {
+    variables: { id: connectionId },
   });
+  const connection = (connectionQuery.data || {}).connectionGet || {};
 
-  const [
-    getData,
-    {
-      data: evaluationTemplateGetData,
-      loading: evaluationTemplateGetLoading,
-      error: evaluationTemplateGetError,
-      called,
-    },
-  ] = useLazyQuery(evaluationTemplateGet);
+  const [getEvaluationTemplateData, evaluationTemplateQuery] = useLazyQuery(
+    evaluationTemplateGet
+  );
 
   useEffect(() => {
-    if (connectionGetData) {
-      const evaluation = connectionGetData.connectionGet.evaluations.find(
-        ({ id }) => id === match.params.evaluationId
+    if (connection.evaluations) {
+      const evaluation = connection.evaluations.find(
+        ({ id }) => id === evaluationId
       );
 
-      getData({
-        variables: {
-          id: evaluation.templateId,
-        },
-      });
+      if (evaluation) {
+        getEvaluationTemplateData({
+          variables: { id: evaluation.templateId },
+        });
+      }
     }
-  }, [connectionGetData]);
+  }, [connection.evaluations]);
 
-  if (
-    (!connectionGetData && connectionGetLoading) ||
-    !called ||
-    (!evaluationTemplateGetData && evaluationTemplateGetLoading)
-  ) {
-    return <GhostLoader />;
-  }
+  const evaluationTemplate =
+    (evaluationTemplateQuery.data || {}).evaluationTemplateGet || {};
 
-  if (connectionGetError || evaluationTemplateGetError) {
-    console.log(connectionGetError);
-    console.log(evaluationTemplateGetError);
+  const error = connectionQuery.error || evaluationTemplateQuery.error;
+  const loading = connectionQuery.loading || evaluationTemplateQuery.loading;
 
+  if (error) {
+    console.log("error", error);
     return <p>We are updating</p>;
   }
 
-  const evaluation = connectionGetData.connectionGet.evaluations.find(
-    ({ id }) => id === match.params.evaluationId
-  );
+  const evaluation =
+    (connection.evaluations || []).find(({ id }) => id === evaluationId) || [];
 
   const columns = [
     {
@@ -73,9 +60,7 @@ export default function Evaluation({ match, history }) {
       key: "name",
       render: id => {
         let section =
-          (evaluationTemplateGetData.evaluationTemplateGet.sections || []).find(
-            s => s.id === id
-          ) || {};
+          (evaluationTemplate.sections || []).find(s => s.id === id) || {};
         let questions = section.questions || [];
 
         let possibleScore = 0;
@@ -120,7 +105,7 @@ export default function Evaluation({ match, history }) {
           <Button
             type="tiny_right"
             onClick={() => {
-              let path = `${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}/section/${sectionId}`;
+              let path = `${startup_page}/${connectionId}/evaluation/${evaluation.id}/section/${sectionId}`;
               history.push(path);
             }}
           />
@@ -134,22 +119,20 @@ export default function Evaluation({ match, history }) {
       <BreadCrumbs
         list={[
           {
-            val: `Startup: ${connectionGetData.connectionGet.creative.name}`,
-            link: `${startup_page}/${match.params.connectionId}`,
+            val: `Startup: ${(connection.creative || {}).name}`,
+            link: `${startup_page}/${connectionId}`,
           },
         ]}
       />
       <Content maxWidth={600}>
         <div className="form_h1">{evaluation.name}</div>
         <div className="form_p1">{evaluation.description}</div>
-        <Card>
+        <Card style={{ paddingTop: "5px" }}>
           <Table
-            dataSource={
-              evaluationTemplateGetData.evaluationTemplateGet.sections || []
-            }
+            dataSource={evaluationTemplate.sections || []}
             columns={columns}
             pagination={false}
-            loading={evaluationTemplateGetLoading}
+            loading={evaluationTemplateQuery.loading}
             diableHead={true}
           />
         </Card>

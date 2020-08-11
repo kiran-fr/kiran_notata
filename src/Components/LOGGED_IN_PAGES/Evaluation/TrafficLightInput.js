@@ -13,7 +13,7 @@ export default function TrafficLightInput({
 }) {
   const [mutate, { loading }] = useMutation(evaluationPut);
 
-  const answer = evaluation.answers.find(
+  const answer = (evaluation.answers || []).find(
     ({ inputType, questionId }) =>
       inputType === "TRAFFIC_LIGHTS" && questionId === question.id
   );

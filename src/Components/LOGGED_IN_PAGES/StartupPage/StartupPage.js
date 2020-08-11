@@ -37,9 +37,9 @@ export default function StartupPage({ match, history }) {
     id && getData({ variables: { id } });
   }, []);
 
-  if (loading) {
-    return <GhostLoader />;
-  }
+  // if (loading) {
+  //   return <GhostLoader />;
+  // }
 
   if (error) {
     console.log(error);
@@ -91,7 +91,11 @@ export default function StartupPage({ match, history }) {
         </Card>
 
         <Card label="EVALUATIONS">
-          <EvaluationBox connection={connection} user={user} />
+          <EvaluationBox
+            connection={connection}
+            user={user}
+            history={history}
+          />
         </Card>
 
         <Card label="LOG/COMMENTS">

@@ -61,7 +61,7 @@ export default function CommentInput({
     }
   }
 
-  const comments = evaluation.answers.filter(
+  const comments = (evaluation.answers || []).filter(
     ({ inputType, questionId }) =>
       inputType === "COMMENT" && questionId === question.id
   );

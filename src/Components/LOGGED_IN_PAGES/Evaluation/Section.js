@@ -1,10 +1,17 @@
-import React from "react";
-import { useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 
-import { Card, Content, BreadCrumbs, GhostLoader } from "../../elements";
+import {
+  Card,
+  Content,
+  BreadCrumbs,
+  GhostLoader,
+  Button,
+} from "../../elements";
 
 import {
+  evaluationTemplateGet,
   evaluationTemplateSectionGet,
   connectionGet,
 } from "../../../Apollo/Queries";
@@ -12,78 +19,129 @@ import {
 import GeneralInput from "./GeneralInput";
 import { startup_page } from "../../../routes";
 
-export default function Section({ match }) {
-  const {
-    data: connectionGetData,
-    loading: connectionGetLoading,
-    error: connectionGetError,
-  } = useQuery(connectionGet, {
-    variables: { id: match.params.connectionId },
+function Navigation({ connection, evaluationId, sectionId, history }) {
+  // Get all sections of evaluation template,
+  // so that we can navigate to next section.
+  // TODO: make a leaner query for this.
+  const [getEvaluationTemplateData, evaluationTemplateQuery] = useLazyQuery(
+    evaluationTemplateGet
+  );
+
+  useEffect(() => {
+    if (connection.evaluations.length) {
+      const evaluation = connection.evaluations.find(
+        ({ id }) => id === evaluationId
+      );
+      getEvaluationTemplateData({
+        variables: { id: evaluation.templateId },
+      });
+    }
+  }, [connection.evaluations]);
+  const evaluationTemplate =
+    (evaluationTemplateQuery.data || {}).evaluationTemplateGet || {};
+
+  const sections = evaluationTemplate.sections || [];
+
+  let currentIndex = sections.map(s => s.id).indexOf(sectionId);
+
+  if (currentIndex === sections.length - 1) return <span />;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <Link
+        to={`${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`}
+      >
+        Go to summary
+      </Link>
+
+      {(currentIndex !== sections.length - 1 && (
+        <Button
+          type="right_arrow"
+          onClick={() => {
+            let path = `${startup_page}/${
+              connection.id
+            }/evaluation/${evaluationId}/section/${
+              sections[currentIndex + 1].id
+            }`;
+            history.push(path);
+          }}
+        >
+          {sections[currentIndex + 1].name}
+        </Button>
+      )) || <span />}
+    </div>
+  );
+}
+
+export default function Section({ match, history }) {
+  const { connectionId, sectionId, evaluationId } = match.params;
+
+  // Get connection
+  const connectionQuery = useQuery(connectionGet, {
+    variables: { id: connectionId },
   });
 
-  const {
-    data: evaluationTemplateSectionGetData,
-    loading: evaluationTemplateSectionGetLoading,
-    error: evaluationTemplateSectionGetError,
-  } = useQuery(evaluationTemplateSectionGet, {
-    variables: { id: match.params.sectionId },
-  });
+  const connection = (connectionQuery.data || {}).connectionGet || {
+    creative: {},
+    evaluations: [],
+  };
 
-  if (
-    (!connectionGetData && connectionGetLoading) ||
-    (!evaluationTemplateSectionGetData && evaluationTemplateSectionGetLoading)
-  ) {
-    return <GhostLoader />;
-  }
+  // Get evaluation template section
+  const evaluationTemplateSectionQuery = useQuery(
+    evaluationTemplateSectionGet,
+    {
+      variables: { id: sectionId },
+    }
+  );
 
-  if (connectionGetError || evaluationTemplateSectionGetError) {
-    console.log(connectionGetError);
-    console.log(evaluationTemplateSectionGetError);
+  const evaluationTemplateSection =
+    (evaluationTemplateSectionQuery.data || {}).evaluationTemplateSectionGet ||
+    {};
 
+  // Define loading & error
+  const loading =
+    connectionQuery.loading || evaluationTemplateSectionQuery.loading;
+  const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
+
+  if (error) {
+    console.log(error);
     return <p>We are updating</p>;
   }
 
-  const evaluation = connectionGetData.connectionGet.evaluations.find(
-    ({ id }) => id === match.params.evaluationId
-  );
+  // Filter out current evaluation
+  const evaluation =
+    connection.evaluations.find(({ id }) => id === evaluationId) || {};
 
   return (
     <div>
       <BreadCrumbs
         list={[
           {
-            val: `Startup: ${connectionGetData.connectionGet.creative.name}`,
-            link: `${startup_page}/${match.params.connectionId}`,
+            val: `Startup: ${connection.creative.name}`,
+            link: `${startup_page}/${connectionId}`,
           },
           {
             val: `Template: ${evaluation.name}`,
-            link: `${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}`,
+            link: `${startup_page}/${connectionId}/evaluation/${evaluation.id}`,
           },
         ]}
       />
       <Content maxWidth={600}>
-        <div className="form_h1">
-          {evaluationTemplateSectionGetData.evaluationTemplateSectionGet.name}
-        </div>
-        <div className="form_p1">
-          {
-            evaluationTemplateSectionGetData.evaluationTemplateSectionGet
-              .description
-          }
-        </div>
+        <div className="form_h1">{evaluationTemplateSection.name}</div>
+        <div className="form_p1">{evaluationTemplateSection.description}</div>
 
-        {(
-          evaluationTemplateSectionGetData.evaluationTemplateSectionGet
-            .questions || []
-        ).map((question, i) => (
+        {(evaluationTemplateSection.questions || []).map((question, i) => (
           <Card
             key={`question-${i}-${question.id}`}
             style={{ marginBottom: "10px" }}
           >
             <GeneralInput
-              section={
-                evaluationTemplateSectionGetData.evaluationTemplateSectionGet
-              }
+              section={evaluationTemplateSection}
               question={question}
               templateId={evaluation.templateId}
               evaluation={evaluation}
@@ -91,11 +149,12 @@ export default function Section({ match }) {
           </Card>
         ))}
 
-        <Link
-          to={`${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}/summary`}
-        >
-          Go to summary
-        </Link>
+        <Navigation
+          connection={connection}
+          sectionId={sectionId}
+          evaluationId={evaluationId}
+          history={history}
+        />
       </Content>
     </div>
   );

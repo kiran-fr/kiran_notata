@@ -11,7 +11,7 @@ export default function SingleChoiceInput({
 }) {
   const [mutate, { loading }] = useMutation(evaluationPut);
 
-  const answer = evaluation.answers.find(
+  const answer = (evaluation.answers || []).find(
     ({ inputType, questionId }) =>
       inputType === "RADIO" && questionId === question.id
   );

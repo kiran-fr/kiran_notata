@@ -1,63 +1,92 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
+import classnames from "classnames";
 import { Link } from "react-router-dom";
 import {
   evaluationTemplatesGet,
   connectionGet,
 } from "../../../../Apollo/Queries";
 import { evaluationPut } from "../../../../Apollo/Mutations";
-import { item } from "../EvaluationBox.module.css";
 import { startup_page } from "../../../../routes";
 import { getPossibleScore, getScore } from "../../Evaluation/util";
+import { Button, Table, Modal } from "../../../elements";
+
+import {
+  container,
+  each_template_style,
+  each_style,
+  header_style,
+  name_style,
+  score_style,
+  body_style,
+  footer_style,
+} from "./EvaluationBox.module.css";
 
 function EvaluationList({ evaluations, connectionId, templates }) {
   return (
-    <div>
+    <div className={container}>
       {evaluations.map(evaluation => {
         const template = templates.find(
           ({ id }) => id === evaluation.templateId
         );
 
+        const sections = template && [...template.sections];
+
         return (
-          <div key={`evaluation-${evaluation.id}`} className={item}>
-            <span>
-              <label>
+          <div
+            key={`evaluation-${evaluation.id}`}
+            className={each_template_style}
+          >
+            {/*HEADER*/}
+            <div className={header_style}>
+              <div className={name_style}>
                 {evaluation.name}{" "}
                 <Link
                   to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}`}
                 >
-                  <i className="fa fas fa-edit" />
+                  {/*<i className="fa fas fa-edit" />*/}
+                  (edit)
                 </Link>
-              </label>
-              <label>{moment(evaluation.createdAt).format("lll")}</label>
-            </span>
-            {template && [
-              ...template.sections.map(({ name, questions, id }) => (
-                <div key={id}>
-                  <label>{name}</label>
-                  <label>
-                    {getScore(questions, evaluation.answers)}/
-                    {getPossibleScore(questions)}
-                  </label>
+              </div>
+              <div className={classnames(score_style, "desktop_only")}>
+                {moment(evaluation.createdAt).format("ll")}
+              </div>
+            </div>
+
+            {template && (
+              <>
+                <div className={body_style}>
+                  {sections.map(({ name, questions, id }) => (
+                    <div key={id} className={each_style}>
+                      <div className={name_style}>{name}</div>
+
+                      <div className={score_style}>
+                        {getScore(questions, evaluation.answers)}/
+                        {getPossibleScore(questions)}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              )),
-              <div key="total">
-                <label>Total</label>
-                <label>
-                  {template.sections.reduce(
-                    (acc, { questions }) =>
-                      acc + getScore(questions, evaluation.answers),
-                    0
-                  )}
-                  /
-                  {template.sections.reduce(
-                    (acc, { questions }) => acc + getPossibleScore(questions),
-                    0
-                  )}
-                </label>
-              </div>,
-            ]}
+
+                <div className={footer_style}>
+                  <div className={name_style}>Total</div>
+
+                  <div className={score_style}>
+                    {template.sections.reduce(
+                      (acc, { questions }) =>
+                        acc + getScore(questions, evaluation.answers),
+                      0
+                    )}
+                    /
+                    {template.sections.reduce(
+                      (acc, { questions }) => acc + getPossibleScore(questions),
+                      0
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         );
       })}
@@ -65,68 +94,157 @@ function EvaluationList({ evaluations, connectionId, templates }) {
   );
 }
 
-export function EvaluationBox({ connection, user }) {
-  const [show, setShow] = useState(false);
+// function EvaluationList({ evaluations, connectionId, templates }) {
 
-  const {
-    data: evaluationTemplates,
-    loading: evaluationTemplatesLoading,
-    error: evaluationTemplatesError,
-  } = useQuery(evaluationTemplatesGet);
+//   console.log('evaluations', evaluations)
 
+//   return <div/>
+
+//   const tableColumns = evaluations.map(evaluation => (
+
+//     [{
+//       title: evaluation.name,
+//       // dataIndex:
+//     }]
+
+//   ))
+
+//   const columns = [
+//     {
+//       title: "Email",
+//       dataIndex: "email",
+//       key: "email",
+//       render: email => <span>{email}</span>,
+//     },
+
+//     {
+//       title: "",
+//       dataIndex: "email",
+//       key: "delete",
+//       width: 20,
+//       // className: delete_bucket,
+//       render: email => {
+//       },
+//     },
+//   ];
+
+//   return (
+//     <Table
+//       dataSource={evaluations}
+//       columns={columns}
+//       diableHead={true}
+//       pagination={false}
+//     />
+//   );
+
+// }
+
+export function EvaluationBox({ connection, user, history }) {
+  const [showModal, setShowModal] = useState(false);
+  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
   let templates = [];
-  if (
-    !evaluationTemplatesLoading &&
-    !evaluationTemplatesError &&
-    evaluationTemplates
-  ) {
-    templates = evaluationTemplates.accountGet.evaluationTemplates;
+  if (!evaluationTemplatesQuery.loading) {
+    templates =
+      evaluationTemplatesQuery.data.accountGet.evaluationTemplates || [];
   }
 
   const [
     mutate,
     { loading: mutationLoading, error: mutationError },
-  ] = useMutation(evaluationPut, {
-    refetchQueries: [
-      { query: connectionGet, variables: { id: connection.id } },
-    ],
-    awaitRefetchQueries: true,
-  });
+  ] = useMutation(evaluationPut);
 
   const evaluations = (connection || {}).evaluations || [];
 
-  return (
-    <>
-      <EvaluationList
-        evaluations={evaluations}
-        connectionId={connection.id}
-        templates={templates}
-      />
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: name => <span>{name}</span>,
+    },
+    {
+      title: "",
+      key: "use",
+      width: 30,
+      render: ({ id: templateId, name, description }) => {
+        return (
+          <Button
+            size="small"
+            onClick={async () => {
+              try {
+                let res = await mutate({
+                  variables: {
+                    connectionId: connection.id,
+                    input: { templateId, name, description },
+                  },
+                });
+                let evaluationId = res.data.evaluationPut.id;
+                let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}`;
+                history.push(path);
+              } catch (error) {
+                return console.log("error", error);
+              }
+            }}
+          >
+            use
+          </Button>
+        );
+      },
+    },
+  ];
 
-      <button onClick={() => setShow(true)}>evaluate startup</button>
-      {show &&
-        (mutationLoading ? (
-          <p>...loading</p>
-        ) : (
-          <ul>
-            {templates.map(({ id: templateId, name, description }) => (
-              <li
-                key={templateId}
-                onClick={async () => {
-                  await mutate({
-                    variables: {
-                      connectionId: connection.id,
-                      input: { templateId, name, description },
-                    },
-                  });
-                  !mutationError && setShow(false);
-                }}
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        ))}
-    </>
+  return (
+    <div style={{ paddingBottom: "15px" }}>
+      {
+        <EvaluationList
+          evaluations={evaluations}
+          connectionId={connection.id}
+          templates={templates}
+        />
+      }
+
+      <div
+        style={{
+          marginTop: "15px",
+          textAlign: "right",
+        }}
+      >
+        <Button onClick={() => setShowModal(true)} type="right_arrow">
+          Evaluate
+        </Button>
+      </div>
+
+      {showModal && (
+        <Modal
+          title="Evaluate startup"
+          close={() => setShowModal(false)}
+          disableFoot={true}
+        >
+          <div style={{ padding: "10px 0px 0px 8px" }}>
+            <Table
+              dataSource={templates}
+              columns={columns}
+              diableHead={true}
+              pagination={false}
+            />
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              paddingTop: "20px",
+            }}
+          >
+            <Button
+              buttonStyle="secondary"
+              size="medium"
+              onClick={() => setShowModal(false)}
+            >
+              cancel
+            </Button>
+          </div>
+        </Modal>
+      )}
+    </div>
   );
 }

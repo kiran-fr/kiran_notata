@@ -11,7 +11,7 @@ export default function MultipleChoiceInput({
 }) {
   const [mutate, { loading }] = useMutation(evaluationPut);
 
-  const answers = evaluation.answers.filter(
+  const answers = (evaluation.answers || []).filter(
     ({ inputType, questionId }) =>
       inputType === "CHECK" && questionId === question.id
   );
