@@ -19,6 +19,7 @@ export default gql`
           inputType
           options {
             val
+            sid
           }
         }
       }

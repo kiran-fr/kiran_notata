@@ -18,10 +18,12 @@ import {
 } from "../../../elements/";
 
 import { dashboard, startup_page } from "../../../../routes";
-
 import { share_title, share_text, copy_link } from "./Facts.module.css";
 
-function Section({ section }) {
+import { GeneralInput } from "./Inputs/GeneralInput";
+import { CommentSection } from "./CommentSection";
+
+function Section({ section, creative }) {
   const { name, description } = section;
   return (
     <div>
@@ -38,102 +40,35 @@ function Section({ section }) {
       </div>
       <div>{description}</div>
       {(section.questions || []).map((question, i) => (
-        <Question key={`q-${i}`} question={question} section={section} />
+        <Question
+          key={`q-${i}`}
+          question={question}
+          section={section}
+          creative={creative}
+        />
       ))}
     </div>
   );
 }
 
-function CommentSection({ question, section }) {
-  const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting } = formState;
-
-  const onSubmit = async (data, event) => {
-    console.log("data", data);
-  };
-
+function Question({ question, section, creative }) {
   return (
-    <div className="comment_form" style={{ padding: "15px" }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <textarea
-          placeholder="Write a comment..."
-          rows="3"
-          name="val"
-          ref={register}
-          style={{ resize: "none" }}
-        />
-      </form>
-    </div>
-  );
-}
-
-function Question({ question, section }) {
-  const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting } = formState;
-  const { name, description, inputType, options } = question;
-
-  const onSubmit = async (data, event) => {
-    console.log("data", data);
-  };
-
-  return (
-    <Card style={{ marginBottom: "10px" }}>
-      <div className="form_h2">{name}</div>
-      <div className="form_p2">{description}</div>
+    <Card style={{ marginBottom: "10px", paddingBottom: "15px" }}>
+      <div className="form_h2">{question.name}</div>
+      <div className="form_p2">{question.description}</div>
       <hr />
-
       <div style={{ padding: "10px" }}>
-        <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
-          {inputType === "CHECK" &&
-            options.map((option, i) => (
-              <div className="check_container" key={`o-${i}`}>
-                <label>
-                  <input type="checkbox" ref={register} name="option.val" />
-                  {option.val}
-                </label>
-              </div>
-            ))}
-
-          {inputType === "RADIO" &&
-            options.map((option, i) => (
-              <div className="check_container" key={`o-${i}`}>
-                <label>
-                  <input type="radio" ref={register} name="option.val" />
-                  {option.val}
-                </label>
-              </div>
-            ))}
-
-          {inputType === "INPUT_TEXT" && (
-            <textarea
-              ref={register}
-              name="option.val"
-              placeholder={options[0].val}
-              style={{
-                resize: "none",
-                height: "150px",
-              }}
-            />
-          )}
-
-          {inputType === "INPUT_MUTLIPLE_LINES" &&
-            options.map((option, i) => (
-              <div key={`o-${i}`}>
-                {
-                  // <label>{option.val}</label>
-                }
-                <input
-                  type="text"
-                  ref={register}
-                  name="option.val"
-                  placeholder={option.val}
-                />
-              </div>
-            ))}
-        </form>
+        <GeneralInput
+          question={question}
+          section={section}
+          creative={creative}
+        />
       </div>
-
-      <CommentSection question={question} section={section} />
+      <CommentSection
+        question={question}
+        section={section}
+        creative={creative}
+      />
     </Card>
   );
 }
@@ -288,6 +223,43 @@ function InviteStartup({ creative, mutate, loading }) {
   );
 }
 
+function CompanyName({ creative, name }) {
+  const [mutate, { loading }] = useMutation(creativePut);
+  const { register, handleSubmit, formState, setValue } = useForm();
+  const { isSubmitting } = formState;
+
+  useEffect(() => {
+    name && setValue("input.name", name);
+  }, [name]);
+
+  const onSubmit = async (data, event) => {
+    let variables = { id: creative.id, ...data };
+    try {
+      await mutate({ variables });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <form
+      className="focus_form"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ marginBottom: "20px" }}
+    >
+      <textarea
+        className="form_h1"
+        rows={1}
+        placeholder="Company name"
+        name="input.name"
+        defaultValue={name}
+        ref={register}
+        onBlur={handleSubmit(onSubmit)}
+      />
+    </form>
+  );
+}
+
 export default function Facts({ history, match }) {
   const { id: connectionId, creativeId } = match.params;
   const [getData, { data, loading, error }] = useLazyQuery(creativeGet);
@@ -322,7 +294,7 @@ export default function Facts({ history, match }) {
         ]}
       />
       <Content maxWidth={600}>
-        <h1>{creative.name}</h1>
+        <CompanyName creative={creative} name={creative.name} />
 
         <InviteStartup
           creative={creative}
@@ -331,7 +303,7 @@ export default function Facts({ history, match }) {
         />
 
         {(creativeTemplate.sections || []).map((section, i) => (
-          <Section key={`section-${i}`} section={section} />
+          <Section key={`section-${i}`} section={section} creative={creative} />
         ))}
       </Content>
     </>

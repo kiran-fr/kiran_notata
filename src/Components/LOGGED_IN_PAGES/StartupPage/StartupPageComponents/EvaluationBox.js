@@ -45,7 +45,6 @@ function EvaluationList({ evaluations, connectionId, templates }) {
                 <Link
                   to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}`}
                 >
-                  {/*<i className="fa fas fa-edit" />*/}
                   (edit)
                 </Link>
               </div>

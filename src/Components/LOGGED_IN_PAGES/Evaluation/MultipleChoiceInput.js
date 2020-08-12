@@ -11,7 +11,7 @@ export default function MultipleChoiceInput({
 }) {
   const [mutate, { loading }] = useMutation(evaluationPut);
 
-  const answers = (evaluation.answers || []).filter(
+  const answer = (evaluation.answers || []).find(
     ({ inputType, questionId }) =>
       inputType === "CHECK" && questionId === question.id
   );
@@ -20,10 +20,6 @@ export default function MultipleChoiceInput({
     <div style={{ padding: "10px" }}>
       <form className="notata_form">
         {question.options.map(({ val, sid }) => {
-          const answer = answers.find(
-            ({ sid: answersSid }) => answersSid === sid
-          );
-
           return (
             <div className="check_container" key={sid}>
               <label>
@@ -46,7 +42,7 @@ export default function MultipleChoiceInput({
                         id: answer.id,
                         sid: sid,
                         question: question.name,
-                        val: "",
+                        val,
                       };
                     } else {
                       variables.input.answerNew = {
@@ -57,10 +53,7 @@ export default function MultipleChoiceInput({
                         val,
                       };
                     }
-
-                    mutate({
-                      variables,
-                    });
+                    mutate({ variables });
                   }}
                 />
                 {val}

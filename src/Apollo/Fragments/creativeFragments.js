@@ -7,7 +7,14 @@ export default gql`
     description
     templateId
     sharedWithEmail
+    sharedByEmail
+    submit
     answers {
+      id
+      inputType
+      questionId
+      sid
+      question
       val
     }
   }
