@@ -15,3 +15,5 @@ export { default as creativeTemplateGet } from "./creativeTemplateGet";
 
 export { default as publicCreativeGet } from "./publicCreativeGet";
 export { default as publicCreativeTemplateGet } from "./publicCreativeTemplateGet";
+
+export { default as tagGroupGet } from "./tagGroupGet";

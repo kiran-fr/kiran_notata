@@ -8,7 +8,6 @@ export default gql`
     templateId
     sharedWithEmail
     answers {
-      key
       val
     }
   }

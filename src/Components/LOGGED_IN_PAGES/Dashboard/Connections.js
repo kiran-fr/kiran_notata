@@ -21,7 +21,7 @@ export default function Connections({ history }) {
   if (error) console.log("error", error);
   if (error) return <div>We are updating </div>;
 
-  let connections = (data || {}).connectionsGet;
+  let connections = (data || { tags: [] }).connectionsGet;
 
   const columns = [
     {
@@ -59,13 +59,7 @@ export default function Connections({ history }) {
       dataIndex: "tags",
       key: "tags",
       responsive: "md",
-      render: tags => (
-        <>
-          {["dummy tag"].map(tag => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </>
-      ),
+      render: tags => tags.map(({ name, id }) => <Tag key={id}>{name}</Tag>),
     },
 
     {

@@ -20,3 +20,7 @@ export { default as evaluationQuestionPut } from "./evaluationQuestionPut";
 export { default as evaluationQuestionDelete } from "./evaluationQuestionDelete";
 
 export { default as groupPut } from "./groupPut";
+
+export { default as tagGroupPut } from "./tagGroupPut";
+export { default as tagPut } from "./tagPut";
+export { default as connectionTagAdd } from "./connectionTagAdd";

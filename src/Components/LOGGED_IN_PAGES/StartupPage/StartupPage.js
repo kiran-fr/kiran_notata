@@ -1,51 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
-import classnames from "classnames";
+import React, { useState } from "react";
+import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
-import { userGet, connectionGet } from "../../../Apollo/Queries";
-import { dashboard, startup_page } from "../../../routes";
+
 import {
   Content,
   Card,
   BreadCrumbs,
   GhostLoader,
   Button,
+  Tag,
 } from "../../elements/";
-
-import { header_comp, sub_header } from "./StartupPage.module.css";
-
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
 import { EvaluationBox } from "./StartupPageComponents/EvaluationBox";
 import { Log } from "./StartupPageComponents/Log";
 import { Share } from "./StartupPageComponents/Share";
 
-export default function StartupPage({ match, history }) {
-  const id = match.params.id;
-  const userQuery = useQuery(userGet);
-  let user = (userQuery.data || {}).userGet || {};
-  const [getData, { data, loading, error }] = useLazyQuery(connectionGet);
+import { userGet, connectionGet, tagGroupGet } from "../../../Apollo/Queries";
+import { connectionTagAdd } from "../../../Apollo/Mutations";
 
-  let connection = {
-    creative: {},
-    createdByUser: {},
-  };
-  if (data) {
-    connection = data.connectionGet;
+import { dashboard, startup_page } from "../../../routes";
+
+import { header_comp, sub_header } from "./StartupPage.module.css";
+
+export default function StartupPage({ match, history }) {
+  const [show, setShow] = useState(false);
+  const {
+    data: userGetData,
+    loading: userGetLoading,
+    error: userGetError,
+  } = useQuery(userGet);
+  const {
+    data: connectionGetData,
+    loading: connectionGetLoading,
+    error: connectionGetError,
+  } = useQuery(connectionGet, { variables: { id: match.params.id } });
+  const {
+    data: tagGroupGetData,
+    loading: tagGroupGetLoading,
+    error: tagGroupGetError,
+  } = useQuery(tagGroupGet);
+
+  const [mutate, { loading }] = useMutation(connectionTagAdd, {
+    refetchQueries: [
+      {
+        query: connectionGet,
+        variables: { id: match.params.id },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
+
+  if (
+    (!userGetData && userGetLoading) ||
+    (!connectionGetData && connectionGetLoading)
+  ) {
+    return <GhostLoader />;
   }
 
-  useEffect(() => {
-    id && getData({ variables: { id } });
-  }, []);
+  if (userGetError || connectionGetError || tagGroupGetError) {
+    console.log(userGetError);
+    console.log(connectionGetError);
+    console.log(tagGroupGetError);
 
-  // if (loading) {
-  //   return <GhostLoader />;
-  // }
-
-  if (error) {
-    console.log(error);
     return <div>We are updating</div>;
   }
 
+  const user = userGetData.userGet;
+  const connection = connectionGetData.connectionGet;
   return (
     <>
       <BreadCrumbs
@@ -56,7 +77,7 @@ export default function StartupPage({ match, history }) {
           },
           {
             val: `Startup: ${connection.creative.name}`,
-            link: `${startup_page}/${id}`,
+            link: `${startup_page}/${match.params.id}`,
           },
         ]}
       />
@@ -83,7 +104,43 @@ export default function StartupPage({ match, history }) {
         </Card>
 
         {/*TAGS*/}
-        <Card label="TAGS"></Card>
+        <Card label="TAGS">
+          {connection.tags.map(({ name, id }) => (
+            <Tag key={id}>{name}</Tag>
+          ))}
+          <button onClick={() => setShow(true)} disabled={loading}>
+            add tags
+          </button>
+          {show && (
+            <ul>
+              {tagGroupGetLoading
+                ? "...loading"
+                : tagGroupGetData.accountGet.tagGroups.map(({ name, tags }) => (
+                    <li>
+                      <h4>{name}</h4>
+                      <ul>
+                        {tags.map(({ name, id }) => (
+                          <li
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              mutate({
+                                variables: {
+                                  connectionId: connection.id,
+                                  tagId: id,
+                                },
+                              });
+                              setShow(false);
+                            }}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+            </ul>
+          )}
+        </Card>
 
         {/*SUBJECTIVE SCORE*/}
         <Card label="SUBJECTIVE SCORE">
@@ -105,15 +162,13 @@ export default function StartupPage({ match, history }) {
         <Card label="...">
           <Button
             onClick={() => {
-              const path = `${startup_page}/${id}/creative/${connection.creative.id}`;
+              const path = `${startup_page}/${match.params.id}/creative/${connection.creative.id}`;
               history.push(path);
             }}
           >
             Go to facts
           </Button>
         </Card>
-
-        <pre>{JSON.stringify(connection, null, 2)}</pre>
       </Content>
     </>
   );

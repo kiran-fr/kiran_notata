@@ -35,7 +35,7 @@ import Profile from "./Profile/Profile";
 import Report from "./Report/Report";
 import Inbox from "./Inbox/Inbox";
 import Activities from "./Activities/Activities";
-import Tags from "./Tags/Tags";
+import Tags from "./Tags";
 import Settings from "./Settings/Settings";
 import Team from "./Team/Team";
 import StartupPage from "./StartupPage/StartupPage";

@@ -12,7 +12,7 @@ export default function TextInput({
 }) {
   const [mutate, { loading }] = useMutation(evaluationPut);
   const delayedMutation = useCallback(
-    debounce(q => mutate(q), 1000),
+    debounce(options => mutate(options), 1000),
     []
   );
 
