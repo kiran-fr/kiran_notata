@@ -1,44 +1,34 @@
 import React, { useCallback } from "react";
-import classnames from "classnames";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
 
-import {
-  Card,
-  Button,
-  Table,
-  Content,
-  Modal,
-  BreadCrumbs,
-  GhostLoader,
-  SimpleInputForm,
-} from "../../elements";
+import { Card, SimpleInputForm } from "../../elements";
 
 // import { evaluationTemplateGet } from "../../../Apollo/Queries";
 import {
-  evaluationQuestionPut,
-  evaluationTemplateSectionPut,
   tagGroupPut,
   tagPut,
+  funnelGroupPut,
+  funnelTagPut,
 } from "../../../Apollo/Mutations";
-import { tagGroupGet } from "../../../Apollo/Queries";
+import { tagGroupGet, funnelGroupGet } from "../../../Apollo/Queries";
 
 import {
   option_dashed_container,
-  option_delete_container,
   option_save,
   tag_group_footer,
-  list_order,
-  list_order_button,
-  order_up,
-  order_down,
-  delete_tag_group,
 } from "./TagGroup.module.css";
 
-function TagGroupNameAndDescription({ id, name, description }) {
-  const [mutate] = useMutation(tagGroupPut);
-  const delayedMutation = useCallback(
-    debounce(options => mutate(options), 1000),
+function TagGroupNameAndDescription({ id, name, description, type }) {
+  const [mutateTags] = useMutation(tagGroupPut);
+  const delayedTagsMutation = useCallback(
+    debounce(options => mutateTags(options), 1000),
+    []
+  );
+
+  const [mutateFunnels] = useMutation(funnelGroupPut);
+  const delayedFunnelsMutation = useCallback(
+    debounce(options => mutateFunnels(options), 1000),
     []
   );
 
@@ -50,12 +40,18 @@ function TagGroupNameAndDescription({ id, name, description }) {
         name="input.name"
         defaultValue={name}
         onChange={event => {
-          delayedMutation({
+          const variables = {
             variables: {
               id,
               input: { name: event.target.value },
             },
-          });
+          };
+
+          if (type === "funnels") {
+            delayedFunnelsMutation(variables);
+          } else {
+            delayedTagsMutation(variables);
+          }
         }}
       />
 
@@ -65,21 +61,32 @@ function TagGroupNameAndDescription({ id, name, description }) {
         name="input.description"
         defaultValue={description}
         onChange={event => {
-          delayedMutation({
+          const variables = {
             variables: {
               id,
               input: { description: event.target.value },
             },
-          });
+          };
+
+          if (type === "funnels") {
+            delayedFunnelsMutation(variables);
+          } else {
+            delayedTagsMutation(variables);
+          }
         }}
       />
     </form>
   );
 }
 
-function TagInput({ tag, tagGroupId, index }) {
-  const [mutate] = useMutation(tagPut, {
+function TagInput({ tag, tagGroupId, funnelGroupId, index, type }) {
+  const [mutateTags] = useMutation(tagPut, {
     refetchQueries: [{ query: tagGroupGet }],
+    awaitRefetchQueries: true,
+  });
+
+  const [mutateFunnels] = useMutation(funnelTagPut, {
+    refetchQueries: [{ query: funnelGroupGet }],
     awaitRefetchQueries: true,
   });
 
@@ -106,20 +113,39 @@ function TagInput({ tag, tagGroupId, index }) {
         submit={({ input_val }) => {
           if (!input_val.length) return;
           if (tag) {
-            mutate({
-              variables: {
-                id: tag.id,
-                tagGroupId,
-                input: { name: input_val, index },
-              },
-            });
+            if (type === "funnels") {
+              mutateFunnels({
+                variables: {
+                  id: tag.id,
+                  funnelGroupId,
+                  input: { name: input_val, index },
+                },
+              });
+            } else {
+              mutateTags({
+                variables: {
+                  id: tag.id,
+                  tagGroupId,
+                  input: { name: input_val, index },
+                },
+              });
+            }
           } else {
-            mutate({
-              variables: {
-                tagGroupId,
-                input: { name: input_val, index },
-              },
-            });
+            if (type === "funnels") {
+              mutateFunnels({
+                variables: {
+                  funnelGroupId,
+                  input: { name: input_val, index },
+                },
+              });
+            } else {
+              mutateTags({
+                variables: {
+                  tagGroupId,
+                  input: { name: input_val, index },
+                },
+              });
+            }
           }
         }}
       />
@@ -128,27 +154,52 @@ function TagInput({ tag, tagGroupId, index }) {
   );
 }
 
-function TagList({ tags, tagGroupId }) {
+function TagList({ tags, funnelTags, tagGroupId, funnelGroupId, type }) {
+  const data = type === "funnels" ? funnelTags : tags;
+
   return (
     <>
-      {[...tags]
+      {[...data]
         .sort((a, b) => a.index - b.index)
         .map((tag, i) => (
-          <TagInput key={tag.id} tag={tag} tagGroupId={tagGroupId} index={i} />
+          <TagInput
+            key={tag.id}
+            tag={tag}
+            tagGroupId={tagGroupId}
+            funnelGroupId={funnelGroupId}
+            index={i}
+            type={type}
+          />
         ))}
 
-      <TagInput tagGroupId={tagGroupId} index={tags.length} />
+      <TagInput
+        tagGroupId={tagGroupId}
+        funnelGroupId={funnelGroupId}
+        index={type === "funnels" ? funnelTags.length : tags.length}
+        type={type}
+      />
     </>
   );
 }
 
-export default function TagGroup({ id, name, description, tags, index }) {
-  const [mutate, mRes] = useMutation(tagGroupPut, {
+export default function TagGroup({
+  id,
+  name,
+  description,
+  tags,
+  funnelTags,
+  index,
+  type,
+}) {
+  const [mutateTags] = useMutation(tagGroupPut, {
     refetchQueries: [{ query: tagGroupGet }],
     awaitRefetchQueries: true,
   });
 
-  console.log("mRes", mRes);
+  const [mutateFunnels] = useMutation(funnelGroupPut, {
+    refetchQueries: [{ query: funnelGroupGet }],
+    awaitRefetchQueries: true,
+  });
 
   return (
     <Card>
@@ -156,8 +207,16 @@ export default function TagGroup({ id, name, description, tags, index }) {
         id={id}
         name={name}
         description={description}
+        type={type}
       />
-      <TagList tags={tags} tagGroupId={id} />
+
+      <TagList
+        tags={tags}
+        tagGroupId={id}
+        funnelTags={funnelTags}
+        funnelGroupId={id}
+        type={type}
+      />
 
       <div className={tag_group_footer} />
 

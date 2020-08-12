@@ -1,41 +1,42 @@
 import React from "react";
-import classnames from "classnames";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import {
-  Card,
-  Button,
-  Table,
-  Content,
-  Modal,
-  BreadCrumbs,
-  GhostLoader,
-} from "../../elements";
+import { Card, Button } from "../../elements";
 
-import {
-  evaluationQuestionPut,
-  evaluationTemplateSectionPut,
-  tagGroupPut,
-} from "../../../Apollo/Mutations";
-import { tagGroupGet } from "../../../Apollo/Queries";
+import { tagGroupPut, funnelGroupPut } from "../../../Apollo/Mutations";
+import { tagGroupGet, funnelGroupGet } from "../../../Apollo/Queries";
 
-export default function CreateTagGroup({ index }) {
-  const [mutate] = useMutation(tagGroupPut, {
+export default function CreateTagGroup({ index, type }) {
+  const [mutateTags] = useMutation(tagGroupPut, {
     refetchQueries: [{ query: tagGroupGet }],
     awaitRefetchQueries: true,
   });
+  const [mutateFunnels] = useMutation(funnelGroupPut, {
+    refetchQueries: [{ query: funnelGroupGet }],
+    awaitRefetchQueries: true,
+  });
+
   const { register, handleSubmit, formState, reset } = useForm();
   const { isSubmitting } = formState;
 
   const onSubmit = async variables => {
     try {
-      await mutate({
-        variables: {
-          ...variables,
-          index,
-        },
-      });
+      if (type === "funnels") {
+        await mutateFunnels({
+          variables: {
+            ...variables,
+            index,
+          },
+        });
+      } else {
+        await mutateTags({
+          variables: {
+            ...variables,
+            index,
+          },
+        });
+      }
 
       reset();
     } catch (error) {

@@ -17,3 +17,4 @@ export { default as publicCreativeGet } from "./publicCreativeGet";
 export { default as publicCreativeTemplateGet } from "./publicCreativeTemplateGet";
 
 export { default as tagGroupGet } from "./tagGroupGet";
+export { default as funnelGroupGet } from "./funnelGroupGet";

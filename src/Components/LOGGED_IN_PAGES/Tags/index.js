@@ -1,33 +1,80 @@
-import React from "react";
-import { useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import { useLazyQuery } from "@apollo/client";
 
 import { Content, GhostLoader } from "../../elements";
 import CreateTag from "./CreateTagGroup";
 import TagGroup from "./TagsGroup";
 
-import { tagGroupGet } from "../../../Apollo/Queries";
+import { tagGroupGet, funnelGroupGet } from "../../../Apollo/Queries";
+import { useEffect } from "react";
 
 export default function Tags() {
-  const { data, loading, error } = useQuery(tagGroupGet);
+  const [type, setType] = useState("tags");
+  const [
+    getTags,
+    {
+      data: tagGroupGetData,
+      loading: tagGroupGetLoading,
+      error: tagGroupGetError,
+      called: tagGroupGetCalled,
+    },
+  ] = useLazyQuery(tagGroupGet);
+  const [
+    getFunnels,
+    {
+      data: funnelGroupGetData,
+      loading: funnelGroupGetLoading,
+      error: funnelGroupGetError,
+      called: funnelGroupGetCalled,
+    },
+  ] = useLazyQuery(funnelGroupGet);
 
-  if (!data || loading) {
-    return <GhostLoader />;
+  useEffect(() => {
+    if (type === "funnels") {
+      getFunnels();
+    } else {
+      getTags();
+    }
+  }, [type]);
+
+  if (type === "funnels") {
+    if (
+      !funnelGroupGetCalled ||
+      (!funnelGroupGetData && funnelGroupGetLoading)
+    ) {
+      return <GhostLoader />;
+    }
+  } else {
+    if (!tagGroupGetCalled || (!tagGroupGetData && tagGroupGetLoading)) {
+      return <GhostLoader />;
+    }
   }
-  const tagGroups = !data || loading ? [] : data.accountGet.tagGroups;
 
-  if (error) {
-    console.log(error);
+  if (funnelGroupGetError || tagGroupGetError) {
+    console.log(funnelGroupGetError);
+    console.log(tagGroupGetError);
+
     return <div>We are updating</div>;
   }
+
+  const data =
+    type === "funnels"
+      ? funnelGroupGetData.accountGet.funnelGroups
+      : tagGroupGetData.accountGet.tagGroups;
+
   return (
     <Content maxWidth={600}>
-      <h1>Tags</h1>
-      {[...tagGroups]
+      <h1>{type === "funnels" ? "Funnels" : "Tags"}</h1>
+      <div>
+        <button onClick={() => setType("tags")}>tags</button>
+        <button onClick={() => setType("funnels")}>funnels</button>
+      </div>
+      {[...data]
         .sort((a, b) => a.index - b.index)
         .map((props, index) => (
-          <TagGroup {...props} key={props.id} index={index} />
+          <TagGroup {...props} key={props.id} index={index} type={type} />
         ))}
-      <CreateTag index={data.length} />
+      <CreateTag index={data.length} type={type} />
     </Content>
   );
 }

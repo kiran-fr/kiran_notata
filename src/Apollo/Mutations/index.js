@@ -24,3 +24,5 @@ export { default as groupPut } from "./groupPut";
 export { default as tagGroupPut } from "./tagGroupPut";
 export { default as tagPut } from "./tagPut";
 export { default as connectionTagAdd } from "./connectionTagAdd";
+export { default as funnelGroupPut } from "./funnelGroupPut";
+export { default as funnelTagPut } from "./funnelTagPut";
