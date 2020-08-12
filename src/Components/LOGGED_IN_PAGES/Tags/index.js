@@ -13,16 +13,16 @@ export default function Tags() {
   if (!data || loading) {
     return <GhostLoader />;
   }
+  const tagGroups = !data || loading ? [] : data.accountGet.tagGroups;
 
   if (error) {
     console.log(error);
-
     return <div>We are updating</div>;
   }
   return (
     <Content maxWidth={600}>
       <h1>Tags</h1>
-      {[...data.accountGet.tagGroups]
+      {[...tagGroups]
         .sort((a, b) => a.index - b.index)
         .map((props, index) => (
           <TagGroup {...props} key={props.id} index={index} />

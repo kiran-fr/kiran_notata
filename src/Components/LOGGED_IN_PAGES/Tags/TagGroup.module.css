@@ -5,6 +5,15 @@
   margin-bottom: 10px;
 }
 
+.option_delete_container {
+  position: absolute;
+  left: 12px;
+  font-size: 18px;
+  color: var(--color-primary);
+  top: 5px;
+  cursor: pointer;
+}
+
 .option_save {
   position: absolute;
   right: 12px;

@@ -23,14 +23,9 @@ import {
 } from "../../../Apollo/Mutations";
 import { tagGroupGet } from "../../../Apollo/Queries";
 
-// import {
-//   profile,
-//   evaluation_template,
-//   evaluation_templates,
-// } from "../../../../routes";
-
 import {
   option_dashed_container,
+  option_delete_container,
   option_save,
   tag_group_footer,
   list_order,
@@ -90,12 +85,26 @@ function TagInput({ tag, tagGroupId, index }) {
 
   return (
     <div className={option_dashed_container}>
+      {/*
+        <div
+          className={option_delete_container}
+          onClick={() => {
+            mutate({
+              variables: {
+                id: tag.id,
+                delete: true
+              }
+            })
+          }}
+        >
+          <i className="fal fa-trash-alt" />
+        </div>
+      */}
       <SimpleInputForm
-        placeholder="Add new option..."
+        placeholder="Create new tag"
         val={tag ? tag.name : ""}
         submit={({ input_val }) => {
           if (!input_val.length) return;
-
           if (tag) {
             mutate({
               variables: {
@@ -134,10 +143,12 @@ function TagList({ tags, tagGroupId }) {
 }
 
 export default function TagGroup({ id, name, description, tags, index }) {
-  const [mutate] = useMutation(tagGroupPut, {
+  const [mutate, mRes] = useMutation(tagGroupPut, {
     refetchQueries: [{ query: tagGroupGet }],
     awaitRefetchQueries: true,
   });
+
+  console.log("mRes", mRes);
 
   return (
     <Card>
@@ -147,38 +158,51 @@ export default function TagGroup({ id, name, description, tags, index }) {
         description={description}
       />
       <TagList tags={tags} tagGroupId={id} />
-      <div className={tag_group_footer}>
-        <section className={delete_tag_group}>delete tag group</section>
-        <div className={list_order}>
-          <div
-            className={classnames(list_order_button, order_up)}
-            onClick={() => {
-              mutate({
-                variables: {
-                  id,
-                  input: { index: index - 1 },
-                },
-              });
-            }}
-          >
-            <i className="fas fa-arrow-alt-circle-up" />
-          </div>
 
-          <div
-            className={classnames(list_order_button, order_down)}
-            onClick={() => {
-              mutate({
-                variables: {
-                  id,
-                  input: { index: index + 1 },
-                },
-              });
-            }}
-          >
-            <i className="fas fa-arrow-alt-circle-down" />
+      <div className={tag_group_footer} />
+
+      {/*
+          <div className={tag_group_footer}>
+            <section
+              className={delete_tag_group}
+              onClick={() => {
+                console.log('mutatrix..')
+                mutate({ variables: { id, delete: true } })
+              }}
+              >
+              delete tag group
+            </section>
+            <div className={list_order}>
+              <div
+                className={classnames(list_order_button, order_up)}
+                onClick={() => {
+                  mutate({
+                    variables: {
+                      id,
+                      input: { index: index - 1 },
+                    },
+                  });
+                }}
+              >
+                <i className="fas fa-arrow-alt-circle-up" />
+              </div>
+
+              <div
+                className={classnames(list_order_button, order_down)}
+                onClick={() => {
+                  mutate({
+                    variables: {
+                      id,
+                      input: { index: index + 1 },
+                    },
+                  });
+                }}
+              >
+                <i className="fas fa-arrow-alt-circle-down" />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        */}
     </Card>
   );
 }

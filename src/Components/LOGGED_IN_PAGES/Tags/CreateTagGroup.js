@@ -13,19 +13,12 @@ import {
   GhostLoader,
 } from "../../elements";
 
-// import { evaluationTemplateGet } from "../../../Apollo/Queries";
 import {
   evaluationQuestionPut,
   evaluationTemplateSectionPut,
   tagGroupPut,
 } from "../../../Apollo/Mutations";
 import { tagGroupGet } from "../../../Apollo/Queries";
-
-// import {
-//   profile,
-//   evaluation_template,
-//   evaluation_templates,
-// } from "../../../../routes";
 
 export default function CreateTagGroup({ index }) {
   const [mutate] = useMutation(tagGroupPut, {
@@ -73,9 +66,17 @@ export default function CreateTagGroup({ index }) {
           ref={register}
         />
 
-        <Button type="right_arrow" loading={isSubmitting} size="large">
-          add new tag group
-        </Button>
+        <div
+          style={{
+            position: "relative",
+            textAlign: "right",
+            marginTop: "10px",
+          }}
+        >
+          <Button type="right_arrow" loading={isSubmitting} size="large">
+            Create new tag group
+          </Button>
+        </div>
       </form>
     </Card>
   );
