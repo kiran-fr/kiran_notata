@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { 
+import {
   accountFragments,
   accountMemberFragments,
   evaluationTemplateFragments,
@@ -10,20 +10,18 @@ import {
   tagFragments,
   funnelGroupFragments,
   funnelTagFragments,
-  creativeFragments
-} from '../Fragments';
+  creativeFragments,
+} from "../Fragments";
 
 export default gql`
   query accountGet {
-
     accountGet {
-    
       ...accountFields
-    
+
       members {
         ...accountMemberFields
       }
-    
+
       evaluationTemplates {
         ...evaluationTemplateFields
         sections {
@@ -33,17 +31,16 @@ export default gql`
           }
         }
       }
-    
+
       evaluationQuestions {
         ...evaluationQuestionFields
       }
-    
+
       tagGroups {
         ...tagGroupFields
         tags {
           ...tagFields
         }
-
       }
 
       funnelGroups {
@@ -56,7 +53,6 @@ export default gql`
       creatives {
         ...creativeFields
       }
-
     }
   }
   ${accountFragments}
@@ -69,5 +65,4 @@ export default gql`
   ${funnelGroupFragments}
   ${funnelTagFragments}
   ${creativeFragments}
-`
-
+`;
