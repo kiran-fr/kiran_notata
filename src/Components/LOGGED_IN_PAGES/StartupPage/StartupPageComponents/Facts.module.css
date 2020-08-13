@@ -1,0 +1,17 @@
+.facts_list {
+}
+
+.list_item {
+  position: relative;
+  padding-left: 25px;
+  padding-bottom: 20px;
+}
+
+.list_item_text {
+}
+
+.list_item_check {
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
