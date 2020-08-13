@@ -55,16 +55,36 @@ function Delete({ id, templates }) {
   );
 }
 
-const CreateNewTemplate = ({ setDone }) => {
+const CreateNewTemplate = ({ setShowModal }) => {
   const [mutate] = useMutation(evaluationTemplatePut);
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
-  const onSubmit = async (data, event) => {
+  const onSubmit = async ({ variables }, event) => {
     try {
-      let res = await mutate(data);
-      let item = res.data.evaluationTemplatePut;
-      setDone(item.id);
+      await mutate({
+        variables,
+        update: (proxy, { data: { evaluationTemplatePut } }) => {
+          const data = proxy.readQuery({
+            query: accountGet,
+          });
+
+          proxy.writeQuery({
+            query: accountGet,
+            data: {
+              accountGet: {
+                ...data.accountGet,
+                evaluationTemplates: [
+                  evaluationTemplatePut,
+                  ...data.accountGet.evaluationTemplates,
+                ],
+              },
+            },
+          });
+        },
+      });
+
+      setShowModal(false);
       event.target.reset();
     } catch (error) {
       console.log(error);
@@ -193,12 +213,7 @@ export default function EvaluationTemplates(props) {
             close={() => setShowModal(false)}
             disableFoot={true}
           >
-            <CreateNewTemplate
-              setDone={id => {
-                let path = `${evaluation_template}/${id}`;
-                props.history.push(path);
-              }}
-            />
+            <CreateNewTemplate setShowModal={setShowModal} />
           </Modal>
         )}
       </Content>
