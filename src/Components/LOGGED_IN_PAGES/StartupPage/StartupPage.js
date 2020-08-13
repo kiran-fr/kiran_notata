@@ -14,41 +14,24 @@ import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
 import { EvaluationBox } from "./StartupPageComponents/EvaluationBox";
 import { Log } from "./StartupPageComponents/Log";
 import { Share } from "./StartupPageComponents/Share";
-
+import { Facts } from "./StartupPageComponents/Facts";
+import { Tags } from "./StartupPageComponents/Tags";
 import { userGet, connectionGet, tagGroupGet } from "../../../Apollo/Queries";
-import { connectionTagAdd } from "../../../Apollo/Mutations";
-
 import { dashboard, startup_page } from "../../../routes";
-
 import { header_comp, sub_header } from "./StartupPage.module.css";
 
 export default function StartupPage({ match, history }) {
-  const [show, setShow] = useState(false);
   const {
     data: userGetData,
     loading: userGetLoading,
     error: userGetError,
   } = useQuery(userGet);
+
   const {
     data: connectionGetData,
     loading: connectionGetLoading,
     error: connectionGetError,
   } = useQuery(connectionGet, { variables: { id: match.params.id } });
-  const {
-    data: tagGroupGetData,
-    loading: tagGroupGetLoading,
-    error: tagGroupGetError,
-  } = useQuery(tagGroupGet);
-
-  const [mutate, { loading }] = useMutation(connectionTagAdd, {
-    refetchQueries: [
-      {
-        query: connectionGet,
-        variables: { id: match.params.id },
-      },
-    ],
-    awaitRefetchQueries: true,
-  });
 
   if (
     (!userGetData && userGetLoading) ||
@@ -57,16 +40,15 @@ export default function StartupPage({ match, history }) {
     return <GhostLoader />;
   }
 
-  if (userGetError || connectionGetError || tagGroupGetError) {
+  if (userGetError || connectionGetError) {
     console.log(userGetError);
     console.log(connectionGetError);
-    console.log(tagGroupGetError);
-
     return <div>We are updating</div>;
   }
 
   const user = userGetData.userGet;
   const connection = connectionGetData.connectionGet;
+
   return (
     <>
       <BreadCrumbs
@@ -98,48 +80,19 @@ export default function StartupPage({ match, history }) {
           </div>
         </Card>
 
-        {/*GROUPS*/}
-        <Card label="SHARE">
-          <Share connection={connection} user={user} history={history} />
+        {/*FACTS*/}
+        <Card label="FACTS" style={{ paddingBottom: "20px" }}>
+          <Facts
+            connection={connection}
+            user={user}
+            match={match}
+            history={history}
+          />
         </Card>
 
         {/*TAGS*/}
-        <Card label="TAGS">
-          {connection.tags.map(({ name, id }) => (
-            <Tag key={id}>{name}</Tag>
-          ))}
-          <button onClick={() => setShow(true)} disabled={loading}>
-            add tags
-          </button>
-          {show && (
-            <ul>
-              {tagGroupGetLoading
-                ? "...loading"
-                : tagGroupGetData.accountGet.tagGroups.map(({ name, tags }) => (
-                    <li>
-                      <h4>{name}</h4>
-                      <ul>
-                        {tags.map(({ name, id }) => (
-                          <li
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                              mutate({
-                                variables: {
-                                  connectionId: connection.id,
-                                  tagId: id,
-                                },
-                              });
-                              setShow(false);
-                            }}
-                          >
-                            {name}
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-            </ul>
-          )}
+        <Card label="TAGS" style={{ paddingBottom: "20px" }}>
+          <Tags connection={connection} user={user} match={match} />
         </Card>
 
         {/*SUBJECTIVE SCORE*/}
@@ -155,19 +108,14 @@ export default function StartupPage({ match, history }) {
           />
         </Card>
 
-        <Card label="LOG/COMMENTS">
-          <Log connection={connection} user={user} />
+        {/*GROUPS*/}
+        <Card label="SHARE">
+          <Share connection={connection} user={user} history={history} />
         </Card>
 
-        <Card label="...">
-          <Button
-            onClick={() => {
-              const path = `${startup_page}/${match.params.id}/creative/${connection.creative.id}`;
-              history.push(path);
-            }}
-          >
-            Go to facts
-          </Button>
+        {/*LOG/COMMENTS*/}
+        <Card label="LOG/COMMENTS">
+          <Log connection={connection} user={user} />
         </Card>
       </Content>
     </>

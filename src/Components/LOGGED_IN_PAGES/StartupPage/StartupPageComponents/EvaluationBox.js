@@ -194,13 +194,23 @@ export function EvaluationBox({ connection, user, history }) {
 
   return (
     <div style={{ paddingBottom: "15px" }}>
-      {
-        <EvaluationList
-          evaluations={evaluations}
-          connectionId={connection.id}
-          templates={templates}
-        />
-      }
+      {!evaluations.length && (
+        <div>
+          <div style={{ fontSize: "18px" }}>Evaluate this startup</div>
+          <div
+            style={{ padding: "20px 0px", color: "var(--color-gray-medium)" }}
+          >
+            Evaluate this startup based on your own criterias. You can score
+            your evaluations, and compare simiar companies.
+          </div>
+        </div>
+      )}
+
+      <EvaluationList
+        evaluations={evaluations}
+        connectionId={connection.id}
+        templates={templates}
+      />
 
       <div
         style={{
@@ -208,7 +218,7 @@ export function EvaluationBox({ connection, user, history }) {
           textAlign: "right",
         }}
       >
-        <Button onClick={() => setShowModal(true)} type="right_arrow">
+        <Button type="just_text" onClick={() => setShowModal(true)}>
           Evaluate
         </Button>
       </div>

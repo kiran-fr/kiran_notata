@@ -13,6 +13,7 @@ import {
   secondary_style,
   input_button_wrapper,
   input_button_icon,
+  text_button,
 } from "./Button.module.css";
 
 const StandardButton = ({
@@ -108,6 +109,19 @@ const TinyRightButton = ({ type, onClick, ...children }) => {
   );
 };
 
+const TextButton = ({ onClick, ...children }) => {
+  onClick =
+    onClick ||
+    function() {
+      console.log("click");
+    };
+  return (
+    <button className={classnames(text_button)} onClick={onClick}>
+      <div {...children} />
+    </button>
+  );
+};
+
 export const Button = props => {
   let { type } = props;
 
@@ -117,6 +131,10 @@ export const Button = props => {
 
   if (type === "input") {
     return <InputButton {...props} />;
+  }
+
+  if (type === "just_text") {
+    return <TextButton {...props} />;
   }
 
   return <StandardButton {...props} />;

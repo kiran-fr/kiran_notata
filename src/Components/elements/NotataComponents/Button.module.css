@@ -208,3 +208,13 @@
 .tiny_right_button_container i {
   color: var(--color-primary);
 }
+
+.text_button,
+.text_button:focus {
+  outline: none;
+  border: none;
+  background: white;
+  color: var(--color-primary);
+  cursor: pointer;
+  text-decoration: underline;
+}

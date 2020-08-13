@@ -55,7 +55,7 @@ export default function Connections({ history }) {
     },
 
     {
-      title: "Source of Dealflow",
+      title: "Tags",
       dataIndex: "tags",
       key: "tags",
       responsive: "md",
