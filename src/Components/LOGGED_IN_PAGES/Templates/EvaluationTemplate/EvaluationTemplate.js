@@ -45,7 +45,7 @@ function NameAndDescription({ template }) {
       ...data,
     };
     try {
-      let res = await mutate({
+      await mutate({
         variables,
         optimisticResponse: {
           __typename: "Mutation",
@@ -87,22 +87,41 @@ function NameAndDescription({ template }) {
   );
 }
 
-function AddNewSection({ id, setDone }) {
+function AddNewSection({ id, setShowModal }) {
   const [mutate] = useMutation(evaluationTemplateSectionPut);
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   async function onSubmit(name, event) {
     try {
-      let res = await mutate({
+      await mutate({
         variables: {
           templateId: id,
           input: name,
         },
+        update: (proxy, { data: evaluationTemplateSectionPut }) => {
+          const data = proxy.readQuery({
+            query: evaluationTemplateGet,
+            variables: { id },
+          });
+
+          proxy.writeQuery({
+            query: evaluationTemplateGet,
+            variables: { id },
+            data: {
+              evaluationTemplateGet: {
+                ...data.evaluationTemplateGet,
+                sections: [
+                  evaluationTemplateSectionPut,
+                  ...data.evaluationTemplateGet.sections,
+                ],
+              },
+            },
+          });
+        },
       });
-      let item = res.data.evaluationTemplateSectionPut;
-      setDone(item.id);
-      // event.target.reset();
+
+      setShowModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -296,14 +315,7 @@ export default function EvaluationTemplate({ match, history }) {
             close={() => setShowModal(false)}
             disableFoot={true}
           >
-            <AddNewSection
-              id={id}
-              //setDone={() => setShowModal(false)}
-              setDone={sectionId => {
-                let path = `${evaluation_template}/${id}/${sectionId}`;
-                history.push(path);
-              }}
-            />
+            <AddNewSection id={id} setShowModal={setShowModal} />
           </Modal>
         )}
       </Content>
