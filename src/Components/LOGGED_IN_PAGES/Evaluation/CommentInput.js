@@ -21,27 +21,36 @@ export default function CommentInput({
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
-  async function onSubmit(data, event) {
+  function onSubmit(data, event) {
+    const answerNew = {
+      inputType: "COMMENT",
+      questionId: question.id,
+      question: question.name,
+      val: data.comment,
+    };
+
     const variables = {
       id: evaluation.id,
       input: {
         name: section.name,
         description: section.description,
         templateId,
-        answerNew: {
-          inputType: "COMMENT",
-          questionId: question.id,
-          question: question.name,
-          val: data.comment,
-        },
+        answerNew,
       },
     };
-    try {
-      let res = await mutate({ variables });
-      console.log("res", res);
-    } catch (error) {
-      console.log("error", error);
-    }
+
+    mutate({
+      variables,
+      optimisticResponse: {
+        __typename: "Mutation",
+        evaluationPut: {
+          __typename: "Evaluation",
+          ...evaluation,
+          answers: [...evaluation.answers, { id: "", sid: "", ...answerNew }],
+        },
+      },
+    });
+
     event.target.reset();
   }
 
@@ -54,8 +63,17 @@ export default function CommentInput({
       },
     };
     try {
-      let res = await mutate({ variables });
-      console.log("res", res);
+      await mutate({
+        variables,
+        optimisticResponse: {
+          __typename: "Mutation",
+          evaluationPut: {
+            __typename: "Evaluation",
+            ...evaluation,
+            answers: evaluation.answers.filter(({ id: _id }) => id !== _id),
+          },
+        },
+      });
     } catch (error) {
       console.log("error", error);
     }
