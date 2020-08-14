@@ -5,14 +5,7 @@ import { connectionGet, evaluationTemplateGet } from "../../../Apollo/Queries";
 
 import { startup_page } from "../../../routes";
 
-import {
-  Card,
-  BreadCrumbs,
-  GhostLoader,
-  Table,
-  Button,
-  Content,
-} from "../../elements/";
+import { Card, BreadCrumbs, Table, Button, Content } from "../../elements/";
 
 export default function Evaluation({ match, history }) {
   const { connectionId, evaluationId } = match.params;
@@ -44,6 +37,10 @@ export default function Evaluation({ match, history }) {
 
   const error = connectionQuery.error || evaluationTemplateQuery.error;
   const loading = connectionQuery.loading || evaluationTemplateQuery.loading;
+
+  if (loading) {
+    return null;
+  }
 
   if (error) {
     console.log("error", error);

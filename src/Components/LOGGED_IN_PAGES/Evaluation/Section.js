@@ -108,14 +108,19 @@ export default function Section({ match, history }) {
     connectionQuery.loading || evaluationTemplateSectionQuery.loading;
   const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
 
+  if (loading) {
+    return null;
+  }
+
   if (error) {
     console.log(error);
     return <p>We are updating</p>;
   }
 
   // Filter out current evaluation
-  const evaluation =
-    connection.evaluations.find(({ id }) => id === evaluationId) || {};
+  const evaluation = connection.evaluations.find(
+    ({ id }) => id === evaluationId
+  ) || { answers: [] };
 
   return (
     <div>
