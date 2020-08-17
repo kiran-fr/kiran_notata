@@ -19,6 +19,7 @@ import {
   Table,
   Button,
   Modal,
+  GhostLoader,
 } from "../../elements/";
 
 function AddNewMember({ group, mutate }) {
@@ -597,19 +598,29 @@ export default function Group({ match, history }) {
 
   const [mutate] = useMutation(groupPut);
 
-  const [getData, { data, loading, error }] = useLazyQuery(groupGet);
-  useEffect(() => getData({ variables: { id } }), []);
-  let group = (data || {}).groupGet || {};
-
+  const [getData, groupQuery] = useLazyQuery(groupGet);
   const connectionsQuery = useQuery(connectionsGet);
-  let connections = (connectionsQuery.data || {}).connectionsGet || [];
-
   const userQuery = useQuery(userGet);
-  let user = (userQuery.data || {}).userGet || {};
+
+  useEffect(() => getData({ variables: { id } }), []);
+
+  const hasAllData = groupQuery.data && connectionsQuery.data && userQuery.data;
+  const error = groupQuery.error || connectionsQuery.error || userQuery.error;
+  const loading =
+    groupQuery.loading || connectionsQuery.loading || userQuery.loading;
+
+  if (error) {
+    console.log("error", error);
+    return <div>We're updaing...</div>;
+  }
+
+  if (!hasAllData && loading) return <GhostLoader />;
+
+  let group = groupQuery.data.groupGet || {};
+  let connections = connectionsQuery.data.connectionsGet || [];
+  let user = userQuery.data.userGet || {};
 
   const isOwner = group.createdBy === user.cognitoIdentityId;
-
-  if (error) console.log("error", error);
 
   return (
     <>

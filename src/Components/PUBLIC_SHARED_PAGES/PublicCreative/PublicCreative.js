@@ -128,6 +128,8 @@ function CompanyName({ creative }) {
 }
 
 export function PublicCreative({ match }) {
+  console.log("PublicCreative");
+
   const { id } = match.params;
 
   const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
@@ -149,6 +151,9 @@ export function PublicCreative({ match }) {
   const loading = creativeQuery.loading || creativeTemplateQuery.loading;
 
   if (error) {
+    console.log("creativeQuery.error", creativeQuery.error);
+    console.log("creativeTemplateQuery.error", creativeTemplateQuery.error);
+
     return (
       <Content maxWidth={600} center>
         <ErrorBox>Form not found...</ErrorBox>

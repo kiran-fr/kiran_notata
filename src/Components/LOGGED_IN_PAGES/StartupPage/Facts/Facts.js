@@ -73,7 +73,7 @@ function Question({ question, section, creative }) {
   );
 }
 
-function InviteStartup({ creative, mutate, loading }) {
+function InviteStartup({ creative, connectionId, mutate, loading }) {
   const [showModal, setShowModal] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -93,7 +93,7 @@ function InviteStartup({ creative, mutate, loading }) {
     try {
       let variables = {
         id: creative.id,
-        input: { sharedWithEmail: data.email },
+        input: { sharedWithEmail: data.email, connectionId },
       };
       await mutate({ variables });
     } catch (error) {
@@ -151,7 +151,7 @@ function InviteStartup({ creative, mutate, loading }) {
                   try {
                     let variables = {
                       id: creative.id,
-                      input: { removeSharing: true },
+                      input: { removeSharing: true, connectionId },
                     };
                     let res = await mutate({ variables });
                     setCopySuccess(false);
@@ -297,6 +297,7 @@ export default function Facts({ history, match }) {
         <CompanyName creative={creative} name={creative.name} />
 
         <InviteStartup
+          connectionId={connectionId}
           creative={creative}
           mutate={mutate}
           loading={mutationLoading}

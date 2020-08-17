@@ -1,10 +1,8 @@
 import React, { useCallback } from "react";
 import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
-
 import { Card, SimpleInputForm } from "../../elements";
 
-// import { evaluationTemplateGet } from "../../../Apollo/Queries";
 import {
   tagGroupPut,
   tagPut,
@@ -54,27 +52,30 @@ function TagGroupNameAndDescription({ id, name, description, type }) {
           }
         }}
       />
+      {/*
+          <textarea
+            rows={1}
+            className="form_p2"
+            name="input.description"
+            defaultValue={description}
+            onChange={event => {
+              const variables = {
+                variables: {
+                  id,
+                  input: { description: event.target.value },
+                },
+              };
 
-      <textarea
-        rows={1}
-        className="form_p2"
-        name="input.description"
-        defaultValue={description}
-        onChange={event => {
-          const variables = {
-            variables: {
-              id,
-              input: { description: event.target.value },
-            },
-          };
+              if (type === "funnels") {
+                delayedFunnelsMutation(variables);
+              } else {
+                delayedTagsMutation(variables);
+              }
+            }}
+          />
+        */}
 
-          if (type === "funnels") {
-            delayedFunnelsMutation(variables);
-          } else {
-            delayedTagsMutation(variables);
-          }
-        }}
-      />
+      <hr />
     </form>
   );
 }
@@ -91,22 +92,7 @@ function TagInput({ tag, tagGroupId, funnelGroupId, index, type }) {
   });
 
   return (
-    <div className={option_dashed_container}>
-      {/*
-        <div
-          className={option_delete_container}
-          onClick={() => {
-            mutate({
-              variables: {
-                id: tag.id,
-                delete: true
-              }
-            })
-          }}
-        >
-          <i className="fal fa-trash-alt" />
-        </div>
-      */}
+    <div className={option_dashed_container} style={{ paddingLeft: "10px" }}>
       <SimpleInputForm
         placeholder="Create new tag"
         val={tag ? tag.name : ""}
@@ -209,7 +195,6 @@ export default function TagGroup({
         description={description}
         type={type}
       />
-
       <TagList
         tags={tags}
         tagGroupId={id}
@@ -217,51 +202,7 @@ export default function TagGroup({
         funnelGroupId={id}
         type={type}
       />
-
       <div className={tag_group_footer} />
-
-      {/*
-          <div className={tag_group_footer}>
-            <section
-              className={delete_tag_group}
-              onClick={() => {
-                console.log('mutatrix..')
-                mutate({ variables: { id, delete: true } })
-              }}
-              >
-              delete tag group
-            </section>
-            <div className={list_order}>
-              <div
-                className={classnames(list_order_button, order_up)}
-                onClick={() => {
-                  mutate({
-                    variables: {
-                      id,
-                      input: { index: index - 1 },
-                    },
-                  });
-                }}
-              >
-                <i className="fas fa-arrow-alt-circle-up" />
-              </div>
-
-              <div
-                className={classnames(list_order_button, order_down)}
-                onClick={() => {
-                  mutate({
-                    variables: {
-                      id,
-                      input: { index: index + 1 },
-                    },
-                  });
-                }}
-              >
-                <i className="fas fa-arrow-alt-circle-down" />
-              </div>
-            </div>
-          </div>
-        */}
     </Card>
   );
 }

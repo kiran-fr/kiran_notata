@@ -21,8 +21,6 @@ import {
 } from "./Facts.module.css";
 
 export function Facts({ connection, user, match, history }) {
-  console.log("connection", connection);
-
   const { creative } = connection;
   const { sharedWithEmail, submit: submitted } = creative;
 
@@ -33,12 +31,6 @@ export function Facts({ connection, user, match, history }) {
   );
   const answerCount = [...new Set(answers.map(({ questionId }) => questionId))]
     .length;
-
-  if (acceptedTerms) {
-    console.log("acceptedTerms", acceptedTerms);
-  }
-
-  console.log("answerCount", answerCount);
 
   let isUntouched = !sharedWithEmail && !submitted && !answerCount;
 

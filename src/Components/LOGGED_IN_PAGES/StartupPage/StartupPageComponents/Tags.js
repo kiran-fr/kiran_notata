@@ -37,7 +37,7 @@ import {
   tag_kill,
 } from "./Tags.module.css";
 
-function TagPage({ group, connection, mutate, mutateDelete, close }) {
+function TagPage({ group, connection, addTag, deleteTag, close }) {
   const [filter, setFilter] = useState("");
 
   let tags = group.tags;
@@ -64,38 +64,24 @@ function TagPage({ group, connection, mutate, mutateDelete, close }) {
         </div>
 
         <div className={dropdown_list_container}>
-          {tags.map(({ name, id }) => {
+          {tags.map(tag => {
+            // This should be based on ID, but since we're using optimistic,
+            // we don't know the ID before we get the data back from server...
             const isChecked = connection.tags.some(
-              ({ id: tagId }) => id === tagId
+              ({ id, name }) => name === tag.name
             );
             return (
-              <div key={id} className={dropdown_group_item}>
+              <div key={tag.id} className={dropdown_group_item}>
                 <div className={dropdown_group_item_check}>
                   <label>
                     <input
                       type="checkbox"
                       checked={isChecked}
                       onChange={() => {
-                        if (!isChecked) {
-                          mutate({
-                            variables: {
-                              connectionId: connection.id,
-                              tagId: id,
-                            },
-                          });
-                        }
-
-                        if (isChecked) {
-                          mutateDelete({
-                            variables: {
-                              connectionId: connection.id,
-                              tagId: id,
-                            },
-                          });
-                        }
+                        isChecked ? deleteTag(tag) : addTag(tag);
                       }}
                     />
-                    {name}
+                    {tag.name}
                   </label>
                 </div>
               </div>
@@ -115,8 +101,8 @@ function TagOverview({
   connection,
   tagGroups,
   setShowGroup,
-  mutate,
-  mutateDelete,
+  addTag,
+  deleteTag,
   close,
 }) {
   const [filter, setFilter] = useState("");
@@ -163,23 +149,18 @@ function TagOverview({
                   .filter(tag =>
                     connection.tags.some(({ id: tagId }) => tagId === tag.id)
                   )
-                  .map(({ name, id }) => {
+                  .map(tag => {
                     return (
-                      <div className={dropdown_group_list_item} key={id}>
+                      <div className={dropdown_group_list_item} key={tag.id}>
                         <div
                           className={dropdown_group_tag_kill}
-                          onClick={() => {
-                            mutateDelete({
-                              variables: {
-                                connectionId: connection.id,
-                                tagId: id,
-                              },
-                            });
-                          }}
+                          onClick={() => deleteTag(tag)}
                         >
                           <i className="fal fa-times" />
                         </div>
-                        <div className={dropdown_group_tag_name}>{name}</div>
+                        <div className={dropdown_group_tag_name}>
+                          {tag.name}
+                        </div>
                       </div>
                     );
                   })}
@@ -194,7 +175,7 @@ function TagOverview({
                 <div>{tagGroup.name}</div>
                 {tagGroup.tags.map((tag, ii) => {
                   const isChecked = connection.tags.some(
-                    ({ id: tagId }) => tagId === tag.id
+                    ({ id, name }) => name === tag.name
                   );
                   return (
                     <div
@@ -205,26 +186,9 @@ function TagOverview({
                         <input
                           type="checkbox"
                           checked={isChecked}
-                          onChange={() => {
-                            console.log("isChecked", isChecked);
-
-                            if (!isChecked) {
-                              mutate({
-                                variables: {
-                                  connectionId: connection.id,
-                                  tagId: tag.id,
-                                },
-                              });
-                            }
-                            if (isChecked) {
-                              mutateDelete({
-                                variables: {
-                                  connectionId: connection.id,
-                                  tagId: tag.id,
-                                },
-                              });
-                            }
-                          }}
+                          onChange={() =>
+                            isChecked ? deleteTag(tag) : addTag(tag)
+                          }
                         />
                         {tag.name}
                       </label>
@@ -248,28 +212,9 @@ export function Tags({ connection, user, match }) {
   const [showGroup, setShowGroup] = useState(null);
 
   const { data, loading, error } = useQuery(tagGroupGet);
-
-  const [mutate, { loading: mutationLoading }] = useMutation(connectionTagAdd, {
-    refetchQueries: [
-      {
-        query: connectionGet,
-        variables: { id: connection.id },
-      },
-    ],
-    awaitRefetchQueries: true,
-  });
-
+  const [mutate, { loading: mutationLoading }] = useMutation(connectionTagAdd);
   const [mutateDelete, { loading: mutationDeleteLoading }] = useMutation(
-    connectionTagRemove,
-    {
-      refetchQueries: [
-        {
-          query: connectionGet,
-          variables: { id: connection.id },
-        },
-      ],
-      awaitRefetchQueries: true,
-    }
+    connectionTagRemove
   );
 
   if (error) {
@@ -278,6 +223,86 @@ export function Tags({ connection, user, match }) {
   }
 
   const tagGroups = (data && data.accountGet.tagGroups) || [];
+
+  function addTag(tag) {
+    mutate({
+      variables: {
+        connectionId: connection.id,
+        tagId: tag.id,
+      },
+
+      optimisticResponse: {
+        __typename: "Mutation",
+        connectionTagAdd: {
+          tags: [
+            ...connection.tags,
+            {
+              createdAt: new Date().getTime(),
+              index: connection.tags.length,
+              createdBy: "tmp",
+              id: "tmp-id",
+              description: null,
+              name: tag.name,
+              tagGroupId: tag.tagGroupId,
+              __typename: "Tag",
+            },
+          ],
+          __typename: "Connection",
+        },
+      },
+
+      update: (proxy, { data: { connectionTagAdd } }) => {
+        const data = proxy.readQuery({
+          query: connectionGet,
+          variables: { id: connection.id },
+        });
+        proxy.writeQuery({
+          query: connectionGet,
+          variables: { id: connection.id },
+          data: {
+            connectionGet: {
+              ...data.connectionGet,
+              tags: [...connectionTagAdd.tags],
+            },
+          },
+        });
+      },
+    });
+  }
+
+  function deleteTag(tag) {
+    mutateDelete({
+      variables: {
+        connectionId: connection.id,
+        tagId: tag.id,
+      },
+
+      optimisticResponse: {
+        __typename: "Mutation",
+        connectionTagRemove: {
+          tags: [...connection.tags.filter(({ id }) => id !== tag.id)],
+          __typename: "Connection",
+        },
+      },
+
+      update: (proxy, { data: { connectionTagRemove } }) => {
+        const data = proxy.readQuery({
+          query: connectionGet,
+          variables: { id: connection.id },
+        });
+        proxy.writeQuery({
+          query: connectionGet,
+          variables: { id: connection.id },
+          data: {
+            connectionGet: {
+              ...data.connectionGet,
+              tags: [...connection.tags.filter(({ id }) => id !== tag.id)],
+            },
+          },
+        });
+      },
+    });
+  }
 
   return (
     <div>
@@ -306,17 +331,7 @@ export function Tags({ connection, user, match }) {
                   <div className={tag_name}>
                     {group.name}: {tag.name}
                   </div>
-                  <div
-                    className={tag_kill}
-                    onClick={() => {
-                      mutateDelete({
-                        variables: {
-                          connectionId: connection.id,
-                          tagId: tag.id,
-                        },
-                      });
-                    }}
-                  >
+                  <div className={tag_kill} onClick={() => deleteTag(tag)}>
                     <i className="fal fa-times" />
                   </div>
                 </div>
@@ -333,8 +348,8 @@ export function Tags({ connection, user, match }) {
             tagGroups={tagGroups}
             connection={connection}
             setShowGroup={setShowGroup}
-            mutate={mutate}
-            mutateDelete={mutateDelete}
+            addTag={addTag}
+            deleteTag={deleteTag}
             close={() => setShow(false)}
           />
         )}
@@ -344,8 +359,8 @@ export function Tags({ connection, user, match }) {
           <TagPage
             group={showGroup}
             connection={connection}
-            mutate={mutate}
-            mutateDelete={mutateDelete}
+            addTag={addTag}
+            deleteTag={deleteTag}
             close={() => setShowGroup(null)}
           />
         )}

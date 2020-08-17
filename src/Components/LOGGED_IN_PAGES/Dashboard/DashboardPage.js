@@ -45,6 +45,7 @@ const CreateNewStartup = ({ setDone }) => {
         style={{
           position: "relative",
           marginBottom: "30px",
+          top: "-20px",
         }}
       >
         <Button

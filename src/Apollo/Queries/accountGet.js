@@ -10,7 +10,6 @@ import {
   tagFragments,
   funnelGroupFragments,
   funnelTagFragments,
-  creativeFragments,
 } from "../Fragments";
 
 export default gql`
@@ -49,10 +48,6 @@ export default gql`
           ...funnelTagFields
         }
       }
-
-      creatives {
-        ...creativeFields
-      }
     }
   }
   ${accountFragments}
@@ -64,5 +59,4 @@ export default gql`
   ${tagFragments}
   ${funnelGroupFragments}
   ${funnelTagFragments}
-  ${creativeFragments}
 `;

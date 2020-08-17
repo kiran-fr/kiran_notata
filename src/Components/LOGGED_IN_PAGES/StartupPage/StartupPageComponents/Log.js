@@ -138,9 +138,7 @@ export function Log({ connection, user }) {
     log = logQuery.data.logGet;
   }
 
-  log = (log || []).filter(l =>
-    viewEvents ? l : l.dataPairs[0].key === "TEXT"
-  );
+  log = (log || []).filter(l => (viewEvents ? l : l.logType === "COMMENT"));
 
   return (
     <div>
@@ -170,8 +168,7 @@ export function Log({ connection, user }) {
           <div
             className={classnames(
               log_feed_text,
-              logItem.dataPairs[0].key === "SUBJECTIVE_SCORE" &&
-                log_feed_type_SUBJECTIVE_SCORE
+              logItem.logType !== "COMMENT" && log_feed_type_SUBJECTIVE_SCORE
             )}
           >
             {logItem.dataPairs[0].val}

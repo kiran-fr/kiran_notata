@@ -12,13 +12,9 @@ export function MultipleChoiceInput({ question, section, creative }) {
     }
   );
 
-  console.log("creative.answers", creative.answers);
-
   return (
     <form onSubmit={e => e.preventDefault()} className="notata_form">
       {options.map(({ val, sid }, i) => {
-        console.log("sid", sid);
-
         const answer = answers.find(
           ({ sid: answersSid }) => answersSid === sid
         );

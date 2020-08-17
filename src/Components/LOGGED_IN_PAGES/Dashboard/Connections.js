@@ -21,7 +21,9 @@ export default function Connections({ history }) {
   if (error) console.log("error", error);
   if (error) return <div>We are updating </div>;
 
-  let connections = (data || { tags: [] }).connectionsGet;
+  if (!data && loading) return <GhostLoader />;
+
+  let connections = data.connectionsGet;
 
   const columns = [
     {

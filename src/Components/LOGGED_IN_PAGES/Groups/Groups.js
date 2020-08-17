@@ -14,6 +14,7 @@ import {
   Button,
   Modal,
   BreadCrumbs,
+  GhostLoader,
 } from "../../elements/";
 
 const CreateNewGroup = ({ setDone, mutate }) => {
@@ -67,7 +68,9 @@ export default function Groups({ history }) {
 
   if (error) return <div>We are updating </div>;
 
-  let groups = (data || {}).groupsGet || [];
+  if (!data && loading) return <GhostLoader />;
+
+  let groups = data.groupsGet || [];
 
   const columns = [
     {
@@ -187,8 +190,6 @@ export default function Groups({ history }) {
             />
           </Modal>
         )}
-
-        <pre>{JSON.stringify(groups, null, 2)}</pre>
       </Content>
     </>
   );
