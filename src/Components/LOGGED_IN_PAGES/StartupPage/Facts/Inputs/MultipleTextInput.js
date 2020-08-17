@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+
 import { creativePut } from "../../../../../Apollo/Mutations";
-import { debounce } from "lodash";
 
 import {
   inputWrapper,
@@ -13,7 +13,7 @@ import {
 export function MultipleTextInput({ question, section, creative }) {
   const [mutate] = useMutation(creativePut);
 
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const answers = (creative.answers || []).filter(
     ({ inputType, questionId }) =>

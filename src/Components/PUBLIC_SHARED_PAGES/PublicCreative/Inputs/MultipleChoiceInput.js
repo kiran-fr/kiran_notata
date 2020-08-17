@@ -35,8 +35,19 @@ export function MultipleChoiceInput({ question, section, creative }) {
                     id: creative.id,
                     input: {},
                   };
+
+                  let optimisticResponse = {};
                   if (answer) {
                     variables.input.answerDelete = answer.id;
+
+                    optimisticResponse = {
+                      __typename: "Mutation",
+                      creativePut: {
+                        __typename: "Creative",
+                        ...creative,
+                        answers: answers.filter(({ id }) => answer.id !== id),
+                      },
+                    };
                   } else {
                     variables.input.answerNew = {
                       inputType: question.inputType,
@@ -45,8 +56,25 @@ export function MultipleChoiceInput({ question, section, creative }) {
                       sid,
                       val,
                     };
+
+                    optimisticResponse = {
+                      __typename: "Mutation",
+                      creativePut: {
+                        __typename: "Creative",
+                        ...creative,
+                        answers: [
+                          ...creative.answers,
+                          {
+                            __typename: "CreativeAnswer",
+                            id: "",
+                            sid: "",
+                            ...variables.input.answerNew,
+                          },
+                        ],
+                      },
+                    };
                   }
-                  mutate({ variables });
+                  mutate({ variables, optimisticResponse });
                 }}
               />
               {val}
