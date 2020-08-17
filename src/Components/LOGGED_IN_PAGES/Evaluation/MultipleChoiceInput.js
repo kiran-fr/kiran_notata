@@ -46,7 +46,7 @@ export default function MultipleChoiceInput({
                         id: answer.id,
                         sid: sid,
                         question: question.name,
-                        val: "",
+                        val: answer.val ? "" : val,
                       };
                     } else {
                       variables.input.answerNew = {
