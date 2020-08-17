@@ -9,9 +9,9 @@ export default function SingleChoiceInput({
   templateId,
   evaluation,
 }) {
-  const [mutate, { loading }] = useMutation(evaluationPut);
+  const [mutate] = useMutation(evaluationPut);
 
-  const answer = (evaluation.answers || []).find(
+  const answer = evaluation.answers.find(
     ({ inputType, questionId }) =>
       inputType === "RADIO" && questionId === question.id
   );
@@ -25,8 +25,7 @@ export default function SingleChoiceInput({
               <label>
                 <input
                   type="radio"
-                  disabled={loading}
-                  checked={answer ? answer.val === val : false}
+                  checked={answer && answer.val === val}
                   onChange={() => {
                     const variables = {
                       id: evaluation.id,
@@ -37,12 +36,31 @@ export default function SingleChoiceInput({
                       },
                     };
 
+                    let optimisticResponse = {};
                     if (answer) {
                       variables.input.answerUpdate = {
                         id: answer.id,
                         question: question.name,
                         val,
                         sid,
+                      };
+
+                      optimisticResponse = {
+                        __typename: "Mutation",
+                        evaluationPut: {
+                          __typename: "Evaluation",
+                          ...evaluation,
+                          answers: evaluation.answers.map(_answer => {
+                            if (answer.id === _answer.id) {
+                              return {
+                                ..._answer,
+                                val,
+                                sid,
+                              };
+                            }
+                            return _answer;
+                          }),
+                        },
                       };
                     } else {
                       variables.input.answerNew = {
@@ -52,10 +70,27 @@ export default function SingleChoiceInput({
                         val,
                         sid,
                       };
+
+                      optimisticResponse = {
+                        __typename: "Mutation",
+                        evaluationPut: {
+                          __typename: "Evaluation",
+                          ...evaluation,
+                          answers: [
+                            ...evaluation.answers,
+                            {
+                              __typename: "EvaluationAnswer",
+                              id: "",
+                              ...variables.input.answerNew,
+                            },
+                          ],
+                        },
+                      };
                     }
 
                     mutate({
                       variables,
+                      optimisticResponse,
                     });
                   }}
                 />

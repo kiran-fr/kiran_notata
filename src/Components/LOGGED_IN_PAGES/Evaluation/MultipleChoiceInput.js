@@ -41,12 +41,30 @@ export default function MultipleChoiceInput({
                       },
                     };
 
+                    let optimisticResponse = {};
                     if (answer) {
                       variables.input.answerUpdate = {
                         id: answer.id,
                         sid: sid,
                         question: question.name,
                         val: answer.val ? "" : val,
+                      };
+
+                      optimisticResponse = {
+                        __typename: "Mutation",
+                        evaluationPut: {
+                          __typename: "Evaluation",
+                          ...evaluation,
+                          answers: evaluation.answers.map(_answer => {
+                            if (answer.id === _answer.id) {
+                              return {
+                                ..._answer,
+                                val: answer.val ? "" : val,
+                              };
+                            }
+                            return _answer;
+                          }),
+                        },
                       };
                     } else {
                       variables.input.answerNew = {
@@ -56,23 +74,23 @@ export default function MultipleChoiceInput({
                         question: question.name,
                         val,
                       };
-                    }
 
-                    mutate({
-                      variables,
-                      optimisticResponse: {
+                      optimisticResponse = {
                         __typename: "Mutation",
                         evaluationPut: {
                           __typename: "Evaluation",
                           ...evaluation,
                           answers: [
                             ...evaluation.answers,
-                            answer
-                              ? variables.input.answerUpdate
-                              : { id: "", ...variables.input.answerNew },
+                            { id: "", ...variables.input.answerNew },
                           ],
                         },
-                      },
+                      };
+                    }
+
+                    mutate({
+                      variables,
+                      optimisticResponse,
                     });
                   }}
                 />

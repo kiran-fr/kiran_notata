@@ -2,13 +2,7 @@ import React, { useEffect } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 
-import {
-  Card,
-  Content,
-  BreadCrumbs,
-  GhostLoader,
-  Button,
-} from "../../elements";
+import { Card, Content, BreadCrumbs, Button } from "../../elements";
 
 import {
   evaluationTemplateGet,
@@ -150,6 +144,7 @@ export default function Section({ match, history }) {
               question={question}
               templateId={evaluation.templateId}
               evaluation={evaluation}
+              connectionId={connectionId}
             />
           </Card>
         ))}
