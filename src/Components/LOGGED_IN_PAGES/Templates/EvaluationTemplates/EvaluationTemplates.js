@@ -119,8 +119,7 @@ export default function EvaluationTemplates(props) {
   const [showModal, setShowModal] = useState(false);
 
   const { data, loading, error } = useQuery(accountGet);
-
-  // console.log('{ data, loading, error }', { data, loading, error })
+  console.log("{ data, loading, error }", { data, loading, error });
 
   if (error) return <div>We are updating </div>;
 
