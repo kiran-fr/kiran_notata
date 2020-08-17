@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
 import { useMutation } from "@apollo/client";
 import { creativePut } from "../../../../../Apollo/Mutations";
 
-export function MultipleChoiceInput({ question, section, creative }) {
+export function MultipleChoiceInput({ question, creative }) {
   const { options } = question;
-  const [mutate, { loading, error, data }] = useMutation(creativePut);
+  const [mutate] = useMutation(creativePut);
 
   const answers = (creative.answers || []).filter(
     ({ inputType, questionId }) => {
@@ -24,15 +24,25 @@ export function MultipleChoiceInput({ question, section, creative }) {
               <input
                 type="checkbox"
                 value={val}
-                disabled={loading}
                 defaultChecked={answer && answer.val}
                 onClick={() => {
                   const variables = {
                     id: creative.id,
                     input: {},
                   };
+
+                  let optimisticResponse = {};
                   if (answer) {
                     variables.input.answerDelete = answer.id;
+
+                    optimisticResponse = {
+                      __typename: "Mutation",
+                      creativePut: {
+                        __typename: "Creative",
+                        ...creative,
+                        answers: answers.filter(({ id }) => answer.id !== id),
+                      },
+                    };
                   } else {
                     variables.input.answerNew = {
                       inputType: question.inputType,
@@ -41,8 +51,25 @@ export function MultipleChoiceInput({ question, section, creative }) {
                       sid,
                       val,
                     };
+
+                    optimisticResponse = {
+                      __typename: "Mutation",
+                      creativePut: {
+                        __typename: "Creative",
+                        ...creative,
+                        answers: [
+                          ...creative.answers,
+                          {
+                            __typename: "CreativeAnswer",
+                            id: "",
+                            sid: "",
+                            ...variables.input.answerNew,
+                          },
+                        ],
+                      },
+                    };
                   }
-                  mutate({ variables });
+                  mutate({ variables, optimisticResponse });
                 }}
               />
               {val}

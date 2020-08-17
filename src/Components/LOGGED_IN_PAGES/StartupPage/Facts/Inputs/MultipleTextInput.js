@@ -11,10 +11,9 @@ import {
 } from "./MultipleTextInput.module.css";
 
 export function MultipleTextInput({ question, section, creative }) {
-  const [mutate, { loading }] = useMutation(creativePut);
+  const [mutate] = useMutation(creativePut);
 
   const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting } = formState;
 
   const answers = (creative.answers || []).filter(
     ({ inputType, questionId }) =>
@@ -36,6 +35,27 @@ export function MultipleTextInput({ question, section, creative }) {
         question: question.name,
         val: data.new,
       };
+
+      mutate({
+        variables,
+        optimisticResponse: {
+          __typename: "Mutation",
+          creativePut: {
+            __typename: "Creative",
+            ...creative,
+            answers: [
+              ...creative.answers,
+              {
+                __typename: "CreativeAnswer",
+                id: "",
+                sid: "",
+                ...variables.input.answerNew,
+              },
+            ],
+          },
+        },
+      });
+      event.target.value = "";
     } else {
       let hit = answers.find(answer => answer.val !== data[answer.id]);
       if (!hit) return;
@@ -44,16 +64,12 @@ export function MultipleTextInput({ question, section, creative }) {
         question: question.name,
         val: data[hit.id],
       };
-    }
 
-    try {
-      await mutate({ variables });
-    } catch (error) {
-      console.log("error", error);
-    }
-
-    if (data.new) {
-      event.target.value = "";
+      try {
+        await mutate({ variables });
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   }
 
@@ -63,7 +79,17 @@ export function MultipleTextInput({ question, section, creative }) {
       input: { answerDelete: id },
     };
     try {
-      await mutate({ variables });
+      await mutate({
+        variables,
+        optimisticResponse: {
+          __typename: "Mutation",
+          creativePut: {
+            __typename: "Creative",
+            ...creative,
+            answers: creative.answers.filter(({ id: _id }) => _id !== id),
+          },
+        },
+      });
     } catch (error) {
       console.log("error", error);
     }

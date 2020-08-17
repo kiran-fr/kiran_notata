@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
+
 import { useMutation } from "@apollo/client";
 import { creativePut } from "../../../../../Apollo/Mutations";
 
-export function SingleChoiceInput({ question, section, creative }) {
+export function SingleChoiceInput({ question, creative }) {
   const { options } = question;
-  const [mutate, { loading }] = useMutation(creativePut);
+  const [mutate] = useMutation(creativePut);
   const answer = (creative.answers || []).find(({ inputType, questionId }) => {
     return inputType === "RADIO" && questionId === question.id;
   });
@@ -23,12 +24,32 @@ export function SingleChoiceInput({ question, section, creative }) {
                     id: creative.id,
                     input: {},
                   };
+
+                  let optimisticResponse = {};
                   if (answer) {
                     variables.input.answerUpdate = {
                       id: answer.id,
                       question: question.name,
                       sid,
                       val,
+                    };
+
+                    optimisticResponse = {
+                      __typename: "Mutation",
+                      creativePut: {
+                        __typename: "Creative",
+                        ...creative,
+                        answers: creative.answers.map(_answer => {
+                          if (answer.id === _answer.id) {
+                            return {
+                              ..._answer,
+                              val,
+                              sid,
+                            };
+                          }
+                          return _answer;
+                        }),
+                      },
                     };
                   } else {
                     variables.input.answerNew = {
@@ -38,8 +59,24 @@ export function SingleChoiceInput({ question, section, creative }) {
                       sid,
                       val,
                     };
+
+                    optimisticResponse = {
+                      __typename: "Mutation",
+                      creativePut: {
+                        __typename: "Creative",
+                        ...creative,
+                        answers: [
+                          ...creative.answers,
+                          {
+                            __typename: "CreativeAnswer",
+                            id: "",
+                            ...variables.input.answerNew,
+                          },
+                        ],
+                      },
+                    };
                   }
-                  mutate({ variables });
+                  mutate({ variables, optimisticResponse });
                 }}
               />
               {val}
