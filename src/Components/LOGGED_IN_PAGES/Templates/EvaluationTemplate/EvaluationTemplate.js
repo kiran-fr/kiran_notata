@@ -314,7 +314,7 @@ export default function EvaluationTemplate({ match, history }) {
 
         {showModal && (
           <Modal
-            title="New Evaluation Template"
+            title="New Section"
             close={() => setShowModal(false)}
             disableFoot={true}
           >

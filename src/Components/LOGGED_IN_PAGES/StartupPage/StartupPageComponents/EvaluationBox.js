@@ -41,7 +41,7 @@ function EvaluationList({ evaluations, connectionId, templates }) {
             {/*HEADER*/}
             <div className={header_style}>
               <div className={name_style}>
-                {evaluation.name}{" "}
+                {(template || {}).name}{" "}
                 <Link
                   to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}`}
                 >
@@ -110,6 +110,10 @@ export function EvaluationBox({ connection, user, history }) {
   ] = useMutation(evaluationPut);
 
   const evaluations = (connection || {}).evaluations || [];
+
+  if (evaluationTemplatesQuery.loading && !evaluationTemplatesQuery.data) {
+    return <div style={{ paddingBottom: "15px" }}>loading...</div>;
+  }
 
   const columns = [
     {

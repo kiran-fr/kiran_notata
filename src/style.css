@@ -379,6 +379,10 @@ input[type="submit"] {
   background: none;
 }
 
+.public_shared_page_content {
+  padding: 15px;
+}
+
 /*
 .standard_form input[type="text"],
 .standard_form input[type="password"],

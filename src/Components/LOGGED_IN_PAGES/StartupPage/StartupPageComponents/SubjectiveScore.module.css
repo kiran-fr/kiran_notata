@@ -69,3 +69,11 @@
 .active_score {
   background-color: var(--color-primary);
 }
+
+@media screen and (max-width: 900px) {
+  .set_score_each {
+    width: 27px;
+    height: 27px;
+    line-height: 1.8;
+  }
+}

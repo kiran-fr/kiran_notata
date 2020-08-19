@@ -32,7 +32,9 @@ import { sectionName } from "./PublicCreative.module.css";
 function Question({ question, section, creative }) {
   const { name, description, inputType } = question;
   return (
-    <Card style={{ marginBottom: "10px", paddingBottom: "15px" }}>
+    <Card
+      style={{ marginBottom: "10px", paddingBottom: "15px", marginTop: "0px" }}
+    >
       <div className="form_h2">{name}</div>
       <div className="form_p2">{description}</div>
       <hr />

@@ -78,6 +78,8 @@ function QuestionNameAndDescription({ templateId, sectionId, question }) {
       ...data,
     };
 
+    console.log("variables", variables);
+
     try {
       let res = await mutate({ variables });
     } catch (error) {
@@ -101,6 +103,7 @@ function QuestionNameAndDescription({ templateId, sectionId, question }) {
         placeholder='I.e. "Template for evaluating early stage startups"'
         rows={1}
         name="input.description"
+        ref={register}
         onBlur={handleSubmit(onSubmit)}
       />
     </form>
