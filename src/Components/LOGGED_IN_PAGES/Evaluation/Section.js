@@ -49,57 +49,66 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "space-between",
+        textAlign: "right",
+        // display: "flex",
+        // justifyContent: "space-between",
       }}
     >
-      <div>
+      <div style={{ marginBottom: "10px" }}>
+        {(currentIndex !== sections.length - 1 && (
+          <Button
+            type="right_arrow"
+            onClick={() => {
+              let path = `${startup_page}/${
+                connection.id
+              }/evaluation/${evaluationId}/section/${
+                sections[currentIndex + 1].id
+              }`;
+              history.push(path);
+            }}
+          >
+            {sections[currentIndex + 1].name}
+          </Button>
+        )) || (
+          <Button
+            type="right_arrow"
+            onClick={() => {
+              let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`;
+              history.push(path);
+            }}
+          >
+            Go to summary
+          </Button>
+        )}
+      </div>
+
+      <div style={{ lineHeight: "2" }}>
         <div>
-          <Link
-            to={`${startup_page}/${connection.id}/evaluation/${evaluationId}`}
+          <Button
+            type="just_text"
+            onClick={() => {
+              let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}`;
+              history.push(path);
+            }}
           >
             Back to overview
-          </Link>
+          </Button>
         </div>
 
         {currentIndex !== sections.length - 1 && (
           <div>
-            <Link
-              to={`${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`}
+            <Button
+              type="just_text"
+              onClick={() => {
+                let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`;
+                history.push(path);
+              }}
             >
               Go to summary
-            </Link>
+            </Button>
           </div>
         )}
       </div>
-
-      {(currentIndex !== sections.length - 1 && (
-        <Button
-          type="right_arrow"
-          onClick={() => {
-            let path = `${startup_page}/${
-              connection.id
-            }/evaluation/${evaluationId}/section/${
-              sections[currentIndex + 1].id
-            }`;
-            history.push(path);
-          }}
-        >
-          {sections[currentIndex + 1].name}
-        </Button>
-      )) || <span />}
-
-      {currentIndex === sections.length - 1 && (
-        <Button
-          type="right_arrow"
-          onClick={() => {
-            let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`;
-            history.push(path);
-          }}
-        >
-          Go to summary
-        </Button>
-      )}
     </div>
   );
 }

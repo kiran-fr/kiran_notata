@@ -221,6 +221,7 @@
   border: none;
   background: white;
   color: var(--color-primary);
+  background: transparent;
   cursor: pointer;
   text-decoration: underline;
 }
