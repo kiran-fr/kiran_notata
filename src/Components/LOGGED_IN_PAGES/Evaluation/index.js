@@ -5,7 +5,14 @@ import { connectionGet, evaluationTemplateGet } from "../../../Apollo/Queries";
 
 import { startup_page } from "../../../routes";
 
-import { Card, BreadCrumbs, Table, Button, Content } from "../../elements/";
+import {
+  Card,
+  BreadCrumbs,
+  Table,
+  Button,
+  Content,
+  GhostLoader,
+} from "../../elements/";
 
 export default function Evaluation({ match, history }) {
   const { connectionId, evaluationId } = match.params;
@@ -39,7 +46,7 @@ export default function Evaluation({ match, history }) {
   const loading = connectionQuery.loading || evaluationTemplateQuery.loading;
 
   if (loading) {
-    return null;
+    return <GhostLoader />;
   }
 
   if (error) {
@@ -124,7 +131,7 @@ export default function Evaluation({ match, history }) {
       <Content maxWidth={600}>
         <div className="form_h1">{evaluation.name}</div>
         <div className="form_p1">{evaluation.description}</div>
-        <Card style={{ paddingTop: "5px" }}>
+        <Card style={{ paddingTop: "5px", marginBottom: "20px" }}>
           <Table
             dataSource={evaluationTemplate.sections || []}
             columns={columns}
@@ -133,6 +140,18 @@ export default function Evaluation({ match, history }) {
             diableHead={true}
           />
         </Card>
+
+        <div style={{ textAlign: "right" }}>
+          <Button
+            type="right_arrow"
+            onClick={() => {
+              let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/summary`;
+              history.push(path);
+            }}
+          >
+            Go to summary
+          </Button>
+        </div>
       </Content>
     </div>
   );

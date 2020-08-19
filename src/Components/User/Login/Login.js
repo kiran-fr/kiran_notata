@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
 import { Auth } from "aws-amplify";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -23,9 +22,9 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const s = queryString.parse(location.search);
 
   useEffect(() => {
-    const { email, verified } = s;
+    const { email } = s;
     setValue(email);
-    setValue(verified);
+    // setValue(verified);
   }, []);
 
   const onSubmit = async (data, event) => {
@@ -64,13 +63,14 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
 
   return (
     <Content maxWidth={600} center>
-      {getValues("verified") && (
-        <SuccessBox title="Whoop whoop 🎉">
+      <h1>Log in</h1>
+
+      {s.verified && (
+        <SuccessBox title="Whoop whoop 🎉" style={{ marginBottom: "35px" }}>
           Your email have been verified, so now you are ready to rock'n rumble!
         </SuccessBox>
       )}
 
-      <h1>Log in</h1>
       <Card style={{ paddingBottom: "20px" }}>
         <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
           {!SMS_MFA && (

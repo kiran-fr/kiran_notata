@@ -1,6 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Auth } from "aws-amplify";
 import { Link, Redirect, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { userLoggedIn } from "../../../Modules/user";
+import { getUserIsLoggedIn } from "../../../Modules";
+import { useForm } from "react-hook-form";
 import classnames from "classnames";
 // import {
 //   container,
@@ -12,11 +16,108 @@ import classnames from "classnames";
 //   standard_form
 // } from "../../elements/Style.module.css";
 
-import { login, awaiting } from "../../../routes";
+import { dashboard, forgotPassword, awaiting, login } from "../../../routes";
 
-export function Signup() {
-  return <div>Sign up...</div>;
+import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
+
+// export function Signup() {
+//   return <div>Sign up...</div>;
+// }
+
+function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
+  const [errorMessage, setErrorMessage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { isSubmitting } = formState;
+
+  if (userIsLoggedIn) {
+    history.push(location.state || dashboard);
+  }
+
+  function onSubmit(data) {
+    const { email, password } = data;
+
+    setIsLoading(true);
+    let res = Auth.signUp({
+      username: email,
+      password,
+      attributes: { email },
+    })
+      .then(res => {
+        console.log("res", res);
+        let path = `${awaiting}?=awaitingConfirm=true&email=${encodeURIComponent(
+          email
+        )}`;
+        history.push(path);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.log("error", error);
+        setErrorMessage("Hmmm.... something went wrong...");
+        setIsLoading(false);
+      });
+  }
+
+  return (
+    <Content maxWidth={600} center>
+      <h1>Sign up</h1>
+      <Card style={{ paddingBottom: "20px" }}>
+        <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="text"
+              placeholder="email"
+              ref={register({ required: true })}
+              name="email"
+              id="email"
+            />
+
+            <label for="password">Password</label>
+            <input
+              type="password"
+              placeholder="password"
+              ref={register({ required: true })}
+              name="password"
+              id="password"
+            />
+          </div>
+
+          <div style={{ textAlign: "right" }}>
+            <Button
+              type="input"
+              value="Sign up"
+              loading={isSubmitting || isLoading}
+            />
+          </div>
+        </form>
+
+        <div
+          style={{
+            position: "absolute",
+            fontSize: "12px",
+            bottom: "-23px",
+            left: "2px",
+          }}
+        >
+          <Link to={login}>Already have an account?</Link>
+        </div>
+      </Card>
+
+      {errorMessage && <ErrorBox>{errorMessage}</ErrorBox>}
+    </Content>
+  );
 }
+
+export const Signup = connect(
+  state => ({
+    userIsLoggedIn: getUserIsLoggedIn(state),
+  }),
+  {
+    userLoggedIn,
+  }
+)(SignupComp);
 
 // export const Signup = withRouter(
 //   class SignupComp extends Component {

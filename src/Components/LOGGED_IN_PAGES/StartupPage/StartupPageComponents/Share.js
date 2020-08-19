@@ -69,6 +69,7 @@ function ShareSetting({ group, connection, mutate, done }) {
           <input
             type="checkbox"
             ref={register}
+            defaultChecked={true}
             name="evaluations"
             id="evaluations"
           />
@@ -79,6 +80,7 @@ function ShareSetting({ group, connection, mutate, done }) {
           <input
             type="checkbox"
             ref={register}
+            defaultChecked={true}
             name="subjective_score"
             id="subjective_score"
           />
@@ -86,12 +88,24 @@ function ShareSetting({ group, connection, mutate, done }) {
         </div>
 
         <div className="check_container">
-          <input type="checkbox" ref={register} name="tags" id="tags" />
+          <input
+            type="checkbox"
+            ref={register}
+            defaultChecked={true}
+            name="tags"
+            id="tags"
+          />
           <label>tags</label>
         </div>
 
         <div className="check_container">
-          <input type="checkbox" ref={register} name="comments" id="comments" />
+          <input
+            type="checkbox"
+            ref={register}
+            defaultChecked={true}
+            name="comments"
+            id="comments"
+          />
           <label>comments</label>
         </div>
 

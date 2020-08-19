@@ -400,6 +400,16 @@ export default function Team() {
   let userInvitations =
     (userInvitationsQuery.data || {}).userInvitationsGet || [];
 
+  const loading =
+    userQuery.loading ||
+    accountQuery.loading ||
+    accountInvitationsQuery.loading ||
+    userInvitationsQuery.loading;
+
+  if (loading) {
+    return <GhostLoader />;
+  }
+
   return (
     <Content maxWidth={600}>
       <div style={{ marginBottom: "40px" }}>

@@ -1,23 +1,22 @@
-.edit_toggle {
-  text-align: right;
-  font-size: 12px;
-  color: var(--color-primary);
-  cursor: pointer;
+.header_comp {
+  color: white;
+  position: relative;
+  background-color: var(--color-secondary);
+  padding: 14px;
+  padding-left: 25px;
+  margin-left: -20px;
+  margin-top: -20px;
+  margin-right: -20px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  border-radius: 7px 7px 0px 0px;
 }
 
-.share_title {
-  font-size: 18px;
-}
-
-.share_text {
-  padding: 20px 0px;
+.sub_header {
   color: var(--color-gray-medium);
-}
-
-.copy_link {
-  padding-top: 5px;
-  font-size: 12px;
-  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 5px;
+  line-height: 2;
 }
 
 .facts_container {
@@ -62,6 +61,25 @@
   color: var(--color-primary);
 }
 
+.subjectiveScore_container {
+  display: flex;
+  justify-content: space-between;
+}
+.subjectiveScore_name {
+}
+.subjectiveScore_value {
+  color: var(--color-orange);
+}
+
+.comment_each {
+  background: var(--color-message-bg);
+  /*display: inline-block;*/
+  padding: 4px 12px;
+  border-radius: 7px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
 .no_answer {
   color: var(--color-gray-medium);
 }
@@ -78,6 +96,7 @@
 
 .question_comments {
   background: var(--color-message-bg);
+  /*display: inline-block;*/
   padding: 2px 12px;
   border-radius: 7px;
   white-space: pre-wrap;

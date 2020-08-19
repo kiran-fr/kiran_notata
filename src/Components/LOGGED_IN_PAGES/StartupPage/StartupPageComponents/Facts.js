@@ -58,11 +58,10 @@ export function Facts({ connection, user, match, history }) {
                 <i className="fal fa-check" />
               </div>
               <div className={list_item_text}>
-                You have invited{" "}
                 <span style={{ color: "var(--color-primary)" }}>
                   {sharedWithEmail}
                 </span>{" "}
-                to fill out this information for you.
+                has been invited to fill out this information.
               </div>
             </div>
           )}
@@ -116,7 +115,7 @@ export function Facts({ connection, user, match, history }) {
               <i className="fal fa-check" />
             </div>
             <div className={list_item_text}>
-              {answerCount} questions has been answered
+              {answerCount} questions have been answered.
             </div>
           </div>
         </div>

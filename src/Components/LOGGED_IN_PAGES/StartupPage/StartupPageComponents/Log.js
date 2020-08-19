@@ -128,7 +128,7 @@ function LogInput({ user, connection }) {
 }
 
 export function Log({ connection, user }) {
-  const [viewEvents, setViewEvents] = useState(false);
+  const [viewEvents, setViewEvents] = useState(true);
   const logQuery = useQuery(logGet, {
     variables: { connectionId: connection.id },
   });

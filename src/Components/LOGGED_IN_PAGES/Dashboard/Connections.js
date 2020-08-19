@@ -42,26 +42,31 @@ export default function Connections({ history }) {
       render: creative => creative.name,
     },
 
-    {
-      title: "Stage",
-      dataIndex: "funnelTags",
-      key: "funnelTags",
-      responsive: "sm",
-      render: funnelTags => (
-        <>
-          {["funnel tag"].map(tag => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </>
-      ),
-    },
+    // {
+    //   title: "Stage",
+    //   dataIndex: "funnelTags",
+    //   key: "funnelTags",
+    //   responsive: "sm",
+    //   render: funnelTags => (
+    //     <>
+    //       {["funnel tag"].map(tag => (
+    //         <Tag key={tag}>{tag}</Tag>
+    //       ))}
+    //     </>
+    //   ),
+    // },
 
     {
       title: "Tags",
       dataIndex: "tags",
       key: "tags",
       responsive: "md",
-      render: tags => tags.map(({ name, id }) => <Tag key={id}>{name}</Tag>),
+      render: tags => {
+        if (!tags.length) {
+          return <span style={{ color: "#DADEE2" }}>n/a</span>;
+        }
+        return tags.map(({ name, id }) => <Tag key={id}>{name}</Tag>);
+      },
     },
 
     {

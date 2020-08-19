@@ -11,6 +11,17 @@
   z-index: 1000;
 }
 
+.sidebar_container:before {
+  content: "";
+  width: inherit;
+  position: fixed;
+  height: 100vh;
+  background: white;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
 .menu_container {
   height: 100%;
   border-right: 0 !important;

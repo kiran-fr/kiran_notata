@@ -55,6 +55,7 @@ export function MultipleTextInput({ question, section, creative }) {
           },
         },
       });
+
       event.target.value = "";
     } else {
       let hit = answers.find(answer => answer.val !== data[answer.id]);

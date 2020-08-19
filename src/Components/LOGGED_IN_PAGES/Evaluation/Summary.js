@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import moment from "moment";
-
+import { Link } from "react-router-dom";
 import { connectionGet, evaluationTemplateGet } from "../../../Apollo/Queries";
 
 import { startup_page } from "../../../routes";
 import { getPossibleScore, getScore } from "./util";
-
-import { row } from "./Summary.module.css";
-
+import classnames from "classnames";
 import {
   Card,
   BreadCrumbs,
@@ -18,7 +16,26 @@ import {
   Content,
 } from "../../elements/";
 
-export default function Summary({ match }) {
+import {
+  summary_score_section,
+  row,
+  summary_row,
+  row_score,
+  header,
+  header_title,
+  header_details,
+  header_details_small,
+  header_details_regular,
+  question_each,
+  question_each_name,
+  question_answer,
+  question_comments,
+  no_answer,
+  small_traffic_light,
+  link_style,
+} from "./Summary.module.css";
+
+export default function Summary({ match, history }) {
   const {
     data: connectionGetData,
     loading: connectionGetLoading,
@@ -70,6 +87,8 @@ export default function Summary({ match }) {
     ({ id }) => id === match.params.evaluationId
   );
 
+  console.log("evaluation", evaluation);
+
   return (
     <div>
       <BreadCrumbs
@@ -80,40 +99,50 @@ export default function Summary({ match }) {
           },
         ]}
       />
+
       <Content maxWidth={600}>
-        <Card maxWidth={1200}>
-          <div className={row}>
-            <label>Summary</label>
-            <span>
-              <label>Last updated</label>
-              <label>{moment(evaluation.updatedAt).format("lll")}</label>
-            </span>
-          </div>
-          {evaluationTemplateGetData.evaluationTemplateGet.sections.map(
-            ({ name, questions, id }) => (
-              <div className={row} key={id}>
-                <label>{name}</label>
-                <label>
-                  {getScore(questions, evaluation.answers)}/
-                  {getPossibleScore(questions)}
-                </label>
+        <Card>
+          <div className={header}>
+            <div className={header_title}>Summary</div>
+
+            <div className={header_details}>
+              <div className={header_details_small}>
+                Last updated {moment(evaluation.updatedAt).format("lll")}
               </div>
-            )
-          )}
-          <div className={row}>
-            <label>Total</label>
-            <label>
-              {evaluationTemplateGetData.evaluationTemplateGet.sections.reduce(
-                (acc, { questions }) =>
-                  acc + getScore(questions, evaluation.answers),
-                0
-              )}
-              /
-              {evaluationTemplateGetData.evaluationTemplateGet.sections.reduce(
-                (acc, { questions }) => acc + getPossibleScore(questions),
-                0
-              )}
-            </label>
+              <div className={header_details_regular}>
+                Created by {evaluation.createdByUser.given_name}{" "}
+                {evaluation.createdByUser.family_name}
+              </div>
+            </div>
+          </div>
+
+          <div className={summary_score_section}>
+            {evaluationTemplateGetData.evaluationTemplateGet.sections.map(
+              ({ name, questions, id }) => (
+                <div className={row} key={id}>
+                  <label>{name}</label>
+                  <label className={row_score}>
+                    {getScore(questions, evaluation.answers)}/
+                    {getPossibleScore(questions)}
+                  </label>
+                </div>
+              )
+            )}
+            <div className={classnames(row, summary_row)}>
+              <label>Total</label>
+              <label className={row_score}>
+                {evaluationTemplateGetData.evaluationTemplateGet.sections.reduce(
+                  (acc, { questions }) =>
+                    acc + getScore(questions, evaluation.answers),
+                  0
+                )}
+                /
+                {evaluationTemplateGetData.evaluationTemplateGet.sections.reduce(
+                  (acc, { questions }) => acc + getPossibleScore(questions),
+                  0
+                )}
+              </label>
+            </div>
           </div>
         </Card>
         {evaluationTemplateGetData.evaluationTemplateGet.sections.map(
@@ -121,32 +150,68 @@ export default function Summary({ match }) {
             const sectionScore = getScore(questions, evaluation.answers);
             const sectionPossibleScore = getPossibleScore(questions);
             return (
-              <Card maxWidth={1200} key={id}>
-                <div className={row}>
-                  <label>{name}</label>
-                  <span>
-                    <label> % completed</label>
-                    <label>
+              <Card key={id}>
+                <div className={header}>
+                  <div className={header_title}>
+                    {name}
+                    <div
+                      className={link_style}
+                      onClick={() => {
+                        let path = `${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}/section/${id}`;
+                        history.push(path);
+                      }}
+                    >
+                      <i className="fal fa-edit" />
+                    </div>
+                  </div>
+
+                  <div className={header_details}>
+                    <div className={header_details_small}>
+                      {
+                        questions.filter(q =>
+                          evaluation.answers.some(
+                            ({ questionId }) => questionId === q.id
+                          )
+                        ).length
+                      }{" "}
+                      of {questions.length} questions answered
+                    </div>
+                    <div className={header_details_regular}>
                       {sectionScore} out of {sectionPossibleScore} points
-                    </label>
-                  </span>
+                    </div>
+                  </div>
                 </div>
+
                 {questions.map(({ name, id, inputType, options }) => {
                   const answer = evaluation.answers.find(
                     ({ questionId, inputType: ansInputType }) =>
                       questionId === id && inputType === ansInputType
                   );
-
                   return (
-                    <div key={id}>
-                      <p>{name}</p>
+                    <div key={id} className={question_each}>
+                      <div className={question_each_name}>{name}</div>
+
+                      {!answer && <div className={no_answer}>Not answered</div>}
+
                       {answer && (
                         <>
                           {(inputType === "INPUT_TEXT" ||
-                            inputType === "RADIO" ||
-                            inputType === "TRAFFIC_LIGHTS") && (
-                            <p>{answer.val}</p>
+                            inputType === "RADIO") && (
+                            <div className={question_answer}>{answer.val}</div>
                           )}
+
+                          {inputType === "TRAFFIC_LIGHTS" && (
+                            <div className={question_answer}>
+                              <div
+                                className={small_traffic_light}
+                                style={{
+                                  background: `var(--color-${answer.val})`,
+                                }}
+                              />{" "}
+                              {answer.val}
+                            </div>
+                          )}
+
                           {inputType === "CHECK" && (
                             <>
                               {evaluation.answers
@@ -157,20 +222,24 @@ export default function Summary({ match }) {
                                     inputType === "CHECK"
                                 )
                                 .map(({ val, id }) => (
-                                  <p key={id}>{val}</p>
+                                  <div className={question_answer} key={id}>
+                                    {val}
+                                  </div>
                                 ))}
                             </>
                           )}
                         </>
                       )}
-                      <p>comments</p>
+                      {/*<p>comments</p>*/}
                       {evaluation.answers
                         .filter(
                           ({ inputType, questionId }) =>
                             inputType === "COMMENT" && id === questionId
                         )
                         .map(({ val, id }) => (
-                          <p key={id}>{val}</p>
+                          <div className={question_comments} key={id}>
+                            {val}
+                          </div>
                         ))}
                       <br />
                     </div>
@@ -180,6 +249,12 @@ export default function Summary({ match }) {
             );
           }
         )}
+
+        {
+          <Link to={`${startup_page}/${connectionGetData.connectionGet.id}`}>
+            &#60; Back to startup
+          </Link>
+        }
       </Content>
     </div>
   );

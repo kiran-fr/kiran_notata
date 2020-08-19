@@ -93,53 +93,10 @@ function EvaluationList({ evaluations, connectionId, templates }) {
   );
 }
 
-// function EvaluationList({ evaluations, connectionId, templates }) {
-
-//   console.log('evaluations', evaluations)
-
-//   return <div/>
-
-//   const tableColumns = evaluations.map(evaluation => (
-
-//     [{
-//       title: evaluation.name,
-//       // dataIndex:
-//     }]
-
-//   ))
-
-//   const columns = [
-//     {
-//       title: "Email",
-//       dataIndex: "email",
-//       key: "email",
-//       render: email => <span>{email}</span>,
-//     },
-
-//     {
-//       title: "",
-//       dataIndex: "email",
-//       key: "delete",
-//       width: 20,
-//       // className: delete_bucket,
-//       render: email => {
-//       },
-//     },
-//   ];
-
-//   return (
-//     <Table
-//       dataSource={evaluations}
-//       columns={columns}
-//       diableHead={true}
-//       pagination={false}
-//     />
-//   );
-
-// }
-
 export function EvaluationBox({ connection, user, history }) {
+  const [isLoading, setIsLoading] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
   let templates = [];
   if (!evaluationTemplatesQuery.loading) {
@@ -169,7 +126,9 @@ export function EvaluationBox({ connection, user, history }) {
         return (
           <Button
             size="small"
+            loading={isLoading === templateId}
             onClick={async () => {
+              setIsLoading(templateId);
               try {
                 let res = await mutate({
                   variables: {
@@ -181,8 +140,9 @@ export function EvaluationBox({ connection, user, history }) {
                 let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}`;
                 history.push(path);
               } catch (error) {
-                return console.log("error", error);
+                console.log("error", error);
               }
+              setIsLoading(null);
             }}
           >
             use

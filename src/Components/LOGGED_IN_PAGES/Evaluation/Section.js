@@ -2,7 +2,13 @@ import React, { useEffect } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 
-import { Card, Content, BreadCrumbs, Button } from "../../elements";
+import {
+  Card,
+  Content,
+  BreadCrumbs,
+  Button,
+  GhostLoader,
+} from "../../elements";
 
 import {
   evaluationTemplateGet,
@@ -38,7 +44,7 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
 
   let currentIndex = sections.map(s => s.id).indexOf(sectionId);
 
-  if (currentIndex === sections.length - 1) return <span />;
+  if (currentIndex === sections.length) return <span />;
 
   return (
     <div
@@ -47,11 +53,13 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
         justifyContent: "space-between",
       }}
     >
-      <Link
-        to={`${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`}
-      >
-        Go to summary
-      </Link>
+      {currentIndex !== sections.length - 1 && (
+        <Link
+          to={`${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`}
+        >
+          Go to summary
+        </Link>
+      )}
 
       {(currentIndex !== sections.length - 1 && (
         <Button
@@ -68,6 +76,18 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
           {sections[currentIndex + 1].name}
         </Button>
       )) || <span />}
+
+      {currentIndex === sections.length - 1 && (
+        <Button
+          type="right_arrow"
+          onClick={() => {
+            let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`;
+            history.push(path);
+          }}
+        >
+          Go to summary
+        </Button>
+      )}
     </div>
   );
 }
@@ -103,7 +123,7 @@ export default function Section({ match, history }) {
   const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
 
   if (loading) {
-    return null;
+    return <GhostLoader />;
   }
 
   if (error) {

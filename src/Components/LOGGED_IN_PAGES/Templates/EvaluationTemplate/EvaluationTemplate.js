@@ -202,6 +202,9 @@ export default function EvaluationTemplate({ match, history }) {
   }, []);
 
   if (error) return <div>We are updating </div>;
+  if (loading) {
+    return <GhostLoader />;
+  }
 
   const columns = [
     {

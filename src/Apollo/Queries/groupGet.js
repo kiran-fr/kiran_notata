@@ -6,6 +6,7 @@ import {
   funnelTagFragments,
   creativeFragments,
   connectionFragments,
+  evaluationFragments,
 } from "../Fragments";
 
 export default gql`
@@ -36,6 +37,10 @@ export default gql`
           funnelTags {
             ...funnelTagFields
           }
+
+          evaluations {
+            ...evaluationFields
+          }
         }
       }
     }
@@ -45,4 +50,5 @@ export default gql`
   ${funnelTagFragments}
   ${creativeFragments}
   ${connectionFragments}
+  ${evaluationFragments}
 `;

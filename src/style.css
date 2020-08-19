@@ -151,8 +151,8 @@ body,
 html,
 textarea {
   font-family: "Roboto", sans-serif !important;
-  background-color: var(--color-gray-pale);
   color: var(--color-gray-dark);
+  background-color: var(--color-gray-pale);
 }
 
 :root {
@@ -186,9 +186,12 @@ h1 {
 
 .logged_in_page_content {
   padding-top: 50px;
-  padding-left: 215px;
+  left: 200px;
+  padding-left: 15px;
   position: relative;
   margin-right: 205px;
+  background: var(--color-gray-pale);
+  min-height: calc(100vh + 50px);
 }
 
 @media screen and (min-width: 900px) {
@@ -203,6 +206,7 @@ h1 {
   }
 
   .logged_in_page_content {
+    left: 0px;
     padding-left: 10px;
     margin-right: 10px;
   }
@@ -233,6 +237,11 @@ h1 {
 .notata_form .check_container label input {
   left: -8px;
   position: relative;
+}
+
+input[type="submit"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .notata_form input[type="text"],

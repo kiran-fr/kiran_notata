@@ -76,7 +76,7 @@ const menuItems = [
     link: team,
   },
   {
-    label: "Groups",
+    label: "Sharing",
     iconClass: "fal fa-share-alt",
     link: group,
   },

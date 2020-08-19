@@ -185,6 +185,28 @@ function AddNewMember({ group, mutate }) {
   );
 }
 
+function SharedBy({ group }) {
+  let admin = group.members.find(m => m.role === "admin");
+
+  let columns = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: email => <span>{email}</span>,
+    },
+  ];
+
+  return (
+    <Table
+      dataSource={[admin] || []}
+      columns={columns}
+      diableHead={true}
+      pagination={false}
+    />
+  );
+}
+
 function MemberList({ group, user, mutate, isOwner }) {
   let columns = [
     {
@@ -307,33 +329,55 @@ function ShareSetting({ group, connection, mutate, done }) {
 
       <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
         <div className="check_container">
-          <input
-            type="checkbox"
-            ref={register}
-            name="evaluations"
-            id="evaluations"
-          />
-          <label>evaluations</label>
+          <label>
+            <input
+              type="checkbox"
+              ref={register}
+              defaultChecked={true}
+              name="evaluations"
+              id="evaluations"
+            />
+            evaluations
+          </label>
         </div>
 
         <div className="check_container">
-          <input
-            type="checkbox"
-            ref={register}
-            name="subjective_score"
-            id="subjective_score"
-          />
-          <label>subjective score</label>
+          <label>
+            <input
+              type="checkbox"
+              ref={register}
+              defaultChecked={true}
+              name="subjective_score"
+              id="subjective_score"
+            />
+            subjective score
+          </label>
         </div>
 
         <div className="check_container">
-          <input type="checkbox" ref={register} name="tags" id="tags" />
-          <label>tags</label>
+          <label>
+            <input
+              type="checkbox"
+              ref={register}
+              defaultChecked={true}
+              name="tags"
+              id="tags"
+            />
+            tags
+          </label>
         </div>
 
         <div className="check_container">
-          <input type="checkbox" ref={register} name="comments" id="comments" />
-          <label>comments</label>
+          <label>
+            <input
+              type="checkbox"
+              ref={register}
+              defaultChecked={true}
+              name="comments"
+              id="comments"
+            />
+            comments
+          </label>
         </div>
 
         <div
@@ -476,55 +520,8 @@ function AddNewStartup({ group, connections, mutate }) {
   );
 }
 
-function StartupList({ group, user, mutate, history }) {
+function StartupList({ group, user, isOwner, mutate, history }) {
   const columns = [
-    {
-      title: "",
-      key: "delete",
-      width: 20,
-      className: "delete_bucket",
-      render: startup => {
-        let connection = startup.connection || {};
-        if (connection.createdBy !== user.cognitoIdentityId) return <span />;
-
-        return (
-          <i
-            className="fal fa-trash-alt"
-            onClick={() => {
-              let variables = {
-                id: group.id,
-                input: { removeStartup: connection.id },
-              };
-
-              console.log("variables", variables);
-
-              mutate({
-                variables,
-                update: (proxy, { data: { groupPut } }) => {
-                  const data = proxy.readQuery({
-                    query: groupGet,
-                    variables: { id: group.id },
-                  });
-
-                  proxy.writeQuery({
-                    query: groupGet,
-                    variables: { id: group.id },
-                    data: {
-                      groupGet: {
-                        ...data.groupGet,
-                        startups: data.groupGet.startups.filter(
-                          s => s.connectionId !== connection.id
-                        ),
-                      },
-                    },
-                  });
-                },
-              });
-            }}
-          />
-        );
-      },
-    },
     {
       title: "Name",
       key: "name",
@@ -583,6 +580,58 @@ function StartupList({ group, user, mutate, history }) {
     },
   ];
 
+  if (isOwner) {
+    const deleteCell = {
+      title: "",
+      key: "delete",
+      width: 20,
+      className: "delete_bucket",
+      render: startup => {
+        let connection = startup.connection || {};
+        if (connection.createdBy !== user.cognitoIdentityId) return <span />;
+
+        return (
+          <i
+            className="fal fa-trash-alt"
+            onClick={() => {
+              let variables = {
+                id: group.id,
+                input: { removeStartup: connection.id },
+              };
+
+              console.log("variables", variables);
+
+              mutate({
+                variables,
+                update: (proxy, { data: { groupPut } }) => {
+                  const data = proxy.readQuery({
+                    query: groupGet,
+                    variables: { id: group.id },
+                  });
+
+                  proxy.writeQuery({
+                    query: groupGet,
+                    variables: { id: group.id },
+                    data: {
+                      groupGet: {
+                        ...data.groupGet,
+                        startups: data.groupGet.startups.filter(
+                          s => s.connectionId !== connection.id
+                        ),
+                      },
+                    },
+                  });
+                },
+              });
+            }}
+          />
+        );
+      },
+    };
+
+    columns.unshift(deleteCell);
+  }
+
   return (
     <Table
       dataSource={group.startups || []}
@@ -627,11 +676,11 @@ export default function Group({ match, history }) {
       <BreadCrumbs
         list={[
           {
-            val: "all groups",
+            val: "All sharings",
             link: `${group_route}`,
           },
           {
-            val: `Group: ${group.name}`,
+            val: `Sharing: ${group.name}`,
             link: `${group_route}/${id}`,
           },
         ]}
@@ -642,14 +691,27 @@ export default function Group({ match, history }) {
           <h1>{group.name}</h1>
         </div>
 
-        <Card label="Members" style={{ paddingTop: "5px" }}>
-          <MemberList
-            group={group}
-            mutate={mutate}
-            isOwner={isOwner}
-            user={user}
-          />
-        </Card>
+        {!isOwner && (
+          <Card label="Shared by" style={{ paddingTop: "5px" }}>
+            <SharedBy
+              group={group}
+              mutate={mutate}
+              isOwner={isOwner}
+              user={user}
+            />
+          </Card>
+        )}
+
+        {isOwner && (
+          <Card label="Members" style={{ paddingTop: "5px" }}>
+            <MemberList
+              group={group}
+              mutate={mutate}
+              isOwner={isOwner}
+              user={user}
+            />
+          </Card>
+        )}
 
         {isOwner && <AddNewMember group={group} mutate={mutate} />}
 
@@ -659,14 +721,17 @@ export default function Group({ match, history }) {
             mutate={mutate}
             history={history}
             user={user}
+            isOwner={isOwner}
           />
         </Card>
 
-        <AddNewStartup
-          connections={connections}
-          group={group}
-          mutate={mutate}
-        />
+        {isOwner && (
+          <AddNewStartup
+            connections={connections}
+            group={group}
+            mutate={mutate}
+          />
+        )}
       </Content>
     </>
   );

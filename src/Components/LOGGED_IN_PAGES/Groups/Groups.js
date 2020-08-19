@@ -115,12 +115,13 @@ export default function Groups({ history }) {
       render: id => {
         let gr = groups.find(g => g.id === id) || {};
         let { name, members, startups } = gr;
+        let isOwner = gr.createdBy === user.cognitoIdentityId;
         return (
           <span>
             <div>{name}</div>
             <div style={{ opacity: 0.5, fontSize: "12px" }}>
-              {(members || []).length} members - {(startups || []).length}{" "}
-              startups
+              {isOwner && <>{(members || []).length} members - </>}
+              {(startups || []).length} startups
             </div>
           </span>
         );
@@ -149,21 +150,43 @@ export default function Groups({ history }) {
       <BreadCrumbs
         list={[
           {
-            val: "all groups",
+            val: "All sharings",
             link: group,
           },
         ]}
       />
       <Content maxWidth={600}>
         <h1>Groups</h1>
-        <Card style={{ paddingTop: "5px" }}>
-          <Table
-            dataSource={groups}
-            columns={columns}
-            loading={loading.toString()}
-            diableHead={true}
-          />
-        </Card>
+
+        {!!groups.length && (
+          <Card style={{ paddingTop: "5px" }}>
+            <Table
+              dataSource={groups}
+              columns={columns}
+              loading={loading.toString()}
+              diableHead={true}
+            />
+          </Card>
+        )}
+
+        {!groups.length && (
+          <Card style={{ paddingBottom: "20px" }}>
+            <div style={{ fontSize: "18px" }}>
+              You don't have any groups yet
+            </div>
+            <div
+              style={{
+                padding: "20px 0px",
+                color: "var(--color-gray-medium)",
+              }}
+            >
+              This is your sharing space. When other ivestors share startups
+              with you they will appear here. You can also create a group to
+              share your startups with other investors in your network. You will
+              be able to choose what data you want to share.
+            </div>
+          </Card>
+        )}
 
         <div style={{ marginTop: "20px" }}>
           <Button

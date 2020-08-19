@@ -84,7 +84,7 @@ const menuItems = [
     link: profile,
   },
   {
-    label: "Groups",
+    label: "Sharing",
     iconClass: "fal fa-share-alt",
     link: group,
   },

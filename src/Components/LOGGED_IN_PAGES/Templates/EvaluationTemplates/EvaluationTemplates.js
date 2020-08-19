@@ -11,6 +11,7 @@ import {
   Content,
   Modal,
   BreadCrumbs,
+  GhostLoader,
 } from "../../../elements/";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
@@ -128,6 +129,10 @@ export default function EvaluationTemplates(props) {
   if (data) {
     let { evaluationTemplates } = data.accountGet;
     templates = evaluationTemplates;
+  }
+
+  if (loading) {
+    return <GhostLoader />;
   }
 
   const columns = [

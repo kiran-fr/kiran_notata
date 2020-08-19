@@ -38,93 +38,93 @@ import {
   success_message,
 } from "./Profile.module.css";
 
-function VerifyPhoneNumberComp({ phoneVerified }) {
-  const [resend, setResend] = useState(false);
-  const [success, setSuccess] = useState(false);
+// function VerifyPhoneNumberComp({ phoneVerified }) {
+//   const [resend, setResend] = useState(false);
+//   const [success, setSuccess] = useState(false);
 
-  const { register, handleSubmit, formState, getValues, setValue } = useForm();
-  const { isSubmitting } = formState;
+//   const { register, handleSubmit, formState, getValues, setValue } = useForm();
+//   const { isSubmitting } = formState;
 
-  const onSubmit = async (data, event) => {
-    try {
-      await Auth.verifyCurrentUserAttributeSubmit(
-        "phone_number",
-        data.verification_code
-      );
-      setSuccess(true);
-      phoneVerified();
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+//   const onSubmit = async (data, event) => {
+//     try {
+//       await Auth.verifyCurrentUserAttributeSubmit(
+//         "phone_number",
+//         data.verification_code
+//       );
+//       setSuccess(true);
+//       phoneVerified();
+//     } catch (error) {
+//       console.log("error", error);
+//     }
+//   };
 
-  if (success) {
-    return (
-      <div className={success_message}>
-        Your phone number has been verified. You can now enable SMS verification
-        when loggin in for extra security.
-      </div>
-    );
-  }
+//   if (success) {
+//     return (
+//       <div className={success_message}>
+//         Your phone number has been verified. You can now enable SMS verification
+//         when loggin in for extra security.
+//       </div>
+//     );
+//   }
 
-  return (
-    <form
-      className="notata_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
-      <div>
-        <div className={verify_title}>Please verify your phone number</div>
+//   return (
+//     <form
+//       className="notata_form"
+//       onSubmit={handleSubmit(onSubmit)}
+//       style={{ marginBottom: "20px" }}
+//     >
+//       <div>
+//         <div className={verify_title}>Please verify your phone number</div>
 
-        <input
-          placeholder="Verification code"
-          type="text"
-          name="verification_code"
-          autoComplete="off"
-          ref={register({ required: true })}
-        />
+//         <input
+//           placeholder="Verification code"
+//           type="text"
+//           name="verification_code"
+//           autoComplete="off"
+//           ref={register({ required: true })}
+//         />
 
-        <div
-          style={{
-            marginTop: "5px",
-            textAlign: "right",
-          }}
-        >
-          <Button type="input" value="VERIFY" loading={isSubmitting} />
-        </div>
+//         <div
+//           style={{
+//             marginTop: "5px",
+//             textAlign: "right",
+//           }}
+//         >
+//           <Button type="input" value="VERIFY" loading={isSubmitting} />
+//         </div>
 
-        {!resend && (
-          <div
-            className={get_new_code}
-            onClick={async () => {
-              try {
-                await Auth.verifyCurrentUserAttribute("phone_number");
-                setResend(true);
-              } catch (error) {
-                return console.log("error", error);
-              }
-            }}
-          >
-            Get a new code
-          </div>
-        )}
+//         {!resend && (
+//           <div
+//             className={get_new_code}
+//             onClick={async () => {
+//               try {
+//                 await Auth.verifyCurrentUserAttribute("phone_number");
+//                 setResend(true);
+//               } catch (error) {
+//                 return console.log("error", error);
+//               }
+//             }}
+//           >
+//             Get a new code
+//           </div>
+//         )}
 
-        {resend && (
-          <div className={new_code}>
-            A new code has been sent you your phone
-          </div>
-        )}
-      </div>
-    </form>
-  );
-}
+//         {resend && (
+//           <div className={new_code}>
+//             A new code has been sent you your phone
+//           </div>
+//         )}
+//       </div>
+//     </form>
+//   );
+// }
 
 export default function Profile() {
   const { data, loading, error } = useQuery(userGet);
   const [mutate] = useMutation(userUpdate);
 
-  const [verifiedPhoneNumber, setVerifiedPhoneNumber] = useState(false);
-  const [hasPhoneNumber, setHasPhoneNumber] = useState(false);
+  // const [verifiedPhoneNumber, setVerifiedPhoneNumber] = useState(false);
+  // const [hasPhoneNumber, setHasPhoneNumber] = useState(false);
   const [cognitoUser, setCognitoUser] = useState();
 
   const { register, handleSubmit, formState, getValues, setValue } = useForm();
@@ -145,23 +145,16 @@ export default function Profile() {
         for (let attrib of userAttributes) {
           ua[attrib.Name] = attrib.Value;
         }
-
-        if (ua.phone_number) setHasPhoneNumber(true);
-        if (ua.phone_number_verified === "true") {
-          setVerifiedPhoneNumber(true);
-        }
-
-        console.log("ua", ua);
-
-        // for (let a in ua) {
-        //   setValue(`input.${a}`, ua[a])
+        // if (ua.phone_number) setHasPhoneNumber(true);
+        // if (ua.phone_number_verified === "true") {
+        //   setVerifiedPhoneNumber(true);
         // }
       });
 
-      Auth.getPreferredMFA(cognitoUser).then(MFA => {
-        console.log("MFA", MFA);
-        setValue("input.MFA", MFA);
-      });
+      // Auth.getPreferredMFA(cognitoUser).then(MFA => {
+      //   console.log("MFA", MFA);
+      //   setValue("input.MFA", MFA);
+      // });
     });
   }, []);
 
@@ -183,9 +176,9 @@ export default function Profile() {
       console.log("error", error);
     }
 
-    if (input.phone_number) {
-      setHasPhoneNumber(true);
-    }
+    // if (input.phone_number) {
+    //   setHasPhoneNumber(true);
+    // }
   };
 
   const values = getValues();
@@ -194,17 +187,17 @@ export default function Profile() {
   return (
     <Content maxWidth={600}>
       <h1>Profile</h1>
-
-      {hasPhoneNumber && !verifiedPhoneNumber && (
-        <Card>
-          <VerifyPhoneNumberComp
-            phoneVerified={() => {
-              setVerifiedPhoneNumber(true);
-            }}
-          />
-        </Card>
-      )}
-
+      {/*
+          {hasPhoneNumber && !verifiedPhoneNumber && (
+            <Card>
+              <VerifyPhoneNumberComp
+                phoneVerified={() => {
+                  setVerifiedPhoneNumber(true);
+                }}
+              />
+            </Card>
+          )}
+      */}
       <Card>
         <form
           className="notata_form"
@@ -252,35 +245,38 @@ export default function Profile() {
             name="input.email"
           />
 
-          <label for="input.phone_number">Phone number</label>
-          <input
-            type="text"
-            placeholder={"Phone number"}
-            autoComplete="off"
-            ref={register}
-            id="input.phone_number"
-            name="input.phone_number"
-          />
+          {/*
+            <label for="input.phone_number">Phone number</label>
+            <input
+              type="text"
+              placeholder={"Phone number"}
+              autoComplete="off"
+              ref={register}
+              id="input.phone_number"
+              name="input.phone_number"
+            />
+          */}
 
-          {verifiedPhoneNumber && (
-            <>
-              <div className={verified_phone_number}>
-                phone number is verified
-              </div>
-
-              <div className="check_container">
-                <input
-                  type="checkbox"
-                  id="input.MFA"
-                  name="input.MFA"
-                  ref={register}
-                />
-                <label for="input.MFA">
-                  Enable SMS for two factor security when logging in.
-                </label>
-              </div>
-            </>
-          )}
+          {/*
+            {verifiedPhoneNumber && (
+              <>
+                <div className={verified_phone_number}>
+                  phone number is verified
+                </div>
+                <div className="check_container">
+                  <input
+                    type="checkbox"
+                    id="input.MFA"
+                    name="input.MFA"
+                    ref={register}
+                  />
+                  <label for="input.MFA">
+                    Enable SMS for two factor security when logging in.
+                  </label>
+                </div>
+              </>
+            )}
+          */}
 
           <div
             style={{
