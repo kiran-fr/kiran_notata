@@ -334,11 +334,13 @@ input[type="submit"] {
 
   position: relative;
   bottom: -5px;
+  padding-right: 40px;
 }
 
 .comment_form textarea {
   resize: vertical;
   border-top: 1px solid #eaeaea;
+  line-height: 1.8;
 }
 
 .comment_form input[type="text"]::placeholder,

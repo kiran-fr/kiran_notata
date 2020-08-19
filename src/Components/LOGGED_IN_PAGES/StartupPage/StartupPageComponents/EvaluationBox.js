@@ -45,7 +45,7 @@ function EvaluationList({ evaluations, connectionId, templates }) {
                 <Link
                   to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}`}
                 >
-                  (edit)
+                  (edit/view)
                 </Link>
               </div>
               <div className={classnames(score_style, "desktop_only")}>
@@ -188,7 +188,7 @@ export function EvaluationBox({ connection, user, history }) {
           size="small"
           onClick={() => setShowModal(true)}
         >
-          Evaluate
+          New evaluation
         </Button>
       </div>
 

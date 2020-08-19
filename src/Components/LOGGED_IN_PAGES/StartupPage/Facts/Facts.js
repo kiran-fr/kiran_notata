@@ -341,14 +341,16 @@ function InputMutlipleLinesAnswer({ question, answers }) {
 
         if (isUrl) {
           return (
-            <a
-              className={facts_answer_link}
-              key={i}
-              href={answer.val}
-              target="_blank"
-            >
-              {answer.val} <i className="fal fa-external-link-square" />
-            </a>
+            <div>
+              <a
+                className={facts_answer_link}
+                key={i}
+                href={answer.val}
+                target="_blank"
+              >
+                {answer.val} <i className="fal fa-external-link-square" />
+              </a>
+            </div>
           );
         }
 

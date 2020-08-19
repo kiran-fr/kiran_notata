@@ -53,13 +53,25 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
         justifyContent: "space-between",
       }}
     >
-      {currentIndex !== sections.length - 1 && (
-        <Link
-          to={`${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`}
-        >
-          Go to summary
-        </Link>
-      )}
+      <div>
+        <div>
+          <Link
+            to={`${startup_page}/${connection.id}/evaluation/${evaluationId}`}
+          >
+            Back to overview
+          </Link>
+        </div>
+
+        {currentIndex !== sections.length - 1 && (
+          <div>
+            <Link
+              to={`${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`}
+            >
+              Go to summary
+            </Link>
+          </div>
+        )}
+      </div>
 
       {(currentIndex !== sections.length - 1 && (
         <Button
