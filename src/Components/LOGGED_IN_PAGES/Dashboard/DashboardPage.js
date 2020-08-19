@@ -44,7 +44,7 @@ const CreateNewStartup = ({ setDone }) => {
       <div
         style={{
           position: "relative",
-          marginBottom: "30px",
+          marginBottom: "10px",
           top: "-20px",
         }}
       >

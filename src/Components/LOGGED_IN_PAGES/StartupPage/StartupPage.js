@@ -74,9 +74,8 @@ export default function StartupPage({ match, history }) {
               {connection.createdByUser.given_name}{" "}
               {connection.createdByUser.family_name}
             </b>{" "}
-            on {moment(connection.createdAt).format("lll")}.
-            <br />
-            Last updated {moment(connection.updatedAt).format("lll")}.
+            on {moment(connection.createdAt).format("lll")}. Last updated{" "}
+            {moment(connection.updatedAt).format("lll")}.
           </div>
         </Card>
 

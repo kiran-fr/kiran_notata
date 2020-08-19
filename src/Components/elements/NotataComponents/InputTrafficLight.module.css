@@ -71,12 +71,13 @@
   .traffic_red,
   .traffic_yellow,
   .traffic_green {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
+    margin: 13px;
   }
 
   .traffic_light span {
-    top: 19px;
+    top: 29px;
     font-size: 14px;
   }
 }
