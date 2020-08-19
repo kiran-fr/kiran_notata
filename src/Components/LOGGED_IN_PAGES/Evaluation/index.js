@@ -107,12 +107,15 @@ export default function Evaluation({ match, history }) {
       render: sectionId => {
         return (
           <Button
-            type="tiny_right"
+            //type="tiny_right"
+            size="small"
             onClick={() => {
               let path = `${startup_page}/${connectionId}/evaluation/${evaluation.id}/section/${sectionId}`;
               history.push(path);
             }}
-          />
+          >
+            go
+          </Button>
         );
       },
     },

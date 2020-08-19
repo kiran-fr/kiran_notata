@@ -61,6 +61,17 @@
   color: var(--color-primary);
 }
 
+.facts_answer_link {
+  display: inline-block;
+  color: white;
+  background: var(--color-primary);
+  margin: 2px 0px;
+  padding: 2px 7px;
+  border-radius: 2px;
+  text-decoration: none;
+  line-break: anywhere;
+}
+
 .subjectiveScore_container {
   display: flex;
   justify-content: space-between;

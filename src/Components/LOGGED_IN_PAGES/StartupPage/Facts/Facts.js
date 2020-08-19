@@ -35,6 +35,7 @@ import {
   facts_comments_label,
   facts_comment_item,
   facts_answer,
+  facts_answer_link,
   no_answer,
   small_traffic_light,
   question_comments,
@@ -335,12 +336,13 @@ function InputMutlipleLinesAnswer({ question, answers }) {
   return (
     <>
       {_answers.map((answer, i) => {
-        let isUrl = answer.val.substring(0, 4) === "http";
+        let firstThree = answer.val.substring(0, 3).toLowerCase();
+        let isUrl = firstThree === "htt" || firstThree === "www";
 
         if (isUrl) {
           return (
             <a
-              className={facts_answer}
+              className={facts_answer_link}
               key={i}
               href={answer.val}
               target="_blank"

@@ -264,12 +264,16 @@ export default function EvaluationTemplate({ match, history }) {
       render: sectionId => {
         return (
           <Button
-            type="tiny_right"
+            // type="tiny_right"
+            type="right_arrow"
+            size="small"
             onClick={() => {
               let path = `${evaluation_template}/${id}/${sectionId}`;
               history.push(path);
             }}
-          />
+          >
+            View
+          </Button>
         );
       },
     },

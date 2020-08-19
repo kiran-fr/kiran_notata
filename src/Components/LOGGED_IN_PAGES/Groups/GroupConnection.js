@@ -41,6 +41,7 @@ import {
   facts_comments_label,
   facts_comment_item,
   facts_answer,
+  facts_answer_link,
   no_answer,
   subjectiveScore_container,
   subjectiveScore_name,
@@ -104,6 +105,23 @@ function InputMutlipleLinesAnswer({ question, answers }) {
   return (
     <>
       {_answers.map((answer, i) => {
+        let firstThree = answer.val.substring(0, 3).toLowerCase();
+        let isUrl = firstThree === "htt" || firstThree === "www";
+        if (isUrl) {
+          return (
+            <div>
+              <a
+                className={facts_answer_link}
+                key={i}
+                href={answer.val}
+                target="_blank"
+              >
+                {answer.val} <i className="fal fa-external-link-square" />
+              </a>
+            </div>
+          );
+        }
+
         return (
           <div key={i} className={facts_answer}>
             {answer.val}

@@ -37,9 +37,20 @@ export default function Connections({ history }) {
 
     {
       title: "Company name",
-      dataIndex: "creative",
+      // dataIndex: "creative",
       key: "creative",
-      render: creative => creative.name,
+      render: connection => {
+        return (
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              history.push(`${startup_page}/${connection.id}`);
+            }}
+          >
+            {connection.creative.name}
+          </span>
+        );
+      },
     },
 
     // {
@@ -109,11 +120,15 @@ export default function Connections({ history }) {
       width: 30,
       render: id => (
         <Button
-          type="tiny_right"
+          //type="tiny_right"
+          type="right_arrow"
+          size="small"
           onClick={() => {
             history.push(`${startup_page}/${id}`);
           }}
-        />
+        >
+          View
+        </Button>
       ),
     },
   ];

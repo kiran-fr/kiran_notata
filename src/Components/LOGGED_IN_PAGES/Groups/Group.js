@@ -570,12 +570,16 @@ function StartupList({ group, user, isOwner, mutate, history }) {
       width: 30,
       render: connection => (
         <Button
-          type="tiny_right"
+          // type="tiny_right"
+          type="right_arrow"
+          size="small"
           onClick={() => {
             let path = `${group_route}/${group.id}/${connection.id}`;
             history.push(path);
           }}
-        />
+        >
+          View
+        </Button>
       ),
     },
   ];

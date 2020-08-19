@@ -381,7 +381,11 @@ export function Share({ connection, user, history }) {
           textAlign: "right",
         }}
       >
-        <Button onClick={() => setShowModal(true)} type="just_text">
+        <Button
+          onClick={() => setShowModal(true)}
+          type="right_arrow"
+          size="small"
+        >
           Share
         </Button>
       </div>

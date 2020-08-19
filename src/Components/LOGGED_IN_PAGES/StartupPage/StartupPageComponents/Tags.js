@@ -367,7 +367,12 @@ export function Tags({ connection, user, match }) {
       </div>
 
       <div style={{ textAlign: "right" }}>
-        <Button type="just_text" onClick={() => setShow(true)}>
+        <Button
+          // type="just_text"
+          size="small"
+          type="right_arrow"
+          onClick={() => setShow(true)}
+        >
           Add/remove tags
         </Button>
       </div>

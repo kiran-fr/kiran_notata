@@ -135,12 +135,16 @@ export default function Groups({ history }) {
       width: 30,
       render: id => (
         <Button
-          type="tiny_right"
+          // type="tiny_right"
+          type="right_arrow"
+          size="small"
           onClick={() => {
             let path = `${group}/${id}`;
             history.push(path);
           }}
-        />
+        >
+          View
+        </Button>
       ),
     },
   ];

@@ -182,7 +182,12 @@ export function EvaluationBox({ connection, user, history }) {
           textAlign: "right",
         }}
       >
-        <Button type="just_text" onClick={() => setShowModal(true)}>
+        <Button
+          // type="just_text"
+          type="right_arrow"
+          size="small"
+          onClick={() => setShowModal(true)}
+        >
           Evaluate
         </Button>
       </div>

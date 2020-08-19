@@ -170,12 +170,16 @@ export default function EvaluationTemplates(props) {
       width: 30,
       render: id => (
         <Button
-          type="tiny_right"
+          //type="tiny_right"
+          type="right_arrow"
+          size="small"
           onClick={() => {
             let path = `${evaluation_template}/${id}`;
             props.history.push(path);
           }}
-        />
+        >
+          View
+        </Button>
       ),
     },
   ];

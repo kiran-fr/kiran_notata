@@ -123,7 +123,9 @@ export function Facts({ connection, user, match, history }) {
 
       <div style={{ textAlign: "right" }}>
         <Button
-          type="just_text"
+          // type="just_text"
+          size="small"
+          type="right_arrow"
           onClick={() => {
             const path = `${startup_page}/${match.params.id}/creative/${connection.creative.id}`;
             history.push(path);

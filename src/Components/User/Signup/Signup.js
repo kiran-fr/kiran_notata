@@ -6,23 +6,8 @@ import { userLoggedIn } from "../../../Modules/user";
 import { getUserIsLoggedIn } from "../../../Modules";
 import { useForm } from "react-hook-form";
 import classnames from "classnames";
-// import {
-//   container,
-//   small_container,
-//   center_container,
-//   inner_container,
-//   success_box,
-//   error_box,
-//   standard_form
-// } from "../../elements/Style.module.css";
-
 import { dashboard, forgotPassword, awaiting, login } from "../../../routes";
-
 import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
-
-// export function Signup() {
-//   return <div>Sign up...</div>;
-// }
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [errorMessage, setErrorMessage] = useState();
@@ -36,7 +21,9 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   }
 
   function onSubmit(data) {
-    const { email, password } = data;
+    let { email, password } = data;
+
+    email = email.toLowerCase().trim();
 
     setIsLoading(true);
     let res = Auth.signUp({
