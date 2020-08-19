@@ -167,7 +167,7 @@ const WrapperComponent = ({ ...props }) => {
   return (
     <>
       <Header />
-      <SideBar />
+      <SideBar {...props} />
       <div className="logged_in_page_content">
         <RouterComponent {...props} />
       </div>
@@ -175,4 +175,4 @@ const WrapperComponent = ({ ...props }) => {
   );
 };
 
-export const LoggedInRouter = withRouter(WrapperComponent);
+export const LoggedInRouter = WrapperComponent;

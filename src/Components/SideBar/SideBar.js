@@ -92,11 +92,17 @@ const menuItems = [
   },
 ];
 
-const SideBar = () => (
+const SideBar = ({ location }) => (
   <div className={classnames(sidebar_container, "desktop_only")}>
     <div className={menu_container}>
       {menuItems.map((item, i) => (
-        <MenuIconItem key={`m-${i}`} horizontal large {...item} />
+        <MenuIconItem
+          key={`m-${i}`}
+          horizontal
+          large
+          {...item}
+          location={location}
+        />
       ))}
     </div>
   </div>

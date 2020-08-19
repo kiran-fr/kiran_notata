@@ -128,7 +128,7 @@ const moreMenuItems = [
   },
 ];
 
-export const DashboardHeader = ({ history }) => {
+export const DashboardHeader = ({ history, location }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const { data, loading, error } = useQuery(userGet);
 
@@ -149,7 +149,7 @@ export const DashboardHeader = ({ history }) => {
 
       <div className={classnames(icons, "mobile_only")}>
         {menuItems.map((item, i) => (
-          <MenuIconItem key={i} {...item} />
+          <MenuIconItem key={i} {...item} location={location} />
         ))}
 
         <div className={icon_dropdown_container}>
@@ -157,6 +157,7 @@ export const DashboardHeader = ({ history }) => {
             label="More"
             iconClass="fal fa-bars"
             onClick={() => setOpenMenu(true)}
+            location={location}
           />
 
           {openMenu && (
@@ -180,6 +181,7 @@ export const DashboardHeader = ({ history }) => {
                     horizontal
                     {...item}
                     onClick={() => setOpenMenu(false)}
+                    location={location}
                   />
                 ))}
               </div>

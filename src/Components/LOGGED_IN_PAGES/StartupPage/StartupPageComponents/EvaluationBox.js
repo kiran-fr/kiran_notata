@@ -94,9 +94,8 @@ function EvaluationList({ evaluations, connectionId, templates }) {
 }
 
 export function EvaluationBox({ connection, user, history }) {
-  const [isLoading, setIsLoading] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
+  const [currentLoading, setCurrentLoading] = useState("");
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
   let templates = [];
   if (!evaluationTemplatesQuery.loading) {
@@ -104,10 +103,7 @@ export function EvaluationBox({ connection, user, history }) {
       evaluationTemplatesQuery.data.accountGet.evaluationTemplates || [];
   }
 
-  const [
-    mutate,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(evaluationPut);
+  const [mutate, { loading }] = useMutation(evaluationPut);
 
   const evaluations = (connection || {}).evaluations || [];
 
@@ -130,9 +126,8 @@ export function EvaluationBox({ connection, user, history }) {
         return (
           <Button
             size="small"
-            loading={isLoading === templateId}
             onClick={async () => {
-              setIsLoading(templateId);
+              setCurrentLoading(templateId);
               try {
                 let res = await mutate({
                   variables: {
@@ -146,8 +141,9 @@ export function EvaluationBox({ connection, user, history }) {
               } catch (error) {
                 console.log("error", error);
               }
-              setIsLoading(null);
+              setCurrentLoading("");
             }}
+            loading={loading && currentLoading === templateId}
           >
             use
           </Button>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
 
 import { userGet, groupGet, connectionsGet } from "../../../Apollo/Queries";
 import { groupPut } from "../../../Apollo/Mutations";
@@ -24,8 +26,18 @@ import {
 
 function AddNewMember({ group, mutate }) {
   const [showModal, setShowModal] = useState(false);
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, errors } = useForm();
   const { isSubmitting } = formState;
+  const emailForm = useForm({
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup
+          .string()
+          .email()
+          .required(),
+      })
+    ),
+  });
 
   const [changeGroupName, setChangeGroupName] = useState(
     group.members.some(m => m.email === group.name)
@@ -140,7 +152,6 @@ function AddNewMember({ group, mutate }) {
                     ref={register({ required: true })}
                     name="name"
                   />
-
                   <div
                     style={{
                       marginTop: "5px",
@@ -157,24 +168,30 @@ function AddNewMember({ group, mutate }) {
           {!changeGroupName && (
             <form
               className="notata_form"
-              onSubmit={handleSubmit(onSubmitInvite)}
+              onSubmit={emailForm.handleSubmit(onSubmitInvite)}
             >
               <div style={{ marginTop: "30px" }}>
                 <input
                   type="text"
                   placeholder={"name@email.com"}
                   autoComplete="off"
-                  ref={register({ required: true })}
+                  ref={emailForm.register()}
                   name="email"
                 />
-
+                {emailForm.errors && emailForm.errors.email && (
+                  <p style={{ color: "red" }}>must be a valid email address</p>
+                )}
                 <div
                   style={{
                     marginTop: "5px",
                     textAlign: "right",
                   }}
                 >
-                  <Button type="input" value="OK" loading={isSubmitting} />
+                  <Button
+                    type="input"
+                    value="OK"
+                    loading={emailForm.formState.isSubmitting}
+                  />
                 </div>
               </div>
             </form>

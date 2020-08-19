@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-
-import validateEmail from "../../../utils/validateEmail";
-
 import { useQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
+
+import validateEmail from "../../../utils/validateEmail";
 
 // API STUFF
 import {
@@ -52,8 +53,17 @@ import {
 function Invite({ account, user }) {
   const [showModal, setShowModal] = useState(false);
 
-  const [mutate, { loading }] = useMutation(accountInvite);
-  const { register, handleSubmit, formState } = useForm();
+  const [mutate] = useMutation(accountInvite);
+  const { register, handleSubmit, formState, errors } = useForm({
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup
+          .string()
+          .email()
+          .required(),
+      })
+    ),
+  });
   const { isSubmitting } = formState;
 
   const onSubmit = async ({ email }, event) => {
@@ -109,10 +119,12 @@ function Invite({ account, user }) {
                 type="text"
                 placeholder={"name@email.com"}
                 autoComplete="off"
-                ref={register({ required: true })}
+                ref={register()}
                 name="email"
               />
-
+              {errors && errors.email && (
+                <p style={{ color: "red" }}>must be a valid email address</p>
+              )}
               <div
                 style={{
                   marginTop: "5px",

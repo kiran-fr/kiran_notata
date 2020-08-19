@@ -44,7 +44,26 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
 
   let currentIndex = sections.map(s => s.id).indexOf(sectionId);
 
-  if (currentIndex === sections.length) return <span />;
+  if (currentIndex === sections.length - 1) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
+          type="right_arrow"
+          onClick={() => {
+            let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`;
+            history.push(path);
+          }}
+        >
+          Go to summary
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div

@@ -19,10 +19,9 @@ export const MenuIconItem = ({
   iconClass,
   notifications,
   horizontal,
+  location,
   ...props
 }) => {
-  let this_page = "/";
-
   if (link) {
     return (
       <Link
@@ -31,7 +30,7 @@ export const MenuIconItem = ({
           icon,
           large && large_style,
           horizontal && horizontal_style,
-          link === this_page && current_route
+          location && location.pathname === link && current_route
         )}
         {...props}
       >
