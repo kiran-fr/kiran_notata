@@ -31,7 +31,14 @@ export const Modal = ({ close, submit, title, disableFoot, ...children }) => {
     <div className={container}>
       <div className={ghost} />
 
-      <div className={content}>
+      <div
+        className={content}
+        onClick={event => {
+          if (event.target === event.currentTarget) {
+            close();
+          }
+        }}
+      >
         <div className={inner}>
           <div className={modal_header}>
             {title && <div className={modal_title}>{title}</div>}
