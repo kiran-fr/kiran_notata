@@ -13,3 +13,5 @@ export { BreadCrumbs } from "./NotataComponents/BreadCrumbs";
 export { SuccessBox } from "./NotataComponents/SuccessBox";
 export { ErrorBox } from "./NotataComponents/ErrorBox";
 export { GhostLoader } from "./NotataComponents/GhostLoader";
+
+export { default as AutoHeightTextArea } from "./NotataComponents/AutoHeightTextArea";
