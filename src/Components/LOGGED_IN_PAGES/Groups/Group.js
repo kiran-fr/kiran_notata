@@ -224,7 +224,9 @@ function SharedBy({ group }) {
   );
 }
 
-function MemberList({ group, user, mutate, isOwner }) {
+function MemberList({ group, user, isOwner }) {
+  const [mutate, { loading }] = useMutation(groupPut);
+
   let columns = [
     {
       title: "",
@@ -235,6 +237,10 @@ function MemberList({ group, user, mutate, isOwner }) {
       render: email => {
         if (!isOwner) return <span />;
         if (email === user.email) return <span />;
+
+        if (loading) {
+          return <i className="fa fa-spinner fa-spin" />;
+        }
 
         return (
           <i
@@ -537,7 +543,9 @@ function AddNewStartup({ group, connections, mutate }) {
   );
 }
 
-function StartupList({ group, user, isOwner, mutate, history }) {
+function StartupList({ group, user, isOwner, history }) {
+  const [mutate, { loading }] = useMutation(groupPut);
+
   const columns = [
     {
       title: "Name",
@@ -610,6 +618,10 @@ function StartupList({ group, user, isOwner, mutate, history }) {
       render: startup => {
         let connection = startup.connection || {};
         if (connection.createdBy !== user.cognitoIdentityId) return <span />;
+
+        if (loading) {
+          return <i className="fa fa-spinner fa-spin" />;
+        }
 
         return (
           <i
