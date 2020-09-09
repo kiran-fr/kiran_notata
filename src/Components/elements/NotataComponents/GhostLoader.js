@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 import { container } from "./GhostLoader.module.css";
 
 export const GhostLoader = () => (

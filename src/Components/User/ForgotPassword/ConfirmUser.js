@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { connect } from "react-redux";
-import classnames from "classnames";
-import { login } from "../../../routes";
+import { login } from "../../../pages/definitions";
 import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
 
 const makeid = length => {
@@ -22,7 +20,7 @@ export function ConfirmUser({ email }) {
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setSuccessMessage] = useState();
 
-  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   const ids = {
@@ -61,7 +59,6 @@ export function ConfirmUser({ email }) {
           >
             <label for={ids.code}>Code sent to your mail</label>
             <input
-              autoComplete="new-password"
               type="text"
               placeholder="Code"
               ref={register({ required: true })}
@@ -72,7 +69,6 @@ export function ConfirmUser({ email }) {
 
             <label for={ids.password}>Your new password</label>
             <input
-              autoComplete="new-password"
               type="password"
               placeholder="Shh... it's a secret..."
               ref={register({ required: true })}

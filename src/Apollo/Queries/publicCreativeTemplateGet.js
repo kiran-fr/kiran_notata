@@ -1,7 +1,5 @@
 import gql from "graphql-tag";
 
-import { groupFragments } from "../Fragments";
-
 export default gql`
   query publicCreativeTemplateGet($id: ID) {
     publicCreativeTemplateGet(id: $id) {

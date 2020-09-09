@@ -1,4 +1,4 @@
-import React, { useRef, Component } from "react";
+import React, { useRef } from "react";
 
 import {
   container,
@@ -8,7 +8,7 @@ import {
 } from "./FrontPage.module.css";
 
 import classnames from "classnames";
-import { login } from "../../routes";
+import { login } from "../../pages/definitions";
 import { Link } from "react-router-dom";
 
 const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);

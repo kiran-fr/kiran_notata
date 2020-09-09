@@ -1,19 +1,18 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { userLoggedIn } from "../../../Modules/user";
 import { getUserIsLoggedIn } from "../../../Modules";
 import { useForm } from "react-hook-form";
-import classnames from "classnames";
-import { dashboard, forgotPassword, awaiting, login } from "../../../routes";
-import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
+import { dashboard, awaiting, login } from "../../../pages/definitions";
+import { Content, Card, Button, ErrorBox } from "../../elements/";
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [errorMessage, setErrorMessage] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   if (userIsLoggedIn) {
@@ -26,7 +25,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
     email = email.toLowerCase().trim();
 
     setIsLoading(true);
-    let res = Auth.signUp({
+    Auth.signUp({
       username: email,
       password,
       attributes: { email },

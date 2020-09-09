@@ -2,35 +2,19 @@ import React from "react";
 
 import classnames from "classnames";
 
-// import {
-//   dashboard,
-//   profile,
-//   report,
-//   inbox,
-//   activities,
-//   tags,
-//   group,
-//   settings,
-//   team,
-//   templates,
-//   signOut,
-// } from "../../routes";
+import {
+  dashboard,
+  profile,
+  tags,
+  group,
+  team,
+  templates,
+  signOut,
+} from "../../pages/definitions";
 
 import { sidebar_container, menu_container } from "./SideBar.module.css";
 
 import { MenuIconItem } from "../elements/";
-
-let dashboard = "/dashboard";
-let profile = "/dashboard/profile";
-let report = "/dashboard/report";
-let inbox = "/dashboard/inbox";
-let activities = "/dashboard/activities";
-let tags = "/dashboard/tags";
-let group = "/dashboard/group";
-let settings = "/dashboard/settings";
-let team = "/dashboard/team";
-let templates = "/dashboard/templates";
-let signOut = "/signout";
 
 const menuItems = [
   {

@@ -1,24 +1,15 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
 
-// API
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
-import { userGet } from "../../Apollo/Queries";
-
-// import {
-//   frontpage,
-//   dashboard,
-//   profile,
-//   report,
-//   inbox,
-//   activities,
-//   tags,
-//   group,
-//   settings,
-//   team,
-//   evaluation_templates,
-//   signOut,
-// } from "../../routes";
+import {
+  frontpage,
+  dashboard,
+  profile,
+  tags,
+  group,
+  team,
+  signOut,
+  templates,
+} from "../../pages/definitions";
 
 // STYLE
 import {
@@ -35,19 +26,6 @@ import {
 import { MenuIconItem } from "../elements/";
 
 import classnames from "classnames";
-
-let frontpage = "/";
-let dashboard = "/dashboard";
-let profile = "/dashboard/profile";
-let report = "/dashboard/report";
-let inbox = "/dashboard/inbox";
-let activities = "/dashboard/activities";
-let tags = "/dashboard/tags";
-let group = "/dashboard/group";
-let settings = "/dashboard/settings";
-let team = "/dashboard/team";
-let templates = "/dashboard/templates";
-let signOut = "/signout";
 
 const menuItems = [
   {
@@ -130,13 +108,6 @@ const moreMenuItems = [
 
 export const DashboardHeader = ({ history, location }) => {
   const [openMenu, setOpenMenu] = useState(false);
-  const { data, loading, error } = useQuery(userGet);
-
-  let have_profile;
-  if (!loading && !error && data) {
-    let user = data.userGet || {};
-    have_profile = user.email !== null;
-  }
 
   return (
     <div className={container}>

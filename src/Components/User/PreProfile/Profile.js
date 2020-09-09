@@ -5,18 +5,10 @@ import { Auth } from "aws-amplify";
 import { useForm } from "react-hook-form";
 
 // API STUFF
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import { userGet } from "../../../Apollo/Queries";
 import { userUpdate } from "../../../Apollo/Mutations";
-import { dashboard } from "../../../routes";
-
-// STYLES
-import classnames from "classnames";
-
-// UTILITIES
-import validateEmail from "../../../utils/validateEmail";
-import validatePhoneNumber from "../../../utils/validatePhoneNumber";
+import { dashboard } from "../../../pages/definitions";
 
 import { omit } from "lodash";
 
@@ -24,7 +16,6 @@ import { Content, Card, Button } from "../../elements/";
 
 export default function PreProfile({ history }) {
   const [mutate] = useMutation(userUpdate);
-  const [verifiedPhoneNumber, setVerifiedPhoneNumber] = useState(false);
   const [cognitoUser, setCognitoUser] = useState();
 
   const { register, handleSubmit, formState, getValues, setValue } = useForm();

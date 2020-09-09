@@ -3,7 +3,6 @@ import classnames from "classnames";
 
 import {
   container,
-  content,
   responsive_sm,
   responsive_md,
   responsive_lg,

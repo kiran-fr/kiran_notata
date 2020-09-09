@@ -1,15 +1,13 @@
 import React from "react";
 import { Auth } from "aws-amplify";
-import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import classnames from "classnames";
-import { login } from "../../../routes";
+import { Link } from "react-router-dom";
+import { login } from "../../../pages/definitions";
 import { useForm } from "react-hook-form";
 
-import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
+import { Content, Card, Button } from "../../elements/";
 
 export function EnterUsername({ done }) {
-  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   const onSubmit = async (data, event) => {

@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import { DashboardHeader } from "./DashboardHeader";
 
-import { dashboard, profile } from "../../routes";
+import { dashboard } from "../../pages/definitions";
 
 const HeaderComponent = () => {
   return (

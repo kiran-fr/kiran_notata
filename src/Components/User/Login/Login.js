@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { userLoggedIn } from "../../../Modules/user";
 import queryString from "query-string";
-import { dashboard, forgotPassword } from "../../../routes";
-import classnames from "classnames";
+import { dashboard, forgotPassword } from "../../../pages/definitions";
 import { getUserIsLoggedIn } from "../../../Modules";
 
 import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
@@ -16,7 +15,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [signinUser, setSigninUser] = useState();
   const [errorMessage, setErrorMessage] = useState();
 
-  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { register, handleSubmit, formState, setValue } = useForm();
   const { isSubmitting } = formState;
 
   const s = queryString.parse(location.search);

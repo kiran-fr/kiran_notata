@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@apollo/client";
 import { container, input_class } from "./SimpleInputForm.module.css";
 
 export function SimpleInputForm({ placeholder, val, submit }) {
-  const { register, handleSubmit, formState, setValue } = useForm();
-  const { isSubmitting } = formState;
+  const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
     setValue("input_val", val);

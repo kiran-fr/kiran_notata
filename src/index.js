@@ -8,7 +8,7 @@ import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import { Routes } from "./routes";
+import { Routes } from "./pages/routes";
 import { appsyncClient, initializeAwsConfig } from "./awsconfig";
 import rootReducer from "./Modules/index";
 import {
