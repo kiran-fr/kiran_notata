@@ -26,3 +26,23 @@
 .date_style {
   font-size: 12px;
 }
+
+.void_list {
+  padding-bottom: 25px;
+  padding-top: 25px;
+  text-align: center;
+  line-height: 2;
+  color: var(--color-gray-medium);
+}
+
+.void_list_label {
+}
+
+.void_list_icon {
+  font-size: 68px;
+  color: var(--color-gray-pale);
+}
+
+.pre_space {
+  white-space: pre;
+}

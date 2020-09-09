@@ -123,7 +123,7 @@ function LogInput({ user, connection }) {
 }
 
 export function Log({ connection, user }) {
-  const [viewEvents, setViewEvents] = useState(true);
+  const [viewEvents, setViewEvents] = useState(false);
   const logQuery = useQuery(logGet, {
     variables: { connectionId: connection.id },
   });
@@ -137,6 +137,14 @@ export function Log({ connection, user }) {
 
   return (
     <div>
+      {!log.length && (
+        <div
+          style={{ paddingBottom: "10px", color: "var(--color-gray-medium)" }}
+        >
+          No comments yet...
+        </div>
+      )}
+
       {log.map((logItem, i) => (
         <div key={`log-${logItem.id}`} className={log_feed_item}>
           <div className={log_feed_byline}>

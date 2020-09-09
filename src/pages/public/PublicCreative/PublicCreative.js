@@ -144,6 +144,8 @@ export function PublicCreative({ match }) {
   const error = creativeQuery.error || creativeTemplateQuery.error;
   const loading = creativeQuery.loading || creativeTemplateQuery.loading;
 
+  console.log("template", template);
+
   if (error) {
     console.log("creativeQuery.error", creativeQuery.error);
     console.log("creativeTemplateQuery.error", creativeTemplateQuery.error);

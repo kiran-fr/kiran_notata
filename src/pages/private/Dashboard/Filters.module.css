@@ -1,0 +1,44 @@
+.container {
+  border-bottom: 1px solid var(--color-gray-pale);
+  padding-bottom: 15px;
+}
+
+.content {
+}
+
+.footer {
+  position: relative;
+  padding-right: 50px;
+}
+
+.filter_icon_container {
+  position: absolute;
+  cursor: pointer;
+  right: 2px;
+  top: 1px;
+}
+
+.filter_icon {
+  color: var(--color-primary);
+  font-size: 30px;
+}
+
+.tag_list {
+  margin-bottom: 10px;
+}
+
+.tag_each {
+  position: relative;
+  padding-right: 16px;
+}
+
+.tag_name {
+}
+
+.tag_kill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--color-gray-medium);
+  cursor: pointer;
+}

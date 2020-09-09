@@ -63,9 +63,12 @@
 .dropdown_group_header {
   display: flex;
   justify-content: space-between;
+  font-size: 15px;
+  line-height: 2.7;
 }
 
 .dropdown_group_title {
+  color: var(--color-gray-dark);
 }
 
 .dropdown_group_list {
@@ -94,6 +97,14 @@
 .dropdown_group_item {
   color: var(--color-gray-medium);
   display: flex;
+
+  font-size: 15px;
+  line-height: 2.7;
+}
+
+.dropdown_group_item_check {
+  font-size: 15px;
+  line-height: 2.7;
 }
 
 .dropdown_group_item_check label {
@@ -111,12 +122,13 @@
 
 .dropdown_close {
   position: absolute;
-  top: -14px;
+  top: 8px;
   right: 14px;
   color: var(--color-primary);
   z-index: 400;
   font-size: 31px;
   cursor: pointer;
+  line-height: 1;
 }
 
 .tag_each {
