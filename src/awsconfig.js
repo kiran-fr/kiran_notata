@@ -1,12 +1,7 @@
 import AWS from "aws-sdk";
 import { AUTH_TYPE } from "aws-appsync";
 import Amplify, { Auth } from "aws-amplify";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloLink,
-  createHttpLink,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
 
 import { createAuthLink } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
@@ -58,8 +53,8 @@ Amplify.configure({
 // const devURL = "https://gwv2lgcqinetjg3ariygacjv64.appsync-api.eu-west-1.amazonaws.com/graphql";
 // const prodURL = "https://kiyq3umvb5h2vc7w2cmjxmdneq.appsync-api.eu-west-1.amazonaws.com/graphql";
 // let appsyncUrl = STAGE === 'dev' ? devURL : prodURL;
-const dev2URL =
-  "https://qisjxuphbjaihfdty2yc7wwjam.appsync-api.eu-west-1.amazonaws.com/graphql";
+// const dev2URL =
+//   "https://qisjxuphbjaihfdty2yc7wwjam.appsync-api.eu-west-1.amazonaws.com/graphql";
 const prodtest =
   "https://pm4namovdzgpboqy5s2vgafzjy.appsync-api.eu-west-1.amazonaws.com/graphql";
 // let appsyncUrl = dev2URL;

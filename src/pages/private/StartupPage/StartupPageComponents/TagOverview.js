@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Button, Tag } from "../../../elements/";
+import React, { useState } from "react";
+import { Button } from "../../../../Components/elements/";
 
 import {
   dropdown_container,
@@ -8,10 +8,6 @@ import {
   dropdown_group,
   dropdown_group_header,
   dropdown_group_title,
-  dropdown_group_list,
-  dropdown_group_list_item,
-  dropdown_group_tag_kill,
-  dropdown_group_tag_name,
   dropdown_group_item_check,
   dropdown_close,
 } from "./Tags.module.css";

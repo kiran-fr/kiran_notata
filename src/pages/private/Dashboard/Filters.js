@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import TagOverview from "../StartupPage/StartupPageComponents/TagOverview";
 import TagPage from "../StartupPage/StartupPageComponents/TagPage";
 
-import { Tag } from "../../elements/";
-
-// STYLES
-import classnames from "classnames";
+import { Tag } from "../../../Components/elements/";
 
 import {
   container,

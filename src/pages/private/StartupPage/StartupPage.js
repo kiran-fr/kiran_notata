@@ -16,7 +16,7 @@ import { Facts } from "./StartupPageComponents/Facts";
 import { Tags } from "./StartupPageComponents/Tags";
 
 // import { Funnel } from "./StartupPageComponents/Funnel";
-import { userGet, connectionGet, tagGroupGet } from "../../../Apollo/Queries";
+import { userGet, connectionGet } from "../../../Apollo/Queries";
 import { dashboard, startup_page } from "../../definitions";
 
 import { header_comp, sub_header } from "./StartupPage.module.css";

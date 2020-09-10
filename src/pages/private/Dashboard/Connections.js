@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 
 // API
@@ -6,11 +6,7 @@ import { useQuery } from "@apollo/client";
 import { connectionsGet, tagGroupGet } from "../../../Apollo/Queries";
 
 // COMPONENTS
-import { Button, Table, Card, Tag, GhostLoader } from "../../elements/";
 import Filters from "./Filters";
-
-// STYLES
-import classnames from "classnames";
 
 import { startup_page } from "../../definitions";
 
@@ -58,7 +54,7 @@ export default function Connections({ history }) {
   const [filters, setFilters] = useState(defaultFilters);
 
   const connectionsQuery = useQuery(connectionsGet);
-  const { data, loading, error, called } = connectionsQuery;
+  const { data, loading, error } = connectionsQuery;
 
   const tagGroupsQuery = useQuery(tagGroupGet);
   const tagGroups =
