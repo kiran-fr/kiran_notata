@@ -3,19 +3,34 @@ import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { userLoggedIn } from "../../../Modules/user";
 import queryString from "query-string";
-import { dashboard, forgotPassword } from "../../../pages/definitions";
-import { getUserIsLoggedIn } from "../../../Modules";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
 
 import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
+
+import { userLoggedIn } from "../../../Modules/user";
+import { getUserIsLoggedIn } from "../../../Modules";
+
+import { dashboard, forgotPassword } from "../../../pages/definitions";
 
 function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [SMS_MFA, setSMS_MFA] = useState(false);
   const [signinUser, setSigninUser] = useState();
   const [errorMessage, setErrorMessage] = useState();
 
-  const { register, handleSubmit, formState, setValue } = useForm();
+  const { register, handleSubmit, formState, setValue, errors } = useForm({
+    resolver: SMS_MFA
+      ? undefined
+      : yupResolver(
+          yup.object().shape({
+            email: yup
+              .string()
+              .email()
+              .required(),
+          })
+        ),
+  });
   const { isSubmitting } = formState;
 
   const s = queryString.parse(location.search);
@@ -82,6 +97,9 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                 name="email"
                 id="email"
               />
+              {errors && errors.email && (
+                <p style={{ color: "red" }}>must be a valid email address</p>
+              )}
 
               <label for="password">Password</label>
               <input

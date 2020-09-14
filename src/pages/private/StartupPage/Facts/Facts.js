@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import validateEmail from "../../../../utils/validateEmail";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
+
 import { creativeGet, creativeTemplateGet } from "../../../../Apollo/Queries";
 import { creativePut } from "../../../../Apollo/Mutations";
+
+import validateEmail from "../../../../utils/validateEmail";
 
 import {
   Content,
@@ -91,7 +95,16 @@ function InviteStartup({ creative, connectionId, mutate, loading }) {
   const [showModal, setShowModal] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const { register, handleSubmit, formState, setValue } = useForm();
+  const { register, handleSubmit, formState, setValue, errors } = useForm({
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup
+          .string()
+          .email()
+          .required(),
+      })
+    ),
+  });
   const { isSubmitting } = formState;
 
   useEffect(() => {
@@ -220,6 +233,9 @@ function InviteStartup({ creative, connectionId, mutate, loading }) {
                 ref={register({ required: true })}
                 name="email"
               />
+              {errors && errors.email && (
+                <p style={{ color: "red" }}>must be a valid email address</p>
+              )}
 
               <div
                 style={{

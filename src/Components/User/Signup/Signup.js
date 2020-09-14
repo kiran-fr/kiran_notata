@@ -2,17 +2,32 @@ import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
+
+import { Content, Card, Button, ErrorBox } from "../../elements/";
+
 import { userLoggedIn } from "../../../Modules/user";
 import { getUserIsLoggedIn } from "../../../Modules";
-import { useForm } from "react-hook-form";
+
 import { dashboard, awaiting, login } from "../../../pages/definitions";
-import { Content, Card, Button, ErrorBox } from "../../elements/";
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [errorMessage, setErrorMessage] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, errors } = useForm({
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup
+          .string()
+          .email()
+          .required(),
+        passwordConfirmation: yup.string().oneOf([yup.ref("password"), null]),
+      })
+    ),
+  });
   const { isSubmitting } = formState;
 
   if (userIsLoggedIn) {
@@ -59,6 +74,9 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               name="email"
               id="email"
             />
+            {errors && errors.email && (
+              <p style={{ color: "red" }}>must be a valid email address</p>
+            )}
 
             <label for="password">Password</label>
             <input
@@ -68,6 +86,18 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               name="password"
               id="password"
             />
+
+            <input
+              type="password"
+              name="passwordConfirmation"
+              ref={register({
+                required: true,
+              })}
+              placeholder="confirm password"
+            />
+            {errors && errors.passwordConfirmation && (
+              <p style={{ color: "red" }}>passwords do not match</p>
+            )}
           </div>
 
           <div style={{ textAlign: "right" }}>

@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import classnames from "classnames";
+import { yupResolver } from "@hookform/resolvers";
+import moment from "moment";
+import * as yup from "yup";
+
+import { Modal, Table, Button } from "../../../../Components/elements";
 
 import { groupsGet } from "../../../../Apollo/Queries";
 import { groupPut } from "../../../../Apollo/Mutations";
+
 import validateEmail from "../../../../utils/validateEmail";
 import { group as group_route } from "../../../definitions";
 
-import { useForm } from "react-hook-form";
-import { Modal, Table, Button } from "../../../../Components/elements";
-
 import { share_description, icon_item } from "./Share.module.css";
-import classnames from "classnames";
-import moment from "moment";
 
 function ShareSetting({ group, connection, mutate, done }) {
   const { register, handleSubmit, formState } = useForm();
@@ -243,7 +246,16 @@ function SharedWithGroupList({ groups, connection, mutate, history }) {
 }
 
 function CreateNewGroup({ done, cancel, mutate }) {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, errors } = useForm({
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup
+          .string()
+          .email()
+          .required(),
+      })
+    ),
+  });
   const { isSubmitting } = formState;
 
   const onSubmit = async (data, event) => {
@@ -289,6 +301,10 @@ function CreateNewGroup({ done, cancel, mutate }) {
           ref={register({ required: true })}
           name="email"
         />
+        {errors && errors.email && (
+          <p style={{ color: "red" }}>must be a valid email address</p>
+        )}
+
         <div
           style={{
             marginTop: "5px",
