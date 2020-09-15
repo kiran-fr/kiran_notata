@@ -37,9 +37,9 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
 
   useEffect(() => {
     const { email } = s;
-    setValue(email);
+    setValue("email", email);
     // setValue(verified);
-  }, []);
+  }, [s, setValue]);
 
   const onSubmit = async (data, event) => {
     if (signinUser && SMS_MFA) {

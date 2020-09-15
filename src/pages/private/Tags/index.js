@@ -35,7 +35,7 @@ export default function Tags() {
     } else {
       getTags();
     }
-  }, [type]);
+  }, [getFunnels, getTags, type]);
 
   if (type === "funnels") {
     if (

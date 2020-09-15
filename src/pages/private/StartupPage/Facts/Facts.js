@@ -109,7 +109,7 @@ function InviteStartup({ creative, connectionId, mutate, loading }) {
 
   useEffect(() => {
     creative.sharedWithEmail && setValue("email", creative.sharedWithEmail);
-  }, []);
+  }, [creative.sharedWithEmail, setValue]);
 
   const shareUrl = `${window.location.protocol}//${window.location.host}/public/creative/${creative.id}&email=${creative.sharedWithEmail}`;
 
@@ -259,7 +259,7 @@ function CompanyName({ creative, name }) {
 
   useEffect(() => {
     name && setValue("input.name", name);
-  }, [name]);
+  }, [name, setValue]);
 
   const onSubmit = async (data, event) => {
     let variables = { id: creative.id, ...data };
@@ -481,7 +481,7 @@ export default function Facts({ history, match }) {
 
   useEffect(() => {
     creativeId && getData({ variables: { id: creativeId } });
-  }, []);
+  }, [creativeId, getData]);
 
   if (loading || creativeTemplateQuery.loading) {
     return <GhostLoader />;

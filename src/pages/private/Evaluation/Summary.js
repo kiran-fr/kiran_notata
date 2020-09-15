@@ -64,7 +64,7 @@ export default function Summary({ match, history }) {
         },
       });
     }
-  }, [connectionGetData]);
+  }, [connectionGetData, getData, match.params.evaluationId]);
 
   if (
     (!connectionGetData && connectionGetLoading) ||

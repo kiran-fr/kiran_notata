@@ -72,7 +72,7 @@ function QuestionNameAndDescription({ templateId, sectionId, question }) {
   useEffect(() => {
     setValue("input.name", name);
     setValue("input.description", description);
-  }, []);
+  }, [description, name, setValue]);
 
   const onSubmit = async (data, event) => {
     let variables = {

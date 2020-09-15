@@ -684,7 +684,7 @@ export default function Group({ match, history }) {
   const connectionsQuery = useQuery(connectionsGet);
   const userQuery = useQuery(userGet);
 
-  useEffect(() => getData({ variables: { id } }), []);
+  useEffect(() => getData({ variables: { id } }), [getData, id]);
 
   const hasAllData = groupQuery.data && connectionsQuery.data && userQuery.data;
   const error = groupQuery.error || connectionsQuery.error || userQuery.error;

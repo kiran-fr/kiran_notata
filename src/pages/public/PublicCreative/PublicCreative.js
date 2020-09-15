@@ -139,7 +139,7 @@ export function PublicCreative({ match }) {
       getCreative({ variables: { id } });
       getCreativeTemplate();
     }
-  }, []);
+  }, [getCreative, getCreativeTemplate, id]);
 
   const error = creativeQuery.error || creativeTemplateQuery.error;
   const loading = creativeQuery.loading || creativeTemplateQuery.loading;

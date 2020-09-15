@@ -65,7 +65,7 @@ const config = {
   region: awsconfig.region,
   auth: {
     type: AUTH_TYPE.AWS_IAM,
-    credentials: Auth.currentCredentials,
+    credentials: (...params) => Auth.currentCredentials(...params),
   },
   disableOffline: true,
 };

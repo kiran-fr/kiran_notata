@@ -37,7 +37,7 @@ export default function Evaluation({ match, history }) {
         });
       }
     }
-  }, [connection.evaluations]);
+  }, [connection.evaluations, evaluationId, getEvaluationTemplateData]);
 
   const evaluationTemplate =
     (evaluationTemplateQuery.data || {}).evaluationTemplateGet || {};

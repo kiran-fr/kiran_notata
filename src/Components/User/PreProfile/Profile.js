@@ -35,7 +35,7 @@ export default function PreProfile({ history }) {
         }
       });
     });
-  }, []);
+  }, [setValue]);
 
   const onSubmit = async (data, event) => {
     let { input } = data;

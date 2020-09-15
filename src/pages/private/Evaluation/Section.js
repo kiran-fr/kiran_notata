@@ -35,7 +35,7 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
         variables: { id: evaluation.templateId },
       });
     }
-  }, [connection.evaluations]);
+  }, [connection.evaluations, evaluationId, getEvaluationTemplateData]);
   const evaluationTemplate =
     (evaluationTemplateQuery.data || {}).evaluationTemplateGet || {};
 

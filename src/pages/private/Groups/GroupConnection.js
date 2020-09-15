@@ -335,7 +335,7 @@ export default function GroupConnection({ match, history }) {
 
   useEffect(() => {
     getData({ variables: { id } });
-  }, []);
+  }, [getData, id]);
 
   const loading = groupGetQuery.loading || creativeTemplateQuery.loading;
   const error = groupGetQuery.error || creativeTemplateQuery.error;

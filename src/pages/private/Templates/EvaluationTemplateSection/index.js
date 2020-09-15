@@ -133,7 +133,7 @@ export default function EvaluationTemplateSection({ match }) {
     if (id !== "new") {
       getData({ variables: { id } });
     }
-  }, []);
+  }, [getData, id]);
 
   if (error) console.log("error", error);
   if (error) return <div>We are updating </div>;

@@ -142,7 +142,7 @@ export default function Profile() {
         setValue("input.MFA", MFA);
       });
     });
-  }, []);
+  }, [data.userGet, setValue]);
 
   const onSubmit = async (data, event) => {
     let { input } = data;

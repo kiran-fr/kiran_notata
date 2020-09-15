@@ -196,7 +196,7 @@ export default function EvaluationTemplate({ match, history }) {
     if (id && id !== "new") {
       getData({ variables: { id } });
     }
-  }, []);
+  }, [getData, id]);
 
   if (error) return <div>We are updating </div>;
   if (loading) {
