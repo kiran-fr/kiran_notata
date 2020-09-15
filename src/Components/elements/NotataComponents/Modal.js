@@ -15,16 +15,16 @@ import {
 import { Button } from "../";
 
 export const Modal = ({ close, submit, title, disableFoot, ...children }) => {
-  function downHandler({ key }) {
-    key === "Escape" && close();
-  }
-
   useEffect(() => {
+    function downHandler({ key }) {
+      key === "Escape" && close();
+    }
+
     window.addEventListener("keydown", downHandler);
     return () => {
       window.removeEventListener("keydown", downHandler);
     };
-  }, []);
+  }, [close]);
 
   return (
     <div className={container}>

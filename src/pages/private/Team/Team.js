@@ -148,6 +148,10 @@ function PendingInvitations({ accountInvitations }) {
       width: 20,
       className: delete_bucket,
       render: email => {
+        if (loading) {
+          return <i className="fa fa-spinner fa-spin" />;
+        }
+
         return (
           <i
             className="fal fa-trash-alt"

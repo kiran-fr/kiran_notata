@@ -335,7 +335,7 @@ export default function GroupConnection({ match, history }) {
 
   useEffect(() => {
     getData({ variables: { id } });
-  }, []);
+  }, [getData, id]);
 
   const loading = groupGetQuery.loading || creativeTemplateQuery.loading;
   const error = groupGetQuery.error || creativeTemplateQuery.error;
@@ -420,7 +420,7 @@ export default function GroupConnection({ match, history }) {
         {/*SUBJECTIVE SCORE*/}
         {with_subjectiveScore && (
           <Card label="Subjective score" style={{ paddingBottom: "20px" }}>
-            {connection.subjectiveScores.map((subjectiveScore, i) => {
+            {(connection.subjectiveScores || []).map((subjectiveScore, i) => {
               return (
                 <div key={i} className={subjectiveScore_container}>
                   <div className={subjectiveScore_name}>

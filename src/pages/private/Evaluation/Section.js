@@ -35,7 +35,7 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
         variables: { id: evaluation.templateId },
       });
     }
-  }, [connection.evaluations]);
+  }, [connection.evaluations, evaluationId, getEvaluationTemplateData]);
   const evaluationTemplate =
     (evaluationTemplateQuery.data || {}).evaluationTemplateGet || {};
 
@@ -175,6 +175,12 @@ export default function Section({ match, history }) {
   const evaluation = connection.evaluations.find(
     ({ id }) => id === evaluationId
   ) || { answers: [] };
+
+  // for (let q of evaluationTemplateSection.questions) {
+  //   let hasAnswered = evaluation.answers.some(
+  //     ({ questionId }) => questionId === q.id
+  //   );
+  // }
 
   return (
     <div>

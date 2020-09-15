@@ -37,6 +37,14 @@ function EvaluationList({ evaluations, connectionId, templates }) {
           >
             {/*HEADER*/}
             <div className={header_style}>
+              <div className={classnames(score_style)}>
+                <span>
+                  By {evaluation.createdByUser.given_name}{" "}
+                  {evaluation.createdByUser.family_name} @{" "}
+                </span>
+                <span>{moment(evaluation.createdAt).format("ll")}</span>
+              </div>
+
               <div className={name_style}>
                 {(template || {}).name}{" "}
                 <Link
@@ -44,9 +52,6 @@ function EvaluationList({ evaluations, connectionId, templates }) {
                 >
                   (edit/view)
                 </Link>
-              </div>
-              <div className={classnames(score_style, "desktop_only")}>
-                {moment(evaluation.createdAt).format("ll")}
               </div>
             </div>
 
@@ -95,7 +100,7 @@ export function EvaluationBox({ connection, user, history }) {
   const [currentLoading, setCurrentLoading] = useState("");
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
   let templates = [];
-  if (!evaluationTemplatesQuery.loading) {
+  if (!evaluationTemplatesQuery.loading && evaluationTemplatesQuery.data) {
     templates =
       evaluationTemplatesQuery.data.accountGet.evaluationTemplates || [];
   }
