@@ -60,7 +60,7 @@ const CreateNewGroup = ({ setDone, mutate }) => {
 export default function Groups({ history }) {
   const [showModal, setShowModal] = useState();
 
-  const [mutate] = useMutation(groupPut);
+  const [mutate, { loading: groupPutLoading }] = useMutation(groupPut);
   const { data, loading, error } = useQuery(groupsGet);
 
   const userQuery = useQuery(userGet);
@@ -81,6 +81,11 @@ export default function Groups({ history }) {
       render: group => {
         let isOwner = group.createdBy === user.cognitoIdentityId;
         if (!isOwner) return <span />;
+
+        if (groupPutLoading) {
+          return <i className="fa fa-spinner fa-spin" />;
+        }
+
         return (
           <i
             className="fal fa-trash-alt"

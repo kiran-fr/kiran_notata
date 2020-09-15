@@ -125,7 +125,9 @@ function ShareSetting({ group, connection, mutate, done }) {
   );
 }
 
-function SharedWithGroupList({ groups, connection, mutate, history }) {
+function SharedWithGroupList({ groups, connection, history }) {
+  const [mutate, { loading }] = useMutation(groupPut);
+
   const columns = [
     {
       title: "",
@@ -133,6 +135,10 @@ function SharedWithGroupList({ groups, connection, mutate, history }) {
       width: 20,
       className: "delete_bucket",
       render: group => {
+        if (loading) {
+          return <i className="fa fa-spinner fa-spin" />;
+        }
+
         return (
           <i
             className="fal fa-trash-alt"
