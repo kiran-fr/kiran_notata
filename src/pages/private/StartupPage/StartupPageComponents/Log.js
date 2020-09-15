@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
@@ -23,19 +23,13 @@ function LogInput({ user, connection }) {
   const [mutate] = useMutation(logPut);
   const { register, handleSubmit } = useForm();
 
-  function downHandler({ key }) {
-    if (key === "Enter") {
-      console.log("submit");
-      handleSubmit(onSubmit);
+  function downHandler(event) {
+    const { key, shiftKey } = event;
+
+    if (shiftKey && key === "Enter") {
+      handleSubmit(onSubmit)(event);
     }
   }
-
-  useEffect(() => {
-    window.addEventListener("keydown", downHandler);
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-  }, []);
 
   const onSubmit = async (data, event) => {
     if (data.val.length < 1) return;
@@ -100,7 +94,11 @@ function LogInput({ user, connection }) {
       },
     });
 
-    event.target.reset();
+    if (event.type === "submit") {
+      event.target.reset();
+    } else {
+      event.target.value = "";
+    }
   };
 
   return (
@@ -111,6 +109,7 @@ function LogInput({ user, connection }) {
           rows="4"
           name="val"
           ref={register({ required: true })}
+          onKeyDown={downHandler}
         />
 
         <div className="comment_sumbit">
