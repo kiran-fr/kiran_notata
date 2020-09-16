@@ -15,7 +15,7 @@ import { Share } from "./StartupPageComponents/Share";
 import { Facts } from "./StartupPageComponents/Facts";
 import { Tags } from "./StartupPageComponents/Tags";
 
-// import { Funnel } from "./StartupPageComponents/Funnel";
+import { Funnel } from "./StartupPageComponents/Funnel";
 import { userGet, connectionGet } from "../../../Apollo/Queries";
 import { dashboard, startup_page } from "../../definitions";
 
@@ -91,11 +91,9 @@ export default function StartupPage({ match, history }) {
         </Card>
 
         {/*FUNNEL*/}
-        {/*
-          <Card label="FUNNEL" style={{ paddingBottom: "20px" }}>
-            <Funnel connection={connection} user={user} match={match} />
-          </Card>
-        */}
+        {/*<Card label="FUNNEL" style={{ paddingBottom: "20px" }}>*/}
+        <Funnel connection={connection} user={user} match={match} />
+        {/*</Card>*/}
 
         {/*TAGS*/}
         <Card label="TAGS" style={{ paddingBottom: "20px" }}>

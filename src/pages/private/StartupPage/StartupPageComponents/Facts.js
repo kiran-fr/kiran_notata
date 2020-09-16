@@ -32,10 +32,8 @@ export function Facts({ connection, user, match, history }) {
           <div
             style={{ padding: "20px 0px", color: "var(--color-gray-medium)" }}
           >
-            You can add tags to make it easier to filter through your startups.
-            Tags are also used to see the bigger picture in reports. We
-            recommend that you spend some time getting your tags right, as it
-            will make it easier for you to navigate in your data.
+            Facts is the part that you share with the startups. You can invite a
+            startup to fill out this part .
           </div>
         </div>
       )}

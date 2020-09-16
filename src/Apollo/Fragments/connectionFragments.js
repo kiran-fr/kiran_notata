@@ -8,6 +8,7 @@ export default gql`
     createdAt
     updatedAt
     createdBy
+    starred
     createdByUser {
       email
       given_name
@@ -24,11 +25,6 @@ export default gql`
         given_name
         family_name
       }
-    }
-    createdByUser {
-      email
-      given_name
-      family_name
     }
   }
 `;

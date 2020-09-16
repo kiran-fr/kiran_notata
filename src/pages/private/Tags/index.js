@@ -10,6 +10,7 @@ import { useEffect } from "react";
 
 export default function Tags() {
   const [type, setType] = useState("tags");
+
   const [
     getTags,
     {
@@ -19,6 +20,9 @@ export default function Tags() {
       called: tagGroupGetCalled,
     },
   ] = useLazyQuery(tagGroupGet);
+
+  console.log("tagGroupGetError", tagGroupGetError);
+
   const [
     getFunnels,
     {
@@ -28,6 +32,8 @@ export default function Tags() {
       called: funnelGroupGetCalled,
     },
   ] = useLazyQuery(funnelGroupGet);
+
+  console.log("funnelGroupGetError", funnelGroupGetError);
 
   useEffect(() => {
     if (type === "funnels") {

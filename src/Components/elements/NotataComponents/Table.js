@@ -23,6 +23,7 @@ export const Table = ({
   loading,
   diableHead,
   noMargin,
+  paginateAt,
 }) => {
   return (
     <table
@@ -64,28 +65,30 @@ export const Table = ({
 
       <tbody>
         {dataSource.map((d, i) => (
-          <tr key={i}>
-            {columns.map((c, ii) => (
-              <td
-                key={`${i}-${ii}`}
-                style={{ width: c.width ? `${c.width}px` : "auto" }}
-                className={classnames(
-                  c.responsive && responsive_map[c.responsive]
-                )}
-              >
-                <div
+          <tr key={`t-${i}`}>
+            {columns.map((c, ii) => {
+              return (
+                <td
+                  key={`${i}-${ii}`}
+                  style={{ width: c.width ? `${c.width}px` : "auto" }}
                   className={classnames(
-                    c.className && c.className,
-                    cell_content
+                    c.responsive && responsive_map[c.responsive]
                   )}
-                  style={{
-                    textAlign: c.centered ? "center" : "left",
-                  }}
                 >
-                  {c.render(c.dataIndex ? d[c.dataIndex] : d)}
-                </div>
-              </td>
-            ))}
+                  <div
+                    className={classnames(
+                      c.className && c.className,
+                      cell_content
+                    )}
+                    style={{
+                      textAlign: c.centered ? "center" : "left",
+                    }}
+                  >
+                    {c.render(c.dataIndex ? d[c.dataIndex] : d)}
+                  </div>
+                </td>
+              );
+            })}
           </tr>
         ))}
       </tbody>
