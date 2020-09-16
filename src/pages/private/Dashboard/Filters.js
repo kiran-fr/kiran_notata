@@ -2,8 +2,7 @@ import React, { useState } from "react";
 
 import TagOverview from "../StartupPage/StartupPageComponents/TagOverview";
 import TagPage from "../StartupPage/StartupPageComponents/TagPage";
-
-import { Tag } from "../../../Components/elements/";
+import { Tag } from "../../../Components/elements";
 
 import {
   container,
@@ -20,8 +19,6 @@ import {
 export default function Filters({ filters, setFilters, tagGroups }) {
   const [show, setShow] = useState(false);
   const [showGroup, setShowGroup] = useState(null);
-
-  console.log("tagGroups", tagGroups);
 
   if (!tagGroups) return <span />;
 

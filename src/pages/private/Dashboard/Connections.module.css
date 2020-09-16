@@ -46,3 +46,15 @@
 .pre_space {
   white-space: pre;
 }
+
+.max_width_200 {
+  max-width: 200px;
+}
+
+.funnel_tag {
+  background: #dff3f1;
+}
+
+.funnel_tag i {
+  color: white;
+}

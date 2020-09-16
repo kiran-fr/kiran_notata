@@ -1,34 +1,30 @@
 import gql from "graphql-tag";
 
-import { 
-  tagFragments,
-  funnelTagFragments,
-  creativeFragments,
-  connectionFragments
-} from '../Fragments';
-
 export default gql`
   query connectionsGet($filters: ConnectionFilters) {
+    connectionsGet(filters: $filters) {
+      id
+      name
+      createdAt
+      updatedAt
+      starred
+      subjectiveScores {
+        score
+      }
 
-    connectionsGet(filters: $filters) {        
-      ...connectionFields
-      
       creative {
-        ...creativeFields
+        name
       }
 
       tags {
-        ...tagFields
+        id
+        name
       }
 
       funnelTags {
-        ...funnelTagFields
+        name
+        index
       }
-
     }
   }
-  ${tagFragments}
-  ${funnelTagFragments}
-  ${creativeFragments}
-  ${connectionFragments}
-`
+`;

@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import { AUTH_TYPE } from "aws-appsync";
 import Amplify, { Auth } from "aws-amplify";
+
 import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
 
 import { createAuthLink } from "aws-appsync-auth-link";
@@ -50,15 +51,13 @@ Amplify.configure({
   },
 });
 
-// const devURL = "https://gwv2lgcqinetjg3ariygacjv64.appsync-api.eu-west-1.amazonaws.com/graphql";
-// const prodURL = "https://kiyq3umvb5h2vc7w2cmjxmdneq.appsync-api.eu-west-1.amazonaws.com/graphql";
-// let appsyncUrl = STAGE === 'dev' ? devURL : prodURL;
-// const dev2URL =
-//   "https://qisjxuphbjaihfdty2yc7wwjam.appsync-api.eu-west-1.amazonaws.com/graphql";
-const prodtest =
-  "https://pm4namovdzgpboqy5s2vgafzjy.appsync-api.eu-west-1.amazonaws.com/graphql";
-// let appsyncUrl = dev2URL;
-let appsyncUrl = prodtest;
+const dev_URL_id = "soaim5drvjdfplwdjyllz2ru6i";
+const dev2_URL_id = "qisjxuphbjaihfdty2yc7wwjam";
+const prodtest_URL_id = "pm4namovdzgpboqy5s2vgafzjy";
+
+const appsync_URL_id = dev_URL_id;
+
+const appsyncUrl = `https://${appsync_URL_id}.appsync-api.eu-west-1.amazonaws.com/graphql`;
 
 const config = {
   url: appsyncUrl,
