@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import {
   frontpage,
   dashboard,
-  profile,
-  tags,
+  // profile,
+  // tags,
   group,
-  team,
+  // team,
   signOut,
-  templates,
+  // templates,
+  settings,
 } from "../../pages/definitions";
 
 // STYLE
@@ -33,78 +34,61 @@ const menuItems = [
     iconClass: "fal fa-home",
     link: dashboard,
   },
-  // {
-  //   label: "Reports",
-  //   iconClass: "fal fa-chart-bar",
-  //   link: report,
-  // },
-  // {
-  //   label: "Activities",
-  //   iconClass: "fal fa-tasks",
-  //   link: activities,
-  //   notifications: 0,
-  // },
-  // {
-  //   label: "Inbox",
-  //   iconClass: "fal fa-inbox",
-  //   link: inbox,
-  //   notifications: 0,
-  // },
-
   {
-    label: "Templates",
-    iconClass: "fal fa-copy",
-    link: templates,
-  },
-  {
-    label: "Profile",
-    iconClass: "fal fa-user",
-    link: profile,
-  },
-  {
-    label: "Sharing",
+    label: "Groups",
     iconClass: "fal fa-share-alt",
     link: group,
   },
-];
 
-const moreMenuItems = [
-  // {
-  //   label: "Templates",
-  //   iconClass: "fal fa-copy",
-  //   link: templates,
-  // },
   {
-    label: "Tags",
-    iconClass: "fal fa-tag",
-    link: tags,
+    label: "Settings",
+    iconClass: "fal fa-cog",
+    link: settings,
   },
-  // {
-  //   label: "Profile",
-  //   iconClass: "fal fa-user",
-  //   link: profile,
-  // },
-  {
-    label: "Team",
-    iconClass: "fal fa-users",
-    link: team,
-  },
-  // {
-  //   label: "Groups",
-  //   iconClass: "fal fa-share-alt",
-  //   link: group,
-  // },
-  // {
-  //   label: "Settings",
-  //   iconClass: "fal fa-cog",
-  //   link: settings,
-  // },
   {
     label: "Log out",
     iconClass: "fal fa-sign-out-alt",
     link: signOut,
   },
 ];
+
+// const moreMenuItems = [
+//   // {
+//   //   label: "Templates",
+//   //   iconClass: "fal fa-copy",
+//   //   link: templates,
+//   // },
+//   {
+//     label: "Tags",
+//     iconClass: "fal fa-tag",
+//     link: tags,
+//   },
+//   // {
+//   //   label: "Profile",
+//   //   iconClass: "fal fa-user",
+//   //   link: profile,
+//   // },
+//   {
+//     label: "Team",
+//     iconClass: "fal fa-users",
+//     link: team,
+//   },
+//   // {
+//   //   label: "Groups",
+//   //   iconClass: "fal fa-share-alt",
+//   //   link: group,
+//   // },
+//   // {
+//   //   label: "Settings",
+//   //   iconClass: "fal fa-cog",
+//   //   link: settings,
+//   // },
+//   {
+//     label: "Log out",
+//     iconClass: "fal fa-sign-out-alt",
+//     link: signOut,
+//   },
+// ];
 
 export const DashboardHeader = ({ history, location }) => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -123,42 +107,46 @@ export const DashboardHeader = ({ history, location }) => {
           <MenuIconItem key={i} {...item} location={location} />
         ))}
 
-        <div className={icon_dropdown_container}>
-          <MenuIconItem
-            label="More"
-            iconClass="fal fa-bars"
-            onClick={() => setOpenMenu(true)}
-            location={location}
-          />
-
-          {openMenu && (
-            <div className={drop_down}>
-              <div
-                className={drop_down_ghost}
-                onClick={() => setOpenMenu(false)}
+        {/*
+            <div className={icon_dropdown_container}>
+              <MenuIconItem
+                label="More"
+                iconClass="fal fa-bars"
+                onClick={() => setOpenMenu(true)}
+                location={location}
               />
 
-              <div className={drop_down_list}>
-                <div
-                  className={drop_down_close}
-                  onClick={() => setOpenMenu(false)}
-                >
-                  <i className="fal fa-times" />
-                </div>
-
-                {moreMenuItems.map((item, i) => (
-                  <MenuIconItem
-                    key={`m-${i}`}
-                    horizontal
-                    {...item}
+              {openMenu && (
+                <div className={drop_down}>
+                  <div
+                    className={drop_down_ghost}
                     onClick={() => setOpenMenu(false)}
-                    location={location}
                   />
-                ))}
-              </div>
+
+                  <div className={drop_down_list}>
+                    <div
+                      className={drop_down_close}
+                      onClick={() => setOpenMenu(false)}
+                    >
+                      <i className="fal fa-times" />
+                    </div>
+
+                    {
+                      moreMenuItems.map((item, i) => (
+                        <MenuIconItem
+                          key={`m-${i}`}
+                          horizontal
+                          {...item}
+                          onClick={() => setOpenMenu(false)}
+                          location={location}
+                        />
+                      ))
+                    }
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          */}
       </div>
     </div>
   );

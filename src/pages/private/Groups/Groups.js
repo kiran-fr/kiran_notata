@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
 
-import { groupsGet, userGet } from "../../../Apollo/Queries";
+import {
+  groupsGet,
+  userGet,
+  groupGetListOfStartups,
+} from "../../../Apollo/Queries";
 import { groupPut } from "../../../Apollo/Mutations";
 
 import { group } from "../../definitions";
@@ -57,6 +61,40 @@ const CreateNewGroup = ({ setDone, mutate }) => {
   );
 };
 
+const ListAll = ({ user }) => {
+  const { data, loading, error } = useQuery(groupGetListOfStartups);
+  if (loading || error) return <span />;
+
+  let startups = data.groupGetListOfStartups;
+  startups = startups.filter(({ sharedBy }) => sharedBy !== user.email);
+
+  const columns = [
+    {
+      title: "Name",
+      key: "name",
+      render: item => {
+        return (
+          <span>
+            <div>{item.connection.creative.name}</div>
+            <div style={{ opacity: 0.5, fontSize: "12px" }}>
+              {<>{item.sharedBy} - </>}
+              {item.groupName}
+            </div>
+          </span>
+        );
+      },
+    },
+  ];
+  return (
+    <Table
+      dataSource={startups}
+      columns={columns}
+      // loading={loading.toString()}
+      diableHead={true}
+    />
+  );
+};
+
 export default function Groups({ history }) {
   const [showModal, setShowModal] = useState();
 
@@ -66,7 +104,10 @@ export default function Groups({ history }) {
   const userQuery = useQuery(userGet);
   let user = (userQuery.data || {}).userGet || {};
 
-  if (error) return <div>We are updating </div>;
+  if (error) {
+    console.log("error", error);
+    return <div>We are updating </div>;
+  }
 
   if (!data && loading) return <GhostLoader />;
 
@@ -79,8 +120,11 @@ export default function Groups({ history }) {
       width: 20,
       className: "delete_bucket",
       render: group => {
-        let isOwner = group.createdBy === user.cognitoIdentityId;
-        if (!isOwner) return <span />;
+        let isAdmin = group.members.some(
+          ({ email, role }) => email === user.email && role === "admin"
+        );
+
+        if (!isAdmin) return <span />;
 
         if (groupPutLoading) {
           return <i className="fa fa-spinner fa-spin" />;
@@ -120,13 +164,31 @@ export default function Groups({ history }) {
       render: id => {
         let gr = groups.find(g => g.id === id) || {};
         let { name, members, startups } = gr;
-        let isOwner = gr.createdBy === user.cognitoIdentityId;
+
+        let isAdmin = gr.members.some(
+          ({ email, role }) => email === user.email && role === "admin"
+        );
+
+        let settings = gr.settings || {};
+        let startupLength = [
+          ...new Set(startups.map(({ creativeId }) => creativeId)),
+        ].length;
+        let member = members.find(({ email }) => email === user.email);
+        let { latestActivity } = member || {};
+
         return (
           <span>
-            <div>{name}</div>
+            {(!latestActivity && (
+              <div style={{ fontWeight: "var(--font-weight-bold)" }}>
+                {name}
+              </div>
+            )) || <div>{name}</div>}
+
             <div style={{ opacity: 0.5, fontSize: "12px" }}>
-              {isOwner && <>{(members || []).length} members - </>}
-              {(startups || []).length} startups
+              {(isAdmin || settings.showUsers) && (
+                <>{(members || []).length} members - </>
+              )}
+              {startupLength} startups
             </div>
           </span>
         );
@@ -159,14 +221,22 @@ export default function Groups({ history }) {
       <BreadCrumbs
         list={[
           {
-            val: "All sharings",
+            val: "All Groups",
             link: group,
           },
         ]}
       />
       <Content maxWidth={600}>
-        <h1>Groups</h1>
+        {/*
+            <h1>Inbox</h1>
+            <Card style={{paddingTop: "5px"}}>
+              <ListAll
+                user={user}
+              />
+            </Card>
+          */}
 
+        <h1>Groups</h1>
         {!!groups.length && (
           <Card style={{ paddingTop: "5px" }}>
             <Table
@@ -209,7 +279,7 @@ export default function Groups({ history }) {
 
         {showModal && (
           <Modal
-            title="New Evaluation Template"
+            title="New Group"
             close={() => setShowModal(false)}
             disableFoot={true}
           >

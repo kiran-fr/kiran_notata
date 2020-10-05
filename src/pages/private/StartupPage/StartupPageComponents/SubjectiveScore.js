@@ -2,6 +2,7 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 
 import { connectionSubjectiveScorePut } from "../../../../Apollo/Mutations";
+import { group as group_route } from "../../../definitions";
 
 import {
   subjective_score_name,
@@ -12,19 +13,52 @@ import {
   set_score_container,
   set_score_each,
   active_score,
+  from_group,
 } from "./SubjectiveScore.module.css";
 import classnames from "classnames";
 
-export function SubjectiveScore({ connection, user }) {
+export function SubjectiveScore({ connection, user, history }) {
+  // console.log('connection.subjectiveScores', connection.subjectiveScores)
+  // console.log('user', user)
+
   const [mutate] = useMutation(connectionSubjectiveScorePut);
+
   let subjectiveScores = connection.subjectiveScores || [];
 
+  // console.log('subjectiveScores', subjectiveScores)
+
+  let otherScores = [];
+  for (let shared of connection.sharedWithMe) {
+    if (shared.connection) {
+      let arr = shared.connection.subjectiveScores || [];
+      arr = arr.map(it => ({
+        ...it,
+        ref: {
+          name: shared.groupName,
+          id: shared.groupId,
+        },
+      }));
+      otherScores = otherScores.concat(arr);
+    }
+  }
+
+  let allScores = subjectiveScores.concat(otherScores);
+
+  allScores = allScores.filter(({ createdByUser }) => createdByUser);
+
+  let dups = {};
+  allScores = allScores.filter(s => {
+    if (dups[s.createdByUser.email]) return false;
+    dups[s.createdByUser.email] = true;
+    return true;
+  });
+
   let averageScore;
-  if (subjectiveScores.length) {
-    let { score: ttl } = subjectiveScores.reduce((a, b) => ({
+  if (allScores.length) {
+    let { score: ttl } = allScores.reduce((a, b) => ({
       score: a.score + b.score,
     }));
-    averageScore = (ttl / subjectiveScores.length).toFixed(1);
+    averageScore = (ttl / allScores.length).toFixed(1);
   }
 
   let yourScore = (
@@ -33,22 +67,33 @@ export function SubjectiveScore({ connection, user }) {
 
   return (
     <div>
-      {subjectiveScores.length > 1 && (
+      {allScores.length > 1 && (
         <>
           <div className={subjective_score_average}>
             <div className={subjective_score_name}>
-              Average subjective score (of {subjectiveScores.length})
+              Average subjective score (of {allScores.length})
             </div>
             <div className={subjective_score_val}>{averageScore}</div>
           </div>
 
           <div className={subjective_score_each_container}>
-            {subjectiveScores.map((ss, i) => (
+            {allScores.map((ss, i) => (
               <div key={`ss-${i}`} className={subjective_score_each}>
                 <div className={subjective_score_name}>
                   {ss.createdByUser.given_name} {ss.createdByUser.family_name}
                   {ss.createdBy === user.cognitoIdentityId && (
                     <span style={{ opacity: 0.4 }}> (you)</span>
+                  )}
+                  {ss.ref && (
+                    <div
+                      className={from_group}
+                      onClick={() => {
+                        let path = `${group_route}/${ss.ref.id}`;
+                        history.push(path);
+                      }}
+                    >
+                      From group: <span>{ss.ref.name}</span>
+                    </div>
                   )}
                 </div>
                 <div className={subjective_score_val}>{ss.score}</div>

@@ -18,11 +18,17 @@ import {
   verify_title,
   verified_phone_number,
 } from "./Profile.module.css";
-// import TeamManagementComp from "./TeamManagement";
 
 import { omit } from "lodash";
 
-import { Content, Card, Button } from "../../../Components/elements";
+import {
+  Content,
+  Card,
+  Button,
+  BreadCrumbs,
+} from "../../../Components/elements";
+
+import { settings, profile } from "../../../pages/definitions";
 
 function VerifyPhoneNumberComp({ phoneVerified }) {
   const [resend, setResend] = useState(false);
@@ -168,108 +174,121 @@ export default function Profile() {
   };
 
   const values = getValues();
-  console.log("values", values);
 
   return (
-    <Content maxWidth={600}>
-      <h1>Profile</h1>
+    <>
+      <BreadCrumbs
+        list={[
+          {
+            val: "Settings",
+            link: settings,
+          },
+          {
+            val: "Profile",
+            link: profile,
+          },
+        ]}
+      />
+      <Content maxWidth={600}>
+        <h1>Profile</h1>
 
-      {hasPhoneNumber && !verifiedPhoneNumber && (
+        {hasPhoneNumber && !verifiedPhoneNumber && (
+          <Card>
+            <VerifyPhoneNumberComp
+              phoneVerified={() => {
+                setVerifiedPhoneNumber(true);
+              }}
+            />
+          </Card>
+        )}
+
         <Card>
-          <VerifyPhoneNumberComp
-            phoneVerified={() => {
-              setVerifiedPhoneNumber(true);
-            }}
-          />
-        </Card>
-      )}
-
-      <Card>
-        <form
-          className="notata_form"
-          onSubmit={handleSubmit(onSubmit)}
-          style={{ marginBottom: "20px" }}
-        >
-          <label for="input.given_name">Given name</label>
-          <input
-            type="text"
-            placeholder={"Given name"}
-            autoComplete="off"
-            ref={register({ required: true })}
-            id="input.given_name"
-            name="input.given_name"
-          />
-
-          <label for="input.family_name">Family name</label>
-          <input
-            type="text"
-            placeholder={"Family name"}
-            autoComplete="off"
-            ref={register({ required: true })}
-            id="input.family_name"
-            name="input.family_name"
-          />
-
-          <label for="input.company">Company</label>
-          <input
-            type="text"
-            placeholder={"Company"}
-            autoComplete="off"
-            ref={register}
-            id="input.company"
-            name="input.company"
-          />
-
-          <label for="input.company">Email</label>
-          <input
-            type="text"
-            placeholder={"Email"}
-            autoComplete="off"
-            ref={register}
-            disabled
-            id="input.email"
-            name="input.email"
-          />
-
-          <label for="input.phone_number">Phone number</label>
-          <input
-            type="text"
-            placeholder={"Phone number"}
-            autoComplete="off"
-            ref={register}
-            id="input.phone_number"
-            name="input.phone_number"
-          />
-
-          {verifiedPhoneNumber && (
-            <>
-              <div className={verified_phone_number}>
-                phone number is verified
-              </div>
-              <div className="check_container">
-                <input
-                  type="checkbox"
-                  id="input.MFA"
-                  name="input.MFA"
-                  ref={register}
-                />
-                <label for="input.MFA">
-                  Enable SMS for two factor security when logging in.
-                </label>
-              </div>
-            </>
-          )}
-
-          <div
-            style={{
-              marginTop: "5px",
-              textAlign: "right",
-            }}
+          <form
+            className="notata_form"
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ marginBottom: "20px" }}
           >
-            <Button type="input" value="SAVE" loading={isSubmitting} />
-          </div>
-        </form>
-      </Card>
-    </Content>
+            <label for="input.given_name">Given name</label>
+            <input
+              type="text"
+              placeholder={"Given name"}
+              autoComplete="off"
+              ref={register({ required: true })}
+              id="input.given_name"
+              name="input.given_name"
+            />
+
+            <label for="input.family_name">Family name</label>
+            <input
+              type="text"
+              placeholder={"Family name"}
+              autoComplete="off"
+              ref={register({ required: true })}
+              id="input.family_name"
+              name="input.family_name"
+            />
+
+            <label for="input.company">Company</label>
+            <input
+              type="text"
+              placeholder={"Company"}
+              autoComplete="off"
+              ref={register}
+              id="input.company"
+              name="input.company"
+            />
+
+            <label for="input.company">Email</label>
+            <input
+              type="text"
+              placeholder={"Email"}
+              autoComplete="off"
+              ref={register}
+              disabled
+              id="input.email"
+              name="input.email"
+            />
+
+            <label for="input.phone_number">Phone number</label>
+            <input
+              type="text"
+              placeholder={"Phone number"}
+              autoComplete="off"
+              ref={register}
+              id="input.phone_number"
+              name="input.phone_number"
+            />
+
+            {verifiedPhoneNumber && (
+              <>
+                <div className={verified_phone_number}>
+                  phone number is verified
+                </div>
+                <div className="check_container">
+                  <input
+                    type="checkbox"
+                    id="input.MFA"
+                    name="input.MFA"
+                    ref={register}
+                  />
+                  <label for="input.MFA">
+                    Enable SMS for two factor security when logging in.
+                  </label>
+                </div>
+              </>
+            )}
+
+            <div
+              style={{
+                marginTop: "5px",
+                textAlign: "right",
+              }}
+            >
+              <Button type="input" value="SAVE" loading={isSubmitting} />
+            </div>
+          </form>
+        </Card>
+      </Content>
+    </>
   );
 }

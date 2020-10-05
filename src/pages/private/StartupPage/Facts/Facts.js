@@ -483,6 +483,8 @@ export default function Facts({ history, match }) {
     creativeId && getData({ variables: { id: creativeId } });
   }, [creativeId, getData]);
 
+  console.log("creativeTemplate", creativeTemplate);
+
   if (loading || creativeTemplateQuery.loading) {
     return <GhostLoader />;
   }

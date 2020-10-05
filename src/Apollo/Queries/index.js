@@ -18,3 +18,5 @@ export { default as publicCreativeTemplateGet } from "./publicCreativeTemplateGe
 
 export { default as tagGroupGet } from "./tagGroupGet";
 export { default as funnelGroupGet } from "./funnelGroupGet";
+export { default as groupGetListOfStartups } from "./groupGetListOfStartups";
+export { default as evaluationTemplateNamesGet } from "./evaluationTemplateNamesGet";

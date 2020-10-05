@@ -296,6 +296,7 @@ input[type="submit"] {
 }
 
 .form_p1 {
+  white-space: pre-wrap;
 }
 
 .form_h2 {
@@ -309,6 +310,7 @@ input[type="submit"] {
 .form_p2 {
   font-size: 15px;
   color: var(--color-gray-medium);
+  white-space: pre-wrap;
 }
 
 .comment_form form {

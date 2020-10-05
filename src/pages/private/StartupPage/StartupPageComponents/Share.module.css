@@ -12,3 +12,9 @@
   color: var(--color-gray-light);
   padding: 0px 5px;
 }
+
+.action_link {
+  color: var(--color-primary);
+  padding: 10px 0px;
+  cursor: pointer;
+}

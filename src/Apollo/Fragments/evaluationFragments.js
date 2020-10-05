@@ -22,5 +22,16 @@ export default gql`
       given_name
       family_name
     }
+    summary {
+      templateName
+      sections {
+        id
+        name
+        score
+        possibleScore
+      }
+      totalScore
+      possibleScore
+    }
   }
 `;

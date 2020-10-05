@@ -7,15 +7,34 @@ export default gql`
     groupsGet {
       ...groupFields
 
+      evaluationTemplates {
+        id
+        name
+        description
+        sections {
+          id
+          name
+        }
+      }
+
       startups {
         connectionId
+        creativeId
         sharedBy
-        createdAt
         createdAt
         comments
         evaluations
         subjective_score
         tags
+        seen
+
+        connection {
+          id
+          creative {
+            id
+            name
+          }
+        }
       }
     }
   }

@@ -22,11 +22,13 @@ const StandardButton = ({
   size,
   loading,
   onClick,
+  iconClass,
+  style,
   ...children
 }) => {
   onClick = onClick || console.log("click");
 
-  let withIconPadding = loading || type === "right_arrow";
+  let withIconPadding = loading || type === "right_arrow" || iconClass;
 
   const sizeClass =
     (size && size === "large" && large_button) ||
@@ -42,6 +44,7 @@ const StandardButton = ({
         withIconPadding && icon_padding,
         buttonStyle && buttonStyle === "secondary" && secondary_style
       )}
+      style={style || {}}
       onClick={onClick}
     >
       <div {...children} />
@@ -49,6 +52,12 @@ const StandardButton = ({
       {type === "right_arrow" && !loading && (
         <span className={chevron_icon}>
           <i className="fal fa-chevron-right" />
+        </span>
+      )}
+
+      {iconClass && !loading && (
+        <span className={loading_icon}>
+          <i className={iconClass} />
         </span>
       )}
 

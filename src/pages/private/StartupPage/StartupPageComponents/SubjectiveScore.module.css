@@ -70,6 +70,20 @@
   background-color: var(--color-primary);
 }
 
+.from_group {
+  color: var(--color-gray-medium);
+  font-size: 12px;
+  font-weight: var(--font-weight-regular);
+  top: -6px;
+  position: relative;
+  line-height: 1.1;
+}
+
+.from_group span {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
 @media screen and (max-width: 900px) {
   .set_score_each {
     width: 27px;

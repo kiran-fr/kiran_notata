@@ -9,10 +9,12 @@ import { publicCreativePut } from "../../../../Apollo/Mutations";
 export default function TextInputContainer({ question, section, creative }) {
   const [mutate, { loading }] = useMutation(publicCreativePut);
 
-  const delayedMutation = useCallback(
-    debounce(q => mutate(q), 1000),
-    []
-  );
+  // const delayedMutation = useCallback(
+  //   debounce(q => {
+  //     mutate(q)
+  //   }, 1000),
+  //   []
+  // );
 
   const answer = (creative.answers || []).find(
     ({ inputType, questionId }) =>
@@ -26,7 +28,7 @@ export default function TextInputContainer({ question, section, creative }) {
       placeholder="Say something..."
       disabled={loading}
       defaultValue={answer && answer.val}
-      onChange={event => {
+      onBlur={event => {
         const variables = {
           id: creative.id,
           input: {},
@@ -46,10 +48,36 @@ export default function TextInputContainer({ question, section, creative }) {
             val: event.target.value,
           };
         }
-        delayedMutation({
+
+        mutate({
           variables,
         });
       }}
+
+      // onChange={event => {
+      //   const variables = {
+      //     id: creative.id,
+      //     input: {},
+      //   };
+      //
+      //   if (answer) {
+      //     variables.input.answerUpdate = {
+      //       id: answer.id,
+      //       question: question.name,
+      //       val: event.target.value,
+      //     };
+      //   } else {
+      //     variables.input.answerNew = {
+      //       inputType: question.inputType,
+      //       questionId: question.id,
+      //       question: question.name,
+      //       val: event.target.value,
+      //     };
+      //   }
+      //   delayedMutation({
+      //     variables,
+      //   });
+      // }}
     />
   );
 }

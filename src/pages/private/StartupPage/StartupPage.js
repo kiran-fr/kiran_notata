@@ -1,6 +1,8 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import { Redirect } from "react-router-dom";
 import moment from "moment";
+import gql from "graphql-tag";
 
 import {
   Content,
@@ -16,12 +18,27 @@ import { Facts } from "./StartupPageComponents/Facts";
 import { Tags } from "./StartupPageComponents/Tags";
 
 import { Funnel } from "./StartupPageComponents/Funnel";
-import { userGet, connectionGet } from "../../../Apollo/Queries";
+import { userGet, connectionGet, groupsGet } from "../../../Apollo/Queries";
+
+import { connectionDelete } from "../../../Apollo/Mutations";
+
 import { dashboard, startup_page } from "../../definitions";
 
-import { header_comp, sub_header } from "./StartupPage.module.css";
+import { header_comp, sub_header, delete_link } from "./StartupPage.module.css";
 
 export default function StartupPage({ match, history }) {
+  const [connectionDeleteMutation, connectionDeleteRes] = useMutation(
+    connectionDelete
+  );
+
+  if (
+    connectionDeleteRes.called &&
+    connectionDeleteRes.data &&
+    !connectionDeleteRes.loading
+  ) {
+    history.push(dashboard);
+  }
+
   const {
     data: userGetData,
     loading: userGetLoading,
@@ -34,21 +51,49 @@ export default function StartupPage({ match, history }) {
     error: connectionGetError,
   } = useQuery(connectionGet, { variables: { id: match.params.id } });
 
+  const {
+    data: groupsGetData,
+    loading: groupsGetLoading,
+    error: groupsGetError,
+  } = useQuery(groupsGet);
+
   if (
     (!userGetData && userGetLoading) ||
-    (!connectionGetData && connectionGetLoading)
+    (!connectionGetData && connectionGetLoading) ||
+    (!groupsGetData && groupsGetLoading)
   ) {
     return <GhostLoader />;
   }
 
-  if (userGetError || connectionGetError) {
+  if (userGetError || connectionGetError || groupsGetError) {
     console.log(userGetError);
     console.log(connectionGetError);
+    console.log(groupsGetError);
     return <div>We are updating</div>;
   }
 
   const user = userGetData.userGet;
   const connection = connectionGetData.connectionGet;
+  const groups = groupsGetData.groupsGet;
+
+  let evaluationsCount = connection.evaluations.length;
+  for (let shared of connection.sharedWithMe) {
+    if (shared.connection) {
+      evaluationsCount += (shared.connection.evaluations || []).length;
+    }
+  }
+
+  let sharedWithGroups =
+    groups.filter(g =>
+      g.startups.some(s => s.connectionId === connection.id)
+    ) || [];
+
+  let groupMembers = {};
+  for (let s of sharedWithGroups) {
+    for (let m of s.members) {
+      groupMembers[m.email] = true;
+    }
+  }
 
   return (
     <>
@@ -69,15 +114,18 @@ export default function StartupPage({ match, history }) {
         {/*HEADER*/}
         <Card>
           <div className={header_comp}>{connection.creative.name}</div>
-          <div className={sub_header}>
-            Created by{" "}
-            <b>
-              {connection.createdByUser.given_name}{" "}
-              {connection.createdByUser.family_name}
-            </b>{" "}
-            on {moment(connection.createdAt).format("lll")}. Last updated{" "}
-            {moment(connection.updatedAt).format("lll")}.
-          </div>
+
+          {
+            <div className={sub_header}>
+              <div>
+                Last updated{" "}
+                <span style={{ color: "var(--color-primary)" }}>
+                  {moment(connection.updatedAt).fromNow()}
+                </span>
+                .
+              </div>
+            </div>
+          }
         </Card>
 
         {/*FACTS*/}
@@ -102,26 +150,56 @@ export default function StartupPage({ match, history }) {
 
         {/*SUBJECTIVE SCORE*/}
         <Card label="SUBJECTIVE SCORE">
-          <SubjectiveScore connection={connection} user={user} />
-        </Card>
-
-        <Card label="EVALUATIONS">
-          <EvaluationBox
+          <SubjectiveScore
             connection={connection}
             user={user}
             history={history}
           />
         </Card>
 
+        <Card label="EVALUATIONS" style={{ paddingTop: "0px" }}>
+          <EvaluationBox
+            connection={connection}
+            groups={groups}
+            user={user}
+            history={history}
+          />
+        </Card>
+
         {/*GROUPS*/}
-        <Card label="SHARE">
-          <Share connection={connection} user={user} history={history} />
+        <Card label="GROUPS">
+          <Share
+            connection={connection}
+            groups={groups}
+            user={user}
+            history={history}
+          />
         </Card>
 
         {/*LOG/COMMENTS*/}
         <Card label="LOG/COMMENTS">
           <Log connection={connection} user={user} />
         </Card>
+
+        <div
+          className={delete_link}
+          onClick={() => {
+            if (
+              window.confirm(
+                `Are you sure you want to this startup permanently?`
+              )
+            ) {
+              /* Do nothing */
+            } else {
+              return;
+            }
+            connectionDeleteMutation({ variables: { id: connection.id } });
+          }}
+        >
+          {(connectionDeleteRes.loading && <span>... deleting</span>) || (
+            <span>delete permanently</span>
+          )}
+        </div>
       </Content>
     </>
   );

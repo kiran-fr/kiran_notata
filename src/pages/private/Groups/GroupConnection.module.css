@@ -59,6 +59,7 @@
 
 .facts_answer {
   color: var(--color-primary);
+  white-space: pre-wrap;
 }
 
 .facts_answer_link {
@@ -89,6 +90,7 @@
   border-radius: 7px;
   margin-bottom: 5px;
   margin-top: 5px;
+  white-space: pre-wrap;
 }
 
 .no_answer {
@@ -117,4 +119,22 @@
   line-height: 1.8;
   font-weight: 400;
   color: var(--color-gray-dark);
+  white-space: pre-wrap;
+}
+
+.link_tag {
+  background: #ff6869;
+}
+
+.link_tag a {
+  color: white;
+  text-decoration: none;
+}
+
+.link_extend {
+  text-align: right;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-primary);
+  padding-bottom: 10px;
 }

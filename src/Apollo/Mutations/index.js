@@ -25,3 +25,7 @@ export { default as connectionFunnelTagAdd } from "./connectionFunnelTagAdd";
 export { default as connectionFunnelTagRemove } from "./connectionFunnelTagRemove";
 
 export { default as connectionSetStar } from "./connectionSetStar";
+export { default as connectionDelete } from "./connectionDelete";
+export { default as groupMarkAsSeen } from "./groupMarkAsSeen";
+
+export { default as tagDelete } from "./tagDelete";

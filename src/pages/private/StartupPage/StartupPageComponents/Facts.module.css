@@ -15,3 +15,12 @@
   left: 0;
   color: var(--color-primary);
 }
+
+.link_tag {
+  background: #ff6869;
+}
+
+.link_tag a {
+  color: white;
+  text-decoration: none;
+}

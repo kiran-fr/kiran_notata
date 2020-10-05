@@ -52,10 +52,12 @@ Amplify.configure({
 });
 
 const dev_URL_id = "soaim5drvjdfplwdjyllz2ru6i";
-const dev2_URL_id = "qisjxuphbjaihfdty2yc7wwjam";
+const dev2_URL_id = "3mlk5clgsvdptfcfo7utvkqhim";
+
 const prodtest_URL_id = "pm4namovdzgpboqy5s2vgafzjy";
 
-const appsync_URL_id = dev_URL_id;
+// const appsync_URL_id = dev2_URL_id;
+const appsync_URL_id = prodtest_URL_id;
 
 const appsyncUrl = `https://${appsync_URL_id}.appsync-api.eu-west-1.amazonaws.com/graphql`;
 

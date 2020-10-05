@@ -14,7 +14,28 @@ import { getUserIsLoggedIn } from "../../../Modules";
 
 import { dashboard, forgotPassword } from "../../../pages/definitions";
 
+const getErrorMessage = ({ error }) => {
+  console.log("getErrorMessage");
+  console.log(JSON.stringify(error, null, 2));
+
+  let { code } = error;
+
+  let defaultError = "Yo, something went wrong, innit";
+
+  let codeMap = {
+    NotAuthorizedException: "Email and password does not match",
+  };
+
+  let errorMessage = codeMap[code] || defaultError;
+
+  // return errorMessage;
+
+  return error.message;
+};
+
 function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
+  // console.log('*** LoginComp')
+
   const [SMS_MFA, setSMS_MFA] = useState(false);
   const [signinUser, setSigninUser] = useState();
   const [errorMessage, setErrorMessage] = useState();
@@ -31,17 +52,20 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
           })
         ),
   });
-  const { isSubmitting } = formState;
+  const { isSubmitting, isSubmitted } = formState;
 
   const s = queryString.parse(location.search);
 
   useEffect(() => {
     const { email } = s;
-    setValue("email", email);
-    // setValue(verified);
-  }, [s, setValue]);
+    if (!isSubmitted && !isSubmitting && email) {
+      setValue("email", email);
+    }
+  }, [s, setValue, isSubmitting, isSubmitted]);
 
   const onSubmit = async (data, event) => {
+    event.preventDefault();
+
     if (signinUser && SMS_MFA) {
       try {
         const loggedUser = await Auth.confirmSignIn(
@@ -65,8 +89,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
         }
         userLoggedIn(signinUser);
       } catch (error) {
-        console.log("error", error);
-        setErrorMessage("Something went wrong...");
+        setErrorMessage(getErrorMessage({ error }));
       }
     }
   };
@@ -98,7 +121,18 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                 id="email"
               />
               {errors && errors.email && (
-                <p style={{ color: "red" }}>must be a valid email address</p>
+                <p
+                  style={{
+                    color: "var(--color-primary)",
+                    fontSize: "12px",
+                    textAlign: "right",
+                    position: "relative",
+                    top: "-6px",
+                    right: "4px",
+                  }}
+                >
+                  that email does not look valid
+                </p>
               )}
 
               <label for="password">Password</label>

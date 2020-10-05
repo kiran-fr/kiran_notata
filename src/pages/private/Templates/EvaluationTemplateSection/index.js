@@ -11,6 +11,7 @@ import {
 } from "../../../../Apollo/Mutations";
 
 import {
+  settings,
   evaluation_template,
   evaluation_templates,
 } from "../../../definitions";
@@ -152,7 +153,11 @@ export default function EvaluationTemplateSection({ match }) {
       <BreadCrumbs
         list={[
           {
-            val: "all templates",
+            val: "Settings",
+            link: settings,
+          },
+          {
+            val: "Evaluation Templates",
             link: `${evaluation_templates}`,
           },
           {

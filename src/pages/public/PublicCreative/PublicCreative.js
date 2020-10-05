@@ -48,7 +48,7 @@ function Question({ question, section, creative }) {
 }
 
 function Submit({ creative }) {
-  const [setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
   const [mutate, { loading }] = useMutation(publicCreativePut);
 
   return (
@@ -58,14 +58,14 @@ function Submit({ creative }) {
           type="right_arrow"
           loading={loading}
           onClick={async () => {
-            setSuccess(false);
+            // setSuccess(false);
             const variables = {
               id: creative.id,
               input: { submit: true },
             };
             try {
               await mutate({ variables });
-              setSuccess(true);
+              // setSuccess(true);
             } catch (error) {
               console.log("error", error);
             }

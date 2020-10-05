@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "../../../../Components/elements";
+import { Button, Tag } from "../../../../Components/elements";
 import { startup_page } from "../../../definitions";
 
 import {
@@ -8,7 +8,78 @@ import {
   list_item,
   list_item_text,
   list_item_check,
+  link_tag,
 } from "./Facts.module.css";
+
+function Summaries({ answers }) {
+  let tagIds = [
+    "q03_section_money",
+    "q01_section_business",
+    "q03_section_business",
+    "q04_section_business",
+    "q06_section_business",
+    "q04_section_info",
+  ];
+
+  let website;
+  let w = answers.find(({ questionId }) => questionId === "q06_section_info");
+  if (w) {
+    w.val.substring(0, 3).toLowerCase() === "htt"
+      ? (website = w.val)
+      : (website = `http://${w.val}`);
+  }
+
+  let d = {
+    slideDeck: (
+      answers.find(
+        ({ questionId }) => questionId === "q01_section_materials"
+      ) || {}
+    ).val,
+    oneLiner: (
+      answers.find(({ questionId }) => questionId === "q01_section_info") || {}
+    ).val,
+    solution: (
+      answers.find(({ questionId }) => questionId === "q03_section_info") || {}
+    ).val,
+    tags: answers.filter(
+      ({ questionId, inputType }) =>
+        inputType !== "COMMENT" && tagIds.some(id => id === questionId)
+    ),
+    website,
+  };
+
+  return (
+    <div style={{ marginBottom: "20px" }}>
+      {d.oneLiner && <div style={{ padding: "10px" }}>{d.oneLiner}</div>}
+
+      {!d.oneLiner && d.solution && (
+        <div style={{ padding: "10px" }}>{d.solution}</div>
+      )}
+
+      {(d.website || d.slideDeck) && (
+        <div style={{ paddingBottom: "10px" }}>
+          {d.website && (
+            <Tag className={link_tag}>
+              <a href={d.website} target="_blank">
+                Website <i className="fal fa-external-link-square" />
+              </a>
+            </Tag>
+          )}
+
+          {d.slideDeck && (
+            <Tag className={link_tag}>
+              <a href={d.slideDeck} target="_blank">
+                Slide deck <i className="fal fa-external-link-square" />
+              </a>
+            </Tag>
+          )}
+        </div>
+      )}
+
+      {!!d.tags.length && d.tags.map(({ val }, i) => <Tag key={i}>{val}</Tag>)}
+    </div>
+  );
+}
 
 export function Facts({ connection, user, match, history }) {
   const { creative } = connection;
@@ -26,6 +97,8 @@ export function Facts({ connection, user, match, history }) {
 
   return (
     <div>
+      <Summaries answers={answers} />
+
       {isUntouched && (
         <div>
           <div style={{ fontSize: "18px" }}>Facts</div>
@@ -34,77 +107,6 @@ export function Facts({ connection, user, match, history }) {
           >
             Facts is the part that you share with the startups. You can invite a
             startup to fill out this part .
-          </div>
-        </div>
-      )}
-
-      {!isUntouched && (
-        <div className={facts_list}>
-          {sharedWithEmail && (
-            <div className={list_item}>
-              <div className={list_item_check}>
-                <i className="fal fa-check" />
-              </div>
-              <div className={list_item_text}>
-                <span style={{ color: "var(--color-primary)" }}>
-                  {sharedWithEmail}
-                </span>{" "}
-                has been invited to fill out this information.
-              </div>
-            </div>
-          )}
-
-          {!sharedWithEmail && !submitted && (
-            <div className={list_item}>
-              <div className={list_item_check}>
-                <i className="fal fa-times" />
-              </div>
-              <div className={list_item_text}>
-                Startup has NOT been invited to fill out this information
-              </div>
-            </div>
-          )}
-
-          {submitted && (
-            <div className={list_item}>
-              <div className={list_item_check}>
-                <i className="fal fa-check" />
-              </div>
-              <div className={list_item_text}>
-                The startup has completed the form.
-              </div>
-            </div>
-          )}
-
-          {submitted && acceptedTerms && (
-            <div className={list_item}>
-              <div className={list_item_check}>
-                <i className="fal fa-check" />
-              </div>
-              <div className={list_item_text}>
-                The startup has accepted the terms and conditions.
-              </div>
-            </div>
-          )}
-
-          {submitted && !acceptedTerms && (
-            <div className={list_item}>
-              <div className={list_item_check}>
-                <i className="fal fa-times" />
-              </div>
-              <div className={list_item_text}>
-                The startup has NOT accepted the terms and conditions.
-              </div>
-            </div>
-          )}
-
-          <div className={list_item}>
-            <div className={list_item_check}>
-              <i className="fal fa-check" />
-            </div>
-            <div className={list_item_text}>
-              {answerCount} questions have been answered.
-            </div>
           </div>
         </div>
       )}

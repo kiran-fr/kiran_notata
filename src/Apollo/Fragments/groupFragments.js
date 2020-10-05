@@ -8,6 +8,11 @@ export default gql`
     createdAt
     updatedAt
     createdBy
+    createdByUser {
+      email
+      given_name
+      family_name
+    }
     members {
       email
       role
@@ -15,7 +20,12 @@ export default gql`
       latestActivity
     }
     settings {
-      name
+      chat
+      public
+      showUsers
+      showScores
+      addStartup
+      addUser
     }
   }
 `;

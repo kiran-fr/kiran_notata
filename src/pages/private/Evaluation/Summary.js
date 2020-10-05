@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { evaluationPut } from "../../../Apollo/Mutations";
 import { connectionGet, evaluationTemplateGet } from "../../../Apollo/Queries";
 
 import { startup_page } from "../../definitions";
@@ -31,9 +32,12 @@ import {
   no_answer,
   small_traffic_light,
   link_style,
+  delete_link_style,
 } from "./Summary.module.css";
 
 export default function Summary({ match, history }) {
+  const [mutate, { loading: loadingMutation }] = useMutation(evaluationPut);
+
   const {
     data: connectionGetData,
     loading: connectionGetLoading,
@@ -252,6 +256,35 @@ export default function Summary({ match, history }) {
           <Link to={`${startup_page}/${connectionGetData.connectionGet.id}`}>
             &#60; Back to startup
           </Link>
+        }
+
+        {
+          <div
+            className={delete_link_style}
+            onClick={async () => {
+              if (loadingMutation) return;
+
+              const variables = {
+                id: evaluation.id,
+                input: { delete: true },
+              };
+              try {
+                await mutate({ variables });
+              } catch (error) {
+                console.log("error", error);
+              }
+
+              let path = `${startup_page}/${connectionGetData.connectionGet.id}`;
+              history.push(path);
+            }}
+          >
+            {loadingMutation && (
+              <>
+                <i className="fa fa-spinner fa-spin" />{" "}
+              </>
+            )}
+            delete evaluation
+          </div>
         }
       </Content>
     </div>

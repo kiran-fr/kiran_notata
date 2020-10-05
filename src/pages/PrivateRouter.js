@@ -21,6 +21,7 @@ import {
   team,
   evaluation_templates,
   evaluation_template,
+  evaluation_template_summary,
   startup_page,
   pre_profile,
   group,
@@ -44,6 +45,7 @@ import FactsPage from "./private/StartupPage/Facts/Facts";
 import EvaluationTemplates from "./private/Templates/EvaluationTemplates/EvaluationTemplates";
 import EvaluationTemplate from "./private/Templates/EvaluationTemplate/EvaluationTemplate";
 import EvaluationTemplateSection from "./private/Templates/EvaluationTemplateSection";
+import EvaluationTemplateSummary from "./private/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
 
 import EvaluationPage from "./private/Evaluation";
 import SectionPage from "./private/Evaluation/Section";
@@ -53,6 +55,7 @@ import SummaryPage from "./private/Evaluation/Summary";
 import Groups from "./private/Groups/Groups";
 import Group from "./private/Groups/Group";
 import GroupConnection from "./private/Groups/GroupConnection";
+import GroupSettings from "./private/Groups/GroupSettings";
 
 // Loader
 import { GhostLoader } from "../Components/elements";
@@ -98,9 +101,17 @@ export const RouterComponent = ({ history }) => {
         component={EvaluationTemplateSection}
       />
 
+      <Route
+        exact
+        path={`${evaluation_template_summary}/:templateId`}
+        component={EvaluationTemplateSummary}
+      />
+
       <Route exact path={`${group}`} component={Groups} />
 
       <Route exact path={`${group}/:id`} component={Group} />
+
+      <Route exact path={`${group}/:id/settings`} component={GroupSettings} />
 
       <Route
         exact

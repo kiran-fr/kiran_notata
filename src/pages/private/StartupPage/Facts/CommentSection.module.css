@@ -22,4 +22,5 @@
   padding: 4px 12px;
   border-radius: 7px;
   margin-bottom: 2px;
+  white-space: pre-wrap;
 }

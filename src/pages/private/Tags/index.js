@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 
-import { Content, GhostLoader } from "../../../Components/elements";
+import {
+  Content,
+  GhostLoader,
+  BreadCrumbs,
+} from "../../../Components/elements";
 import CreateTag from "./CreateTagGroup";
 import TagGroup from "./TagsGroup";
 
 import { tagGroupGet, funnelGroupGet } from "../../../Apollo/Queries";
 import { useEffect } from "react";
+
+import { settings, tags } from "../../../pages/definitions";
 
 export default function Tags() {
   const [type, setType] = useState("tags");
@@ -21,8 +27,6 @@ export default function Tags() {
     },
   ] = useLazyQuery(tagGroupGet);
 
-  console.log("tagGroupGetError", tagGroupGetError);
-
   const [
     getFunnels,
     {
@@ -32,8 +36,6 @@ export default function Tags() {
       called: funnelGroupGetCalled,
     },
   ] = useLazyQuery(funnelGroupGet);
-
-  console.log("funnelGroupGetError", funnelGroupGetError);
 
   useEffect(() => {
     if (type === "funnels") {
@@ -69,18 +71,31 @@ export default function Tags() {
       : tagGroupGetData.accountGet.tagGroups;
 
   return (
-    <Content maxWidth={600}>
-      <h1>{type === "funnels" ? "Funnels" : "Tags"}</h1>
-      <div>
-        <button onClick={() => setType("tags")}>tags</button>
-        <button onClick={() => setType("funnels")}>funnels</button>
-      </div>
-      {[...data]
-        .sort((a, b) => a.index - b.index)
-        .map((props, index) => (
+    <>
+      <BreadCrumbs
+        list={[
+          {
+            val: "Settings",
+            link: settings,
+          },
+          {
+            val: "Tags & Funnels",
+            link: tags,
+          },
+        ]}
+      />
+
+      <Content maxWidth={600}>
+        <h1>{type === "funnels" ? "Funnels" : "Tags"}</h1>
+        <div>
+          <button onClick={() => setType("tags")}>tags</button>
+          <button onClick={() => setType("funnels")}>funnels</button>
+        </div>
+        {[...data].map((props, index) => (
           <TagGroup {...props} key={props.id} index={index} type={type} />
         ))}
-      <CreateTag index={data.length} type={type} />
-    </Content>
+        <CreateTag index={data.length} type={type} />
+      </Content>
+    </>
   );
 }

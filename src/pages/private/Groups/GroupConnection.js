@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 
 import {
   groupGet,
-  // connectionsGet,
   creativeTemplateGet,
   logGet,
   evaluationTemplateGet,
+  connectionsGet,
 } from "../../../Apollo/Queries";
 
 import { connectionPut } from "../../../Apollo/Mutations";
@@ -41,6 +41,8 @@ import {
   comment_each,
   small_traffic_light,
   question_comments,
+  link_tag,
+  link_extend,
 } from "./GroupConnection.module.css";
 
 function MultipleChoiseAnswer({ question, answers }) {
@@ -187,6 +189,56 @@ function CommentSection({ answers, question }) {
 }
 
 function Facts({ answers, creativeTemplate, with_comments }) {
+  let order = ["Info", "Materials", "Business", "Money"];
+
+  const hasAnswer = question =>
+    answers.some(({ questionId }) => questionId === question.id);
+
+  return (
+    <>
+      {order.map(n => {
+        const section = creativeTemplate.sections.find(
+          ({ name }) => name === n
+        );
+
+        if (!section) {
+          return <span key={n} />;
+        }
+
+        let { name, description, questions } = section;
+
+        questions = questions.filter(question => hasAnswer(question));
+
+        if (!questions.length) {
+          return <span key={n} />;
+        }
+
+        return (
+          <div key={n} className={facts_section_container}>
+            <div className={facts_section_header}>{name}</div>
+            <div className={facts_section_description}>{description}</div>
+            <div>
+              {questions.map((question, i) => {
+                return (
+                  <div
+                    key={`question-${n}-${i}`}
+                    className={facts_question_container}
+                  >
+                    <div className={facts_question_header}>{question.name}</div>
+                    <GeneralAnswer answers={answers} question={question} />
+                    {with_comments && (
+                      <CommentSection question={question} answers={answers} />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+
   return (
     <div className={facts_container}>
       {creativeTemplate.sections.map((section, i) => {
@@ -196,21 +248,24 @@ function Facts({ answers, creativeTemplate, with_comments }) {
             <div className={facts_section_header}>{name}</div>
             <div className={facts_section_description}>{description}</div>
             <div>
-              {questions.map((question, ii) => {
-                return (
-                  <div
-                    key={`question-${i}-${ii}`}
-                    className={facts_question_container}
-                  >
-                    <div className={facts_question_header}>{question.name}</div>
-                    {/*<div className={facts_question_description}>{question.description}</div>*/}
-                    <GeneralAnswer answers={answers} question={question} />
-                    {with_comments && (
-                      <CommentSection question={question} answers={answers} />
-                    )}
-                  </div>
-                );
-              })}
+              {questions
+                .filter(question => hasAnswer(question))
+                .map((question, ii) => {
+                  return (
+                    <div
+                      key={`question-${i}-${ii}`}
+                      className={facts_question_container}
+                    >
+                      <div className={facts_question_header}>
+                        {question.name}
+                      </div>
+                      <GeneralAnswer answers={answers} question={question} />
+                      {with_comments && (
+                        <CommentSection question={question} answers={answers} />
+                      )}
+                    </div>
+                  );
+                })}
             </div>
           </div>
         );
@@ -288,45 +343,145 @@ function Evaluation({ evaluation, with_comments }) {
 }
 
 function AddButton({ creative, history }) {
-  const [mutate, { error, loading }] = useMutation(connectionPut);
+  const [mutate, { data, error, loading }] = useMutation(connectionPut);
 
-  return (
-    <div style={{ textAlign: "right" }}>
-      <Button
-        type="right_arrow"
-        loading={loading}
-        onClick={async () => {
+  console.log("error", error);
+
+  const {
+    data: query_data,
+    error: query_error,
+    loading: qeury_loading,
+  } = useQuery(connectionsGet);
+
+  if (qeury_loading && !query_data) {
+    return <span />;
+  }
+
+  let connections = query_data.connectionsGet;
+
+  let connection;
+  if (connections) {
+    connection = connections.find(
+      ({ creativeId }) => creativeId === creative.id
+    );
+  }
+
+  if (!connection && !data) {
+    return (
+      <div
+        style={{
+          textAlign: "right",
+          color: "var(--color-primary)",
+          cursor: "pointer",
+          fontSize: "14px",
+        }}
+        onClick={() => {
           if (loading) return;
-          try {
-            let res = await mutate({ variables: { creativeId: creative.id } });
-            const { id } = res.data.connectionPut;
-            history.push(`${startup_page}/${id}`);
-          } catch (error) {
-            return console.log("error", error);
-          }
-          console.log("addCreative...", creative);
+          let variables = {
+            creativeId: creative.id,
+          };
+          mutate({ variables });
         }}
       >
-        Add to my startups
-      </Button>
+        {(loading && <i className="fa fa-spinner fa-spin" />) || (
+          <i className="fal fa-cloud-download" />
+        )}{" "}
+        save this startup
+      </div>
+    );
+  }
 
-      {error && (
-        <div
-          style={{
-            fontSize: "12px",
-            marginTop: "10px",
-            color: "var(--color-red)",
-          }}
-        >
-          Hmm... we got an error. Sure you don't already have this startup in
-          your list?
+  return (
+    <div
+      style={{
+        textAlign: "right",
+        color: "var(--color-primary)",
+        cursor: "pointer",
+        fontSize: "14px",
+      }}
+      onClick={() => {
+        let id = connection ? connection.id : data.connectionPut.id;
+        history.push(`${startup_page}/${id}`);
+      }}
+    >
+      view startup
+    </div>
+  );
+}
+
+function Summaries({ answers }) {
+  let tagIds = [
+    "q03_section_money",
+    "q01_section_business",
+    "q03_section_business",
+    "q04_section_business",
+    "q06_section_business",
+    "q04_section_info",
+  ];
+
+  let website;
+  let w = answers.find(({ questionId }) => questionId === "q06_section_info");
+  if (w) {
+    w.val.substring(0, 3).toLowerCase() === "htt"
+      ? (website = w.val)
+      : (website = `http://${w.val}`);
+  }
+
+  let d = {
+    slideDeck: (
+      answers.find(
+        ({ questionId }) => questionId === "q01_section_materials"
+      ) || {}
+    ).val,
+    oneLiner: (
+      answers.find(({ questionId }) => questionId === "q01_section_info") || {}
+    ).val,
+    solution: (
+      answers.find(({ questionId }) => questionId === "q03_section_info") || {}
+    ).val,
+    tags: answers.filter(
+      ({ questionId, inputType }) =>
+        inputType !== "COMMENT" && tagIds.some(id => id === questionId)
+    ),
+    website,
+  };
+
+  return (
+    <div style={{ marginBottom: "20px" }}>
+      {d.oneLiner && <div style={{ padding: "10px" }}>{d.oneLiner}</div>}
+
+      {!d.oneLiner && d.solution && (
+        <div style={{ padding: "10px" }}>{d.solution}</div>
+      )}
+
+      {(d.website || d.slideDeck) && (
+        <div style={{ paddingBottom: "10px" }}>
+          {d.website && (
+            <Tag className={link_tag}>
+              <a href={d.website} target="_blank">
+                Website <i className="fal fa-external-link-square" />
+              </a>
+            </Tag>
+          )}
+
+          {d.slideDeck && (
+            <Tag className={link_tag}>
+              <a href={d.slideDeck} target="_blank">
+                Slide deck <i className="fal fa-external-link-square" />
+              </a>
+            </Tag>
+          )}
         </div>
       )}
+
+      {!!d.tags.length && d.tags.map(({ val }, i) => <Tag key={i}>{val}</Tag>)}
     </div>
   );
 }
 
 export default function GroupConnection({ match, history }) {
+  const [viewFacts, setViewFacts] = useState(false);
+
   const id = match.params.id;
   const connectionId = match.params.connectionId;
 
@@ -334,7 +489,7 @@ export default function GroupConnection({ match, history }) {
   const creativeTemplateQuery = useQuery(creativeTemplateGet);
 
   useEffect(() => {
-    getData({ variables: { id } });
+    getData({ variables: { id, connectionId } });
   }, [getData, id]);
 
   const loading = groupGetQuery.loading || creativeTemplateQuery.loading;
@@ -353,8 +508,10 @@ export default function GroupConnection({ match, history }) {
   let group = groupGetQuery.data.groupGet;
   let startups = group.startups;
   let shared_startup = startups.find(c => c.connectionId === connectionId);
+
   let connection = shared_startup.connection;
   let creative = connection.creative;
+
   let creativeTemplate = creativeTemplateQuery.data.creativeTemplateGet;
 
   const {
@@ -369,7 +526,7 @@ export default function GroupConnection({ match, history }) {
       <BreadCrumbs
         list={[
           {
-            val: "all groups",
+            val: "All Groups",
             link: `${group_route}`,
           },
           {
@@ -391,8 +548,19 @@ export default function GroupConnection({ match, history }) {
           <div className={sub_header}>
             Shared by{" "}
             <b>
-              {shared_startup.sharedBy} on{" "}
-              {moment(shared_startup.createdAt).format("lll")}.
+              {shared_startup.sharedBy} in{" "}
+              <span
+                style={{
+                  color: "var(--color-primary",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  history.push(`${group_route}/${group.id}`);
+                }}
+              >
+                {group.name}
+              </span>
+              .
             </b>
           </div>
 
@@ -401,15 +569,25 @@ export default function GroupConnection({ match, history }) {
 
         {/*FACTS*/}
         <Card label="Facts">
-          <Facts
-            answers={connection.creative.answers}
-            creativeTemplate={creativeTemplate}
-            with_comments={with_comments}
-          />
+          <Summaries answers={creative.answers} />
+          <div onClick={() => setViewFacts(!viewFacts)} className={link_extend}>
+            {viewFacts ? "hide facts" : "...show facts"}
+          </div>
+
+          {viewFacts && (
+            <div>
+              <hr />
+              <Facts
+                answers={connection.creative.answers}
+                creativeTemplate={creativeTemplate}
+                with_comments={with_comments}
+              />
+            </div>
+          )}
         </Card>
 
         {/*TAGS*/}
-        {with_tags && (
+        {with_tags && !!connection.tags.length && (
           <Card label="Tags" style={{ paddingBottom: "20px" }}>
             {connection.tags.map(({ name }, i) => (
               <Tag key={i}>{name}</Tag>
@@ -418,23 +596,25 @@ export default function GroupConnection({ match, history }) {
         )}
 
         {/*SUBJECTIVE SCORE*/}
-        {with_subjectiveScore && (
-          <Card label="Subjective score" style={{ paddingBottom: "20px" }}>
-            {(connection.subjectiveScores || []).map((subjectiveScore, i) => {
-              return (
-                <div key={i} className={subjectiveScore_container}>
-                  <div className={subjectiveScore_name}>
-                    {subjectiveScore.createdByUser.given_name}{" "}
-                    {subjectiveScore.createdByUser.family_name}
+        {with_subjectiveScore &&
+          connection.subjectiveScores &&
+          !!connection.subjectiveScores.length && (
+            <Card label="Subjective score" style={{ paddingBottom: "20px" }}>
+              {(connection.subjectiveScores || []).map((subjectiveScore, i) => {
+                return (
+                  <div key={i} className={subjectiveScore_container}>
+                    <div className={subjectiveScore_name}>
+                      {subjectiveScore.createdByUser.given_name}{" "}
+                      {subjectiveScore.createdByUser.family_name}
+                    </div>
+                    <div className={subjectiveScore_value}>
+                      {subjectiveScore.score}
+                    </div>
                   </div>
-                  <div className={subjectiveScore_value}>
-                    {subjectiveScore.score}
-                  </div>
-                </div>
-              );
-            })}
-          </Card>
-        )}
+                );
+              })}
+            </Card>
+          )}
 
         {/*COMMENTS*/}
         {with_comments && (

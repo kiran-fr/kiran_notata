@@ -1,20 +1,74 @@
 import gql from "graphql-tag";
 
-import { 
+import {
   tagFragments,
   funnelTagFragments,
   creativeFragments,
   connectionFragments,
-  evaluationFragments
-} from '../Fragments';
+  evaluationFragments,
+} from "../Fragments";
 
 export default gql`
   query connectionGet($id: ID!) {
-
     connectionGet(id: $id) {
-
       ...connectionFields
-      
+
+      sharedWithMe {
+        sharedBy
+        createdAt
+        groupName
+        groupId
+
+        comments
+        evaluations
+        subjective_score
+        tags
+
+        connection {
+          subjectiveScores {
+            score
+            createdByUser {
+              email
+              family_name
+              given_name
+            }
+          }
+
+          evaluations {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+            createdBy
+            templateId
+            answers {
+              id
+              inputType
+              questionId
+              sid
+              question
+              val
+            }
+            createdByUser {
+              email
+              given_name
+              family_name
+            }
+            summary {
+              templateName
+              sections {
+                name
+                score
+                possibleScore
+              }
+              totalScore
+              possibleScore
+            }
+          }
+        }
+      }
+
       creative {
         ...creativeFields
       }
@@ -30,21 +84,11 @@ export default gql`
       evaluations {
         ...evaluationFields
       }
-
     }
-
   }
   ${tagFragments}
   ${funnelTagFragments}
   ${creativeFragments}
   ${connectionFragments}
   ${evaluationFragments}
-`
-
-
-
-
-
-
-  
-
+`;

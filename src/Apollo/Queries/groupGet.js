@@ -10,18 +10,30 @@ import {
 } from "../Fragments";
 
 export default gql`
-  query groupGet($id: ID!) {
-    groupGet(id: $id) {
+  query groupGet($id: ID!, $connectionId: ID) {
+    groupGet(id: $id, connectionId: $connectionId) {
       ...groupFields
+
+      evaluationTemplates {
+        id
+        name
+        description
+        sections {
+          id
+          name
+        }
+      }
 
       startups {
         connectionId
+        creativeId
         sharedBy
         createdAt
         comments
         evaluations
         subjective_score
         tags
+        seen
 
         connection {
           ...connectionFields

@@ -109,7 +109,7 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
               history.push(path);
             }}
           >
-            Back to overview
+            Go to overview
           </Button>
         </div>
 
@@ -152,6 +152,9 @@ export default function Section({ match, history }) {
     }
   );
 
+  // console.log('connectionQuery', connectionQuery)
+  // console.log('evaluationTemplateSectionQuery', evaluationTemplateSectionQuery)
+
   const evaluationTemplateSection =
     (evaluationTemplateSectionQuery.data || {}).evaluationTemplateSectionGet ||
     {};
@@ -162,9 +165,10 @@ export default function Section({ match, history }) {
   const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
 
   if (loading) {
-    //remove
     return <GhostLoader />;
   }
+
+  // console.log('connectionQuery.error', connectionQuery.error)
 
   if (error) {
     console.log(error);

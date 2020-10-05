@@ -14,8 +14,10 @@ export function EnterUsername({ done }) {
     const { username } = data;
     try {
       await Auth.forgotPassword(username);
+      console.log("done", username);
       done(username);
     } catch (error) {
+      console.log("error", error);
       /* Will not throw errors */
     }
   };
@@ -48,7 +50,7 @@ export function EnterUsername({ done }) {
             left: "2px",
           }}
         >
-          <Link to={login}>Send</Link>
+          <Link to={login}>Login</Link>
         </div>
       </Card>
     </Content>

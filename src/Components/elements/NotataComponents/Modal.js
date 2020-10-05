@@ -14,12 +14,18 @@ import {
 
 import { Button } from "../";
 
-export const Modal = ({ close, submit, title, disableFoot, ...children }) => {
+export const Modal = ({
+  close,
+  noKill,
+  submit,
+  title,
+  disableFoot,
+  ...children
+}) => {
   useEffect(() => {
     function downHandler({ key }) {
       key === "Escape" && close();
     }
-
     window.addEventListener("keydown", downHandler);
     return () => {
       window.removeEventListener("keydown", downHandler);
@@ -39,13 +45,17 @@ export const Modal = ({ close, submit, title, disableFoot, ...children }) => {
         }}
       >
         <div className={inner}>
-          <div className={modal_header}>
-            {title && <div className={modal_title}>{title}</div>}
+          {title && (
+            <div className={modal_header}>
+              {title && <div className={modal_title}>{title}</div>}
 
-            <div onClick={close} className={close_modal}>
-              <i className="fal fa-times" />
+              {!noKill && (
+                <div onClick={close} className={close_modal}>
+                  <i className="fal fa-times" />
+                </div>
+              )}
             </div>
-          </div>
+          )}
 
           <div className={main_content} {...children} />
 
@@ -53,7 +63,7 @@ export const Modal = ({ close, submit, title, disableFoot, ...children }) => {
             <div className={modal_footer}>
               {close && (
                 <Button onClick={close} size="medium" buttonStyle="secondary">
-                  Canncel
+                  Cancel
                 </Button>
               )}
 

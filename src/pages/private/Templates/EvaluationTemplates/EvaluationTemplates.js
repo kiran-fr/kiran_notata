@@ -13,7 +13,7 @@ import {
 } from "../../../../Components/elements";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
-import { accountGet } from "../../../../Apollo/Queries";
+import { evaluationTemplatesGet, groupsGet } from "../../../../Apollo/Queries";
 
 import {
   evaluationTemplatePut,
@@ -21,13 +21,15 @@ import {
 } from "../../../../Apollo/Mutations";
 
 import {
+  settings,
   evaluation_template,
   evaluation_templates,
 } from "../../../definitions";
 
 function Delete({ id, templates }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
-    refetchQueries: [{ query: accountGet }],
+    // refetchQueries: [{ query: accountGet }],
+    refetchQueries: [{ query: evaluationTemplatesGet }],
     awaitRefetchQueries: true,
   });
 
@@ -62,24 +64,24 @@ const CreateNewTemplate = ({ setShowModal }) => {
     try {
       await mutate({
         variables,
-        update: (proxy, { data: { evaluationTemplatePut } }) => {
-          const data = proxy.readQuery({
-            query: accountGet,
-          });
+        // update: (proxy, { data: { evaluationTemplatePut } }) => {
+        //   const data = proxy.readQuery({
+        //     query: accountGet,
+        //   });
 
-          proxy.writeQuery({
-            query: accountGet,
-            data: {
-              accountGet: {
-                ...data.accountGet,
-                evaluationTemplates: [
-                  evaluationTemplatePut,
-                  ...data.accountGet.evaluationTemplates,
-                ],
-              },
-            },
-          });
-        },
+        //   proxy.writeQuery({
+        //     query: accountGet,
+        //     data: {
+        //       accountGet: {
+        //         ...data.accountGet,
+        //         evaluationTemplates: [
+        //           evaluationTemplatePut,
+        //           ...data.accountGet.evaluationTemplates,
+        //         ],
+        //       },
+        //     },
+        //   });
+        // },
       });
 
       setShowModal(false);
@@ -113,9 +115,56 @@ const CreateNewTemplate = ({ setShowModal }) => {
   );
 };
 
+function SharedWithMe() {
+  console.log("SharedWithMe");
+  const { data, loading, error } = useQuery(groupsGet);
+
+  if (error) {
+    return <span />;
+  }
+
+  if (loading && !data) {
+    return <span />;
+  }
+
+  let groups = data.groupsGet;
+  let templates = [];
+
+  if (groups) {
+    for (let group of groups) {
+      templates = templates.concat(group.evaluationTemplates || []);
+    }
+  }
+
+  let groupsWithTemplates = groups.filter(
+    ({ evaluationTemplates }) =>
+      evaluationTemplates && evaluationTemplates.length
+  );
+
+  if (!templates.length) {
+    return <span />;
+  }
+
+  return (
+    <Card style={{ paddingTop: "5px" }} title="SHARED WITH ME">
+      {groupsWithTemplates.map(group => {
+        return (
+          <div key={group.id}>
+            <div>{group.name}</div>
+
+            {group.evaluationTemplates}
+          </div>
+        );
+      })}
+
+      <pre>{JSON.stringify(templates, null, 2)}</pre>
+    </Card>
+  );
+}
+
 export default function EvaluationTemplates(props) {
   const [showModal, setShowModal] = useState(false);
-  const { data, loading, error } = useQuery(accountGet);
+  const { data, loading, error } = useQuery(evaluationTemplatesGet);
 
   if (error) {
     console.log("error", error);
@@ -186,7 +235,11 @@ export default function EvaluationTemplates(props) {
       <BreadCrumbs
         list={[
           {
-            val: "all templates",
+            val: "Settings",
+            link: settings,
+          },
+          {
+            val: "Evaluation templates",
             link: `${evaluation_templates}`,
           },
         ]}
@@ -202,6 +255,10 @@ export default function EvaluationTemplates(props) {
             diableHead={true}
           />
         </Card>
+
+        {/*
+            <SharedWithMe />
+          */}
 
         <div style={{ marginTop: "20px" }}>
           <Button

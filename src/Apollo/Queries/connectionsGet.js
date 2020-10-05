@@ -8,6 +8,7 @@ export default gql`
       createdAt
       updatedAt
       starred
+      creativeId
       subjectiveScores {
         score
       }
@@ -17,11 +18,14 @@ export default gql`
       }
 
       tags {
+        tagGroupId
         id
         name
       }
 
       funnelTags {
+        id
+        funnelGroupId
         name
         index
       }

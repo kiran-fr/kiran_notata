@@ -8,13 +8,13 @@ import * as yup from "yup";
 
 import { Modal, Table, Button } from "../../../../Components/elements";
 
-import { groupsGet } from "../../../../Apollo/Queries";
+import { groupsGet, connectionGet } from "../../../../Apollo/Queries";
 import { groupPut } from "../../../../Apollo/Mutations";
 
 import validateEmail from "../../../../utils/validateEmail";
 import { group as group_route } from "../../../definitions";
 
-import { share_description, icon_item } from "./Share.module.css";
+import { share_description, icon_item, action_link } from "./Share.module.css";
 
 function ShareSetting({ group, connection, mutate, done }) {
   const { register, handleSubmit, formState } = useForm();
@@ -26,39 +26,29 @@ function ShareSetting({ group, connection, mutate, done }) {
       input: {
         addStartup: {
           connectionId: connection.id,
+          creativeId: connection.creativeId,
           ...data,
         },
       },
     };
 
     try {
-      await mutate({
+      let res = await mutate({
         variables,
-        update: (proxy, { data: { groupPut } }) => {
-          const data = proxy.readQuery({
-            query: groupsGet,
-          });
-          proxy.writeQuery({
-            query: groupsGet,
-            data: {
-              groupsGet: [
-                ...data.groupsGet.map(g => {
-                  if (g.id !== group.id) return g;
-                  return {
-                    ...g,
-                    startups: [...g.startups, groupPut],
-                  };
-                }),
-              ],
-            },
-          });
-        },
+        refetchQueries: [
+          {
+            query: connectionGet,
+            variables: { id: connection.id },
+          },
+        ],
       });
       done();
     } catch (error) {
       console.log("error", error);
     }
   };
+
+  let { haveShared } = group;
 
   return (
     <div>
@@ -72,7 +62,7 @@ function ShareSetting({ group, connection, mutate, done }) {
           <input
             type="checkbox"
             ref={register}
-            defaultChecked={true}
+            defaultChecked={!haveShared || haveShared.evaluations}
             name="evaluations"
             id="evaluations"
           />
@@ -83,7 +73,7 @@ function ShareSetting({ group, connection, mutate, done }) {
           <input
             type="checkbox"
             ref={register}
-            defaultChecked={true}
+            defaultChecked={!haveShared || haveShared.subjective_score}
             name="subjective_score"
             id="subjective_score"
           />
@@ -94,7 +84,7 @@ function ShareSetting({ group, connection, mutate, done }) {
           <input
             type="checkbox"
             ref={register}
-            defaultChecked={true}
+            defaultChecked={!haveShared || haveShared.tags}
             name="tags"
             id="tags"
           />
@@ -105,7 +95,7 @@ function ShareSetting({ group, connection, mutate, done }) {
           <input
             type="checkbox"
             ref={register}
-            defaultChecked={true}
+            defaultChecked={!haveShared || haveShared.comments}
             name="comments"
             id="comments"
           />
@@ -125,98 +115,141 @@ function ShareSetting({ group, connection, mutate, done }) {
   );
 }
 
-function SharedWithGroupList({ groups, connection, history }) {
+function RevokeSharing({ group, connection, user }) {
+  const [mutate, { data, loading, error }] = useMutation(groupPut);
+
+  return (
+    <div
+      className={action_link}
+      onClick={() => {
+        if (loading) return;
+
+        let variables = {
+          id: group.id,
+          input: { removeStartup: connection.id },
+        };
+        mutate({
+          variables,
+          update: (proxy, { data: { groupPut } }) => {
+            const data = proxy.readQuery({
+              query: groupsGet,
+            });
+            proxy.writeQuery({
+              query: groupsGet,
+              data: {
+                groupsGet: [
+                  ...data.groupsGet.map(g => {
+                    if (g.id !== group.id) return g;
+                    return {
+                      ...g,
+                      startups: g.startups.filter(
+                        s =>
+                          !(
+                            s.connectionId === connection.id &&
+                            s.sharedBy === user.email
+                          )
+                      ),
+                    };
+                  }),
+                ],
+              },
+            });
+          },
+        });
+      }}
+    >
+      {/*<i className="fal fa-trash-alt" />*/}
+      revoke sharing {loading && <i className="fa fa-spinner fa-spin" />}
+    </div>
+  );
+}
+
+function SharedWithGroupList(props) {
+  let { groups, connection, user, shareStartup, history } = props;
+
   const [mutate, { loading }] = useMutation(groupPut);
 
   const columns = [
     {
-      title: "",
-      key: "delete",
-      width: 20,
-      className: "delete_bucket",
-      render: group => {
-        if (loading) {
-          return <i className="fa fa-spinner fa-spin" />;
-        }
-
-        return (
-          <i
-            className="fal fa-trash-alt"
-            onClick={() => {
-              let variables = {
-                id: group.id,
-                input: { removeStartup: connection.id },
-              };
-
-              mutate({
-                variables,
-                update: (proxy, { data: { groupPut } }) => {
-                  const data = proxy.readQuery({
-                    query: groupsGet,
-                  });
-                  proxy.writeQuery({
-                    query: groupsGet,
-                    data: {
-                      groupsGet: [
-                        ...data.groupsGet.map(g => {
-                          if (g.id !== group.id) return g;
-                          return {
-                            ...g,
-                            startups: g.startups.filter(
-                              s => s.connectionId !== connection.id
-                            ),
-                          };
-                        }),
-                      ],
-                    },
-                  });
-                },
-              });
-            }}
-          />
-        );
-      },
-    },
-    {
       title: "Name",
       key: "name",
       render: group => {
+        let haveShared = group.startups.find(
+          ({ sharedBy, connectionId }) =>
+            sharedBy === user.email && connectionId === connection.id
+        );
+
+        console.log("group", group);
+
         return (
           <span>
-            <div>{group.name}</div>
+            <div>
+              {group.name}
+
+              {haveShared && (
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    shareStartup(group, haveShared);
+                  }}
+                >
+                  {" "}
+                  <i className="fal fa-gear" />
+                </span>
+              )}
+            </div>
             <div style={{ opacity: 0.5, fontSize: "12px" }}>
               {group.members.length} members -{" "}
               {moment(group.createdAt).format("ll")}
             </div>
+
+            {haveShared && (
+              <>
+                <RevokeSharing
+                  user={user}
+                  group={group}
+                  connection={connection}
+                />
+              </>
+            )}
+
+            {!haveShared && group.settings && group.settings.addStartup && (
+              <div className={action_link} onClick={() => shareStartup(group)}>
+                <i className="fal fa-share-alt" /> share with this group
+              </div>
+            )}
           </span>
         );
       },
     },
-    {
-      title: "Icons",
-      key: "icons",
-      className: "desktop_only",
-      render: group => {
-        let iconList = [];
-        let startup = group.startups.find(
-          s => s.connectionId === connection.id
-        );
-        if (startup.comments) iconList.push("fas fa-comment");
-        if (startup.tags) iconList.push("fas fa-tags");
-        if (startup.subjective_score) iconList.push("fas fa-brain");
-        if (startup.evaluations) iconList.push("fas fa-clipboard-list-check");
-        return (
-          <>
-            {iconList.map(iconClass => (
-              <i
-                key={`${iconClass}`}
-                className={classnames(iconClass, icon_item)}
-              />
-            ))}
-          </>
-        );
-      },
-    },
+    // {
+    //   title: "Icons",
+    //   key: "icons",
+    //   className: "desktop_only",
+    //   render: group => {
+    //     let iconList = [];
+    //     let startup = group.startups.find(
+    //       s => s.connectionId === connection.id
+    //     );
+
+    //     if (!startup) return <span/>
+
+    //     if (startup.comments) iconList.push("fas fa-comment");
+    //     if (startup.tags) iconList.push("fas fa-tags");
+    //     if (startup.subjective_score) iconList.push("fas fa-brain");
+    //     if (startup.evaluations) iconList.push("fas fa-clipboard-list-check");
+    //     return (
+    //       <>
+    //         {iconList.map(iconClass => (
+    //           <i
+    //             key={`${iconClass}`}
+    //             className={classnames(iconClass, icon_item)}
+    //           />
+    //         ))}
+    //       </>
+    //     );
+    //   },
+    // },
 
     {
       title: "",
@@ -324,24 +357,34 @@ function CreateNewGroup({ done, cancel, mutate }) {
   );
 }
 
-export function Share({ connection, user, history }) {
+export function Share({ connection, groups, user, history }) {
   const [showModal, setShowModal] = useState(false);
   const [showCreateNewGroup, setShowCreateNewGroup] = useState(false);
   const [showShareSettings, setShowShareSettings] = useState(null);
 
   const [mutate] = useMutation(groupPut);
 
-  const { data } = useQuery(groupsGet);
-  let groups = (data || {}).groupsGet || [];
-
   let sharedWithGroups =
     groups.filter(g =>
-      g.startups.some(s => s.connectionId === connection.id)
+      g.startups.some(s => {
+        return s.connectionId === connection.id;
+      })
     ) || [];
+
+  let groupsWithThisStartup =
+    groups.filter(g =>
+      g.startups.some(s => {
+        return s.creativeId === connection.creativeId;
+      })
+    ) || [];
+
+  sharedWithGroups = groupsWithThisStartup;
 
   let notSharedWithGroups =
     groups.filter(
-      g => !g.startups.some(s => s.connectionId === connection.id)
+      g =>
+        !g.startups.some(s => s.connectionId === connection.id) &&
+        g.settings && g.settings.addStartup
     ) || [];
 
   const columns = [
@@ -390,10 +433,16 @@ export function Share({ connection, user, history }) {
         </div>
       )) || (
         <SharedWithGroupList
+          user={user}
           connection={connection}
           groups={sharedWithGroups}
           mutate={mutate}
           history={history}
+          shareStartup={(shareGroup, haveShared) => {
+            setShowModal(true);
+            setShowCreateNewGroup(false);
+            setShowShareSettings({ ...shareGroup, haveShared });
+          }}
         />
       )}
 
@@ -503,7 +552,10 @@ export function Share({ connection, user, history }) {
                 <Button
                   buttonStyle="secondary"
                   size="medium"
-                  onClick={() => setShowShareSettings(null)}
+                  onClick={() => {
+                    setShowModal(false);
+                    setShowShareSettings(null);
+                  }}
                 >
                   cancel
                 </Button>

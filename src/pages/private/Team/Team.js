@@ -37,7 +37,19 @@ import {
   Button,
   Modal,
   GhostLoader,
+  BreadCrumbs,
 } from "../../../Components/elements";
+
+import {
+  // dashboard,
+  // profile,
+  // tags,
+  // group,
+  team,
+  // templates,
+  // signOut,
+  settings,
+} from "../../../pages/definitions";
 
 function Invite({ account, user }) {
   const [showModal, setShowModal] = useState(false);
@@ -273,7 +285,7 @@ function TeamMembers({ user, account }) {
   );
 }
 
-function ExternalInvitations({ userInvitations }) {
+export function ExternalInvitations({ userInvitations }) {
   const [loadReject, setLoadReject] = useState(false);
   const [loadAccept, setLoadAccept] = useState(false);
 
@@ -287,8 +299,7 @@ function ExternalInvitations({ userInvitations }) {
         </div>
 
         <div style={{ color: "var(--color-primary)" }}>
-          By accepting the invitation below you will abandon your team. If you
-          are the only person on your team, you will loose your data.
+          By accepting the invitation below you will abandon your current team.
         </div>
       </div>
 
@@ -416,32 +427,51 @@ export default function Team() {
   }
 
   return (
-    <Content maxWidth={600}>
-      <div style={{ marginBottom: "40px" }}>
-        <h1>Your team</h1>
-      </div>
-
-      {!!userInvitations.length && (
-        <Card>
-          <ExternalInvitations userInvitations={userInvitations} />
-        </Card>
-      )}
-
-      <Card style={{ paddingTop: "5px" }} label="Team members">
-        <TeamMembers user={user} account={account} />
-      </Card>
-
-      {!!accountInvitations.length && (
-        <Card style={{ paddingTop: "5px" }} label="Pending invitations">
-          <PendingInvitations accountInvitations={accountInvitations} />
-        </Card>
-      )}
-
-      <Invite
-        user={user}
-        account={account}
-        accountInvitations={accountInvitations}
+    <>
+      <BreadCrumbs
+        list={[
+          {
+            val: "Settings",
+            link: settings,
+          },
+          {
+            val: "Your team",
+            link: team,
+          },
+        ]}
       />
-    </Content>
+
+      <Content maxWidth={600}>
+        <div style={{ marginBottom: "40px" }}>
+          <h1>Your team</h1>
+        </div>
+
+        {!!userInvitations.length && (
+          <Card>
+            <ExternalInvitations userInvitations={userInvitations} />
+          </Card>
+        )}
+
+        {!userInvitations.length && (
+          <>
+            <Card style={{ paddingTop: "5px" }} label="Team members">
+              <TeamMembers user={user} account={account} />
+            </Card>
+
+            {!!accountInvitations.length && (
+              <Card style={{ paddingTop: "5px" }} label="Pending invitations">
+                <PendingInvitations accountInvitations={accountInvitations} />
+              </Card>
+            )}
+
+            <Invite
+              user={user}
+              account={account}
+              accountInvitations={accountInvitations}
+            />
+          </>
+        )}
+      </Content>
+    </>
   );
 }

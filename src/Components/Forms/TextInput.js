@@ -7,6 +7,7 @@ export default function TextInput({
   disabled,
   defaultValue,
   onChange,
+  onBlur,
 }) {
   return (
     <form onSubmit={e => e.preventDefault()} className="notata_form">
@@ -17,6 +18,7 @@ export default function TextInput({
         disabled={disabled}
         defaultValue={defaultValue}
         onChange={onChange}
+        onBlur={onBlur}
       />
     </form>
   );

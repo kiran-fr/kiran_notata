@@ -5,9 +5,15 @@ export default gql`
   mutation evaluationPut(
     $id: ID
     $connectionId: String
+    $groupId: String
     $input: EvaluationInput
   ) {
-    evaluationPut(id: $id, connectionId: $connectionId, input: $input) {
+    evaluationPut(
+      id: $id
+      connectionId: $connectionId
+      groupId: $groupId
+      input: $input
+    ) {
       ...evaluationFields
     }
   }

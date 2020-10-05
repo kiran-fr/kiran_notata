@@ -15,12 +15,8 @@ import {
   funnel_tag_container,
 } from "./Funnel.module.css";
 
-export function Funnel({ connection, user, match }) {
-  const {
-    data,
-    // loading,
-    // error
-  } = useQuery(funnelGroupGet);
+export function Funnel({ connection }) {
+  const { data } = useQuery(funnelGroupGet);
 
   const funnelGroups = (data && data.accountGet.funnelGroups) || [];
   const [mutate] = useMutation(connectionFunnelTagAdd);
@@ -30,25 +26,19 @@ export function Funnel({ connection, user, match }) {
       ({ id }) => id === funnelTag.funnelGroupId
     );
     let allFunnelTags = cloneDeep(funnelGroup.funnelTags);
-    // let selectedTag = allFunnelTags.find(({ id }) => id === funnelTag.id);
 
     let tags = [];
-    // Remove tag if it's the first one and user clicks on it again
+
     if (
       connection.funnelTags.length === 1 &&
       connection.funnelTags[0].id === funnelTag.id
     ) {
       tags = [];
-      // If not... add tags
     } else {
       tags = allFunnelTags.filter(
         ({ index }) => (index || 0) <= funnelTag.index
       );
     }
-
-    console.log("==============");
-    console.log("allFunnelTags", allFunnelTags);
-    console.log("tags", tags);
 
     mutate({
       variables: {
