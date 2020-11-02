@@ -1,5 +1,5 @@
 import React from "react";
-import qp from "../../../utils/queryParams";
+import qp from "utils/queryParams";
 
 export default class Component extends React.Component {
   constructor(props) {

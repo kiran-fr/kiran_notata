@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { Content, ErrorBox, GhostLoader } from "../../elements/";
-import { publicGroupGet } from "../../../Apollo/Queries";
+import { publicGroupGet } from "Apollo/Queries";
 
 export function PublicCreative({ match }) {
   let { id } = match.params;

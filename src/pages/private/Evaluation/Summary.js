@@ -2,18 +2,13 @@ import React, { useEffect } from "react";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { evaluationPut } from "../../../Apollo/Mutations";
-import { connectionGet, evaluationTemplateGet } from "../../../Apollo/Queries";
-
-import { startup_page } from "../../definitions";
+import { evaluationPut } from "Apollo/Mutations";
+import { connectionGet, evaluationTemplateGet } from "Apollo/Queries";
+import { startup_page } from "pages/definitions";
 import { getPossibleScore, getScore } from "./util";
 import classnames from "classnames";
-import {
-  Card,
-  BreadCrumbs,
-  GhostLoader,
-  Content,
-} from "../../../Components/elements";
+
+import { Card, BreadCrumbs, GhostLoader, Content } from "Components/elements";
 
 import {
   summary_score_section,
@@ -88,8 +83,6 @@ export default function Summary({ match, history }) {
   const evaluation = connectionGetData.connectionGet.evaluations.find(
     ({ id }) => id === match.params.evaluationId
   );
-
-  console.log("evaluation", evaluation);
 
   return (
     <div>

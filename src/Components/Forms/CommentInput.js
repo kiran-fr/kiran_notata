@@ -21,12 +21,20 @@ export default function CommentInput({
 
   async function onSubmit(data, event) {
     await handleOnSubmit(data);
-    event.target.reset();
+    // event.target.reset();
   }
 
   async function deleteComment(...params) {
     await handleDeleteComment(...params);
   }
+
+  const handleKeyDown = e => {
+    if (e.key === "Enter" && e.shiftKey) return;
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(onSubmit)(e);
+    }
+  };
 
   return (
     <div className="comment_form" style={style}>
@@ -51,8 +59,9 @@ export default function CommentInput({
           placeholder={placeholder || "Write a comment..."}
           rows={rows | 3}
           name="comment"
-          ref={register}
+          ref={register({ required: true })}
           style={{ resize: "none" }}
+          onKeyDown={handleKeyDown}
         />
 
         <div className="comment_sumbit">

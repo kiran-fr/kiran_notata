@@ -1,9 +1,8 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 
-import { SingleChoiceInput } from "../../../../Components/Forms";
-
-import { publicCreativePut } from "../../../../Apollo/Mutations";
+import { SingleChoiceInput } from "Components/Forms";
+import { publicCreativePut } from "Apollo/Mutations";
 
 export default function SingleChoiceInputContainer({
   question,

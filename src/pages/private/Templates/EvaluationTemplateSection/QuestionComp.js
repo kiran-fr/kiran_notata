@@ -5,12 +5,12 @@ import { useMutation } from "@apollo/client";
 import { omit } from "lodash";
 import classnames from "classnames";
 
-import { evaluationTemplateGet } from "../../../../Apollo/Queries";
+import { evaluationTemplateGet } from "Apollo/Queries";
 
 import {
   evaluationQuestionPut,
   evaluationQuestionDelete,
-} from "../../../../Apollo/Mutations";
+} from "Apollo/Mutations";
 
 import { delete_question } from "./EvaluationTemplateSection.module.css";
 
@@ -34,11 +34,7 @@ import {
   option_save,
 } from "./QuestionComp.module.css";
 
-import {
-  Tag,
-  SimpleInputForm,
-  InputTrafficLight,
-} from "../../../../Components/elements";
+import { Tag, SimpleInputForm, InputTrafficLight } from "Components/elements";
 
 const inputMap = [
   {

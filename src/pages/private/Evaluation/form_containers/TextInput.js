@@ -1,10 +1,8 @@
 import React, { useCallback } from "react";
 import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
-
-import { TextInput } from "../../../../Components/Forms";
-
-import { evaluationPut } from "../../../../Apollo/Mutations";
+import { TextInput } from "Components/Forms";
+import { evaluationPut } from "Apollo/Mutations";
 
 export default function TextInputContainer({
   section,

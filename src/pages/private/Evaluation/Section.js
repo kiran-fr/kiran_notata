@@ -7,13 +7,13 @@ import {
   BreadCrumbs,
   Button,
   GhostLoader,
-} from "../../../Components/elements";
+} from "Components/elements";
 
 import {
   evaluationTemplateGet,
   evaluationTemplateSectionGet,
   connectionGet,
-} from "../../../Apollo/Queries";
+} from "Apollo/Queries";
 
 import GeneralInput from "./form_containers/GeneralInput";
 import { startup_page } from "../../definitions";

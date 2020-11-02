@@ -8,10 +8,9 @@ import * as yup from "yup";
 
 import { Content, Card, Button, ErrorBox } from "../../elements/";
 
-import { userLoggedIn } from "../../../Modules/user";
-import { getUserIsLoggedIn } from "../../../Modules";
-
-import { dashboard, awaiting, login } from "../../../pages/definitions";
+import { userLoggedIn } from "Modules/user";
+import { getUserIsLoggedIn } from "Modules";
+import { dashboard, awaiting, login } from "pages/definitions";
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [errorMessage, setErrorMessage] = useState();
@@ -20,10 +19,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(
       yup.object().shape({
-        email: yup
-          .string()
-          .email()
-          .required(),
+        email: yup.string().email().required(),
         passwordConfirmation: yup.string().oneOf([yup.ref("password"), null]),
       })
     ),

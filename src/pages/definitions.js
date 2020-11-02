@@ -33,7 +33,6 @@ export const templates = `${dashboard}/templates`;
 
 export const evaluation_templates = `${dashboard}/templates`;
 export const evaluation_template = `${evaluation_templates}/edit`;
-
 export const evaluation_template_summary = `${evaluation_templates}/summary`;
 
 export const group = `${dashboard}/group`;
@@ -42,4 +41,3 @@ export const group = `${dashboard}/group`;
 export const public_pages = `/public`;
 export const public_creative = `${public_pages}/creative`;
 export const demo_page = `${public_pages}/demo`;
-// export const demo_page= "/demo";

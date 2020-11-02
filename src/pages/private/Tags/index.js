@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 
-import {
-  Content,
-  GhostLoader,
-  BreadCrumbs,
-} from "../../../Components/elements";
+import { Content, GhostLoader, BreadCrumbs } from "Components/elements";
 import CreateTag from "./CreateTagGroup";
 import TagGroup from "./TagsGroup";
 
-import { tagGroupGet, funnelGroupGet } from "../../../Apollo/Queries";
+import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
 import { useEffect } from "react";
 
-import { settings, tags } from "../../../pages/definitions";
+import { settings, tags } from "pages/definitions";
 
 export default function Tags() {
   const [type, setType] = useState("tags");

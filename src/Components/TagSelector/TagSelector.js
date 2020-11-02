@@ -16,42 +16,40 @@ export default function TagSelector(props) {
   if (!show) return <span />;
 
   return (
-    <>
-      <Modal
-        title={props.title || ""}
-        noKill
-        close={() => {
-          props.close();
-        }}
-        disableFoot={true}
-      >
-        <SelectedTags {...props} />
+    <Modal
+      title={props.title || ""}
+      noKill
+      close={() => {
+        props.close();
+      }}
+      disableFoot={true}
+    >
+      <SelectedTags {...props} />
 
-        {/*OVERVIEW*/}
-        {tagGroups && !showGroup && (
-          <TagOverview
-            {...props}
-            setShowGroup={setShowGroup}
-            close={() => {
-              props.close();
-              setShowGroup(null);
-            }}
-          />
-        )}
+      {/*OVERVIEW*/}
+      {tagGroups && !showGroup && (
+        <TagOverview
+          {...props}
+          setShowGroup={setShowGroup}
+          close={() => {
+            props.close();
+            setShowGroup(null);
+          }}
+        />
+      )}
 
-        {/*PAGE*/}
-        {showGroup && (
-          <TagPage
-            {...props}
-            tagGroups={tagGroups}
-            groupId={showGroup}
-            // setShowGroup={setShowGroup}
-            close={() => {
-              setShowGroup(null);
-            }}
-          />
-        )}
-      </Modal>
-    </>
+      {/*PAGE*/}
+      {showGroup && (
+        <TagPage
+          {...props}
+          tagGroups={tagGroups}
+          groupId={showGroup}
+          // setShowGroup={setShowGroup}
+          close={() => {
+            setShowGroup(null);
+          }}
+        />
+      )}
+    </Modal>
   );
 }

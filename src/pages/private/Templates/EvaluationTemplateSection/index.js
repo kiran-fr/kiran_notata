@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 
 import Question from "./QuestionComp";
 
-import { evaluationTemplateGet } from "../../../../Apollo/Queries";
+import { evaluationTemplateGet } from "Apollo/Queries";
 import {
   evaluationQuestionPut,
   evaluationTemplateSectionPut,
-} from "../../../../Apollo/Mutations";
+} from "Apollo/Mutations";
 
 import {
   settings,
@@ -22,7 +22,7 @@ import {
   Content,
   BreadCrumbs,
   GhostLoader,
-} from "../../../../Components/elements";
+} from "Components/elements";
 
 function NameAndDescription({ template, section }) {
   const [mutate] = useMutation(evaluationTemplateSectionPut);

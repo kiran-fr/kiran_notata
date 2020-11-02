@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import classnames from "classnames";
 import moment from "moment";
 
-import { logPut } from "../../../../Apollo/Mutations";
-import { logGet } from "../../../../Apollo/Queries";
+import { logPut } from "Apollo/Mutations";
+import { logGet } from "Apollo/Queries";
 
 import {
   log_feed_item,

@@ -10,15 +10,15 @@ import {
   Modal,
   BreadCrumbs,
   GhostLoader,
-} from "../../../../Components/elements";
+} from "Components/elements";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
-import { evaluationTemplatesGet, groupsGet } from "../../../../Apollo/Queries";
+import { accountGet, evaluationTemplatesGet, groupsGet } from "Apollo/Queries";
 
 import {
   evaluationTemplatePut,
   evaluationTemplateDelete,
-} from "../../../../Apollo/Mutations";
+} from "Apollo/Mutations";
 
 import {
   settings,
@@ -64,24 +64,25 @@ const CreateNewTemplate = ({ setShowModal }) => {
     try {
       await mutate({
         variables,
-        // update: (proxy, { data: { evaluationTemplatePut } }) => {
-        //   const data = proxy.readQuery({
-        //     query: accountGet,
-        //   });
 
-        //   proxy.writeQuery({
-        //     query: accountGet,
-        //     data: {
-        //       accountGet: {
-        //         ...data.accountGet,
-        //         evaluationTemplates: [
-        //           evaluationTemplatePut,
-        //           ...data.accountGet.evaluationTemplates,
-        //         ],
-        //       },
-        //     },
-        //   });
-        // },
+        update: (proxy, { data: { evaluationTemplatePut } }) => {
+          const data = proxy.readQuery({
+            query: accountGet,
+          });
+
+          proxy.writeQuery({
+            query: accountGet,
+            data: {
+              accountGet: {
+                ...data.accountGet,
+                evaluationTemplates: [
+                  evaluationTemplatePut,
+                  ...data.accountGet.evaluationTemplates,
+                ],
+              },
+            },
+          });
+        },
       });
 
       setShowModal(false);

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import { tagGroupGet } from "../../Apollo/Queries";
-import { tagPut } from "../../Apollo/Mutations";
+import { tagGroupGet } from "Apollo/Queries";
+import { tagPut } from "Apollo/Mutations";
 
 import {
-  dropdown_container,
-  dropdown_title,
   dropdown_inner,
   dropdown_list_container,
   dropdown_group_item,
@@ -26,7 +24,7 @@ export default function TagPage({
   close,
   tagGroups,
 }) {
-  let [mutate, { loading, error, data }] = useMutation(tagPut, {
+  let [mutate, { loading }] = useMutation(tagPut, {
     refetchQueries: [{ query: tagGroupGet }],
     awaitRefetchQueries: true,
   });
@@ -52,14 +50,10 @@ export default function TagPage({
       ({ name }) => name.toLowerCase() === filter.toLowerCase()
     );
 
-    if (!match) {
-      addNewButton = "SMALL";
-    }
+    if (!match) addNewButton = "SMALL";
   }
 
-  if (filter.length && !tags.length) {
-    addNewButton = "LARGE";
-  }
+  if (filter.length && !tags.length) addNewButton = "LARGE";
 
   return (
     <div

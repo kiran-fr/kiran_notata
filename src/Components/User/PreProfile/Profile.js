@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 // API STUFF
 import { useMutation } from "@apollo/client";
 
-import { userUpdate } from "../../../Apollo/Mutations";
-import { dashboard } from "../../../pages/definitions";
+import { userUpdate } from "Apollo/Mutations";
+import { dashboard } from "pages/definitions";
 
 import { omit } from "lodash";
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import TagSelector from "../../../Components/TagSelector/TagSelector";
-import { funnelGroupGet } from "../../../Apollo/Queries";
+import TagSelector from "Components/TagSelector/TagSelector";
+import { funnelGroupGet } from "Apollo/Queries";
 import { useQuery } from "@apollo/client";
-import { Tag, Modal } from "../../../Components/elements/";
+import { Tag, Modal } from "Components/elements/";
 import { cloneDeep } from "lodash";
 import classnames from "classnames";
 

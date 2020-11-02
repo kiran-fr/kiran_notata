@@ -53,10 +53,7 @@ function AddNewMember({ group, mutate }) {
   const emailForm = useForm({
     resolver: yupResolver(
       yup.object().shape({
-        email: yup
-          .string()
-          .email()
-          .required(),
+        email: yup.string().email().required(),
       })
     ),
   });
@@ -1177,33 +1174,37 @@ export default function Group({ match, history }) {
           <h1>{group.name}</h1>
         </div>
 
-        {/* List ALL users to everyone */
+        {
+          /* List ALL users to everyone */
 
-        ((isAdmin || (!isAdmin && settings.showUsers)) && (
-          <Card label="Members" style={{ paddingTop: "5px" }}>
-            <MemberList
-              group={group}
-              mutate={mutate}
-              isAdmin={isAdmin}
-              user={user}
-            />
-          </Card>
-          /* Show only who shared */
-        )) || (
-          <Card label="Shared by" style={{ paddingTop: "5px" }}>
-            <SharedBy
-              group={group}
-              mutate={mutate}
-              isAdmin={isAdmin}
-              user={user}
-            />
-          </Card>
-        )}
+          ((isAdmin || (!isAdmin && settings.showUsers)) && (
+            <Card label="Members" style={{ paddingTop: "5px" }}>
+              <MemberList
+                group={group}
+                mutate={mutate}
+                isAdmin={isAdmin}
+                user={user}
+              />
+            </Card>
+            /* Show only who shared */
+          )) || (
+            <Card label="Shared by" style={{ paddingTop: "5px" }}>
+              <SharedBy
+                group={group}
+                mutate={mutate}
+                isAdmin={isAdmin}
+                user={user}
+              />
+            </Card>
+          )
+        }
 
-        {/* Invite member */
-        (isAdmin || (!isAdmin && settings.showUsers && settings.addUser)) && (
-          <AddNewMember group={group} mutate={mutate} />
-        )}
+        {
+          /* Invite member */
+          (isAdmin || (!isAdmin && settings.showUsers && settings.addUser)) && (
+            <AddNewMember group={group} mutate={mutate} />
+          )
+        }
 
         <Card label="Startups" style={{ paddingTop: "5px" }}>
           <StartupList
@@ -1217,14 +1218,16 @@ export default function Group({ match, history }) {
           />
         </Card>
 
-        {/* Add new startup */
-        (isAdmin || (!isAdmin && settings.addStartup)) && (
-          <AddNewStartup
-            connections={connections}
-            group={group}
-            mutate={mutate}
-          />
-        )}
+        {
+          /* Add new startup */
+          (isAdmin || (!isAdmin && settings.addStartup)) && (
+            <AddNewStartup
+              connections={connections}
+              group={group}
+              mutate={mutate}
+            />
+          )
+        }
 
         {group.evaluationTemplates && !!group.evaluationTemplates.length && (
           <Card label="Evaluation templates" style={{ paddingTop: "5px" }}>
@@ -1238,15 +1241,17 @@ export default function Group({ match, history }) {
           </Card>
         )}
 
-        {/* Add new startup */
-        (isAdmin || (!isAdmin && settings.addStartup)) && (
-          <AddNewTemplate
-            isAdmin={isAdmin}
-            // connections={connections}
-            group={group}
-            mutate={mutate}
-          />
-        )}
+        {
+          /* Add new startup */
+          (isAdmin || (!isAdmin && settings.addStartup)) && (
+            <AddNewTemplate
+              isAdmin={isAdmin}
+              // connections={connections}
+              group={group}
+              mutate={mutate}
+            />
+          )
+        }
 
         {isAdmin && (
           <div

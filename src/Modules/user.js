@@ -2,21 +2,21 @@ export const USER_LOGGED_IN = "user_USER_LOGGED_IN";
 export const USER_NOT_LOGGED_IN = "user_USER_NOT_LOGGED_IN";
 export const SET_USER_ATTRIBUTES = "user_SET_USER_ATTRIBUTES";
 
-export const getUserIsLoggedIn = (state) => state.loggedIn;
-export const getAttributes = (state) => state.attributes;
-export const getEmailIsVerified = (state) =>
+export const getUserIsLoggedIn = state => state.loggedIn;
+export const getAttributes = state => state.attributes;
+export const getEmailIsVerified = state =>
   state.attributes.length === 0 ||
   state.attributes.some(
-    (attribute) =>
-      attribute.Name === "email_verified" && attribute.Value === "true",
+    attribute =>
+      attribute.Name === "email_verified" && attribute.Value === "true"
   );
 
-export const setUserAttributes = (payload) => ({
+export const setUserAttributes = payload => ({
   type: SET_USER_ATTRIBUTES,
   payload,
 });
 
-export const userLoggedIn = (payload) => ({
+export const userLoggedIn = payload => ({
   type: USER_LOGGED_IN,
   payload,
 });

@@ -9,6 +9,7 @@ export default gql`
       updatedAt
       starred
       creativeId
+
       subjectiveScores {
         score
       }

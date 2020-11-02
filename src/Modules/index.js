@@ -3,7 +3,7 @@ import user, * as fromUser from "./user";
 import { USER_NOT_LOGGED_IN } from "./user";
 
 const rootReducer = combineReducers({
-  user
+  user,
 });
 
 export default (state, action) => {
@@ -15,4 +15,4 @@ export default (state, action) => {
 
 // export const getLoggedInUSer = ({user}) => fromUser.userLoggedIn(user);
 
-export const getUserIsLoggedIn = ({user}) => fromUser.getUserIsLoggedIn(user);
+export const getUserIsLoggedIn = ({ user }) => fromUser.getUserIsLoggedIn(user);

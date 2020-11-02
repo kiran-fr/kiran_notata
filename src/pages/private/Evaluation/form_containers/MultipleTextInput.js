@@ -1,9 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-
-import { MultipleTextInput } from "../../../../Components/Forms";
-
-import { evaluationPut } from "../../../../Apollo/Mutations";
+import { MultipleTextInput } from "Components/Forms";
+import { evaluationPut } from "Apollo/Mutations";
 
 export default function MultipleTextInputContainer({
   section,

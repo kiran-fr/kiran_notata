@@ -1,5 +1,5 @@
 import React from "react";
-import { Content } from "../../../Components/elements";
+import { Content } from "Components/elements";
 
 const Comp = () => {
   return (

@@ -1,20 +1,11 @@
 import React, { useCallback } from "react";
 import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
-
-import { TextInput } from "../../../../Components/Forms";
-
-import { publicCreativePut } from "../../../../Apollo/Mutations";
+import { TextInput } from "Components/Forms";
+import { publicCreativePut } from "Apollo/Mutations";
 
 export default function TextInputContainer({ question, section, creative }) {
   const [mutate, { loading }] = useMutation(publicCreativePut);
-
-  // const delayedMutation = useCallback(
-  //   debounce(q => {
-  //     mutate(q)
-  //   }, 1000),
-  //   []
-  // );
 
   const answer = (creative.answers || []).find(
     ({ inputType, questionId }) =>

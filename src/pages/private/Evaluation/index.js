@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
 
-import { connectionGet, evaluationTemplateGet } from "../../../Apollo/Queries";
+import { connectionGet, evaluationTemplateGet } from "Apollo/Queries";
 
 import { startup_page } from "../../definitions";
 
@@ -12,7 +12,7 @@ import {
   Button,
   Content,
   GhostLoader,
-} from "../../../Components/elements";
+} from "Components/elements";
 
 export default function Evaluation({ match, history }) {
   const { connectionId, evaluationId } = match.params;

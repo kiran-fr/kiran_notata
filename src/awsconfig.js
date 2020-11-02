@@ -1,13 +1,8 @@
-import AWS from "aws-sdk";
-import { AUTH_TYPE } from "aws-appsync";
+import AWS from "aws-sdk/global";
 import Amplify, { Auth } from "aws-amplify";
-
 import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
-
-import { createAuthLink } from "aws-appsync-auth-link";
+import { AUTH_TYPE, createAuthLink } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
-
-// const STAGE = process.env.REACT_APP_STAGE;
 
 export const awsconfig = {
   region: "eu-west-1",
@@ -53,11 +48,10 @@ Amplify.configure({
 
 const dev_URL_id = "soaim5drvjdfplwdjyllz2ru6i";
 const dev2_URL_id = "3mlk5clgsvdptfcfo7utvkqhim";
-
 const prodtest_URL_id = "pm4namovdzgpboqy5s2vgafzjy";
 
-// const appsync_URL_id = dev2_URL_id;
-const appsync_URL_id = prodtest_URL_id;
+const appsync_URL_id = dev2_URL_id;
+// const appsync_URL_id = prodtest_URL_id;
 
 const appsyncUrl = `https://${appsync_URL_id}.appsync-api.eu-west-1.amazonaws.com/graphql`;
 

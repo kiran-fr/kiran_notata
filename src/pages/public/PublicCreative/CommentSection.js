@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { publicCreativePut } from "../../../Apollo/Mutations";
+import { publicCreativePut } from "Apollo/Mutations";
 import {
   comments_label,
   comments_list,
@@ -59,23 +59,21 @@ export function CommentSection({ section, question, creative }) {
   return (
     <div className="comment_form" style={{ padding: "15px" }}>
       {!!comments.length && (
-        <>
-          <div className={comments_list}>
-            <div className={comments_label}>Comments</div>
-            {comments.map(({ val, id }) => (
-              <div key={id} className={comment_item}>
-                {val}
+        <div className={comments_list}>
+          <div className={comments_label}>Comments</div>
+          {comments.map(({ val, id }) => (
+            <div key={id} className={comment_item}>
+              {val}
 
-                <div
-                  className={comment_delete}
-                  onClick={() => deleteComment({ val, id })}
-                >
-                  delete
-                </div>
+              <div
+                className={comment_delete}
+                onClick={() => deleteComment({ val, id })}
+              >
+                delete
               </div>
-            ))}
-          </div>
-        </>
+            </div>
+          ))}
+        </div>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <textarea
@@ -94,33 +92,3 @@ export function CommentSection({ section, question, creative }) {
     </div>
   );
 }
-
-// import React, { useEffect, useState, useCallback } from "react";
-// import { useMutation } from "@apollo/client";
-// import { useForm } from "react-hook-form";
-// import { publicCreativePut } from "../../../Apollo/Mutations";
-// import { debounce } from "lodash";
-
-// export function CommentSection({ question, creative }) {
-
-//   const { register, handleSubmit, formState } = useForm();
-//   const { isSubmitting } = formState;
-
-//   const onSubmit = async (data, event) => {
-//     console.log("data", data);
-//   };
-
-//   return (
-//     <div className="comment_form" style={{ padding: "15px" }}>
-//       <form onSubmit={handleSubmit(onSubmit)}>
-//         <textarea
-//           placeholder="Add comment..."
-//           rows="3"
-//           name="val"
-//           ref={register}
-//           style={{ resize: "none" }}
-//         />
-//       </form>
-//     </div>
-//   );
-// }

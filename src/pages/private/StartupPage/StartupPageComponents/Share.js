@@ -6,12 +6,12 @@ import { yupResolver } from "@hookform/resolvers";
 import moment from "moment";
 import * as yup from "yup";
 
-import { Modal, Table, Button } from "../../../../Components/elements";
+import { Modal, Table, Button } from "Components/elements";
 
-import { groupsGet, connectionGet } from "../../../../Apollo/Queries";
-import { groupPut } from "../../../../Apollo/Mutations";
+import { groupsGet, connectionGet } from "Apollo/Queries";
+import { groupPut } from "Apollo/Mutations";
 
-import validateEmail from "../../../../utils/validateEmail";
+import validateEmail from "utils/validateEmail";
 import { group as group_route } from "../../../definitions";
 
 import { share_description, icon_item, action_link } from "./Share.module.css";
@@ -166,7 +166,6 @@ function RevokeSharing({ group, connection, user }) {
 
 function SharedWithGroupList(props) {
   let { groups, connection, user, shareStartup, history } = props;
-
   const [mutate, { loading }] = useMutation(groupPut);
 
   const columns = [
@@ -222,34 +221,6 @@ function SharedWithGroupList(props) {
         );
       },
     },
-    // {
-    //   title: "Icons",
-    //   key: "icons",
-    //   className: "desktop_only",
-    //   render: group => {
-    //     let iconList = [];
-    //     let startup = group.startups.find(
-    //       s => s.connectionId === connection.id
-    //     );
-
-    //     if (!startup) return <span/>
-
-    //     if (startup.comments) iconList.push("fas fa-comment");
-    //     if (startup.tags) iconList.push("fas fa-tags");
-    //     if (startup.subjective_score) iconList.push("fas fa-brain");
-    //     if (startup.evaluations) iconList.push("fas fa-clipboard-list-check");
-    //     return (
-    //       <>
-    //         {iconList.map(iconClass => (
-    //           <i
-    //             key={`${iconClass}`}
-    //             className={classnames(iconClass, icon_item)}
-    //           />
-    //         ))}
-    //       </>
-    //     );
-    //   },
-    // },
 
     {
       title: "",
@@ -288,10 +259,7 @@ function CreateNewGroup({ done, cancel, mutate }) {
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(
       yup.object().shape({
-        email: yup
-          .string()
-          .email()
-          .required(),
+        email: yup.string().email().required(),
       })
     ),
   });
@@ -357,12 +325,15 @@ function CreateNewGroup({ done, cancel, mutate }) {
   );
 }
 
-export function Share({ connection, groups, user, history }) {
+export function Share({ connection, user, history }) {
   const [showModal, setShowModal] = useState(false);
   const [showCreateNewGroup, setShowCreateNewGroup] = useState(false);
   const [showShareSettings, setShowShareSettings] = useState(null);
 
   const [mutate] = useMutation(groupPut);
+
+  const { data } = useQuery(groupsGet);
+  let groups = data?.groupsGet || [];
 
   let sharedWithGroups =
     groups.filter(g =>
@@ -384,7 +355,8 @@ export function Share({ connection, groups, user, history }) {
     groups.filter(
       g =>
         !g.startups.some(s => s.connectionId === connection.id) &&
-        g.settings && g.settings.addStartup
+        g.settings &&
+        g.settings.addStartup
     ) || [];
 
   const columns = [

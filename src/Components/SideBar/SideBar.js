@@ -11,7 +11,7 @@ import {
   templates,
   signOut,
   settings,
-} from "../../pages/definitions";
+} from "pages/definitions";
 
 import { sidebar_container, menu_container } from "./SideBar.module.css";
 

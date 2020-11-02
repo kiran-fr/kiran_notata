@@ -3,8 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-
-import validateEmail from "../../../utils/validateEmail";
+import validateEmail from "utils/validateEmail";
 
 // API STUFF
 import {
@@ -12,12 +11,9 @@ import {
   userInvitationsGet,
   accountGet,
   accountInvitationsGet,
-} from "../../../Apollo/Queries";
+} from "Apollo/Queries";
 
-import {
-  accountInvite,
-  userInvitationResponse,
-} from "../../../Apollo/Mutations";
+import { accountInvite, userInvitationResponse } from "Apollo/Mutations";
 
 import {
   delete_bucket,
@@ -38,18 +34,9 @@ import {
   Modal,
   GhostLoader,
   BreadCrumbs,
-} from "../../../Components/elements";
+} from "Components/elements";
 
-import {
-  // dashboard,
-  // profile,
-  // tags,
-  // group,
-  team,
-  // templates,
-  // signOut,
-  settings,
-} from "../../../pages/definitions";
+import { team, settings } from "pages/definitions";
 
 function Invite({ account, user }) {
   const [showModal, setShowModal] = useState(false);
@@ -58,10 +45,7 @@ function Invite({ account, user }) {
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(
       yup.object().shape({
-        email: yup
-          .string()
-          .email()
-          .required(),
+        email: yup.string().email().required(),
       })
     ),
   });
@@ -422,9 +406,7 @@ export default function Team() {
     accountInvitationsQuery.loading ||
     userInvitationsQuery.loading;
 
-  if (loading) {
-    return <GhostLoader />;
-  }
+  if (loading) return <GhostLoader />;
 
   return (
     <>

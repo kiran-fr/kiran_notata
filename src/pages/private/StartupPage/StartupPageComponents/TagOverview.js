@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "../../../../Components/elements/";
+import { Button } from "Components/elements/";
 
 import {
   dropdown_container,
@@ -58,30 +58,6 @@ export default function TagOverview({
                   onClick={() => setShowGroup(tagGroup)}
                 />
               </div>
-
-              {/*
-                  <div className={dropdown_group_list}>
-                    {tagGroup.tags
-                      .filter(tag =>
-                        connection.tags.some(({ id: tagId }) => tagId === tag.id)
-                      )
-                      .map(tag => {
-                        return (
-                          <div className={dropdown_group_list_item} key={tag.id}>
-                            <div
-                              className={dropdown_group_tag_kill}
-                              onClick={() => deleteTag(tag)}
-                            >
-                              <i className="fal fa-times" />
-                            </div>
-                            <div className={dropdown_group_tag_name}>
-                              {tag.name}
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
-                */}
             </div>
           ))}
 

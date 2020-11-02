@@ -4,9 +4,8 @@ import { Redirect, Switch } from "react-router-dom";
 import Route from "react-router/es/Route";
 
 // API
-// import { Query } from "@apollo/client/react/components";
 import { useQuery } from "@apollo/client";
-import { userGet } from "../Apollo/Queries";
+import { userGet } from "Apollo/Queries";
 
 // ROUTES
 import {
@@ -53,16 +52,16 @@ import SummaryPage from "./private/Evaluation/Summary";
 
 // Groups
 import Groups from "./private/Groups/Groups";
-import Group from "./private/Groups/Group";
+import Group from "./private/Groups/Group/Group";
 import GroupConnection from "./private/Groups/GroupConnection";
 import GroupSettings from "./private/Groups/GroupSettings";
 
 // Loader
-import { GhostLoader } from "../Components/elements";
+import { GhostLoader } from "Components/elements";
 
 // Styles
-import SideBar from "../Components/SideBar/SideBar";
-import Header from "../Components/Header/Header";
+import SideBar from "Components/SideBar/SideBar";
+import Header from "Components/Header/Header";
 
 export const RouterComponent = ({ history }) => {
   return (

@@ -7,21 +7,20 @@ import {
   logGet,
   evaluationTemplateGet,
   connectionsGet,
-} from "../../../Apollo/Queries";
+} from "Apollo/Queries";
 
-import { connectionPut } from "../../../Apollo/Mutations";
-
-import { startup_page, group as group_route } from "../../definitions";
+import { connectionPut } from "Apollo/Mutations";
+import { startup_page, group as group_route } from "pages/definitions";
 
 import moment from "moment";
+
 import {
   BreadCrumbs,
   Content,
   Card,
   Tag,
-  Button,
   GhostLoader,
-} from "../../../Components/elements";
+} from "Components/elements";
 
 import {
   header_comp,
@@ -285,6 +284,7 @@ function Comments({ connection }) {
   if (!comments.length) {
     return <span>There are no comments for this startup</span>;
   }
+
   return (
     <>
       {comments.map((commentItem, i) => {

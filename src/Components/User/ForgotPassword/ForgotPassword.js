@@ -7,7 +7,8 @@ export function ForgotPassword({ location }) {
   const [confirmEmail, setConfirmEmail] = useState(false);
   const [email, setEmail] = useState();
 
-  if (!confirmEmail) {
+  if (confirmEmail) return <ConfirmUser email={email} />;
+  else
     return (
       <EnterUsername
         location={location}
@@ -17,11 +18,4 @@ export function ForgotPassword({ location }) {
         }}
       />
     );
-  }
-
-  if (confirmEmail) {
-    return <ConfirmUser email={email} />;
-  }
-
-  return <span>?</span>;
 }

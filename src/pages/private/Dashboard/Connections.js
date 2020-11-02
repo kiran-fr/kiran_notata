@@ -27,13 +27,13 @@ import Filters from "./Filters";
 import { startup_page } from "../../definitions";
 
 import {
+  Modal,
   Button,
   Table,
   Card,
   Tag,
   GhostLoader,
-  Modal,
-} from "../../../Components/elements";
+} from "Components/elements";
 
 import TagSelector from "../../../Components/TagSelector/TagSelector";
 

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-
-import { Content } from "../../../Components/elements";
+import { Content } from "Components/elements";
 
 import LOGIN from "./gifs/01_LOGIN_396.gif";
 import DASH from "./gifs/02_DASH_396.gif";

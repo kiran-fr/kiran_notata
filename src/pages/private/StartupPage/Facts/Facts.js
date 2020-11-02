@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { creativeGet, creativeTemplateGet } from "../../../../Apollo/Queries";
-import { creativePut } from "../../../../Apollo/Mutations";
+import { creativeGet, creativeTemplateGet } from "Apollo/Queries";
+import { creativePut } from "Apollo/Mutations";
 
-import validateEmail from "../../../../utils/validateEmail";
+import validateEmail from "utils/validateEmail";
 
 import {
   Content,
@@ -17,9 +17,9 @@ import {
   Button,
   SuccessBox,
   GhostLoader,
-} from "../../../../Components/elements";
+} from "Components/elements";
 
-import { dashboard, startup_page } from "../../../definitions";
+import { dashboard, startup_page } from "pages/definitions";
 import {
   share_title,
   share_text,
@@ -98,10 +98,7 @@ function InviteStartup({ creative, connectionId, mutate, loading }) {
   const { register, handleSubmit, formState, setValue, errors } = useForm({
     resolver: yupResolver(
       yup.object().shape({
-        email: yup
-          .string()
-          .email()
-          .required(),
+        email: yup.string().email().required(),
       })
     ),
   });

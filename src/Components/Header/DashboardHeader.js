@@ -3,14 +3,10 @@ import React, { useState } from "react";
 import {
   frontpage,
   dashboard,
-  // profile,
-  // tags,
   group,
-  // team,
   signOut,
-  // templates,
   settings,
-} from "../../pages/definitions";
+} from "pages/definitions";
 
 // STYLE
 import {
@@ -106,47 +102,6 @@ export const DashboardHeader = ({ history, location }) => {
         {menuItems.map((item, i) => (
           <MenuIconItem key={i} {...item} location={location} />
         ))}
-
-        {/*
-            <div className={icon_dropdown_container}>
-              <MenuIconItem
-                label="More"
-                iconClass="fal fa-bars"
-                onClick={() => setOpenMenu(true)}
-                location={location}
-              />
-
-              {openMenu && (
-                <div className={drop_down}>
-                  <div
-                    className={drop_down_ghost}
-                    onClick={() => setOpenMenu(false)}
-                  />
-
-                  <div className={drop_down_list}>
-                    <div
-                      className={drop_down_close}
-                      onClick={() => setOpenMenu(false)}
-                    >
-                      <i className="fal fa-times" />
-                    </div>
-
-                    {
-                      moreMenuItems.map((item, i) => (
-                        <MenuIconItem
-                          key={`m-${i}`}
-                          horizontal
-                          {...item}
-                          onClick={() => setOpenMenu(false)}
-                          location={location}
-                        />
-                      ))
-                    }
-                  </div>
-                </div>
-              )}
-            </div>
-          */}
       </div>
     </div>
   );

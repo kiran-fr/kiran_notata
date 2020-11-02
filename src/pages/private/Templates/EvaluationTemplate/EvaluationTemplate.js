@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import { evaluationTemplateGet } from "../../../../Apollo/Queries";
+import { evaluationTemplateGet } from "Apollo/Queries";
 import {
   evaluationTemplatePut,
   evaluationTemplateSectionPut,
   evaluationTemplateSectionDelete,
-} from "../../../../Apollo/Mutations";
+} from "Apollo/Mutations";
 import {
   settings,
   evaluation_template,
   evaluation_templates,
-} from "../../../definitions";
+} from "pages/definitions";
 
 import {
   Card,
@@ -22,7 +22,8 @@ import {
   Modal,
   BreadCrumbs,
   GhostLoader,
-} from "../../../../Components/elements";
+} from "Components/elements";
+import TemplateInfo from "./TemplateInfo";
 
 import { delete_bucket } from "./EvaluationTemplate.module.css";
 
@@ -189,9 +190,7 @@ export default function EvaluationTemplate({ match, history }) {
   );
 
   let template = {};
-  if (data) {
-    template = data.evaluationTemplateGet;
-  }
+  if (data) template = data.evaluationTemplateGet;
 
   useEffect(() => {
     if (id && id !== "new") {
@@ -199,10 +198,8 @@ export default function EvaluationTemplate({ match, history }) {
     }
   }, [getData, id]);
 
-  if (error) return <div>We are updating </div>;
-  if (loading) {
-    return <GhostLoader />;
-  }
+  if (error) return <div>We are updating</div>;
+  if (loading) return <GhostLoader />;
 
   const columns = [
     {
@@ -245,7 +242,15 @@ export default function EvaluationTemplate({ match, history }) {
 
         return (
           <div>
-            <div>{section.name}</div>
+            <div
+              style={{
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                maxWidth: "400px",
+              }}
+            >
+              {section.name}
+            </div>
             <div style={{ opacity: 0.5, fontSize: "12px" }}>
               {questions.length} questions - {possibleScore} points
             </div>
@@ -296,7 +301,7 @@ export default function EvaluationTemplate({ match, history }) {
         ]}
       />
       <Content maxWidth={600}>
-        <NameAndDescription template={template} />
+        <TemplateInfo template={template} />
 
         <Card style={{ paddingTop: "5px" }}>
           <Table

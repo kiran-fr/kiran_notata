@@ -3,11 +3,9 @@ import { useMutation, useQuery } from "@apollo/client";
 import { cloneDeep } from "lodash";
 import classnames from "classnames";
 
-import { funnelGroupGet, connectionGet } from "../../../../Apollo/Queries";
-
-import { connectionFunnelTagAdd } from "../../../../Apollo/Mutations";
-
-import { Card } from "../../../../Components/elements";
+import { funnelGroupGet, connectionGet } from "Apollo/Queries";
+import { connectionFunnelTagAdd } from "Apollo/Mutations";
+import { Card } from "Components/elements";
 
 import {
   funnel_tag,
@@ -15,7 +13,7 @@ import {
   funnel_tag_container,
 } from "./Funnel.module.css";
 
-export function Funnel({ connection }) {
+export function Funnel({ connection, user, match }) {
   const { data } = useQuery(funnelGroupGet);
 
   const funnelGroups = (data && data.accountGet.funnelGroups) || [];

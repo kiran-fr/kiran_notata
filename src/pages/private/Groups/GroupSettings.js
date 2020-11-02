@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from "react";
-import moment from "moment";
-
 import { useForm } from "react-hook-form";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 
+import { userGet, groupGet } from "Apollo/Queries";
+import { groupPut, connectionPut } from "Apollo/Mutations";
+
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-
-import {
-  userGet,
-  groupGet,
-  // connectionsGet,
-  // evaluationTemplateNamesGet
-} from "../../../Apollo/Queries";
-
-import { groupPut, connectionPut } from "../../../Apollo/Mutations";
 
 import {
   group as group_route,
   group_settings,
   startup_page,
   evaluation_template_summary,
-} from "../../definitions";
+} from "pages/definitions";
 
 import classnames from "classnames";
 
@@ -33,7 +25,7 @@ import {
   Button,
   Modal,
   GhostLoader,
-} from "../../../Components/elements";
+} from "Components/elements";
 
 export default function GroupSettings({ match, history }) {
   const { register, handleSubmit, formState, setValue } = useForm();

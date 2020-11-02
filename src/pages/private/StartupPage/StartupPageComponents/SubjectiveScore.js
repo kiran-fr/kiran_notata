@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 
-import { connectionSubjectiveScorePut } from "../../../../Apollo/Mutations";
+import { connectionSubjectiveScorePut } from "Apollo/Mutations";
 import { group as group_route } from "../../../definitions";
 
 import {

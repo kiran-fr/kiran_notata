@@ -9,27 +9,17 @@ import * as yup from "yup";
 
 import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
 
-import { userLoggedIn } from "../../../Modules/user";
-import { getUserIsLoggedIn } from "../../../Modules";
-
-import { dashboard, forgotPassword } from "../../../pages/definitions";
+import { userLoggedIn } from "Modules/user";
+import { getUserIsLoggedIn } from "Modules";
+import { dashboard, forgotPassword } from "pages/definitions";
 
 const getErrorMessage = ({ error }) => {
-  console.log("getErrorMessage");
-  console.log(JSON.stringify(error, null, 2));
-
   let { code } = error;
-
   let defaultError = "Yo, something went wrong, innit";
-
   let codeMap = {
     NotAuthorizedException: "Email and password does not match",
   };
-
   let errorMessage = codeMap[code] || defaultError;
-
-  // return errorMessage;
-
   return error.message;
 };
 
@@ -45,15 +35,12 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
       ? undefined
       : yupResolver(
           yup.object().shape({
-            email: yup
-              .string()
-              .email()
-              .required(),
+            email: yup.string().email().required(),
           })
         ),
   });
-  const { isSubmitting, isSubmitted } = formState;
 
+  const { isSubmitting, isSubmitted } = formState;
   const s = queryString.parse(location.search);
 
   useEffect(() => {
