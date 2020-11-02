@@ -164,9 +164,9 @@ export default function Section({ match, history }) {
     connectionQuery.loading || evaluationTemplateSectionQuery.loading;
   const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
 
-  if (loading) {
-    return <GhostLoader />;
-  }
+  // if (loading) {
+  //   return <GhostLoader />;
+  // }
 
   // console.log('connectionQuery.error', connectionQuery.error)
 

@@ -28,7 +28,7 @@ export function Tags({ connection, user, match }) {
 
   if (!data && loading) return <span />;
 
-  const tagGroups = data.accountGet.tagGroups || [];
+  const tagGroups = data?.accountGet?.tagGroups || [];
 
   function addTag(tag) {
     mutate({

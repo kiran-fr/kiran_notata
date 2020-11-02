@@ -164,7 +164,7 @@ const WrapperComponent = ({ ...props }) => {
     return <Redirect to={signup} />;
   }
 
-  if (loading) return <GhostLoader />;
+  // if (loading) return <GhostLoader />;
 
   if (!loading && !error && data) {
     let user = data.userGet || {};
