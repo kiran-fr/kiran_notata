@@ -6,6 +6,8 @@ import { Tag, Modal } from "Components/elements/";
 import { cloneDeep } from "lodash";
 import classnames from "classnames";
 
+import moment from "moment";
+
 import {
   container,
   content,
@@ -24,13 +26,15 @@ import {
   funnel_tag_active,
 } from "./Filters.module.css";
 
+import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
+
 const Tags = ({ filters, tagGroups, setFilters }) => {
   const [show, setShow] = useState(false);
 
   return (
     <div className={filter_icon_container}>
       <div className={filter_icon} onClick={() => setShow(!show)}>
-        <i className="fal fa-tag" />
+        <i className={`${filters.tags?.length ? "fas" : "fal"} fa-tag`} />
       </div>
 
       <TagSelector
@@ -78,7 +82,9 @@ const Funnels = ({ filters, setFilters }) => {
   return (
     <div className={filter_icon_container}>
       <div className={filter_icon} onClick={() => setShow(!show)}>
-        <i className="fal fa-filter" />
+        <i
+          className={`${filters.funnelTags?.length ? "fas" : "fal"} fa-filter`}
+        />
       </div>
 
       {show && (
@@ -114,12 +120,56 @@ const Funnels = ({ filters, setFilters }) => {
   );
 };
 
+const DateSelector = ({ filters, setFilters }) => {
+  const [show, setShow] = useState(false);
+
+  const setDateFilter = dateRange => {
+    setFilters({
+      ...filters,
+      dateRange: dateRange,
+    });
+  };
+
+  return (
+    <div className={filter_icon_container}>
+      <div className={filter_icon}>
+        <i
+          className={`${
+            filters.dateRange[0] || filters.dateRange[1] ? "fas" : "fal"
+          } fa-calendar`}
+          onClick={() => setShow(!show)}
+        />
+        {show && (
+          <Modal title="DATE" close={() => setShow(false)}>
+            <DateRangeSelector
+              value={filters.dateRange}
+              onValueChange={setDateFilter}
+            />
+          </Modal>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export default function Filters({ filters, setFilters, tagGroups }) {
+  const formatDateTag = range => {
+    let result = "";
+    if (range[0]) {
+      result += ` From ${moment(range[0]).format("MM-DD-YYYY")}`;
+    }
+    if (range[1]) {
+      result += ` To ${moment(range[1]).format("MM-DD-YYYY")}`;
+    }
+    return result;
+  };
+
   const defaultFilters = {
     search: "",
     tags: [],
     funnelTags: [],
     starred: false,
+    dateRange: [null, null],
   };
 
   filters = filters || defaultFilters;
@@ -191,19 +241,16 @@ export default function Filters({ filters, setFilters, tagGroups }) {
           </div>
 
           {/*CALENDAR*/}
-          {/*
-              <div className={filter_content}>
-                <div className={filter_icon_container}>
-                  <div className={filter_icon} onClick={() => setShow(!show)}>
-                    <i className="fal fa-calendar" />
-                  </div>
-                </div>
-              </div>
-            */}
+          <div className={filter_content}>
+            <DateSelector setFilters={setFilters} filters={filters} />
+          </div>
         </div>
       </div>
 
-      {(!!filters.tags.length || !!filters.funnelTags.length) && (
+      {(!!filters.tags.length ||
+        !!filters.funnelTags.length ||
+        filters.dateRange[0] ||
+        filters.dateRange[1]) && (
         <div className={content}>
           <div className={tag_list}>
             {filters.funnelTags.map(funnelTag => {
@@ -253,6 +300,28 @@ export default function Filters({ filters, setFilters, tagGroups }) {
                 </Tag>
               );
             })}
+
+            {(filters.dateRange[0] || filters.dateRange[1]) && (
+              <Tag key="dateFilterTag">
+                <div className={tag_each}>
+                  <div className={tag_name}>
+                    <i className="fal fa-calendar" /> Date:{" "}
+                    {formatDateTag(filters.dateRange)}
+                  </div>
+                  <div
+                    className={tag_kill}
+                    onClick={() => {
+                      setFilters({
+                        ...filters,
+                        dateRange: [null, null],
+                      });
+                    }}
+                  >
+                    <i className="fal fa-times" />
+                  </div>
+                </div>
+              </Tag>
+            )}
           </div>
         </div>
       )}

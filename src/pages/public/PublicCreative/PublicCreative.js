@@ -44,7 +44,7 @@ function Question({ question, section, creative }) {
   );
 }
 
-function Submit({ creative }) {
+function Submit({ creative, accountId }) {
   // const [success, setSuccess] = useState(false);
   const [mutate, { loading }] = useMutation(publicCreativePut);
 
@@ -57,8 +57,9 @@ function Submit({ creative }) {
           onClick={async () => {
             // setSuccess(false);
             const variables = {
-              id: creative.id,
-              input: { submit: true },
+              id: creative.id || "",
+              accountId: accountId,
+              input: { submit: true, name: creative.name },
             };
             try {
               await mutate({ variables });
@@ -93,7 +94,9 @@ function CompanyName({ creative }) {
   const onSubmit = async (data, event) => {
     let variables = { id: creative.id, ...data };
     try {
-      await mutate({ variables });
+      if (creative.id) {
+        await mutate({ variables });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +115,10 @@ function CompanyName({ creative }) {
         name="input.name"
         defaultValue={creative.name}
         ref={register}
-        onBlur={handleSubmit(onSubmit)}
+        onBlur={e => {
+          creative.id && handleSubmit(onSubmit);
+          creative.name = e.target.value;
+        }}
       />
     </form>
   );
@@ -121,10 +127,10 @@ function CompanyName({ creative }) {
 export function PublicCreative({ match }) {
   console.log("PublicCreative");
 
-  const { id } = match.params;
+  const { id, accountId } = match.params;
 
   const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
-  const creative = (creativeQuery.data || {}).publicCreativeGet;
+  let creative = (creativeQuery.data || {}).publicCreativeGet;
 
   const [getCreativeTemplate, creativeTemplateQuery] = useLazyQuery(
     publicCreativeTemplateGet
@@ -132,11 +138,10 @@ export function PublicCreative({ match }) {
   const template = (creativeTemplateQuery.data || {}).publicCreativeTemplateGet;
 
   useEffect(() => {
-    if (id) {
-      getCreative({ variables: { id } });
-      getCreativeTemplate();
-    }
-  }, [getCreative, getCreativeTemplate, id]);
+    if (id) getCreative({ variables: { id } });
+
+    getCreativeTemplate();
+  }, [id && getCreative, getCreativeTemplate, id]);
 
   const error = creativeQuery.error || creativeTemplateQuery.error;
   const loading = creativeQuery.loading || creativeTemplateQuery.loading;
@@ -154,41 +159,53 @@ export function PublicCreative({ match }) {
     );
   }
 
-  if (!loading && creative && template) {
-    return (
-      <>
-        <Content maxWidth={600}>
-          <CompanyName creative={creative} />
+  if (!creative) {
+    creative = {
+      id: null,
+      name: "",
+      description: "External Form",
+      templateId: "",
+      sharedWithEmail: null,
+      sharedByEmail: null,
+      submit: false,
+      answers: [],
+    };
+  }
 
+  if (!loading && creative && template)
+    return (
+      <Content maxWidth={600}>
+        <CompanyName creative={creative} />
+
+        {creative.id && (
           <div>
             <span style={{ color: "var(--color-primary)" }}>
               {creative.sharedByEmail}
-            </span>{" "}
+            </span>
             have invited you to share some information about your company with
             them. Fill out the relevant parts of this form, and hit "submit"
             when you are ready.
           </div>
+        )}
 
-          {(template.sections || []).map((section, i) => (
-            <div key={`section-${i}`}>
-              <div className={sectionName}>{section.name}</div>
-              <div>{section.description}</div>
-              {(section.questions || []).map((question, ii) => (
-                <Question
-                  key={`q-${i}-${ii}`}
-                  question={question}
-                  section={section}
-                  creative={creative}
-                />
-              ))}
-            </div>
-          ))}
+        {(template.sections || []).map((section, i) => (
+          <div key={`section-${i}`}>
+            <div className={sectionName}>{section.name}</div>
+            <div>{section.description}</div>
+            {(section.questions || []).map((question, ii) => (
+              <Question
+                key={`q-${i}-${ii}`}
+                question={question}
+                section={section}
+                creative={creative}
+              />
+            ))}
+          </div>
+        ))}
 
-          <Submit creative={creative} />
-        </Content>
-      </>
+        <Submit creative={creative} accountId={accountId} />
+      </Content>
     );
-  }
 
   return <GhostLoader />;
 }

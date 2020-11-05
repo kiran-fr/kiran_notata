@@ -11,21 +11,21 @@
 }
 
 .container td:first-child {
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .container td:last-child {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .container thead td {
-  padding-top: 0px;
+  padding: 12px 12px;
 }
 
 .container thead {
-  font-size: 11px;
-  color: var(--color-gray-dark);
-  font-weight: var(--font-weight-light);
+  font-size: 13px;
+  color: var(--color-gray-medium);
+  font-weight: var(--font-weight-normal);
   text-transform: uppercase;
 }
 
@@ -43,6 +43,16 @@
 
 .no_head tbody tr:first-child {
   border-top: none;
+}
+
+.no_margin {
+  margin: 0;
+}
+
+.sort_icon {
+  margin-left: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 @media screen and (max-width: 600px) {

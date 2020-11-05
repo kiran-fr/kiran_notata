@@ -13,6 +13,7 @@ import {
 } from "Components/elements";
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
+
 import { accountGet, evaluationTemplatesGet, groupsGet } from "Apollo/Queries";
 
 import {
@@ -24,7 +25,7 @@ import {
   settings,
   evaluation_template,
   evaluation_templates,
-} from "../../../definitions";
+} from "pages/definitions";
 
 function Delete({ id, templates }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
@@ -64,14 +65,12 @@ const CreateNewTemplate = ({ setShowModal }) => {
     try {
       await mutate({
         variables,
-
         update: (proxy, { data: { evaluationTemplatePut } }) => {
           const data = proxy.readQuery({
-            query: accountGet,
+            query: evaluationTemplatesGet,
           });
-
           proxy.writeQuery({
-            query: accountGet,
+            query: evaluationTemplatesGet,
             data: {
               accountGet: {
                 ...data.accountGet,
@@ -178,7 +177,7 @@ export default function EvaluationTemplates(props) {
     templates = evaluationTemplates;
   }
 
-  if (loading) {
+  if (loading && !data) {
     return <GhostLoader />;
   }
 
@@ -253,7 +252,7 @@ export default function EvaluationTemplates(props) {
             dataSource={templates || []}
             columns={columns}
             loading={loading.toString()}
-            diableHead={true}
+            disableHead={true}
           />
         </Card>
 

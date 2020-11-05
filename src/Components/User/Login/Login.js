@@ -11,15 +11,25 @@ import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
 
 import { userLoggedIn } from "Modules/user";
 import { getUserIsLoggedIn } from "Modules";
+
 import { dashboard, forgotPassword } from "pages/definitions";
 
 const getErrorMessage = ({ error }) => {
+  console.log("getErrorMessage");
+  console.log(JSON.stringify(error, null, 2));
+
   let { code } = error;
+
   let defaultError = "Yo, something went wrong, innit";
+
   let codeMap = {
     NotAuthorizedException: "Email and password does not match",
   };
+
   let errorMessage = codeMap[code] || defaultError;
+
+  // return errorMessage;
+
   return error.message;
 };
 

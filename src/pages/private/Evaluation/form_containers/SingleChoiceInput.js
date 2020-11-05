@@ -27,8 +27,8 @@ export default function SingleChoiceInputContainer({
           const variables = {
             id: evaluation.id,
             input: {
-              name: section.name,
-              description: section.description,
+              // name: section.name,
+              // description: section.description,
               templateId,
             },
           };

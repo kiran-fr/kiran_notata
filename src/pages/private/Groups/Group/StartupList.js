@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { connectionsGet } from "Apollo/Queries";
+import { connectionsGet, groupGet } from "Apollo/Queries";
 
 import { groupPut, connectionPut } from "Apollo/Mutations";
 import ShareSetting from "./ShareSetting";
@@ -22,7 +22,15 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
   const [isLoadingAddAll, setIsLoadingAddAll] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState({});
   const [showShareSettings, setShowShareSettings] = useState(null);
-  const [mutate] = useMutation(groupPut);
+
+  const [mutate] = useMutation(groupPut, {
+    refetchQueries: [
+      {
+        query: groupGet,
+        variables: { id: group.id },
+      },
+    ],
+  });
 
   const [connectionPutMutate] = useMutation(connectionPut);
 
@@ -33,12 +41,14 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
   }
 
   let list = [];
+
   for (let creativeId in ss) {
     if (ss[creativeId] && ss[creativeId][0] && ss[creativeId][0].connection) {
-      list.push({
+      let item = {
         creative: ss[creativeId][0].connection.creative,
         startups: ss[creativeId],
-      });
+      };
+      list.push(item);
     }
   }
 
@@ -49,9 +59,9 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
     for (let g of list) {
       let { creative, startups } = g;
 
-      let my_startups = haveShared({ startups });
-
+      // let my_startups = haveShared({ startups });
       let match = startups.find(({ sharedBy }) => sharedBy === user.email);
+
       if (!match) share += 1;
 
       let match2 = connections.find(
@@ -63,6 +73,12 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
   }
 
   const { saveAndShare, share } = getAddAllStatus();
+
+  function haveSharedStartup({ startups }) {
+    let my_startups = haveShared({ startups });
+    let match = my_startups.find(({ sharedBy }) => sharedBy === user.email);
+    return !!match;
+  }
 
   async function addAllAndShareBack() {
     if (isLoadingAddAll) return;
@@ -224,45 +240,10 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
               {startups.map((startup, i) => {
                 const { sharedBy, createdAt, connection } = startup;
 
-                //let subjectiveScores = connection.subjectiveScores || [];
-
-                //let otherScores = [];
-                //for (let shared of (connection.sharedWithMe || [])) {
-                //  let arr = shared.connection.subjectiveScores || []
-                //  arr = arr.map(it => (
-                //    {
-                //      ...it,
-                //      ref: {
-                //        name: shared.groupName,
-                //        id: shared.groupId
-                //      }
-                //    }
-                //  ))
-                //  otherScores = otherScores.concat(arr);
-                //}
-
-                //let allScores = subjectiveScores.concat(otherScores);
-
-                //  let hit = (connection.subjectiveScores || [])
-                //    .find(({createdByUser: { email }}) => {
-                //      return email === sharedBy
-                //     })
-
-                // console.log('hit', hit)
-
-                // let score = hit ? hit.score : undefined;
-
-                //  if (
-                //    connection.subjectiveScores &&
-                //    connection.subjectiveScores.length
-                //    ) {
-                //    score = connection.subjectiveScores[0].score
-                //  }
-
                 let avg;
                 if (
-                  connection.subjectiveScores &&
-                  connection.subjectiveScores.length
+                  connection?.subjectiveScores &&
+                  connection?.subjectiveScores.length
                 ) {
                   let { score: ttl } = connection.subjectiveScores.reduce(
                     (a, b) => ({
@@ -283,14 +264,6 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
                     key={i}
                   >
                     <span> {sharedBy}</span>
-                    {
-                      // score && (
-                      //   <span>
-                      //     {" "}
-                      //     ({score})
-                      //   </span>
-                      // )
-                    }
                   </div>
                 );
               })}
@@ -349,7 +322,7 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
       <Table
         dataSource={list}
         columns={columns}
-        diableHead={true}
+        disableHead={true}
         pagination={false}
       />
 

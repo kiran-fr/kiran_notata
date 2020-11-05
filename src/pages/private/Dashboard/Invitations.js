@@ -11,7 +11,7 @@ import { ExternalInvitations } from "../Team/Team";
 export default function Invitations({ history }) {
   const { data, error, loading } = useQuery(userInvitationsGet);
 
-  if (loading) return <span />;
+  if (loading && !data) return <span />;
 
   if (error) {
     console.log("error", error);

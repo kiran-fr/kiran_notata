@@ -139,7 +139,7 @@ export default function EvaluationTemplateSection({ match }) {
   if (error) console.log("error", error);
   if (error) return <div>We are updating </div>;
 
-  if (loading) {
+  if (loading && !data) {
     return <GhostLoader />;
   }
 

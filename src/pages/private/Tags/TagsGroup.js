@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
-import { Card, SimpleInputForm } from "../../../Components/elements";
+
+import { Card, SimpleInputForm } from "Components/elements";
 
 import {
   tagGroupPut,
@@ -9,9 +10,9 @@ import {
   tagDelete,
   funnelGroupPut,
   funnelTagPut,
-} from "../../../Apollo/Mutations";
+} from "Apollo/Mutations";
 
-import { tagGroupGet, funnelGroupGet } from "../../../Apollo/Queries";
+import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
 
 import {
   option_dashed_container,
@@ -140,16 +141,14 @@ function TagList({ tags, funnelTags, tagGroupId, funnelGroupId, type }) {
       {[...data]
         .sort((a, b) => a.index - b.index)
         .map((tag, i) => (
-          <>
-            <TagInput
-              key={tag.id}
-              tag={tag}
-              tagGroupId={tagGroupId}
-              funnelGroupId={funnelGroupId}
-              index={i}
-              type={type}
-            />
-          </>
+          <TagInput
+            key={tag.id}
+            tag={tag}
+            tagGroupId={tagGroupId}
+            funnelGroupId={funnelGroupId}
+            index={i}
+            type={type}
+          />
         ))}
 
       <TagInput

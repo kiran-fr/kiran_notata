@@ -1,6 +1,8 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
+
 import { MultipleTextInput } from "Components/Forms";
+
 import { publicCreativePut } from "Apollo/Mutations";
 
 export default function MultipleTextInputContainer({
@@ -92,8 +94,8 @@ export default function MultipleTextInputContainer({
 
   return (
     <MultipleTextInput
-      handleOnSubmit={handleOnSubmit}
-      handleOnDelete={handleOnDelete}
+      handleOnSubmit={creative.id && handleOnSubmit}
+      handleOnDelete={creative.id && handleOnDelete}
       answers={answers}
     />
   );

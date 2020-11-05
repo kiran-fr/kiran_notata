@@ -2,6 +2,7 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 
 import { MultipleChoiceInput } from "Components/Forms";
+
 import { publicCreativePut } from "Apollo/Mutations";
 
 export default function MultipleChoiceInputContainer({
@@ -30,50 +31,52 @@ export default function MultipleChoiceInputContainer({
           key: sid,
           checked: answer && answer.val,
           handleOnClick: () => {
-            const variables = {
-              id: creative.id,
-              input: {},
-            };
-
-            let optimisticResponse = {};
-            if (answer) {
-              variables.input.answerDelete = answer.id;
-
-              optimisticResponse = {
-                __typename: "Mutation",
-                creativePut: {
-                  __typename: "Creative",
-                  ...creative,
-                  answers: answers.filter(({ id }) => answer.id !== id),
-                },
-              };
-            } else {
-              variables.input.answerNew = {
-                inputType: question.inputType,
-                questionId: question.id,
-                question: question.name,
-                sid,
-                val,
+            if (creative.id) {
+              const variables = {
+                id: creative.id,
+                input: {},
               };
 
-              optimisticResponse = {
-                __typename: "Mutation",
-                creativePut: {
-                  __typename: "Creative",
-                  ...creative,
-                  answers: [
-                    ...creative.answers,
-                    {
-                      __typename: "CreativeAnswer",
-                      id: "",
-                      sid: "",
-                      ...variables.input.answerNew,
-                    },
-                  ],
-                },
-              };
+              let optimisticResponse = {};
+              if (answer) {
+                variables.input.answerDelete = answer.id;
+
+                optimisticResponse = {
+                  __typename: "Mutation",
+                  creativePut: {
+                    __typename: "Creative",
+                    ...creative,
+                    answers: answers.filter(({ id }) => answer.id !== id),
+                  },
+                };
+              } else {
+                variables.input.answerNew = {
+                  inputType: question.inputType,
+                  questionId: question.id,
+                  question: question.name,
+                  sid,
+                  val,
+                };
+
+                optimisticResponse = {
+                  __typename: "Mutation",
+                  creativePut: {
+                    __typename: "Creative",
+                    ...creative,
+                    answers: [
+                      ...creative.answers,
+                      {
+                        __typename: "CreativeAnswer",
+                        id: "",
+                        sid: "",
+                        ...variables.input.answerNew,
+                      },
+                    ],
+                  },
+                };
+              }
+              mutate({ variables, optimisticResponse });
             }
-            mutate({ variables, optimisticResponse });
           },
         };
       })}

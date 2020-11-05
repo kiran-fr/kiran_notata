@@ -11,7 +11,6 @@ import {
 
 import { connectionPut } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
-
 import moment from "moment";
 
 import {
@@ -91,39 +90,33 @@ function InputMutlipleLinesAnswer({ question, answers }) {
       inputType === "INPUT_MUTLIPLE_LINES" && questionId === question.id
   );
 
-  if (!_answers.length) {
-    return <div className={no_answer}>Not answered</div>;
-  }
+  if (!_answers.length) return <div className={no_answer}>Not answered</div>;
 
-  return (
-    <>
-      {_answers.map((answer, i) => {
-        let firstThree = answer.val.substring(0, 3).toLowerCase();
-        let isUrl = firstThree === "htt" || firstThree === "www";
-        if (isUrl) {
-          return (
-            <div>
-              <a
-                className={facts_answer_link}
-                key={i}
-                href={answer.val}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {answer.val} <i className="fal fa-external-link-square" />
-              </a>
-            </div>
-          );
-        }
+  return _answers.map((answer, i) => {
+    let firstThree = answer.val.substring(0, 3).toLowerCase();
+    let isUrl = firstThree === "htt" || firstThree === "www";
+    if (isUrl) {
+      return (
+        <div>
+          <a
+            className={facts_answer_link}
+            key={i}
+            href={answer.val}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {answer.val} <i className="fal fa-external-link-square" />
+          </a>
+        </div>
+      );
+    }
 
-        return (
-          <div key={i} className={facts_answer}>
-            {answer.val}
-          </div>
-        );
-      })}
-    </>
-  );
+    return (
+      <div key={i} className={facts_answer}>
+        {answer.val}
+      </div>
+    );
+  });
 }
 
 function InputTrafficLightsAnswer({ question, answers }) {
@@ -193,84 +186,74 @@ function Facts({ answers, creativeTemplate, with_comments }) {
   const hasAnswer = question =>
     answers.some(({ questionId }) => questionId === question.id);
 
-  return (
-    <>
-      {order.map(n => {
-        const section = creativeTemplate.sections.find(
-          ({ name }) => name === n
-        );
+  return order.map(n => {
+    const section = creativeTemplate.sections.find(({ name }) => name === n);
 
-        if (!section) {
-          return <span key={n} />;
-        }
+    if (!section) return <span key={n} />;
 
-        let { name, description, questions } = section;
+    let { name, description, questions } = section;
 
-        questions = questions.filter(question => hasAnswer(question));
+    questions = questions.filter(question => hasAnswer(question));
 
-        if (!questions.length) {
-          return <span key={n} />;
-        }
+    if (!questions.length) return <span key={n} />;
 
-        return (
-          <div key={n} className={facts_section_container}>
-            <div className={facts_section_header}>{name}</div>
-            <div className={facts_section_description}>{description}</div>
-            <div>
-              {questions.map((question, i) => {
-                return (
-                  <div
-                    key={`question-${n}-${i}`}
-                    className={facts_question_container}
-                  >
-                    <div className={facts_question_header}>{question.name}</div>
-                    <GeneralAnswer answers={answers} question={question} />
-                    {with_comments && (
-                      <CommentSection question={question} answers={answers} />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-    </>
-  );
+    return (
+      <div key={n} className={facts_section_container}>
+        <div className={facts_section_header}>{name}</div>
+        <div className={facts_section_description}>{description}</div>
+        <div>
+          {questions.map((question, i) => {
+            return (
+              <div
+                key={`question-${n}-${i}`}
+                className={facts_question_container}
+              >
+                <div className={facts_question_header}>{question.name}</div>
+                <GeneralAnswer answers={answers} question={question} />
+                {with_comments && (
+                  <CommentSection question={question} answers={answers} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  });
 
-  return (
-    <div className={facts_container}>
-      {creativeTemplate.sections.map((section, i) => {
-        const { name, description, questions } = section;
-        return (
-          <div key={`section-${i}`} className={facts_section_container}>
-            <div className={facts_section_header}>{name}</div>
-            <div className={facts_section_description}>{description}</div>
-            <div>
-              {questions
-                .filter(question => hasAnswer(question))
-                .map((question, ii) => {
-                  return (
-                    <div
-                      key={`question-${i}-${ii}`}
-                      className={facts_question_container}
-                    >
-                      <div className={facts_question_header}>
-                        {question.name}
-                      </div>
-                      <GeneralAnswer answers={answers} question={question} />
-                      {with_comments && (
-                        <CommentSection question={question} answers={answers} />
-                      )}
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
+  // return (
+  //   <div className={facts_container}>
+  //     {creativeTemplate.sections.map((section, i) => {
+  //       const { name, description, questions } = section;
+  //       return (
+  //         <div key={`section-${i}`} className={facts_section_container}>
+  //           <div className={facts_section_header}>{name}</div>
+  //           <div className={facts_section_description}>{description}</div>
+  //           <div>
+  //             {questions
+  //               .filter(question => hasAnswer(question))
+  //               .map((question, ii) => {
+  //                 return (
+  //                   <div
+  //                     key={`question-${i}-${ii}`}
+  //                     className={facts_question_container}
+  //                   >
+  //                     <div className={facts_question_header}>
+  //                       {question.name}
+  //                     </div>
+  //                     <GeneralAnswer answers={answers} question={question} />
+  //                     {with_comments && (
+  //                       <CommentSection question={question} answers={answers} />
+  //                     )}
+  //                   </div>
+  //                 );
+  //               })}
+  //           </div>
+  //         </div>
+  //       );
+  //     })}
+  //   </div>
+  // );
 }
 
 function Comments({ connection }) {
@@ -285,18 +268,14 @@ function Comments({ connection }) {
     return <span>There are no comments for this startup</span>;
   }
 
-  return (
-    <>
-      {comments.map((commentItem, i) => {
-        let comment = commentItem.dataPairs[0].val;
-        return (
-          <div key={i} className={comment_each}>
-            {comment}
-          </div>
-        );
-      })}
-    </>
-  );
+  return comments.map((commentItem, i) => {
+    let comment = commentItem.dataPairs[0].val;
+    return (
+      <div key={i} className={comment_each}>
+        {comment}
+      </div>
+    );
+  });
 }
 
 function Evaluation({ evaluation, with_comments }) {
@@ -458,7 +437,7 @@ function Summaries({ answers }) {
         <div style={{ paddingBottom: "10px" }}>
           {d.website && (
             <Tag className={link_tag}>
-              <a href={d.website} target="_blank">
+              <a href={d.website} target="_blank" rel="noopener noreferrer">
                 Website <i className="fal fa-external-link-square" />
               </a>
             </Tag>
@@ -466,7 +445,7 @@ function Summaries({ answers }) {
 
           {d.slideDeck && (
             <Tag className={link_tag}>
-              <a href={d.slideDeck} target="_blank">
+              <a href={d.slideDeck} target="_blank" rel="noopener noreferrer">
                 Slide deck <i className="fal fa-external-link-square" />
               </a>
             </Tag>

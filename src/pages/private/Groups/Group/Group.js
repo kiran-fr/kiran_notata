@@ -44,7 +44,7 @@ function SharedBy({ group }) {
     <Table
       dataSource={[admin] || []}
       columns={columns}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );
@@ -125,7 +125,7 @@ function MemberList({ group, user, isAdmin }) {
     <Table
       dataSource={group.members || []}
       columns={columns}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );
@@ -170,15 +170,7 @@ function AddNewTemplate({ group, isAdmin, mutate }) {
                 input: { addTemplate: template.id },
               };
               try {
-                await mutate({
-                  variables,
-                  refetchQueries: [
-                    {
-                      query: groupGet,
-                      variables: { id: group.id },
-                    },
-                  ],
-                });
+                await mutate({ variables });
                 setShowModal(false);
               } catch (error) {
                 console.log("error", error);
@@ -221,7 +213,7 @@ function AddNewTemplate({ group, isAdmin, mutate }) {
             <Table
               dataSource={templates}
               columns={columns}
-              diableHead={true}
+              disableHead={true}
               pagination={false}
             />
           </div>
@@ -286,15 +278,17 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
                   input: { removeTemplate: id },
                 };
 
-                await mutate({
-                  variables,
-                  refetchQueries: [
-                    {
-                      query: groupGet,
-                      variables: { id: group.id },
-                    },
-                  ],
-                });
+                await mutate({ variables });
+
+                // await mutate({
+                //   variables,
+                //   refetchQueries: [
+                //     {
+                //       query: groupGet,
+                //       variables: { id: group.id },
+                //     },
+                //   ],
+                // });
               } catch (error) {
                 console.log("error", error);
               }
@@ -313,7 +307,7 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
     <Table
       dataSource={templates}
       columns={columns}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );
@@ -321,6 +315,15 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
 
 export default function Group({ match, history }) {
   const id = match.params.id;
+
+  // const [mutate] = useMutation(groupPut, {
+  //   refetchQueries: [
+  //     {
+  //       query: groupGet,
+  //       variables: { id },
+  //     },
+  //   ],
+  // });
 
   const [mutate] = useMutation(groupPut);
 
@@ -346,9 +349,10 @@ export default function Group({ match, history }) {
     return <GhostLoader />;
   }
 
-  const group = groupQuery.data.groupGet;
-  const connections = connectionsQuery.data.connectionsGet;
-  const user = userQuery.data.userGet;
+  const group = groupQuery.data?.groupGet;
+  const connections = connectionsQuery.data?.connectionsGet;
+  const user = userQuery.data?.userGet;
+
   const settings = group.settings || {};
 
   // const isAdmin = group.createdBy === user.cognitoIdentityId;
@@ -408,17 +412,19 @@ export default function Group({ match, history }) {
           )
         }
 
-        <Card label="Startups" style={{ paddingTop: "5px" }}>
-          <StartupList
-            connections={connections}
-            group={group}
-            mutate={mutate}
-            history={history}
-            user={user}
-            isAdmin={isAdmin}
-            settings={settings}
-          />
-        </Card>
+        {!!group.startups.length && (
+          <Card label="Startups" style={{ paddingTop: "5px" }}>
+            <StartupList
+              connections={connections}
+              group={group}
+              mutate={mutate}
+              history={history}
+              user={user}
+              isAdmin={isAdmin}
+              settings={settings}
+            />
+          </Card>
+        )}
 
         {
           /* Add new startup */

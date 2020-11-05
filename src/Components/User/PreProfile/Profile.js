@@ -50,7 +50,7 @@ export default function PreProfile({ history }) {
     }
 
     try {
-      await mutate({ variables: { input } });
+      let res = await mutate({ variables: { input } });
     } catch (error) {
       console.log("error", error);
     }
@@ -59,7 +59,7 @@ export default function PreProfile({ history }) {
   };
 
   const values = getValues();
-  console.log("values", values);
+  // console.log("values", values);
 
   return (
     <Content maxWidth={600}>
@@ -107,7 +107,7 @@ export default function PreProfile({ history }) {
             placeholder={"Email"}
             autoComplete="off"
             ref={register}
-            disabled
+            // disabled
             id="input.email"
             name="input.email"
           />

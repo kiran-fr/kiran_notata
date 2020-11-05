@@ -24,6 +24,7 @@ import {
   startup_page,
   pre_profile,
   group,
+  external_form,
 } from "./definitions";
 
 // Landing page / list
@@ -62,6 +63,7 @@ import { GhostLoader } from "Components/elements";
 // Styles
 import SideBar from "Components/SideBar/SideBar";
 import Header from "Components/Header/Header";
+import ExternalForm from "./private/ExternalForm/ExternalForm";
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -144,6 +146,8 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={team} component={Team} />
 
+      <Route exact path={external_form} component={ExternalForm} />
+
       <Route render={() => <div>404</div>} />
     </Switch>
   );
@@ -164,9 +168,11 @@ const WrapperComponent = ({ ...props }) => {
     return <Redirect to={signup} />;
   }
 
-  // if (loading) return <GhostLoader />;
+  if (loading && !data) return <GhostLoader />;
 
   if (!loading && !error && data) {
+    console.log("data", data);
+
     let user = data.userGet || {};
     if (user.email === null) {
       return <Redirect to={pre_profile} />;

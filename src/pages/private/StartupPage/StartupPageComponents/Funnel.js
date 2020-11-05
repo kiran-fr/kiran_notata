@@ -5,6 +5,7 @@ import classnames from "classnames";
 
 import { funnelGroupGet, connectionGet } from "Apollo/Queries";
 import { connectionFunnelTagAdd } from "Apollo/Mutations";
+
 import { Card } from "Components/elements";
 
 import {
@@ -13,7 +14,7 @@ import {
   funnel_tag_container,
 } from "./Funnel.module.css";
 
-export function Funnel({ connection, user, match }) {
+export function Funnel({ connection }) {
   const { data } = useQuery(funnelGroupGet);
 
   const funnelGroups = (data && data.accountGet.funnelGroups) || [];
@@ -72,39 +73,34 @@ export function Funnel({ connection, user, match }) {
     });
   }
 
-  return (
-    <>
-      {funnelGroups.map(funnelGroup => {
-        let funnelTags = cloneDeep(funnelGroup.funnelTags);
-        funnelTags = funnelTags.sort((a, b) => a.index - b.index);
-        return (
-          <Card
-            label={`FUNNEL – ${funnelGroup.name.toUpperCase()}`}
-            style={{ paddingBottom: "20px" }}
-            key={funnelGroup.id}
-          >
-            <div>
-              <div className={funnel_tag_container}>
-                {funnelTags.map((funnelTag, i) => (
-                  <div
-                    key={funnelTag.id}
-                    className={classnames(
-                      funnel_tag,
-                      connection.funnelTags.some(
-                        ({ id }) => id === funnelTag.id
-                      ) && funnel_tag_active
-                    )}
-                    style={{ width: `${100 - i * 10}%` }}
-                    onClick={() => addFunnelTag(funnelTag)}
-                  >
-                    {funnelTag.name}
-                  </div>
-                ))}
+  return funnelGroups.map(funnelGroup => {
+    let funnelTags = cloneDeep(funnelGroup.funnelTags);
+    funnelTags = funnelTags.sort((a, b) => a.index - b.index);
+    return (
+      <Card
+        label={`FUNNEL – ${funnelGroup.name.toUpperCase()}`}
+        style={{ paddingBottom: "20px" }}
+        key={funnelGroup.id}
+      >
+        <div>
+          <div className={funnel_tag_container}>
+            {funnelTags.map((funnelTag, i) => (
+              <div
+                key={funnelTag.id}
+                className={classnames(
+                  funnel_tag,
+                  connection.funnelTags.some(({ id }) => id === funnelTag.id) &&
+                    funnel_tag_active
+                )}
+                style={{ width: `${100 - i * 10}%` }}
+                onClick={() => addFunnelTag(funnelTag)}
+              >
+                {funnelTag.name}
               </div>
-            </div>
-          </Card>
-        );
-      })}
-    </>
-  );
+            ))}
+          </div>
+        </div>
+      </Card>
+    );
+  });
 }

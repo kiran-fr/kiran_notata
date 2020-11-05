@@ -13,6 +13,7 @@ export { default as groupsGet } from "./groupsGet";
 export type { Groups as GroupsType } from "./groupsGet";
 export { default as groupGet } from "./groupGet";
 export { default as creativeGet } from "./creativeGet";
+export { default as creativesGet } from "./creativesGet";
 export { default as creativeTemplateGet } from "./creativeTemplateGet";
 
 export { default as publicCreativeGet } from "./publicCreativeGet";

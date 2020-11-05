@@ -26,6 +26,7 @@
 .highlight_1 {
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
+  cursor: pointer;
 }
 
 .highlight_2 {
@@ -57,4 +58,15 @@
   padding-top: 5px;
   padding-bottom: 8px;
   cursor: pointer;
+  display: inline-block;
+}
+
+.delete_creative {
+  font-size: 12px;
+  color: var(--color-primary);
+  padding-top: 5px;
+  padding-bottom: 8px;
+  margin-left: 10px;
+  cursor: pointer;
+  display: inline-block;
 }

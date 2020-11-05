@@ -78,11 +78,11 @@
     ]
   },
   "dependencies": {
-    "@apollo/client": "^3.2.3",
+    "@apollo/client": "3.0.2",
     "@date-io/date-fns": "1.x",
     "@hookform/resolvers": "^0.1.0",
-    "@material-ui/core": "^4.9.12",
-    "@material-ui/pickers": "^3.2.10",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/pickers": "4.0.0-alpha.12",
     "@sentry/react": "^5.26.0",
     "@sentry/tracing": "^5.26.0",
     "@types/jest": "^26.0.14",

@@ -2,6 +2,7 @@ export { default as logPut } from "./logPut";
 export { default as connectionSubjectiveScorePut } from "./connectionSubjectiveScorePut";
 export { default as userUpdate } from "./userUpdate";
 export { default as creativePut } from "./creativePut";
+export { default as creativeDelete } from "./creativeDelete";
 export { default as connectionPut } from "./connectionPut";
 export { default as accountInvite } from "./accountInvite";
 export { default as userInvitationResponse } from "./userInvitationResponse";

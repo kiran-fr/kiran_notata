@@ -21,7 +21,7 @@ export default function CommentInput({
 
   async function onSubmit(data, event) {
     await handleOnSubmit(data);
-    // event.target.reset();
+    event.target.reset();
   }
 
   async function deleteComment(...params) {

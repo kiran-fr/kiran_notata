@@ -31,13 +31,17 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
       const evaluation = connection.evaluations.find(
         ({ id }) => id === evaluationId
       );
-      getEvaluationTemplateData({
-        variables: { id: evaluation.templateId },
-      });
+
+      if (evaluation) {
+        getEvaluationTemplateData({
+          variables: { id: evaluation.templateId },
+        });
+      }
     }
   }, [connection.evaluations, evaluationId, getEvaluationTemplateData]);
+
   const evaluationTemplate =
-    (evaluationTemplateQuery.data || {}).evaluationTemplateGet || {};
+    evaluationTemplateQuery.data?.evaluationTemplateGet || {};
 
   const sections = evaluationTemplate.sections || [];
 
@@ -139,7 +143,7 @@ export default function Section({ match, history }) {
     variables: { id: connectionId },
   });
 
-  const connection = (connectionQuery.data || {}).connectionGet || {
+  const connection = connectionQuery.data?.connectionGet || {
     creative: {},
     evaluations: [],
   };
@@ -156,29 +160,31 @@ export default function Section({ match, history }) {
   // console.log('evaluationTemplateSectionQuery', evaluationTemplateSectionQuery)
 
   const evaluationTemplateSection =
-    (evaluationTemplateSectionQuery.data || {}).evaluationTemplateSectionGet ||
-    {};
+    evaluationTemplateSectionQuery.data?.evaluationTemplateSectionGet;
 
   // Define loading & error
   const loading =
     connectionQuery.loading || evaluationTemplateSectionQuery.loading;
+
   const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
 
-  // if (loading) {
-  //   return <GhostLoader />;
-  // }
+  // Filter out current evaluation
+  let evaluation = connection.evaluations.find(({ id }) => id === evaluationId);
 
-  // console.log('connectionQuery.error', connectionQuery.error)
+  // if (loading && !connectionQuery.data) {
+  if (!evaluation || !evaluationTemplateSection) {
+    return <GhostLoader />;
+  }
 
   if (error) {
     console.log(error);
     return <p>We are updating</p>;
   }
 
-  // Filter out current evaluation
-  const evaluation = connection.evaluations.find(
-    ({ id }) => id === evaluationId
-  ) || { answers: [] };
+  // // Filter out current evaluation
+  // const evaluation = connection.evaluations.find(
+  //   ({ id }) => id === evaluationId
+  // ) || { answers: [] };
 
   // for (let q of evaluationTemplateSection.questions) {
   //   let hasAnswered = evaluation.answers.some(

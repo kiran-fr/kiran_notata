@@ -90,7 +90,7 @@ function AddNewStartup({ group, connections, mutate }) {
                 <Table
                   dataSource={connections}
                   columns={columns}
-                  diableHead={true}
+                  disableHead={true}
                   pagination={false}
                 />
               </div>

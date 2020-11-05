@@ -20,6 +20,8 @@ export const Modal = ({
   submit,
   title,
   disableFoot,
+  loading,
+  showScrollBar,
   ...children
 }) => {
   useEffect(() => {
@@ -37,6 +39,7 @@ export const Modal = ({
       <div className={ghost} />
 
       <div
+        style={{ overflow: showScrollBar ? "hidden" : "auto" }}
         className={content}
         onClick={event => {
           if (event.target === event.currentTarget) {
@@ -57,7 +60,14 @@ export const Modal = ({
             </div>
           )}
 
-          <div className={main_content} {...children} />
+          <div
+            style={{
+              overflowY: showScrollBar ? "scroll" : "none",
+              maxHeight: showScrollBar ? "60vh" : "auto",
+            }}
+            className={`${showScrollBar && "scrollbar"} ${main_content}`}
+            {...children}
+          />
 
           {(close || submit) && !disableFoot && (
             <div className={modal_footer}>
@@ -68,7 +78,12 @@ export const Modal = ({
               )}
 
               {submit && (
-                <Button onClick={submit} size="medium" type="right_arrow">
+                <Button
+                  onClick={!loading && submit}
+                  size="medium"
+                  type="right_arrow"
+                  loading={loading}
+                >
                   OK
                 </Button>
               )}

@@ -33,9 +33,12 @@ export const templates = `${dashboard}/templates`;
 
 export const evaluation_templates = `${dashboard}/templates`;
 export const evaluation_template = `${evaluation_templates}/edit`;
+
 export const evaluation_template_summary = `${evaluation_templates}/summary`;
 
 export const group = `${dashboard}/group`;
+
+export const external_form = `${dashboard}/external_form`;
 
 // PUBLIC ROUTES
 export const public_pages = `/public`;

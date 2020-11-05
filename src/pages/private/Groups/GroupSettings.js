@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import { useForm } from "react-hook-form";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
-
 import { userGet, groupGet } from "Apollo/Queries";
 import { groupPut, connectionPut } from "Apollo/Mutations";
 
@@ -37,32 +37,8 @@ export default function GroupSettings({ match, history }) {
   const userQuery = useQuery(userGet);
   const groupQuery = useQuery(groupGet, { variables: { id } });
 
-  // useEffect(() => {
-  //   console.log('groupQuery', groupQuery.data.groupGet)
-
-  //   if (
-  //     groupQuery.data &&
-  //     groupQuery.data.groupGet &&
-  //     groupQuery.data.groupGet.settings
-  //     ) {
-
-  //     let {
-  //       addMember,
-  //       addStartup,
-  //       showUsers
-  //     } = groupQuery.data.groupGet.settings;
-  //     // setValue("addMember", addMember)
-  //     // setValue("addStartup", addStartup)
-  //     // setValue("showUsers", showUsers)
-
-  //   }
-
-  // }, [groupQuery]);
-
   const hasAllData = groupQuery.data && userQuery.data;
-
   const error = groupQuery.error || userQuery.error;
-
   const loading = groupQuery.loading || userQuery.loading;
 
   if (error) {

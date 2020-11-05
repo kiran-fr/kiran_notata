@@ -30,7 +30,9 @@ interface Startups {
     };
   };
 }
-interface Member {
+
+
+export interface Member {
   email: string;
   role: string;
   joinedDate: string;
@@ -99,3 +101,5 @@ export default gql`
   }
   ${groupFragments}
 `;
+
+

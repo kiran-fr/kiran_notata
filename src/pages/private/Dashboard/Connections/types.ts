@@ -18,6 +18,24 @@ export type Connection = {
   sharedWithMe: GroupStartupList[];
 }
 
+
+export const subjectiveScore = (connection?: Connection): number | undefined => {
+  let scores = connection?.subjectiveScores || [];
+
+  let avg;
+  if (scores?.length) {
+    let { score: ttl } = scores.reduce(
+      (a, b) =>
+        ({
+          score: a.score + b.score,
+        } as SubjectiveScore)
+    );
+    avg = Number((ttl / scores.length).toFixed(1));
+  }
+  return avg;
+};
+
+
 export type SimpleUser = {
   email: string
   given_name: string
@@ -56,6 +74,12 @@ export type Tag = {
   createdByUser: SimpleUser;
 }
 
+
+export const tagCount = (tags: Tag[]): number => {
+  return tags.length;
+};
+
+
 export type FunnelTag = {
   id: string;
   funnelGroupId: string;
@@ -66,6 +90,15 @@ export type FunnelTag = {
   createdAt: Date;
   index: number;
 }
+
+
+export const highestFunnelTagIndex = (funnelTags: FunnelTag[]): number => {
+  return funnelTags.length ? funnelTags.reduce(
+    (max, tag) => (tag.index > max ? tag.index : max),
+    funnelTags[0].index
+  ) : -1;
+};
+
 
 export type SubjectiveScore = {
   score: number;

@@ -73,7 +73,7 @@ const EvaluateSelector = ({ connection, close, history }) => {
           <Table
             dataSource={data.accountGet.evaluationTemplates}
             columns={columns}
-            diableHead={true}
+            disableHead={true}
             pagination={false}
           />
         </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { Card, Button } from "Components/elements";
-
 import { tagGroupPut, funnelGroupPut } from "Apollo/Mutations";
 import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
+
+import { Card, Button } from "Components/elements";
 
 export default function CreateTagGroup({ index, type }) {
   const [mutateTags] = useMutation(tagGroupPut, {

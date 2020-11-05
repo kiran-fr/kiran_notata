@@ -19,7 +19,7 @@ export default function Evaluation({ match, history }) {
   const connectionQuery = useQuery(connectionGet, {
     variables: { id: connectionId },
   });
-  const connection = (connectionQuery.data || {}).connectionGet || {};
+  const connection = connectionQuery?.data?.connectionGet || {};
 
   const [getEvaluationTemplateData, evaluationTemplateQuery] = useLazyQuery(
     evaluationTemplateGet
@@ -40,12 +40,12 @@ export default function Evaluation({ match, history }) {
   }, [connection.evaluations, evaluationId, getEvaluationTemplateData]);
 
   const evaluationTemplate =
-    (evaluationTemplateQuery.data || {}).evaluationTemplateGet || {};
+    evaluationTemplateQuery.data?.evaluationTemplateGet || {};
 
   const error = connectionQuery.error || evaluationTemplateQuery.error;
   const loading = connectionQuery.loading || evaluationTemplateQuery.loading;
 
-  if (loading) {
+  if (loading && !connectionQuery.data) {
     return <GhostLoader />;
   }
 
@@ -140,7 +140,7 @@ export default function Evaluation({ match, history }) {
             columns={columns}
             pagination={false}
             loading={evaluationTemplateQuery.loading}
-            diableHead={true}
+            disableHead={true}
           />
         </Card>
 

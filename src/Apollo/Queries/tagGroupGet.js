@@ -5,6 +5,7 @@ import { tagGroupFragments, tagFragments } from "../Fragments";
 export default gql`
   query tagGroupGet {
     accountGet {
+      id
       tagGroups {
         ...tagGroupFields
         tags {

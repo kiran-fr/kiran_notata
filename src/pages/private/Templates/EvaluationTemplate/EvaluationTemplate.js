@@ -3,6 +3,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
 import { evaluationTemplateGet } from "Apollo/Queries";
+
 import {
   evaluationTemplatePut,
   evaluationTemplateSectionPut,
@@ -199,7 +200,10 @@ export default function EvaluationTemplate({ match, history }) {
   }, [getData, id]);
 
   if (error) return <div>We are updating</div>;
-  if (loading) return <GhostLoader />;
+
+  if (loading && !data) {
+    return <GhostLoader />;
+  }
 
   const columns = [
     {
@@ -309,7 +313,7 @@ export default function EvaluationTemplate({ match, history }) {
             columns={columns}
             pagination={false}
             loading={loading.toString()}
-            diableHead={true}
+            disableHead={true}
           />
         </Card>
 

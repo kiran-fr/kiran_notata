@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { useMutation } from "@apollo/client";
-import { debounce } from "lodash";
 import { TextInput } from "Components/Forms";
 import { publicCreativePut } from "Apollo/Mutations";
 
@@ -20,55 +19,32 @@ export default function TextInputContainer({ question, section, creative }) {
       disabled={loading}
       defaultValue={answer && answer.val}
       onBlur={event => {
-        const variables = {
-          id: creative.id,
-          input: {},
-        };
+        if (creative.id) {
+          const variables = {
+            id: creative.id,
+            input: {},
+          };
 
-        if (answer) {
-          variables.input.answerUpdate = {
-            id: answer.id,
-            question: question.name,
-            val: event.target.value,
-          };
-        } else {
-          variables.input.answerNew = {
-            inputType: question.inputType,
-            questionId: question.id,
-            question: question.name,
-            val: event.target.value,
-          };
+          if (answer) {
+            variables.input.answerUpdate = {
+              id: answer.id,
+              question: question.name,
+              val: event.target.value,
+            };
+          } else {
+            variables.input.answerNew = {
+              inputType: question.inputType,
+              questionId: question.id,
+              question: question.name,
+              val: event.target.value,
+            };
+          }
+
+          mutate({
+            variables,
+          });
         }
-
-        mutate({
-          variables,
-        });
       }}
-
-      // onChange={event => {
-      //   const variables = {
-      //     id: creative.id,
-      //     input: {},
-      //   };
-      //
-      //   if (answer) {
-      //     variables.input.answerUpdate = {
-      //       id: answer.id,
-      //       question: question.name,
-      //       val: event.target.value,
-      //     };
-      //   } else {
-      //     variables.input.answerNew = {
-      //       inputType: question.inputType,
-      //       questionId: question.id,
-      //       question: question.name,
-      //       val: event.target.value,
-      //     };
-      //   }
-      //   delayedMutation({
-      //     variables,
-      //   });
-      // }}
     />
   );
 }

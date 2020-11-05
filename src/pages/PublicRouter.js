@@ -3,9 +3,9 @@ import { Switch, withRouter } from "react-router-dom";
 import Route from "react-router/es/Route";
 
 // ROUTES
-import { public_creative, demo_page } from "./definitions";
+import { public_creative, demo_page, public_pages } from "./definitions";
 
-import { PublicCreative } from "./public/PublicCreative/PublicCreative";
+import { PublicCreative } from "./public/ExternalForm/PublicCreative/PublicCreative";
 import { DemoPage } from "./public/DemoPage/DemoPage";
 
 export const RouterComponent = ({ history }) => {
@@ -13,7 +13,11 @@ export const RouterComponent = ({ history }) => {
     <Switch>
       <Route exact path={demo_page} component={DemoPage} />
       <Route exact path={`${public_creative}/:id`} component={PublicCreative} />
-
+      <Route
+        exact
+        path={`${public_pages}/:accountId/form.html`}
+        component={PublicCreative}
+      />
       <Route render={() => <div>404</div>} />
     </Switch>
   );

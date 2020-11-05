@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import {
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
-  evaluationQuestionFragments
+  evaluationQuestionFragments,
 } from "../Fragments";
 
 export default gql`

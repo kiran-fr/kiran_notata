@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Button, Tag } from "../../../../Components/elements";
-import { startup_page } from "../../../definitions";
+import { Button, Tag } from "Components/elements";
+import { startup_page } from "pages/definitions";
 
 import {
   facts_list,
@@ -60,7 +60,7 @@ function Summaries({ answers }) {
         <div style={{ paddingBottom: "10px" }}>
           {d.website && (
             <Tag className={link_tag}>
-              <a href={d.website} target="_blank">
+              <a href={d.website} target="_blank" rel="noopener noreferrer">
                 Website <i className="fal fa-external-link-square" />
               </a>
             </Tag>
@@ -68,7 +68,7 @@ function Summaries({ answers }) {
 
           {d.slideDeck && (
             <Tag className={link_tag}>
-              <a href={d.slideDeck} target="_blank">
+              <a href={d.slideDeck} target="_blank" rel="noopener noreferrer">
                 Slide deck <i className="fal fa-external-link-square" />
               </a>
             </Tag>

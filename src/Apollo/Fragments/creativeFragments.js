@@ -6,6 +6,7 @@ export default gql`
     name
     description
     templateId
+    createdAt
     sharedWithEmail
     sharedByEmail
     submit

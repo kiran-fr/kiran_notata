@@ -28,6 +28,11 @@ const menuItems = [
     iconClass: "fal fa-share-alt",
     link: group,
   },
+  // {
+  //   label: "Web Form",
+  //   iconClass: "fal fa-inbox",
+  //   link: external_form,
+  // },
   {
     label: "Settings",
     iconClass: "fal fa-cog",

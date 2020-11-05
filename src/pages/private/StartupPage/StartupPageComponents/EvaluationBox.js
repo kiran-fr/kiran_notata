@@ -3,11 +3,12 @@ import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import { evaluationTemplatesGet } from "../../../../Apollo/Queries";
-import { evaluationPut } from "../../../../Apollo/Mutations";
-import { startup_page, group as group_route } from "../../../definitions";
+
+import { evaluationTemplatesGet } from "Apollo/Queries";
+import { evaluationPut } from "Apollo/Mutations";
+import { startup_page, group as group_route } from "pages/definitions";
 import { getPossibleScore, getScore } from "../../Evaluation/util";
-import { Button, Table, Modal } from "../../../../Components/elements";
+import { Button, Table, Modal } from "Components/elements";
 
 import {
   container,
@@ -70,7 +71,7 @@ function EvaluationSummary({
               )}
             </div>
             {evaluation.summary.templateName}{" "}
-            {!noEdit && (
+            {!noEdit && evaluation.summary.sections[0] && (
               <Link
                 to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}/section/${evaluation.summary.sections[0].id}`}
               >
@@ -105,6 +106,7 @@ function EvaluationSummary({
 
 export function EvaluationBox({ connection, groups, user, history }) {
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [currentLoading, setCurrentLoading] = useState("");
 
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
@@ -186,8 +188,31 @@ export function EvaluationBox({ connection, groups, user, history }) {
   );
 
   let megaAllTemplates = [...templates];
-  for (let group of allGroupsWithTemplates) {
-    megaAllTemplates = megaAllTemplates.concat(group.evaluationTemplates || []);
+
+  // for (let group of allGroupsWithTemplates) {
+  //   megaAllTemplates = megaAllTemplates.concat(group.evaluationTemplates || []);
+  // }
+
+  async function selectTemplate({ templateId, name, description }) {
+    setCurrentLoading(templateId);
+    try {
+      let res = await mutate({
+        variables: {
+          connectionId: connection.id,
+          input: { templateId, name, description },
+        },
+      });
+      let evaluation = res.data.evaluationPut;
+      let template = allTemplates.find(
+        t => t && t.id === evaluation.templateId
+      ) || { sections: [{ id: null }] };
+
+      let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${template.sections[0].id}`;
+      history.push(path);
+    } catch (error) {
+      console.log("error", error);
+    }
+    setCurrentLoading("");
   }
 
   const columns = [
@@ -204,26 +229,21 @@ export function EvaluationBox({ connection, groups, user, history }) {
       render: ({ id: templateId, name, description }) => {
         return (
           <Button
+            type="right_arrow"
             size="small"
-            onClick={async () => {
-              setCurrentLoading(templateId);
-              try {
-                let res = await mutate({
-                  variables: {
-                    connectionId: connection.id,
-                    input: { templateId, name, description },
-                  },
-                });
-                let evaluation = res.data.evaluationPut;
-                let template = allTemplates.find(
-                  t => t && t.id === evaluation.templateId
-                ) || { sections: [{ id: null }] };
-                let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${template.sections[0].id}`;
-                history.push(path);
-              } catch (error) {
-                console.log("error", error);
+            onClick={() => {
+              if (currentLoading) return;
+
+              let haveUsedThisTemplateBefore = evaluations.some(
+                evaluation => evaluation.templateId === templateId
+              );
+
+              if (!haveUsedThisTemplateBefore) {
+                selectTemplate({ templateId, name, description });
+              } else {
+                setShowConfirmModal({ templateId, name, description });
+                setShowModal(false);
               }
-              setCurrentLoading("");
             }}
             loading={loading && currentLoading === templateId}
           >
@@ -362,7 +382,7 @@ export function EvaluationBox({ connection, groups, user, history }) {
             <Table
               dataSource={megaAllTemplates}
               columns={columns}
-              diableHead={true}
+              disableHead={true}
               pagination={false}
             />
           </div>
@@ -379,6 +399,58 @@ export function EvaluationBox({ connection, groups, user, history }) {
               onClick={() => setShowModal(false)}
             >
               cancel
+            </Button>
+          </div>
+        </Modal>
+      )}
+
+      {showConfirmModal && (
+        <Modal
+          title="Evaluate startup"
+          close={() => {
+            setShowConfirmModal(undefined);
+            setShowModal(true);
+          }}
+          disableFoot={true}
+        >
+          <div
+            style={{
+              padding: "10px 0px 0px 8px",
+              fontSize: "16px",
+              lineHeight: 2,
+            }}
+          >
+            <span>
+              You have already evaluated this startup using this template. You
+              can edit evaluation, or create a new one by clicking "USE".
+            </span>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              paddingTop: "20px",
+              textAlign: "right",
+            }}
+          >
+            <Button
+              buttonStyle="secondary"
+              size="medium"
+              onClick={() => {
+                setShowConfirmModal(undefined);
+                setShowModal(true);
+              }}
+            >
+              cancel
+            </Button>
+
+            <Button
+              type="right_arrow"
+              size="medium"
+              loading={currentLoading}
+              onClick={() => selectTemplate(showConfirmModal)}
+            >
+              use
             </Button>
           </div>
         </Modal>

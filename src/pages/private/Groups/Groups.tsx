@@ -61,7 +61,8 @@ interface GroupsData {
 //       dataSource={startups}
 //       columns={columns}
 //       // loading={loading.toString()}
-//       diableHead={true}
+
+//       disableHead={true}
 //     />
 //   );
 // };
@@ -102,7 +103,8 @@ export default function Groups({ history }: { history: any }) {
           },
         ]}
       />
-      <Content maxWidth={600} center={""}>
+
+      <Content maxWidth={600}>
         {/*
             <h1>Inbox</h1>
             <Card style={{paddingTop: "5px"}}>
@@ -116,18 +118,17 @@ export default function Groups({ history }: { history: any }) {
         {!!groups?.length && (
           <Card
             style={{ paddingTop: "5px" }}
-            noMargin={""}
-            maxWidth={""}
-            label={""}
+            // noMargin={""}
+            // maxWidth={""}
+            // label={""}
           >
             <Table
               dataSource={groups}
               columns={columns}
-              loading={loading.toString()}
-              diableHead={true}
+              loading={loading}
+              disableHead={true}
               cell_content={""}
-              noMargin={""}
-              paginateAt={""}
+              noMargin={false}
             />
           </Card>
         )}
@@ -135,9 +136,9 @@ export default function Groups({ history }: { history: any }) {
         {!groups?.length && (
           <Card
             style={{ paddingBottom: "20px" }}
-            noMargin={""}
-            maxWidth={""}
-            label={""}
+            // noMargin={""}
+            // maxWidth={""}
+            // label={""}
           >
             <div style={{ fontSize: "18px" }}>
               You don't have any groups yet
@@ -173,6 +174,8 @@ export default function Groups({ history }: { history: any }) {
             disableFoot={true}
             noKill={""}
             submit={""}
+            loading={false}
+            showScrollBar={false}
           >
             <CreateNewGroup
               mutate={mutate}

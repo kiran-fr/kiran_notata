@@ -166,6 +166,7 @@ function RevokeSharing({ group, connection, user }) {
 
 function SharedWithGroupList(props) {
   let { groups, connection, user, shareStartup, history } = props;
+
   const [mutate, { loading }] = useMutation(groupPut);
 
   const columns = [
@@ -248,7 +249,7 @@ function SharedWithGroupList(props) {
       <Table
         dataSource={groups}
         columns={columns}
-        diableHead={true}
+        disableHead={true}
         pagination={false}
       />
     </div>
@@ -325,15 +326,15 @@ function CreateNewGroup({ done, cancel, mutate }) {
   );
 }
 
-export function Share({ connection, user, history }) {
+export function Share({ connection, groups, user, history }) {
   const [showModal, setShowModal] = useState(false);
   const [showCreateNewGroup, setShowCreateNewGroup] = useState(false);
   const [showShareSettings, setShowShareSettings] = useState(null);
 
   const [mutate] = useMutation(groupPut);
 
-  const { data } = useQuery(groupsGet);
-  let groups = data?.groupsGet || [];
+  // const { data } = useQuery(groupsGet);
+  // let groups = data?.groupsGet || [];
 
   let sharedWithGroups =
     groups.filter(g =>
@@ -477,7 +478,7 @@ export function Share({ connection, user, history }) {
                   <Table
                     dataSource={notSharedWithGroups}
                     columns={columns}
-                    diableHead={true}
+                    disableHead={true}
                     pagination={false}
                   />
 

@@ -14,13 +14,16 @@
 }
 
 .filter_star {
+}
+
+.filter_star {
   font-size: 18px;
   cursor: pointer;
 }
 
 .filter_icon_container {
   cursor: pointer;
-  /*padding-right: 50px;*/
+  cursor: pointer;
 }
 
 .filter_icon_container {

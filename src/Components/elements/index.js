@@ -2,7 +2,9 @@ export { MenuIconItem } from "./NotataComponents/MenuIconItem";
 export { Card } from "./NotataComponents/Card";
 export { Tag } from "./NotataComponents/Tag";
 export { Button } from "./NotataComponents/Button";
-export { Table } from "./NotataComponents/Table";
+
+export { Table } from "./NotataComponents/Table.tsx";
+
 export { Content } from "./NotataComponents/Content";
 export { Modal } from "./NotataComponents/Modal";
 

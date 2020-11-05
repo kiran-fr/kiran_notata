@@ -32,8 +32,8 @@ export default function MultipleChoiceInputContainer({
             const variables = {
               id: evaluation.id,
               input: {
-                name: section.name,
-                description: section.description,
+                // name: section.name,
+                // description: section.description,
                 templateId,
               },
             };

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import { Content } from "Components/elements";
 
 import LOGIN from "./gifs/01_LOGIN_396.gif";

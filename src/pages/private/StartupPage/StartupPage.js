@@ -4,12 +4,8 @@ import { Redirect } from "react-router-dom";
 import moment from "moment";
 import gql from "graphql-tag";
 
-import {
-  Content,
-  Card,
-  BreadCrumbs,
-  GhostLoader,
-} from "../../../Components/elements";
+import { Content, Card, BreadCrumbs, GhostLoader } from "Components/elements";
+
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
 import { EvaluationBox } from "./StartupPageComponents/EvaluationBox";
 import { Log } from "./StartupPageComponents/Log";
@@ -18,11 +14,11 @@ import { Facts } from "./StartupPageComponents/Facts";
 import { Tags } from "./StartupPageComponents/Tags";
 
 import { Funnel } from "./StartupPageComponents/Funnel";
-import { userGet, connectionGet, groupsGet } from "../../../Apollo/Queries";
 
-import { connectionDelete } from "../../../Apollo/Mutations";
+import { userGet, connectionGet, groupsGet } from "Apollo/Queries";
+import { connectionDelete } from "Apollo/Mutations";
 
-import { dashboard, startup_page } from "../../definitions";
+import { dashboard, startup_page } from "pages/definitions";
 
 import { header_comp, sub_header, delete_link } from "./StartupPage.module.css";
 
@@ -66,9 +62,9 @@ export default function StartupPage({ match, history }) {
   }
 
   if (userGetError || connectionGetError || groupsGetError) {
-    console.log(userGetError);
-    console.log(connectionGetError);
-    console.log(groupsGetError);
+    console.log("userGetError", userGetError);
+    console.log("connectionGetError", connectionGetError);
+    console.log("groupsGetError", groupsGetError);
     return <div>We are updating</div>;
   }
 

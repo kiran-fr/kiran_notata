@@ -10,6 +10,7 @@ import { Content, Card, Button, ErrorBox } from "../../elements/";
 
 import { userLoggedIn } from "Modules/user";
 import { getUserIsLoggedIn } from "Modules";
+
 import { dashboard, awaiting, login } from "pages/definitions";
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {

@@ -3,8 +3,8 @@ import { useQuery, useLazyQuery } from "@apollo/client";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { connectionGet, evaluationTemplateGet } from "Apollo/Queries";
-
 import { startup_page } from "pages/definitions";
+
 import { getPossibleScore, getScore } from "../../Evaluation/util";
 import classnames from "classnames";
 import { Card, BreadCrumbs, GhostLoader, Content } from "Components/elements";

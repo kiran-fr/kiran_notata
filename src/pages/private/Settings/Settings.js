@@ -1,7 +1,14 @@
 import React from "react";
-import { Content, Card, Table } from "../../../Components/elements";
 
-import { profile, tags, team, templates } from "../../../pages/definitions";
+import { Content, Card, Table } from "Components/elements";
+
+import {
+  profile,
+  tags,
+  team,
+  templates,
+  external_form,
+} from "pages/definitions";
 
 const Comp = ({ history }) => {
   const linkList = [
@@ -25,6 +32,11 @@ const Comp = ({ history }) => {
       label: "Your team",
       iconClass: "fal fa-users",
       link: team,
+    },
+    {
+      label: "Web Form",
+      iconClass: "fal fa-inbox",
+      link: external_form,
     },
   ];
 
@@ -70,7 +82,7 @@ const Comp = ({ history }) => {
         <Table
           dataSource={linkList}
           columns={columns}
-          diableHead={true}
+          disableHead={true}
           pagination={false}
         />
       </Card>

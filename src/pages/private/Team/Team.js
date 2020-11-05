@@ -188,7 +188,7 @@ function PendingInvitations({ accountInvitations }) {
       dataSource={accountInvitations}
       columns={columns}
       loading={loading.toString()}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );
@@ -263,7 +263,7 @@ function TeamMembers({ user, account }) {
       dataSource={members}
       columns={columns}
       // loading={loading.toString()}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );

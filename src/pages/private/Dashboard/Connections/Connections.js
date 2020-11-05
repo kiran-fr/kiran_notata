@@ -21,6 +21,8 @@ import { Table, Card, GhostLoader } from "Components/elements";
 
 import TagSelector from "Components/TagSelector/TagSelector";
 
+import moment from "moment";
+
 import {
   void_list,
   void_list_label,
@@ -36,6 +38,7 @@ function applyFilters({ connections, filters }) {
   filters = filters || {};
   filters.tags = filters.tags || [];
   filters.funnelTags = filters.funnelTags || [];
+  filters.dateRange = filters.dateRange || [null, null];
 
   if (!filters) return connections;
 
@@ -117,6 +120,18 @@ function applyFilters({ connections, filters }) {
     });
   }
 
+  if (filters.dateRange[0] || filters.dateRange[1]) {
+    const [start, end] = [
+      filters.dateRange[0] ? moment(filters.dateRange[0]).valueOf() : null,
+      filters.dateRange[1] ? moment(filters.dateRange[1]).valueOf() : null,
+    ];
+    connections = connections.filter(
+      connection =>
+        (start ? start <= connection.updatedAt : true) &&
+        (end ? end >= connection.updatedAt : true)
+    );
+  }
+
   return connections;
 }
 
@@ -134,7 +149,7 @@ export default function Connections({ history }) {
       f = JSON.parse(localStorage.getItem("filters"));
       setFilterState(f);
     } catch (error) {}
-  }, filters);
+  }, []);
 
   function setFilters(filterData) {
     localStorage.setItem("filters", JSON.stringify(filterData));
@@ -287,12 +302,17 @@ export default function Connections({ history }) {
     funnelTags: [],
     search: "",
     starred: false,
+    dateRange: [null, null],
   };
 
   const f = filters || defaultFilters;
 
   let hasFilters =
-    f.tags.length || f.funnelTags.length || f.search || f.starred;
+    f.tags.length ||
+    f.funnelTags.length ||
+    f.search ||
+    f.starred ||
+    (f.dateRange.length && (f.dateRange[0] || f.dateRange[1]));
 
   return (
     <>
@@ -311,7 +331,12 @@ export default function Connections({ history }) {
           <div
             className={clear_filters}
             onClick={() => {
-              setFilters({ search: "", tags: [], funnelTags: [] });
+              setFilters({
+                search: "",
+                tags: [],
+                funnelTags: [],
+                dateRange: [null, null],
+              });
             }}
           >
             clear all filters
@@ -342,8 +367,9 @@ export default function Connections({ history }) {
         <Table
           dataSource={connections || []}
           columns={columns}
-          diableHead={true}
+          disableHead={false}
           pagination={false}
+          allowSorting={true}
           loading={loading}
         />
 

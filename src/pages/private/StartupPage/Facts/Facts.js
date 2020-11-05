@@ -20,6 +20,7 @@ import {
 } from "Components/elements";
 
 import { dashboard, startup_page } from "pages/definitions";
+
 import {
   share_title,
   share_text,
@@ -41,7 +42,7 @@ import {
 import { GeneralInput } from "./Inputs/GeneralInput";
 import { CommentSection } from "./CommentSection";
 
-function Section({ section, creative }) {
+export function Section({ section, creative }) {
   const { name, description } = section;
   return (
     <div>
@@ -69,7 +70,7 @@ function Section({ section, creative }) {
   );
 }
 
-function Question({ question, section, creative }) {
+export function Question({ question, section, creative }) {
   return (
     <Card style={{ marginBottom: "10px", paddingBottom: "15px" }}>
       <div className="form_h2">{question.name}</div>
@@ -430,7 +431,7 @@ function AnswerCommentSection({ answers, question }) {
   );
 }
 
-function ViewSummary({ answers, creativeTemplate }) {
+export function ViewSummary({ answers, creativeTemplate }) {
   return (
     <div className={facts_container}>
       {creativeTemplate.sections.map((section, i) => {
@@ -479,8 +480,6 @@ export default function Facts({ history, match }) {
   useEffect(() => {
     creativeId && getData({ variables: { id: creativeId } });
   }, [creativeId, getData]);
-
-  console.log("creativeTemplate", creativeTemplate);
 
   if (loading || creativeTemplateQuery.loading) {
     return <GhostLoader />;

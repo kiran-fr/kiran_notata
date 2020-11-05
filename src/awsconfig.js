@@ -3,6 +3,7 @@ import Amplify, { Auth } from "aws-amplify";
 import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
 import { AUTH_TYPE, createAuthLink } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
+import { apolloInMemoryCache } from "./apollo-cache";
 
 export const awsconfig = {
   region: "eu-west-1",
@@ -51,7 +52,6 @@ const dev2_URL_id = "3mlk5clgsvdptfcfo7utvkqhim";
 const prodtest_URL_id = "pm4namovdzgpboqy5s2vgafzjy";
 
 const appsync_URL_id = dev2_URL_id;
-// const appsync_URL_id = prodtest_URL_id;
 
 const appsyncUrl = `https://${appsync_URL_id}.appsync-api.eu-west-1.amazonaws.com/graphql`;
 
@@ -70,7 +70,7 @@ export const appsyncClient = new ApolloClient({
     createAuthLink(config),
     createSubscriptionHandshakeLink(config),
   ]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache(apolloInMemoryCache),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: "cache-and-network",

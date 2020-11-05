@@ -4,6 +4,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { evaluationPut } from "Apollo/Mutations";
 import { connectionGet, evaluationTemplateGet } from "Apollo/Queries";
+
 import { startup_page } from "pages/definitions";
 import { getPossibleScore, getScore } from "./util";
 import classnames from "classnames";
@@ -207,22 +208,19 @@ export default function Summary({ match, history }) {
                             </div>
                           )}
 
-                          {inputType === "CHECK" && (
-                            <>
-                              {evaluation.answers
-                                .filter(
-                                  ({ questionId, val, inputType }) =>
-                                    questionId === id &&
-                                    val &&
-                                    inputType === "CHECK"
-                                )
-                                .map(({ val, id }) => (
-                                  <div className={question_answer} key={id}>
-                                    {val}
-                                  </div>
-                                ))}
-                            </>
-                          )}
+                          {inputType === "CHECK" &&
+                            evaluation.answers
+                              .filter(
+                                ({ questionId, val, inputType }) =>
+                                  questionId === id &&
+                                  val &&
+                                  inputType === "CHECK"
+                              )
+                              .map(({ val, id }) => (
+                                <div className={question_answer} key={id}>
+                                  {val}
+                                </div>
+                              ))}
                         </>
                       )}
                       {/*<p>comments</p>*/}

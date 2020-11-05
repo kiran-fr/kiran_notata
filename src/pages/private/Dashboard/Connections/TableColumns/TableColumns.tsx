@@ -4,23 +4,17 @@ import { Button, Tag } from "Components/elements";
 import {
   Connection,
   FunnelTag,
-  SubjectiveScore,
+  highestFunnelTagIndex,
+  subjectiveScore,
+  tagCount,
 } from "pages/private/Dashboard/Connections/types";
-
-// import {
-//   list_star,
-//   average_score,
-//   date_style,
-//   pre_space,
-//   max_width_200,
-//   funnel_tag,
-// } from "../Connections.module.css";
 
 import styles from "../Connections.module.css";
 
 import moment from "moment";
 import { History } from "history";
-// var styles = require("../Connections.module.css");
+
+import connectionGet from "Apollo/Queries/connectionGet";
 
 export default ({
   history,
@@ -38,6 +32,8 @@ export default ({
     key: "starred",
     width: 20,
     className: styles.list_star,
+    allowSorting: false,
+
     render: (connection: Connection) => {
       const { starred, id } = connection;
       return (
@@ -67,8 +63,9 @@ export default ({
   },
   {
     title: "Company name",
-    key: "creative",
+    key: "creative.name",
     className: styles.max_width_200,
+    type: "string",
     render: (connection: Connection) => {
       let _style: React.CSSProperties = {
         cursor: "pointer",
@@ -92,13 +89,14 @@ export default ({
     dataIndex: "funnelTags",
     key: "tags",
     responsive: "sm",
+    valueExpr: (connection: Connection) => highestFunnelTagIndex(connection.funnelTags),
     render: (funnelTags: FunnelTag[]) => {
       if (!funnelTags.length) {
         return <span style={{ color: "#DADEE2" }}>n/a</span>;
       }
       let highest = funnelTags.reduce(
         (max, tag) => (tag.index > max ? tag.index : max),
-        funnelTags[0].index
+        funnelTags[0].index,
       );
       let tag = funnelTags.find(({ index }) => index === highest);
       return (
@@ -113,6 +111,7 @@ export default ({
     // dataIndex: "tags",
     key: "tags",
     responsive: "md",
+    valueExpr: (connection: Connection) => tagCount(connection.tags),
     render: (connection: Connection) => (
       <span>
         <span
@@ -140,20 +139,11 @@ export default ({
     // dataIndex: "subjectiveScores",
     key: "subjectiveScores",
     responsive: "sm",
+    type: "number",
+    width: 156,
+    valueExpr: (connection: Connection) => subjectiveScore(connection) || 0,
     render: (connection: Connection) => {
-      let scores = connection.subjectiveScores;
-
-      let avg;
-      if (scores?.length) {
-        let { score: ttl } = scores.reduce(
-          (a, b) =>
-            ({
-              score: a.score + b.score,
-            } as SubjectiveScore)
-        );
-        avg = (ttl / scores.length).toFixed(1);
-      }
-
+      let avg = subjectiveScore(connection);
       return (
         <div
           onClick={() => {
@@ -177,6 +167,7 @@ export default ({
     key: "updatedAt",
     responsive: "lg",
     className: styles.pre_space,
+    type: "date",
     render: (date: string) => (
       <span className={styles.date_style}>{moment(date).format("ll")}</span>
     ),
@@ -186,6 +177,8 @@ export default ({
     dataIndex: "id",
     key: "id",
     width: 30,
+    allowSorting: false,
+
     render: (id: string) => (
       <Button
         type="right_arrow"

@@ -215,13 +215,24 @@
   color: var(--color-primary);
 }
 
-.text_button,
-.text_button:focus {
+/* Text Button */
+
+.text_button {
   outline: none;
   border: none;
-  background: white;
   color: var(--color-primary);
   background: transparent;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.text_button:hover,
+.text_button:focus,
+.text_buttons:active {
+  outline: none;
+  border: none;
+  color: var(--color-primary-select);
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
 }

@@ -69,8 +69,8 @@ const CreateNewStartup = ({
         <Modal
           title="Add startup"
           close={() => {
-            setShowConnection(false);
             setShowModal(false);
+            setShowConnection(undefined);
           }}
           disableFoot={true}
         >
@@ -103,7 +103,7 @@ const CreateNewStartup = ({
                 <li
                   onClick={() => {
                     setShowTagGroup(showConnection);
-                    setShowConnection();
+                    setShowConnection(undefined);
                     setShowModal(false);
                   }}
                 >
@@ -113,17 +113,25 @@ const CreateNewStartup = ({
                 <li
                   onClick={() => {
                     setShowEvaluate(showConnection);
-                    setShowConnection();
+                    setShowConnection(undefined);
                     setShowModal(false);
                   }}
                 >
                   Evaluate
                 </li>
+
+                <li
+                  style={{ color: "var(--color-primary)" }}
+                  onClick={() => {
+                    setShowConnection(undefined);
+                  }}
+                >
+                  Add another startup
+                </li>
               </ul>
 
               <div className={shortcuts_list_footer}>
                 <span />
-
                 <Button
                   type="right_arrow"
                   size="medium"
