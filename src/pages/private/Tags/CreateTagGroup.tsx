@@ -5,8 +5,9 @@ import { tagGroupPut, funnelGroupPut } from "Apollo/Mutations";
 import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
 
 import { Card, Button } from "Components/elements";
+import { TagType } from "pages/private/Tags/index";
 
-export default function CreateTagGroup({ index, type }) {
+export default function CreateTagGroup({ index, type } : { index: number, type: TagType }) {
   const [mutateTags] = useMutation(tagGroupPut, {
     refetchQueries: [{ query: tagGroupGet }],
     awaitRefetchQueries: true,
@@ -19,7 +20,7 @@ export default function CreateTagGroup({ index, type }) {
   const { register, handleSubmit, formState, reset } = useForm();
   const { isSubmitting } = formState;
 
-  const onSubmit = async variables => {
+  const onSubmit = async (variables: any) => {
     try {
       if (type === "funnels") {
         await mutateFunnels({
@@ -53,7 +54,7 @@ export default function CreateTagGroup({ index, type }) {
         <textarea
           rows={1}
           className="form_h1"
-          placeholder="Tag Group Name"
+          placeholder={type === "tags" ? "Tag Group Name" : "Funnel Group Name"}
           name="input.name"
           ref={register}
         />
@@ -61,7 +62,11 @@ export default function CreateTagGroup({ index, type }) {
         <textarea
           rows={1}
           className="form_p1"
-          placeholder="Tag Group Description"
+          placeholder={
+            type === "tags"
+              ? "Tag Group Description"
+              : "Funnel Group Description"
+          }
           name="input.description"
           ref={register}
         />
@@ -74,7 +79,9 @@ export default function CreateTagGroup({ index, type }) {
           }}
         >
           <Button type="right_arrow" loading={isSubmitting} size="large">
-            Create new tag group
+            {type === "tags"
+              ? "Create new tag group"
+              : "Create new funnel group"}
           </Button>
         </div>
       </form>

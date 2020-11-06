@@ -51,6 +51,15 @@ export const apolloInMemoryCache = {
         },
       },
     },
+    FunnelGroup: {
+      fields: {
+        funnelTags: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+      },
+    },
     Account: {
       fields: {
         tagGroups: {

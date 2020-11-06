@@ -172,8 +172,6 @@ export default function Groups({ history }: { history: any }) {
             title="New Group"
             close={() => setShowModal(false)}
             disableFoot={true}
-            noKill={""}
-            submit={""}
             loading={false}
             showScrollBar={false}
           >

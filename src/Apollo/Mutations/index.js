@@ -30,3 +30,6 @@ export { default as connectionDelete } from "./connectionDelete";
 export { default as groupMarkAsSeen } from "./groupMarkAsSeen";
 
 export { default as tagDelete } from "./tagDelete";
+export { default as funnelTagDetele } from "./funnelTagDelete";
+export { default as tagGroupDelete } from "./tagGroupDelete";
+export { default as funnelGroupDelete } from "./funnelGroupDelete";

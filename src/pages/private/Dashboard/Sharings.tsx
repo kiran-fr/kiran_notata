@@ -452,7 +452,6 @@ export default function Sharings({ history }:
           key={"actionModal"}
           noKill
           loading={false}
-          submit={null}
           showScrollBar={true}
           >
           <ViewSummary

@@ -7,9 +7,8 @@
   align-items: center;
   z-index: 999999;
 
-  color: var(--color-secondary);
+  /*color: var(--color-secondary);*/
   height: 100vh;
-  top: 0;
   position: absolute;
   width: 100%;
 }

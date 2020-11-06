@@ -22,6 +22,7 @@ import "babel-polyfill";
 import "./fonts/font-awesome-4.7.0/css/font-awesome.min.css";
 import "./fonts/fontawesome-pro-5.13.0-web/css/all.min.css";
 import "./style.css";
+import { createMuiTheme } from "@material-ui/core";
 
 initializeAwsConfig();
 console.log(
@@ -54,6 +55,17 @@ const generateClassName = createGenerateClassName();
 const jss = create({
   ...jssPreset(),
   insertionPoint: document.getElementById("jss-insertion-point"),
+});
+
+export const materialTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#ff6969",
+    },
+    secondary: {
+      main: "#af5959",
+    },
+  },
 });
 
 Auth.currentAuthenticatedUser()

@@ -10,8 +10,8 @@ import DateFnsUtils from "@material-ui/pickers/adapter/date-fns";
 import { Button } from "Components/elements";
 import moment from "moment";
 import { useEffect } from "react";
-import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from '@material-ui/core/styles';
+import { materialTheme } from "index";
 
 interface DateRangeIntervals {
   label: string;
@@ -22,17 +22,6 @@ interface Props {
   value: DateRange<Date>;
   onValueChange: (dateRange: DateRange<Date>) => void;
 }
-// TODO: Move Styles And ThemeProvider To Root Level
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#ff6969",
-    },
-    secondary: {
-      main: "#af5959",
-    },
-  },
-});
 
 export default function DateRangeSelector(props: Props) {
   const [value, setValue] = React.useState<DateRange<Date>>([null, null]);
@@ -71,7 +60,7 @@ export default function DateRangeSelector(props: Props) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={materialTheme}>
       <LocalizationProvider dateAdapter={DateFnsUtils}>
         <DateRangePicker
           startText="From"
