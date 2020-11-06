@@ -21,7 +21,7 @@ export const Table = ({
   columns,
   cell_content,
   loading,
-  diableHead,
+  disableHead,
   noMargin,
   paginateAt,
 }) => {
@@ -29,11 +29,11 @@ export const Table = ({
     <table
       className={classnames(
         container,
-        diableHead && no_head,
+        disableHead && no_head,
         noMargin && no_margin
       )}
     >
-      {!diableHead && (
+      {!disableHead && (
         <thead>
           <tr>
             {columns.map((c, i) => {

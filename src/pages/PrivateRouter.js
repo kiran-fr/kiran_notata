@@ -171,7 +171,7 @@ const WrapperComponent = ({ ...props }) => {
   if (loading && !data) return <GhostLoader />;
 
   if (!loading && !error && data) {
-    console.log("data", data);
+    // console.log("data", data);
 
     let user = data.userGet || {};
     if (user.email === null) {

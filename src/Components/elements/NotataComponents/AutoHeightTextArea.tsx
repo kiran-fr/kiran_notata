@@ -53,6 +53,7 @@ export default function AutoHeightTextarea({
     textareaRef.current.style.height = scrollHeight + "px";
   }, [currentValue]);
 
+
   useEffect(() => {
     setCurrentValue(value);
   }, [value]);
@@ -70,30 +71,6 @@ export default function AutoHeightTextarea({
   );
 }
 
-// const TextArea = styled.textarea`
-//   height: ${({ scrollHeight }) =>
-//     scrollHeight ? `${scrollHeight}px` : "auto"};
-//   overflow-y: hidden;
-// `;
 
-// export default function AutoHeightTextArea(props) {
-//   const [scrollHeight, setScrollHeight] = useState(0);
-//   const textareaRef = useRef();
 
-//   useEffect(() => {
-//     if (textareaRef) {
-//       setScrollHeight(textareaRef.current.scrollHeight);
-//     }
-//   }, [textareaRef]);
 
-//   return (
-//     <TextArea
-//       {...props}
-//       ref={textareaRef}
-//       scrollHeight={scrollHeight}
-//       onInput={() => {
-//         setScrollHeight(textareaRef.current.scrollHeight);
-//       }}
-//     />
-//   );
-// }

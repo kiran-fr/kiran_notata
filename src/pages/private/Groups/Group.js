@@ -218,7 +218,7 @@ function SharedBy({ group }) {
     <Table
       dataSource={[admin] || []}
       columns={columns}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );
@@ -299,7 +299,7 @@ function MemberList({ group, user, isAdmin }) {
     <Table
       dataSource={group.members || []}
       columns={columns}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );
@@ -509,7 +509,7 @@ function AddNewStartup({ group, connections, mutate }) {
                 <Table
                   dataSource={connections}
                   columns={columns}
-                  diableHead={true}
+                  disableHead={true}
                   pagination={false}
                 />
               </div>
@@ -641,7 +641,7 @@ function AddNewTemplate({ group, isAdmin, mutate }) {
             <Table
               dataSource={templates}
               columns={columns}
-              diableHead={true}
+              disableHead={true}
               pagination={false}
             />
           </div>
@@ -988,7 +988,7 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
       <Table
         dataSource={list}
         columns={columns}
-        diableHead={true}
+        disableHead={true}
         pagination={false}
       />
 
@@ -1111,7 +1111,7 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
     <Table
       dataSource={templates}
       columns={columns}
-      diableHead={true}
+      disableHead={true}
       pagination={false}
     />
   );

@@ -24,6 +24,7 @@ import {
   BreadCrumbs,
   GhostLoader,
 } from "Components/elements";
+
 import TemplateInfo from "./TemplateInfo";
 
 import { delete_bucket } from "./EvaluationTemplate.module.css";

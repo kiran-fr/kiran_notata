@@ -171,7 +171,7 @@ export function PublicCreative({ match }) {
         {creative.id && (
           <div>
             <span style={{ color: "var(--color-primary)" }}>
-              {creative.sharedByEmail}
+              {creative.sharedByEmail}{" "}
             </span>
             have invited you to share some information about your company with
             them. Fill out the relevant parts of this form, and hit "submit"

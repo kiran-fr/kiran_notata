@@ -48,7 +48,6 @@ type InboxData = {
 // *********
 
 
-
 export default function Sharings({ history }:
                                    {
                                      history: History,
@@ -76,9 +75,23 @@ export default function Sharings({ history }:
   });
 
   // DEFINITIONS
-  const isLoading = userGetQuery.loading || groupsGetQuery.loading || creativesGetQuery.loading || connectionsGetQuery.loading;
-  const hasError = userGetQuery.error || groupsGetQuery.error || creativesGetQuery.error || connectionsGetQuery.error;
-  const missingData = !userGetQuery.data || !groupsGetQuery.data || !creativesGetQuery.data || !connectionsGetQuery.data;
+  const isLoading =
+    userGetQuery.loading ||
+    groupsGetQuery.loading ||
+    creativesGetQuery.loading ||
+    connectionsGetQuery.loading;
+
+  const hasError =
+    userGetQuery.error ||
+    groupsGetQuery.error ||
+    creativesGetQuery.error ||
+    connectionsGetQuery.error;
+
+  const missingData =
+    !userGetQuery.data ||
+    !groupsGetQuery.data ||
+    !creativesGetQuery.data ||
+    !connectionsGetQuery.data;
 
 
 
@@ -92,13 +105,14 @@ export default function Sharings({ history }:
   }
 
   if (isLoading)
-    return (
-    <Card label="Inbox" maxWidth={1200} style={{ paddingBottom: "20px" }}>
-      <span>
-            <i className="fa fa-spinner fa-spin"/>
-      </span>
-    </Card>
-  );
+    return <span/>
+  //   return (
+  //   <Card label="Inbox" maxWidth={1200} style={{ paddingBottom: "20px" }}>
+  //     <span>
+  //           <i className="fa fa-spinner fa-spin"/>
+  //     </span>
+  //   </Card>
+  // );
 
   async function processCreative() {
     try {
@@ -312,7 +326,7 @@ export default function Sharings({ history }:
 
                     }}
                   >
-                    mark as seen maaan {" "}
+                    mark as seen{" "}
                     {loadingMark[data.groupId] && (
                       <i className="fa fa-spinner fa-spin"/>
                     )}

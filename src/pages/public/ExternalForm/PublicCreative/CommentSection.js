@@ -61,12 +61,14 @@ export function CommentSection({ question, creative }) {
           style={{ resize: "none" }}
         />
 
-        {creative.id && (
-          <div className="comment_sumbit">
-            <i className="fas fa-arrow-alt-circle-up" />
-            <input type="submit" value="" disabled={isSubmitting} />
-          </div>
-        )}
+        {/*
+            creative.id && (
+              <div className="comment_sumbit">
+                <i className="fas fa-arrow-alt-circle-up" />
+                <input type="submit" value="" disabled={isSubmitting} />
+              </div>
+            )
+          */}
       </div>
     </div>
   );

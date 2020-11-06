@@ -15,9 +15,10 @@ function TemplateInfo({ template }: { template: any }) {
   useEffect(() => {
     setValue("input.name", name);
     setValue("input.description", description);
-  });
+  }, [name, description]);
 
   const onSubmit = async (data: any, event: any) => {
+
     let variables = {
       id: template.id,
       ...data,

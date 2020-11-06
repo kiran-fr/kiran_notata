@@ -68,6 +68,41 @@ export default function CommentInputContainer({
     }
   }
 
+  async function handleUpdateComment({ id, val }) {
+    const variables = {
+      id: evaluation.id,
+      input: {
+        answerUpdate: {
+          id,
+          val,
+        },
+      },
+    };
+
+    console.log("variables", variables);
+
+    try {
+      let res = await mutate({
+        variables,
+        optimisticResponse: {
+          __typename: "Mutation",
+          evaluationPut: {
+            __typename: "Evaluation",
+            ...evaluation,
+            answers: evaluation.answers.map(e => ({
+              ...e,
+              val: e.id === id ? val : e.val,
+            })),
+          },
+        },
+      });
+
+      console.log("res", res);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
   const comments = (evaluation.answers || []).filter(
     ({ inputType, questionId }) =>
       inputType === "COMMENT" && questionId === question.id
@@ -78,6 +113,7 @@ export default function CommentInputContainer({
       comments={comments}
       style={{ padding: "15px" }}
       handleDeleteComment={handleDeleteComment}
+      handleUpdateComment={handleUpdateComment}
       handleOnSubmit={handleOnSubmit}
     />
   );

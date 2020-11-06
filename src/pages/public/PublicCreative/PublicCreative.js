@@ -92,6 +92,8 @@ function CompanyName({ creative }) {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data, event) => {
+    console.log("THIS IS NEVER CALLED! WHY?");
+
     let variables = { id: creative.id, ...data };
     try {
       if (creative.id) {
@@ -115,9 +117,23 @@ function CompanyName({ creative }) {
         name="input.name"
         defaultValue={creative.name}
         ref={register}
-        onBlur={e => {
+        onBlur={async e => {
           creative.id && handleSubmit(onSubmit);
-          creative.name = e.target.value;
+
+          if (creative.id) {
+            let variables = {
+              id: creative.id,
+              input: {
+                name: e.target.value,
+              },
+            };
+
+            try {
+              await mutate({ variables });
+            } catch (error) {
+              console.log(error);
+            }
+          }
         }}
       />
     </form>
@@ -125,8 +141,6 @@ function CompanyName({ creative }) {
 }
 
 export function PublicCreative({ match }) {
-  console.log("PublicCreative");
-
   const { id, accountId } = match.params;
 
   const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
@@ -146,7 +160,8 @@ export function PublicCreative({ match }) {
   const error = creativeQuery.error || creativeTemplateQuery.error;
   const loading = creativeQuery.loading || creativeTemplateQuery.loading;
 
-  console.log("template", template);
+  // console.log("creative", creative)
+  // console.log("template", template);
 
   if (error) {
     console.log("creativeQuery.error", creativeQuery.error);
@@ -159,18 +174,18 @@ export function PublicCreative({ match }) {
     );
   }
 
-  if (!creative) {
-    creative = {
-      id: null,
-      name: "",
-      description: "External Form",
-      templateId: "",
-      sharedWithEmail: null,
-      sharedByEmail: null,
-      submit: false,
-      answers: [],
-    };
-  }
+  // if (!creative) {
+  //   creative = {
+  //     id: null,
+  //     name: "",
+  //     description: "External Form",
+  //     templateId: "",
+  //     sharedWithEmail: null,
+  //     sharedByEmail: null,
+  //     submit: false,
+  //     answers: [],
+  //   };
+  // }
 
   if (!loading && creative && template)
     return (

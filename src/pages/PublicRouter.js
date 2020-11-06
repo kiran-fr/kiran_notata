@@ -4,9 +4,11 @@ import Route from "react-router/es/Route";
 
 // ROUTES
 import { public_creative, demo_page, public_pages } from "./definitions";
-
-import { PublicCreative } from "./public/ExternalForm/PublicCreative/PublicCreative";
 import { DemoPage } from "./public/DemoPage/DemoPage";
+
+import { PublicCreative as ExternalForm } from "./public/ExternalForm/PublicCreative/PublicCreative";
+
+import { PublicCreative } from "./public/PublicCreative/PublicCreative";
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -16,7 +18,7 @@ export const RouterComponent = ({ history }) => {
       <Route
         exact
         path={`${public_pages}/:accountId/form.html`}
-        component={PublicCreative}
+        component={ExternalForm}
       />
       <Route render={() => <div>404</div>} />
     </Switch>
