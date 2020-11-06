@@ -209,21 +209,6 @@ export default function Sharings({ history }:
       });
     }
 
-    // for (let startup of group.startups) {
-    //   if (!startup.seen) {
-    //     inboxData.push({
-    //       timeStamp: startup.createdAt,
-    //       type: InboxType.SHARING,
-    //       data: {
-    //         ...startup,
-    //         name: group.name,
-    //         groupId: group.id,
-    //         connection: startup.connection,
-    //       },
-    //     });
-    //   }
-    // }
-
   }
 
   // Populate list with web form items
@@ -466,6 +451,7 @@ export default function Sharings({ history }:
           key={"actionModal"}
           noKill
           loading={false}
+          submit={null}
           showScrollBar={true}
           >
           <ViewSummary

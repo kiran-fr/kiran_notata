@@ -10,7 +10,7 @@ export default function CommentInputContainer({
   templateId,
   evaluation,
 }) {
-  const [mutate] = useMutation(evaluationPut);
+  const [mutate, { loading }] = useMutation(evaluationPut);
 
   async function handleOnSubmit(data) {
     const answerNew = {
@@ -115,6 +115,7 @@ export default function CommentInputContainer({
       handleDeleteComment={handleDeleteComment}
       handleUpdateComment={handleUpdateComment}
       handleOnSubmit={handleOnSubmit}
+      loading={loading}
     />
   );
 }

@@ -32,40 +32,6 @@ interface GroupsData {
   groupsGet: GroupsType[];
 }
 
-// const ListAll = ({ user }) => {
-//   const { data, loading, error } = useQuery(groupGetListOfStartups);
-//   if (loading || error) return <span />;
-
-//   let startups = data.groupGetListOfStartups;
-//   startups = startups.filter(({ sharedBy }) => sharedBy !== user.email);
-
-//   const columns = [
-//     {
-//       title: "Name",
-//       key: "name",
-//       render: item => {
-//         return (
-//           <span>
-//             <div>{item.connection.creative.name}</div>
-//             <div style={{ opacity: 0.5, fontSize: "12px" }}>
-//               {<>{item.sharedBy} - </>}
-//               {item.groupName}
-//             </div>
-//           </span>
-//         );
-//       },
-//     },
-//   ];
-//   return (
-//     <Table
-//       dataSource={startups}
-//       columns={columns}
-//       // loading={loading.toString()}
-
-//       disableHead={true}
-//     />
-//   );
-// };
 
 export default function Groups({ history }: { history: any }) {
   const [showModal, setShowModal] = useState(false);
@@ -105,22 +71,10 @@ export default function Groups({ history }: { history: any }) {
       />
 
       <Content maxWidth={600}>
-        {/*
-            <h1>Inbox</h1>
-            <Card style={{paddingTop: "5px"}}>
-              <ListAll
-                user={user}
-              />
-            </Card>
-          */}
-
         <h1>Groups</h1>
         {!!groups?.length && (
           <Card
             style={{ paddingTop: "5px" }}
-            // noMargin={""}
-            // maxWidth={""}
-            // label={""}
           >
             <Table
               dataSource={groups}
@@ -134,12 +88,7 @@ export default function Groups({ history }: { history: any }) {
         )}
 
         {!groups?.length && (
-          <Card
-            style={{ paddingBottom: "20px" }}
-            // noMargin={""}
-            // maxWidth={""}
-            // label={""}
-          >
+          <Card style={{ paddingBottom: "20px" }} >
             <div style={{ fontSize: "18px" }}>
               You don't have any groups yet
             </div>
@@ -172,6 +121,8 @@ export default function Groups({ history }: { history: any }) {
             title="New Group"
             close={() => setShowModal(false)}
             disableFoot={true}
+            noKill={""}
+            submit={""}
             loading={false}
             showScrollBar={false}
           >

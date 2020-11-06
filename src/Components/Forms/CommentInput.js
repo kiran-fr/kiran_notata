@@ -18,6 +18,7 @@ export default function CommentInput({
   handleOnSubmit,
   handleUpdateComment,
   handleDeleteComment,
+  loading,
 }) {
   const [showModal, setShowModal] = useState(undefined);
 
@@ -123,7 +124,7 @@ export default function CommentInput({
               <div style={{ textAlign: "right" }}>
                 <Button
                   type="input"
-                  loading={isSubmitting}
+                  loading={isSubmitting || loading}
                   value="save comment"
                 />
               </div>

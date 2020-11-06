@@ -252,7 +252,10 @@ function DeleteTagGroup({ tags, groupId, name, type }: { tags: Tag[] | FunnelTag
           disableFoot={false}
           close={() => setShowWarning(false)}
           key="warningModal"
-          noKill
+          noKill={""}
+          submit={""}
+          loading={false}
+          showScrollBar={false}
         >
           <span>
             You have to delete all the {type === TagType.TAGS ? "tags" : "funnels"} in
