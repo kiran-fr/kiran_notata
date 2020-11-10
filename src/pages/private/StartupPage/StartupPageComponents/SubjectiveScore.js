@@ -18,14 +18,8 @@ import {
 import classnames from "classnames";
 
 export function SubjectiveScore({ connection, user, history }) {
-  // console.log('connection.subjectiveScores', connection.subjectiveScores)
-  // console.log('user', user)
-
   const [mutate] = useMutation(connectionSubjectiveScorePut);
-
   let subjectiveScores = connection.subjectiveScores || [];
-
-  // console.log('subjectiveScores', subjectiveScores)
 
   let otherScores = [];
   for (let shared of connection.sharedWithMe) {

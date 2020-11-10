@@ -93,8 +93,11 @@ function Submit({ creative, accountId, answers, name }) {
       {success && !loading && (
         <div style={{ marginTop: "20px" }}>
           <SuccessBox>
-            Your information has been submitted, and the investor received your
-            request.
+            Thank you!
+            <br />
+            Your information has been submitted. We will go through your
+            application and come back to you withing two weeks if we are
+            interested.
           </SuccessBox>
         </div>
       )}
@@ -128,7 +131,7 @@ export function PublicCreative({ match }) {
   const [getCreativeTemplate, creativeTemplateQuery] = useLazyQuery(
     publicCreativeTemplateGet
   );
-  const template = (creativeTemplateQuery.data || {}).publicCreativeTemplateGet;
+  const template = creativeTemplateQuery?.data?.publicCreativeTemplateGet;
 
   useEffect(() => {
     if (id) getCreative({ variables: { id } });

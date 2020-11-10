@@ -215,6 +215,14 @@ h1 {
   }
 }
 
+@media screen and (max-width: 500px) {
+  .logged_in_page_content {
+    left: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+  }
+}
+
 .notata_form {
 }
 

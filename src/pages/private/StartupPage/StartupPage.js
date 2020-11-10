@@ -106,7 +106,7 @@ export default function StartupPage({ match, history }) {
         ]}
       />
 
-      <Content maxWidth={600}>
+      <Content maxWidth={780}>
         {/*HEADER*/}
         <Card>
           <div className={header_comp}>{connection.creative.name}</div>
