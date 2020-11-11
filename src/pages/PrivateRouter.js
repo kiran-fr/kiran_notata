@@ -61,9 +61,10 @@ import GroupSettings from "./private/Groups/GroupSettings";
 import { GhostLoader } from "Components/elements";
 
 // Styles
-import SideBar from "Components/SideBar/SideBar";
 import Header from "Components/Header/Header";
 import ExternalForm from "./private/ExternalForm/ExternalForm";
+import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu";
+import SideBar from "../Components/SideBar/SideBar";
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -182,7 +183,8 @@ const WrapperComponent = ({ ...props }) => {
   return (
     <>
       <Header />
-      <SideBar {...props} />
+      <SideBarTreeMenu {...props} />
+      {/*<SideBar {...props} />*/}
       <div className="logged_in_page_content">
         <RouterComponent {...props} />
       </div>

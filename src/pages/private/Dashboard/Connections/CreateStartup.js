@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { connectionsGet } from "Apollo/Queries";
@@ -13,13 +13,15 @@ import {
   shortcuts_list_footer,
 } from "./Connections.module.css";
 
-const CreateNewStartup = ({
+export const CreateNewStartup = ({
   setDone,
   history,
   setShowTagGroup,
   setShowEvaluate,
+  showModalOnly,
+  showModalState,
 }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(showModalState);
   const [showConnection, setShowConnection] = useState();
 
   const [mutateCreative] = useMutation(creativePut);
@@ -29,6 +31,10 @@ const CreateNewStartup = ({
 
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
+
+  useEffect(() => {
+    setShowModal(showModalState);
+  }, [showModalState]);
 
   const onSubmit = async (data, event) => {
     try {
@@ -49,21 +55,23 @@ const CreateNewStartup = ({
 
   return (
     <>
-      <div
-        style={{
-          position: "relative",
-          marginBottom: "10px",
-          top: "-20px",
-        }}
-      >
-        <Button
-          onClick={() => setShowModal(true)}
-          type="right_arrow"
-          size="large"
+      {!showModalOnly && (
+        <div
+          style={{
+            position: "relative",
+            marginBottom: "10px",
+            top: "-20px",
+          }}
         >
-          ADD NEW STARTUP
-        </Button>
-      </div>
+          <Button
+            onClick={() => setShowModal(true)}
+            type="right_arrow"
+            size="large"
+          >
+            ADD NEW STARTUP
+          </Button>
+        </div>
+      )}
 
       {showModal && (
         <Modal

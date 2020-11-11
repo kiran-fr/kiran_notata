@@ -14,7 +14,7 @@ import {
 
 import { Button } from "../";
 
-export const Modal = ({
+export const Modal_COPY = ({
   close,
   noKill,
   submit,

@@ -189,13 +189,23 @@ h1 {
 
 .logged_in_page_content {
   padding-top: 50px;
+  left: 150px;
+  padding-left: 115px;
+  position: relative;
+  margin-right: 165px;
+  background: var(--color-gray-pale);
+  min-height: calc(100vh + 50px);
+}
+
+/* Old logged_in_page_content
+  padding-top: 50px;
   left: 200px;
   padding-left: 15px;
   position: relative;
   margin-right: 205px;
   background: var(--color-gray-pale);
   min-height: calc(100vh + 50px);
-}
+ */
 
 @media screen and (min-width: 900px) {
   .mobile_only {

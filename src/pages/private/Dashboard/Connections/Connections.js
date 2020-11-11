@@ -324,6 +324,7 @@ export default function Connections({ history }) {
         }}
         setShowTagGroup={setShowTagGroup}
         setShowEvaluate={setShowEvaluate}
+        showModalOnly={false}
       />
 
       <div className={small_text_flex}>

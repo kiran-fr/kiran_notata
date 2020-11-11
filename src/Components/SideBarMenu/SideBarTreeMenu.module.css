@@ -1,0 +1,111 @@
+.sidebar_container {
+  padding-top: 35px;
+  padding-left: 25px;
+  user-select: none;
+  background: white;
+  position: absolute;
+  left: 0;
+  top: 53px;
+  min-height: 100vh;
+  width: 250px;
+  z-index: 1000;
+}
+
+.sidebar_container:before {
+  content: "";
+  width: inherit;
+  position: fixed;
+  height: 100vh;
+  background: white;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.collapsed {
+  display: none;
+}
+
+.menu_container {
+  height: 100%;
+  border-right: 0 !important;
+  background: white;
+  position: relative;
+}
+
+.menu_container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu_container li {
+  padding: 0;
+  padding-left: 10px;
+}
+
+.menu_container div {
+  padding-left: 100%;
+  margin-left: -100%;
+  line-height: 35px;
+}
+
+.caret {
+  position: absolute;
+  margin-left: -15px;
+  margin-top: 10px;
+  line-height: 35px;
+  cursor: pointer;
+}
+
+.caret_down {
+  position: absolute;
+  margin-left: -15px;
+  margin-top: 10px;
+  line-height: 35px;
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+.root_item {
+  font-weight: 500;
+}
+
+.root_node {
+  margin-bottom: 15px;
+}
+
+.item:hover {
+  background-color: var(--color-gray-pale);
+}
+
+.selected_item,
+.selected_item:hover {
+  font-weight: 400;
+  color: white;
+  background-color: var(--color-secondary);
+}
+
+.node_item_icon {
+  vertical-align: middle;
+  float: right;
+  line-height: 35px !important;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.link {
+  color: inherit;
+  text-decoration: inherit;
+  display: inline-block;
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.hash_tag {
+  margin-right: 6px;
+  color: var(--color-gray-medium);
+}
