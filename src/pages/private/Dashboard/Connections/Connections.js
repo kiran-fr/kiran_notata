@@ -135,6 +135,102 @@ function applyFilters({ connections, filters }) {
   return connections;
 }
 
+export const AddTagMutationOptions = (tag, connection) => ({
+  variables: {
+    connectionId: connection.id,
+    tagId: tag.id,
+  },
+
+  optimisticResponse: {
+    __typename: "Mutation",
+    connectionTagAdd: {
+      tags: [
+        ...connection.tags,
+        {
+          createdAt: new Date().getTime(),
+          index: connection.tags.length,
+          createdBy: "tmp",
+          id: "tmp-id",
+          description: null,
+          name: tag.name,
+          tagGroupId: tag.tagGroupId,
+          __typename: "Tag",
+        },
+      ],
+      __typename: "Connection",
+    },
+  },
+
+  update: (proxy, { data: { connectionTagAdd } }) => {
+    const data = proxy.readQuery({
+      query: connectionsGet,
+    });
+
+    proxy.writeQuery({
+      query: connectionsGet,
+      data: {
+        connectionsGet: data.connectionsGet.map(c => {
+          if (c.id !== connection.id) {
+            return c;
+          }
+
+          return {
+            ...c,
+            tags: connectionTagAdd.tags,
+          };
+        }),
+      },
+    });
+  },
+});
+
+export const DeleteTagMutationOptions = (tag, connection) => ({
+  variables: {
+    connectionId: connection.id,
+    tagId: tag.id,
+  },
+
+  optimisticResponse: {
+    __typename: "Mutation",
+    connectionTagRemove: {
+      tags: [
+        ...connection.tags
+          .filter(({ id }) => id !== tag.id)
+          .map(t => ({
+            ...t,
+            index: null,
+            description: null,
+            createdBy: "tmp",
+            createdAt: 0,
+          })),
+      ],
+      __typename: "Connection",
+    },
+  },
+
+  update: (proxy, { data: { connectionTagRemove } }) => {
+    const data = proxy.readQuery({
+      query: connectionsGet,
+    });
+
+    proxy.writeQuery({
+      query: connectionsGet,
+      data: {
+        connectionsGet: data.connectionsGet.map(c => {
+          if (c.id !== connection.id) {
+            return c;
+          }
+
+          return {
+            ...c,
+            tags: connectionTagRemove.tags,
+          };
+        }),
+      },
+    });
+  },
+});
+
 export default function Connections({ history }) {
   const [mutate] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
@@ -198,103 +294,11 @@ export default function Connections({ history }) {
   });
 
   function addTag(tag, connection) {
-    mutate({
-      variables: {
-        connectionId: connection.id,
-        tagId: tag.id,
-      },
-
-      optimisticResponse: {
-        __typename: "Mutation",
-        connectionTagAdd: {
-          tags: [
-            ...connection.tags,
-            {
-              createdAt: new Date().getTime(),
-              index: connection.tags.length,
-              createdBy: "tmp",
-              id: "tmp-id",
-              description: null,
-              name: tag.name,
-              tagGroupId: tag.tagGroupId,
-              __typename: "Tag",
-            },
-          ],
-          __typename: "Connection",
-        },
-      },
-
-      update: (proxy, { data: { connectionTagAdd } }) => {
-        const data = proxy.readQuery({
-          query: connectionsGet,
-        });
-
-        proxy.writeQuery({
-          query: connectionsGet,
-          data: {
-            connectionsGet: data.connectionsGet.map(c => {
-              if (c.id !== connection.id) {
-                return c;
-              }
-
-              return {
-                ...c,
-                tags: connectionTagAdd.tags,
-              };
-            }),
-          },
-        });
-      },
-    });
+    mutate(AddTagMutationOptions(tag, connection));
   }
 
   function deleteTag(tag, connection) {
-    mutateDelete({
-      variables: {
-        connectionId: connection.id,
-        tagId: tag.id,
-      },
-
-      optimisticResponse: {
-        __typename: "Mutation",
-        connectionTagRemove: {
-          tags: [
-            ...connection.tags
-              .filter(({ id }) => id !== tag.id)
-              .map(t => ({
-                ...t,
-                index: null,
-                description: null,
-                createdBy: "tmp",
-                createdAt: 0,
-              })),
-          ],
-          __typename: "Connection",
-        },
-      },
-
-      update: (proxy, { data: { connectionTagRemove } }) => {
-        const data = proxy.readQuery({
-          query: connectionsGet,
-        });
-
-        proxy.writeQuery({
-          query: connectionsGet,
-          data: {
-            connectionsGet: data.connectionsGet.map(c => {
-              if (c.id !== connection.id) {
-                return c;
-              }
-
-              return {
-                ...c,
-                tags: connectionTagRemove.tags,
-              };
-            }),
-          },
-        });
-      },
-    });
+    mutateDelete(DeleteTagMutationOptions(tag, connection));
   }
 
   const defaultFilters = {

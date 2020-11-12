@@ -36,15 +36,16 @@ export interface GroupsData {
 export default function Groups({
                                  history, showModalOnly,
                                  showModalState,
-                               }: { history: any, showModalOnly?: boolean, showModalState?: boolean }) {
-  const [showModal, setShowModal] = useState(showModalState);
+                                 onCloseModalEvent,
+                               }: { history: any, showModalOnly?: boolean, showModalState?: {state : boolean}, onCloseModalEvent: () => void }) {
+  const [showModal, setShowModal] = useState(showModalState?.state);
 
   const [mutate, { loading: groupPutLoading }] = useMutation(groupPut);
   const { data, loading, error } = useQuery<GroupsData>(groupsGet);
   const userQuery = useQuery<UserData>(userGet);
 
   useEffect(() => {
-    setShowModal(showModalState);
+    setShowModal(showModalState?.state);
   }, [showModalState]);
 
   let user = userQuery.data?.userGet;
@@ -140,6 +141,7 @@ export default function Groups({
             setDone={(id: any) => {
               let path = `${group}/${id}`;
               history.push(path);
+              showModalOnly && onCloseModalEvent();
             }}
           />
         </Modal>

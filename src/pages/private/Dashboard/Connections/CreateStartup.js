@@ -20,8 +20,9 @@ export const CreateNewStartup = ({
   setShowEvaluate,
   showModalOnly,
   showModalState,
+  onCloseModalEvent,
 }) => {
-  const [showModal, setShowModal] = useState(showModalState);
+  const [showModal, setShowModal] = useState(showModalState?.state);
   const [showConnection, setShowConnection] = useState();
 
   const [mutateCreative] = useMutation(creativePut);
@@ -33,7 +34,7 @@ export const CreateNewStartup = ({
   const { isSubmitting } = formState;
 
   useEffect(() => {
-    setShowModal(showModalState);
+    setShowModal(showModalState?.state);
   }, [showModalState]);
 
   const onSubmit = async (data, event) => {
@@ -145,6 +146,7 @@ export const CreateNewStartup = ({
                   size="medium"
                   onClick={() => {
                     history.push(`${startup_page}/${showConnection}`);
+                    showModalOnly && onCloseModalEvent();
                   }}
                 >
                   View startup

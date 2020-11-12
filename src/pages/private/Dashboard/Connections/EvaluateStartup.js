@@ -11,7 +11,7 @@ import { Button, Table, Modal } from "Components/elements";
 
 import { spinner_class } from "./Connections.module.css";
 
-const EvaluateSelector = ({ connection, close, history }) => {
+export const EvaluateSelector = ({ connection, close, history }) => {
   const [currentLoading, setCurrentLoading] = useState("");
   // const [showModal, setShowModal] = useState(false);
 
