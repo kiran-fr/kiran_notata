@@ -1,5 +1,5 @@
 .sidebar_container {
-  padding-top: 35px;
+  padding-top: 15px;
   padding-left: 25px;
   user-select: none;
   background: white;
@@ -72,7 +72,7 @@
 }
 
 .root_node {
-  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .item:hover {

@@ -121,13 +121,14 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   // ================
 
   function NodeItems({ node }: { node: MenuItem }): JSX.Element {
+    const collapsed = !expandedState.has(node.key);
+    const hasSelectedChildItem = itemOrItemNodesSelected(node);
+
     if (node.nodes && node.nodes.length) {
-      const collapsed = !expandedState.has(node.key);
-      const hasSelectedChildItem = collapsed && node.nodes.some((item) => item.selected);
       return (
           <>
-          <li className={classnames(node.root && !hasSelectedChildItem && styles.root_node)}>
-            <Item key={node.key} node={node} expandable={true} hasSelectedChildItem={hasSelectedChildItem}/>
+          <li className={classnames(node.root && styles.root_node)}>
+            <Item key={node.key} node={node} expandable={true} collapsed={collapsed} hasSelectedChildItem={hasSelectedChildItem}/>
             <ul className={classnames(collapsed && styles.collapsed)}>
               {node.nodes.map((item, i) => (
                   <NodeItems node={item} key={`${node.key}-${i}`}/>
@@ -136,9 +137,9 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           </li>
 
           { collapsed && node.nodes
-            .filter((item) => item.selected)
+            .filter((item) => itemOrItemNodesSelected(item))
             .map((item, i) => (
-              <li className={classnames(node.root && styles.root_node)} key='not-collapsed'>
+              <li key={`not-collapsed-${i}`}>
                 <ul>
                   <NodeItems node={item} key={`${node.key}-${i}`}/>
                 </ul>
@@ -150,15 +151,19 @@ const SideBarTreeMenu = ({ location, history }: any) => {
     }
     return (
       <li className={classnames(node.root && styles.root_node)}>
-        <Item key={node.key} node={node} expandable={false} hasSelectedChildItem={false}/>
+        <Item key={node.key} node={node} expandable={false} hasSelectedChildItem={hasSelectedChildItem} collapsed={collapsed}/>
       </li>
     );
   }
 
-  function Item({ node, expandable, hasSelectedChildItem }: { node: MenuItem, expandable: boolean, hasSelectedChildItem: boolean }): JSX.Element {
+  function itemOrItemNodesSelected(item: MenuItem): boolean {
+    return item.selected || (item.nodes?.some((i) => i.selected) || false);
+  }
+
+  function Item({ node, expandable, collapsed, hasSelectedChildItem }: { node: MenuItem, expandable: boolean, collapsed: boolean, hasSelectedChildItem: boolean }): JSX.Element {
     return (
       <>
-        <div className={`${styles.item} ${node.root && styles.root_item} ${node.selected && styles.selected_item}`}>
+        <div className={`${styles.item} ${(node.root || (collapsed && hasSelectedChildItem)) && styles.root_item} ${(node.selected || selectedNodes.has(node.link))&& styles.selected_item}`}>
           {expandable && (
             <i onClick={(e) => {e.stopPropagation(); changeExpanded(node.key);}}
                className={`${!expandedState.has(node.key) ? styles.caret : styles.caret_down} fas fa-caret-right`}/>
@@ -166,7 +171,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           {node.showHashTag && (
             <span className={styles.hash_tag}>#</span>
           )}
-          <Link to={node.link} className={classnames(styles.link, hasSelectedChildItem && styles.root_item)}>
+          <Link to={node.link} className={styles.link}>
               {node.label}
           </Link>
           {node.icon && (<i onClick={node.action} className={classnames(styles.node_item_icon, node.icon)}/>)}</div>
