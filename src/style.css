@@ -189,10 +189,10 @@ h1 {
 
 .logged_in_page_content {
   padding-top: 50px;
-  left: 150px;
-  padding-left: 115px;
+  left: 140px;
+  padding-left: 130px;
   position: relative;
-  margin-right: 165px;
+  margin-right: 150px;
   background: var(--color-gray-pale);
   min-height: calc(100vh + 50px);
 }

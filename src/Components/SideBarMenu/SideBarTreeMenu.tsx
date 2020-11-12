@@ -22,6 +22,7 @@ type MenuItem = {
   icon?: string;
   nodes?: MenuItem[];
   showHashTag?: boolean;
+  selected?: boolean;
   action?: () => void;
 }
 
@@ -98,6 +99,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         label: group.name,
         link: `/dashboard/group/${group.id}`,
         icon: 'fal fa-cog',
+        selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
         action: () => history.push(`/dashboard/group/${group.id}/settings`),
         nodes: [
         ...group.startups.map((startup) =>
@@ -106,40 +108,57 @@ const SideBarTreeMenu = ({ location, history }: any) => {
             link: `/dashboard/startup_page/${startup.connectionId}`,
             label: startup.connection?.creative?.name,
             nodes: [],
+            selected: selectedNodes.has(`/dashboard/startup_page/${startup.connectionId}`),
             showHashTag: true
           } as MenuItem))
         ]
       });
     });
   }
+
   // ================
   // NODE REGION
   // ================
 
   function NodeItems({ node }: { node: MenuItem }): JSX.Element {
     if (node.nodes && node.nodes.length) {
+      const collapsed = !expandedState.has(node.key);
+      const hasSelectedChildItem = collapsed && node.nodes.some((item) => item.selected);
       return (
-          <li className={`${node.root && styles.root_node}`}>
-            <Item key={node.key} node={node} expandable={true}/>
-            <ul className={classnames(!expandedState.has(node.key) && styles.collapsed)}>
+          <>
+          <li className={classnames(node.root && !hasSelectedChildItem && styles.root_node)}>
+            <Item key={node.key} node={node} expandable={true} hasSelectedChildItem={hasSelectedChildItem}/>
+            <ul className={classnames(collapsed && styles.collapsed)}>
               {node.nodes.map((item, i) => (
                   <NodeItems node={item} key={`${node.key}-${i}`}/>
               ))}
             </ul>
           </li>
+
+          { collapsed && node.nodes
+            .filter((item) => item.selected)
+            .map((item, i) => (
+              <li className={classnames(node.root && styles.root_node)} key='not-collapsed'>
+                <ul>
+                  <NodeItems node={item} key={`${node.key}-${i}`}/>
+                </ul>
+              </li>
+            ))
+          }
+          </>
       );
     }
     return (
-      <li className={`${node.root && styles.root_node}`}>
-        <Item key={node.key} node={node} expandable={false}/>
+      <li className={classnames(node.root && styles.root_node)}>
+        <Item key={node.key} node={node} expandable={false} hasSelectedChildItem={false}/>
       </li>
     );
   }
 
-  function Item({ node, expandable }: { node: MenuItem, expandable: boolean }): JSX.Element {
+  function Item({ node, expandable, hasSelectedChildItem }: { node: MenuItem, expandable: boolean, hasSelectedChildItem: boolean }): JSX.Element {
     return (
       <>
-        <div className={`${styles.item} ${node.root && styles.root_item} ${selectedNodes.has(node.link) && styles.selected_item}`}>
+        <div className={`${styles.item} ${node.root && styles.root_item} ${node.selected && styles.selected_item}`}>
           {expandable && (
             <i onClick={(e) => {e.stopPropagation(); changeExpanded(node.key);}}
                className={`${!expandedState.has(node.key) ? styles.caret : styles.caret_down} fas fa-caret-right`}/>
@@ -147,7 +166,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           {node.showHashTag && (
             <span className={styles.hash_tag}>#</span>
           )}
-          <Link to={node.link} className={styles.link}>
+          <Link to={node.link} className={classnames(styles.link, hasSelectedChildItem && styles.root_item)}>
               {node.label}
           </Link>
           {node.icon && (<i onClick={node.action} className={classnames(styles.node_item_icon, node.icon)}/>)}</div>

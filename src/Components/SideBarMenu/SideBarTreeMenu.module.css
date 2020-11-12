@@ -7,7 +7,7 @@
   left: 0;
   top: 53px;
   min-height: 100vh;
-  width: 250px;
+  width: 260px;
   z-index: 1000;
 }
 
@@ -47,22 +47,22 @@
 .menu_container div {
   padding-left: 100%;
   margin-left: -100%;
-  line-height: 35px;
+  line-height: 38px;
 }
 
 .caret {
   position: absolute;
   margin-left: -15px;
-  margin-top: 10px;
-  line-height: 35px;
+  margin-top: 11px;
+  line-height: 38px;
   cursor: pointer;
 }
 
 .caret_down {
   position: absolute;
   margin-left: -15px;
-  margin-top: 10px;
-  line-height: 35px;
+  margin-top: 11px;
+  line-height: 38px;
   transform: rotate(90deg);
   cursor: pointer;
 }
@@ -89,7 +89,8 @@
 .node_item_icon {
   vertical-align: middle;
   float: right;
-  line-height: 35px !important;
+  padding-right: 5px;
+  line-height: 38px !important;
   cursor: pointer;
   margin-right: 15px;
 }
@@ -98,11 +99,12 @@
   color: inherit;
   text-decoration: inherit;
   display: inline-block;
-  max-width: 170px;
+  max-width: 175px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: top;
+  font-size: 15px;
 }
 
 .hash_tag {
