@@ -26,7 +26,7 @@ const StandardButton = ({
   style,
   ...children
 }) => {
-  onClick = onClick || console.log("click");
+  onClick = onClick || (() => {});
 
   let withIconPadding = loading || type === "right_arrow" || iconClass;
 
@@ -105,7 +105,7 @@ const InputButton = ({ value, size, loading }) => {
 const TinyRightButton = ({ type, onClick, ...children }) => {
   onClick =
     onClick ||
-    function() {
+    function () {
       console.log("click");
     };
   return (
@@ -121,7 +121,7 @@ const TinyRightButton = ({ type, onClick, ...children }) => {
 const TextButton = ({ onClick, ...children }) => {
   onClick =
     onClick ||
-    function() {
+    function () {
       console.log("click");
     };
   return (

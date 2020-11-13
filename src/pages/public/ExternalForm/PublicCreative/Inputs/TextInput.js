@@ -2,7 +2,10 @@ import React from "react";
 import { TextInput } from "Components/Forms";
 
 export default function TextInputContainer({ question, setAnswers, answers }) {
-  const answer = answers[question.id] || {};
+  const answer = answers.find(
+    ({ questionId, inputType }) =>
+      questionId === question.id && inputType === question.inputType
+  );
 
   return (
     <TextInput
@@ -17,12 +20,20 @@ export default function TextInputContainer({ question, setAnswers, answers }) {
           question: question.name,
           val: event.target.value,
         };
-        setAnswers({
-          ...answers,
-          [question.id]: {
-            ...answerNew,
-          },
-        });
+
+        let newAnswers;
+
+        if (!answer) {
+          newAnswers = [...answers, answerNew];
+        }
+
+        if (answer) {
+          newAnswers = answers.map(ans =>
+            ans.questionId === question.id ? answerNew : ans
+          );
+        }
+
+        setAnswers(newAnswers);
       }}
     />
   );

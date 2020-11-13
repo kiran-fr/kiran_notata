@@ -25,9 +25,12 @@ import {
   Button,
   Modal,
   GhostLoader,
+  SuccessBox,
 } from "Components/elements";
 
 export default function GroupSettings({ match, history }) {
+  const [success, setSuccess] = useState(false);
+
   const { register, handleSubmit, formState, setValue } = useForm();
   const { isSubmitting } = formState;
 
@@ -56,11 +59,15 @@ export default function GroupSettings({ match, history }) {
       input: { settings },
     };
 
+    setSuccess(false);
+
     try {
       await mutate({ variables });
     } catch (error) {
       return console.log("error", error);
     }
+
+    setSuccess(true);
   };
 
   const group = groupQuery.data.groupGet;
@@ -141,6 +148,19 @@ export default function GroupSettings({ match, history }) {
                 </label>
               </div>
 
+              <div className="check_container">
+                <label>
+                  <input
+                    type="checkbox"
+                    ref={register}
+                    name="showScores"
+                    id="showScores"
+                    defaultChecked={settings.showScores}
+                  />
+                  List evaluation and subjective scores on group page.
+                </label>
+              </div>
+
               <div
                 style={{
                   marginTop: "15px",
@@ -151,6 +171,8 @@ export default function GroupSettings({ match, history }) {
               </div>
             </form>
           </Card>
+
+          {success && <SuccessBox>Settings successfully saved</SuccessBox>}
         </div>
       </Content>
     </>

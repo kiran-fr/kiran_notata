@@ -4,6 +4,7 @@ export default gql`
   fragment creativeFields on Creative {
     id
     name
+    accountId
     description
     templateId
     createdAt

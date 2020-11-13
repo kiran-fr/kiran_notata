@@ -148,11 +148,9 @@ function StartupList({ group, connections, settings, user, isAdmin, history }) {
     let account_startups = startups.filter(({ connectionId }) =>
       connections.some(({ id }) => id === connectionId)
     );
-
     let my_startups = account_startups.filter(
       ({ sharedBy }) => sharedBy === user.email
     );
-
     return my_startups;
   }
 

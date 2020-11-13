@@ -9,7 +9,10 @@ export default function MultipleChoiceInputContainer({
 }) {
   const { options } = question;
 
-  const answerAnswers = answers[question.id] || [];
+  const answerAnswers = answers.filter(
+    ({ questionId }) => questionId === question.id
+  );
+
   return (
     <MultipleChoiceInput
       options={options.map(({ val, sid }) => {
@@ -21,7 +24,8 @@ export default function MultipleChoiceInputContainer({
           key: sid,
           checked: answer && answer.val,
           handleOnClick: e => {
-            let answersUpdated;
+            let allAnswers = [...answers];
+
             if (e.target.checked) {
               const answerNew = {
                 inputType: question.inputType,
@@ -30,17 +34,13 @@ export default function MultipleChoiceInputContainer({
                 sid,
                 val,
               };
-              answersUpdated = [...answerAnswers, answerNew];
+              allAnswers.push(answerNew);
             } else {
-              answersUpdated = answerAnswers.filter(
-                ({ sid: answersSid }) => answersSid !== sid
+              allAnswers = allAnswers.filter(
+                ans => !(ans.sid === sid && ans.questionId === question.id)
               );
             }
-
-            setAnswers({
-              ...answers,
-              [question.id]: answersUpdated,
-            });
+            setAnswers(allAnswers);
           },
         };
       })}

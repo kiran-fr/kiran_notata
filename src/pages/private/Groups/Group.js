@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import moment from "moment";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers";
@@ -11,14 +9,14 @@ import {
   groupGet,
   connectionsGet,
   evaluationTemplateNamesGet,
-} from "../../../Apollo/Queries";
+} from "Apollo/Queries";
 
-import { groupPut, connectionPut } from "../../../Apollo/Mutations";
+import { groupPut, connectionPut } from "Apollo/Mutations";
 import {
   group as group_route,
   startup_page,
   evaluation_template_summary,
-} from "../../definitions";
+} from "pages/definitions";
 
 import validateEmail from "../../../utils/validateEmail";
 
@@ -34,8 +32,6 @@ import {
   add_all_description,
 } from "./Group.module.css";
 
-import classnames from "classnames";
-
 import {
   BreadCrumbs,
   Content,
@@ -44,7 +40,7 @@ import {
   Button,
   Modal,
   GhostLoader,
-} from "../../../Components/elements";
+} from "Components/elements";
 
 function AddNewMember({ group, mutate }) {
   const [showModal, setShowModal] = useState(false);
@@ -1169,14 +1165,15 @@ export default function Group({ match, history }) {
         ]}
       />
 
-      <Content maxWidth={600}>
-        <div style={{ marginBottom: "50px" }}>
+      <Content maxWidth={780}>
+        <div style={{ marginBottom: "100px" }}>
           <h1>{group.name}</h1>
         </div>
 
+        <div>Your mother is my brother</div>
+
         {
           /* List ALL users to everyone */
-
           ((isAdmin || (!isAdmin && settings.showUsers)) && (
             <Card label="Members" style={{ paddingTop: "5px" }}>
               <MemberList

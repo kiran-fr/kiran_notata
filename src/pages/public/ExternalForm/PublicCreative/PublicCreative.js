@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { useForm } from "react-hook-form";
 import { publicCreativePut } from "Apollo/Mutations";
-
+import { omit } from "lodash";
 import { publicCreativeGet, publicCreativeTemplateGet } from "Apollo/Queries";
 
 import {
@@ -41,14 +40,52 @@ function Question({ question, section, creative, setAnswers, answers }) {
         question={question}
         section={section}
         creative={creative}
+        answers={answers}
+        setAnswers={setAnswers}
       />
     </Card>
   );
 }
 
-function Submit({ creative, accountId, answers, name }) {
-  const [success, setSuccess] = useState(false);
-  const [mutate, { loading }] = useMutation(publicCreativePut);
+function Submit({
+  creative,
+  template,
+  accountId,
+  answers,
+  name,
+  success,
+  setSuccess,
+}) {
+  const [mutate, mres] = useMutation(publicCreativePut);
+  const [errors, setErrors] = useState([]);
+
+  function findErrors(variables) {
+    let errs = [];
+
+    console.log(variables);
+
+    if (!variables.input.name) {
+      errs.push("Company name must be provided.");
+    }
+
+    if (
+      !variables.input.answers.find(
+        ({ questionId }) => questionId === "q01_section_terms"
+      )
+    ) {
+      errs.push("Terms and conditions are not accepted.");
+    }
+
+    if (
+      !variables.input.answers.find(
+        ({ questionId }) => questionId === "q05_section_info"
+      )
+    ) {
+      errs.push("Contact person is not provided.");
+    }
+
+    return errs;
+  }
 
   return (
     <div>
@@ -56,28 +93,28 @@ function Submit({ creative, accountId, answers, name }) {
         <div style={{ textAlign: "right" }}>
           <Button
             type="right_arrow"
-            loading={loading}
+            loading={mres.loading}
             onClick={async () => {
-              const answersArray = Object.values(answers)
-                .flat()
-                .map(answer => {
-                  if (answer.inputType === "INPUT_MUTLIPLE_LINES")
-                    delete answer.id;
+              if (mres.loading) return;
 
-                  return answer;
-                });
-
-              console.log(answersArray);
-              // setSuccess(false);
+              const nAnswers = answers.map(ans =>
+                omit(ans, ["__typename", "id"])
+              );
               const variables = {
                 id: creative.id || "",
                 accountId: accountId,
                 input: {
-                  submit: true,
                   name: name,
-                  answerNew: answersArray,
+                  submit: true,
+                  answers: nAnswers,
                 },
               };
+
+              let errs = findErrors(variables);
+              setErrors(errs);
+
+              if (errs.length) return;
+
               try {
                 await mutate({ variables });
                 setSuccess(true);
@@ -90,14 +127,23 @@ function Submit({ creative, accountId, answers, name }) {
           </Button>
         </div>
       )}
-      {success && !loading && (
+
+      {!!errors.length && (
+        <div style={{ marginTop: "10px" }}>
+          <ErrorBox>
+            {errors.map((err, i) => (
+              <div key={i}>{err}</div>
+            ))}
+          </ErrorBox>
+        </div>
+      )}
+
+      {success && (
         <div style={{ marginTop: "20px" }}>
           <SuccessBox>
-            Thank you!
-            <br />
-            Your information has been submitted. We will go through your
-            application and come back to you withing two weeks if we are
-            interested.
+            {creative.id && <div>{template.successMessageInvited || ""}</div>}
+
+            {!creative.id && <div>{template.successMessageWebForm || ""}</div>}
           </SuccessBox>
         </div>
       )}
@@ -105,13 +151,14 @@ function Submit({ creative, accountId, answers, name }) {
   );
 }
 
-const CompanyName = ({ setName }) => (
+const CompanyName = ({ setName, creative }) => (
   <div className="focus_form" style={{ marginBottom: "20px" }}>
     <textarea
       className="form_h1"
       rows={1}
       placeholder="Your company name"
       name="input.name"
+      defaultValue={creative.name}
       onBlur={e => {
         setName(e.target.value);
       }}
@@ -120,13 +167,12 @@ const CompanyName = ({ setName }) => (
 );
 
 export function PublicCreative({ match }) {
-  const { id, accountId } = match.params;
-
+  const [success, setSuccess] = useState(false);
+  let { id, accountId } = match.params;
   const [answers, setAnswers] = useState({});
   const [name, setName] = useState("");
   const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
-
-  let creative = (creativeQuery.data || {}).publicCreativeGet;
+  let creative = creativeQuery.data?.publicCreativeGet;
 
   const [getCreativeTemplate, creativeTemplateQuery] = useLazyQuery(
     publicCreativeTemplateGet
@@ -134,18 +180,27 @@ export function PublicCreative({ match }) {
   const template = creativeTemplateQuery?.data?.publicCreativeTemplateGet;
 
   useEffect(() => {
-    if (id) getCreative({ variables: { id } });
+    if (accountId) {
+      getCreativeTemplate({ variables: { id: accountId } });
+    }
+  }, [accountId && getCreativeTemplate]);
 
-    getCreativeTemplate();
+  useEffect(() => {
+    if (id) {
+      getCreative({ variables: { id } });
+    }
   }, [id && getCreative, getCreativeTemplate, id]);
+
+  useEffect(() => {
+    if (creative) {
+      setAnswers(creative.answers);
+    }
+  }, [creative]);
 
   const error = creativeQuery.error || creativeTemplateQuery.error;
   const loading = creativeQuery.loading || creativeTemplateQuery.loading;
 
   if (error) {
-    console.log("creativeQuery.error", creativeQuery.error);
-    console.log("creativeTemplateQuery.error", creativeTemplateQuery.error);
-
     return (
       <Content maxWidth={600} center>
         <ErrorBox>Form not found...</ErrorBox>
@@ -169,41 +224,49 @@ export function PublicCreative({ match }) {
   if (!loading && creative && template)
     return (
       <Content maxWidth={600}>
-        <CompanyName setName={setName} />
-
-        {creative.id && (
+        {!success && (
           <div>
-            <span style={{ color: "var(--color-primary)" }}>
-              {creative.sharedByEmail}{" "}
-            </span>
-            have invited you to share some information about your company with
-            them. Fill out the relevant parts of this form, and hit "submit"
-            when you are ready.
-          </div>
-        )}
+            <div
+              style={{
+                marginBottom: "30px",
+                marginTop: "20px",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {creative.id
+                ? template.headerMessageInvited || ""
+                : template.headerMessageWebForm || ""}
+            </div>
 
-        {(template.sections || []).map((section, i) => (
-          <div key={`section-${i}`}>
-            <div className={sectionName}>{section.name}</div>
-            <div>{section.description}</div>
-            {(section.questions || []).map((question, ii) => (
-              <Question
-                key={`q-${i}-${ii}`}
-                question={question}
-                section={section}
-                creative={creative}
-                setAnswers={setAnswers}
-                answers={answers}
-              />
+            <CompanyName setName={setName} creative={creative} />
+
+            {(template.sections || []).map((section, i) => (
+              <div key={`section-${i}`}>
+                <div className={sectionName}>{section.name}</div>
+                <div>{section.description}</div>
+                {(section.questions || []).map((question, ii) => (
+                  <Question
+                    key={`q-${i}-${ii}`}
+                    question={question}
+                    section={section}
+                    creative={creative}
+                    setAnswers={setAnswers}
+                    answers={answers}
+                  />
+                ))}
+              </div>
             ))}
           </div>
-        ))}
+        )}
 
         <Submit
           creative={creative}
           accountId={accountId}
           answers={answers}
-          name={name}
+          name={name || creative.name}
+          template={template}
+          success={success}
+          setSuccess={setSuccess}
         />
       </Content>
     );

@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import { Card } from "Components/elements/NotataComponents/Card";
-import { SuccessBox } from "Components/elements/NotataComponents/SuccessBox";
+
+import {
+  GhostLoader,
+  Content,
+  Card,
+  SuccessBox,
+  Button
+} from "Components/elements/";
+
+import {
+  facts_templates
+} from "pages/definitions";
+
 import { useQuery } from "@apollo/client";
 import accountGet from "Apollo/Queries/accountGet";
-import { GhostLoader } from "Components/elements/NotataComponents/GhostLoader";
-import { Content } from "Components/elements/NotataComponents/Content";
-
 import styles from "pages/private/StartupPage/Facts/Facts.module.css";
+import { History } from "history";
 
 
-export default function ExternalForm() {
+export default function ExternalForm({ history }: { history: History}) {
   const [copySuccess, setCopySuccess] = useState(false);
 
   const accountQuery = useQuery(accountGet);
@@ -37,27 +46,22 @@ export default function ExternalForm() {
   }
 
   return (
-    <Content maxWidth={600}>
+    <Content maxWidth={780}>
+
+      <h1 style={{ marginBottom: "10px" }}>External Web Form</h1>
+
       <Card style={{ paddingBottom: "20px" }}>
-        <div className={styles.share_title}>External Web Form</div>
 
         <div className={styles.share_text}>
-          This external form can be posted on the company's website, please copy
-          and paste the code below. Information about new submitted startups
-          will be displayed in your inbox.
+          This form can be posted on your website. Please copy and paste the embeddable code below, or refer to the link.
         </div>
-
 
         <div
           style={{
             marginBottom: '20px'
           }}
           >
-
           <div>Link</div>
-
-
-
           <SuccessBox
             style={{
               padding: "5px",
@@ -111,6 +115,18 @@ export default function ExternalForm() {
           </div>
 
         </div>
+
+
+        <Button
+          size={"medium"}
+          buttonStyle={"secondary"}
+          onClick={() => {
+            history.push(facts_templates)
+          }}
+          >
+          Customize form
+        </Button>
+
 
       </Card>
     </Content>

@@ -463,8 +463,6 @@ function getEvaluationSummariesForTeam({ evaluations, hide }) {
       evaluations: evaluations,
     };
 
-    console.log("d", d);
-
     data.push(d);
   }
 

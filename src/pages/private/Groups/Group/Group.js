@@ -11,7 +11,7 @@ import {
 import { groupPut } from "Apollo/Mutations";
 import AddNewMember from "./AddMember";
 import AddNewStartup from "./AddStartup";
-import StartupList from "./StartupList";
+import StartupList2 from "./StartupList2";
 
 import {
   group as group_route,
@@ -190,7 +190,7 @@ function AddNewTemplate({ group, isAdmin, mutate }) {
     <div
       style={{
         position: "relative",
-        top: "-40px",
+        // top: "-40px",
       }}
     >
       <Button
@@ -316,15 +316,6 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
 export default function Group({ match, history }) {
   const id = match.params.id;
 
-  // const [mutate] = useMutation(groupPut, {
-  //   refetchQueries: [
-  //     {
-  //       query: groupGet,
-  //       variables: { id },
-  //     },
-  //   ],
-  // });
-
   const [mutate] = useMutation(groupPut);
 
   const [getData, groupQuery] = useLazyQuery(groupGet);
@@ -375,7 +366,7 @@ export default function Group({ match, history }) {
         ]}
       />
 
-      <Content maxWidth={600}>
+      <Content maxWidth={780} style={{ paddingBottom: "200px" }}>
         <div style={{ marginBottom: "50px" }}>
           <h1>{group.name}</h1>
         </div>
@@ -413,17 +404,15 @@ export default function Group({ match, history }) {
         }
 
         {!!group.startups.length && (
-          <Card label="Startups" style={{ paddingTop: "5px" }}>
-            <StartupList
-              connections={connections}
-              group={group}
-              mutate={mutate}
-              history={history}
-              user={user}
-              isAdmin={isAdmin}
-              settings={settings}
-            />
-          </Card>
+          <StartupList2
+            connections={connections}
+            group={group}
+            mutate={mutate}
+            history={history}
+            user={user}
+            isAdmin={isAdmin}
+            settings={settings}
+          />
         )}
 
         {
@@ -437,29 +426,33 @@ export default function Group({ match, history }) {
           )
         }
 
-        {group.evaluationTemplates && !!group.evaluationTemplates.length && (
-          <Card label="Evaluation templates" style={{ paddingTop: "5px" }}>
-            <Templates
-              templates={group.evaluationTemplates}
-              isAdmin={isAdmin}
-              history={history}
-              mutate={mutate}
-              group={group}
-            />
-          </Card>
-        )}
+        {isAdmin && (
+          <div style={{ top: "40px", position: "relative" }}>
+            {group.evaluationTemplates && !!group.evaluationTemplates.length && (
+              <Card label="Evaluation templates" style={{ paddingTop: "5px" }}>
+                <Templates
+                  templates={group.evaluationTemplates}
+                  isAdmin={isAdmin}
+                  history={history}
+                  mutate={mutate}
+                  group={group}
+                />
+              </Card>
+            )}
 
-        {
-          /* Add new startup */
-          (isAdmin || (!isAdmin && settings.addStartup)) && (
-            <AddNewTemplate
-              isAdmin={isAdmin}
-              // connections={connections}
-              group={group}
-              mutate={mutate}
-            />
-          )
-        }
+            {
+              /* Add new startup */
+              (isAdmin || (!isAdmin && settings.addStartup)) && (
+                <AddNewTemplate
+                  isAdmin={isAdmin}
+                  // connections={connections}
+                  group={group}
+                  mutate={mutate}
+                />
+              )
+            }
+          </div>
+        )}
 
         {isAdmin && (
           <div
@@ -468,6 +461,8 @@ export default function Group({ match, history }) {
               fontWeight: "var(--font-weight-light)",
               fontSize: "16px",
               cursor: "pointer",
+              position: "relative",
+              top: "100px",
             }}
             onClick={() => {
               let path = `${group_route}/${group.id}/settings`;

@@ -107,32 +107,13 @@ export default function StartupPage({ match, history }) {
       />
 
       <Content maxWidth={780}>
-        {/*HEADER*/}
-        <Card>
-          <div className={header_comp}>{connection.creative.name}</div>
-
-          {
-            <div className={sub_header}>
-              <div>
-                Last updated{" "}
-                <span style={{ color: "var(--color-primary)" }}>
-                  {moment(connection.updatedAt).fromNow()}
-                </span>
-                .
-              </div>
-            </div>
-          }
-        </Card>
-
         {/*FACTS*/}
-        <Card label="FACTS" style={{ paddingBottom: "20px" }}>
-          <Facts
-            connection={connection}
-            user={user}
-            match={match}
-            history={history}
-          />
-        </Card>
+        <Facts
+          connection={connection}
+          user={user}
+          match={match}
+          history={history}
+        />
 
         {/*FUNNEL*/}
         {/*<Card label="FUNNEL" style={{ paddingBottom: "20px" }}>*/}

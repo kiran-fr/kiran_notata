@@ -141,6 +141,8 @@ function CompanyName({ creative }) {
 }
 
 export function PublicCreative({ match }) {
+  console.log("mamma");
+
   const { id, accountId } = match.params;
 
   const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);

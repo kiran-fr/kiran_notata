@@ -14,7 +14,13 @@ export const RouterComponent = ({ history }) => {
   return (
     <Switch>
       <Route exact path={demo_page} component={DemoPage} />
-      <Route exact path={`${public_creative}/:id`} component={PublicCreative} />
+      <Route
+        exact
+        path={`${public_creative}/:accountId/:id`}
+        component={ExternalForm}
+
+        // component={PublicCreative}
+      />
       <Route
         exact
         path={`${public_pages}/:accountId/form.html`}

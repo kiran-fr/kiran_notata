@@ -25,6 +25,8 @@ import {
   pre_profile,
   group,
   external_form,
+  facts_templates,
+  facts_template,
 } from "./definitions";
 
 // Landing page / list
@@ -50,6 +52,9 @@ import EvaluationTemplateSummary from "./private/Templates/EvaluationTemplateSum
 import EvaluationPage from "./private/Evaluation";
 import SectionPage from "./private/Evaluation/Section";
 import SummaryPage from "./private/Evaluation/Summary";
+
+import FactsTemplates from "./private/FactsTemplates/FactsTemplates/FactsTemplates";
+import FactsTemplate from "./private/FactsTemplates/FactsTemplate/FactsTemplate";
 
 // Groups
 import Groups from "./private/Groups/Groups";
@@ -83,6 +88,10 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={settings} component={Settings} />
 
       <Route exact path={team} component={Team} />
+
+      <Route exact path={facts_templates} component={FactsTemplates} />
+
+      <Route exact path={`${facts_template}/:id`} component={FactsTemplate} />
 
       <Route
         exact
