@@ -8,7 +8,6 @@ import { Content } from "Components/elements/NotataComponents/Content";
 
 import styles from "pages/private/StartupPage/Facts/Facts.module.css";
 
-
 export default function ExternalForm() {
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -18,7 +17,7 @@ export default function ExternalForm() {
 
   const loading: boolean = accountQuery.loading;
 
-  if (loading && !accountQuery.data) return <GhostLoader/>;
+  if (loading && !accountQuery.data) return <GhostLoader />;
 
   const iFrameUrl: string = `${window.location.protocol}//${window.location.host}/public/${account.id}/form.html`;
   const iFrameContent = `<iframe src="${iFrameUrl}" 
@@ -47,16 +46,12 @@ export default function ExternalForm() {
           will be displayed in your inbox.
         </div>
 
-
         <div
           style={{
-            marginBottom: '20px'
+            marginBottom: "20px",
           }}
-          >
-
+        >
           <div>Link</div>
-
-
 
           <SuccessBox
             style={{
@@ -68,25 +63,22 @@ export default function ExternalForm() {
             key=""
             title=""
           >
-          <a
-            href={iFrameUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{fontSize: "12px"}}
+            <a
+              href={iFrameUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: "12px" }}
             >
-            {iFrameUrl}
-          </a>
-          </SuccessBox>          
-
+              {iFrameUrl}
+            </a>
+          </SuccessBox>
         </div>
-
 
         <div
           style={{
-            marginBottom: '20px'
-          }}        
-          >
-
+            marginBottom: "20px",
+          }}
+        >
           <div>Embed</div>
 
           <SuccessBox
@@ -103,19 +95,14 @@ export default function ExternalForm() {
           </SuccessBox>
 
           <div
-            style={{textAlign: "right"}}
+            style={{ textAlign: "right" }}
             className={styles.copy_link}
             onClick={copyToClipboard}
-            >
+          >
             {copySuccess ? "code copied to clipboard" : "copy code"}
           </div>
-
         </div>
-
       </Card>
     </Content>
   );
 }
-
-
-

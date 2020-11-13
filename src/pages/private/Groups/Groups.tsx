@@ -32,12 +32,17 @@ export interface GroupsData {
   groupsGet: GroupsType[];
 }
 
-
 export default function Groups({
-                                 history, showModalOnly,
-                                 showModalState,
-                                 onCloseModalEvent,
-                               }: { history: any, showModalOnly?: boolean, showModalState?: {state : boolean}, onCloseModalEvent: () => void }) {
+  history,
+  showModalOnly,
+  showModalState,
+  onCloseModalEvent,
+}: {
+  history: any;
+  showModalOnly?: boolean;
+  showModalState?: { state: boolean };
+  onCloseModalEvent: () => void;
+}) {
   const [showModal, setShowModal] = useState(showModalState?.state);
 
   const [mutate, { loading: groupPutLoading }] = useMutation(groupPut);
@@ -71,62 +76,60 @@ export default function Groups({
     <>
       {!showModalOnly && (
         <>
-        <BreadCrumbs
-          list={[
-            {
-              val: "All Groups",
-              link: group,
-            },
-          ]}
-        />
+          <BreadCrumbs
+            list={[
+              {
+                val: "All Groups",
+                link: group,
+              },
+            ]}
+          />
 
-        <Content maxWidth={600}>
-          <h1>Groups</h1>
-          {!!groups?.length && (
-            <Card
-              style={{ paddingTop: "5px" }}
-            >
-              <Table
-                dataSource={groups}
-                columns={columns}
-                loading={loading}
-                disableHead={true}
-                cell_content={""}
-                noMargin={false}
-              />
-            </Card>
-          )}
+          <Content maxWidth={600}>
+            <h1>Groups</h1>
+            {!!groups?.length && (
+              <Card style={{ paddingTop: "5px" }}>
+                <Table
+                  dataSource={groups}
+                  columns={columns}
+                  loading={loading}
+                  disableHead={true}
+                  cell_content={""}
+                  noMargin={false}
+                />
+              </Card>
+            )}
 
-          {!groups?.length && (
-            <Card style={{ paddingBottom: "20px" }}>
-              <div style={{ fontSize: "18px" }}>
-                You don't have any groups yet
-              </div>
-              <div
-                style={{
-                  padding: "20px 0px",
-                  color: "var(--color-gray-medium)",
-                }}
+            {!groups?.length && (
+              <Card style={{ paddingBottom: "20px" }}>
+                <div style={{ fontSize: "18px" }}>
+                  You don't have any groups yet
+                </div>
+                <div
+                  style={{
+                    padding: "20px 0px",
+                    color: "var(--color-gray-medium)",
+                  }}
+                >
+                  This is your sharing space. When other ivestors share startups
+                  with you they will appear here. You can also create a group to
+                  share your startups with other investors in your network. You
+                  will be able to choose what data you want to share.
+                </div>
+              </Card>
+            )}
+
+            <div style={{ marginTop: "20px" }}>
+              <Button
+                onClick={() => setShowModal(true)}
+                type="right_arrow"
+                size="large"
               >
-                This is your sharing space. When other ivestors share startups
-                with you they will appear here. You can also create a group to
-                share your startups with other investors in your network. You will
-                be able to choose what data you want to share.
-              </div>
-            </Card>
-          )}
-
-          <div style={{ marginTop: "20px" }}>
-            <Button
-              onClick={() => setShowModal(true)}
-              type="right_arrow"
-              size="large"
-            >
-              Create New Group
-            </Button>
-          </div>
-        </Content>
-      </>
+                Create New Group
+              </Button>
+            </div>
+          </Content>
+        </>
       )}
       {showModal && (
         <Modal

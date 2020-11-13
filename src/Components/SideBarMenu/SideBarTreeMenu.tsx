@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SideBarTreeMenu.module.css";
-import {
-  dashboard,
-  group,
-  signOut,
-  settings,
-} from "pages/definitions";
+import { dashboard, group, signOut, settings } from "pages/definitions";
 import { Link } from "react-router-dom";
 import CreateNewStartup from "pages/private/Dashboard/Connections/CreateStartup";
 import Groups, { GroupsData } from "pages/private/Groups/Groups";
@@ -18,7 +13,10 @@ import tagGroupGet from "Apollo/Queries/tagGroupGet";
 import { Connection, Tag } from "pages/private/Dashboard/Connections/types";
 import connectionTagRemove from "Apollo/Mutations/connectionTagRemove";
 import connectionTagAdd from "Apollo/Mutations/connectionTagAdd";
-import { AddTagMutationOptions, DeleteTagMutationOptions } from "pages/private/Dashboard/Connections/Connections";
+import {
+  AddTagMutationOptions,
+  DeleteTagMutationOptions,
+} from "pages/private/Dashboard/Connections/Connections";
 
 const classnames = require("classnames");
 
@@ -32,7 +30,7 @@ type MenuItem = {
   showHashTag?: boolean;
   selected?: boolean;
   action?: () => void;
-}
+};
 
 const SideBarTreeMenu = ({ location, history }: any) => {
 
@@ -43,7 +41,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
       link: dashboard,
       root: true,
       icon: "fal fa-plus",
-      action: () => setShowNewStartupModal({state: true}),
+      action: () => setShowNewStartupModal({ state: true }),
     },
     {
       key: "groups",
@@ -51,7 +49,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
       link: group,
       root: true,
       icon: "fal fa-plus",
-      action: () => setShowNewGroupModal({state: true}),
+      action: () => setShowNewGroupModal({ state: true }),
       nodes: [],
     },
     {
@@ -83,7 +81,6 @@ const SideBarTreeMenu = ({ location, history }: any) => {
     changeSelected(location.pathname);
   }, [location]);
 
-
   function changeExpanded(key: string): void {
     const node = expandedState.has(key);
     node ? expandedState.delete(key) : expandedState.add(key);
@@ -108,7 +105,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const [mutate] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
 
-  if (groupsQuery.data && groupsQuery.data.groupsGet) {
+  if (groupsQuery.data?.groupsGet) {
     const index = menuItems.findIndex((item) => item.key === "groups");
     groupsQuery.data.groupsGet.forEach((group) => {
       menuItems[index].nodes?.push({
@@ -141,64 +138,96 @@ const SideBarTreeMenu = ({ location, history }: any) => {
     const collapsed = !expandedState.has(node.key);
     const hasSelectedChildItem = itemOrItemNodesSelected(node);
 
-    if (node.nodes && node.nodes.length) {
+    if (node.nodes?.length) {
       return (
         <>
           <li className={classnames(node.root && styles.root_node)}>
-            <Item key={node.key} node={node} expandable={true} collapsed={collapsed}
-                  hasSelectedChildItem={hasSelectedChildItem}/>
+            <Item
+              key={node.key}
+              node={node}
+              expandable={true}
+              collapsed={collapsed}
+              hasSelectedChildItem={hasSelectedChildItem}
+            />
             <ul className={classnames(collapsed && styles.collapsed)}>
               {node.nodes.map((item, i) => (
-                <NodeItems node={item} key={`${node.key}-${i}`}/>
+                <NodeItems node={item} key={`${node.key}-${i}`} />
               ))}
             </ul>
           </li>
 
-          {collapsed && node.nodes
-            .filter((item) => itemOrItemNodesSelected(item))
-            .map((item, i) => (
-              <li key={`not-collapsed-${i}`}>
-                <ul>
-                  <NodeItems node={item} key={`${node.key}-${i}`}/>
-                </ul>
-              </li>
-            ))
-          }
+          {collapsed &&
+            node.nodes
+              .filter(item => itemOrItemNodesSelected(item))
+              .map((item, i) => (
+                <li key={`not-collapsed-${i}`}>
+                  <ul>
+                    <NodeItems node={item} key={`${node.key}-${i}`} />
+                  </ul>
+                </li>
+              ))}
         </>
       );
     }
     return (
       <li className={classnames(node.root && styles.root_node)}>
-        <Item key={node.key} node={node} expandable={false} hasSelectedChildItem={hasSelectedChildItem}
-              collapsed={collapsed}/>
+        <Item
+          key={node.key}
+          node={node}
+          expandable={false}
+          hasSelectedChildItem={hasSelectedChildItem}
+          collapsed={collapsed}
+        />
       </li>
     );
   }
 
   function itemOrItemNodesSelected(item: MenuItem): boolean {
-    return item.selected || (item.nodes?.some((i) => i.selected) || false);
+    return item.selected || item.nodes?.some(i => i.selected) || false;
   }
 
-  function Item({ node, expandable, collapsed, hasSelectedChildItem }: { node: MenuItem, expandable: boolean, collapsed: boolean, hasSelectedChildItem: boolean }): JSX.Element {
+  function Item({
+    node,
+    expandable,
+    collapsed,
+    hasSelectedChildItem,
+  }: {
+    node: MenuItem;
+    expandable: boolean;
+    collapsed: boolean;
+    hasSelectedChildItem: boolean;
+  }): JSX.Element {
     return (
-      <>
-        <div
-          className={`${styles.item} ${(node.root || (collapsed && hasSelectedChildItem)) && styles.root_item} ${(node.selected || selectedNodes.has(node.link)) && styles.selected_item}`}>
-          {expandable && (
-            <i onClick={(e) => {
+      <div
+        className={`${styles.item} ${
+          (node.root || (collapsed && hasSelectedChildItem)) && styles.root_item
+        } ${
+          (node.selected || selectedNodes.has(node.link)) &&
+          styles.selected_item
+        }`}
+      >
+        {expandable && (
+          <i
+            onClick={e => {
               e.stopPropagation();
               changeExpanded(node.key);
             }}
-               className={`${!expandedState.has(node.key) ? styles.caret : styles.caret_down} fas fa-caret-right`}/>
-          )}
-          {node.showHashTag && (
-            <span className={styles.hash_tag}>#</span>
-          )}
-          <Link to={node.link} className={styles.link}>
-            {node.label}
-          </Link>
-          {node.icon && (<i onClick={node.action} className={classnames(styles.node_item_icon, node.icon)}/>)}</div>
-      </>
+            className={`${
+              !expandedState.has(node.key) ? styles.caret : styles.caret_down
+            } fas fa-caret-right`}
+          />
+        )}
+        {node.showHashTag && <span className={styles.hash_tag}>#</span>}
+        <Link to={node.link} className={styles.link}>
+          {node.label}
+        </Link>
+        {node.icon && (
+          <i
+            onClick={node.action}
+            className={classnames(styles.node_item_icon, node.icon)}
+          />
+        )}
+      </div>
     );
   }
 
@@ -216,7 +245,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   let showEvaluateForConnection: Connection | undefined;
   if (showEvaluate) {
     showEvaluateForConnection = (connections || []).find(
-      ({ id }: { id: string }) => id === showEvaluate,
+      ({ id }: { id: string }) => id === showEvaluate
     );
   }
 
@@ -234,7 +263,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         <div className={styles.menu_container}>
           <ul>
             {menuItems.map((item, i) => (
-              <NodeItems node={item} key={`root-${i}`}/>
+              <NodeItems node={item} key={`root-${i}`} />
             ))}
           </ul>
         </div>
@@ -244,15 +273,16 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         setShowEvaluate={setShowEvaluate}
         showModalOnly={true}
         history={history}
-        setDone={() => {
-        }}
+        setDone={() => {}}
         showModalState={showNewStartupModal}
-        onCloseModalEvent={() => setShowNewStartupModal({state: false})}
+        onCloseModalEvent={() => setShowNewStartupModal({ state: false })}
       />
-      <Groups history={history}
-              showModalOnly={true}
-              showModalState={showNewGroupModal}
-              onCloseModalEvent={() => setShowNewGroupModal({state: false})}/>
+      <Groups
+        history={history}
+        showModalOnly={true}
+        showModalState={showNewGroupModal}
+        onCloseModalEvent={() => setShowNewGroupModal({ state: false })}
+      />
       {showEvaluate && (
         <EvaluateSelector
           connection={showEvaluateForConnection}
