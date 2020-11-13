@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { evaluationTemplatesGet } from "Apollo/Queries";
 import { evaluationPut } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
-import { getPossibleScore, getScore } from "../../Evaluation/util";
 import { Button, Table, Modal } from "Components/elements";
 
 import styles from "./EvaluationBox.module.css";
@@ -59,6 +58,7 @@ function getEvaluationSummaries({
     }
 
     let data2 = [];
+
     for (let templateId in evaluationsByTemplate) {
       // Get all shared evaluations
       let evaluations = evaluationsByTemplate[templateId] || [];
@@ -75,12 +75,54 @@ function getEvaluationSummaries({
       // Get total score
       let totalScore = 0;
       let count = 0;
+
+      let averagePerTemplateSection = {};
       for (let evaluation of evaluations) {
         if (!hide[evaluation.id]) {
+          // Get averages for sections
+          for (let section of evaluation.summary.sections) {
+            averagePerTemplateSection[section.name] = averagePerTemplateSection[
+              section.name
+            ] || {
+              totalScore: 0,
+              count: 0,
+              possibleScore: 0,
+              scorePerAnswer: {},
+            };
+            averagePerTemplateSection[section.name].totalScore += section.score;
+            averagePerTemplateSection[section.name].possibleScore =
+              section.possibleScore;
+            averagePerTemplateSection[section.name].count += 1;
+
+            // Get average single answers for section
+            for (let answer of section.scorePerAnswer) {
+              averagePerTemplateSection[section.name].scorePerAnswer[
+                answer.question
+              ] = averagePerTemplateSection[section.name].scorePerAnswer[
+                answer.question
+              ] || {
+                totalScore: 0,
+                count: 0,
+                possibleScore: 0,
+              };
+              averagePerTemplateSection[section.name].scorePerAnswer[
+                answer.question
+              ].count += 1;
+              averagePerTemplateSection[section.name].scorePerAnswer[
+                answer.question
+              ].possibleScore = answer.possibleScore;
+              averagePerTemplateSection[section.name].scorePerAnswer[
+                answer.question
+              ].totalScore += answer.score;
+            }
+          }
+
           totalScore += evaluation.summary?.totalScore || 0;
           count += 1;
         }
       }
+
+      // console.log('averagePerTemplateSection', averagePerTemplateSection)
 
       // Get average score
       let averageScore = parseFloat((totalScore / count).toFixed(1));
@@ -101,6 +143,7 @@ function getEvaluationSummaries({
         averagePercentageScore: averagePercentageScore,
         templateSections: templateSections,
         evaluations: evaluations,
+        averagePerTemplateSection: averagePerTemplateSection,
       });
     }
 
@@ -112,6 +155,8 @@ function getEvaluationSummaries({
 function SummaryLine({
   name,
   percentageScore,
+  score,
+  possibleScore,
   className,
   list,
   hide,
@@ -121,11 +166,16 @@ function SummaryLine({
   isYou,
   editLink,
   history,
+  numberScore,
+  iteration,
 }) {
+  iteration = iteration || 0;
+
   let [showList, setShowList] = useState(false);
+  const [viewPercentage, setViewPercentage] = useState(!numberScore);
 
   return (
-    <div>
+    <div style={{ paddingLeft: iteration * 5 + "px" }}>
       <div
         className={classnames(
           styles.line_style,
@@ -187,22 +237,70 @@ function SummaryLine({
             <div className={styles.timeStamp}>{timeStamp}</div>
           )) || <span />}
 
-          <div className={styles.score_style}>{percentageScore}%</div>
+          {viewPercentage && (
+            <div
+              className={styles.score_style}
+              onClick={() => setViewPercentage(false)}
+            >
+              {percentageScore || 0}%
+            </div>
+          )}
+
+          {!viewPercentage && (
+            <div
+              className={styles.score_style}
+              onClick={() => setViewPercentage(true)}
+            >
+              {score}/{possibleScore}
+            </div>
+          )}
         </div>
       </div>
 
       {showList && list && (
         <div className={styles.expanded_list_container}>
-          {list.map((item, i) => (
-            <SummaryLine
-              key={i}
-              hide={hide}
-              evaluationId={evaluationId}
-              name={item.name}
-              percentageScore={item.percentageScore}
-              className={classnames(className, styles.sub_list)}
-            />
-          ))}
+          {list
+            .sort((a, b) => {
+              if (a.name < b.name) {
+                return -1;
+              }
+              if (a.name > b.name) {
+                return 1;
+              }
+              return 0;
+            })
+            .map((item, i) => {
+              let innerList = (item.scorePerAnswer || []).map(it => {
+                let res = {
+                  name: it.question,
+                  percentageScore: Math.round(
+                    (it.score / it.possibleScore) * 100
+                  ),
+                  score: it.score,
+                  possibleScore: it.possibleScore,
+                  numberScore: true,
+                };
+                return res;
+              });
+
+              return (
+                <>
+                  <SummaryLine
+                    key={iteration + i}
+                    iteration={iteration + 1}
+                    hide={hide}
+                    evaluationId={evaluationId}
+                    name={item.name}
+                    percentageScore={item.percentageScore}
+                    score={item.score}
+                    possibleScore={item.possibleScore}
+                    className={classnames(className, styles.sub_list)}
+                    list={!!innerList.length && innerList}
+                    numberScore={item.numberScore}
+                  />
+                </>
+              );
+            })}
         </div>
       )}
     </div>
@@ -213,17 +311,38 @@ function EvaluationsByTemplate({
   data,
   connection,
   user,
-  templateId,
   hide,
   toggleHide,
   history,
 }) {
-  let [showList, setShowList] = useState(false);
+  let list = Object.keys(data.averagePerTemplateSection).map(sectionName => {
+    let item = data.averagePerTemplateSection[sectionName];
 
-  let list = (data.templateSections || []).map(item => ({
-    name: item.name,
-    percentageScore: Math.round((item.score / item.possibleScore) * 100),
-  }));
+    // Averages for each answer
+    let scorePerAnswer = Object.keys(item.scorePerAnswer).map(questionName => {
+      let it = item.scorePerAnswer[questionName];
+      let averageScore = it.totalScore / it.count;
+      let percentageScore = Math.round((averageScore / it.possibleScore) * 100);
+      let res = {
+        question: questionName,
+        score: averageScore.toFixed(1),
+        possibleScore: it.possibleScore,
+        percentageScore: percentageScore,
+      };
+      return res;
+    });
+
+    // Averages for each section
+    let averageScore = item.totalScore / item.count;
+    let res = {
+      name: sectionName,
+      possibleScore: item.possibleScore,
+      percentageScore: Math.round((averageScore / item.possibleScore) * 100),
+      score: averageScore.toFixed(1),
+      scorePerAnswer,
+    };
+    return res;
+  });
 
   return (
     <div className={styles.each_template_style}>
@@ -232,8 +351,11 @@ function EvaluationsByTemplate({
           hide={hide}
           name={data.templateName}
           percentageScore={data.averagePercentageScore}
+          score={data.averageScore}
+          possibleScore={data.possibleScore}
           className={classnames(styles.template_summary_line)}
-          list={list.length > 1 && list}
+          list={!!list.length && list}
+          numberScore={false}
         />
       </div>
 
@@ -244,10 +366,19 @@ function EvaluationsByTemplate({
             100
         );
 
-        let list = (evaluation.summary?.sections || []).map(item => ({
-          name: item.name,
-          percentageScore: Math.round((item.score / item.possibleScore) * 100),
-        }));
+        let list = (evaluation.summary?.sections || []).map(item => {
+          let sa = {
+            name: item.name,
+            percentageScore: Math.round(
+              (item.score / item.possibleScore) * 100
+            ),
+            scorePerAnswer: item.scorePerAnswer,
+            score: item.score,
+            possibleScore: item.possibleScore,
+            numberScore: true,
+          };
+          return sa;
+        });
 
         let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.id}`;
 
@@ -257,15 +388,17 @@ function EvaluationsByTemplate({
             hide={hide}
             toggleHide={toggleHide}
             evaluationId={evaluation.id}
-            key={evaluation.id}
             timeStamp={moment(evaluation.updatedAt).format("ll")}
             name={`${given_name} ${family_name}`}
             isYou={user.email === email}
             editLink={editLink}
             percentageScore={percentageScore}
+            score={evaluation.summary.totalScore}
+            possibleScore={evaluation.summary.possibleScore}
             className={classnames(styles.each_evaluation_line)}
-            list={list.length > 1 && list}
+            list={list}
             history={history}
+            numberScore={false}
           />
         );
       })}
@@ -274,25 +407,18 @@ function EvaluationsByTemplate({
 }
 
 function GroupEvaluations({
+  data,
   connection,
   groups,
   user,
   evaluations,
   evaluationTemplates,
   history,
+  hide,
+  setHide,
 }) {
-  const [showList, setShowList] = useState(false);
-  const [hide, setHide] = useState({});
   const [currentLoading, setCurrentLoading] = useState("");
   const [mutate, { loading }] = useMutation(evaluationPut);
-
-  let data = getEvaluationSummaries({
-    connection,
-    groups,
-    evaluations,
-    evaluationTemplates,
-    hide,
-  });
 
   function toggleHide(evaluationId) {
     setHide({
@@ -305,8 +431,10 @@ function GroupEvaluations({
     <div>
       {data.map(groupEvaluations => {
         let { groupName, groupId } = groupEvaluations[0] || {};
-
         let group = groups.find(({ id }) => id === groupId);
+
+        // let showUsers = group?.settings?.showUsers;
+        let showUsers = true;
 
         let groupEvaluationTemplates = (group.evaluationTemplates || []).filter(
           template => {
@@ -324,24 +452,28 @@ function GroupEvaluations({
         return (
           <div key={groupId}>
             <div className={styles.group_of_evaluations}>
-              <div className={styles.from_group}>
-                <span>From group: </span>
-                <Link to={`${group_route}/${groupId}`}>{groupName}</Link>
-              </div>
+              {showUsers && (
+                <div>
+                  <div className={styles.from_group}>
+                    <span>From group: </span>
+                    <Link to={`${group_route}/${groupId}`}>{groupName}</Link>
+                  </div>
 
-              {groupEvaluations.map(d => {
-                return (
-                  <EvaluationsByTemplate
-                    key={d.templateId}
-                    templateId={d.templateId}
-                    connection={connection}
-                    user={user}
-                    data={d}
-                    hide={hide}
-                    toggleHide={toggleHide}
-                  />
-                );
-              })}
+                  {groupEvaluations.map(d => {
+                    return (
+                      <EvaluationsByTemplate
+                        key={d.templateId}
+                        templateId={d.templateId}
+                        connection={connection}
+                        user={user}
+                        data={d}
+                        hide={hide}
+                        toggleHide={toggleHide}
+                      />
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {!!groupEvaluationTemplates.length && (
@@ -507,10 +639,14 @@ function TeamEvaluatons({
           templateSections,
         } = templateData;
 
-        let list = (templateSections || []).map(item => ({
-          name: item.name,
-          percentageScore: Math.round((item.score / item.possibleScore) * 100),
-        }));
+        let list = (templateSections || []).map(item => {
+          return {
+            name: item.name,
+            percentageScore: Math.round(
+              (item.score / item.possibleScore) * 100
+            ),
+          };
+        });
 
         return (
           <div key={i} className={styles.each_template_style}>
@@ -536,6 +672,10 @@ function TeamEvaluatons({
               let list = (evaluation.summary?.sections || []).map(item => {
                 let totalScore = item.score || 0;
                 let possibleScore = item.possibleScore || 0;
+
+                // let { scorePerAnswer } = item;
+                // console.log('scorePerAnswer', scorePerAnswer)
+
                 return {
                   name: item.name,
                   percentageScore: Math.round(
@@ -755,6 +895,8 @@ function NewEvaluationLogic({ evaluations, templates, connection, history }) {
 }
 
 export function EvaluationBox({ connection, groups, user, history }) {
+  const [hide, setHide] = useState({});
+
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
 
   let templates = [];
@@ -768,9 +910,17 @@ export function EvaluationBox({ connection, groups, user, history }) {
 
   const evaluations = connection.evaluations || [];
 
+  const data = getEvaluationSummaries({
+    connection,
+    groups,
+    evaluations,
+    evaluationTemplates: templates,
+    hide,
+  });
+
   return (
     <>
-      {!evaluations.length && (
+      {!evaluations.length && !data.length && (
         <div style={{ paddingTop: "20px" }}>
           <div style={{ fontSize: "18px" }}>Evaluate this startup</div>
           <div
@@ -783,12 +933,15 @@ export function EvaluationBox({ connection, groups, user, history }) {
       )}
 
       <GroupEvaluations
+        data={data}
         groups={groups}
-        evaluations={evaluations}
+        // evaluations={evaluations}
         connection={connection}
-        evaluationTemplates={templates}
+        // evaluationTemplates={templates}
         user={user}
         history={history}
+        hide={hide}
+        setHide={setHide}
       />
 
       <TeamEvaluatons
