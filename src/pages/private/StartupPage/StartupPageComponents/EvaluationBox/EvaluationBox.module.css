@@ -67,8 +67,9 @@
 
 .score_container {
   display: flex;
-  justify-content: space-between;
-  width: 300px;
+  justify-content: flex-end;
+  /*width: 300px;*/
+  width: 235px;
 }
 /*
 .from_group {

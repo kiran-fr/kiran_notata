@@ -113,27 +113,26 @@ export default function GroupSettings({ match, history }) {
                   <input
                     type="checkbox"
                     ref={register}
+                    name="showScores"
+                    id="showScores"
+                    defaultChecked={settings.showScores}
+                  />
+                  Members can see scores.
+                </label>
+              </div>
+
+              <div className="check_container">
+                <label>
+                  <input
+                    type="checkbox"
+                    ref={register}
                     name="showUsers"
                     id="showUsers"
                     defaultChecked={settings.showUsers}
                   />
-                  Everyone can see everyone.
+                  Everyone can see everyone, including individual scores.
                 </label>
               </div>
-              {/*
-                  <div className="check_container">
-                    <label>
-                      <input
-                        type="checkbox"
-                        ref={register}
-                        name="addUser"
-                        id="addUser"
-                        defaultChecked={settings.addUser}
-                      />
-                      Allow members to invite others.
-                    </label>
-                  </div>
-                */}
 
               <div className="check_container">
                 <label>
@@ -148,18 +147,18 @@ export default function GroupSettings({ match, history }) {
                 </label>
               </div>
 
-              <div className="check_container">
-                <label>
-                  <input
-                    type="checkbox"
-                    ref={register}
-                    name="showScores"
-                    id="showScores"
-                    defaultChecked={settings.showScores}
-                  />
-                  List evaluation and subjective scores on group page.
-                </label>
-              </div>
+              {/*<div className="check_container">*/}
+              {/*  <label>*/}
+              {/*    <input*/}
+              {/*      type="checkbox"*/}
+              {/*      ref={register}*/}
+              {/*      name="showScores"*/}
+              {/*      id="showScores"*/}
+              {/*      defaultChecked={settings.showScores}*/}
+              {/*    />*/}
+              {/*    List individual scores.*/}
+              {/*  </label>*/}
+              {/*</div>*/}
 
               <div
                 style={{

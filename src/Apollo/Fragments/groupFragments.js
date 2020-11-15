@@ -24,6 +24,7 @@ export default gql`
       public
       showUsers
       showScores
+      showSummaries
       addStartup
       addUser
     }
