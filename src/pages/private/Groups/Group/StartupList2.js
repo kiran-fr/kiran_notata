@@ -910,28 +910,30 @@ function StartupList2({
             {(isAdmin || settings.showScores) && (
               <div className={styles.list_outer_container}>
                 <div className={styles.list_label}>Evaluations:</div>
-                {data.map(d => {
-                  return (
-                    <div style={{ marginBottom: "5px" }}>
-                      <EvaluationsByTemplate
-                        templateId={d.templateId}
-                        user={user}
-                        data={d}
-                        isAdmin={isAdmin}
-                        hide={hideUser}
-                        showUsers={settings.showUsers}
-                        showScores={settings.showScores}
-                        toggleHide={eId => {
-                          setHideUser({
-                            ...hideUser,
-                            [eId]: !hideUser[eId],
-                          });
-                        }}
-                        history={history}
-                      />
-                    </div>
-                  );
-                })}
+                {data
+                  .filter(({ templateId }) => !hide[templateId])
+                  .map(d => {
+                    return (
+                      <div style={{ marginBottom: "5px" }}>
+                        <EvaluationsByTemplate
+                          templateId={d.templateId}
+                          user={user}
+                          data={d}
+                          isAdmin={isAdmin}
+                          hide={hideUser}
+                          showUsers={settings.showUsers}
+                          showScores={settings.showScores}
+                          toggleHide={eId => {
+                            setHideUser({
+                              ...hideUser,
+                              [eId]: !hideUser[eId],
+                            });
+                          }}
+                          history={history}
+                        />
+                      </div>
+                    );
+                  })}
               </div>
             )}
 
