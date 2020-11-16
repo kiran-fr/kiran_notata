@@ -60,7 +60,7 @@ export default function Groups({
     return <div>We are updating </div>;
   }
 
-  if (!data && loading && !showModalOnly) return <GhostLoader/>;
+  if (!data && loading && !showModalOnly) return <GhostLoader />;
 
   let groups = data?.groupsGet;
 

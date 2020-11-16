@@ -376,9 +376,7 @@ export default function Group({ match, history }) {
     return <div>We're updaing...</div>;
   }
 
-  if (!hasAllData && loading) {
-    return <GhostLoader />;
-  }
+  if (!hasAllData && loading) return <GhostLoader />;
 
   const group = groupQuery.data?.groupGet;
   const connections = connectionsQuery.data?.connectionsGet;
