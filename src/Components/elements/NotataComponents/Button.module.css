@@ -130,6 +130,7 @@
   top: 6px;
   left: 2px;
   font-size: 13px;
+  font-weight: 600;
 }
 
 .medium_button .loading_icon {
@@ -199,7 +200,7 @@
 }
 
 .input_button_wrapper .medium_button .chevron_icon i {
-  top: 4px;
+  top: 3.5px;
 }
 
 /* Other button */
