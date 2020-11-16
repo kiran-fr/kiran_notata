@@ -418,21 +418,39 @@ export default function Group({ match, history }) {
         }
 
         {isActualAdmin && (
-          <div>
-            <Button
-              buttonStyle={memberView && "secondary"}
-              size={"medium"}
-              onClick={() => setMemberView(false)}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <Button
+                buttonStyle={memberView && "secondary"}
+                size={"medium"}
+                onClick={() => setMemberView(false)}
+              >
+                Admin view
+              </Button>
+              <Button
+                buttonStyle={!memberView && "secondary"}
+                size={"medium"}
+                onClick={() => setMemberView(true)}
+              >
+                Member view
+              </Button>
+            </div>
+
+            <div
+              style={{
+                fontWeight: "var(--font-weight-light)",
+                fontSize: "16px",
+                cursor: "pointer",
+                position: "relative",
+                top: "10px",
+              }}
+              onClick={() => {
+                let path = `${group_route}/${group.id}/settings`;
+                history.push(path);
+              }}
             >
-              Admin view
-            </Button>
-            <Button
-              buttonStyle={!memberView && "secondary"}
-              size={"medium"}
-              onClick={() => setMemberView(true)}
-            >
-              Member view
-            </Button>
+              <i className="fal fa-gear" /> settings
+            </div>
           </div>
         )}
 
