@@ -7,7 +7,7 @@ import gql from "graphql-tag";
 import { Content, Card, BreadCrumbs, GhostLoader } from "Components/elements";
 
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
-import { EvaluationBox } from "./StartupPageComponents/EvaluationBox";
+import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationBox";
 import { Log } from "./StartupPageComponents/Log";
 import { Share } from "./StartupPageComponents/Share";
 import { Facts } from "./StartupPageComponents/Facts";

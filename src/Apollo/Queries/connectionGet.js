@@ -61,6 +61,12 @@ export default gql`
                 name
                 score
                 possibleScore
+                scorePerAnswer {
+                  score
+                  possibleScore
+                  questionId
+                  question
+                }
               }
               totalScore
               possibleScore

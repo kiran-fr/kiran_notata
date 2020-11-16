@@ -29,29 +29,41 @@ import {
 } from "Components/elements";
 
 function SharedBy({ group }) {
-  let admin = group.members.find(m => m.role === "admin");
+  let admins = group.members
+    .filter(m => m.role === "admin")
+    .map(({ email }) => email);
 
-  let columns = [
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      render: email => <span>{email}</span>,
-    },
-  ];
+  // let columns = [
+  //   {
+  //     title: "Email",
+  //     dataIndex: "email",
+  //     key: "email",
+  //     render: email => <span>{email}</span>,
+  //   },
+  // ];
 
   return (
-    <Table
-      dataSource={[admin] || []}
-      columns={columns}
-      disableHead={true}
-      pagination={false}
-    />
+    <div>
+      {admins.length === 1
+        ? "The administrator of this group is: "
+        : "The administrators of this group are: "}
+      <span style={{ color: "var(--color-primary)" }}>{admins.join(", ")}</span>
+    </div>
   );
+
+  // return (
+  //   <Table
+  //     dataSource={[admin] || []}
+  //     columns={columns}
+  //     disableHead={true}
+  //     pagination={false}
+  //   />
+  // );
 }
 
 function MemberList({ group, user, isAdmin }) {
   const [isLoading, setIsLoading] = useState({});
+  const [show, setShow] = useState(false);
   const [mutate] = useMutation(groupPut);
 
   let columns = [
@@ -122,12 +134,36 @@ function MemberList({ group, user, isAdmin }) {
   }
 
   return (
-    <Table
-      dataSource={group.members || []}
-      columns={columns}
-      disableHead={true}
-      pagination={false}
-    />
+    <>
+      <div>
+        This group has {group.members.length} members.
+        <Button
+          buttonStyle={"secondary"}
+          size={"small"}
+          onClick={() => setShow(true)}
+        >
+          See members
+        </Button>
+      </div>
+
+      {show && (
+        <Modal
+          title="Group members"
+          close={() => {
+            setShow(false);
+          }}
+          disableFoot={false}
+          showScrollBar={true}
+        >
+          <Table
+            dataSource={group.members || []}
+            columns={columns}
+            disableHead={true}
+            pagination={false}
+          />
+        </Modal>
+      )}
+    </>
   );
 }
 
@@ -316,11 +352,15 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
 export default function Group({ match, history }) {
   const id = match.params.id;
 
+  // console.log('id', id)
+
   const [mutate] = useMutation(groupPut);
 
   const [getData, groupQuery] = useLazyQuery(groupGet);
   const connectionsQuery = useQuery(connectionsGet);
   const userQuery = useQuery(userGet);
+
+  // console.log('groupQuery', groupQuery)
 
   useEffect(() => getData({ variables: { id } }), [getData, id]);
 
@@ -343,11 +383,9 @@ export default function Group({ match, history }) {
   const group = groupQuery.data?.groupGet;
   const connections = connectionsQuery.data?.connectionsGet;
   const user = userQuery.data?.userGet;
-
   const settings = group.settings || {};
 
-  // const isAdmin = group.createdBy === user.cognitoIdentityId;
-  let isAdmin = group.members.some(
+  let isAdmin = group?.members?.some(
     ({ email, role }) => email === user.email && role === "admin"
   );
 
@@ -371,30 +409,27 @@ export default function Group({ match, history }) {
           <h1>{group.name}</h1>
         </div>
 
-        {
-          /* List ALL users to everyone */
+        {/* List ALL users to everyone */}
 
-          ((isAdmin || (!isAdmin && settings.showUsers)) && (
-            <Card label="Members" style={{ paddingTop: "5px" }}>
+        <Card label="Group members" style={{ padding: "20px" }}>
+          <SharedBy
+            group={group}
+            mutate={mutate}
+            isAdmin={isAdmin}
+            user={user}
+          />
+
+          {(isAdmin || (!isAdmin && settings.showUsers)) && (
+            <div style={{ marginTop: "10px" }}>
               <MemberList
                 group={group}
                 mutate={mutate}
                 isAdmin={isAdmin}
                 user={user}
               />
-            </Card>
-            /* Show only who shared */
-          )) || (
-            <Card label="Shared by" style={{ paddingTop: "5px" }}>
-              <SharedBy
-                group={group}
-                mutate={mutate}
-                isAdmin={isAdmin}
-                user={user}
-              />
-            </Card>
-          )
-        }
+            </div>
+          )}
+        </Card>
 
         {
           /* Invite member */

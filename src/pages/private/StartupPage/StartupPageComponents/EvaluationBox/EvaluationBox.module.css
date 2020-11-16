@@ -67,8 +67,9 @@
 
 .score_container {
   display: flex;
-  justify-content: space-between;
-  width: 300px;
+  justify-content: flex-end;
+  /*width: 300px;*/
+  width: 235px;
 }
 /*
 .from_group {
@@ -89,6 +90,16 @@
 
 */
 .timeStamp {
+  color: var(--color-gray-medium);
+  font-size: 12px;
+  position: relative;
+  top: 3px;
+
+  width: 115px;
+  text-align: right;
+}
+
+.altScore {
   color: var(--color-gray-medium);
   font-size: 12px;
   position: relative;
@@ -157,8 +168,9 @@
 }
 
 .score_style {
-  width: 40px;
+  width: 60px;
   text-align: right;
+  cursor: pointer;
 }
 
 .each_style .score_style {
@@ -238,6 +250,9 @@
 
 @media screen and (max-width: 700px) {
   .timeStamp {
+    display: none;
+  }
+  .altScore {
     display: none;
   }
 
