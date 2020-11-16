@@ -1,18 +1,32 @@
 import gql from "graphql-tag";
 
-import {
-  groupFragments,
-  tagFragments,
-  funnelTagFragments,
-  creativeFragments,
-  connectionFragments,
-  evaluationFragments,
-} from "../Fragments";
-
 export default gql`
   query groupGet($id: ID!, $connectionId: ID) {
     groupGet(id: $id, connectionId: $connectionId) {
-      ...groupFields
+      id
+      name
+      createdAt
+      updatedAt
+      createdByUser {
+        email
+        given_name
+        family_name
+      }
+      members {
+        email
+        role
+        joinedDate
+        latestActivity
+      }
+      settings {
+        chat
+        public
+        showUsers
+        showScores
+        showSummaries
+        addStartup
+        addUser
+      }
 
       evaluationTemplates {
         id
@@ -34,33 +48,64 @@ export default gql`
         subjective_score
         tags
         seen
-
         connection {
-          ...connectionFields
+          id
+          accountId
+          subjectiveScores {
+            score
+            createdAt
+            createdByUser {
+              email
+              given_name
+              family_name
+            }
+          }
 
           creative {
-            ...creativeFields
-          }
-
-          tags {
-            ...tagFields
-          }
-
-          funnelTags {
-            ...funnelTagFields
+            id
+            name
+            templateId
+            answers {
+              id
+              inputType
+              questionId
+              sid
+              question
+              val
+            }
           }
 
           evaluations {
-            ...evaluationFields
+            id
+            name
+            createdAt
+            updatedAt
+            templateId
+            createdByUser {
+              email
+              given_name
+              family_name
+            }
+            summary {
+              templateName
+              sections {
+                sectionId
+                name
+                score
+                possibleScore
+                scorePerAnswer {
+                  score
+                  possibleScore
+                  questionId
+                  question
+                }
+              }
+              totalScore
+              possibleScore
+            }
           }
         }
       }
     }
   }
-  ${groupFragments}
-  ${tagFragments}
-  ${funnelTagFragments}
-  ${creativeFragments}
-  ${connectionFragments}
-  ${evaluationFragments}
 `;

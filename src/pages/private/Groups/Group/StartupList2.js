@@ -102,14 +102,17 @@ const getSummaries = (startups, hide, group) => {
 
 const getListOfStartups = ({ group, sortBy, hide, hideUser }) => {
   let ss = {};
+
   for (let startup of group.startups) {
     ss[startup.creativeId] = ss[startup.creativeId] || [];
     ss[startup.creativeId].push(startup);
   }
+
   let list = [];
   for (let creativeId in ss) {
     if (ss[creativeId]?.[0]?.connection) {
       let evaluations = ss[creativeId]
+        .filter(it => it.evaluations)
         .map(({ connection }) => connection?.evaluations || [])
         .flat()
         .filter(x => x);
@@ -766,10 +769,10 @@ function StartupList2({
   const [sortBy, _setSortBy] = useState("");
   const [hide, _setHide] = useState({});
   const [hideUser, setHideUser] = useState({});
-
   const [isLoadingDownload, setIsLoadingDownload] = useState({});
 
   let list = getListOfStartups({ group, sortBy, hide, hideUser });
+
   let allUsedTemplates = getAllUsedTemplates(list);
 
   useEffect(() => {
@@ -836,6 +839,10 @@ function StartupList2({
         );
 
         let isLoading = isLoadingDownload[creative.id];
+
+        let visibleEvaluations = data.filter(
+          ({ templateId }) => !hide[templateId]
+        );
 
         return (
           <div className={styles.startup} key={creative.id}>
@@ -907,33 +914,31 @@ function StartupList2({
                 </div>
               )}
 
-            {(isAdmin || settings.showScores) && (
+            {(isAdmin || settings.showScores) && !!visibleEvaluations.length && (
               <div className={styles.list_outer_container}>
                 <div className={styles.list_label}>Evaluations:</div>
-                {data
-                  .filter(({ templateId }) => !hide[templateId])
-                  .map(d => {
-                    return (
-                      <div style={{ marginBottom: "5px" }}>
-                        <EvaluationsByTemplate
-                          templateId={d.templateId}
-                          user={user}
-                          data={d}
-                          isAdmin={isAdmin}
-                          hide={hideUser}
-                          showUsers={settings.showUsers}
-                          showScores={settings.showScores}
-                          toggleHide={eId => {
-                            setHideUser({
-                              ...hideUser,
-                              [eId]: !hideUser[eId],
-                            });
-                          }}
-                          history={history}
-                        />
-                      </div>
-                    );
-                  })}
+                {visibleEvaluations.map(d => {
+                  return (
+                    <div style={{ marginBottom: "5px" }}>
+                      <EvaluationsByTemplate
+                        templateId={d.templateId}
+                        user={user}
+                        data={d}
+                        isAdmin={isAdmin}
+                        hide={hideUser}
+                        showUsers={settings.showUsers}
+                        showScores={settings.showScores}
+                        toggleHide={eId => {
+                          setHideUser({
+                            ...hideUser,
+                            [eId]: !hideUser[eId],
+                          });
+                        }}
+                        history={history}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             )}
 

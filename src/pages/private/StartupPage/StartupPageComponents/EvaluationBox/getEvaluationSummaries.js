@@ -13,6 +13,7 @@ export function getDataForEvaluationsSharedInGroup({
   }
 
   let data = [];
+
   for (let templateId in evaluationsByTemplate) {
     // Get all shared evaluations
     let evaluations = evaluationsByTemplate[templateId] || [];
