@@ -83,13 +83,11 @@ function AddNewMember({ group, mutate }) {
         top: "-40px",
       }}
     >
-      <Button
-        onClick={() => setShowModal(true)}
-        type="right_arrow"
-        size="large"
-      >
-        Invite new member
-      </Button>
+      <div style={{ textAlign: "right" }}>
+        <Button onClick={() => setShowModal(true)} type="just_text">
+          + invite new member
+        </Button>
+      </div>
 
       {showModal && (
         <Modal

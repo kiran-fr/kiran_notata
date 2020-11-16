@@ -5,7 +5,10 @@ import { inputWrapper, inputIcon } from "./MultipleTextInput.module.css";
 export default function MultipleTextInput({ setAnswers, question, answers }) {
   const [newAnswer, setnewAnswer] = useState("");
 
-  const answerAnswers = answers[question.id] || [];
+  const answerAnswers = answers.filter(
+    ({ questionId, inputType }) =>
+      questionId === question.id && inputType === question.inputType
+  );
 
   async function handleOnSubmit(value, id) {
     if (id === undefined) {
@@ -14,6 +17,7 @@ export default function MultipleTextInput({ setAnswers, question, answers }) {
       const id = answerAnswers.length
         ? answerAnswers[answerAnswers.length - 1].id + 1
         : 0;
+
       const answerNew = {
         inputType: question.inputType,
         questionId: question.id,
@@ -22,14 +26,7 @@ export default function MultipleTextInput({ setAnswers, question, answers }) {
         val: value,
       };
 
-      setAnswers({
-        ...answers,
-        [question.id]: [...answerAnswers, answerNew],
-      });
-    } else {
-      // let answersIN = answerAnswers.filter(
-      //   ({ sid: answersSid }) => answersSid !== id
-      // );
+      setAnswers([...answers, answerNew]);
     }
   }
 
@@ -37,10 +34,8 @@ export default function MultipleTextInput({ setAnswers, question, answers }) {
     let answersIN = answerAnswers.filter(
       ({ id: answersId }) => answersId !== id
     );
-    setAnswers({
-      ...answers,
-      [question.id]: answersIN,
-    });
+
+    setAnswers(answers.filter(ans => ans.id !== id));
   }
 
   return (
@@ -54,7 +49,6 @@ export default function MultipleTextInput({ setAnswers, question, answers }) {
             value={val}
             disabled
             placeholder="Say something..."
-            // onBlur={e => handleOnSubmit(e.target.value, id)}
           />
           <div
             className={inputIcon}
@@ -75,6 +69,10 @@ export default function MultipleTextInput({ setAnswers, question, answers }) {
           placeholder="Say something..."
           value={newAnswer}
           onChange={e => setnewAnswer(e.target.value)}
+          onBlur={e => {
+            handleOnSubmit(e.target.value);
+            setnewAnswer("");
+          }}
         />
         <div
           className={inputIcon}

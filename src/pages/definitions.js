@@ -29,12 +29,13 @@ export const activities = `${dashboard}/activities`;
 export const tags = `${dashboard}/tags`;
 export const settings = `${dashboard}/settings`;
 export const team = `${dashboard}/team`;
-export const templates = `${dashboard}/templates`;
 
 export const evaluation_templates = `${dashboard}/templates`;
 export const evaluation_template = `${evaluation_templates}/edit`;
-
 export const evaluation_template_summary = `${evaluation_templates}/summary`;
+
+export const facts_templates = `${dashboard}/facts_templates`;
+export const facts_template = `${facts_templates}/edit`;
 
 export const group = `${dashboard}/group`;
 

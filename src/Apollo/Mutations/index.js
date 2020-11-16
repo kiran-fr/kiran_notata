@@ -33,3 +33,5 @@ export { default as tagDelete } from "./tagDelete";
 export { default as funnelTagDetele } from "./funnelTagDelete";
 export { default as tagGroupDelete } from "./tagGroupDelete";
 export { default as funnelGroupDelete } from "./funnelGroupDelete";
+
+export { default as creativeTemplatePut } from "./creativeTemplatePut";

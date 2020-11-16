@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { creativeGet, creativeTemplateGet } from "Apollo/Queries";
+import { userGet, creativeGet, creativeTemplateGet } from "Apollo/Queries";
 import { creativePut } from "Apollo/Mutations";
 
 import validateEmail from "utils/validateEmail";
@@ -19,25 +19,9 @@ import {
   GhostLoader,
 } from "Components/elements";
 
-import { dashboard, startup_page } from "pages/definitions";
+import { dashboard, startup_page, facts_templates } from "pages/definitions";
 
-import {
-  share_title,
-  share_text,
-  copy_link,
-  facts_container,
-  facts_section_container,
-  facts_section_header,
-  facts_section_description,
-  facts_question_container,
-  facts_question_header,
-  facts_answer,
-  facts_answer_link,
-  no_answer,
-  small_traffic_light,
-  question_comments,
-  edit_toggle,
-} from "./Facts.module.css";
+import { share_title, share_text, copy_link } from "./Facts.module.css";
 
 import { GeneralInput } from "./Inputs/GeneralInput";
 import { CommentSection } from "./CommentSection";
@@ -109,7 +93,7 @@ function InviteStartup({ creative, connectionId, mutate, loading }) {
     creative.sharedWithEmail && setValue("email", creative.sharedWithEmail);
   }, [creative.sharedWithEmail, setValue]);
 
-  const shareUrl = `${window.location.protocol}//${window.location.host}/public/creative/${creative.id}&email=${creative.sharedWithEmail}`;
+  const shareUrl = `${window.location.protocol}//${window.location.host}/public/creative/${creative.accountId}/${creative.id}&email=${creative.sharedWithEmail}`;
 
   const onSubmit = async (data, event) => {
     let email = data.email.toLowerCase().trim();
@@ -287,193 +271,17 @@ function CompanyName({ creative, name }) {
   );
 }
 
-function MultipleChoiseAnswer({ question, answers }) {
-  const _answers = answers.filter(({ inputType, questionId }) => {
-    return inputType === "CHECK" && questionId === question.id;
-  });
-
-  if (!_answers.length) {
-    return <div className={no_answer}>Not answered</div>;
-  }
-
-  return (
-    <div className={facts_answer}>
-      {_answers.map(({ val }) => val).join(", ")}
-    </div>
-  );
-}
-
-function RadioAnswer({ question, answers }) {
-  const answer = answers.find(({ inputType, questionId }) => {
-    return inputType === "RADIO" && questionId === question.id;
-  });
-
-  if (!answer) {
-    return <div className={no_answer}>Not answered</div>;
-  }
-
-  return <div className={facts_answer}>{answer.val}</div>;
-}
-
-function InputTextAnswer({ question, answers }) {
-  const answer = answers.find(
-    ({ inputType, questionId }) =>
-      inputType === "INPUT_TEXT" && questionId === question.id
-  );
-
-  if (!answer) {
-    return <div className={no_answer}>Not answered</div>;
-  }
-
-  return <div className={facts_answer}>{answer.val}</div>;
-}
-
-function InputMutlipleLinesAnswer({ question, answers }) {
-  const _answers = answers.filter(
-    ({ inputType, questionId }) =>
-      inputType === "INPUT_MUTLIPLE_LINES" && questionId === question.id
-  );
-
-  if (!_answers.length) {
-    return <div className={no_answer}>Not answered</div>;
-  }
-
-  return (
-    <>
-      {_answers.map((answer, i) => {
-        let firstThree = answer.val.substring(0, 3).toLowerCase();
-        let isUrl = firstThree === "htt" || firstThree === "www";
-
-        if (isUrl) {
-          return (
-            <div>
-              <a
-                className={facts_answer_link}
-                key={i}
-                href={answer.val}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {answer.val} <i className="fal fa-external-link-square" />
-              </a>
-            </div>
-          );
-        }
-
-        return (
-          <div key={i} className={facts_answer}>
-            {answer.val}
-          </div>
-        );
-      })}
-    </>
-  );
-}
-
-function InputTrafficLightsAnswer({ question, answers }) {
-  const answer = answers.find(
-    ({ inputType, questionId }) =>
-      inputType === "TRAFFIC_LIGHTS" && questionId === question.id
-  );
-
-  if (!answer) {
-    return <div className={no_answer}>Not answered</div>;
-  }
-
-  return (
-    <div className={facts_answer}>
-      <div
-        className={small_traffic_light}
-        style={{
-          background: `var(--color-${answer.val})`,
-        }}
-      />{" "}
-      {answer.val}
-    </div>
-  );
-}
-
-function GeneralAnswer(props) {
-  switch (props.question.inputType) {
-    case "CHECK":
-      return <MultipleChoiseAnswer {...props} />;
-    case "RADIO":
-      return <RadioAnswer {...props} />;
-    case "INPUT_TEXT":
-      return <InputTextAnswer {...props} />;
-    case "TRAFFIC_LIGHTS":
-      return <InputTrafficLightsAnswer {...props} />;
-    case "INPUT_MUTLIPLE_LINES":
-      return <InputMutlipleLinesAnswer {...props} />;
-    default:
-      return <MultipleChoiseAnswer {...props} />;
-  }
-}
-
-function AnswerCommentSection({ answers, question }) {
-  const comments = answers.filter(
-    ({ inputType, questionId }) =>
-      inputType === "COMMENT" && questionId === question.id
-  );
-
-  if (!comments.length) {
-    return <span />;
-  }
-
-  return (
-    <div>
-      {comments.map(({ val, id }) => (
-        <div key={id} className={question_comments}>
-          {val}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export function ViewSummary({ answers, creativeTemplate }) {
-  return (
-    <div className={facts_container}>
-      {creativeTemplate.sections.map((section, i) => {
-        const { name, description, questions } = section;
-        return (
-          <div key={`section-${i}`} className={facts_section_container}>
-            <div className={facts_section_header}>{name}</div>
-            <div className={facts_section_description}>{description}</div>
-            <div>
-              {questions.map((question, ii) => {
-                return (
-                  <div
-                    key={`question-${i}-${ii}`}
-                    className={facts_question_container}
-                  >
-                    <div className={facts_question_header}>{question.name}</div>
-                    <GeneralAnswer answers={answers} question={question} />
-                    <AnswerCommentSection
-                      question={question}
-                      answers={answers}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 export default function Facts({ history, match }) {
-  const [editFacts, setEditFacts] = useState(false);
-
   const { id: connectionId, creativeId } = match.params;
   const [getData, { data, loading }] = useLazyQuery(creativeGet);
-  const creative = (data || []).creativeGet || {};
+
+  const creative = data?.creativeGet || {};
+  const userQuery = useQuery(userGet);
+  const user = userQuery.data.userGet;
 
   const creativeTemplateQuery = useQuery(creativeTemplateGet);
   const creativeTemplate =
-    (creativeTemplateQuery.data || {}).creativeTemplateGet || {};
+    creativeTemplateQuery.data?.creativeTemplateGet || {};
 
   const [mutate, { loading: mutationLoading }] = useMutation(creativePut);
 
@@ -481,8 +289,12 @@ export default function Facts({ history, match }) {
     creativeId && getData({ variables: { id: creativeId } });
   }, [creativeId, getData]);
 
-  if (loading || creativeTemplateQuery.loading) {
+  if (loading || creativeTemplateQuery.loading || userQuery.loading) {
     return <GhostLoader />;
+  }
+
+  if (creative.accountId !== user.accountId) {
+    return <div>Acces denied</div>;
   }
 
   return (
@@ -498,7 +310,7 @@ export default function Facts({ history, match }) {
             link: `${startup_page}/${connectionId}`,
           },
           {
-            val: `Facts`,
+            val: `Startup Info`,
             link: `${startup_page}/${connectionId}/creative/${creative.id}`,
           },
         ]}
@@ -513,22 +325,9 @@ export default function Facts({ history, match }) {
           loading={mutationLoading}
         />
 
-        {!editFacts && (
-          <div className={edit_toggle} onClick={() => setEditFacts(true)}>
-            edit
-          </div>
-        )}
-
-        {editFacts && (
-          <div style={{ textAlign: "right" }}>
-            <Button size="small" onClick={() => setEditFacts(false)}>
-              back to summary
-            </Button>
-          </div>
-        )}
-
-        {editFacts &&
-          (creativeTemplate.sections || []).map((section, i) => (
+        {(creativeTemplate.sections || [])
+          .filter(({ id }) => id !== "section_terms")
+          .map((section, i) => (
             <Section
               key={`section-${i}`}
               section={section}
@@ -536,14 +335,16 @@ export default function Facts({ history, match }) {
             />
           ))}
 
-        {!editFacts && (
-          <Card>
-            <ViewSummary
-              creativeTemplate={creativeTemplate}
-              answers={creative.answers}
-            />
-          </Card>
-        )}
+        <div style={{ textAlign: "right", marginTop: "35px" }}>
+          <Button
+            type={"just_text"}
+            onClick={() => {
+              history.push(facts_templates);
+            }}
+          >
+            edit form template
+          </Button>
+        </div>
       </Content>
     </>
   );

@@ -261,8 +261,12 @@ export default function Connections({ history }) {
   const tagGroups =
     (tagGroupsQuery.data && tagGroupsQuery.data.accountGet.tagGroups) || [];
 
-  if (error) console.log("error", error);
-  if (error || tagGroupsQuery.error) return <div>We are updating </div>;
+  if (error || tagGroupsQuery.error) {
+    console.log("error", error);
+    console.log("tagGroupsQuery.error", tagGroupsQuery.error);
+    return <div>We are updating </div>;
+  }
+
   if (!data && loading) return <GhostLoader />;
   if (!tagGroupsQuery.data && tagGroupsQuery.loading) return <GhostLoader />;
 
@@ -274,16 +278,14 @@ export default function Connections({ history }) {
 
   let showTagsForConnection;
   if (showTagGroup) {
-    showTagsForConnection = (connections || []).find(
-      ({ id }) => id === showTagGroup
-    );
+    showTagsForConnection =
+      (connections || []).find(({ id }) => id === showTagGroup) || {};
   }
 
   let showEvaluateForConnection;
   if (showEvaluate) {
-    showEvaluateForConnection = (connections || []).find(
-      ({ id }) => id === showEvaluate
-    );
+    showEvaluateForConnection =
+      (connections || []).find(({ id }) => id === showEvaluate) || {};
   }
 
   const columns = tableColumns({
@@ -380,10 +382,10 @@ export default function Connections({ history }) {
 
         {showTagGroup && (
           <TagSelector
-            title={showTagsForConnection.creative.name}
+            title={showTagsForConnection?.creative?.name}
             show={showTagsForConnection}
             tagGroups={tagGroups}
-            checkedTags={showTagsForConnection.tags}
+            checkedTags={showTagsForConnection?.tags}
             addTag={tag => {
               addTag(tag, showTagsForConnection);
             }}

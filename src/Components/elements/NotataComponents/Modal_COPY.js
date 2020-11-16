@@ -73,7 +73,7 @@ export const Modal_COPY = ({
             <div className={modal_footer}>
               {close && (
                 <Button onClick={close} size="medium" buttonStyle="secondary">
-                  Cancel
+                  Close
                 </Button>
               )}
 

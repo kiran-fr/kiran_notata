@@ -25,7 +25,7 @@ import {
 } from "pages/private/Dashboard/Connections/types";
 import { Groups } from "Apollo/Queries/groupsGet";
 import { connectionPut } from "Apollo/Mutations/index";
-import { ViewSummary } from "pages/private/StartupPage/Facts/Facts";
+import { ViewSummary } from "./ViewSummary";
 
 
 // *********
@@ -103,17 +103,12 @@ export default function Sharings({ history }: { history: History }) {
 
   function getUnbindedCreatives(connections: Connection[], creatives: Creative[]): Creative[] {
     const existCreativeIds = new Set(connections.map(({creativeId}) => creativeId));
-    return creatives.filter((creative) => !existCreativeIds.has(creative.id));
+    return creatives
+      .filter((creative) => !existCreativeIds.has(creative.id))
+      .sort((a, b) => b.createdAt - a.createdAt)
   }
 
   if (isLoading) return <span />;
-  //   return (
-  //   <Card label="Inbox" maxWidth={1200} style={{ paddingBottom: "20px" }}>
-  //     <span>
-  //           <i className="fa fa-spinner fa-spin"/>
-  //     </span>
-  //   </Card>
-  // );
 
   async function processCreative() {
     try {
@@ -207,7 +202,7 @@ export default function Sharings({ history }: { history: History }) {
   // Populate list with web form items
   for (let creative of getUnbindedCreatives(connections, creatives)) {
     inboxData.push({
-      timeStamp: new Date(),
+      timeStamp: moment(creative.createdAt, 'x').format(),
       type: InboxType.EXTERNAL_FORM,
       data: {
         name: creative.name || "New Company",

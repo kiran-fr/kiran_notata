@@ -179,7 +179,7 @@ function SharedWithGroupList(props) {
             sharedBy === user.email && connectionId === connection.id
         );
 
-        console.log("group", group);
+        // console.log("group", group);
 
         return (
           <span>

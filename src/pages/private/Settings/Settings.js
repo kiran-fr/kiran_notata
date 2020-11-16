@@ -6,7 +6,8 @@ import {
   profile,
   tags,
   team,
-  templates,
+  evaluation_templates,
+  facts_templates,
   external_form,
 } from "pages/definitions";
 
@@ -15,7 +16,7 @@ const Comp = ({ history }) => {
     {
       label: "Evaluation templates",
       iconClass: "fal fa-copy",
-      link: templates,
+      link: evaluation_templates,
     },
     {
       label: "Tags & Funnels",
@@ -37,6 +38,11 @@ const Comp = ({ history }) => {
       label: "Web Form",
       iconClass: "fal fa-inbox",
       link: external_form,
+    },
+    {
+      label: "Startup template",
+      iconClass: "fal fa-copy",
+      link: facts_templates,
     },
   ];
 

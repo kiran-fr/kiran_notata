@@ -46,6 +46,7 @@ export type SimpleUser = {
 export type Creative = {
   id: string;
   name: string;
+  createdAt: number;
   description: string;
   templateId: string;
   sharedWithEmail: string;

@@ -51,7 +51,7 @@ function AddNewStartup({ group, connections, mutate }) {
     <div
       style={{
         position: "relative",
-        top: "-40px",
+        // top: "-40px",
         paddingTop: "10px",
         paddingBottom: "10px",
       }}

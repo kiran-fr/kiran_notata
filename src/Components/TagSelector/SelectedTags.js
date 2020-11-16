@@ -3,18 +3,12 @@ import { Button, Tag } from "../elements/";
 
 import { tag_each, tag_name, tag_kill } from "./Tags.module.css";
 
-export default function SelectedTags({
-  checkedTags,
-  tagGroups,
-  setShowGroup,
-  addTag,
-  deleteTag,
-  close,
-}) {
+export default function SelectedTags({ checkedTags, tagGroups, deleteTag }) {
   return (
     <div>
-      {checkedTags.map(tag => {
-        const group = tagGroups.find(({ id }) => id === tag.tagGroupId) || {};
+      {(checkedTags || []).map(tag => {
+        const group =
+          (tagGroups || []).find(({ id }) => id === tag.tagGroupId) || {};
         return (
           <Tag key={tag.id}>
             <div className={tag_each}>

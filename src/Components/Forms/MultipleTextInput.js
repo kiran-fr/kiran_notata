@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { inputWrapper, inputIcon } from "./MultipleTextInput.module.css";
+import { func } from "prop-types";
 
 export default function MultipleTextInput({
   handleOnSubmit,
@@ -16,6 +17,12 @@ export default function MultipleTextInput({
 
   async function onDelete(id) {
     await handleOnDelete(id);
+  }
+
+  async function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      await handleOnSubmit({ new: event.target.value }, event);
+    }
   }
 
   return (
@@ -50,6 +57,7 @@ export default function MultipleTextInput({
           name="new"
           placeholder="Say something..."
           onBlur={handleSubmit(onSubmit)}
+          onKeyDown={handleKeyDown}
         />
         <div className={inputIcon} onClick={() => handleSubmit(onSubmit)}>
           <i className="fal fa-plus" />
