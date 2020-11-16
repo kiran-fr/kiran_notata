@@ -45,3 +45,4 @@ export const external_form = `${dashboard}/external_form`;
 export const public_pages = `/public`;
 export const public_creative = `${public_pages}/creative`;
 export const demo_page = `${public_pages}/demo`;
+export const ban_demo_page = `${public_pages}/ban`;
