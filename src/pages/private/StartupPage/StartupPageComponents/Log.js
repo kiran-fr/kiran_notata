@@ -26,9 +26,7 @@ function LogInput({ user, connection }) {
   function downHandler(event) {
     const { key, shiftKey } = event;
 
-    if (shiftKey && key === "Enter") {
-      handleSubmit(onSubmit)(event);
-    }
+    if (shiftKey && key === "Enter") handleSubmit(onSubmit)(event);
   }
 
   const onSubmit = async (data, event) => {
@@ -148,12 +146,9 @@ export function Log({ connection, user }) {
         <div key={`log-${logItem.id}`} className={log_feed_item}>
           <div className={log_feed_byline}>
             <span className={name}>
-              {(logItem.createdBy === user.cognitoIdentityId && (
-                <span>You</span>
-              )) || (
+              {(logItem.createdBy === user.cognitoIdentityId && "You") || (
                 <span>
-                  {logItem.createdByUser.given_name}{" "}
-                  {logItem.createdByUser.family_name}
+                  {`${logItem.createdByUser.given_name} ${logItem.createdByUser.family_name}`}
                 </span>
               )}
             </span>
@@ -162,8 +157,7 @@ export function Log({ connection, user }) {
               {moment(logItem.createdAt).format("lll")}
             </span>
             <span className={date}>
-              {" "}
-              ({moment(logItem.createdAt).fromNow()})
+              {` (${moment(logItem.createdAt).fromNow()})`}
             </span>
           </div>
 
