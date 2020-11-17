@@ -31,6 +31,7 @@
 .line_style {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid white;
 }
 
 .footer_style {
@@ -49,6 +50,7 @@
 
 .header_style {
   position: relative;
+  /*border-bottom: 1px solid white;*/
 }
 
 .footer_style {
