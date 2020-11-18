@@ -118,45 +118,44 @@ export function Log({ group, user }: { group: any; user: any }) {
 
   return (
     <>
-      {!log.length && (
-        <div
-          style={{ paddingBottom: "10px", color: "var(--color-gray-medium)" }}
-        >
-          No comments yet...
-        </div>
-      )}
-
       <div className={styles.comments_section}>
-        {log.map((logItem: any, i: any) => (
-          <div key={`log-${logItem.id}`} className={styles.log_feed_item}>
-            <div className={styles.log_feed_byline}>
-              <span className={styles.name}>
-                {(logItem.createdBy === user?.cognitoIdentityId && "You ") || (
-                  <span>
-                    {`${logItem.createdByUser.given_name} ${logItem.createdByUser.family_name}`}
-                  </span>
+        {log.length ? (
+          log.map((logItem: any, i: any) => (
+            <div key={`log-${logItem.id}`} className={styles.log_feed_item}>
+              <div className={styles.log_feed_byline}>
+                <span className={styles.name}>
+                  {(logItem.createdBy === user?.cognitoIdentityId &&
+                    "You ") || (
+                    <span>
+                      {`${logItem.createdByUser.given_name} ${logItem.createdByUser.family_name} `}
+                    </span>
+                  )}
+                </span>
+                <span className={styles.date}>
+                  {`– ${moment(logItem.createdAt).format("lll")}`}
+                </span>
+              </div>
+
+              <div
+                className={classnames(
+                  styles.log_feed_text,
+                  logItem.logType !== "COMMENT" &&
+                    styles.log_feed_type_SUBJECTIVE_SCORE
                 )}
-              </span>
-              <span className={styles.date}>
-                {moment(logItem.createdAt).format("lll")}
-              </span>
-            </div>
+              >
+                {logItem.dataPairs[0].val}
+              </div>
 
-            <div
-              className={classnames(
-                styles.log_feed_text,
-                logItem.logType !== "COMMENT" &&
-                  styles.log_feed_type_SUBJECTIVE_SCORE
+              {logItem.createdAt !== logItem.updatedAt && (
+                <div className={styles.log_item_edited}>(edited)</div>
               )}
-            >
-              {logItem.dataPairs[0].val}
             </div>
-
-            {logItem.createdAt !== logItem.updatedAt && (
-              <div className={styles.log_item_edited}>(edited)</div>
-            )}
+          ))
+        ) : (
+          <div style={{ paddingLeft: "10px", color: "var(--color-gray-medium)" }}>
+            No comments yet...
           </div>
-        ))}
+        )}
       </div>
 
       <hr />

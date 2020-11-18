@@ -1,7 +1,7 @@
 .sidebar_container {
-  padding-top: 15px;
-  /* padding-top: 68px; */
-  padding-right: 25px;
+  /* padding-top: 15px; */
+  padding-top: 68px;
+  /* padding-right: 25px; */
   background: white;
   position: fixed;
   right: 0;
@@ -10,7 +10,6 @@
   min-height: 90vh;
   width: 300px;
   z-index: 1002;
-  /* z-index: 1; */
   height: 100%;
 }
 
@@ -19,7 +18,7 @@
   width: inherit;
   /* position: fixed; */
   position: absolute;
-  height: 30%;
+  height: 90%;
   /* height: 100vh; */
   background: white;
   right: 0;
