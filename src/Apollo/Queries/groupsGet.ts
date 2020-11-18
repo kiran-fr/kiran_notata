@@ -11,7 +11,7 @@ interface EvaluationTemplates {
     name: string;
   };
 }
-interface Startups {
+export interface Startups {
   connectionId: string;
   creativeId: string;
   sharedBy: string;

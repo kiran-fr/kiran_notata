@@ -8,7 +8,6 @@
   z-index: 1001;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
   border-bottom: 1px solid var(--color-gray-pale);
 }
 
@@ -59,5 +58,27 @@
   top: -16px;
   right: -8px;
   color: #ff6868;
+  cursor: pointer;
+}
+
+.header_block_logo {
+  display: flex;
+  width: 261px;
+  padding: 10px 20px;
+  border-right: 1px solid var(--color-gray-pale);
+}
+
+.header_block_panel {
+  display: flex;
+  width: 200px;
+}
+
+.hamburger_menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 20px;
+  font-size: xx-large;
+  color: var(--color-gray-medium);
   cursor: pointer;
 }

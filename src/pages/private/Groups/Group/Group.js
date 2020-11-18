@@ -34,15 +34,6 @@ function SharedBy({ group }) {
     .filter(m => m.role === "admin")
     .map(({ email }) => email);
 
-  // let columns = [
-  //   {
-  //     title: "Email",
-  //     dataIndex: "email",
-  //     key: "email",
-  //     render: email => <span>{email}</span>,
-  //   },
-  // ];
-
   return (
     <div>
       {admins.length === 1
@@ -51,15 +42,6 @@ function SharedBy({ group }) {
       <span style={{ color: "var(--color-primary)" }}>{admins.join(", ")}</span>
     </div>
   );
-
-  // return (
-  //   <Table
-  //     dataSource={[admin] || []}
-  //     columns={columns}
-  //     disableHead={true}
-  //     pagination={false}
-  //   />
-  // );
 }
 
 function MemberList({ group, user, isAdmin }) {
@@ -168,7 +150,7 @@ function MemberList({ group, user, isAdmin }) {
   );
 }
 
-function AddNewTemplate({ group, isAdmin, mutate }) {
+function AddNewTemplate({ group, mutate }) {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(null);
   const { data } = useQuery(evaluationTemplateNamesGet);
@@ -351,17 +333,13 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
 };
 
 export default function Group({ match, history }) {
+  const [memberView, setMemberView] = useState(false);
+
   const id = match.params.id;
-
-  // console.log('id', id)
-
   const [mutate] = useMutation(groupPut);
-
   const [getData, groupQuery] = useLazyQuery(groupGet);
   const connectionsQuery = useQuery(connectionsGet);
   const userQuery = useQuery(userGet);
-
-  // console.log('groupQuery', groupQuery)
 
   useEffect(() => getData({ variables: { id } }), [getData, id]);
 
@@ -384,9 +362,11 @@ export default function Group({ match, history }) {
   const user = userQuery.data?.userGet;
   const settings = group?.settings;
 
-  let isAdmin = group?.members?.some(
+  let isActualAdmin = group?.members?.some(
     ({ email, role }) => email === user.email && role === "admin"
   );
+
+  let isAdmin = memberView ? !memberView : isActualAdmin;
 
   return (
     <>
@@ -410,7 +390,6 @@ export default function Group({ match, history }) {
         </div>
 
         {/* List ALL users to everyone */}
-
         <Card label="Group members" style={{ padding: "20px" }}>
           <SharedBy
             group={group}
@@ -437,6 +416,43 @@ export default function Group({ match, history }) {
             <AddNewMember group={group} mutate={mutate} />
           )
         }
+
+        {isActualAdmin && (
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <Button
+                buttonStyle={memberView && "secondary"}
+                size={"medium"}
+                onClick={() => setMemberView(false)}
+              >
+                Admin view
+              </Button>
+              <Button
+                buttonStyle={!memberView && "secondary"}
+                size={"medium"}
+                onClick={() => setMemberView(true)}
+              >
+                Member view
+              </Button>
+            </div>
+
+            <div
+              style={{
+                fontWeight: "var(--font-weight-light)",
+                fontSize: "16px",
+                cursor: "pointer",
+                position: "relative",
+                top: "10px",
+              }}
+              onClick={() => {
+                let path = `${group_route}/${group.id}/settings`;
+                history.push(path);
+              }}
+            >
+              <i className="fal fa-gear" /> settings
+            </div>
+          </div>
+        )}
 
         {!!group.startups.length && (
           <StartupList2

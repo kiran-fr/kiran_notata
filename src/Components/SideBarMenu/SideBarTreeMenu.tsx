@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./SideBarTreeMenu.module.css";
 import { dashboard, group, signOut, settings } from "pages/definitions";
 import { Link } from "react-router-dom";
@@ -17,6 +17,15 @@ import {
   AddTagMutationOptions,
   DeleteTagMutationOptions,
 } from "pages/private/Dashboard/Connections/Connections";
+import { useDispatch, useSelector } from "react-redux";
+import { hideMobileNavigationMenu } from "../../Modules/menu";
+import userGet from "../../Apollo/Queries/userGet";
+import { Startups } from "../../Apollo/Queries/groupsGet";
+import ShareSetting from "../../pages/private/Groups/Group/ShareSetting";
+import { Modal } from "../elements/NotataComponents/Modal";
+import { Button } from "../elements";
+import { GroupsType } from "../../Apollo/Queries";
+import groupPut from "../../Apollo/Mutations/groupPut";
 
 const classnames = require("classnames");
 
@@ -76,10 +85,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const [showNewGroupModal, setShowNewGroupModal] = useState<{state: boolean}>({state: false});
   const [showEvaluate, setShowEvaluate] = useState<string | undefined>(undefined);
   const [showTagGroup, setShowTagGroup] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    changeSelected(location.pathname);
-  }, [location]);
+  const [showShareSettings, setShowShareSettings] = useState<{group: GroupsType, connection: any} | undefined>(undefined);
 
   function changeExpanded(key: string): void {
     const node = expandedState.has(key);
@@ -94,38 +100,104 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   }
 
   // ================
+  // HANDLE ACTION MENU CLICK REGION
+  // ================
+  const visibleMobileLeftMenu = useSelector((state: any) => state.menu.visibleMobileLeftMenu);
+
+  // visibleMobileLeftMenu && menuItems.unshift({
+  //   key: "notata",
+  //   label: "NOTATA",
+  //   link: dashboard,
+  //   root: true,
+  // });
+  const dispatch = useDispatch();
+
+  const useOnClickOutside = (ref: any, handler: any) => {
+    useEffect(() => {
+        const listener = (event: MouseEvent) => {
+          if (!ref.current || ref.current.contains(event.target)) {
+            return;
+          }
+          handler(event);
+        };
+        document.addEventListener('mousedown', listener);
+        return () => {
+          document.removeEventListener('mousedown', listener);
+        };
+      },
+      [ref, handler],
+    );
+  };
+
+  const menuRef = useRef<any>(null);
+  useOnClickOutside(menuRef, () => dispatch(hideMobileNavigationMenu()));
+
+  useEffect(() => {
+    changeSelected(location.pathname);
+  }, [location, menuRef]);
+
+  // ================
   // QUERY REGION
   // ================
 
   const groupsQuery = useQuery<GroupsData>(groupsGet, { fetchPolicy: "cache-first" });
   const connectionsQuery = useQuery(connectionsGet, { fetchPolicy: "cache-first" });
   const tagGroupsQuery = useQuery(tagGroupGet, { fetchPolicy: "cache-first" });
+  const userQuery = useQuery(userGet, { fetchPolicy: "cache-first" });
   const connections = connectionsQuery.data?.connectionsGet || [];
+  const user = userQuery.data?.userGet;
   const tagGroups = tagGroupsQuery.data?.accountGet.tagGroups || [];
   const [mutate] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
+  const [mutateGroupPut] = useMutation(groupPut, {
+    refetchQueries: [{query: groupsGet}],
+  });
 
   if (groupsQuery.data?.groupsGet) {
     const index = menuItems.findIndex((item) => item.key === "groups");
     groupsQuery.data.groupsGet.forEach((group) => {
+
+      const isAdmin = group.members.some(
+        ({ email, role }) => email === user.email && role === "admin"
+      );
+
+      const startups = new Map<string, Startups[]>();
+
+      group.startups.forEach((s) => {
+        startups.get(s.connectionId) ?
+          startups.set(s.connectionId, [...startups.get(s.connectionId) || [], s]) :
+          startups.set(s.connectionId, [s]);
+      });
+
       menuItems[index].nodes?.push({
         key: group.id,
         label: group.name,
         link: `/dashboard/group/${group.id}`,
-        icon: "fal fa-cog",
+        icon: isAdmin ? "fal fa-cog" : "",
         selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
-        action: () => history.push(`/dashboard/group/${group.id}/settings`),
-        nodes: [
-          ...group.startups.map((startup) =>
-            ({
-              key: startup.connectionId,
-              link: `/dashboard/startup_page/${startup.connectionId}`,
-              label: startup.connection?.creative?.name,
+        action: () => isAdmin ? history.push(`/dashboard/group/${group.id}/settings`) : undefined,
+        nodes: [...startups].map(([connectionId, value]) => {
+
+            const userMatch = value.find(({ sharedBy }) => sharedBy === user.email);
+            const creativeMatch = connections.find(({ creativeId } : {creativeId: string}) => creativeId === value[0].creativeId);
+            const syncWithGroup = !userMatch || !creativeMatch;
+
+            return {
+              key: connectionId,
+              link: `/dashboard/startup_page/${connectionId}`,
+              label: value[0].connection?.creative?.name,
               nodes: [],
-              selected: selectedNodes.has(`/dashboard/startup_page/${startup.connectionId}`),
+              selected: selectedNodes.has(`/dashboard/startup_page/${connectionId}`),
               showHashTag: true,
-            } as MenuItem)),
-        ],
+              icon: syncWithGroup ? "fal fa-cloud-download" : "",
+              action: () => setShowShareSettings({group: group, connection: {
+                  id: connectionId,
+                  creativeId: value[0].creativeId,
+                  creative: {name: value[0].connection.creative.name}
+                }})
+            } as MenuItem;
+           }
+          )
       });
     });
   }
@@ -134,10 +206,9 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   // NODE REGION
   // ================
 
-  function NodeItems({ node }: { node: MenuItem }): JSX.Element {
+  function NodeItems({ node, level }: { node: MenuItem, level: number }): JSX.Element {
     const collapsed = !expandedState.has(node.key);
     const hasSelectedChildItem = itemOrItemNodesSelected(node);
-
     if (node.nodes?.length) {
       return (
         <>
@@ -145,13 +216,14 @@ const SideBarTreeMenu = ({ location, history }: any) => {
             <Item
               key={node.key}
               node={node}
+              level={level++}
               expandable={true}
               collapsed={collapsed}
               hasSelectedChildItem={hasSelectedChildItem}
             />
             <ul className={classnames(collapsed && styles.collapsed)}>
               {node.nodes.map((item, i) => (
-                <NodeItems node={item} key={`${node.key}-${i}`} />
+                <NodeItems node={item} key={`${node.key}-${i}`} level={level}/>
               ))}
             </ul>
           </li>
@@ -162,7 +234,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
               .map((item, i) => (
                 <li key={`not-collapsed-${i}`}>
                   <ul>
-                    <NodeItems node={item} key={`${node.key}-${i}`} />
+                    <NodeItems node={item} key={`${node.key}-${i}`} level={level}/>
                   </ul>
                 </li>
               ))}
@@ -177,6 +249,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           expandable={false}
           hasSelectedChildItem={hasSelectedChildItem}
           collapsed={collapsed}
+          level={level++}
         />
       </li>
     );
@@ -188,11 +261,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
 
   function Item({
     node,
+    level,
     expandable,
     collapsed,
     hasSelectedChildItem,
   }: {
     node: MenuItem;
+    level: number;
     expandable: boolean;
     collapsed: boolean;
     hasSelectedChildItem: boolean;
@@ -218,7 +293,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           />
         )}
         {node.showHashTag && <span className={styles.hash_tag}>#</span>}
-        <Link to={node.link} className={styles.link}>
+        <Link to={node.link} className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>
           {node.label}
         </Link>
         {node.icon && (
@@ -259,11 +334,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
 
   return (
     <>
-      <div className={classnames(styles.sidebar_container, "desktop_only")}>
+      <div ref={menuRef}
+           className={classnames(styles.sidebar_container,
+             !visibleMobileLeftMenu ? styles.closed_mobile_container : styles.open_mobile_container)}>
         <div className={styles.menu_container}>
           <ul>
             {menuItems.map((item, i) => (
-              <NodeItems node={item} key={`root-${i}`} />
+              <NodeItems node={item} key={`root-${i}`} level={0}/>
             ))}
           </ul>
         </div>
@@ -309,6 +386,41 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           }}
         />
       )}
+      {showShareSettings && console.log('my', showShareSettings)}
+      { showShareSettings && (
+        <Modal
+          title="Share startup"
+          close={() => {
+            setShowShareSettings(undefined);
+          }}
+          disableFoot={true}
+        >
+          <ShareSetting
+            group={showShareSettings.group}
+            connection={showShareSettings.connection}
+            mutate={mutateGroupPut}
+            done={() => {
+              setShowShareSettings(undefined);
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              left: "26px",
+              bottom: "33px",
+            }}
+          >
+            <Button
+              buttonStyle="secondary"
+              size="medium"
+              onClick={() => setShowShareSettings(undefined)}
+            >
+              cancel
+            </Button>
+          </div>
+        </Modal>
+      )
+      }
     </>
   );
 };
