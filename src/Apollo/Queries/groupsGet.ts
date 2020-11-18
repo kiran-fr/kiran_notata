@@ -31,7 +31,6 @@ interface Startups {
   };
 }
 
-
 export interface Member {
   email: string;
   role: string;
@@ -101,5 +100,3 @@ export default gql`
   }
   ${groupFragments}
 `;
-
-
