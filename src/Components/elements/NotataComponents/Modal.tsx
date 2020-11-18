@@ -5,7 +5,9 @@ import styles from "./Modal.module.css";
 import { Button } from "../";
 
 interface Props {
-  close: (event: React.MouseEvent<HTMLDivElement, MouseEvent> | KeyboardEvent) => void;
+  close: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent> | KeyboardEvent
+  ) => void;
   noKill?: boolean;
   submit?: Function;
   title?: string;
@@ -24,7 +26,7 @@ export const Modal = ({
   loading,
   showScrollBar,
   ...children
-} : Props) => {
+}: Props) => {
   useEffect(() => {
     function downHandler(e: KeyboardEvent) {
       e.key === "Escape" && close(e);
