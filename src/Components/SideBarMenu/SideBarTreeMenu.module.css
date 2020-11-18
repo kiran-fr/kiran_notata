@@ -3,7 +3,7 @@
   padding-left: 25px;
   user-select: none;
   background: white;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 53px;
   min-height: 100vh;
