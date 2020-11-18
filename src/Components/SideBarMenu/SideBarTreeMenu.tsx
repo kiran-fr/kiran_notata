@@ -1,31 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./SideBarTreeMenu.module.css";
-import { dashboard, group, signOut, settings } from "pages/definitions";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useMutation, useQuery } from "@apollo/client";
+import { Startups } from "Apollo/Queries/groupsGet";
+import {
+  connectionsGet,
+  groupsGet,
+  GroupsType,
+  tagGroupGet,
+  userGet,
+} from "Apollo/Queries";
+import {
+  connectionTagAdd,
+  connectionTagRemove,
+  groupPut,
+} from "Apollo/Mutations";
+
+import { dashboard, group, signOut, settings } from "pages/definitions";
 import CreateNewStartup from "pages/private/Dashboard/Connections/CreateStartup";
 import Groups, { GroupsData } from "pages/private/Groups/Groups";
-import { useMutation, useQuery } from "@apollo/client";
-import { groupsGet } from "Apollo/Queries/index";
 import EvaluateSelector from "pages/private/Dashboard/Connections/EvaluateStartup";
-import connectionsGet from "Apollo/Queries/connectionsGet";
 import TagSelector from "Components/TagSelector/TagSelector";
-import tagGroupGet from "Apollo/Queries/tagGroupGet";
 import { Connection, Tag } from "pages/private/Dashboard/Connections/types";
-import connectionTagRemove from "Apollo/Mutations/connectionTagRemove";
-import connectionTagAdd from "Apollo/Mutations/connectionTagAdd";
 import {
   AddTagMutationOptions,
   DeleteTagMutationOptions,
 } from "pages/private/Dashboard/Connections/Connections";
-import { useDispatch, useSelector } from "react-redux";
-import { hideMobileNavigationMenu } from "../../Modules/menu";
-import userGet from "../../Apollo/Queries/userGet";
-import { Startups } from "../../Apollo/Queries/groupsGet";
-import ShareSetting from "../../pages/private/Groups/Group/ShareSetting";
+import { hideMobileNavigationMenu } from "Modules/menu";
+import ShareSetting from "pages/private/Groups/Group/ShareSetting";
 import { Modal } from "../elements/NotataComponents/Modal";
 import { Button } from "../elements";
-import { GroupsType } from "../../Apollo/Queries";
-import groupPut from "../../Apollo/Mutations/groupPut";
+import styles from "./SideBarTreeMenu.module.css";
 
 const classnames = require("classnames");
 
