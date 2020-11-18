@@ -4,9 +4,11 @@
   user-select: none;
   background: white;
   position: fixed;
+  overflow-y: scroll;
   left: 0;
   top: 53px;
-  min-height: 100vh;
+  min-height: 90vh;
+  height: 90%;
   width: 260px;
   z-index: 1000;
 }
