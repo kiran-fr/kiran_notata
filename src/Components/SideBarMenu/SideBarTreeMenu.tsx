@@ -47,7 +47,6 @@ type MenuItem = {
 };
 
 const SideBarTreeMenu = ({ location, history }: any) => {
-
   const menuItems: MenuItem[] = [
     {
       key: "startups",
@@ -180,29 +179,28 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         link: `/dashboard/group/${group.id}`,
         icon: isAdmin ? "fal fa-cog" : "",
         selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
-        action: () => isAdmin ? history.push(`/dashboard/group/${group.id}/settings`) : undefined,
+        action: () => isAdmin ?? history.push(`/dashboard/group/${group.id}/settings`),
         nodes: [...startups].map(([connectionId, value]) => {
 
-            const userMatch = value.find(({ sharedBy }) => sharedBy === user.email);
-            const creativeMatch = connections.find(({ creativeId } : {creativeId: string}) => creativeId === value[0].creativeId);
-            const syncWithGroup = !userMatch || !creativeMatch;
+          const userMatch = value.find(({ sharedBy }) => sharedBy === user.email);
+          const creativeMatch = connections.find(({ creativeId } : {creativeId: string}) => creativeId === value[0].creativeId);
+          const syncWithGroup = !userMatch || !creativeMatch;
 
-            return {
-              key: connectionId,
-              link: `/dashboard/startup_page/${connectionId}`,
-              label: value[0].connection?.creative?.name,
-              nodes: [],
-              selected: selectedNodes.has(`/dashboard/startup_page/${connectionId}`),
-              showHashTag: true,
-              icon: syncWithGroup ? "fal fa-cloud-download" : "",
-              action: () => setShowShareSettings({group: group, connection: {
-                  id: connectionId,
-                  creativeId: value[0].creativeId,
-                  creative: {name: value[0].connection.creative.name}
-                }})
-            } as MenuItem;
-           }
-          )
+          return {
+            key: connectionId,
+            link: `/dashboard/startup_page/${connectionId}`,
+            label: value[0].connection?.creative?.name,
+            nodes: [],
+            selected: selectedNodes.has(`/dashboard/startup_page/${connectionId}`),
+            showHashTag: true,
+            icon: syncWithGroup ? "fal fa-cloud-download" : "",
+            action: () => setShowShareSettings({group: group, connection: {
+              id: connectionId,
+              creativeId: value[0].creativeId,
+              creative: {name: value[0].connection.creative.name}
+            }})
+          } as MenuItem;
+        }),
       });
     });
   }
@@ -228,7 +226,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
             />
             <ul className={classnames(collapsed && styles.collapsed)}>
               {node.nodes.map((item, i) => (
-                <NodeItems node={item} key={`${node.key}-${i}`} level={level}/>
+                <NodeItems node={item} key={`${node.key}-${i}`} level={level} />
               ))}
             </ul>
           </li>
@@ -239,7 +237,11 @@ const SideBarTreeMenu = ({ location, history }: any) => {
               .map((item, i) => (
                 <li key={`not-collapsed-${i}`}>
                   <ul>
-                    <NodeItems node={item} key={`${node.key}-${i}`} level={level}/>
+                    <NodeItems
+                      node={item}
+                      key={`${node.key}-${i}`}
+                      level={level}
+                    />
                   </ul>
                 </li>
               ))}
@@ -298,7 +300,11 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           />
         )}
         {node.showHashTag && <span className={styles.hash_tag}>#</span>}
-        <Link to={node.link} className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>
+        <Link
+          to={node.link}
+          className={styles.link}
+          style={{ maxWidth: `${203 - 27 * level}px` }}
+        >
           {node.label}
         </Link>
         {node.icon && (
@@ -339,13 +345,19 @@ const SideBarTreeMenu = ({ location, history }: any) => {
 
   return (
     <>
-      <div ref={menuRef}
-           className={classnames(styles.sidebar_container,
-             !visibleMobileLeftMenu ? styles.closed_mobile_container : styles.open_mobile_container)}>
+      <div
+        ref={menuRef}
+        className={classnames(
+          styles.sidebar_container,
+          !visibleMobileLeftMenu
+            ? styles.closed_mobile_container
+            : styles.open_mobile_container
+        )}
+      >
         <div className={styles.menu_container}>
           <ul>
             {menuItems.map((item, i) => (
-              <NodeItems node={item} key={`root-${i}`} level={0}/>
+              <NodeItems node={item} key={`root-${i}`} level={0} />
             ))}
           </ul>
         </div>
@@ -391,8 +403,8 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           }}
         />
       )}
-      {showShareSettings && console.log('my', showShareSettings)}
-      { showShareSettings && (
+      {showShareSettings && console.log("my", showShareSettings)}
+      {showShareSettings && (
         <Modal
           title="Share startup"
           close={() => {
@@ -424,8 +436,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
             </Button>
           </div>
         </Modal>
-      )
-      }
+      )}
     </>
   );
 };
