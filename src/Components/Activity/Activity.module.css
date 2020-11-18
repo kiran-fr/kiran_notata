@@ -1,6 +1,5 @@
 .sidebar_container {
-  /* padding-top: 15px; */
-  padding-top: 68px;
+  padding-top: 55px;
   /* padding-right: 25px; */
   background: white;
   position: fixed;
@@ -16,7 +15,6 @@
 .sidebar_container:before {
   content: "";
   width: inherit;
-  /* position: fixed; */
   position: absolute;
   height: 90%;
   /* height: 100vh; */

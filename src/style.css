@@ -191,7 +191,7 @@ h1 {
   padding-top: 50px;
   left: 140px;
   padding-left: 130px;
-  padding-right: 260px;
+  padding-right: 300px;
   position: relative;
   margin-right: 150px;
   background: var(--color-gray-pale);
@@ -222,6 +222,7 @@ h1 {
   .logged_in_page_content {
     left: 0px;
     padding-left: 10px;
+    padding-right: 0px;
     margin-right: 10px;
   }
 }

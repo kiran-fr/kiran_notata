@@ -152,7 +152,7 @@ export function Log({ group, user }: { group: any; user: any }) {
             </div>
           ))
         ) : (
-          <div style={{ paddingLeft: "10px", color: "var(--color-gray-medium)" }}>
+          <div style={{ color: "var(--color-gray-medium)" }}>
             No comments yet...
           </div>
         )}
