@@ -24,6 +24,27 @@
   z-index: -1;
 }
 
+.icons {
+  position: fixed;
+  right: 0;
+  top: 0px;
+  z-index: 1002;
+  margin-top: 5px;
+  margin-right: 20px;
+  font-size: xx-large;
+  cursor: pointer;
+  color: var(--color-gray-medium);
+}
+.icons:before {
+  content: "";
+  width: inherit;
+  position: absolute;
+  height: 90%;
+  background: white;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
 /* @media (max-width: 900px) {
   .closed_mobile_container {
     top: 0;
