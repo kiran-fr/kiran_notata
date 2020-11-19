@@ -118,19 +118,17 @@ const SideBarTreeMenu = ({ location, history }: any) => {
 
   const useOnClickOutside = (ref: any, handler: any) => {
     useEffect(() => {
-        const listener = (event: MouseEvent) => {
-          if (!ref.current || ref.current.contains(event.target)) {
-            return;
-          }
-          handler(event);
-        };
-        document.addEventListener('mousedown', listener);
-        return () => {
-          document.removeEventListener('mousedown', listener);
-        };
-      },
-      [ref, handler],
-    );
+      const listener = (event: MouseEvent) => {
+        if (!ref.current || ref.current.contains(event.target)) {
+          return;
+        }
+        handler(event);
+      };
+      document.addEventListener("mousedown", listener);
+      return () => {
+        document.removeEventListener("mousedown", listener);
+      };
+    }, [ref, handler]);
   };
 
   const menuRef = useRef<any>(null);
@@ -154,7 +152,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const [mutate] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
   const [mutateGroupPut] = useMutation(groupPut, {
-    refetchQueries: [{query: groupsGet}],
+    refetchQueries: [{ query: groupsGet }],
   });
 
   if (groupsQuery.data?.groupsGet) {
