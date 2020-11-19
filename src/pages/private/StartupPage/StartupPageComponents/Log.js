@@ -110,7 +110,7 @@ function LogInput({ user, connection }) {
           onKeyDown={downHandler}
         />
 
-        <div className="comment_sumbit">
+        <div className="comment_submit">
           <i className="fas fa-arrow-alt-circle-up" />
           <input type="submit" value="" />
         </div>
