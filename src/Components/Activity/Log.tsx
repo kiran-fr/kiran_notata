@@ -90,6 +90,7 @@ function LogInput({ user, group }: { user: any; group: any }) {
           // type="text"
           placeholder="Write a comment..."
           // rows={4}
+          autoComplete="off"
           name="val"
           ref={register({ required: true })}
           onKeyDown={downHandler}
