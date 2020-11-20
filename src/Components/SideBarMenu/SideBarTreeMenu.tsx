@@ -177,7 +177,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         link: `/dashboard/group/${group.id}`,
         icon: isAdmin ? "fal fa-cog" : "",
         selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
-        action: () => isAdmin ?? history.push(`/dashboard/group/${group.id}/settings`),
+        action: () => isAdmin && history.push(`/dashboard/group/${group.id}/settings`),
         nodes: [...startups].map(([connectionId, value]) => {
 
           const userMatch = value.find(({ sharedBy }) => sharedBy === user.email);
