@@ -96,8 +96,8 @@ function LogInput({ user, group }: { user: any; group: any }) {
           onKeyDown={downHandler}
         />
 
-        <div className="comment_sumbit">
-          <i className="fas fa-arrow-alt-circle-up" />
+        <div className={styles.comment_submit}>
+          <i className="fal fa-chevron-right" />
           <input type="submit" value="" />
         </div>
       </form>
