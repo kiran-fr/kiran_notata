@@ -12,7 +12,8 @@ const classnames = require("classnames");
 
 function LogInput({ user, group }: { user: any; group: any }) {
   const [mutate] = useMutation(groupLogPut);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm();
+  const { isSubmitting } = formState;
 
   function downHandler(event: any) {
     const { key, shiftKey } = event;
@@ -22,6 +23,7 @@ function LogInput({ user, group }: { user: any; group: any }) {
 
   const onSubmit = async (data: any, event: any) => {
     if (data.val.length < 1) return;
+    if (isSubmitting) return;
 
     let variables = {
       groupId: group.id,
@@ -87,9 +89,7 @@ function LogInput({ user, group }: { user: any; group: any }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           className={styles.comment_input}
-          // type="text"
           placeholder="Write a comment..."
-          // rows={4}
           autoComplete="off"
           name="val"
           ref={register({ required: true })}
@@ -97,7 +97,15 @@ function LogInput({ user, group }: { user: any; group: any }) {
         />
 
         <div className={styles.comment_submit}>
-          <i className="fal fa-chevron-right" />
+          {
+            !isSubmitting && (
+              <i className="fal fa-paper-plane"/>
+            ) || (
+              <i className="fal fa-spinner fa-spin"/>
+            )
+
+          }
+
           <input type="submit" value="" />
         </div>
       </form>

@@ -10,6 +10,7 @@
   width: 340px;
   z-index: 1003;
   height: 100%;
+  border-left: 1px solid var(--color-gray-pale);
 }
 
 .sidebar_container:before {
@@ -22,6 +23,7 @@
   right: 0;
   top: 0;
   z-index: -1;
+  border-left: 1px solid var(--color-gray-pale);
 }
 
 .icons {
@@ -58,6 +60,9 @@
     transform: translateX(0);
     transition: transform 0.3s ease-in-out;
     /* overflow-x: hidden; */
+  }
+  .sidebar_container {
+    padding-top: 0px;
   }
   .open_mobile_container::-webkit-scrollbar {
     display: none;

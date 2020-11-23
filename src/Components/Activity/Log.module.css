@@ -1,10 +1,8 @@
 .comments_section {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 90%;
+  height: calc(100% - 86px);
   padding-left: 45px;
-  /* overflow: -moz-hidden-unscrollable; */
-  /* min-height: 70vh; */
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
@@ -22,7 +20,7 @@
 
 .log_feed_item {
   font-size: 12px;
-  margin-bottom: 45px;
+  margin-bottom: 25px;
   line-height: 1.8;
   /* padding-left: 25px; */
 }
@@ -70,44 +68,47 @@
   text-align: left;
   border-radius: 20px;
   width: 100%;
-  margin-top: 5px;
+  /*margin-top: 5px;*/
   color: var(--color-gray-dark);
   background: var(--color-gray-pale);
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
 }
 
 .comment_submit {
   position: absolute;
-  right: 30px;
-  top: 8px;
+  right: 29px;
+  top: 4px;
+  width: 30px;
+  height: 30px;
   z-index: 100;
   background: white;
   border-radius: 100%;
   text-align: center;
+  line-height: 1.8;
+  cursor: pointer;
 }
 
 .comment_submit i {
-  position: absolute;
-  top: 10px;
-  color: var(--color-gray-dark);
+  color: var(--color-gray-medium);
   z-index: 9999;
   font-size: 12px;
-  width: 100%;
-  height: 100%;
   cursor: pointer;
   pointer-events: none;
   font-weight: 600;
 }
 
 .comment_submit input {
-  right: 5px;
-  top: 10px;
   border: none;
   font-size: 14px;
   cursor: pointer;
-  height: 34px;
   outline: none;
-  width: 34px;
-  opacity: 1;
   background: none;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border-radius: 32px;
 }
