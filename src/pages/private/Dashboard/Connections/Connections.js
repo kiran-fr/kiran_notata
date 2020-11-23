@@ -14,6 +14,7 @@ import {
 import Filters from "../Filters";
 import CreateNewStartup from "./CreateStartup";
 import EvaluateSelector from "./EvaluateStartup";
+import SetSubjectiveScore from "./SetSubjectiveScore";
 
 import { startup_page } from "pages/definitions";
 
@@ -31,6 +32,7 @@ import {
   small_text_flex,
   clear_filters,
 } from "./Connections.module.css";
+
 import tableColumns from "./TableColumns/TableColumns";
 
 function applyFilters({ connections, filters }) {
@@ -356,15 +358,15 @@ export default function Connections({ history }) {
         />
       )}
 
-      <Card maxWidth={1200} style={{ paddingTop: "5px" }}>
-        {!connections.length && (
-          <div className={void_list}>
-            <div className={void_list_label}>No results to show</div>
-            <div className={void_list_icon}>
-              <i className="fal fa-ghost" />
-            </div>
-          </div>
-        )}
+      <Card maxWidth={1200} noMargin={true} style={{ paddingBottom: "20px" }}>
+        {/*{!connections.length && (*/}
+        {/*  <div className={void_list}>*/}
+        {/*    <div className={void_list_label}>No results to show</div>*/}
+        {/*    <div className={void_list_icon}>*/}
+        {/*      <i className="fal fa-ghost" />*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*)}*/}
 
         <Table
           dataSource={connections || []}
@@ -372,7 +374,11 @@ export default function Connections({ history }) {
           disableHead={false}
           pagination={false}
           allowSorting={true}
+          // rowLinkFn={d => {
+          //   console.log('hey', d)
+          // }}
           loading={loading}
+          emptyLabel={"No results."}
         />
 
         {showTagGroup && (
@@ -393,8 +399,18 @@ export default function Connections({ history }) {
           />
         )}
 
+        {/*{showEvaluate && (*/}
+        {/*  <EvaluateSelector*/}
+        {/*    connection={showEvaluateForConnection}*/}
+        {/*    history={history}*/}
+        {/*    close={() => {*/}
+        {/*      setShowEvaluate(null);*/}
+        {/*    }}*/}
+        {/*  />*/}
+        {/*)}*/}
+
         {showEvaluate && (
-          <EvaluateSelector
+          <SetSubjectiveScore
             connection={showEvaluateForConnection}
             history={history}
             close={() => {

@@ -6,29 +6,293 @@ import { Link } from "react-router-dom";
 import { evaluationTemplatesGet } from "Apollo/Queries";
 import { evaluationPut } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
+import { getPossibleScore, getScore } from "../../Evaluation/util";
 import { Button, Table, Modal } from "Components/elements";
 
 import styles from "./EvaluationBox.module.css";
 
-import { getEvaluationSummaries } from "./getEvaluationSummaries";
-import getEvaluationSummariesForTeam from "./getEvaluationSummariesForTeam";
+function getEvaluationSummaries({
+  connection,
+  groups,
+  evaluations,
+  evaluationTemplates,
+  hide,
+}) {
+  // Get all shared evaluations
+  // ––––––––––––––––––––––––––
+  let sharedEvaluations = [];
+  for (let sharedItem of connection.sharedWithMe) {
+    if (sharedItem.connection) {
+      for (let sharedEvaluation of sharedItem.connection.evaluations) {
+        if (sharedItem.evaluations) {
+          sharedEvaluations.push({
+            evaluation: sharedEvaluation,
+            sharedItem,
+          });
+        }
+      }
+    }
+  }
 
-import SummaryLine from "./SummaryLine";
-import EvaluationsByTemplate from "./EvaluationsByTemplate";
+  // Cluster evaluations by groupId
+  // ––––––––––––––––––––––––––––––
+  let evaluationsByGroup = {};
+  for (let { evaluation, sharedItem } of sharedEvaluations) {
+    evaluationsByGroup[sharedItem.groupId] =
+      evaluationsByGroup[sharedItem.groupId] || [];
+    evaluationsByGroup[sharedItem.groupId].push({ evaluation, sharedItem });
+  }
+
+  let data = [];
+
+  for (let groupId in evaluationsByGroup) {
+    let thisGroup = groups.find(g => g.id === groupId) || {};
+    let sharedEvaluationsInGroup = evaluationsByGroup[groupId];
+
+    // Cluster evaluations by template ID
+    // ––––––––––––––––––––––––––––––––––
+    let evaluationsByTemplate = {};
+    for (let { evaluation, sharedItem } of sharedEvaluationsInGroup) {
+      evaluationsByTemplate[evaluation.templateId] =
+        evaluationsByTemplate[evaluation.templateId] || [];
+      evaluationsByTemplate[evaluation.templateId].push(evaluation);
+    }
+
+    let data2 = [];
+    for (let templateId in evaluationsByTemplate) {
+      // Get all shared evaluations
+      let evaluations = evaluationsByTemplate[templateId] || [];
+
+      // Get possible score
+      let possibleScore = evaluations[0]?.summary?.possibleScore;
+
+      // Get template name
+      let templateName = evaluations[0]?.summary?.templateName;
+
+      // Get template sections
+      let templateSections = evaluations[0]?.summary?.sections;
+
+      // Get total score
+      let totalScore = 0;
+      let count = 0;
+      for (let evaluation of evaluations) {
+        if (!hide[evaluation.id]) {
+          totalScore += evaluation.summary?.totalScore || 0;
+          count += 1;
+        }
+      }
+
+      // Get average score
+      let averageScore = parseFloat((totalScore / count).toFixed(1));
+
+      // Get average percentage score
+      let averagePercentageScore =
+        Math.round((averageScore / possibleScore) * 100) || 0;
+
+      // Put it all together
+      data2.push({
+        groupName: thisGroup.name,
+        groupId: thisGroup.id,
+        templateId: templateId,
+        templateName: templateName,
+        submissions: evaluations.length,
+        averageScore: averageScore,
+        possibleScore: possibleScore,
+        averagePercentageScore: averagePercentageScore,
+        templateSections: templateSections,
+        evaluations: evaluations,
+      });
+    }
+
+    data.push(data2);
+  }
+  return data;
+}
+
+function SummaryLine({
+  name,
+  percentageScore,
+  className,
+  list,
+  hide,
+  toggleHide,
+  evaluationId,
+  timeStamp,
+  isYou,
+  editLink,
+  history,
+}) {
+  let [showList, setShowList] = useState(false);
+
+  return (
+    <div>
+      <div
+        className={classnames(
+          styles.line_style,
+          className && className,
+          evaluationId && hide && hide[evaluationId] && styles.hide_line
+        )}
+      >
+        <div className={classnames(styles.name_style, styles.title_container)}>
+          {list && (
+            <div
+              className={styles.caret_button}
+              onClick={() => setShowList(!showList)}
+            >
+              {(showList && <i className="fas fa-caret-down" />) || (
+                <i className="fas fa-caret-right" />
+              )}
+            </div>
+          )}
+          {isYou ? (
+            <span className={styles.isYou}>{name} (you)</span>
+          ) : (
+            <span>{name}</span>
+          )}
+        </div>
+
+        <div className={styles.score_container}>
+          <div className={styles.edit_container}>
+            {(isYou && editLink && (
+              <Button
+                style={{ margin: "0px" }}
+                size="small"
+                type="just_text"
+                onClick={() => {
+                  history.push(editLink);
+                }}
+              >
+                edit
+              </Button>
+            )) || <span />}
+          </div>
+
+          {(evaluationId && toggleHide && (
+            <div
+              className={styles.eye_toggle}
+              onClick={() => {
+                toggleHide(evaluationId);
+              }}
+            >
+              {hide &&
+                (hide[evaluationId] ? (
+                  <i className="fal fa-eye-slash" />
+                ) : (
+                  <i className="fal fa-eye" />
+                ))}
+            </div>
+          )) || <span />}
+
+          {(timeStamp && (
+            <div className={styles.timeStamp}>{timeStamp}</div>
+          )) || <span />}
+
+          <div className={styles.score_style}>{percentageScore}%</div>
+        </div>
+      </div>
+
+      {showList && list && (
+        <div className={styles.expanded_list_container}>
+          {list.map((item, i) => (
+            <SummaryLine
+              key={i}
+              hide={hide}
+              evaluationId={evaluationId}
+              name={item.name}
+              percentageScore={item.percentageScore}
+              className={classnames(className, styles.sub_list)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EvaluationsByTemplate({
+  data,
+  connection,
+  user,
+  templateId,
+  hide,
+  toggleHide,
+  history,
+}) {
+  let [showList, setShowList] = useState(false);
+
+  let list = (data.templateSections || []).map(item => ({
+    name: item.name,
+    percentageScore: Math.round((item.score / item.possibleScore) * 100),
+  }));
+
+  return (
+    <div className={styles.each_template_style}>
+      <div className={styles.header_style}>
+        <SummaryLine
+          hide={hide}
+          name={data.templateName}
+          percentageScore={data.averagePercentageScore}
+          className={classnames(styles.template_summary_line)}
+          list={list.length > 1 && list}
+        />
+      </div>
+
+      {data.evaluations.map((evaluation, i) => {
+        let { given_name, family_name, email } = evaluation.createdByUser || {};
+        let percentageScore = Math.round(
+          (evaluation.summary.totalScore / evaluation.summary.possibleScore) *
+            100
+        );
+
+        let list = (evaluation.summary?.sections || []).map(item => ({
+          name: item.name,
+          percentageScore: Math.round((item.score / item.possibleScore) * 100),
+        }));
+
+        let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.sectionId}`;
+
+        return (
+          <SummaryLine
+            key={i}
+            hide={hide}
+            toggleHide={toggleHide}
+            evaluationId={evaluation.id}
+            key={evaluation.id}
+            timeStamp={moment(evaluation.updatedAt).format("ll")}
+            name={`${given_name} ${family_name}`}
+            isYou={user.email === email}
+            editLink={editLink}
+            percentageScore={percentageScore}
+            className={classnames(styles.each_evaluation_line)}
+            list={list.length > 1 && list}
+            history={history}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 function GroupEvaluations({
-  data,
   connection,
   groups,
   user,
-  // evaluations,
-  // evaluationTemplates,
+  evaluations,
+  evaluationTemplates,
   history,
-  hide,
-  setHide,
 }) {
+  const [showList, setShowList] = useState(false);
+  const [hide, setHide] = useState({});
   const [currentLoading, setCurrentLoading] = useState("");
   const [mutate, { loading }] = useMutation(evaluationPut);
+
+  let data = getEvaluationSummaries({
+    connection,
+    groups,
+    evaluations,
+    evaluationTemplates,
+    hide,
+  });
 
   function toggleHide(evaluationId) {
     setHide({
@@ -41,16 +305,8 @@ function GroupEvaluations({
     <div>
       {data.map(groupEvaluations => {
         let { groupName, groupId } = groupEvaluations[0] || {};
+
         let group = groups.find(({ id }) => id === groupId);
-
-        let showScores = group?.settings?.showScores;
-        let showUsers = group?.settings?.showUsers;
-        let isAdmin = group?.members?.some(
-          ({ email, role }) => email === user.email && role === "admin"
-        );
-
-        console.log("group.name", group.name);
-        console.log("groupEvaluations", groupEvaluations);
 
         let groupEvaluationTemplates = (group.evaluationTemplates || []).filter(
           template => {
@@ -68,32 +324,24 @@ function GroupEvaluations({
         return (
           <div key={groupId}>
             <div className={styles.group_of_evaluations}>
-              {(showScores || isAdmin) && (
-                <div>
-                  <div className={styles.from_group}>
-                    <span>From group: </span>
-                    <Link to={`${group_route}/${groupId}`}>{groupName}</Link>
-                  </div>
+              <div className={styles.from_group}>
+                <span>From group: </span>
+                <Link to={`${group_route}/${groupId}`}>{groupName}</Link>
+              </div>
 
-                  {groupEvaluations.map(d => {
-                    return (
-                      <EvaluationsByTemplate
-                        key={d.templateId}
-                        templateId={d.templateId}
-                        connection={connection}
-                        user={user}
-                        data={d}
-                        hide={hide}
-                        toggleHide={toggleHide}
-                        history={history}
-                        showUsers={showUsers}
-                        showScores={showScores}
-                        isAdmin={isAdmin}
-                      />
-                    );
-                  })}
-                </div>
-              )}
+              {groupEvaluations.map(d => {
+                return (
+                  <EvaluationsByTemplate
+                    key={d.templateId}
+                    templateId={d.templateId}
+                    connection={connection}
+                    user={user}
+                    data={d}
+                    hide={hide}
+                    toggleHide={toggleHide}
+                  />
+                );
+              })}
             </div>
 
             {!!groupEvaluationTemplates.length && (
@@ -117,8 +365,11 @@ function GroupEvaluations({
                           loading={currentLoading === template.id}
                           onClick={async () => {
                             if (currentLoading === template.id) return;
+
                             setCurrentLoading(template.id);
-                            let sectionId = template.sections[0]?.sectionId;
+
+                            let sectionId = template.sections[0]?.id;
+
                             try {
                               let variables = {
                                 connectionId: connection.id,
@@ -129,10 +380,10 @@ function GroupEvaluations({
                                   description: template.description,
                                 },
                               };
+
                               let res = await mutate({ variables });
                               let evaluation = res.data.evaluationPut;
-                              let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}`;
-                              // let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
+                              let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
                               history.push(path);
                             } catch (error) {
                               console.log("error", error);
@@ -155,7 +406,70 @@ function GroupEvaluations({
   );
 }
 
-function TeamEvaluations({
+function getEvaluationSummariesForTeam({ evaluations, hide }) {
+  let data = [];
+
+  // Cluster evaluations by template ID
+  // ––––––––––––––––––––––––––––––––––
+  let evaluationsByTemplate = {};
+  for (let evaluation of evaluations) {
+    evaluationsByTemplate[evaluation.templateId] =
+      evaluationsByTemplate[evaluation.templateId] || [];
+    evaluationsByTemplate[evaluation.templateId].push(evaluation);
+  }
+
+  for (let templateId in evaluationsByTemplate) {
+    // Get all shared evaluations
+    let evaluations = evaluationsByTemplate[templateId] || [];
+
+    // Get possible score
+    let possibleScore = evaluations[0]?.summary?.possibleScore;
+
+    // Get template name
+    let templateName = evaluations[0]?.summary?.templateName;
+
+    // Get template sections
+    let templateSections = evaluations[0]?.summary?.sections;
+
+    // Get total score
+    let totalScore = 0;
+    let count = 0;
+    for (let evaluation of evaluations) {
+      if (!hide[evaluation.id]) {
+        totalScore += evaluation.summary?.totalScore || 0;
+        count += 1;
+      }
+    }
+
+    // Get average score
+    let averageScore = parseFloat((totalScore / count).toFixed(1));
+
+    // Get average percentage score
+    let averagePercentageScore =
+      Math.round((averageScore / possibleScore) * 100) || 0;
+
+    // Put it all together
+
+    let d = {
+      // groupName: thisGroup.name,
+      // groupId: thisGroup.id,
+      templateId: templateId,
+      templateName: templateName,
+      submissions: evaluations.length,
+      averageScore: averageScore,
+      possibleScore: possibleScore,
+      averagePercentageScore: averagePercentageScore,
+      templateSections: templateSections,
+      evaluations: evaluations,
+    };
+
+    data.push(d);
+  }
+
+  return data;
+}
+
+function TeamEvaluatons({
   connection,
   user,
   evaluations,
@@ -193,14 +507,10 @@ function TeamEvaluations({
           templateSections,
         } = templateData;
 
-        let list = (templateSections || []).map(item => {
-          return {
-            name: item.name,
-            percentageScore: Math.round(
-              (item.score / item.possibleScore) * 100
-            ),
-          };
-        });
+        let list = (templateSections || []).map(item => ({
+          name: item.name,
+          percentageScore: Math.round((item.score / item.possibleScore) * 100),
+        }));
 
         return (
           <div key={i} className={styles.each_template_style}>
@@ -211,7 +521,6 @@ function TeamEvaluations({
                 percentageScore={averagePercentageScore}
                 className={classnames(styles.template_summary_line)}
                 list={list.length > 1 && list}
-                history={history}
               />
             </div>
 
@@ -235,11 +544,7 @@ function TeamEvaluations({
                 };
               });
 
-              let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.sectionId}`;
-
-              // console.log('evaluation.summary', evaluation.summary)
-              // console.log('evaluation.summary?.sections[0]?.id', evaluation.summary?.sections[0]?.id)
-              // console.log('editLink', editLink)
+              let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.id}`;
 
               return (
                 <SummaryLine
@@ -450,8 +755,6 @@ function NewEvaluationLogic({ evaluations, templates, connection, history }) {
 }
 
 export function EvaluationBox({ connection, groups, user, history }) {
-  const [hide, setHide] = useState({});
-
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
 
   let templates = [];
@@ -465,19 +768,9 @@ export function EvaluationBox({ connection, groups, user, history }) {
 
   const evaluations = connection.evaluations || [];
 
-  const data = getEvaluationSummaries({
-    connection,
-    groups,
-    evaluations,
-    evaluationTemplates: templates,
-    hide,
-  });
-
-  console.log("data", data);
-
   return (
     <>
-      {!evaluations.length && !data.length && (
+      {!evaluations.length && (
         <div style={{ paddingTop: "20px" }}>
           <div style={{ fontSize: "18px" }}>Evaluate this startup</div>
           <div
@@ -490,16 +783,15 @@ export function EvaluationBox({ connection, groups, user, history }) {
       )}
 
       <GroupEvaluations
-        data={data}
         groups={groups}
+        evaluations={evaluations}
         connection={connection}
+        evaluationTemplates={templates}
         user={user}
         history={history}
-        hide={hide}
-        setHide={setHide}
       />
 
-      <TeamEvaluations
+      <TeamEvaluatons
         evaluations={evaluations}
         connection={connection}
         history={history}
