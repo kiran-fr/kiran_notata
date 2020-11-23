@@ -1,21 +1,18 @@
 import React from "react";
-import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
 import moment from "moment";
 
-import { groupLogPut } from "Apollo/Mutations";
-import { groupLogGet } from "Apollo/Queries";
+import { LogItem } from "Apollo/Queries";
 
 import styles from "./Log.module.css";
 const classnames = require("classnames");
 
-function LogInput({ user, group }: { user: any; group: any }) {
-  const [mutate] = useMutation(groupLogPut);
+function LogInput({ submitMutation }: { submitMutation: Function }) {
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
-  function downHandler(event: any) {
+  function downHandler(event: React.KeyboardEvent) {
     const { key, shiftKey } = event;
 
     if (shiftKey && key === "Enter") handleSubmit(onSubmit)(event);
@@ -25,57 +22,7 @@ function LogInput({ user, group }: { user: any; group: any }) {
     if (data.val.length < 1) return;
     if (isSubmitting) return;
 
-    let variables = {
-      groupId: group.id,
-      input: {
-        logType: "COMMENT",
-        dataPairs: [
-          {
-            key: "TEXT",
-            val: data.val,
-          },
-        ],
-      },
-    };
-
-    mutate({
-      variables,
-      // optimisticResponse: {
-      //   __typename: "Mutation",
-      //   groupLogPut: {
-      //     __typename: "GroupLogItem",
-      //     id: "",
-      //     groupId: group.id,
-      //     createdByUser: {
-      //       __typename: "SimpleUser",
-      //       given_name: user.given_name,
-      //       family_name: user.family_name,
-      //       email: user.email,
-      //     },
-      //     dataPairs: [
-      //       {
-      //         key: "TEXT",
-      //         val: data.val,
-      //         __typename: "KeyVal",
-      //       },
-      //     ],
-      //   },
-      // },
-      update: (proxy, { data: { groupLogPut } }) => {
-        const data: any = proxy.readQuery({
-          query: groupLogGet,
-          variables: { groupId: group.id },
-        });
-
-        proxy.writeQuery({
-          query: groupLogGet,
-          variables: { groupId: group.id },
-          data: {
-            groupLogGet: [...data?.groupLogGet, groupLogPut],
-          },
-        });
-      },
-    });
+    submitMutation(data.val);
 
     if (event.type === "submit") {
       event.target.reset();
@@ -108,23 +55,20 @@ function LogInput({ user, group }: { user: any; group: any }) {
   );
 }
 
-export function Log({ group, user }: { group: any; user: any }) {
-  const logQuery = useQuery(groupLogGet, {
-    variables: { groupId: group.id },
-  });
-
-  let log = [];
-  if (!logQuery.error && !logQuery.loading && logQuery.data) {
-    log = logQuery.data.groupLogGet;
-  }
-
-  log = log.filter((l: any) => l.logType === "COMMENT");
-
+export function Log({
+  logs,
+  user,
+  submitMutation,
+}: {
+  logs: LogItem[];
+  user: any;
+  submitMutation: Function;
+}) {
   return (
     <>
       <div className={styles.comments_section}>
-        {log.length ? (
-          log.map((logItem: any, i: any) => (
+        {logs.length ? (
+          logs.map((logItem: LogItem) => (
             <div key={`log-${logItem.id}`} className={styles.log_feed_item}>
               <div className={styles.log_feed_byline}>
                 <span className={styles.name}>
@@ -163,7 +107,7 @@ export function Log({ group, user }: { group: any; user: any }) {
       </div>
 
       <hr />
-      <LogInput group={group} user={user} />
+      <LogInput submitMutation={submitMutation} />
     </>
   );
 }

@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 
 import { Content, Card, BreadCrumbs, GhostLoader } from "Components/elements";
 
+import { StartupActivity } from "./StartupPageComponents/Activity";
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
 import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationBox";
 import { Log } from "./StartupPageComponents/Log";
@@ -103,6 +104,7 @@ export default function StartupPage({ match, history }) {
         ]}
       />
 
+      <StartupActivity user={user} connection={connection} />
       <Content maxWidth={780}>
         {/*FACTS*/}
         <Facts

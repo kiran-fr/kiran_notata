@@ -8,7 +8,8 @@ import {
   evaluationTemplateNamesGet,
 } from "Apollo/Queries";
 
-import { groupPut } from "Apollo/Mutations";
+import { groupLogGet } from "Apollo/Queries";
+import { groupPut, groupLogPut } from "Apollo/Mutations";
 import AddNewMember from "./AddMember";
 import AddNewStartup from "./AddStartup";
 import StartupList2 from "./StartupList2";
@@ -332,6 +333,76 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
   );
 };
 
+const GroupActivity = ({ user, group }) => {
+  const [mutate] = useMutation(groupLogPut);
+  const logQuery = useQuery(groupLogGet, {
+    variables: { groupId: group.id },
+  });
+
+  let logs = [];
+  if (!logQuery.error && !logQuery.loading && logQuery.data) {
+    logs = logQuery.data.groupLogGet;
+  }
+
+  logs = logs.filter(l => l.logType === "COMMENT");
+
+  const submitMutation = value => {
+    let variables = {
+      groupId: group.id,
+      input: {
+        logType: "COMMENT",
+        dataPairs: [
+          {
+            key: "TEXT",
+            val: value,
+          },
+        ],
+      },
+    };
+
+    mutate({
+      variables,
+      // optimisticResponse: {
+      //   __typename: "Mutation",
+      //   groupLogPut: {
+      //     __typename: "GroupLogItem",
+      //     id: "",
+      //     groupId: group.id,
+      //     createdByUser: {
+      //       __typename: "SimpleUser",
+      //       given_name: user.given_name,
+      //       family_name: user.family_name,
+      //       email: user.email,
+      //     },
+      //     dataPairs: [
+      //       {
+      //         key: "TEXT",
+      //         val: data.val,
+      //         __typename: "KeyVal",
+      //       },
+      //     ],
+      //   },
+      // },
+      update: (proxy, { data: { groupLogPut } }) => {
+        const data = proxy.readQuery({
+          query: groupLogGet,
+          variables: { groupId: group.id },
+        });
+
+        proxy.writeQuery({
+          query: groupLogGet,
+          variables: { groupId: group.id },
+          data: {
+            groupLogGet: [...data?.groupLogGet, groupLogPut],
+          },
+        });
+      },
+    });
+  };
+
+  return <Activity user={user} logs={logs} submitMutation={submitMutation} />;
+};
+
 export default function Group({ match, history }) {
   const [memberView, setMemberView] = useState(false);
 
@@ -383,7 +454,7 @@ export default function Group({ match, history }) {
         ]}
       />
 
-      <Activity user={user} group={group} />
+      <GroupActivity user={user} group={group} />
       <Content maxWidth={780} style={{ paddingBottom: "200px" }}>
         <div style={{ marginBottom: "50px" }}>
           <h1>{group.name}</h1>
