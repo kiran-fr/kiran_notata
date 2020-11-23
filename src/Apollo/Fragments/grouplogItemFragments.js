@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 export default gql`
   fragment grouplogItemFragments on GroupLogItem {
     id
-    createdBy
     groupId
     creativeId
     createdAt
@@ -13,6 +12,7 @@ export default gql`
       key
       val
     }
+    createdBy
     createdByUser {
       email
       given_name
