@@ -97,14 +97,9 @@ function LogInput({ user, group }: { user: any; group: any }) {
         />
 
         <div className={styles.comment_submit}>
-          {
-            !isSubmitting && (
-              <i className="fal fa-paper-plane"/>
-            ) || (
-              <i className="fal fa-spinner fa-spin"/>
-            )
-
-          }
+          {(!isSubmitting && <i className="fal fa-paper-plane" />) || (
+            <i className="fal fa-spinner fa-spin" />
+          )}
 
           <input type="submit" value="" />
         </div>

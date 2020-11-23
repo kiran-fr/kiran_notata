@@ -1,11 +1,14 @@
 .comments_section {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height: calc(100% - 86px);
   padding-left: 45px;
   display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
+  flex-flow: column nowrap;
+}
+
+.comments_section > :first-child {
+  margin-top: auto !important;
 }
 
 .event_toggle_button {
