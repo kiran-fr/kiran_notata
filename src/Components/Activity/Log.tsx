@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
@@ -6,8 +6,11 @@ import moment from "moment";
 
 import { groupLogPut } from "Apollo/Mutations";
 import { groupLogGet } from "Apollo/Queries";
+import { groupLogSubscription } from "Apollo/Subscriptions";
 
 import styles from "./Log.module.css";
+import { useSubscription } from "@apollo/client";
+
 const classnames = require("classnames");
 
 function LogInput({ user, group }: { user: any; group: any }) {
@@ -97,11 +100,11 @@ function LogInput({ user, group }: { user: any; group: any }) {
         />
 
         <div className={styles.comment_submit}>
-          {(!isSubmitting && <i className="fal fa-paper-plane" />) || (
-            <i className="fal fa-spinner fa-spin" />
+          {(!isSubmitting && <i className="fal fa-paper-plane"/>) || (
+            <i className="fal fa-spinner fa-spin"/>
           )}
 
-          <input type="submit" value="" />
+          <input type="submit" value=""/>
         </div>
       </form>
     </div>
@@ -112,19 +115,39 @@ export function Log({ group, user }: { group: any; user: any }) {
   const logQuery = useQuery(groupLogGet, {
     variables: { groupId: group.id },
   });
+  const [logsState, setLogsState] = useState<any[]>([]);
 
-  let log = [];
-  if (!logQuery.error && !logQuery.loading && logQuery.data) {
-    log = logQuery.data.groupLogGet;
-  }
+  useSubscription(groupLogSubscription, {
+      onSubscriptionData: ({ client, subscriptionData: { data } }) => {
+        if (!data ||
+          data.subscribeToAllGroupLogPutEvents.groupId !== group.id ||
+          data.subscribeToAllGroupLogPutEvents.createdByUser.email === user.email) {
+          return;
+        }
+        const groupLogs = client.readQuery({ query: groupLogGet, variables: { groupId: group.id } });
+        client.writeQuery({
+          query: groupLogGet,
+          variables: { groupId: group.id },
+          data: {
+            groupLogGet: [...groupLogs.groupLogGet, data.subscribeToAllGroupLogPutEvents],
+          },
+        });
+        setLogsState([...groupLogs.groupLogGet, data.subscribeToAllGroupLogPutEvents].filter((l) => l.logType === "COMMENT"))
+      },
+    },
+  );
 
-  log = log.filter((l: any) => l.logType === "COMMENT");
+  useEffect(() => {
+    if (logQuery.data?.groupLogGet) {
+      setLogsState(logQuery.data.groupLogGet.filter((l: any) => l.logType === "COMMENT"));
+    }
+  }, [logQuery.data]);
 
   return (
     <>
       <div className={styles.comments_section}>
-        {log.length ? (
-          log.map((logItem: any, i: any) => (
+        {logsState.length ? (
+          logsState.map((logItem: any, i: any) => (
             <div key={`log-${logItem.id}`} className={styles.log_feed_item}>
               <div className={styles.log_feed_byline}>
                 <span className={styles.name}>
@@ -144,7 +167,7 @@ export function Log({ group, user }: { group: any; user: any }) {
                 className={classnames(
                   styles.log_feed_text,
                   logItem.logType !== "COMMENT" &&
-                    styles.log_feed_type_SUBJECTIVE_SCORE
+                  styles.log_feed_type_SUBJECTIVE_SCORE,
                 )}
               >
                 {logItem.dataPairs[0].val}
@@ -162,8 +185,8 @@ export function Log({ group, user }: { group: any; user: any }) {
         )}
       </div>
 
-      <hr />
-      <LogInput group={group} user={user} />
+      <hr/>
+      <LogInput group={group} user={user}/>
     </>
   );
 }

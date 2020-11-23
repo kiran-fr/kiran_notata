@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { grouplogItemFragments } from "../Fragments";
 
 // export default gql`
 //   subscription subscribeToGroupLogPutEvents($groupId: String!) {
@@ -14,10 +15,8 @@ import gql from "graphql-tag";
 export default gql`
   subscription {
     subscribeToAllGroupLogPutEvents {
-      groupId
-      dataPairs {
-        val
-      }
+       ...grouplogItemFragments
     }
   }
+     ${grouplogItemFragments}
 `;

@@ -92,6 +92,7 @@ export default function GroupSettings({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
+            state: { rightMenu: true }
           },
           {
             val: `Settings`,

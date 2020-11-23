@@ -379,6 +379,7 @@ export default function Group({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
+            state: { rightMenu: true }
           },
         ]}
       />
