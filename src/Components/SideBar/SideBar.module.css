@@ -9,6 +9,7 @@
   min-height: 100vh;
   width: 200px;
   z-index: 1000;
+  box-shadow: 1px 0 var(--color-gray-light);
 }
 
 .sidebar_container:before {

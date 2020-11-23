@@ -243,7 +243,7 @@ function SharedWithGroupList(props) {
     <div
       style={{
         marginTop: "-10px",
-        borderBottom: "1px solid var(--color-gray-pale",
+        borderBottom: "1px solid var(--color-gray-light)",
       }}
     >
       <Table
@@ -486,7 +486,7 @@ export function Share({ connection, groups, user, history }) {
                     style={{
                       textAlign: "right",
                       paddingTop: "30px",
-                      borderTop: "1px solid var(--color-gray-pale)",
+                      borderTop: "1px solid var(--color-gray-light)",
                     }}
                   >
                     <Button

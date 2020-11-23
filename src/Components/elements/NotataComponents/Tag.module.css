@@ -1,7 +1,8 @@
 .container {
-  border-radius: 20px;
+  border-radius: 3px;
   color: var(--color-gray-dark);
   background: var(--color-gray-pale);
+  border: 1px solid var(--color-gray-light);
   padding: 3px 12px;
   display: inline-block;
   font-size: 12px;

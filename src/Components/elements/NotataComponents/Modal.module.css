@@ -19,11 +19,11 @@
 }
 
 .modal_header {
-  border-bottom: 1px solid var(--color-gray-pale);
+  border-bottom: 1px solid var(--color-gray-light);
 }
 
 .modal_footer {
-  border-top: 1px solid var(--color-gray-pale);
+  border-top: 1px solid var(--color-gray-light);
   margin-left: -2px;
   margin-right: -2px;
   padding-top: 20px;
