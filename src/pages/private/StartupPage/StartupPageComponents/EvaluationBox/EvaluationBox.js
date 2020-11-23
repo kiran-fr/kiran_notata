@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { evaluationTemplatesGet } from "Apollo/Queries";
 import { evaluationPut } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
-import { getPossibleScore, getScore } from "../../Evaluation/util";
+import { getPossibleScore, getScore } from "../../../Evaluation/util";
 import { Button, Table, Modal } from "Components/elements";
 
 import styles from "./EvaluationBox.module.css";
