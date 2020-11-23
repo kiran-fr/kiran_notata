@@ -3,193 +3,602 @@ import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import { evaluationTemplatesGet } from "../../../../Apollo/Queries";
-import { evaluationPut } from "../../../../Apollo/Mutations";
-import { startup_page, group as group_route } from "../../../definitions";
-import { getPossibleScore, getScore } from "../../Evaluation/util";
-import { Button, Table, Modal } from "../../../../Components/elements";
+import { evaluationTemplatesGet } from "Apollo/Queries";
+import { evaluationPut } from "Apollo/Mutations";
+import { startup_page, group as group_route } from "pages/definitions";
+import { getPossibleScore, getScore } from "../../../Evaluation/util";
+import { Button, Table, Modal } from "Components/elements";
 
-import {
-  container,
-  each_template_style,
-  each_style,
-  header_style,
-  name_style,
-  score_style,
-  body_style,
-  footer_style,
-  meta_style,
-  caret_button,
-  title_container,
-  from_group,
-} from "./EvaluationBox.module.css";
+import styles from "./EvaluationBox.module.css";
 
-function EvaluationSummary({
-  evaluation,
-  connectionId,
-  sharedItem,
-  noEdit,
+function getEvaluationSummaries({
+  connection,
+  groups,
+  evaluations,
+  evaluationTemplates,
+  hide,
+}) {
+  // Get all shared evaluations
+  // ––––––––––––––––––––––––––
+  let sharedEvaluations = [];
+  for (let sharedItem of connection.sharedWithMe) {
+    if (sharedItem.connection) {
+      for (let sharedEvaluation of sharedItem.connection.evaluations) {
+        if (sharedItem.evaluations) {
+          sharedEvaluations.push({
+            evaluation: sharedEvaluation,
+            sharedItem,
+          });
+        }
+      }
+    }
+  }
+
+  // Cluster evaluations by groupId
+  // ––––––––––––––––––––––––––––––
+  let evaluationsByGroup = {};
+  for (let { evaluation, sharedItem } of sharedEvaluations) {
+    evaluationsByGroup[sharedItem.groupId] =
+      evaluationsByGroup[sharedItem.groupId] || [];
+    evaluationsByGroup[sharedItem.groupId].push({ evaluation, sharedItem });
+  }
+
+  let data = [];
+
+  for (let groupId in evaluationsByGroup) {
+    let thisGroup = groups.find(g => g.id === groupId) || {};
+    let sharedEvaluationsInGroup = evaluationsByGroup[groupId];
+
+    // Cluster evaluations by template ID
+    // ––––––––––––––––––––––––––––––––––
+    let evaluationsByTemplate = {};
+    for (let { evaluation, sharedItem } of sharedEvaluationsInGroup) {
+      evaluationsByTemplate[evaluation.templateId] =
+        evaluationsByTemplate[evaluation.templateId] || [];
+      evaluationsByTemplate[evaluation.templateId].push(evaluation);
+    }
+
+    let data2 = [];
+    for (let templateId in evaluationsByTemplate) {
+      // Get all shared evaluations
+      let evaluations = evaluationsByTemplate[templateId] || [];
+
+      // Get possible score
+      let possibleScore = evaluations[0]?.summary?.possibleScore;
+
+      // Get template name
+      let templateName = evaluations[0]?.summary?.templateName;
+
+      // Get template sections
+      let templateSections = evaluations[0]?.summary?.sections;
+
+      // Get total score
+      let totalScore = 0;
+      let count = 0;
+      for (let evaluation of evaluations) {
+        if (!hide[evaluation.id]) {
+          totalScore += evaluation.summary?.totalScore || 0;
+          count += 1;
+        }
+      }
+
+      // Get average score
+      let averageScore = parseFloat((totalScore / count).toFixed(1));
+
+      // Get average percentage score
+      let averagePercentageScore =
+        Math.round((averageScore / possibleScore) * 100) || 0;
+
+      // Put it all together
+      data2.push({
+        groupName: thisGroup.name,
+        groupId: thisGroup.id,
+        templateId: templateId,
+        templateName: templateName,
+        submissions: evaluations.length,
+        averageScore: averageScore,
+        possibleScore: possibleScore,
+        averagePercentageScore: averagePercentageScore,
+        templateSections: templateSections,
+        evaluations: evaluations,
+      });
+    }
+
+    data.push(data2);
+  }
+  return data;
+}
+
+function SummaryLine({
+  name,
+  percentageScore,
+  className,
+  list,
+  hide,
+  toggleHide,
+  evaluationId,
+  timeStamp,
+  isYou,
+  editLink,
   history,
 }) {
   let [showList, setShowList] = useState(false);
 
   return (
-    <div key={`evaluation-${evaluation.id}`} className={each_template_style}>
-      {/*HEADER*/}
-      <div className={header_style}>
-        <div>
-          <div className={classnames(meta_style)}>
-            <span>
-              By {evaluation.createdByUser.given_name}{" "}
-              {evaluation.createdByUser.family_name} @{" "}
-            </span>
-            <span>{moment(evaluation.createdAt).format("ll")}</span>
-
-            {!noEdit && (
-              <Link
-                to={`${startup_page}/${connectionId}/evaluation/${evaluation.id}/section/${evaluation.summary.sections[0].id}`}
-              >
-                {" "}
-                (edit)
-              </Link>
-            )}
-          </div>
-
-          {sharedItem && (
-            <div className={from_group}>
-              From group:{" "}
-              <span
-                onClick={() => {
-                  let path = `${group_route}/${sharedItem.groupId}`;
-                  history.push(path);
-                }}
-              >
-                {sharedItem.groupName}
-              </span>
-            </div>
-          )}
-
-          <div className={classnames(name_style, title_container)}>
+    <div>
+      <div
+        className={classnames(
+          styles.line_style,
+          className && className,
+          evaluationId && hide && hide[evaluationId] && styles.hide_line
+        )}
+      >
+        <div className={classnames(styles.name_style, styles.title_container)}>
+          {list && (
             <div
-              className={caret_button}
+              className={styles.caret_button}
               onClick={() => setShowList(!showList)}
             >
               {(showList && <i className="fas fa-caret-down" />) || (
                 <i className="fas fa-caret-right" />
               )}
             </div>
-            {evaluation.summary.templateName}{" "}
-          </div>
+          )}
+          {isYou ? (
+            <span className={styles.isYou}>{name} (you)</span>
+          ) : (
+            <span>{name}</span>
+          )}
         </div>
 
-        <div className={score_style}>
-          {evaluation.summary.totalScore}/{evaluation.summary.possibleScore}
+        <div className={styles.score_container}>
+          <div className={styles.edit_container}>
+            {(isYou && editLink && (
+              <Button
+                style={{ margin: "0px" }}
+                size="small"
+                type="just_text"
+                onClick={() => {
+                  history.push(editLink);
+                }}
+              >
+                edit
+              </Button>
+            )) || <span />}
+          </div>
+
+          {(evaluationId && toggleHide && (
+            <div
+              className={styles.eye_toggle}
+              onClick={() => {
+                toggleHide(evaluationId);
+              }}
+            >
+              {hide &&
+                (hide[evaluationId] ? (
+                  <i className="fal fa-eye-slash" />
+                ) : (
+                  <i className="fal fa-eye" />
+                ))}
+            </div>
+          )) || <span />}
+
+          {(timeStamp && (
+            <div className={styles.timeStamp}>{timeStamp}</div>
+          )) || <span />}
+
+          <div className={styles.score_style}>{percentageScore}%</div>
         </div>
       </div>
 
-      {showList && (
-        <div className={body_style}>
-          {evaluation.summary.sections.map(
-            ({ name, score, possibleScore }, i) => (
-              <div key={i} className={each_style}>
-                <div className={name_style}>{name}</div>
-                <div className={score_style}>
-                  {score}/{possibleScore}
-                </div>
-              </div>
-            )
-          )}
+      {showList && list && (
+        <div className={styles.expanded_list_container}>
+          {list.map((item, i) => (
+            <SummaryLine
+              key={i}
+              hide={hide}
+              evaluationId={evaluationId}
+              name={item.name}
+              percentageScore={item.percentageScore}
+              className={classnames(className, styles.sub_list)}
+            />
+          ))}
         </div>
       )}
     </div>
   );
 }
 
-export function EvaluationBox({ connection, groups, user, history }) {
-  const [showModal, setShowModal] = useState(false);
+function EvaluationsByTemplate({
+  data,
+  connection,
+  user,
+  templateId,
+  hide,
+  toggleHide,
+  history,
+}) {
+  let [showList, setShowList] = useState(false);
+
+  let list = (data.templateSections || []).map(item => ({
+    name: item.name,
+    percentageScore: Math.round((item.score / item.possibleScore) * 100),
+  }));
+
+  return (
+    <div className={styles.each_template_style}>
+      <div className={styles.header_style}>
+        <SummaryLine
+          hide={hide}
+          name={data.templateName}
+          percentageScore={data.averagePercentageScore}
+          className={classnames(styles.template_summary_line)}
+          list={list.length > 1 && list}
+        />
+      </div>
+
+      {data.evaluations.map((evaluation, i) => {
+        let { given_name, family_name, email } = evaluation.createdByUser || {};
+        let percentageScore = Math.round(
+          (evaluation.summary.totalScore / evaluation.summary.possibleScore) *
+            100
+        );
+
+        let list = (evaluation.summary?.sections || []).map(item => ({
+          name: item.name,
+          percentageScore: Math.round((item.score / item.possibleScore) * 100),
+        }));
+
+        let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.sectionId}`;
+
+        return (
+          <SummaryLine
+            key={i}
+            hide={hide}
+            toggleHide={toggleHide}
+            evaluationId={evaluation.id}
+            key={evaluation.id}
+            timeStamp={moment(evaluation.updatedAt).format("ll")}
+            name={`${given_name} ${family_name}`}
+            isYou={user.email === email}
+            editLink={editLink}
+            percentageScore={percentageScore}
+            className={classnames(styles.each_evaluation_line)}
+            list={list.length > 1 && list}
+            history={history}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function GroupEvaluations({
+  connection,
+  groups,
+  user,
+  evaluations,
+  evaluationTemplates,
+  history,
+}) {
+  const [showList, setShowList] = useState(false);
+  const [hide, setHide] = useState({});
   const [currentLoading, setCurrentLoading] = useState("");
-
-  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
-  let templates = [];
-  if (!evaluationTemplatesQuery.loading && evaluationTemplatesQuery.data) {
-    templates =
-      evaluationTemplatesQuery.data.accountGet.evaluationTemplates || [];
-  }
-
   const [mutate, { loading }] = useMutation(evaluationPut);
 
-  if (!connection) return <span />;
+  let data = getEvaluationSummaries({
+    connection,
+    groups,
+    evaluations,
+    evaluationTemplates,
+    hide,
+  });
 
-  const evaluations = connection.evaluations || [];
+  function toggleHide(evaluationId) {
+    setHide({
+      ...hide,
+      [evaluationId]: !hide[evaluationId],
+    });
+  }
 
-  const sharedEvaluations = [];
+  return (
+    <div>
+      {data.map(groupEvaluations => {
+        let { groupName, groupId } = groupEvaluations[0] || {};
 
-  // console.log('connection.sharedWithMe', connection.sharedWithMe)
+        let group = groups.find(({ id }) => id === groupId);
 
-  for (let sharedItem of connection.sharedWithMe) {
-    if (sharedItem.connection) {
-      for (let sharedEvaluation of sharedItem.connection.evaluations) {
-        if (!evaluations.some(({ id }) => id === sharedEvaluation.id)) {
-          if (sharedItem.evaluations) {
-            sharedEvaluations.push({
-              evaluation: sharedEvaluation,
-              sharedItem,
-            });
+        let groupEvaluationTemplates = (group.evaluationTemplates || []).filter(
+          template => {
+            let hasEvaluated = connection.evaluations.find(
+              ({ templateId, createdBy }) => {
+                let templateMatch = templateId === template.id;
+                let userMatch = createdBy === user.cognitoIdentityId;
+                return templateMatch && userMatch;
+              }
+            );
+            return !hasEvaluated;
           }
-        }
+        );
+
+        return (
+          <div key={groupId}>
+            <div className={styles.group_of_evaluations}>
+              <div className={styles.from_group}>
+                <span>From group: </span>
+                <Link to={`${group_route}/${groupId}`}>{groupName}</Link>
+              </div>
+
+              {groupEvaluations.map(d => {
+                return (
+                  <EvaluationsByTemplate
+                    key={d.templateId}
+                    templateId={d.templateId}
+                    connection={connection}
+                    user={user}
+                    data={d}
+                    hide={hide}
+                    toggleHide={toggleHide}
+                  />
+                );
+              })}
+            </div>
+
+            {!!groupEvaluationTemplates.length && (
+              <div className={styles.group_footer}>
+                <div className={styles.group_footer_title}>
+                  You are kindly requested to share the following with{" "}
+                  {group.name}:
+                </div>
+
+                <div className={styles.group_footer_buttons_container}>
+                  {groupEvaluationTemplates.map(template => {
+                    return (
+                      <div
+                        className={styles.group_footer_button}
+                        key={`${groupId}-${template.id}`}
+                      >
+                        <Button
+                          type="right_arrow"
+                          size="medium"
+                          key={`${group.id}-${template.id}`}
+                          loading={currentLoading === template.id}
+                          onClick={async () => {
+                            if (currentLoading === template.id) return;
+
+                            setCurrentLoading(template.id);
+
+                            let sectionId = template.sections[0]?.id;
+
+                            try {
+                              let variables = {
+                                connectionId: connection.id,
+                                groupId: group.id,
+                                input: {
+                                  templateId: template.id,
+                                  name: template.name,
+                                  description: template.description,
+                                },
+                              };
+
+                              let res = await mutate({ variables });
+                              let evaluation = res.data.evaluationPut;
+                              let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
+                              history.push(path);
+                            } catch (error) {
+                              console.log("error", error);
+                            }
+                            setCurrentLoading("");
+                          }}
+                        >
+                          {template.name}
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function getEvaluationSummariesForTeam({ evaluations, hide }) {
+  let data = [];
+
+  // Cluster evaluations by template ID
+  // ––––––––––––––––––––––––––––––––––
+  let evaluationsByTemplate = {};
+  for (let evaluation of evaluations) {
+    evaluationsByTemplate[evaluation.templateId] =
+      evaluationsByTemplate[evaluation.templateId] || [];
+    evaluationsByTemplate[evaluation.templateId].push(evaluation);
+  }
+
+  for (let templateId in evaluationsByTemplate) {
+    // Get all shared evaluations
+    let evaluations = evaluationsByTemplate[templateId] || [];
+
+    // Get possible score
+    let possibleScore = evaluations[0]?.summary?.possibleScore;
+
+    // Get template name
+    let templateName = evaluations[0]?.summary?.templateName;
+
+    // Get template sections
+    let templateSections = evaluations[0]?.summary?.sections;
+
+    // Get total score
+    let totalScore = 0;
+    let count = 0;
+    for (let evaluation of evaluations) {
+      if (!hide[evaluation.id]) {
+        totalScore += evaluation.summary?.totalScore || 0;
+        count += 1;
       }
     }
-  }
 
-  // Get groups that you are member of that has this startup
-  let isInGroups =
-    groups.filter(g =>
-      g.startups.some(s => s.creativeId === connection.creative.id)
-    ) || [];
+    // Get average score
+    let averageScore = parseFloat((totalScore / count).toFixed(1));
 
-  // Get only groups with evaluation template
-  let groupsWithTemplates = isInGroups.filter(({ evaluationTemplates }) => {
-    return evaluationTemplates && evaluationTemplates.length !== 0;
-  });
+    // Get average percentage score
+    let averagePercentageScore =
+      Math.round((averageScore / possibleScore) * 100) || 0;
 
-  // Get only evaluation templates I have not already used
-  groupsWithTemplates = groupsWithTemplates.map(group => {
-    let evaluationTemplates = group.evaluationTemplates.filter(template => {
-      let haveEvaluated = connection.evaluations.some(
-        ({ templateId, createdByUser }) => {
-          if (createdByUser.email !== user.email) {
-            return false;
-          }
-          return templateId === template.id;
-        }
-      );
-      return !haveEvaluated;
-    });
-    return {
-      ...group,
-      evaluationTemplates,
+    // Put it all together
+
+    let d = {
+      // groupName: thisGroup.name,
+      // groupId: thisGroup.id,
+      templateId: templateId,
+      templateName: templateName,
+      submissions: evaluations.length,
+      averageScore: averageScore,
+      possibleScore: possibleScore,
+      averagePercentageScore: averagePercentageScore,
+      templateSections: templateSections,
+      evaluations: evaluations,
     };
-  });
 
-  // Remove empty
-  groupsWithTemplates = groupsWithTemplates.filter(
-    ({ evaluationTemplates }) =>
-      evaluationTemplates && evaluationTemplates.length
-  );
-
-  let allTemplates = [...templates];
-  for (let group of groupsWithTemplates) {
-    allTemplates = allTemplates.concat(group.evaluationTemplates || []);
+    data.push(d);
   }
 
-  let allGroupsWithTemplates = groups.filter(
-    ({ evaluationTemplates }) =>
-      evaluationTemplates && evaluationTemplates.length !== 0
-  );
+  return data;
+}
 
-  let megaAllTemplates = [...templates];
-  for (let group of allGroupsWithTemplates) {
-    megaAllTemplates = megaAllTemplates.concat(group.evaluationTemplates || []);
+function TeamEvaluatons({
+  connection,
+  user,
+  evaluations,
+  evaluationTemplates,
+  history,
+}) {
+  let [showList, setShowList] = useState(false);
+  let [hide, setHide] = useState({});
+
+  let data = getEvaluationSummariesForTeam({ evaluations, hide });
+
+  function toggleHide(evaluationId) {
+    setHide({
+      ...hide,
+      [evaluationId]: !hide[evaluationId],
+    });
+  }
+
+  if (!data.length) {
+    return <span />;
+  }
+
+  return (
+    <div className={styles.group_of_evaluations}>
+      <div className={styles.from_group}>
+        <span>Your evaluations</span>
+      </div>
+
+      {data.map((templateData, i) => {
+        let {
+          templateName,
+          templateId,
+          averagePercentageScore,
+          evaluations,
+          templateSections,
+        } = templateData;
+
+        let list = (templateSections || []).map(item => ({
+          name: item.name,
+          percentageScore: Math.round((item.score / item.possibleScore) * 100),
+        }));
+
+        return (
+          <div key={i} className={styles.each_template_style}>
+            <div className={styles.header_style}>
+              <SummaryLine
+                hide={hide}
+                name={templateName}
+                percentageScore={averagePercentageScore}
+                className={classnames(styles.template_summary_line)}
+                list={list.length > 1 && list}
+              />
+            </div>
+
+            {evaluations.map((evaluation, ii) => {
+              let { given_name, family_name, email } =
+                evaluation.createdByUser || {};
+              let totalScore = evaluation?.summary?.totalScore || 0;
+              let possibleScore = evaluation?.summary?.possibleScore || 0;
+              let percentageScore = Math.round(
+                (totalScore / possibleScore) * 100
+              );
+
+              let list = (evaluation.summary?.sections || []).map(item => {
+                let totalScore = item.score || 0;
+                let possibleScore = item.possibleScore || 0;
+                return {
+                  name: item.name,
+                  percentageScore: Math.round(
+                    (totalScore / possibleScore) * 100
+                  ),
+                };
+              });
+
+              let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.id}`;
+
+              return (
+                <SummaryLine
+                  key={`${i}-${ii}`}
+                  hide={hide}
+                  toggleHide={toggleHide}
+                  evaluationId={evaluation.id}
+                  key={evaluation.id}
+                  timeStamp={moment(evaluation.updatedAt).format("ll")}
+                  name={`${given_name} ${family_name}`}
+                  isYou={user.email === email}
+                  editLink={editLink}
+                  percentageScore={percentageScore}
+                  className={classnames(styles.each_evaluation_line)}
+                  list={list.length > 1 && list}
+                  history={history}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function NewEvaluationLogic({ evaluations, templates, connection, history }) {
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [currentLoading, setCurrentLoading] = useState("");
+  const [mutate, { loading }] = useMutation(evaluationPut);
+
+  let groupsWithTemplates = [];
+
+  async function selectTemplate({ templateId, name, description }) {
+    setCurrentLoading(templateId);
+    try {
+      let res = await mutate({
+        variables: {
+          connectionId: connection.id,
+          input: { templateId, name, description },
+        },
+      });
+      let evaluation = res.data.evaluationPut;
+      let template = templates.find(
+        t => t && t.id === evaluation.templateId
+      ) || { sections: [{ id: null }] };
+
+      let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${template.sections[0].id}`;
+      history.push(path);
+    } catch (error) {
+      console.log("error", error);
+    }
+    setCurrentLoading("");
   }
 
   const columns = [
@@ -206,26 +615,21 @@ export function EvaluationBox({ connection, groups, user, history }) {
       render: ({ id: templateId, name, description }) => {
         return (
           <Button
+            type="right_arrow"
             size="small"
-            onClick={async () => {
-              setCurrentLoading(templateId);
-              try {
-                let res = await mutate({
-                  variables: {
-                    connectionId: connection.id,
-                    input: { templateId, name, description },
-                  },
-                });
-                let evaluation = res.data.evaluationPut;
-                let template = allTemplates.find(
-                  t => t && t.id === evaluation.templateId
-                ) || { sections: [{ id: null }] };
-                let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${template.sections[0].id}`;
-                history.push(path);
-              } catch (error) {
-                console.log("error", error);
+            onClick={() => {
+              if (currentLoading) return;
+
+              let haveUsedThisTemplateBefore = evaluations.some(
+                evaluation => evaluation.templateId === templateId
+              );
+
+              if (!haveUsedThisTemplateBefore) {
+                selectTemplate({ templateId, name, description });
+              } else {
+                setShowConfirmModal({ templateId, name, description });
+                setShowModal(false);
               }
-              setCurrentLoading("");
             }}
             loading={loading && currentLoading === templateId}
           >
@@ -237,103 +641,11 @@ export function EvaluationBox({ connection, groups, user, history }) {
   ];
 
   return (
-    <div style={{ paddingBottom: "15px" }}>
-      {!evaluations.length && (
-        <div style={{ paddingTop: "20px" }}>
-          <div style={{ fontSize: "18px" }}>Evaluate this startup</div>
-          <div
-            style={{ padding: "20px 0px", color: "var(--color-gray-medium)" }}
-          >
-            Evaluate this startup based on your own criteria, or choose from
-            predefined templates.
-          </div>
-        </div>
-      )}
-
-      <div className={container}>
-        {evaluations.map(evaluation => (
-          <EvaluationSummary
-            key={evaluation.id}
-            evaluation={evaluation}
-            connectionId={connection.id}
-          />
-        ))}
-
-        {sharedEvaluations.map(({ evaluation, sharedItem }) => (
-          <EvaluationSummary
-            key={evaluation.id}
-            evaluation={evaluation}
-            connectionId={sharedItem.connectionId}
-            sharedItem={sharedItem}
-            history={history}
-            noEdit
-          />
-        ))}
-      </div>
-
-      {groupsWithTemplates.map(group => {
-        return (
-          <div key={group.id}>
-            <div className={from_group}>
-              Evaluation from{" "}
-              <span
-                onClick={() => {
-                  let path = `${group_route}/${group.id}`;
-                  history.push(path);
-                }}
-              >
-                {group.name}
-              </span>
-            </div>
-
-            <div>
-              {group.evaluationTemplates.map(template => {
-                return (
-                  <Button
-                    type="right_arrow"
-                    size="medium"
-                    style={{ width: "100%" }}
-                    key={`${group.id}-${template.id}`}
-                    loading={currentLoading === template.id}
-                    onClick={async () => {
-                      if (currentLoading === template.id) return;
-
-                      setCurrentLoading(template.id);
-                      try {
-                        let variables = {
-                          connectionId: connection.id,
-                          groupId: group.id,
-                          input: {
-                            templateId: template.id,
-                            name: template.name,
-                            description: template.description,
-                          },
-                        };
-
-                        let res = await mutate({ variables });
-                        let evaluation = res.data.evaluationPut;
-                        let _template = allTemplates.find(
-                          ({ id }) => id === evaluation.templateId
-                        ) || { sections: [{ id: null }] };
-                        let sectionId = _template.sections.find(({ id }) => id)
-                          .id;
-                        let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
-                        history.push(path);
-                      } catch (error) {
-                        console.log("error", error);
-                      }
-                      setCurrentLoading("");
-                    }}
-                  >
-                    {template.name}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-
+    <div
+      style={{
+        marginBottom: "35px",
+      }}
+    >
       <div
         style={{
           marginTop: "15px",
@@ -343,14 +655,15 @@ export function EvaluationBox({ connection, groups, user, history }) {
         <Button
           type={
             (evaluations.length && !groupsWithTemplates.length) ||
-            groupsWithTemplates.length
+            groupsWithTemplates.length ||
+            connection.sharedWithMe?.length
               ? "just_text"
               : "right_arrow"
           }
           size="small"
           onClick={() => setShowModal(true)}
         >
-          New evaluation
+          + new evaluation
         </Button>
       </div>
 
@@ -362,9 +675,9 @@ export function EvaluationBox({ connection, groups, user, history }) {
         >
           <div style={{ padding: "10px 0px 0px 8px" }}>
             <Table
-              dataSource={megaAllTemplates}
+              dataSource={templates}
               columns={columns}
-              diableHead={true}
+              disableHead={true}
               pagination={false}
             />
           </div>
@@ -385,6 +698,113 @@ export function EvaluationBox({ connection, groups, user, history }) {
           </div>
         </Modal>
       )}
+
+      {showConfirmModal && (
+        <Modal
+          title="Evaluate startup"
+          close={() => {
+            setShowConfirmModal(undefined);
+            setShowModal(true);
+          }}
+          disableFoot={true}
+        >
+          <div
+            style={{
+              padding: "10px 0px 0px 8px",
+              fontSize: "16px",
+              lineHeight: 2,
+            }}
+          >
+            <span>
+              You have already evaluated this startup using this template. You
+              can edit evaluation, or create a new one by clicking "USE".
+            </span>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              paddingTop: "20px",
+              textAlign: "right",
+            }}
+          >
+            <Button
+              buttonStyle="secondary"
+              size="medium"
+              onClick={() => {
+                setShowConfirmModal(undefined);
+                setShowModal(true);
+              }}
+            >
+              cancel
+            </Button>
+
+            <Button
+              type="right_arrow"
+              size="medium"
+              loading={currentLoading}
+              onClick={() => selectTemplate(showConfirmModal)}
+            >
+              use
+            </Button>
+          </div>
+        </Modal>
+      )}
     </div>
+  );
+}
+
+export function EvaluationBox({ connection, groups, user, history }) {
+  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
+
+  let templates = [];
+
+  if (!evaluationTemplatesQuery.loading && evaluationTemplatesQuery.data) {
+    templates =
+      evaluationTemplatesQuery.data.accountGet.evaluationTemplates || [];
+  }
+
+  if (!connection) return <span />;
+
+  const evaluations = connection.evaluations || [];
+
+  return (
+    <>
+      {!evaluations.length && (
+        <div style={{ paddingTop: "20px" }}>
+          <div style={{ fontSize: "18px" }}>Evaluate this startup</div>
+          <div
+            style={{ padding: "20px 0px", color: "var(--color-gray-medium)" }}
+          >
+            Evaluate this startup based on your own criteria, or choose from
+            predefined templates.
+          </div>
+        </div>
+      )}
+
+      <GroupEvaluations
+        groups={groups}
+        evaluations={evaluations}
+        connection={connection}
+        evaluationTemplates={templates}
+        user={user}
+        history={history}
+      />
+
+      <TeamEvaluatons
+        evaluations={evaluations}
+        connection={connection}
+        history={history}
+        evaluationTemplates={templates}
+        user={user}
+      />
+
+      <NewEvaluationLogic
+        templates={templates}
+        evaluations={evaluations}
+        connection={connection}
+        history={history}
+      />
+    </>
   );
 }
