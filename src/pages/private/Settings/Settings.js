@@ -1,6 +1,7 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { Content, Card, Table } from "Components/elements";
+import { API } from "aws-amplify";
+import { subscribeToAllTestMutations } from "Apollo/Subscriptions/";
 
 import {
   profile,
@@ -12,6 +13,22 @@ import {
 } from "pages/definitions";
 
 const Comp = ({ history }) => {
+  let subscription;
+  useEffect(() => {
+    subscribe();
+    return () => subscription.unsubscribe();
+  }, []);
+
+  function subscribe() {
+    subscription = API.graphql({
+      query: subscribeToAllTestMutations,
+    }).subscribe({
+      next: data => {
+        console.log(data);
+      },
+    });
+  }
+
   const linkList = [
     {
       label: "Evaluation templates",

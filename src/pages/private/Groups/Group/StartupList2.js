@@ -11,13 +11,16 @@ import { startup_page } from "pages/definitions";
 import StartupInfoSection from "../../StartupPage/StartupPageComponents/StartupInfoSection";
 
 import classnames from "classnames";
+import { getDataForEvaluationsSharedInGroup } from "../../StartupPage/StartupPageComponents/EvaluationBox/getEvaluationSummaries";
+import EvaluationsByTemplate from "../../StartupPage/StartupPageComponents/EvaluationBox/EvaluationsByTemplate";
 
-const getSummaries = (startups, hide) => {
+const getSummaries = (startups, hide, group) => {
   let summaries = {
     subjectiveScores: 0,
     subjectiveScoresCount: 0,
     averageSubjectiveScore: 0,
     evaluations: {},
+    // data
   };
 
   for (let startup of startups) {
@@ -97,19 +100,34 @@ const getSummaries = (startups, hide) => {
   return summaries;
 };
 
-const getListOfStartups = ({ group, sortBy, hide }) => {
+const getListOfStartups = ({ group, sortBy, hide, hideUser }) => {
   let ss = {};
+
   for (let startup of group.startups) {
     ss[startup.creativeId] = ss[startup.creativeId] || [];
     ss[startup.creativeId].push(startup);
   }
+
   let list = [];
   for (let creativeId in ss) {
     if (ss[creativeId]?.[0]?.connection) {
+      let evaluations = ss[creativeId]
+        .filter(it => it.evaluations)
+        .map(({ connection }) => connection?.evaluations || [])
+        .flat()
+        .filter(x => x);
+
+      const data = getDataForEvaluationsSharedInGroup({
+        group,
+        evaluations,
+        hide: hideUser,
+      });
+
       let item = {
         creative: ss[creativeId][0].connection.creative,
         startups: ss[creativeId],
-        summaries: getSummaries(ss[creativeId], hide),
+        summaries: getSummaries(ss[creativeId], hide, group),
+        data,
       };
       list.push(item);
     }
@@ -330,7 +348,7 @@ function TemplateLogic({
 
                 setCurrentLoading(template.id);
 
-                let sectionId = template.sections[0]?.id;
+                let sectionId = template.sections[0]?.sectionId;
 
                 try {
                   let variables = {
@@ -345,7 +363,8 @@ function TemplateLogic({
 
                   let res = await mutate({ variables });
                   let evaluation = res.data.evaluationPut;
-                  let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
+                  // let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
+                  let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}`;
                   history.push(path);
                 } catch (error) {
                   console.log("error", error);
@@ -750,9 +769,11 @@ function StartupList2({
 }) {
   const [sortBy, _setSortBy] = useState("");
   const [hide, _setHide] = useState({});
+  const [hideUser, setHideUser] = useState({});
   const [isLoadingDownload, setIsLoadingDownload] = useState({});
 
-  let list = getListOfStartups({ group, sortBy, hide });
+  let list = getListOfStartups({ group, sortBy, hide, hideUser });
+
   let allUsedTemplates = getAllUsedTemplates(list);
 
   useEffect(() => {
@@ -793,7 +814,7 @@ function StartupList2({
         setIsLoadingDownload={setIsLoadingDownload}
       />
 
-      {settings.showScores && (
+      {(settings.showScores || isAdmin) && (
         <>
           <SortBy
             sortBy={sortBy}
@@ -809,7 +830,7 @@ function StartupList2({
         </>
       )}
 
-      {list.map(({ creative, startups, summaries }) => {
+      {list.map(({ creative, startups, summaries, data }) => {
         let haveAddedStartup = connections.find(
           ({ creativeId }) => creativeId === creative.id
         );
@@ -819,6 +840,10 @@ function StartupList2({
         );
 
         let isLoading = isLoadingDownload[creative.id];
+
+        let visibleEvaluations = data.filter(
+          ({ templateId }) => !hide[templateId]
+        );
 
         return (
           <div className={styles.startup} key={creative.id}>
@@ -865,7 +890,7 @@ function StartupList2({
             {/* SUBJECTIVE SCORE */}
 
             {!hide["subjectiveScores"] &&
-              settings.showScores &&
+              (settings.showScores || isAdmin) &&
               summaries.subjectiveScoresCount !== 0 && (
                 <div className={styles.list_outer_container}>
                   <div className={styles.list_label}>Subjective score:</div>
@@ -890,40 +915,69 @@ function StartupList2({
                 </div>
               )}
 
+            {(isAdmin || settings.showScores) && !!visibleEvaluations.length && (
+              <div className={styles.list_outer_container}>
+                <div className={styles.list_label}>Evaluations:</div>
+                {visibleEvaluations.map(d => {
+                  return (
+                    <div style={{ marginBottom: "5px" }}>
+                      <EvaluationsByTemplate
+                        templateId={d.templateId}
+                        user={user}
+                        data={d}
+                        isAdmin={isAdmin}
+                        hide={hideUser}
+                        showUsers={settings.showUsers}
+                        showScores={settings.showScores}
+                        toggleHide={eId => {
+                          setHideUser({
+                            ...hideUser,
+                            [eId]: !hideUser[eId],
+                          });
+                        }}
+                        history={history}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
             {/* EVALUATIONS */}
-            {settings.showScores &&
-              !!Object.keys(summaries.evaluations).filter(
-                templateId => !hide[templateId]
-              ).length && (
-                <div className={styles.list_outer_container}>
-                  <div className={styles.list_label}>Evaluations:</div>
-                  <div className={styles.list_container}>
-                    {Object.keys(summaries.evaluations)
-                      .filter(templateId => !hide[templateId])
-                      .map(templateId => {
-                        let item = summaries.evaluations[templateId];
+            {/*{settings.showScores &&*/}
+            {/*  !!Object.keys(summaries.evaluations).filter(*/}
+            {/*    templateId => !hide[templateId]*/}
+            {/*  ).length && (*/}
+            {/*    <div className={styles.list_outer_container}>*/}
+            {/*      <div className={styles.list_label}>Evaluations:</div>*/}
+            {/*      <div className={styles.list_container}>*/}
+            {/*        {Object.keys(summaries.evaluations)*/}
+            {/*          .filter(templateId => !hide[templateId])*/}
+            {/*          .map(templateId => {*/}
 
-                        return (
-                          <div key={templateId} className={styles.list_item}>
-                            <div className={styles.list_item_label}>
-                              {item.templateName}
-                            </div>
+            {/*            let item = summaries.evaluations[templateId];*/}
 
-                            <div className={styles.list_item_right}>
-                              <div className={styles.list_item_sub_line}>
-                                {item.count} submissions
-                              </div>
+            {/*            return (*/}
+            {/*              <div key={templateId} className={styles.list_item}>*/}
+            {/*                <div className={styles.list_item_label}>*/}
+            {/*                  {item.templateName}*/}
+            {/*                </div>*/}
 
-                              <div className={styles.list_item_score}>
-                                {item.percentageScore}%
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-              )}
+            {/*                <div className={styles.list_item_right}>*/}
+            {/*                  <div className={styles.list_item_sub_line}>*/}
+            {/*                    {item.count} submissions*/}
+            {/*                  </div>*/}
+
+            {/*                  <div className={styles.list_item_score}>*/}
+            {/*                    {item.percentageScore}%*/}
+            {/*                  </div>*/}
+            {/*                </div>*/}
+            {/*              </div>*/}
+            {/*            );*/}
+            {/*          })}*/}
+            {/*      </div>*/}
+            {/*    </div>*/}
+            {/*  )}*/}
 
             {/* TEMPLATE LOGIC */}
             {haveAddedStartup && haveSharedStartup && (

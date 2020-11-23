@@ -52,9 +52,3 @@ export default gql`
   ${creativeFragments}
   ${connectionFragments}
 `;
-
-//         evaluations {
-//           ...evaluationFields
-//         }
-
-// ${evaluationFragments}

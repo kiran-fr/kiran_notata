@@ -22,7 +22,7 @@ import {
   caret_button,
   title_container,
   from_group,
-} from "./EvaluationBox.module.css";
+} from "./EvaluationBox/EvaluationBox.module.css";
 
 function EvaluationSummary({
   evaluation,

@@ -25,10 +25,16 @@ export default gql`
     summary {
       templateName
       sections {
-        id
+        sectionId
         name
         score
         possibleScore
+        scorePerAnswer {
+          score
+          possibleScore
+          questionId
+          question
+        }
       }
       totalScore
       possibleScore
