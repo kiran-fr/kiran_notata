@@ -12,6 +12,11 @@ export const apolloInMemoryCache = {
             return incoming;
           },
         },
+        connectionsGet: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
       },
     },
     Connection: {

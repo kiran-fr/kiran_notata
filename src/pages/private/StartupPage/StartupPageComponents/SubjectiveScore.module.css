@@ -84,7 +84,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1011px) {
   .set_score_each {
     width: 27px;
     height: 27px;

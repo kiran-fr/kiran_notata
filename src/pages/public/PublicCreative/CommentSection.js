@@ -85,7 +85,7 @@ export function CommentSection({ section, question, creative }) {
         />
 
         {creative.id && (
-          <div className="comment_sumbit">
+          <div className="comment_submit">
             <i className="fas fa-arrow-alt-circle-up" />
             <input type="submit" value="" disabled={isSubmitting} />
           </div>

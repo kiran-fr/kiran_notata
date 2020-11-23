@@ -1,0 +1,122 @@
+.comments_section {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100% - 86px);
+  padding-left: 45px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.comments_section > :first-child {
+  margin-top: auto !important;
+}
+
+/* Remove When Styled Scroll Will Be Added */
+.comments_section::-webkit-scrollbar {
+  display: none;
+}
+
+.event_toggle_button {
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  font-size: 12px;
+  top: -20px;
+  color: #306f7a;
+  z-index: 1;
+}
+
+.log_feed_item {
+  font-size: 12px;
+  margin-bottom: 25px;
+  line-height: 1.8;
+  /* padding-left: 25px; */
+}
+
+.name {
+  font-weight: 600;
+  color: #2f6e7b;
+}
+
+.date {
+  color: #999;
+  font-weight: 300;
+}
+
+.log_feed_text {
+  white-space: pre-wrap;
+}
+
+.log_feed_type_SUBJECTIVE_SCORE {
+  background: var(--color-message-bg);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 7px;
+}
+
+.log_item_edited {
+  color: #999;
+  font-style: italic;
+}
+
+.empty_message {
+  opacity: 0.2;
+}
+
+.comment_form {
+  position: relative;
+  padding: 0 25px;
+}
+
+.comment_input {
+  border: 0;
+  font-size: 12px;
+  outline: none;
+  padding: 12px 20px;
+  text-align: left;
+  border-radius: 20px;
+  width: 100%;
+  /*margin-top: 5px;*/
+  color: var(--color-gray-dark);
+  background: var(--color-gray-pale);
+  /*margin-bottom: 10px;*/
+}
+
+.comment_submit {
+  position: absolute;
+  right: 29px;
+  top: 4px;
+  width: 30px;
+  height: 30px;
+  z-index: 100;
+  background: white;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 1.8;
+  cursor: pointer;
+}
+
+.comment_submit i {
+  color: var(--color-gray-medium);
+  z-index: 9999;
+  font-size: 12px;
+  cursor: pointer;
+  pointer-events: none;
+  font-weight: 600;
+}
+
+.comment_submit input {
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  background: none;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border-radius: 32px;
+}

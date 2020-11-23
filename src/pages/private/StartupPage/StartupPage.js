@@ -1,8 +1,5 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { Redirect } from "react-router-dom";
-import moment from "moment";
-import gql from "graphql-tag";
 
 import { Content, Card, BreadCrumbs, GhostLoader } from "Components/elements";
 
@@ -20,12 +17,15 @@ import { connectionDelete } from "Apollo/Mutations";
 
 import { dashboard, startup_page } from "pages/definitions";
 
-import { header_comp, sub_header, delete_link } from "./StartupPage.module.css";
+import { delete_link } from "./StartupPage.module.css";
 
 export default function StartupPage({ match, history }) {
   const [connectionDeleteMutation, connectionDeleteRes] = useMutation(
     connectionDelete
   );
+
+  let idString = match.params.id;
+  let [id] = idString.split("?");
 
   if (
     connectionDeleteRes.called &&
@@ -45,7 +45,7 @@ export default function StartupPage({ match, history }) {
     data: connectionGetData,
     loading: connectionGetLoading,
     error: connectionGetError,
-  } = useQuery(connectionGet, { variables: { id: match.params.id } });
+  } = useQuery(connectionGet, { variables: { id } });
 
   const {
     data: groupsGetData,
@@ -163,7 +163,7 @@ export default function StartupPage({ match, history }) {
           onClick={() => {
             if (
               window.confirm(
-                `Are you sure you want to this startup permanently?`
+                `Are you sure you want to delete this startup permanently?`
               )
             ) {
               /* Do nothing */

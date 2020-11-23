@@ -14,8 +14,7 @@ import {
 } from "pages/definitions";
 
 import { sidebar_container, menu_container } from "./SideBar.module.css";
-
-import { MenuIconItem } from "../elements/";
+import { MenuIconItem } from "../elements/NotataComponents/MenuIconItem";
 
 const menuItems = [
   {

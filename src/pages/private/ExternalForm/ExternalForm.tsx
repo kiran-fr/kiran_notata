@@ -27,7 +27,7 @@ export default function ExternalForm({ history }: { history: History}) {
 
   const loading: boolean = accountQuery.loading;
 
-  if (loading && !accountQuery.data) return <GhostLoader/>;
+  if (loading && !accountQuery.data) return <GhostLoader />;
 
   const iFrameUrl: string = `${window.location.protocol}//${window.location.host}/public/${account.id}/form.html`;
   const iFrameContent = `<iframe src="${iFrameUrl}" 
@@ -72,25 +72,22 @@ export default function ExternalForm({ history }: { history: History}) {
             key=""
             title=""
           >
-          <a
-            href={iFrameUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{fontSize: "12px"}}
+            <a
+              href={iFrameUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: "12px" }}
             >
-            {iFrameUrl}
-          </a>
-          </SuccessBox>          
-
+              {iFrameUrl}
+            </a>
+          </SuccessBox>
         </div>
-
 
         <div
           style={{
-            marginBottom: '20px'
-          }}        
-          >
-
+            marginBottom: "20px",
+          }}
+        >
           <div>Embed</div>
 
           <SuccessBox
@@ -107,15 +104,13 @@ export default function ExternalForm({ history }: { history: History}) {
           </SuccessBox>
 
           <div
-            style={{textAlign: "right"}}
+            style={{ textAlign: "right" }}
             className={styles.copy_link}
             onClick={copyToClipboard}
-            >
+          >
             {copySuccess ? "code copied to clipboard" : "copy code"}
           </div>
-
         </div>
-
 
         <Button
           size={"medium"}
@@ -132,6 +127,3 @@ export default function ExternalForm({ history }: { history: History}) {
     </Content>
   );
 }
-
-
-

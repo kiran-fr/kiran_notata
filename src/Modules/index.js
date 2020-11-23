@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import user, * as fromUser from "./user";
 import { USER_NOT_LOGGED_IN } from "./user";
+import menu from "./menu";
 
 const rootReducer = combineReducers({
   user,
+  menu,
 });
 
 export default (state, action) => {

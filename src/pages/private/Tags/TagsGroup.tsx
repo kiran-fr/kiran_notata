@@ -252,8 +252,6 @@ function DeleteTagGroup({ tags, groupId, name, type }: { tags: Tag[] | FunnelTag
           disableFoot={false}
           close={() => setShowWarning(false)}
           key="warningModal"
-          noKill={""}
-          submit={""}
           loading={false}
           showScrollBar={false}
         >

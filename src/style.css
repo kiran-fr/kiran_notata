@@ -190,29 +190,45 @@ h1 {
 
 .logged_in_page_content {
   padding-top: 50px;
+  left: 140px;
+  padding-left: 190px;
+  /*padding-right: 340px;*/
+  position: relative;
+  margin-right: 150px;
+  background: var(--color-gray-pale);
+  /*min-height: calc(100vh + 50px);*/
+  min-height: 100vh;
+}
+
+/* Old logged_in_page_content
+  padding-top: 50px;
   left: 200px;
   padding-left: 15px;
   position: relative;
   margin-right: 205px;
   background: var(--color-gray-pale);
   min-height: calc(100vh + 50px);
-}
+ */
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1011px) {
   .mobile_only {
     display: none;
   }
+  .show_right_activity {
+    padding-right: 340px;
+  }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1011px) {
   .desktop_only {
     display: none;
   }
 
   .logged_in_page_content {
-    left: 0px;
-    padding-left: 10px;
-    margin-right: 10px;
+    left: 0;
+    padding-left: 12px;
+    padding-right: 0;
+    margin-right: 12px;
   }
 }
 
@@ -372,14 +388,14 @@ input[type="submit"] {
   color: #aaa;
 }
 
-.comment_sumbit {
+.comment_submit {
   position: absolute;
   right: 0;
   top: 12px;
   z-index: 100;
 }
 
-.comment_sumbit i {
+.comment_submit i {
   position: absolute;
   top: 0;
   right: 0;
@@ -392,7 +408,7 @@ input[type="submit"] {
   pointer-events: none;
 }
 
-.comment_sumbit input {
+.comment_submit input {
   right: 5px;
   top: 10px;
   border: none;

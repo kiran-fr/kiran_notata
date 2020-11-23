@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
 
-import {
-  container,
-  content,
-  inner,
-  close_modal,
-  ghost,
-  main_content,
-  modal_header,
-  modal_title,
-  modal_footer,
-} from "./Modal.module.css";
+import styles from "./Modal.module.css";
 
 import { Button } from "../";
+
+interface Props {
+  close: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent> | KeyboardEvent
+  ) => void;
+  noKill?: boolean;
+  submit?: Function;
+  title?: string;
+  disableFoot?: boolean;
+  loading?: boolean;
+  showScrollBar?: boolean;
+  children?: any;
+}
 
 export const Modal = ({
   close,
@@ -23,10 +26,10 @@ export const Modal = ({
   loading,
   showScrollBar,
   ...children
-}) => {
+}: Props) => {
   useEffect(() => {
-    function downHandler({ key }) {
-      key === "Escape" && close();
+    function downHandler(e: KeyboardEvent) {
+      e.key === "Escape" && close(e);
     }
     window.addEventListener("keydown", downHandler);
     return () => {
@@ -35,25 +38,25 @@ export const Modal = ({
   }, [close]);
 
   return (
-    <div className={container}>
-      <div className={ghost} />
+    <div className={styles.container}>
+      <div className={styles.ghost} />
 
       <div
         style={{ overflow: showScrollBar ? "hidden" : "auto" }}
-        className={content}
+        className={styles.content}
         onClick={event => {
           if (event.target === event.currentTarget) {
-            close();
+            close(event);
           }
         }}
       >
-        <div className={inner}>
+        <div className={styles.inner}>
           {title && (
-            <div className={modal_header}>
-              {title && <div className={modal_title}>{title}</div>}
+            <div className={styles.modal_header}>
+              {title && <div className={styles.modal_title}>{title}</div>}
 
               {!noKill && (
-                <div onClick={close} className={close_modal}>
+                <div onClick={close} className={styles.close_modal}>
                   <i className="fal fa-times" />
                 </div>
               )}
@@ -62,18 +65,18 @@ export const Modal = ({
 
           <div
             style={{
-              overflowY: showScrollBar ? "scroll" : "none",
+              overflowY: showScrollBar ? "scroll" : "hidden",
               maxHeight: showScrollBar ? "60vh" : "auto",
             }}
-            className={`${showScrollBar && "scrollbar"} ${main_content}`}
+            className={`${showScrollBar && "scrollbar"} ${styles.main_content}`}
             {...children}
           />
 
           {(close || submit) && !disableFoot && (
-            <div className={modal_footer}>
+            <div className={styles.modal_footer}>
               {close && (
                 <Button onClick={close} size="medium" buttonStyle="secondary">
-                  Close
+                  Cancel
                 </Button>
               )}
 

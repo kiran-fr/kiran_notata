@@ -48,12 +48,13 @@ Amplify.configure({
   },
 });
 
+// const dev_URL_id = "soaim5drvjdfplwdjyllz2ru6i";
 const dev_URL_id = "soaim5drvjdfplwdjyllz2ru6i";
 const prodtest_URL_id = "pm4namovdzgpboqy5s2vgafzjy";
 const dev2_URL_id = "3mlk5clgsvdptfcfo7utvkqhim";
 const V2PROD_URL_id = "ahh7xy4e2vgsrmf6uyo4fxyk3y";
 
-const appsync_URL_id = V2PROD_URL_id;
+const appsync_URL_id = dev2_URL_id;
 
 const appsyncUrl = `https://${appsync_URL_id}.appsync-api.eu-west-1.amazonaws.com/graphql`;
 

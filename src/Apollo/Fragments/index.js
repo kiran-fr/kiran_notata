@@ -17,3 +17,4 @@ export { default as evaluationFragments } from "./evaluationFragments";
 export { default as logItemFragments } from "./logItemFragments";
 
 export { default as groupFragments } from "./groupFragments";
+export { default as grouplogItemFragments } from "./grouplogItemFragments";

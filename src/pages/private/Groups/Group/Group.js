@@ -12,6 +12,7 @@ import { groupPut } from "Apollo/Mutations";
 import AddNewMember from "./AddMember";
 import AddNewStartup from "./AddStartup";
 import StartupList2 from "./StartupList2";
+import Activity from "Components/Activity/Activity";
 
 import {
   group as group_route,
@@ -354,9 +355,7 @@ export default function Group({ match, history }) {
     return <div>We're updaing...</div>;
   }
 
-  if (!hasAllData && loading) {
-    return <GhostLoader />;
-  }
+  if (!hasAllData && loading) return <GhostLoader />;
 
   const group = groupQuery.data?.groupGet;
   const connections = connectionsQuery.data?.connectionsGet;
@@ -384,6 +383,7 @@ export default function Group({ match, history }) {
         ]}
       />
 
+      <Activity user={user} group={group} />
       <Content maxWidth={780} style={{ paddingBottom: "200px" }}>
         <div style={{ marginBottom: "50px" }}>
           <h1>{group.name}</h1>

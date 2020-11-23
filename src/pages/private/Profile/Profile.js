@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 // API STUFF
 import { useQuery, useMutation } from "@apollo/client";
 
-import { userGet } from "../../../Apollo/Queries";
-import { userUpdate } from "../../../Apollo/Mutations";
+import { userGet } from "Apollo/Queries";
+import { userUpdate } from "Apollo/Mutations";
 
 // COMPONENTS
 import {
@@ -21,14 +21,9 @@ import {
 
 import { omit } from "lodash";
 
-import {
-  Content,
-  Card,
-  Button,
-  BreadCrumbs,
-} from "../../../Components/elements";
+import { Content, Card, Button, BreadCrumbs } from "Components/elements";
 
-import { settings, profile } from "../../../pages/definitions";
+import { settings, profile } from "pages/definitions";
 
 function VerifyPhoneNumberComp({ phoneVerified }) {
   const [resend, setResend] = useState(false);

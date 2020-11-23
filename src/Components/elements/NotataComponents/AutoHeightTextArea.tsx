@@ -53,7 +53,6 @@ export default function AutoHeightTextarea({
     textareaRef.current.style.height = scrollHeight + "px";
   }, [currentValue]);
 
-
   useEffect(() => {
     setCurrentValue(value);
   }, [value]);
@@ -70,7 +69,3 @@ export default function AutoHeightTextarea({
     />
   );
 }
-
-
-
-

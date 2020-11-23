@@ -4,7 +4,13 @@ import { History } from "history";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
-import { userGet, groupsGet, creativesGet, creativeTemplateGet, connectionsGet } from "Apollo/Queries";
+import {
+  userGet,
+  groupsGet,
+  creativesGet,
+  creativeTemplateGet,
+  connectionsGet,
+} from "Apollo/Queries";
 import { groupMarkAsSeen, creativeDelete } from "Apollo/Mutations";
 
 // import { startup_page } from "../../definitions";
@@ -27,7 +33,9 @@ import { ViewSummary } from "./ViewSummary";
 // *********
 
 enum InboxType {
-  GROUP = "GROUP", SHARING = "SHARING", EXTERNAL_FORM = "EXTERNAL_FORM"
+  GROUP = "GROUP",
+  SHARING = "SHARING",
+  EXTERNAL_FORM = "EXTERNAL_FORM",
 }
 
 type Inbox = {
@@ -48,11 +56,7 @@ type InboxData = {
 // *********
 
 
-export default function Sharings({ history }:
-                                   {
-                                     history: History,
-                                   }) {
-
+export default function Sharings({ history }: { history: History }) {
   // STATES
   const [expanded, setExpanded] = useState(false);
   const [selectedInbox, setSelectedInbox] = useState<Inbox | null>(null);
@@ -71,7 +75,7 @@ export default function Sharings({ history }:
 
   const [markAsSeen] = useMutation(groupMarkAsSeen, {
     refetchQueries: [{ query: groupsGet }],
-    awaitRefetchQueries: true
+    awaitRefetchQueries: true,
   });
 
   // DEFINITIONS
@@ -93,8 +97,6 @@ export default function Sharings({ history }:
     !creativesGetQuery.data ||
     !connectionsGetQuery.data;
 
-
-
   // ================
   // HELPER FUNCTIONS
   // ================
@@ -106,8 +108,7 @@ export default function Sharings({ history }:
       .sort((a, b) => b.createdAt - a.createdAt)
   }
 
-  if (isLoading)
-    return <span/>
+  if (isLoading) return <span />;
 
   async function processCreative() {
     try {
@@ -124,30 +125,30 @@ export default function Sharings({ history }:
               query: creativesGet,
               data: {
                 creativesGet: [
-                ...data.creativesGet.filter((creative: Creative) => creative.id !== selectedInbox.data.creative?.id),
+                  ...data.creativesGet.filter(
+                    (creative: Creative) =>
+                      creative.id !== selectedInbox.data.creative?.id
+                  ),
                 ],
               },
             });
           },
         });
       } else if (selectedInbox?.actionState === "SAVE") {
-         await mutateConnection(
-          { variables: { creativeId: selectedInbox.data.creative?.id },
-            update: (proxy, { data: { connectionPut } }) => {
-              let data: any = proxy.readQuery({
-                query: connectionsGet,
-              });
-              proxy.writeQuery({
-                query: connectionsGet,
-                data: {
-                  connectionsGet: [
-                    connectionPut,
-                    ...data.connectionsGet,
-                  ],
-                },
-              });
-            },
-          });
+        await mutateConnection({
+          variables: { creativeId: selectedInbox.data.creative?.id },
+          update: (proxy, { data: { connectionPut } }) => {
+            let data: any = proxy.readQuery({
+              query: connectionsGet,
+            });
+            proxy.writeQuery({
+              query: connectionsGet,
+              data: {
+                connectionsGet: [connectionPut, ...data.connectionsGet],
+              },
+            });
+          },
+        });
       }
       setSelectedInbox(null);
     } catch (error) {
@@ -157,20 +158,12 @@ export default function Sharings({ history }:
 
   // ================
 
-
-
-
   // Loading state
-  if (isLoading && missingData)
-    return <span />;
+  if (isLoading && missingData) return <span />;
   // Error
-  if (hasError)
-    return <span />;
+  if (hasError) return <span />;
   // No data
-  if (missingData)
-    return <span/>;
-
-
+  if (missingData) return <span />;
 
   // Definitions
   let creativeTemplate = creativeTemplateQuery.data?.creativeTemplateGet || {};
@@ -221,16 +214,15 @@ export default function Sharings({ history }:
 
 
   inboxData = inboxData
-    .sort((a, b) =>
-      new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime()
+    .sort(
+      (a, b) =>
+        new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime()
     )
-    .filter(({ type }) =>
-      type !== InboxType.SHARING
-    );
+    .filter(({ type }) => type !== InboxType.SHARING);
 
   let capListAt = 5;
 
-  if (!inboxData.length) return <span/>;
+  if (!inboxData.length) return <span />;
   return (
     <Card label="Inbox" maxWidth={1200} style={{ paddingBottom: "20px" }}>
 
@@ -426,7 +418,7 @@ export default function Sharings({ history }:
           title={selectedInbox.actionState === "SAVE" ? "Save Startup" : "Delete Permanently"}
           submit={() => processCreative()}
           close={() => setSelectedInbox(null)}
-          loading={ creativeDeleteLoading || connectionPutLoading }
+          loading={creativeDeleteLoading || connectionPutLoading}
           disableFoot={false}
           key={"actionModal"}
           noKill
@@ -446,9 +438,8 @@ export default function Sharings({ history }:
           key={"actionModal"}
           noKill
           loading={false}
-          submit={null}
           showScrollBar={true}
-          >
+        >
           <ViewSummary
             creativeTemplate={creativeTemplate}
             answers={selectedInbox.data.creative?.answers}
@@ -459,6 +450,3 @@ export default function Sharings({ history }:
     </Card>
   );
 }
-
-
-

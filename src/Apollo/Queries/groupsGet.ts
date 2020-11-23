@@ -11,7 +11,7 @@ interface EvaluationTemplates {
     name: string;
   };
 }
-interface Startups {
+export interface Startups {
   connectionId: string;
   creativeId: string;
   sharedBy: string;
@@ -30,7 +30,6 @@ interface Startups {
     };
   };
 }
-
 
 export interface Member {
   email: string;
@@ -101,5 +100,3 @@ export default gql`
   }
   ${groupFragments}
 `;
-
-

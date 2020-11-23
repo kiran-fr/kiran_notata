@@ -234,7 +234,7 @@ function AddStartup({ creative, connections, isLoading }) {
   );
 }
 
-function ShareBack({ connection, group, isLoading }) {
+export function ShareBack({ connection, group, isLoading }) {
   const [showShareSettings, setShowShareSettings] = useState(null);
   const [mutate, { loading }] = useMutation(groupPut, {
     refetchQueries: [
