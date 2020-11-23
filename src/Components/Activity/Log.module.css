@@ -1,7 +1,8 @@
 .comments_section {
+  margin-top: 55px;
   overflow-y: auto;
   overflow-x: hidden;
-  height: calc(100% - 86px);
+  height: calc(100% - 141px);
   padding-left: 45px;
   display: flex;
   flex-flow: column nowrap;
@@ -114,4 +115,31 @@
   margin: 0;
   padding: 0;
   border-radius: 32px;
+}
+
+.tabs {
+  position: absolute;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  height: 55px;
+}
+
+.tab {
+  display: table-cell;
+  position: relative;
+  cursor: pointer;
+  padding: 10px 25px;
+  border: solid #e1e1e136 1px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tab:hover {
+  background-color: var(--color-gray-pale);
+}
+
+.selected_tab {
+  font-weight: 600;
+  color: #2f6e7b;
 }

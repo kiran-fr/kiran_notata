@@ -16,8 +16,6 @@ export const StartupActivity = ({ user, connection }) => {
     logs = logQuery.data.logGet;
   }
 
-  logs = (logs || []).filter(l => l.logType === "COMMENT");
-
   const submitMutation = value => {
     let variables = {
       connectionId: connection.id,

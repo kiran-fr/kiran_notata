@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import moment from "moment";
@@ -64,8 +64,26 @@ export function Log({
   user: any;
   submitMutation: Function;
 }) {
+  const [viewEvents, setViewEvents] = useState(false);
+
+  logs = logs.filter(l => (viewEvents ? l : l.logType === "COMMENT"));
+
   return (
     <>
+      <div className={styles.tabs}>
+        <div
+          className={`${styles.tab} ${!viewEvents && styles.selected_tab}`}
+          onClick={() => setViewEvents(false)}
+        >
+          COMMENTS
+        </div>
+        <div
+          className={`${styles.tab} ${viewEvents && styles.selected_tab}`}
+          onClick={() => setViewEvents(true)}
+        >
+          ACTIVITIES
+        </div>
+      </div>
       <div className={styles.comments_section}>
         {logs.length ? (
           logs.map((logItem: LogItem) => (
