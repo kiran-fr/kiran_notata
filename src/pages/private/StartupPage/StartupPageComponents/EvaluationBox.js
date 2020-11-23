@@ -249,7 +249,7 @@ function EvaluationsByTemplate({
           percentageScore: Math.round((item.score / item.possibleScore) * 100),
         }));
 
-        let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.id}`;
+        let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.sectionId}`;
 
         return (
           <SummaryLine
