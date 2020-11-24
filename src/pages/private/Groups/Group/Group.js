@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import {
+  useQuery,
+  useLazyQuery,
+  useMutation,
+  useSubscription,
+} from "@apollo/client";
 
 import {
   userGet,
@@ -10,6 +15,7 @@ import {
 
 import { groupLogGet } from "Apollo/Queries";
 import { groupPut, groupLogPut } from "Apollo/Mutations";
+import { groupLogSubscription } from "Apollo/Subscriptions";
 import AddNewMember from "./AddMember";
 import AddNewStartup from "./AddStartup";
 import StartupList2 from "./StartupList2";
@@ -338,13 +344,51 @@ const GroupActivity = ({ user, group }) => {
   const logQuery = useQuery(groupLogGet, {
     variables: { groupId: group.id },
   });
+  const [logsState, setLogsState] = useState([]);
 
-  let logs = [];
-  if (!logQuery.error && !logQuery.loading && logQuery.data) {
-    logs = logQuery.data.groupLogGet;
-  }
+  // let logs = [];
+  // if (!logQuery.error && !logQuery.loading && logQuery.data) {
+  //   logs = logQuery.data.groupLogGet;
+  // }
 
-  logs = logs.filter(l => l.logType === "COMMENT");
+  useSubscription(groupLogSubscription, {
+    onSubscriptionData: ({ client, subscriptionData: { data } }) => {
+      if (
+        !data ||
+        data.subscribeToAllGroupLogPutEvents.groupId !== group.id ||
+        data.subscribeToAllGroupLogPutEvents.createdByUser.email === user.email
+      ) {
+        return;
+      }
+      const groupLogs = client.readQuery({
+        query: groupLogGet,
+        variables: { groupId: group.id },
+      });
+      client.writeQuery({
+        query: groupLogGet,
+        variables: { groupId: group.id },
+        data: {
+          groupLogGet: [
+            ...groupLogs.groupLogGet,
+            data.subscribeToAllGroupLogPutEvents,
+          ],
+        },
+      });
+      setLogsState(
+        [...groupLogs.groupLogGet, data.subscribeToAllGroupLogPutEvents].filter(
+          l => l.logType === "COMMENT"
+        )
+      );
+    },
+  });
+
+  useEffect(() => {
+    if (logQuery.data?.groupLogGet) {
+      setLogsState(
+        logQuery.data.groupLogGet.filter(l => l.logType === "COMMENT")
+      );
+    }
+  }, [logQuery.data]);
 
   const submitMutation = value => {
     let variables = {
@@ -400,7 +444,9 @@ const GroupActivity = ({ user, group }) => {
     });
   };
 
-  return <Activity user={user} logs={logs} submitMutation={submitMutation} />;
+  return (
+    <Activity user={user} logs={logsState} submitMutation={submitMutation} />
+  );
 };
 
 export default function Group({ match, history }) {
@@ -450,7 +496,7 @@ export default function Group({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
-            state: { rightMenu: true }
+            state: { rightMenu: true },
           },
         ]}
       />
