@@ -14,6 +14,21 @@ import styles from "./EvaluationBox.module.css";
 import { getEvaluationSummaries } from "./getEvaluationSummaries";
 import getEvaluationSummariesForTeam from "./getEvaluationSummariesForTeam";
 
+function SummaryLine({
+  name,
+  percentageScore,
+  className,
+  list,
+  hide,
+  toggleHide,
+  evaluationId,
+  timeStamp,
+  isYou,
+  editLink,
+  history,
+}) {
+  let [showList, setShowList] = useState(false);
+
   return (
     <div>
       <div
