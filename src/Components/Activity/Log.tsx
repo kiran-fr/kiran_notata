@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 
 import moment from "moment";
@@ -65,8 +65,14 @@ export function Log({
   submitMutation: Function;
 }) {
   const [viewEvents, setViewEvents] = useState(false);
+  const ref = useRef(null);
 
   logs = logs.filter(l => (viewEvents ? l : l.logType === "COMMENT"));
+
+  useEffect(() => {
+    const node: HTMLDivElement | null = ref.current;
+    if (node) (node as any).scrollIntoView({ behavior: "smooth" });
+  }, [logs]);
 
   return (
     <>
@@ -87,7 +93,11 @@ export function Log({
       <div className={styles.comments_section}>
         {logs.length ? (
           logs.map((logItem: LogItem) => (
-            <div key={`log-${logItem.id}`} className={styles.log_feed_item}>
+            <div
+              ref={ref}
+              key={`log-${logItem.id}`}
+              className={styles.log_feed_item}
+            >
               <div className={styles.log_feed_byline}>
                 <span className={styles.name}>
                   {(logItem.createdBy === user?.cognitoIdentityId &&
