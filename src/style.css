@@ -112,7 +112,7 @@ body {
 
 hr {
   border: none;
-  border-top: 1px solid var(--color-gray-pale);
+  border-top: 1px solid var(--color-gray-light);
   margin: 15px 0px;
 }
 
@@ -165,7 +165,8 @@ textarea {
   --color-gray-dark: #515c6f;
   --color-gray-medium: #a0a8b1;
   --color-gray-light: #dadee2;
-  --color-gray-pale: #f2f5f6;
+  /*--color-gray-pale: #f2f5f6;*/
+  --color-gray-pale: #f8fafb;
 
   --color-message-bg: #f7f6f3;
   --color-green: #478339;
@@ -190,12 +191,13 @@ h1 {
 .logged_in_page_content {
   padding-top: 50px;
   left: 140px;
-  padding-left: 130px;
-  padding-right: 340px;
+  padding-left: 190px;
+  /*padding-right: 340px;*/
   position: relative;
-  margin-right: 150px;
+  margin-right: 155px;
   background: var(--color-gray-pale);
-  min-height: calc(100vh + 50px);
+  /*min-height: calc(100vh + 50px);*/
+  min-height: 100vh;
 }
 
 /* Old logged_in_page_content
@@ -208,22 +210,25 @@ h1 {
   min-height: calc(100vh + 50px);
  */
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1011px) {
   .mobile_only {
     display: none;
   }
+  .show_right_activity {
+    padding-right: 340px;
+  }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1011px) {
   .desktop_only {
     display: none;
   }
 
   .logged_in_page_content {
-    left: 0px;
-    padding-left: 10px;
-    padding-right: 0px;
-    margin-right: 10px;
+    left: 0;
+    padding-left: 12px;
+    padding-right: 0;
+    margin-right: 12px;
   }
 }
 

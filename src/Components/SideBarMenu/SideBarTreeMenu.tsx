@@ -13,7 +13,7 @@ import {
 import {
   connectionTagAdd,
   connectionTagRemove,
-  groupPut,
+  connectionPut
 } from "Apollo/Mutations";
 
 import { dashboard, group, signOut, settings } from "pages/definitions";
@@ -27,8 +27,6 @@ import {
   DeleteTagMutationOptions,
 } from "pages/private/Dashboard/Connections/Connections";
 import { hideMobileNavigationMenu } from "Modules/menu";
-import ShareSetting from "pages/private/Groups/Group/ShareSetting";
-import { Modal } from "../elements/NotataComponents/Modal";
 import { Button } from "../elements";
 import styles from "./SideBarTreeMenu.module.css";
 
@@ -44,6 +42,7 @@ type MenuItem = {
   showHashTag?: boolean;
   selected?: boolean;
   action?: () => void;
+  showRightMenu?: boolean
 };
 
 const SideBarTreeMenu = ({ location, history }: any) => {
@@ -89,7 +88,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const [showNewGroupModal, setShowNewGroupModal] = useState<{state: boolean}>({state: false});
   const [showEvaluate, setShowEvaluate] = useState<string | undefined>(undefined);
   const [showTagGroup, setShowTagGroup] = useState<string | undefined>(undefined);
-  const [showShareSettings, setShowShareSettings] = useState<{group: GroupsType, connection: any} | undefined>(undefined);
+  const [loadingState, setLoadingState] = useState<string | undefined>(undefined);
 
   function changeExpanded(key: string): void {
     const node = expandedState.has(key);
@@ -149,15 +148,14 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const connections = connectionsQuery.data?.connectionsGet || [];
   const user = userQuery.data?.userGet;
   const tagGroups = tagGroupsQuery.data?.accountGet.tagGroups || [];
-  const [mutate] = useMutation(connectionTagAdd);
-  const [mutateDelete] = useMutation(connectionTagRemove);
-  const [mutateGroupPut] = useMutation(groupPut, {
-    refetchQueries: [{ query: groupsGet }],
-  });
+  const [mutateConnectionTagAdd] = useMutation(connectionTagAdd);
+  const [mutateconnectionTagRemove] = useMutation(connectionTagRemove);
+  const [mutateConnectionPut] = useMutation(connectionPut);
 
-  if (groupsQuery.data?.groupsGet) {
+  if (groupsQuery.data?.groupsGet.length) {
     const index = menuItems.findIndex((item) => item.key === "groups");
-    groupsQuery.data.groupsGet.forEach((group) => {
+    groupsQuery.data.groupsGet.slice().sort((a, b) => a.name.localeCompare(b.name))
+      .forEach((group) => {
 
       const isAdmin = group.members.some(
         ({ email, role }) => email === user.email && role === "admin"
@@ -166,9 +164,9 @@ const SideBarTreeMenu = ({ location, history }: any) => {
       const startups = new Map<string, Startups[]>();
 
       group.startups.forEach((s) => {
-        startups.get(s.connectionId) ?
-          startups.set(s.connectionId, [...startups.get(s.connectionId) || [], s]) :
-          startups.set(s.connectionId, [s]);
+        startups.get(s.creativeId) ?
+          startups.set(s.creativeId, [...startups.get(s.creativeId) || [], s]) :
+          startups.set(s.creativeId, [s]);
       });
 
       menuItems[index].nodes?.push({
@@ -178,27 +176,24 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         icon: isAdmin ? "fal fa-cog" : "",
         selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
         action: () => isAdmin && history.push(`/dashboard/group/${group.id}/settings`),
-        nodes: [...startups].map(([connectionId, value]) => {
+        showRightMenu: true,
+        nodes: [...startups]
+          .sort((a, b) => a[1][0].connection?.creative?.name.localeCompare(b[1][0].connection?.creative?.name))
+          .map(([creativeId, value]) => {
 
-          const userMatch = value.find(({ sharedBy }) => sharedBy === user.email);
-          const creativeMatch = connections.find(({ creativeId } : {creativeId: string}) => creativeId === value[0].creativeId);
-          const syncWithGroup = !userMatch || !creativeMatch;
-
-          return {
-            key: connectionId,
-            link: `/dashboard/startup_page/${connectionId}`,
-            label: value[0].connection?.creative?.name,
-            nodes: [],
-            selected: selectedNodes.has(`/dashboard/startup_page/${connectionId}`),
-            showHashTag: true,
-            icon: syncWithGroup ? "fal fa-cloud-download" : "",
-            action: () => setShowShareSettings({group: group, connection: {
-              id: connectionId,
-              creativeId: value[0].creativeId,
-              creative: {name: value[0].connection.creative.name}
-            }})
-          } as MenuItem;
-        }),
+            const haveAddedStartup = connections.find((c: Connection) => c.creativeId === creativeId);
+            return {
+              key: creativeId,
+              link: haveAddedStartup && `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
+              label: value[0].connection?.creative?.name,
+              nodes: [],
+              selected: haveAddedStartup && selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`),
+              showHashTag: true,
+              icon: !haveAddedStartup && (loadingState !== creativeId) ? "fal fa-cloud-download" : loadingState === creativeId ? "fa fa-spinner fa-spin" : "",
+              action: () => !haveAddedStartup && addStartup(creativeId)
+            } as MenuItem;
+           }
+          )
       });
     });
   }
@@ -298,13 +293,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           />
         )}
         {node.showHashTag && <span className={styles.hash_tag}>#</span>}
-        <Link
-          to={node.link}
-          className={styles.link}
-          style={{ maxWidth: `70%` }}
-        >
-          {node.label}
-        </Link>
+        {
+          node.link ?
+            <Link to={{pathname: node.link, state: { rightMenu: node.showRightMenu} }} className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>
+              {node.label}
+            </Link> :
+            <span className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>{node.label}</span>
+        }
         {node.icon && (
           <i
             onClick={node.action}
@@ -334,11 +329,37 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   }
 
   function addTag(tag: Tag, connection: Connection | undefined): void {
-    mutate(AddTagMutationOptions(tag, connection) as any);
+    mutateConnectionTagAdd(AddTagMutationOptions(tag, connection) as any);
   }
 
   function deleteTag(tag: Tag, connection: Connection | undefined): void {
-    mutateDelete(DeleteTagMutationOptions(tag, connection) as any);
+    mutateconnectionTagRemove(DeleteTagMutationOptions(tag, connection) as any);
+  }
+
+  async function addStartup(creativeId: string) {
+    setLoadingState(creativeId);
+    try {
+       await mutateConnectionPut({
+        variables: {
+          creativeId: creativeId,
+        },
+        update: (proxy, { data: { connectionPut } }) => {
+          const data: any = proxy.readQuery({
+            query: connectionsGet,
+          });
+          proxy.writeQuery({
+            query: connectionsGet,
+            data: {
+              connectionsGet: [...data.connectionsGet, connectionPut],
+            },
+          });
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingState(undefined);
+    }
   }
 
   return (
@@ -400,40 +421,6 @@ const SideBarTreeMenu = ({ location, history }: any) => {
             setShowTagGroup(undefined);
           }}
         />
-      )}
-      {showShareSettings && console.log("my", showShareSettings)}
-      {showShareSettings && (
-        <Modal
-          title="Share startup"
-          close={() => {
-            setShowShareSettings(undefined);
-          }}
-          disableFoot={true}
-        >
-          <ShareSetting
-            group={showShareSettings.group}
-            connection={showShareSettings.connection}
-            mutate={mutateGroupPut}
-            done={() => {
-              setShowShareSettings(undefined);
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: "26px",
-              bottom: "33px",
-            }}
-          >
-            <Button
-              buttonStyle="secondary"
-              size="medium"
-              onClick={() => setShowShareSettings(undefined)}
-            >
-              cancel
-            </Button>
-          </div>
-        </Modal>
       )}
     </>
   );

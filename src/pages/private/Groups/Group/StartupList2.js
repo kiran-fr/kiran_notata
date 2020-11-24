@@ -363,7 +363,8 @@ function TemplateLogic({
 
                   let res = await mutate({ variables });
                   let evaluation = res.data.evaluationPut;
-                  let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
+                  // let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
+                  let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}`;
                   history.push(path);
                 } catch (error) {
                   console.log("error", error);

@@ -25,6 +25,9 @@ export default function StartupPage({ match, history }) {
     connectionDelete
   );
 
+  let idString = match.params.id;
+  let [id] = idString.split("?");
+
   if (
     connectionDeleteRes.called &&
     connectionDeleteRes.data &&
@@ -43,7 +46,7 @@ export default function StartupPage({ match, history }) {
     data: connectionGetData,
     loading: connectionGetLoading,
     error: connectionGetError,
-  } = useQuery(connectionGet, { variables: { id: match.params.id } });
+  } = useQuery(connectionGet, { variables: { id } });
 
   const {
     data: groupsGetData,

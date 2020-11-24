@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { evaluationTemplatesGet } from "Apollo/Queries";
 import { evaluationPut } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
+import { getPossibleScore, getScore } from "../../../Evaluation/util";
 import { Button, Table, Modal } from "Components/elements";
 
 import styles from "./EvaluationBox.module.css";
@@ -13,8 +14,154 @@ import styles from "./EvaluationBox.module.css";
 import { getEvaluationSummaries } from "./getEvaluationSummaries";
 import getEvaluationSummariesForTeam from "./getEvaluationSummariesForTeam";
 
-import SummaryLine from "./SummaryLine";
-import EvaluationsByTemplate from "./EvaluationsByTemplate";
+  return (
+    <div>
+      <div
+        className={classnames(
+          styles.line_style,
+          className && className,
+          evaluationId && hide && hide[evaluationId] && styles.hide_line
+        )}
+      >
+        <div className={classnames(styles.name_style, styles.title_container)}>
+          {list && (
+            <div
+              className={styles.caret_button}
+              onClick={() => setShowList(!showList)}
+            >
+              {(showList && <i className="fas fa-caret-down" />) || (
+                <i className="fas fa-caret-right" />
+              )}
+            </div>
+          )}
+          {isYou ? (
+            <span className={styles.isYou}>{name} (you)</span>
+          ) : (
+            <span>{name}</span>
+          )}
+        </div>
+
+        <div className={styles.score_container}>
+          <div className={styles.edit_container}>
+            {(isYou && editLink && (
+              <Button
+                style={{ margin: "0px" }}
+                size="small"
+                type="just_text"
+                onClick={() => {
+                  history.push(editLink);
+                }}
+              >
+                edit
+              </Button>
+            )) || <span />}
+          </div>
+
+          {(evaluationId && toggleHide && (
+            <div
+              className={styles.eye_toggle}
+              onClick={() => {
+                toggleHide(evaluationId);
+              }}
+            >
+              {hide &&
+                (hide[evaluationId] ? (
+                  <i className="fal fa-eye-slash" />
+                ) : (
+                  <i className="fal fa-eye" />
+                ))}
+            </div>
+          )) || <span />}
+
+          {(timeStamp && (
+            <div className={styles.timeStamp}>{timeStamp}</div>
+          )) || <span />}
+
+          <div className={styles.score_style}>{percentageScore}%</div>
+        </div>
+      </div>
+
+      {showList && list && (
+        <div className={styles.expanded_list_container}>
+          {list.map((item, i) => (
+            <SummaryLine
+              key={i}
+              hide={hide}
+              evaluationId={evaluationId}
+              name={item.name}
+              percentageScore={item.percentageScore}
+              className={classnames(className, styles.sub_list)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EvaluationsByTemplate({
+  data,
+  connection,
+  user,
+  templateId,
+  hide,
+  toggleHide,
+  history,
+}) {
+  let [showList, setShowList] = useState(false);
+
+  let list = (data.templateSections || []).map(item => ({
+    name: item.name,
+    percentageScore: Math.round((item.score / item.possibleScore) * 100),
+  }));
+
+  return (
+    <div className={styles.each_template_style}>
+      <div className={styles.header_style}>
+        <SummaryLine
+          hide={hide}
+          name={data.templateName}
+          percentageScore={data.averagePercentageScore}
+          className={classnames(styles.template_summary_line)}
+          list={list.length > 1 && list}
+        />
+      </div>
+
+      {data.evaluations.map((evaluation, i) => {
+        let { given_name, family_name, email } = evaluation.createdByUser || {};
+        let percentageScore = Math.round(
+          (evaluation.summary.totalScore / evaluation.summary.possibleScore) *
+            100
+        );
+
+        let list = (evaluation.summary?.sections || []).map(item => ({
+          name: item.name,
+          percentageScore: Math.round((item.score / item.possibleScore) * 100),
+        }));
+
+        let editLink = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${evaluation.summary?.sections[0]?.sectionId}`;
+
+        return (
+          <SummaryLine
+            key={i}
+            hide={hide}
+            toggleHide={toggleHide}
+            evaluationId={evaluation.id}
+            key={evaluation.id}
+            timeStamp={moment(evaluation.updatedAt).format("ll")}
+            name={`${given_name} ${family_name}`}
+            isYou={user.email === email}
+            editLink={editLink}
+            percentageScore={percentageScore}
+            className={classnames(styles.each_evaluation_line)}
+            list={list.length > 1 && list}
+            history={history}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 function GroupEvaluations({
   data,

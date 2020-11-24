@@ -19,6 +19,8 @@ interface Props {
   paginateAt?: number;
   allowSorting?: boolean;
   label?: string;
+  emptyLabel?: string;
+  // rowLinkFn: (arg0: string) => string;
 }
 
 enum DataType {
@@ -48,8 +50,11 @@ export const Table = ({
   disableHead,
   noMargin,
   paginateAt,
-  allowSorting
+  allowSorting,
+  emptyLabel,
+  // rowLinkFn
 }: Props) => {
+
 
 
   // region SortRegion
@@ -132,81 +137,102 @@ export const Table = ({
   // endregion
 
   return (
-    <table
-      className={classnames(
-        styles.container,
-        disableHead && styles.no_head,
-        noMargin && styles.no_margin
-      )}
-    >
-      {!disableHead && (
-        <thead>
-          <tr>
-            {columns.map((c, i) => {
-              return (
-                <td
-                  key={`head-${i}`}
-                  style={{ width: c.width ? `${c.width}px` : "auto" }}
-                  className={classnames(
-                    c.responsive && responsive_map[c.responsive],
-                  )}
-                >
-                  <div
+    <div>
+      <table
+        className={classnames(
+          styles.container,
+          disableHead && styles.no_head,
+          noMargin && styles.no_margin
+        )}
+      >
+        {!disableHead && (
+          <thead>
+            <tr>
+              {columns.map((c, i) => {
+                return (
+                  <td
+                    key={`head-${i}`}
+                    style={{ width: c.width ? `${c.width}px` : "auto" }}
                     className={classnames(
-                      c.className && c.className,
-                      cell_content
+                      c.responsive && responsive_map[c.responsive],
                     )}
-                    style={{
-                      textAlign: c.centered ? "center" : "left",
-                    }}
                   >
-                    {c.title}
-                    <span className={styles.sort_icon} onClick={() => setNextSortValue(i)}>
-                      <i className={classnames({
-                        "fad fa-sort" : sort.get(i) === SortType.NONE,
-                        "fad fa-sort-up" : sort.get(i) === SortType.ASC,
-                        "fad fa-sort-down" : sort.get(i) === SortType.DESC,
-                      })}
-                      />
-                    </span>
-                  </div>
-                </td>
-              );
-            })}
-          </tr>
-        </thead>
-      )}
+                    <div
+                      className={classnames(
+                        c.className && c.className,
+                        cell_content
+                      )}
+                      style={{
+                        textAlign: c.centered ? "center" : "left",
+                      }}
+                    >
+                      <span>{c.title}</span>
+                      <span className={styles.sort_icon} onClick={() => setNextSortValue(i)}>
+                        <i
+                          // style={{opacity: sort.get(i) === SortType.NONE ? 0.5 : 1}}
+                          className={classnames({
+                          "fal fa-sort-alt" : sort.get(i) === SortType.NONE,
+                          "fal fa-sort-amount-down" : sort.get(i) === SortType.ASC,
+                          "fal fa-sort-amount-up" : sort.get(i) === SortType.DESC,
 
-      <tbody>
-        {dataSourceProcessed.map((d, i) => (
-          <tr key={`t-${i}`}>
-            {columns.map((c, ii) => {
-              return (
-                <td
-                  key={`${i}-${ii}`}
-                  style={{ width: c.width ? `${c.width}px` : "auto" }}
-                  className={classnames(
-                    c.responsive && responsive_map[c.responsive]
-                  )}
-                >
-                  <div
+                        })}
+                        />
+                      </span>
+                    </div>
+                  </td>
+                );
+              })}
+            </tr>
+          </thead>
+        )}
+
+        <tbody>
+          {dataSourceProcessed.map((d, i) => (
+            <tr
+              key={`t-${i}`}
+              // onClick={() => rowLinkFn(d)}
+              >
+              {columns.map((c, ii) => {
+                return (
+                  <td
+                    key={`${i}-${ii}`}
+                    style={{ width: c.width ? `${c.width}px` : "auto" }}
                     className={classnames(
-                      c.className && c.className,
-                      cell_content
+                      c.responsive && responsive_map[c.responsive]
                     )}
-                    style={{
-                      textAlign: c.centered ? "center" : "left",
-                    }}
                   >
-                    {c.render(c.dataIndex ? d[c.dataIndex] : d, i)}
-                  </div>
-                </td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                    <div
+                      className={classnames(
+                        c.className && c.className,
+                        cell_content
+                      )}
+                      style={{
+                        textAlign: c.centered ? "center" : "left",
+                      }}
+                    >
+                      {c.render(c.dataIndex ? d[c.dataIndex] : d, i)}
+                    </div>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+
+      </table>
+
+      {
+        !dataSourceProcessed.length && (
+          <div
+            className={styles.empty_list}
+          >
+            {emptyLabel || 'This list is empty'}
+          </div>
+        )
+      }
+
+    </div>
+
   );
 };
 

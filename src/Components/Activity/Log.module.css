@@ -12,6 +12,11 @@
   margin-top: auto !important;
 }
 
+/* Remove When Styled Scroll Will Be Added */
+.comments_section::-webkit-scrollbar {
+  display: none;
+}
+
 .event_toggle_button {
   cursor: pointer;
   position: absolute;

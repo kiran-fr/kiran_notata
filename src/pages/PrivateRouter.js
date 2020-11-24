@@ -194,7 +194,11 @@ const WrapperComponent = ({ ...props }) => {
       <Header />
       <SideBarTreeMenu {...props} />
       {/*<SideBar {...props} />*/}
-      <div className="logged_in_page_content">
+      <div
+        className={`logged_in_page_content ${
+          props.location.state?.rightMenu ? "show_right_activity" : ""
+        }`}
+      >
         <RouterComponent {...props} />
       </div>
     </>

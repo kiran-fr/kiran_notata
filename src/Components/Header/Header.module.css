@@ -8,7 +8,8 @@
   z-index: 1001;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--color-gray-pale);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--color-gray-light);
 }
 
 .logo {
@@ -16,8 +17,8 @@
   font-size: 28px;
   font-weight: var(--font-weight-light);
   position: relative;
-  top: -4px;
-  left: 31px;
+  padding-top: 7px;
+  padding-left: 30px;
 }
 
 .icons {
@@ -62,10 +63,12 @@
 }
 
 .header_block_logo {
-  display: flex;
-  width: 261px;
-  padding: 10px 20px;
-  border-right: 1px solid var(--color-gray-pale);
+  width: 320px;
+  border-right: 1px solid var(--color-gray-light);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
 }
 
 .header_block_panel {
