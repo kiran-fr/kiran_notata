@@ -117,7 +117,7 @@ export default ({
         size="small"
         onClick={() => {
           let path = `${group}/${id}`;
-          history.push(path);
+          history.push(path, {rightMenu: true});
         }}
       >
         View
