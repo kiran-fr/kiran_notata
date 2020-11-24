@@ -13,7 +13,6 @@
 }
 
 .sidebar_container:after {
-  content: "";
   position: absolute;
   width: 100%;
   height: 55px;
