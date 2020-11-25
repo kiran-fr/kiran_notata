@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import moment from "moment";
@@ -55,6 +55,16 @@ function LogInput({ submitMutation }: { submitMutation: Function }) {
   );
 }
 
+const isViewable = (parent: HTMLDivElement, child: HTMLDivElement): boolean => {
+  const parentRect = parent.getBoundingClientRect();
+  const childRect = child.getBoundingClientRect();
+
+  return (
+    childRect.top >= parentRect.top &&
+    childRect.top - (parentRect.top + parent.clientHeight) <= 90
+  );
+};
+
 export function Log({
   logs,
   user,
@@ -66,13 +76,22 @@ export function Log({
 }) {
   const [viewEvents, setViewEvents] = useState(false);
   const ref = useRef(null);
+  const parentRef = useRef(null);
 
   logs = logs.filter(l => (viewEvents ? l : l.logType === "COMMENT"));
 
-  useEffect(() => {
+  const scrollToBottom = () => {
     const node: HTMLDivElement | null = ref.current;
-    if (node) (node as any).scrollIntoView({ behavior: "smooth" });
-  }, [logs]);
+    if (node) {
+      const isChildViewable = isViewable(
+        parentRef.current! as HTMLDivElement,
+        ref.current! as HTMLDivElement
+      );
+      if (isChildViewable) (node as any).scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(scrollToBottom, [logs]);
 
   return (
     <>
@@ -90,7 +109,7 @@ export function Log({
           ACTIVITIES
         </div>
       </div>
-      <div className={styles.comments_section}>
+      <div ref={parentRef} className={styles.comments_section}>
         {logs.length ? (
           logs.map((logItem: LogItem) => (
             <div
