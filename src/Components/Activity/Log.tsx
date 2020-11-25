@@ -65,6 +65,30 @@ const isViewable = (parent: HTMLDivElement, child: HTMLDivElement): boolean => {
   );
 };
 
+function usePrevious(value: any): any {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
+const scrollToBottom = (
+  parentRef: React.RefObject<HTMLDivElement>,
+  childRef: React.RefObject<HTMLDivElement>,
+  forceScroll?: boolean
+) => {
+  const node: HTMLDivElement | null = childRef.current;
+  if (node) {
+    const isChild = isViewable(
+      parentRef.current! as HTMLDivElement,
+      childRef.current! as HTMLDivElement
+    );
+    if (forceScroll || isChild)
+      (node as any).scrollIntoView({ behavior: "smooth" });
+  }
+};
+
 export function Log({
   logs,
   user,
@@ -80,18 +104,12 @@ export function Log({
 
   logs = logs.filter(l => (viewEvents ? l : l.logType === "COMMENT"));
 
-  const scrollToBottom = () => {
-    const node: HTMLDivElement | null = ref.current;
-    if (node) {
-      const isChildViewable = isViewable(
-        parentRef.current! as HTMLDivElement,
-        ref.current! as HTMLDivElement
-      );
-      if (isChildViewable) (node as any).scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const prevCount = usePrevious(logs);
 
-  useEffect(scrollToBottom, [logs]);
+  useEffect(() => {
+    if (!prevCount?.length) scrollToBottom(parentRef, ref, true);
+    else scrollToBottom(parentRef, ref, false);
+  }, [logs]);
 
   return (
     <>
