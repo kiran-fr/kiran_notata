@@ -172,7 +172,12 @@ export function Log({
       </div>
 
       <hr />
-      <LogInput submitMutation={submitMutation} />
+      <LogInput
+        submitMutation={(value: string) => {
+          submitMutation(value);
+          scrollToBottom(parentRef, ref, true);
+        }}
+      />
     </>
   );
 }
