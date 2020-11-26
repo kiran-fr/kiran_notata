@@ -163,8 +163,8 @@ export default function Section({ match, history }) {
     evaluationTemplateSectionQuery.data?.evaluationTemplateSectionGet;
 
   // Define loading & error
-  const loading =
-    connectionQuery.loading || evaluationTemplateSectionQuery.loading;
+  // const loading =
+  //   connectionQuery.loading || evaluationTemplateSectionQuery.loading;
 
   const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
 

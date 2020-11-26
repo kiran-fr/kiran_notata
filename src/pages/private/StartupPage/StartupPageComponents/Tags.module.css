@@ -1,13 +1,3 @@
-.button_container {
-  top: auto;
-  bottom: 0px;
-  right: 10px;
-  position: absolute;
-  z-index: 100;
-  font-size: 15px;
-  line-height: 2.7;
-}
-
 .dropdown_title {
   text-transform: uppercase;
   color: var(--color-gray-medium);

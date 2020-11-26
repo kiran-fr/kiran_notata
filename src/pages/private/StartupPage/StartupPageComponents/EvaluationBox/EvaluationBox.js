@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { evaluationTemplatesGet } from "Apollo/Queries";
 import { evaluationPut } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
-import { getPossibleScore, getScore } from "../../../Evaluation/util";
 import { Button, Table, Modal } from "Components/elements";
 
 import styles from "./EvaluationBox.module.css";
@@ -123,7 +122,7 @@ function EvaluationsByTemplate({
   toggleHide,
   history,
 }) {
-  let [showList, setShowList] = useState(false);
+  // let [showList, setShowList] = useState(false);
 
   let list = (data.templateSections || []).map(item => ({
     name: item.name,
@@ -158,11 +157,10 @@ function EvaluationsByTemplate({
 
         return (
           <SummaryLine
-            key={i}
+            key={evaluation.id}
             hide={hide}
             toggleHide={toggleHide}
             evaluationId={evaluation.id}
-            key={evaluation.id}
             timeStamp={moment(evaluation.updatedAt).format("ll")}
             name={`${given_name} ${family_name}`}
             isYou={user.email === email}
@@ -190,7 +188,7 @@ function GroupEvaluations({
   setHide,
 }) {
   const [currentLoading, setCurrentLoading] = useState("");
-  const [mutate, { loading }] = useMutation(evaluationPut);
+  const [mutate] = useMutation(evaluationPut);
 
   function toggleHide(evaluationId) {
     setHide({
@@ -323,7 +321,7 @@ function TeamEvaluations({
   evaluationTemplates,
   history,
 }) {
-  let [showList, setShowList] = useState(false);
+  // let [showList, setShowList] = useState(false);
   let [hide, setHide] = useState({});
 
   let data = getEvaluationSummariesForTeam({ evaluations, hide });
@@ -348,7 +346,6 @@ function TeamEvaluations({
       {data.map((templateData, i) => {
         let {
           templateName,
-          templateId,
           averagePercentageScore,
           evaluations,
           templateSections,
@@ -404,11 +401,10 @@ function TeamEvaluations({
 
               return (
                 <SummaryLine
-                  key={`${i}-${ii}`}
+                  key={evaluation.id}
                   hide={hide}
                   toggleHide={toggleHide}
                   evaluationId={evaluation.id}
-                  key={evaluation.id}
                   timeStamp={moment(evaluation.updatedAt).format("ll")}
                   name={`${given_name} ${family_name}`}
                   isYou={user.email === email}

@@ -11,7 +11,6 @@ import {
 
 import { connectionPut } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
-import moment from "moment";
 
 import {
   BreadCrumbs,
@@ -326,13 +325,9 @@ function AddButton({ creative, history }) {
 
   console.log("error", error);
 
-  const {
-    data: query_data,
-    error: query_error,
-    loading: qeury_loading,
-  } = useQuery(connectionsGet);
+  const { data: query_data, loading: query_loading } = useQuery(connectionsGet);
 
-  if (qeury_loading && !query_data) {
+  if (query_loading && !query_data) {
     return <span />;
   }
 
@@ -511,7 +506,7 @@ export default function GroupConnection({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
-            state: { rightMenu: true }
+            state: { rightMenu: true },
           },
           {
             val: `Startup: ${(connection.creative || {}).name}`,

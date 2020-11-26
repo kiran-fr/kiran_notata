@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useLazyQuery, useMutation } from "@apollo/client";
-import { useForm } from "react-hook-form";
+import React from "react";
+// import { useLazyQuery, useMutation } from "@apollo/client";
+// import { useForm } from "react-hook-form";
 
 // import { evaluationTemplateGet } from "Apollo/Queries";
 
@@ -15,18 +15,18 @@ import { useForm } from "react-hook-form";
 //   evaluation_templates,
 // } from "pages/definitions";
 
-import {
-  Card,
-  Button,
-  Table,
-  Content,
-  Modal,
-  BreadCrumbs,
-  GhostLoader,
-} from "Components/elements";
+// import {
+//   Card,
+//   Button,
+//   Table,
+//   Content,
+//   Modal,
+//   BreadCrumbs,
+//   GhostLoader,
+// } from "Components/elements";
 
-import TemplateInfo from "./TemplateInfo";
-import { delete_bucket } from "./FactsTemplate.module.css";
+// import TemplateInfo from "./TemplateInfo";
+// import { delete_bucket } from "./FactsTemplate.module.css";
 
 // function AddNewSection({ id, setShowModal }) {
 //   const [mutate] = useMutation(evaluationTemplateSectionPut);

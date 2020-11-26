@@ -13,7 +13,6 @@ import {
 // COMPONENTS
 import Filters from "../Filters";
 import CreateNewStartup from "./CreateStartup";
-import EvaluateSelector from "./EvaluateStartup";
 import SetSubjectiveScore from "./SetSubjectiveScore";
 
 import { startup_page } from "pages/definitions";
@@ -25,9 +24,6 @@ import TagSelector from "Components/TagSelector/TagSelector";
 import moment from "moment";
 
 import {
-  void_list,
-  void_list_label,
-  void_list_icon,
   counter,
   small_text_flex,
   clear_filters,
@@ -46,7 +42,7 @@ function applyFilters({ connections, filters }) {
 
   if (filters.starred) {
     connections = connections.filter(connection => {
-      if (!connection) return;
+      if (!connection) return false;
       return connection.starred;
     });
   }
