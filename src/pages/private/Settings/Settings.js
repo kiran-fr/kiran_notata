@@ -13,13 +13,8 @@ import {
 } from "pages/definitions";
 
 const Comp = ({ history }) => {
-  let subscription;
   useEffect(() => {
-    subscribe();
-    return () => subscription.unsubscribe();
-  }, []);
-
-  function subscribe() {
+    let subscription;
     subscription = API.graphql({
       query: subscribeToAllTestMutations,
     }).subscribe({
@@ -27,7 +22,8 @@ const Comp = ({ history }) => {
         console.log(data);
       },
     });
-  }
+    return () => subscription.unsubscribe();
+  }, []);
 
   const linkList = [
     {
