@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { inputWrapper, inputIcon } from "./MultipleTextInput.module.css";
-import { func } from "prop-types";
 
 export default function MultipleTextInput({
   handleOnSubmit,

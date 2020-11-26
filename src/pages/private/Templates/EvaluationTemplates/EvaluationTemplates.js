@@ -14,7 +14,7 @@ import {
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
 
-import { accountGet, evaluationTemplatesGet, groupsGet } from "Apollo/Queries";
+import { evaluationTemplatesGet } from "Apollo/Queries";
 
 import {
   evaluationTemplatePut,
@@ -115,52 +115,52 @@ const CreateNewTemplate = ({ setShowModal }) => {
   );
 };
 
-function SharedWithMe() {
-  console.log("SharedWithMe");
-  const { data, loading, error } = useQuery(groupsGet);
+// function SharedWithMe() {
+//   console.log("SharedWithMe");
+//   const { data, loading, error } = useQuery(groupsGet);
 
-  if (error) {
-    return <span />;
-  }
+//   if (error) {
+//     return <span />;
+//   }
 
-  if (loading && !data) {
-    return <span />;
-  }
+//   if (loading && !data) {
+//     return <span />;
+//   }
 
-  let groups = data.groupsGet;
-  let templates = [];
+//   let groups = data.groupsGet;
+//   let templates = [];
 
-  if (groups) {
-    for (let group of groups) {
-      templates = templates.concat(group.evaluationTemplates || []);
-    }
-  }
+//   if (groups) {
+//     for (let group of groups) {
+//       templates = templates.concat(group.evaluationTemplates || []);
+//     }
+//   }
 
-  let groupsWithTemplates = groups.filter(
-    ({ evaluationTemplates }) =>
-      evaluationTemplates && evaluationTemplates.length
-  );
+//   let groupsWithTemplates = groups.filter(
+//     ({ evaluationTemplates }) =>
+//       evaluationTemplates && evaluationTemplates.length
+//   );
 
-  if (!templates.length) {
-    return <span />;
-  }
+//   if (!templates.length) {
+//     return <span />;
+//   }
 
-  return (
-    <Card style={{ paddingTop: "5px" }} title="SHARED WITH ME">
-      {groupsWithTemplates.map(group => {
-        return (
-          <div key={group.id}>
-            <div>{group.name}</div>
+//   return (
+//     <Card style={{ paddingTop: "5px" }} title="SHARED WITH ME">
+//       {groupsWithTemplates.map(group => {
+//         return (
+//           <div key={group.id}>
+//             <div>{group.name}</div>
 
-            {group.evaluationTemplates}
-          </div>
-        );
-      })}
+//             {group.evaluationTemplates}
+//           </div>
+//         );
+//       })}
 
-      <pre>{JSON.stringify(templates, null, 2)}</pre>
-    </Card>
-  );
-}
+//       <pre>{JSON.stringify(templates, null, 2)}</pre>
+//     </Card>
+//   );
+// }
 
 export default function EvaluationTemplates(props) {
   const [showModal, setShowModal] = useState(false);

@@ -31,9 +31,9 @@ export default function MultipleTextInput({ setAnswers, question, answers }) {
   }
 
   async function handleOnDelete(id) {
-    let answersIN = answerAnswers.filter(
-      ({ id: answersId }) => answersId !== id
-    );
+    // let answersIN = answerAnswers.filter(
+    //   ({ id: answersId }) => answersId !== id
+    // );
 
     setAnswers(answers.filter(ans => ans.id !== id));
   }

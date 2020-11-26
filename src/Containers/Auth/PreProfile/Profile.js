@@ -18,7 +18,7 @@ export default function PreProfile({ history }) {
   const [mutate] = useMutation(userUpdate);
   const [cognitoUser, setCognitoUser] = useState();
 
-  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { register, handleSubmit, formState, setValue } = useForm();
 
   const { isSubmitting } = formState;
 
@@ -50,16 +50,13 @@ export default function PreProfile({ history }) {
     }
 
     try {
-      let res = await mutate({ variables: { input } });
+      await mutate({ variables: { input } });
     } catch (error) {
       console.log("error", error);
     }
 
     history.push(dashboard);
   };
-
-  const values = getValues();
-  // console.log("values", values);
 
   return (
     <Content maxWidth={600}>

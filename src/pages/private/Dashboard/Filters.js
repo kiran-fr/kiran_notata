@@ -70,7 +70,7 @@ const Funnels = ({ filters, setFilters }) => {
   }
 
   const addFunnelTag = funnelTag => {
-    let group = funnelGroups.find(({ id }) => funnelTag.funnelGroupId === id);
+    // let group = funnelGroups.find(({ id }) => funnelTag.funnelGroupId === id);
 
     if (filters.funnelTags.some(({ id }) => id === funnelTag.id)) {
       return setFilters([]);

@@ -73,12 +73,12 @@ export default function StartupPage({ match, history }) {
   const connection = connectionGetData.connectionGet;
   const groups = groupsGetData.groupsGet;
 
-  let evaluationsCount = connection.evaluations.length;
-  for (let shared of connection.sharedWithMe) {
-    if (shared.connection) {
-      evaluationsCount += (shared.connection.evaluations || []).length;
-    }
-  }
+  // let evaluationsCount = connection.evaluations.length;
+  // for (let shared of connection.sharedWithMe) {
+  //   if (shared.connection) {
+  //     evaluationsCount += (shared.connection.evaluations || []).length;
+  //   }
+  // }
 
   let sharedWithGroups =
     groups.filter(g =>

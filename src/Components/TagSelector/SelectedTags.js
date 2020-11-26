@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Tag } from "../elements/";
+import React from "react";
+import { Tag } from "../elements/";
 
 import { tag_each, tag_name, tag_kill } from "./Tags.module.css";
 

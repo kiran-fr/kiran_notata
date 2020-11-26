@@ -22,7 +22,7 @@ export default function CommentInput({
 }) {
   const [showModal, setShowModal] = useState(undefined);
 
-  const { register, handleSubmit, formState, setValue } = useForm();
+  const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   async function onSubmit(data, event) {

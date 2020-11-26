@@ -166,7 +166,7 @@ function RevokeSharing({ group, connection, user }) {
 function SharedWithGroupList(props) {
   let { groups, connection, user, shareStartup, history } = props;
 
-  const [mutate] = useMutation(groupPut);
+  // const [mutate] = useMutation(groupPut);
 
   const columns = [
     {

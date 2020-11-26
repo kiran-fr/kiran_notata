@@ -24,15 +24,15 @@ const getErrorMessage = ({ error }) => {
   console.log("getErrorMessage");
   console.log(JSON.stringify(error, null, 2));
 
-  let { code } = error;
+  // let { code } = error;
 
-  let defaultError = "Yo, something went wrong, innit";
+  // let defaultError = "Yo, something went wrong, innit";
 
-  let codeMap = {
-    NotAuthorizedException: "Email and password does not match",
-  };
+  // let codeMap = {
+  //   NotAuthorizedException: "Email and password does not match",
+  // };
 
-  let errorMessage = codeMap[code] || defaultError;
+  // let errorMessage = codeMap[code] || defaultError;
 
   // return errorMessage;
 

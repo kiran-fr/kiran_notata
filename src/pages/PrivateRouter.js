@@ -69,7 +69,6 @@ import { GhostLoader } from "Components/elements";
 import Header from "Components/Header/Header";
 import ExternalForm from "./private/ExternalForm/ExternalForm";
 import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu";
-import SideBar from "../Components/SideBar/SideBar";
 
 export const RouterComponent = ({ history }) => {
   return (

@@ -6,14 +6,13 @@ import { Startups } from "Apollo/Queries/groupsGet";
 import {
   connectionsGet,
   groupsGet,
-  GroupsType,
   tagGroupGet,
   userGet,
 } from "Apollo/Queries";
 import {
   connectionTagAdd,
   connectionTagRemove,
-  connectionPut
+  connectionPut,
 } from "Apollo/Mutations";
 
 import { dashboard, group, signOut, settings } from "pages/definitions";
@@ -27,7 +26,6 @@ import {
   DeleteTagMutationOptions,
 } from "pages/private/Dashboard/Connections/Connections";
 import { hideMobileNavigationMenu } from "Modules/menu";
-import { Button } from "../elements";
 import styles from "./SideBarTreeMenu.module.css";
 
 const classnames = require("classnames");
@@ -42,7 +40,7 @@ type MenuItem = {
   showHashTag?: boolean;
   selected?: boolean;
   action?: () => void;
-  showRightMenu?: boolean
+  showRightMenu?: boolean;
 };
 
 const SideBarTreeMenu = ({ location, history }: any) => {

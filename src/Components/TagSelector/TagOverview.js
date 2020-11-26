@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Button } from "../elements/";
 
 import {
-  dropdown_container,
-  dropdown_title,
   dropdown_inner,
   dropdown_group,
   dropdown_group_header,
