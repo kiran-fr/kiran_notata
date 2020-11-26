@@ -109,7 +109,7 @@ export function Log({
   useEffect(() => {
     if (!prevCount?.length) scrollToBottom(parentRef, ref, true);
     else scrollToBottom(parentRef, ref, false);
-  }, [logs]);
+  }, [logs, prevCount]);
 
   return (
     <>
