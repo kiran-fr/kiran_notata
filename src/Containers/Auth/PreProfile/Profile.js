@@ -12,7 +12,7 @@ import { dashboard } from "pages/definitions";
 
 import { omit } from "lodash";
 
-import { Content, Card, Button } from "../../elements/";
+import { Content, Card, Button } from "Components/elements/";
 
 export default function PreProfile({ history }) {
   const [mutate] = useMutation(userUpdate);

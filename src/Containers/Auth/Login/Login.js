@@ -7,7 +7,13 @@ import queryString from "query-string";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
+import {
+  Content,
+  Card,
+  Button,
+  SuccessBox,
+  ErrorBox,
+} from "Components/elements/";
 
 import { userLoggedIn } from "Modules/user";
 import { getUserIsLoggedIn } from "Modules";

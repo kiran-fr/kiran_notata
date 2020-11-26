@@ -9,15 +9,15 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ScrollToTop from "../ScrollToTop";
 
 // PUBLIC
-import FrontPage from "../Containers/FrontPage";
+import { FrontPage } from "Containers/FrontPage/FrontPage";
 
 // USER
-import { Signup } from "../Components/User/Signup/Signup";
-import { Login } from "../Components/User/Login/Login";
-import { ForgotPassword } from "../Components/User/ForgotPassword/ForgotPassword";
-import { Awaiting } from "../Components/User/Awaiting/Awaiting";
-import { SignOut } from "../Components/User/SignOut/SignOut";
-import PreProfile from "../Components/User/PreProfile/Profile";
+import { Signup } from "Containers/Auth/Signup/Signup";
+import { Login } from "Containers/Auth/Login/Login";
+import { ForgotPassword } from "Containers/Auth/ForgotPassword/ForgotPassword";
+import { Awaiting } from "Containers/Auth/Awaiting/Awaiting";
+import { SignOut } from "Containers/Auth/SignOut/SignOut";
+import PreProfile from "Containers/Auth/PreProfile/Profile";
 
 // SHARING
 import LinkBridge from "../Components/Shared/LinkBridge/LinkBridge";

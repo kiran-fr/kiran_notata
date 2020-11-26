@@ -3,7 +3,13 @@ import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { login } from "pages/definitions";
-import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
+import {
+  Content,
+  Card,
+  Button,
+  SuccessBox,
+  ErrorBox,
+} from "Components/elements/";
 
 const makeid = length => {
   var result = "";

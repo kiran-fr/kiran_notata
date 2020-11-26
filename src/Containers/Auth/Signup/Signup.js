@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { Content, Card, Button, ErrorBox } from "../../elements/";
+import { Content, Card, Button, ErrorBox } from "Components/elements/";
 
 import { userLoggedIn } from "Modules/user";
 import { getUserIsLoggedIn } from "Modules";
