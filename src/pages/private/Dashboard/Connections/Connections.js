@@ -14,6 +14,7 @@ import {
 import Filters from "../Filters";
 import CreateNewStartup from "./CreateStartup";
 import SetSubjectiveScore from "./SetSubjectiveScore";
+import TagsChart from "./TagsChart";
 
 import { startup_page } from "pages/definitions";
 
@@ -330,7 +331,10 @@ export default function Connections({ history }) {
         setShowEvaluate={setShowEvaluate}
         showModalOnly={false}
       />
-
+      <TagsChart
+        tags={connections.map(connection => connection.tags).flat()}
+        tagGroups={tagGroups}
+      />
       <div className={small_text_flex}>
         {(hasFilters && (
           <div
