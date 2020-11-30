@@ -477,7 +477,7 @@ export default function Group({ match, history }) {
   const group = groupQuery.data?.groupGet;
   const connections = connectionsQuery.data?.connectionsGet;
   const user = userQuery.data?.userGet;
-  const settings = group?.settings;
+  const settings = group?.settings || {showUsers: false};
 
   let isActualAdmin = group?.members?.some(
     ({ email, role }) => email === user.email && role === "admin"

@@ -187,10 +187,11 @@ const SideBarTreeMenu = ({ location, history }: any) => {
                 link: haveAddedStartup && `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
                 label: value[0].connection?.creative?.name,
                 nodes: [],
-                selected: haveAddedStartup && selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`),
+                selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`) || selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}`)),
                 showHashTag: true,
                 icon: !haveAddedStartup && (loadingState !== creativeId) ? "fal fa-cloud-download" : loadingState === creativeId ? "fa fa-spinner fa-spin" : "",
-                action: () => !haveAddedStartup && addStartup(creativeId)
+                showRightMenu: true,
+                action: () => !haveAddedStartup && addStartup(creativeId),
               } as MenuItem;
             }),
         });
