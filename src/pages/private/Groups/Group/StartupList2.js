@@ -857,7 +857,7 @@ function StartupList2({
                 onClick={() => {
                   if (!haveAddedStartup) return;
                   let path = `${startup_page}/${haveAddedStartup.id}`;
-                  history.push(path);
+                  history.push(path, { rightMenu: true });
                 }}
               >
                 {creative.name}

@@ -511,6 +511,7 @@ export default function GroupConnection({ match, history }) {
           {
             val: `Startup: ${(connection.creative || {}).name}`,
             link: `${group_route}/${id}/${connection.id}`,
+            state: { rightMenu: true },
           },
         ]}
       />

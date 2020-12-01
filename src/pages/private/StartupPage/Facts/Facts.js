@@ -308,10 +308,12 @@ export default function Facts({ history, match }) {
           {
             val: `Startup: ${creative.name}`,
             link: `${startup_page}/${connectionId}`,
+            state: { rightMenu: true },
           },
           {
             val: `Startup Info`,
             link: `${startup_page}/${connectionId}/creative/${creative.id}`,
+            state: { rightMenu: true },
           },
         ]}
       />
