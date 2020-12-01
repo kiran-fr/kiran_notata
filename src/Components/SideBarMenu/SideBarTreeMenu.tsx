@@ -295,10 +295,23 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         {node.showHashTag && <span className={styles.hash_tag}>#</span>}
         {
           node.link ?
-            <Link to={{pathname: node.link, state: { rightMenu: node.showRightMenu} }} className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>
+            <span
+              onClick={() => dispatch(hideMobileNavigationMenu())}
+              >
+              <Link
+                to={{pathname: node.link, state: { rightMenu: node.showRightMenu} }}
+                className={styles.link}
+                style={{maxWidth: `${203 - 27 * level}px`}}
+              >
+                {node.label}
+              </Link>
+            </span>:
+            <span
+              className={styles.link}
+              style={{maxWidth: `${203 - 27 * level}px`}}
+              >
               {node.label}
-            </Link> :
-            <span className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>{node.label}</span>
+            </span>
         }
         {node.icon && (
           <i
