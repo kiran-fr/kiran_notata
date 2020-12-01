@@ -3,9 +3,9 @@ import {
   XAxis,
   BarChart,
   Bar,
-  Cell,
+  Cell, ResponsiveContainer,
 } from "recharts";
-import { Connection } from "../types";
+import { Connection } from "../../types";
 
 type StageChartData = {
   id: string;
@@ -49,29 +49,33 @@ const StageChart = ({ connections }: { connections: Connection[] }) => {
   ];
 
   const CustomizedAxisTick = (props: any) => {
-    const {x, y, stroke, payload} = props;
+    const { x, y, stroke, payload } = props;
 
     return (
       <g transform={`translate(${x},${y})`}>
-        <text x={0} y={0} dy={16} textAnchor="middle" fontSize={14} fill="#666" transform="rotate(0)">{payload.value}</text>
+        <text x={0} y={0} dy={16} textAnchor="middle" fontSize={14} fill="#666"
+              transform="rotate(0)">{payload.value}</text>
       </g>
     );
   };
 
-  return (<>
-      <BarChart width={600} height={200} data={data}>
-        <Bar dataKey="value" label={{
-          value: "name", position: "top", fontWeight: "normal",
-        }}>
-          {
-            data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index]} stroke={colors[index]}/>
-            ))
-          }
-        </Bar>
-        <XAxis dataKey="name" axisLine={false} tick={<CustomizedAxisTick/>}/>
-      </BarChart>
-    </>
+  return (
+    <div style={{ width: "100%", height: 250 }}>
+      <ResponsiveContainer>
+        <BarChart width={600} height={200} data={data}>
+          <Bar dataKey="value" label={{
+            value: "name", position: "top", fontWeight: "normal",
+          }}>
+            {
+              data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={colors[index]} stroke={colors[index]}/>
+              ))
+            }
+          </Bar>
+          <XAxis dataKey="name" axisLine={false} tick={<CustomizedAxisTick/>}/>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
