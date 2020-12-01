@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { PieChart, Pie, Sector, Cell, Legend, Tooltip } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Sector,
+  Cell,
+  Legend,
+  Tooltip,
+  LegendProps,
+  LegendPayload,
+} from "recharts";
 
 const TagsChart = ({ tags, tagGroups }: any) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -23,7 +32,7 @@ const TagsChart = ({ tags, tagGroups }: any) => {
     if (red.get(tag.id)) red.get(tag.id).value++;
   });
 
-  const dat: object[] = Array.from(red.values());
+  const dat: LegendPayload[] = Array.from(red.values());
   console.log("da", dat);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -107,6 +116,7 @@ const TagsChart = ({ tags, tagGroups }: any) => {
     lineHeight: "24px",
   };
 
+  dat.sort((a, b) => b.value - a.value);
   return (
     <PieChart width={400} height={400}>
       <Pie
@@ -132,6 +142,9 @@ const TagsChart = ({ tags, tagGroups }: any) => {
         layout="vertical"
         verticalAlign="middle"
         wrapperStyle={style}
+        formatter={(value, entry: any) =>
+          `${value} - ${(entry?.payload.percent * 100).toFixed(2)}%`
+        }
       />
       <Tooltip />
     </PieChart>
