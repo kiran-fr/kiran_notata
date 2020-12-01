@@ -14,7 +14,6 @@ import {
 import Filters from "../Filters";
 import CreateNewStartup from "./CreateStartup";
 import SetSubjectiveScore from "./SetSubjectiveScore";
-import TagsChart from "./TagsChart";
 
 import { startup_page } from "pages/definitions";
 
@@ -31,6 +30,8 @@ import {
 } from "./Connections.module.css";
 
 import tableColumns from "./TableColumns/TableColumns";
+import StageChart from "./Charts/StageChart";
+import TagsChart from "./TagsChart";
 
 function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
@@ -321,6 +322,16 @@ export default function Connections({ history }) {
 
   return (
     <>
+      <Card maxWidth={1200} noMargin={true} style={{ paddingBottom: "20px" }}>
+        <StageChart
+          connections={connections}
+        />
+        <TagsChart
+          tags={connections.map(connection => connection.tags).flat()}
+          tagGroups={tagGroups}
+        />
+      </Card>
+
       <CreateNewStartup
         history={history}
         setDone={connection => {
@@ -330,10 +341,6 @@ export default function Connections({ history }) {
         setShowTagGroup={setShowTagGroup}
         setShowEvaluate={setShowEvaluate}
         showModalOnly={false}
-      />
-      <TagsChart
-        tags={connections.map(connection => connection.tags).flat()}
-        tagGroups={tagGroups}
       />
       <div className={small_text_flex}>
         {(hasFilters && (
