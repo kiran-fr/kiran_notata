@@ -12,28 +12,3 @@
   right: 0;
   position: relative;
 }
-
-.select {
-  display: inline-flex;
-}
-.select select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  background: none;
-  padding-left: 20px;
-  z-index: 1;
-}
-.select svg {
-  right: -20px;
-  position: relative;
-  z-index: 0;
-}
-
-.select select option {
-  background-color: none;
-}
-
-.select::-ms-expand {
-  display: none;
-}
