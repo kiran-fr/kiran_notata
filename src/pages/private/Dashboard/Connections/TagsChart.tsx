@@ -1,19 +1,37 @@
 import React, { useState } from "react";
 import { LegendPayload } from "recharts";
-import { Select } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons";
+import Select, { components } from "react-select";
 
 import PieChart from "./TagsChart/PieChart";
 import BarChart from "./TagsChart/BarChart";
 import styles from "./TagsChart.module.css";
-import "antd/lib/select/style/index.css";
-const { Option } = Select;
+
+const Placeholder = (props: any) => {
+  return (
+    <>
+      <svg height={20} width={20} viewBox="0 0 1024 1024">
+        <path d="M715.8 493.5L335 165.1c-14.2-12.2-35-1.2-35 18.5v656.8c0 19.7 20.8 30.7 35 18.5l380.8-328.4c10.9-9.4 10.9-27.6 0-37z" />
+      </svg>
+      <components.Placeholder {...props} />
+    </>
+  );
+};
+
+const SingleValue = (props: any) => {
+  return (
+    <>
+      <svg height={20} width={20} viewBox="0 0 1024 1024">
+        <path d="M715.8 493.5L335 165.1c-14.2-12.2-35-1.2-35 18.5v656.8c0 19.7 20.8 30.7 35 18.5l380.8-328.4c10.9-9.4 10.9-27.6 0-37z" />
+      </svg>
+      <components.SingleValue {...props} />
+    </>
+  );
+};
 
 const TagsChart = ({ tags, tagGroups }: any) => {
   const [chartType, setChartType] = useState(false);
   const [dataType, setDataType] = useState(tagGroups[0].id);
 
-  // console.log("tags", tags);
   console.log("tagGroupsBefore", tagGroups);
 
   const groupTags = tagGroups
@@ -35,32 +53,48 @@ const TagsChart = ({ tags, tagGroups }: any) => {
   const dat: LegendPayload[] = Array.from(groupTags.values());
   console.log("da", dat);
 
+  const customStyles = {
+    menu: (provided: any) => ({
+      ...provided,
+      width: 240,
+    }),
+    control: (base: any) => ({
+      ...base,
+      width: 240,
+      border: 0,
+      boxShadow: "none",
+      background: "none",
+    }),
+    placeholder: (base: any) => ({
+      ...base,
+      fontSize: "1em",
+    }),
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+    dropdownIndicator: () => ({
+      display: "none",
+    }),
+    singleValue: (base: any) => ({
+      ...base,
+      paddingLeft: 20,
+    }),
+  };
+
   dat.sort((a, b) => b.value - a.value);
   return (
     <>
       <Select
-        defaultValue={tagGroups[0].name}
-        style={{ width: 240 }}
-        bordered={false}
-        showArrow={false}
-        optionLabelProp="label"
-        onSelect={(e, opt) => setDataType(opt.key)}
-      >
-        {tagGroups.map((tagGroup: any) => (
-          <Option
-            key={tagGroup.id}
-            value={tagGroup.name}
-            label={
-              <>
-                <CaretRightOutlined />
-                &nbsp; {tagGroup.name}
-              </>
-            }
-          >
-            {tagGroup.name}
-          </Option>
-        ))}
-      </Select>
+        options={tagGroups}
+        defaultValue={tagGroups[0]}
+        onChange={val => setDataType(val.id)}
+        components={{ Placeholder, SingleValue }}
+        getOptionLabel={option => option.name}
+        isOptionSelected={option => option.id === dataType.id}
+        placeholder={"Choose"}
+        isSearchable={false}
+        styles={customStyles}
+      />
 
       <button
         className={styles.chart_type}
