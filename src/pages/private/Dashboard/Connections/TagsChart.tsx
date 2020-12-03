@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LegendPayload } from "recharts";
 import Select, { components } from "react-select";
+import { Tag } from "./types";
 
 import PieChart from "./TagsChart/PieChart";
 import BarChart from "./TagsChart/BarChart";
@@ -28,11 +29,37 @@ const SingleValue = (props: any) => {
   );
 };
 
-const TagsChart = ({ tags, tagGroups }: any) => {
+const customStyles = {
+  menu: (provided: any) => ({
+    ...provided,
+    width: 240,
+  }),
+  control: (base: any) => ({
+    ...base,
+    width: 240,
+    border: 0,
+    boxShadow: "none",
+    background: "none",
+  }),
+  placeholder: (base: any) => ({
+    ...base,
+    fontSize: "1em",
+  }),
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  dropdownIndicator: () => ({
+    display: "none",
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    paddingLeft: 20,
+  }),
+};
+
+const TagsChart = ({ tags, tagGroups }: { tags: Tag[]; tagGroups: any }) => {
   const [chartType, setChartType] = useState(false);
   const [dataType, setDataType] = useState(tagGroups[0].id);
-
-  console.log("tagGroupsBefore", tagGroups);
 
   const groupTags = tagGroups
     .find((tagGroup: any) => tagGroup.id === dataType)
@@ -44,44 +71,18 @@ const TagsChart = ({ tags, tagGroups }: any) => {
         }),
       new Map()
     );
-  // console.log("tagGroups", groupTags);
 
-  tags.forEach((tag: any) => {
+  tags.forEach(tag => {
     if (groupTags.get(tag.id)) groupTags.get(tag.id).value++;
   });
 
   const dat: LegendPayload[] = Array.from(groupTags.values());
+  dat.sort((a, b) => b.value - a.value);
+
+  console.log("tagGroupsBefore", tagGroups);
+  // console.log("tagGroups", groupTags);
   console.log("da", dat);
 
-  const customStyles = {
-    menu: (provided: any) => ({
-      ...provided,
-      width: 240,
-    }),
-    control: (base: any) => ({
-      ...base,
-      width: 240,
-      border: 0,
-      boxShadow: "none",
-      background: "none",
-    }),
-    placeholder: (base: any) => ({
-      ...base,
-      fontSize: "1em",
-    }),
-    indicatorSeparator: () => ({
-      display: "none",
-    }),
-    dropdownIndicator: () => ({
-      display: "none",
-    }),
-    singleValue: (base: any) => ({
-      ...base,
-      paddingLeft: 20,
-    }),
-  };
-
-  dat.sort((a, b) => b.value - a.value);
   return (
     <>
       <Select
