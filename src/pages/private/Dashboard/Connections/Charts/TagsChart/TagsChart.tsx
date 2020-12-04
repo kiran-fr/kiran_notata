@@ -40,6 +40,10 @@ const customStyles = {
     boxShadow: "none",
     background: "none",
   }),
+  container: (provided: any) => ({
+    ...provided,
+    width: 240,
+  }),
   placeholder: (base: any) => ({
     ...base,
     fontSize: "1em",
@@ -56,7 +60,15 @@ const customStyles = {
   }),
 };
 
-const TagsChart = ({ tags, tagGroups, chartType }: { tags: Tag[]; tagGroups: any, chartType?: ChartType }) => {
+const TagsChart = ({
+  tags,
+  tagGroups,
+  chartType,
+}: {
+  tags: Tag[];
+  tagGroups: any;
+  chartType?: ChartType;
+}) => {
   const [dataType, setDataType] = useState(tagGroups[0].id);
 
   const groupTags = tagGroups
@@ -94,7 +106,11 @@ const TagsChart = ({ tags, tagGroups, chartType }: { tags: Tag[]; tagGroups: any
         isSearchable={false}
         styles={customStyles}
       />
-      {chartType === ChartType.PIE ? <PieChart data={dat} /> : <BarChart data={dat} />}
+      {chartType === ChartType.PIE ? (
+        <PieChart data={dat} />
+      ) : (
+        <BarChart data={dat} />
+      )}
     </>
   );
 };

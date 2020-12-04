@@ -70,7 +70,7 @@ const renderActiveShape = (props: any) => {
         stroke={fill}
         fill="none"
       />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -95,9 +95,7 @@ const PieChart = ({ data }: { data: object[] }) => {
   return (
     <div style={{ width: "100%", height: 250 }}>
       <ResponsiveContainer>
-        <Chart
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
+        <Chart margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
@@ -111,7 +109,10 @@ const PieChart = ({ data }: { data: object[] }) => {
             fill="#8884d8"
           >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
           <Legend
@@ -124,7 +125,7 @@ const PieChart = ({ data }: { data: object[] }) => {
               `${value} - ${(entry?.payload.percent * 100).toFixed(2)}%`
             }
           />
-          <Tooltip/>
+          <Tooltip />
         </Chart>
       </ResponsiveContainer>
     </div>
