@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.0.2",
+    "@date-io/date-fns": "1.x",
     "@hookform/resolvers": "^0.1.0",
     "@material-ui/core": "^4.11.1",
     "@material-ui/pickers": "4.0.0-alpha.12",
@@ -97,6 +98,7 @@
     "aws-appsync-auth-link": "^3.0.2",
     "aws-appsync-subscription-link": "^3.0.3",
     "d3": "^5.15.0",
+    "date-fns": "^2.12.0",
     "jss": "^10.5.0",
     "query-string": "^6.13.5",
     "rc-slider": "^9.6.4",
