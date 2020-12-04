@@ -40,6 +40,10 @@ const customStyles = {
     boxShadow: "none",
     background: "none",
   }),
+  container: (provided: any) => ({
+    ...provided,
+    width: 240,
+  }),
   placeholder: (base: any) => ({
     ...base,
     fontSize: "1em",

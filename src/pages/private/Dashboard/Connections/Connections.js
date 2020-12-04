@@ -328,7 +328,7 @@ export default function Connections({ history }) {
           <StageChart connections={connections} />
         </ChartBlock>
 
-        <ChartBlock header={"Tags"} showSelector={true}>
+        <ChartBlock showSelector={true}>
           <TagsChart
             tags={connections.map(connection => connection.tags).flat()}
             tagGroups={tagGroups}
