@@ -322,7 +322,7 @@ export default function Connections({ history }) {
   return (
     <>
       <Card maxWidth={1200} style={{ paddingBottom: "20px" }}>
-        <ChartArea connections={connections} tagGroups={tagGroups}/>
+        <ChartArea connections={connections} tagGroups={tagGroups} />
       </Card>
 
       <CreateNewStartup
