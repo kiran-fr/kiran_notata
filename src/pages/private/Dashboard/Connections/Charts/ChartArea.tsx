@@ -6,7 +6,7 @@ import { Connection } from "../types";
 import ChartBlock from "./ChartBlock";
 
 type TagChartItem = {
-  tagGroupId: string;
+  id: number;
 };
 
 const ChartArea = ({
@@ -16,18 +16,15 @@ const ChartArea = ({
   connections: Connection[];
   tagGroups: any[];
 }) => {
-  const [tagCharts, setTagCharts] = useState<TagChartItem[]>([
-    { tagGroupId: tagGroups[0].id },
-  ]);
-
+  const [tagCharts, setTagCharts] = useState<TagChartItem[]>([{ id: 0 }]);
   return (
     <>
       <ChartBlock header={"Stage"}>
         <StageChart connections={connections} />
       </ChartBlock>
 
-      {tagCharts.map(chart => (
-        <ChartBlock header={"Tags"} showSelector={true}>
+      {tagCharts.map((chart, index) => (
+        <ChartBlock key={index} showSelector={true}>
           <TagsChart
             tags={connections.map(connection => connection.tags).flat()}
             tagGroups={tagGroups}
@@ -38,7 +35,9 @@ const ChartArea = ({
       <Button
         type={"just_text"}
         onClick={() =>
-          setTagCharts(tagCharts.concat([{ tagGroupId: tagGroups[0].id }]))
+          setTagCharts(
+            tagCharts.concat([{ id: tagCharts[tagCharts.length - 1].id + 1 }])
+          )
         }
       >
         Add Graph
