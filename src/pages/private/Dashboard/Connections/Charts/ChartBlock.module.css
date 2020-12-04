@@ -1,49 +1,49 @@
 .content {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid var(--color-gray-light);
-    border-radius: 2px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 2px;
 }
 
 .header_text {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--color-gray-medium);
-    display: inline;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-gray-medium);
+  display: inline;
 }
 
 .block_controls {
   display: inline;
-    float: right;
+  float: right;
 }
 
 .chart_type {
-    width: 40px;
-    height: 32px;
-    background-color: var(--color-primary);
-    border: none;
-    outline: none;
-    border-radius: 7px;
-    color: white;
-    font-size: 19px;
-    cursor: pointer;
-    /* float: left; */
-    right: 0;
-    position: relative;
+  width: 40px;
+  height: 32px;
+  background-color: var(--color-primary);
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  color: white;
+  font-size: 19px;
+  cursor: pointer;
+  /* float: left; */
+  right: 0;
+  position: relative;
 }
 
 .width_type {
-    width: 40px;
-    height: 32px;
-    /*background-color: var(--color-primary);*/
-    color: var(--color-primary);
-    border: none;
-    outline: none;
-    border-radius: 7px;
-    font-size: 19px;
-    cursor: pointer;
-    margin-right: 5px;
-    /* float: left; */
-    right: 0;
-    position: relative;
+  width: 40px;
+  height: 32px;
+  /*background-color: var(--color-primary);*/
+  color: var(--color-primary);
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  font-size: 19px;
+  cursor: pointer;
+  margin-right: 5px;
+  /* float: left; */
+  right: 0;
+  position: relative;
 }

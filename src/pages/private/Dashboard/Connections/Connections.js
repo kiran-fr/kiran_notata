@@ -324,14 +324,11 @@ export default function Connections({ history }) {
   return (
     <>
       <Card maxWidth={1200} style={{ paddingBottom: "20px" }}>
-
-        <ChartBlock header={'Stage'}>
-          <StageChart
-            connections={connections}
-          />
+        <ChartBlock header={"Stage"}>
+          <StageChart connections={connections} />
         </ChartBlock>
 
-        <ChartBlock header={'Tags'} showSelector={true}>
+        <ChartBlock header={"Tags"} showSelector={true}>
           <TagsChart
             tags={connections.map(connection => connection.tags).flat()}
             tagGroups={tagGroups}
