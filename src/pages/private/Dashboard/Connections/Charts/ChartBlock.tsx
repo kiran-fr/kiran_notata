@@ -21,24 +21,16 @@ const ChartBlock = ({ header, showSelector, ...props }: any) => {
         {
           showSelector && (
             <div className={styles.block_controls}>
-              <button
+              <button onClick={() => setWidthState( widthState === WidthState.HALF ? WidthState.FULL : WidthState.HALF) }
                 className={styles.width_type}
               >
-                {widthState === WidthState.HALF ? (
-                  <i className="fas fa-expand-alt" onClick={() => setWidthState(WidthState.FULL)}/>
-                ) : (
-                  <i className="fas fa-compress-alt" onClick={() => setWidthState(WidthState.HALF)}/>
-                )}
+                <i className={`fas ${widthState === WidthState.HALF ? 'fa-expand-alt' : 'fa-compress-alt'}`}/>
               </button>
 
               <button
-                className={styles.chart_type}
+                className={styles.chart_type} onClick={() => setChartType( chartType === ChartType.PIE ? ChartType.BAR : ChartType.PIE) }
               >
-                {chartType === ChartType.PIE ? (
-                  <i className="fas fa-chart-pie" onClick={() => setChartType(ChartType.BAR)}/>
-                ) : (
-                  <i className="fas fa-chart-bar" onClick={() => setChartType(ChartType.PIE)}/>
-                )}
+                <i className={`fas ${chartType === ChartType.PIE ? 'fa-chart-pie' : 'fa-chart-bar'}`}/>
               </button>
             </div>
           )
