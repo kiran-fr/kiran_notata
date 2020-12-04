@@ -69,7 +69,7 @@ const TagsChart = ({
   tags: Tag[];
   tagGroups: any;
   chartType?: ChartType;
-  lengthFilter: number;
+  lengthFilter?: number;
 }) => {
   const [dataType, setDataType] = useState(tagGroups[0].id);
 
@@ -89,7 +89,7 @@ const TagsChart = ({
   });
 
   let data: LegendPayload[] = Array.from(groupTags.values());
-  if (lengthFilter > 0)
+  if (lengthFilter && lengthFilter > 0)
     data = data.filter(group => group.value >= lengthFilter);
   data.sort((a, b) => b.value - a.value);
 
