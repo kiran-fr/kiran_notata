@@ -15,7 +15,6 @@ export const ChartBlock = ({
   header,
   showSelector,
   initialWidthState = WidthState.HALF,
-  index,
   onDeleteBlock,
   ...props
 }: any) => {
@@ -71,10 +70,7 @@ export const ChartBlock = ({
             />
           </button>
 
-          <button
-            className={styles.width_type}
-            onClick={() => onDeleteBlock(index)}
-          >
+          <button className={styles.width_type} onClick={onDeleteBlock}>
             <i className="fas fa-trash-alt" />
           </button>
         </div>

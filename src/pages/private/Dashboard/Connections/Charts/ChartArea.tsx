@@ -21,7 +21,6 @@ const ChartArea = ({
 
   const onDeleteBlock = (index: number) => {
     tagCharts.splice(index, 1);
-    console.log(tagCharts);
     setTagCharts(tagCharts.slice());
   };
 
@@ -35,11 +34,10 @@ const ChartArea = ({
       <div className={styles.flex}>
         {tagCharts.map((chart, index) => (
           <ChartBlock
-            header={"Tags"}
             showSelector={true}
-            key={`tag-${index}`}
+            key={`tag-${chart.id}`}
             index={index}
-            onDeleteBlock={onDeleteBlock}
+            onDeleteBlock={() => onDeleteBlock(index)}
           >
             <TagsChart
               tags={connections.map(connection => connection.tags).flat()}
@@ -53,7 +51,7 @@ const ChartArea = ({
         type={"just_text"}
         onClick={() =>
           setTagCharts(
-            tagCharts.concat([{ id: tagCharts[tagCharts.length - 1].id + 1 }])
+            tagCharts.concat([{ id: tagCharts[tagCharts.length - 1]?.id + 1 }])
           )
         }
       >
