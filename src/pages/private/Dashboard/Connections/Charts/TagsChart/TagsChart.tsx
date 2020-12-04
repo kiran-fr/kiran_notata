@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { LegendPayload } from "recharts";
 import Select, { components } from "react-select";
-import { Tag } from "./types";
-
-import PieChart from "./TagsChart/PieChart";
-import BarChart from "./TagsChart/BarChart";
-import styles from "./TagsChart.module.css";
+import { Tag } from "../../types";
+import PieChart from "../PieChart";
+import BarChart from "../BarChart";
+import { ChartType } from "../ChartBlock";
 
 const Placeholder = (props: any) => {
   return (
@@ -57,8 +56,7 @@ const customStyles = {
   }),
 };
 
-const TagsChart = ({ tags, tagGroups }: { tags: Tag[]; tagGroups: any }) => {
-  const [chartType, setChartType] = useState(false);
+const TagsChart = ({ tags, tagGroups, chartType }: { tags: Tag[]; tagGroups: any, chartType?: ChartType }) => {
   const [dataType, setDataType] = useState(tagGroups[0].id);
 
   const groupTags = tagGroups
@@ -96,18 +94,7 @@ const TagsChart = ({ tags, tagGroups }: { tags: Tag[]; tagGroups: any }) => {
         isSearchable={false}
         styles={customStyles}
       />
-
-      <button
-        className={styles.chart_type}
-        onClick={() => setChartType(!chartType)}
-      >
-        {chartType ? (
-          <i className="fas fa-chart-pie" />
-        ) : (
-          <i className="fas fa-chart-bar" />
-        )}
-      </button>
-      {chartType ? <PieChart data={dat} /> : <BarChart data={dat} />}
+      {chartType === ChartType.PIE ? <PieChart data={dat} /> : <BarChart data={dat} />}
     </>
   );
 };

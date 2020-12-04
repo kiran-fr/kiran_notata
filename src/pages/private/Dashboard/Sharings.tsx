@@ -281,7 +281,7 @@ export default function Sharings({ history }: { history: History }) {
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           let path = `${group_route}/${data.groupId}`;
-                          history.push(path);
+                          history.push(path, { rightMenu: true });
                         }}
                       >
                         {data.name}
@@ -344,7 +344,7 @@ export default function Sharings({ history }: { history: History }) {
                         className={styles.highlight_1}
                         onClick={() => {
                           let path = `${group_route}/${data.groupId}`;
-                          history.push(path);
+                          history.push(path, { rightMenu: true });
                         }}
                       >
                         {data.name}

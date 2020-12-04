@@ -80,7 +80,7 @@ export default ({
 
           <div
             onClick={() => {
-              history.push(`${startup_page}/${connection.id}`);
+              history.push(`${startup_page}/${connection.id}`, { rightMenu: true });
             }}
             className={styles.actual_content}
           >

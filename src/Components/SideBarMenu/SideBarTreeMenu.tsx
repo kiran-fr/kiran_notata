@@ -187,10 +187,11 @@ const SideBarTreeMenu = ({ location, history }: any) => {
                 link: haveAddedStartup && `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
                 label: value[0].connection?.creative?.name,
                 nodes: [],
-                selected: haveAddedStartup && selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`),
+                selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`) || selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}`)),
                 showHashTag: true,
                 icon: !haveAddedStartup && (loadingState !== creativeId) ? "fal fa-cloud-download" : loadingState === creativeId ? "fa fa-spinner fa-spin" : "",
-                action: () => !haveAddedStartup && addStartup(creativeId)
+                showRightMenu: true,
+                action: () => !haveAddedStartup && addStartup(creativeId),
               } as MenuItem;
             }),
         });
@@ -294,10 +295,23 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         {node.showHashTag && <span className={styles.hash_tag}>#</span>}
         {
           node.link ?
-            <Link to={{pathname: node.link, state: { rightMenu: node.showRightMenu} }} className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>
+            <span
+              onClick={() => dispatch(hideMobileNavigationMenu())}
+              >
+              <Link
+                to={{pathname: node.link, state: { rightMenu: node.showRightMenu} }}
+                className={styles.link}
+                style={{maxWidth: `${203 - 27 * level}px`}}
+              >
+                {node.label}
+              </Link>
+            </span>:
+            <span
+              className={styles.link}
+              style={{maxWidth: `${203 - 27 * level}px`}}
+              >
               {node.label}
-            </Link> :
-            <span className={styles.link} style={{maxWidth: `${203 - 27 * level}px`}}>{node.label}</span>
+            </span>
         }
         {node.icon && (
           <i
