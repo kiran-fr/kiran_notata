@@ -3,7 +3,7 @@ import { Button } from "../../../../../Components/elements";
 import TagsChart from "./TagsChart/TagsChart";
 import StageChart from "./StageChart/StageChart";
 import { Connection } from "../types";
-import { ChartBlock, WidthState }  from "./ChartBlock";
+import { ChartBlock, WidthState } from "./ChartBlock";
 import styles from "./ChartArea.module.css";
 
 type TagChartItem = {
@@ -19,24 +19,28 @@ const ChartArea = ({
 }) => {
   const [tagCharts, setTagCharts] = useState<TagChartItem[]>([{ id: 0 }]);
 
-  const onDeleteBlock  = (index: number) => {
+  const onDeleteBlock = (index: number) => {
     tagCharts.splice(index, 1);
-    console.log(tagCharts)
+    console.log(tagCharts);
     setTagCharts(tagCharts.slice());
   };
 
   return (
     <>
       <div className={styles.flex}>
-
-      <ChartBlock header={"Stage"} initialWidthState={WidthState.FULL}>
-        <StageChart connections={connections} />
-      </ChartBlock>
+        <ChartBlock header={"Stage"} initialWidthState={WidthState.FULL}>
+          <StageChart connections={connections} />
+        </ChartBlock>
       </div>
       <div className={styles.flex}>
-
         {tagCharts.map((chart, index) => (
-          <ChartBlock header={"Tags"} showSelector={true} key={`tag-${index}`} index={index} onDeleteBlock={onDeleteBlock}>
+          <ChartBlock
+            header={"Tags"}
+            showSelector={true}
+            key={`tag-${index}`}
+            index={index}
+            onDeleteBlock={onDeleteBlock}
+          >
             <TagsChart
               tags={connections.map(connection => connection.tags).flat()}
               tagGroups={tagGroups}
@@ -55,7 +59,6 @@ const ChartArea = ({
       >
         Add Graph
       </Button>
-
     </>
   );
 };
