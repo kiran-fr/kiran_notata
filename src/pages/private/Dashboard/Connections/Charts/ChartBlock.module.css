@@ -17,6 +17,20 @@
   float: right;
 }
 
+.filter_input {
+  background-color: var(--color-gray-light);
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 19px;
+  height: 32px;
+  margin-right: 5px;
+  position: relative;
+  right: 0;
+  text-align: center;
+  width: 80px;
+}
+
 .chart_type {
   width: 40px;
   height: 32px;

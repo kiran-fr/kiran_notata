@@ -64,10 +64,12 @@ const TagsChart = ({
   tags,
   tagGroups,
   chartType,
+  lengthFilter,
 }: {
   tags: Tag[];
   tagGroups: any;
   chartType?: ChartType;
+  lengthFilter: number;
 }) => {
   const [dataType, setDataType] = useState(tagGroups[0].id);
 
@@ -86,12 +88,10 @@ const TagsChart = ({
     if (groupTags.get(tag.id)) groupTags.get(tag.id).value++;
   });
 
-  const dat: LegendPayload[] = Array.from(groupTags.values());
-  dat.sort((a, b) => b.value - a.value);
-
-  console.log("tagGroupsBefore", tagGroups);
-  // console.log("tagGroups", groupTags);
-  console.log("da", dat);
+  let data: LegendPayload[] = Array.from(groupTags.values());
+  if (lengthFilter > 0)
+    data = data.filter(group => group.value >= lengthFilter);
+  data.sort((a, b) => b.value - a.value);
 
   return (
     <>
@@ -107,9 +107,9 @@ const TagsChart = ({
         styles={customStyles}
       />
       {chartType === ChartType.PIE ? (
-        <PieChart data={dat} />
+        <PieChart data={data} />
       ) : (
-        <BarChart data={dat} />
+        <BarChart data={data} />
       )}
     </>
   );
