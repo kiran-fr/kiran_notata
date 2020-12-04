@@ -14,6 +14,7 @@ export enum WidthState {
 export const ChartBlock = ({ header, showSelector, initialWidthState = WidthState.HALF, index, onDeleteBlock, ...props }: any) => {
   const [chartType, setChartType] = useState<ChartType>(ChartType.BAR);
   const [widthState, setWidthState] = useState<WidthState>(initialWidthState);
+  const [lengthFilter, setlengthFilter] = useState(0);
 
   return (
     <div
@@ -23,6 +24,10 @@ export const ChartBlock = ({ header, showSelector, initialWidthState = WidthStat
 
       {showSelector && (
         <div className={styles.block_controls}>
+          <input
+            onChange={e => setlengthFilter(parseInt(e.target.value))}
+            className={styles.filter_input}
+          />
           <button
             onClick={() =>
               setWidthState(
@@ -67,7 +72,13 @@ export const ChartBlock = ({ header, showSelector, initialWidthState = WidthStat
         </div>
       )}
 
-      <div>{React.cloneElement(props.children, { chartType, widthState })}</div>
+      <div>
+        {React.cloneElement(props.children, {
+          chartType,
+          widthState,
+          lengthFilter,
+        })}
+      </div>
     </div>
   );
 };
