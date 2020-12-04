@@ -6,19 +6,18 @@ export enum ChartType {
   BAR = "BAR",
 }
 
-enum WidthState {
+export enum WidthState {
   HALF = "HALF",
   FULL = "FULL",
 }
 
-const ChartBlock = ({ header, showSelector, ...props }: any) => {
+export const ChartBlock = ({ header, showSelector, initialWidthState = WidthState.HALF, index, onDeleteBlock, ...props }: any) => {
   const [chartType, setChartType] = useState<ChartType>(ChartType.BAR);
-  const [widthState, setWidthState] = useState<WidthState>(WidthState.FULL);
+  const [widthState, setWidthState] = useState<WidthState>(initialWidthState);
 
   return (
     <div
-      className={styles.content}
-      style={{ width: widthState === WidthState.FULL ? "100%" : "50%" }}
+      className={`${styles.content} ${widthState === WidthState.FULL ? styles.flex_100 : styles.flex_50}`}
     >
       <div className={styles.header_text}>{header}</div>
 
@@ -57,6 +56,14 @@ const ChartBlock = ({ header, showSelector, ...props }: any) => {
               }`}
             />
           </button>
+
+          <button
+            className={styles.width_type}
+            onClick={() => onDeleteBlock(index)}>
+            <i
+            className="fas fa-trash-alt"
+          />
+          </button>
         </div>
       )}
 
@@ -64,5 +71,3 @@ const ChartBlock = ({ header, showSelector, ...props }: any) => {
     </div>
   );
 };
-
-export default ChartBlock;
