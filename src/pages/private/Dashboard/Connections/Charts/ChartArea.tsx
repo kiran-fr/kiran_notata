@@ -51,7 +51,13 @@ const ChartArea = ({
         type={"just_text"}
         onClick={() =>
           setTagCharts(
-            tagCharts.concat([{ id: tagCharts[tagCharts.length - 1]?.id + 1 }])
+            tagCharts.concat([
+              {
+                id: tagCharts.length
+                  ? tagCharts[tagCharts.length - 1]?.id + 1
+                  : 0,
+              },
+            ])
           )
         }
       >
