@@ -18,6 +18,15 @@
   max-width: 100%;
 }
 
+@media (max-width: 1011px) {
+  .flex_50 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 1 1 100%;
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
 .header_text {
   font-size: 14px;
   font-weight: 500;
