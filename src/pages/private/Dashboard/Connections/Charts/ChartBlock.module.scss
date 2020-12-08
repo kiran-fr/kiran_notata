@@ -43,45 +43,36 @@
   float: right;
 }
 
-.filter_input {
-  background-color: var(--color-gray-light);
-  border-radius: 7px;
+.button {
+  height: 30px;
   border: none;
   cursor: pointer;
-  font-size: 19px;
-  height: 32px;
-  margin-right: 5px;
-  position: relative;
+  font-size: 18px;
   right: 0;
-  text-align: center;
-  width: 80px;
-}
-
-.chart_type {
-  width: 40px;
-  height: 32px;
-  background-color: var(--color-primary);
-  border: none;
+  border-radius: 6px;
   outline: none;
-  border-radius: 7px;
-  color: white;
-  font-size: 19px;
-  cursor: pointer;
   margin-right: 5px;
-  right: 0;
-  position: relative;
-}
 
-.width_type {
-  width: 40px;
-  height: 32px;
-  color: var(--color-primary);
-  border: none;
-  outline: none;
-  border-radius: 7px;
-  font-size: 19px;
-  cursor: pointer;
-  margin-right: 5px;
-  right: 0;
-  position: relative;
+  &_filter {
+    @extend .button;
+    background-color: var(--color-gray-light);
+    position: relative;
+    text-align: center;
+    width: 80px;
+  }
+
+  &_chart_type {
+    @extend .button;
+    width: 40px;
+    background-color: var(--color-primary);
+    color: white;
+    position: relative;
+  }
+
+  &_width {
+    @extend .button;
+    width: 40px;
+    color: var(--color-primary);
+    position: relative;
+  }
 }

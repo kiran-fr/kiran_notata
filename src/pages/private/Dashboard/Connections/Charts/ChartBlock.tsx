@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./ChartBlock.module.css";
+import styles from "./ChartBlock.module.scss";
 
 export enum ChartType {
   PIE = "PIE",
@@ -34,7 +34,7 @@ export const ChartBlock = ({
         <div className={styles.block_controls}>
           <input
             onChange={e => setlengthFilter(parseInt(e.target.value))}
-            className={styles.filter_input}
+            className={styles.button_filter}
           />
           <button
             onClick={() =>
@@ -44,7 +44,7 @@ export const ChartBlock = ({
                   : WidthState.HALF
               )
             }
-            className={styles.width_type}
+            className={styles.button_width}
           >
             <i
               className={`fas ${
@@ -56,7 +56,7 @@ export const ChartBlock = ({
           </button>
 
           <button
-            className={styles.chart_type}
+            className={styles.button_chart_type}
             onClick={() =>
               setChartType(
                 chartType === ChartType.PIE ? ChartType.BAR : ChartType.PIE
@@ -70,7 +70,7 @@ export const ChartBlock = ({
             />
           </button>
 
-          <button className={styles.width_type} onClick={onDeleteBlock}>
+          <button className={styles.button_width} onClick={onDeleteBlock}>
             <i className="fas fa-trash-alt" />
           </button>
         </div>

@@ -13,8 +13,9 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const style = {
   top: 0,
-  left: 350,
-  lineHeight: "24px",
+  left: 320,
+  lineHeight: "20px",
+  fontSize: "14px",
 };
 
 const renderActiveShape = (props: any) => {
@@ -93,16 +94,16 @@ const PieChart = ({ data }: { data: object[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div style={{ width: "100%", height: 250 }}>
+    <div style={{ width: "100%", height: 260 }}>
       <ResponsiveContainer>
-        <Chart margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <Chart margin={{ top: 25, right: 0, left: 10 }}>
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             onMouseEnter={(data: any, index: number) => setActiveIndex(index)}
             dataKey="value"
             data={data}
-            cx={200}
+            cx={150}
             cy={100}
             labelLine={false}
             outerRadius={80}
