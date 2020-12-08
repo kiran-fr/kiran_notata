@@ -12,10 +12,21 @@ import {
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const style = {
-  top: 0,
-  left: 320,
-  lineHeight: "20px",
-  fontSize: "14px",
+  halfBlock: {
+    top: 0,
+    left: 225,
+    width: "170px",
+    overflowY: "scroll",
+    lineHeight: "20px",
+    fontSize: "14px",
+  },
+  fullBlock: {
+    top: 0,
+    left: 510,
+    lineHeight: "20px",
+    fontSize: "14px",
+    overflowY: "scroll",
+  },
 };
 
 const renderActiveShape = (props: any) => {
@@ -90,7 +101,14 @@ const renderActiveShape = (props: any) => {
     </g>
   );
 };
-const PieChart = ({ data }: { data: object[] }) => {
+
+const PieChart = ({
+  data,
+  widthState,
+}: {
+  data: object[];
+  widthState?: string;
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
@@ -99,11 +117,11 @@ const PieChart = ({ data }: { data: object[] }) => {
         <Chart margin={{ top: 25, right: 0, left: 10 }}>
           <Pie
             activeIndex={activeIndex}
-            activeShape={renderActiveShape}
+            activeShape={widthState === "FULL" ? renderActiveShape : undefined}
             onMouseEnter={(data: any, index: number) => setActiveIndex(index)}
             dataKey="value"
             data={data}
-            cx={150}
+            cx={widthState === "FULL" ? 230 : 80}
             cy={100}
             labelLine={false}
             outerRadius={80}
@@ -118,15 +136,17 @@ const PieChart = ({ data }: { data: object[] }) => {
           </Pie>
           <Legend
             iconSize={10}
-            height={140}
+            height={260}
             layout="vertical"
             verticalAlign="middle"
-            wrapperStyle={style}
+            wrapperStyle={
+              widthState === "FULL" ? style.fullBlock : style.halfBlock
+            }
             formatter={(value, entry: any) =>
               `${value} - ${(entry?.payload.percent * 100).toFixed(2)}%`
             }
           />
-          <Tooltip />
+          {widthState !== "FULL" && <Tooltip />}
         </Chart>
       </ResponsiveContainer>
     </div>

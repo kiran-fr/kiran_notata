@@ -65,11 +65,13 @@ const TagsChart = ({
   tagGroups,
   chartType,
   lengthFilter,
+  widthState,
 }: {
   tags: Tag[];
   tagGroups: any;
   chartType?: ChartType;
   lengthFilter?: number;
+  widthState?: string;
 }) => {
   const [dataType, setDataType] = useState(tagGroups[0].id);
 
@@ -107,7 +109,7 @@ const TagsChart = ({
         styles={customStyles}
       />
       {chartType === ChartType.PIE ? (
-        <PieChart data={data} />
+        <PieChart data={data} widthState={widthState} />
       ) : (
         <BarChart data={data} />
       )}
