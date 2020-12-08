@@ -25,6 +25,10 @@
     flex: 1 1 100%;
     max-width: 100%;
   }
+
+  .width_type {
+    display: none;
+  }
 }
 
 .header_text {

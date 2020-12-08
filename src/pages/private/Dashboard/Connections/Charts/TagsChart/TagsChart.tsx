@@ -35,14 +35,14 @@ const customStyles = {
   }),
   control: (base: any) => ({
     ...base,
-    width: 240,
+    width: 140,
     border: 0,
     boxShadow: "none",
     background: "none",
   }),
   container: (provided: any) => ({
     ...provided,
-    width: 240,
+    width: 140,
   }),
   placeholder: (base: any) => ({
     ...base,
