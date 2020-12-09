@@ -10,14 +10,24 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+// const COLORS = [
+//   "#A8A7A7",
+//   "#CC527A",
+//   "#E8175D",
+//   "#932432",
+//   "#3C1874",
+//   "#474747",
+//   "#363636",
+// ];
+
 const COLORS = [
-  "#A8A7A7",
-  "#CC527A",
-  "#E8175D",
-  "#932432",
-  "#3C1874",
-  "#474747",
-  "#363636",
+  "#68bb35",
+  "#339af6",
+  "#6d6d6d",
+  "#f1a627",
+  "#e74226",
+  "#bf0045",
+  "#4a00f5",
 ];
 
 const BarChart = ({ data }: { data: object[] }) => {
