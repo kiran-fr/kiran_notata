@@ -9,7 +9,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = [
+  "#A8A7A7",
+  "#CC527A",
+  "#E8175D",
+  "#932432",
+  "#3C1874",
+  "#474747",
+  "#363636",
+];
 
 const style = {
   halfBlock: {
