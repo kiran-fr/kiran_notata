@@ -73,9 +73,19 @@ const renderActiveShape = (props: any) => {
 
   return (
     <g>
-      {/* <text x={cx} y={cy} dy={8} textAnchor="middle" fill={"red"}>
-        {payload.name}
-      </text> */}
+      <text
+        x={cx}
+        y={cy}
+        dy={8}
+        fontSize={payload.name.length >= 16 ? 11 : undefined}
+        width={"135px"}
+        textAnchor="middle"
+        fill={fill}
+      >
+        {payload.name.length > 23
+          ? `${payload.name.slice(0, 20)}...`
+          : payload.name}
+      </text>
       <Sector
         cx={cx}
         cy={cy}
@@ -129,7 +139,7 @@ const PieChart = ({
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div style={{ width: "100%", height: 260 }}>
+    <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <Chart margin={{ top: 25, right: 0, left: 10 }}>
           <Pie
@@ -139,9 +149,10 @@ const PieChart = ({
             dataKey="value"
             data={data}
             cx={widthState === "FULL" ? 230 : 80}
-            cy={100}
+            cy={120}
             labelLine={false}
-            outerRadius={80}
+            innerRadius={70}
+            outerRadius={90}
             fill="#8884d8"
           >
             {data.map((entry, index) => (
