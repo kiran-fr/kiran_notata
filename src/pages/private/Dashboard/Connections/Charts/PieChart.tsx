@@ -32,7 +32,7 @@ const style = {
   halfBlock: {
     top: 0,
     left: 225,
-    width: "170px",
+    width: "45%",
     overflowY: "scroll",
     lineHeight: "20px",
     fontSize: "14px",
