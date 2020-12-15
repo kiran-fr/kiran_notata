@@ -1,16 +1,19 @@
 import * as React from "react";
 import { XAxis, BarChart, Bar, Cell, ResponsiveContainer } from "recharts";
-import { Connection } from "../../types";
-
-type StageChartData = {
-  id: number;
-  name: number;
-  value: number;
-};
+import { ChartData, Connection } from "../../types";
 
 const ScoresChart = ({ connections }: { connections: Connection[] }) => {
+  const arrKar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value => [
+    value,
+    {
+      id: value.toString(),
+      value: 0,
+      name: value.toString(),
+    },
+  ]);
+
   const dataMap = connections.reduce(
-    (map: Map<number, StageChartData>, connection: Connection) => {
+    (map: Map<number, ChartData>, connection: Connection) => {
       connection.subjectiveScores.forEach(score => {
         const chartData = map.get(score.score);
         if (chartData) {
@@ -18,19 +21,19 @@ const ScoresChart = ({ connections }: { connections: Connection[] }) => {
           map.set(score.score, chartData);
         } else {
           map.set(score.score, {
-            id: score.score,
+            id: score.score.toString(),
             value: 1,
-            name: score.score,
+            name: score.score.toString(),
           });
         }
       });
       return map;
     },
-    new Map<number, StageChartData>()
+    new Map<number, ChartData>(arrKar as any)
   );
 
   const data = Array.from(dataMap.values());
-  data.sort((a, b) => a.id - b.id);
+  data.sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
   const colors = [
     "#FFBF00",
