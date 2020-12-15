@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { LegendPayload } from "recharts";
+import { ChartData } from "../../types";
 import Select, { components } from "react-select";
 import { Tag } from "../../types";
 import PieChart from "../PieChart";
 import BarChart from "../BarChart";
 import { ChartType } from "../ChartBlock";
+import styles from "../ChartBlock.module.scss";
 
 const Placeholder = (props: any) => {
   return (
@@ -66,12 +67,16 @@ const TagsChart = ({
   chartType,
   lengthFilter,
   widthState,
+  setFilters,
+  filters,
 }: {
   tags: Tag[];
   tagGroups: any;
   chartType?: ChartType;
   lengthFilter?: number;
   widthState?: string;
+  setFilters: Function;
+  filters: any;
 }) => {
   const [dataType, setDataType] = useState(tagGroups[0].id);
 
@@ -80,6 +85,7 @@ const TagsChart = ({
     .tags.reduce(
       (map: Map<string, Object>, props: any) =>
         map.set(props.id, {
+          id: props.id,
           name: props.name,
           value: 0,
         }),
@@ -90,7 +96,7 @@ const TagsChart = ({
     if (groupTags.get(tag.id)) groupTags.get(tag.id).value++;
   });
 
-  let data: LegendPayload[] = Array.from(groupTags.values());
+  let data: ChartData[] = Array.from(groupTags.values());
   if (lengthFilter && lengthFilter > 0)
     data = data.filter(group => group.value >= lengthFilter);
   data.sort((a, b) => b.value - a.value);
@@ -109,9 +115,14 @@ const TagsChart = ({
         styles={customStyles}
       />
       {chartType === ChartType.PIE ? (
-        <PieChart data={data} widthState={widthState} />
+        <PieChart
+          data={data}
+          widthState={widthState}
+          setFilters={setFilters}
+          filters={filters}
+        />
       ) : (
-        <BarChart data={data} />
+        <BarChart data={data} setFilters={setFilters} filters={filters} />
       )}
     </>
   );

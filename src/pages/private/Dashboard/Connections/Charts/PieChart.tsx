@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { ChartData } from "../types";
 
 // const COLORS = [
 //   "#A8A7A7",
@@ -57,6 +58,7 @@ const renderActiveShape = (props: any) => {
     startAngle,
     endAngle,
     fill,
+    onClick,
     payload,
     percent,
     value,
@@ -94,6 +96,8 @@ const renderActiveShape = (props: any) => {
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill}
+        onClick={onClick}
+        cursor={"pointer"}
       />
       <Sector
         cx={cx}
@@ -132,11 +136,18 @@ const renderActiveShape = (props: any) => {
 const PieChart = ({
   data,
   widthState,
+  setFilters,
+  filters,
 }: {
-  data: object[];
+  data: ChartData[];
   widthState?: string;
+  setFilters: Function;
+  filters: any;
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedIndexes, setSelectedIndex] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   return (
     <div style={{ width: "100%", height: 300 }}>
@@ -158,7 +169,34 @@ const PieChart = ({
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={
+                  Object.keys(selectedIndexes).length > 0
+                    ? selectedIndexes[index]
+                      ? COLORS[index % COLORS.length]
+                      : "grey"
+                    : COLORS[index % COLORS.length]
+                }
+                onClick={() => {
+                  if (selectedIndexes[index]) {
+                    delete selectedIndexes[index];
+                    setSelectedIndex({
+                      ...selectedIndexes,
+                    });
+                    setFilters({
+                      tags: filters.tags.filter(
+                        ({ id }: any) => id !== entry.id
+                      ),
+                    });
+                  } else {
+                    setSelectedIndex({
+                      ...selectedIndexes,
+                      [index]: true,
+                    });
+                    setFilters({
+                      tags: [...filters.tags, { id: entry.id }],
+                    });
+                  }
+                }}
               />
             ))}
           </Pie>

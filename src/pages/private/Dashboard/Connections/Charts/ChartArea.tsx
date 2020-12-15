@@ -13,9 +13,13 @@ type TagChartItem = {
 const ChartArea = ({
   connections,
   tagGroups,
+  setFilters,
+  filters,
 }: {
   connections: Connection[];
   tagGroups: any[];
+  setFilters: any;
+  filters: any;
 }) => {
   const [tagCharts, setTagCharts] = useState<TagChartItem[]>([{ id: 0 }]);
 
@@ -42,6 +46,8 @@ const ChartArea = ({
             <TagsChart
               tags={connections.map(connection => connection.tags).flat()}
               tagGroups={tagGroups}
+              setFilters={setFilters}
+              filters={filters}
             />
           </ChartBlock>
         ))}

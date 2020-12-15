@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BarChart as Chart,
   Bar,
@@ -9,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { ChartData } from "../types";
 
 // const COLORS = [
 //   "#A8A7A7",
@@ -30,7 +31,19 @@ const COLORS = [
   "#4a00f5",
 ];
 
-const BarChart = ({ data }: { data: object[] }) => {
+const BarChart = ({
+  data,
+  setFilters,
+  filters,
+}: {
+  data: ChartData[];
+  setFilters: Function;
+  filters: any;
+}) => {
+  const [selectedIndexes, setSelectedIndex] = useState<{
+    [key: string]: boolean;
+  }>({});
+
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
@@ -39,11 +52,38 @@ const BarChart = ({ data }: { data: object[] }) => {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="value" fill="#8884d8">
+          <Bar dataKey="value" fill="#8884d8" cursor={"pointer"}>
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={
+                  Object.keys(selectedIndexes).length > 0
+                    ? selectedIndexes[index]
+                      ? COLORS[index % COLORS.length]
+                      : "grey"
+                    : COLORS[index % COLORS.length]
+                }
+                onClick={() => {
+                  if (selectedIndexes[index]) {
+                    delete selectedIndexes[index];
+                    setSelectedIndex({
+                      ...selectedIndexes,
+                    });
+                    setFilters({
+                      tags: filters.tags.filter(
+                        ({ id }: any) => id !== entry.id
+                      ),
+                    });
+                  } else {
+                    setSelectedIndex({
+                      ...selectedIndexes,
+                      [index]: true,
+                    });
+                    setFilters({
+                      tags: [...filters.tags, { id: entry.id }],
+                    });
+                  }
+                }}
               />
             ))}
           </Bar>

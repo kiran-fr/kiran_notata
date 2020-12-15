@@ -237,6 +237,7 @@ export default function Connections({ history }) {
   const [showEvaluate, setShowEvaluate] = useState(undefined);
 
   const [filters, setFilterState] = useState();
+  const [chartFilters, setChartFilters] = useState({ tags: [] });
 
   useEffect(() => {
     let f;
@@ -270,9 +271,15 @@ export default function Connections({ history }) {
   if (!tagGroupsQuery.data && tagGroupsQuery.loading) return <GhostLoader />;
 
   let connections = data.connectionsGet;
+  let connectionsGeneral;
 
   if (connections.length >= 10) {
-    connections = applyFilters({ connections, filters });
+    connectionsGeneral = applyFilters({ connections, filters });
+    // Apply filters from charts, affecting selection in table but not in charts themselves
+    connections = applyFilters({
+      connections: connectionsGeneral,
+      filters: chartFilters,
+    });
   }
 
   let showTagsForConnection;
@@ -322,7 +329,12 @@ export default function Connections({ history }) {
   return (
     <>
       <Card maxWidth={1200} style={{ paddingBottom: "20px" }}>
-        <ChartArea connections={connections} tagGroups={tagGroups} />
+        <ChartArea
+          connections={connectionsGeneral}
+          tagGroups={tagGroups}
+          setFilters={setChartFilters}
+          filters={chartFilters}
+        />
       </Card>
 
       <CreateNewStartup

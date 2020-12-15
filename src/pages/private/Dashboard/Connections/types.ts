@@ -206,3 +206,9 @@ export enum LogType {
   EVENT,
   COMMENT,
 }
+
+export type ChartData = {
+  id: string;
+  name: string;
+  value: number;
+};
