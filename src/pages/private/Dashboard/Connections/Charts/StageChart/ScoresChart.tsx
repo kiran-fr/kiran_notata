@@ -30,7 +30,7 @@ const ScoresChart = ({ connections }: { connections: Connection[] }) => {
   );
 
   const data = Array.from(dataMap.values());
-  data.sort((a, b) => b.id - a.id);
+  data.sort((a, b) => a.id - b.id);
 
   const colors = [
     "#FFBF00",
