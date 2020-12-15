@@ -1,29 +1,36 @@
 import * as React from "react";
 import { XAxis, BarChart, Bar, Cell, ResponsiveContainer } from "recharts";
-import { ChartData, Connection } from "../../types";
+import { Connection } from "../../types";
 
-const StageChart = ({ connections }: { connections: Connection[] }) => {
+type StageChartData = {
+  id: number;
+  name: number;
+  value: number;
+};
+
+const ScoresChart = ({ connections }: { connections: Connection[] }) => {
   const dataMap = connections.reduce(
-    (map: Map<string, ChartData>, connection: Connection) => {
-      connection.funnelTags.forEach(funnelTag => {
-        const chartData = map.get(funnelTag.id);
+    (map: Map<number, StageChartData>, connection: Connection) => {
+      connection.subjectiveScores.forEach(score => {
+        const chartData = map.get(score.score);
         if (chartData) {
           chartData.value += 1;
-          map.set(funnelTag.id, chartData);
+          map.set(score.score, chartData);
         } else {
-          map.set(funnelTag.id, {
-            id: funnelTag.id,
+          map.set(score.score, {
+            id: score.score,
             value: 1,
-            name: funnelTag.name,
+            name: score.score,
           });
         }
       });
       return map;
     },
-    new Map<string, ChartData>()
+    new Map<number, StageChartData>()
   );
 
   const data = Array.from(dataMap.values());
+  data.sort((a, b) => b.id - a.id);
 
   const colors = [
     "#FFBF00",
@@ -86,4 +93,4 @@ const StageChart = ({ connections }: { connections: Connection[] }) => {
   );
 };
 
-export default StageChart;
+export default ScoresChart;

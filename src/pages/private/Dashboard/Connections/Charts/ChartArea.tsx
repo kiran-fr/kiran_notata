@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../../../../../Components/elements";
 import TagsChart from "./TagsChart/TagsChart";
 import StageChart from "./StageChart/StageChart";
+import ScoresChart from "./StageChart/ScoresChart";
 import { Connection } from "../types";
 import { ChartBlock, WidthState } from "./ChartBlock";
 import styles from "./ChartArea.module.css";
@@ -33,6 +34,14 @@ const ChartArea = ({
       <div className={styles.flex}>
         <ChartBlock header={"Stage"} initialWidthState={WidthState.FULL}>
           <StageChart connections={connections} />
+        </ChartBlock>
+      </div>
+      <div className={styles.flex}>
+        <ChartBlock
+          header={"Subjective Scores"}
+          initialWidthState={WidthState.FULL}
+        >
+          <ScoresChart connections={connections} />
         </ChartBlock>
       </div>
       <div className={styles.flex}>
