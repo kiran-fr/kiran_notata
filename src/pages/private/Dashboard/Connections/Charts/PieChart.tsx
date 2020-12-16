@@ -48,11 +48,9 @@ const style = {
 };
 
 const renderActiveShape = (props: any) => {
-  const RADIAN = Math.PI / 180;
   const {
     cx,
     cy,
-    midAngle,
     innerRadius,
     outerRadius,
     startAngle,
@@ -61,17 +59,7 @@ const renderActiveShape = (props: any) => {
     onClick,
     payload,
     percent,
-    value,
   } = props;
-  const sin = Math.sin(-RADIAN * midAngle);
-  const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius + 10) * cos;
-  const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 30) * cos;
-  const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-  const ey = my;
-  const textAnchor = cos >= 0 ? "start" : "end";
 
   return (
     <g>
@@ -79,14 +67,17 @@ const renderActiveShape = (props: any) => {
         x={cx}
         y={cy}
         dy={8}
-        fontSize={payload.name.length >= 16 ? 11 : undefined}
-        width={"135px"}
+        fontSize={payload.name.length >= 22 ? 11 : undefined}
+        width="135px"
         textAnchor="middle"
         fill={fill}
+        style={{ whiteSpace: "pre-line" }}
       >
-        {payload.name.length > 23
+        {payload.name.length > 35
           ? `${payload.name.slice(0, 20)}...`
           : payload.name}
+        {`\n`}
+        {(percent * 100).toFixed(2)}%
       </text>
       <Sector
         cx={cx}
@@ -108,27 +99,6 @@ const renderActiveShape = (props: any) => {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path
-        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-        stroke={fill}
-        fill="none"
-      />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-      >{`PV ${value}`}</text>
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        dy={18}
-        textAnchor={textAnchor}
-        fill="#999"
-      >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
-      </text>
     </g>
   );
 };
@@ -162,8 +132,8 @@ const PieChart = ({
             cx={widthState === "FULL" ? 230 : 80}
             cy={120}
             labelLine={false}
-            innerRadius={70}
-            outerRadius={90}
+            innerRadius={widthState === "FULL" ? 110 : 70}
+            outerRadius={widthState === "FULL" ? 130 : 90}
             fill="#8884d8"
           >
             {data.map((entry, index) => (
