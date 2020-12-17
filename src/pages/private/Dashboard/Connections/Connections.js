@@ -236,7 +236,13 @@ export default function Connections({ history }) {
   const [showTagGroup, setShowTagGroup] = useState(undefined);
   const [showEvaluate, setShowEvaluate] = useState(undefined);
 
-  const [filters, setFilterState] = useState();
+  const [filters, setFilterState] = useState({
+    tags: [],
+    funnelTags: [],
+    search: "",
+    starred: false,
+    dateRange: [null, null],
+  });
   const [chartFilters, setChartFilters] = useState({ tags: [] });
 
   useEffect(() => {
@@ -309,22 +315,13 @@ export default function Connections({ history }) {
     mutateDelete(DeleteTagMutationOptions(tag, connection));
   }
 
-  const defaultFilters = {
-    tags: [],
-    funnelTags: [],
-    search: "",
-    starred: false,
-    dateRange: [null, null],
-  };
-
-  const f = filters || defaultFilters;
-
   let hasFilters =
-    f.tags.length ||
-    f.funnelTags.length ||
-    f.search ||
-    f.starred ||
-    (f.dateRange.length && (f.dateRange[0] || f.dateRange[1]));
+    filters.tags.length ||
+    filters.funnelTags.length ||
+    filters.search ||
+    filters.starred ||
+    (filters.dateRange.length &&
+      (filters.dateRange[0] || filters.dateRange[1]));
 
   return (
     <>

@@ -164,16 +164,6 @@ export default function Filters({ filters, setFilters, tagGroups }) {
     return result;
   };
 
-  const defaultFilters = {
-    search: "",
-    tags: [],
-    funnelTags: [],
-    starred: false,
-    dateRange: [null, null],
-  };
-
-  filters = filters || defaultFilters;
-
   // if (!tagGroups) return <span />;
 
   return (
