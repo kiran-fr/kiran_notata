@@ -79,6 +79,9 @@ const TagsChart = ({
   filters: any;
 }) => {
   const [dataType, setDataType] = useState(tagGroups[0].id);
+  const [selectedTags, setSelectedTag] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const groupTags = tagGroups
     .find((tagGroup: any) => tagGroup.id === dataType)
@@ -120,9 +123,17 @@ const TagsChart = ({
           widthState={widthState}
           setFilters={setFilters}
           filters={filters}
+          selectedTags={selectedTags}
+          setSelectedTag={setSelectedTag}
         />
       ) : (
-        <BarChart data={data} setFilters={setFilters} filters={filters} />
+        <BarChart
+          data={data}
+          setFilters={setFilters}
+          filters={filters}
+          selectedTags={selectedTags}
+          setSelectedTag={setSelectedTag}
+        />
       )}
     </>
   );

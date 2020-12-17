@@ -35,15 +35,15 @@ const BarChart = ({
   data,
   setFilters,
   filters,
+  selectedTags,
+  setSelectedTag,
 }: {
   data: ChartData[];
   setFilters: Function;
   filters: any;
+  selectedTags: { [key: string]: boolean };
+  setSelectedTag: Function;
 }) => {
-  const [selectedIndexes, setSelectedIndex] = useState<{
-    [key: string]: boolean;
-  }>({});
-
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
@@ -57,17 +57,17 @@ const BarChart = ({
               <Cell
                 key={`cell-${index}`}
                 fill={
-                  Object.keys(selectedIndexes).length > 0
-                    ? selectedIndexes[index]
+                  Object.keys(selectedTags).length > 0
+                    ? selectedTags[entry.id]
                       ? COLORS[index % COLORS.length]
                       : "grey"
                     : COLORS[index % COLORS.length]
                 }
                 onClick={() => {
-                  if (selectedIndexes[index]) {
-                    delete selectedIndexes[index];
-                    setSelectedIndex({
-                      ...selectedIndexes,
+                  if (selectedTags[entry.id]) {
+                    delete selectedTags[entry.id];
+                    setSelectedTag({
+                      ...selectedTags,
                     });
                     setFilters({
                       tags: filters.tags.filter(
@@ -75,9 +75,9 @@ const BarChart = ({
                       ),
                     });
                   } else {
-                    setSelectedIndex({
-                      ...selectedIndexes,
-                      [index]: true,
+                    setSelectedTag({
+                      ...selectedTags,
+                      [entry.id]: true,
                     });
                     setFilters({
                       tags: [...filters.tags, { id: entry.id }],

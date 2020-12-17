@@ -108,16 +108,17 @@ const PieChart = ({
   widthState,
   setFilters,
   filters,
+  selectedTags,
+  setSelectedTag,
 }: {
   data: ChartData[];
   widthState?: string;
   setFilters: Function;
   filters: any;
+  selectedTags: { [key: string]: boolean };
+  setSelectedTag: Function;
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedIndexes, setSelectedIndex] = useState<{
-    [key: string]: boolean;
-  }>({});
 
   return (
     <div style={{ width: "100%", height: 300 }}>
@@ -127,6 +128,7 @@ const PieChart = ({
             activeIndex={activeIndex}
             activeShape={widthState === "FULL" ? renderActiveShape : undefined}
             onMouseEnter={(data: any, index: number) => setActiveIndex(index)}
+            cursor={"pointer"}
             dataKey="value"
             data={data}
             cx={widthState === "FULL" ? 230 : 80}
@@ -140,17 +142,17 @@ const PieChart = ({
               <Cell
                 key={`cell-${index}`}
                 fill={
-                  Object.keys(selectedIndexes).length > 0
-                    ? selectedIndexes[index]
+                  Object.keys(selectedTags).length > 0
+                    ? selectedTags[entry.id]
                       ? COLORS[index % COLORS.length]
                       : "grey"
                     : COLORS[index % COLORS.length]
                 }
                 onClick={() => {
-                  if (selectedIndexes[index]) {
-                    delete selectedIndexes[index];
-                    setSelectedIndex({
-                      ...selectedIndexes,
+                  if (selectedTags[entry.id]) {
+                    delete selectedTags[entry.id];
+                    setSelectedTag({
+                      ...selectedTags,
                     });
                     setFilters({
                       tags: filters.tags.filter(
@@ -158,9 +160,9 @@ const PieChart = ({
                       ),
                     });
                   } else {
-                    setSelectedIndex({
-                      ...selectedIndexes,
-                      [index]: true,
+                    setSelectedTag({
+                      ...selectedTags,
+                      [entry.id]: true,
                     });
                     setFilters({
                       tags: [...filters.tags, { id: entry.id }],
