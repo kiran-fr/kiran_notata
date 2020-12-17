@@ -71,13 +71,15 @@ const renderActiveShape = (props: any) => {
         width="135px"
         textAnchor="middle"
         fill={fill}
-        style={{ whiteSpace: "pre-line" }}
       >
-        {payload.name.length > 35
-          ? `${payload.name.slice(0, 20)}...`
-          : payload.name}
-        {`\n`}
-        {(percent * 100).toFixed(2)}%
+        <tspan x={cx} dy="0">
+          {payload.name.length > 35
+            ? `${payload.name.slice(0, 20)}...`
+            : payload.name}
+        </tspan>
+        <tspan x={cx} dy="1em">
+          {(percent * 100).toFixed(2)}%
+        </tspan>
       </text>
       <Sector
         cx={cx}
