@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { ChartData } from "../../types";
 import Select, { components } from "react-select";
 import { Tag } from "../../types";
@@ -83,18 +83,28 @@ const TagsChart = ({
     [key: string]: boolean;
   }>({});
 
-  const groupTags = tagGroups
-    .find((tagGroup: any) => tagGroup.id === dataType)
-    .tags.reduce(
-      (map: Map<string, Object>, props: any) =>
-        map.set(props.id, {
-          id: props.id,
-          name: props.name,
-          value: 0,
-        }),
-      new Map()
-    );
+  const groupsTags = useMemo(
+    () =>
+      tagGroups.reduce(
+        (groupsMap: Map<string, Object>, props: any) =>
+          groupsMap.set(
+            props.id,
+            props.tags.reduce(
+              (map: Map<string, Object>, props: any) =>
+                map.set(props.id, {
+                  id: props.id,
+                  name: props.name,
+                  value: 0,
+                }),
+              new Map()
+            )
+          ),
+        new Map()
+      ),
+    [tagGroups]
+  );
 
+  let groupTags = groupsTags.get(dataType);
   tags.forEach(tag => {
     if (groupTags.get(tag.id)) groupTags.get(tag.id).value++;
   });
