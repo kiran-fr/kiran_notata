@@ -1,6 +1,7 @@
 import * as React from "react";
 import { XAxis, BarChart, Bar, Cell, ResponsiveContainer } from "recharts";
 import { ChartData, Connection } from "../../types";
+import { CHART_COLORS } from "../ChartArea";
 
 const ScoresChart = ({ connections }: { connections: Connection[] }) => {
   const arrKar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value => [
@@ -34,16 +35,6 @@ const ScoresChart = ({ connections }: { connections: Connection[] }) => {
 
   const data = Array.from(dataMap.values());
   data.sort((a, b) => parseInt(a.id) - parseInt(b.id));
-
-  const colors = [
-    "#FFBF00",
-    "#ff6402",
-    "#3ea943",
-    "#ff00c9",
-    "#7d00ff",
-    "#0027ff",
-    "#00a2ff",
-  ];
 
   const CustomizedAxisTick = (props: any) => {
     const { x, y, payload } = props;
@@ -80,8 +71,8 @@ const ScoresChart = ({ connections }: { connections: Connection[] }) => {
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={colors[index]}
-                stroke={colors[index]}
+                fill={CHART_COLORS[index]}
+                stroke={CHART_COLORS[index]}
               />
             ))}
           </Bar>

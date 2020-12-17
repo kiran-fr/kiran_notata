@@ -18,7 +18,7 @@ export const ChartBlock = ({
   onDeleteBlock,
   ...props
 }: any) => {
-  const [chartType, setChartType] = useState<ChartType>(ChartType.BAR);
+  const [chartType, setChartType] = useState<ChartType>(ChartType.PIE);
   const [widthState, setWidthState] = useState<WidthState>(initialWidthState);
   const [lengthFilter, setlengthFilter] = useState(0);
 
@@ -32,10 +32,15 @@ export const ChartBlock = ({
 
       {showSelector && (
         <div className={styles.block_controls}>
-          <input
-            onChange={e => setlengthFilter(parseInt(e.target.value))}
-            className={styles.button_filter}
-          />
+          <div className={styles.input_filter}>
+            <div>
+              <i className="fas fa-filter"/>
+            </div>
+            <input
+              onChange={e => setlengthFilter(parseInt(e.target.value))}
+              className={styles.button_filter}
+            />
+          </div>
           <button
             onClick={() =>
               setWidthState(

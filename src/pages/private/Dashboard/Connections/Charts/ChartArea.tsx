@@ -11,6 +11,19 @@ type TagChartItem = {
   id: number;
 };
 
+export const CHART_COLORS = [
+  "#68bb35",
+  "#339af6",
+  "#f1a627",
+  "#e74226",
+  "#bf0045",
+  "#e2da1c",
+  "#4a00f5",
+  "#d628e7",
+  "#289832",
+  "#6d6d6d",
+];
+
 const ChartArea = ({
   connections,
   tagGroups,
@@ -32,14 +45,12 @@ const ChartArea = ({
   return (
     <>
       <div className={styles.flex}>
-        <ChartBlock header={"Stage"} initialWidthState={WidthState.FULL}>
+        <ChartBlock header={"Stage"} initialWidthState={WidthState.HALF}>
           <StageChart connections={connections} />
         </ChartBlock>
-      </div>
-      <div className={styles.flex}>
         <ChartBlock
           header={"Subjective Scores"}
-          initialWidthState={WidthState.FULL}
+          initialWidthState={WidthState.HALF}
         >
           <ScoresChart connections={connections} />
         </ChartBlock>

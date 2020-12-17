@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   PieChart as Chart,
   Pie,
@@ -9,37 +9,20 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ChartData } from "../types";
-
-// const COLORS = [
-//   "#A8A7A7",
-//   "#CC527A",
-//   "#E8175D",
-//   "#932432",
-//   "#3C1874",
-//   "#474747",
-//   "#363636",
-// ];
-const COLORS = [
-  "#68bb35",
-  "#339af6",
-  "#6d6d6d",
-  "#f1a627",
-  "#e74226",
-  "#bf0045",
-  "#4a00f5",
-];
+import { CHART_COLORS } from "./ChartArea";
 
 const style = {
   halfBlock: {
-    top: 0,
-    left: 225,
-    width: "45%",
+    top: 20,
+    left: 245,
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
     overflowY: "scroll",
     lineHeight: "20px",
     fontSize: "14px",
   },
   fullBlock: {
-    top: 0,
+    top: 20,
     left: 510,
     lineHeight: "20px",
     fontSize: "14px",
@@ -112,22 +95,34 @@ const PieChart = ({
   setFilters: Function;
   filters: any;
 }) => {
+
+  // ================
+  // STATE REGION
+  // ================
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedIndexes, setSelectedIndex] = useState<{
     [key: string]: boolean;
   }>({});
+  const [width, setWidth] = useState(0);
+
+  const ref = useRef<any>(null);
+  useEffect(() => {
+    setWidth(ref.current.clientWidth)
+  }, [ref.current, widthState]);
 
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div style={{ width: "100%", height: 300 }}  ref={ref}>
+
       <ResponsiveContainer>
         <Chart margin={{ top: 25, right: 0, left: 10 }}>
           <Pie
             activeIndex={activeIndex}
-            activeShape={widthState === "FULL" ? renderActiveShape : undefined}
+            activeShape={renderActiveShape}
             onMouseEnter={(data: any, index: number) => setActiveIndex(index)}
             dataKey="value"
             data={data}
-            cx={widthState === "FULL" ? 230 : 80}
+            cx={widthState === "FULL" ? 230 : 100}
             cy={120}
             labelLine={false}
             innerRadius={widthState === "FULL" ? 110 : 70}
@@ -140,9 +135,9 @@ const PieChart = ({
                 fill={
                   Object.keys(selectedIndexes).length > 0
                     ? selectedIndexes[index]
-                      ? COLORS[index % COLORS.length]
+                      ? CHART_COLORS[index % CHART_COLORS.length]
                       : "grey"
-                    : COLORS[index % COLORS.length]
+                    : CHART_COLORS[index % CHART_COLORS.length]
                 }
                 onClick={() => {
                   if (selectedIndexes[index]) {
@@ -171,6 +166,7 @@ const PieChart = ({
           <Legend
             iconSize={10}
             height={260}
+            width={width - (widthState === "FULL" ? 500 : 230)}
             layout="vertical"
             verticalAlign="middle"
             wrapperStyle={
@@ -180,7 +176,6 @@ const PieChart = ({
               `${value} - ${(entry?.payload.percent * 100).toFixed(2)}%`
             }
           />
-          {widthState !== "FULL" && <Tooltip />}
         </Chart>
       </ResponsiveContainer>
     </div>
