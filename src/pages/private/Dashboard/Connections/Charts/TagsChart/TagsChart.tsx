@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
-import { ChartData } from "../../types";
 import Select, { components } from "react-select";
-import { Tag } from "../../types";
+import { cloneDeep } from "lodash";
+import { Tag, ChartData } from "../../types";
 import PieChart from "../PieChart";
 import BarChart from "../BarChart";
 import { ChartType } from "../ChartBlock";
@@ -64,6 +64,7 @@ const customStyles = {
 const TagsChart = ({
   tags,
   tagGroups,
+  groupsTags,
   chartType,
   lengthFilter,
   widthState,
@@ -72,41 +73,19 @@ const TagsChart = ({
 }: {
   tags: Tag[];
   tagGroups: any;
+  groupsTags: Map<string, Map<string, ChartData>>;
   chartType?: ChartType;
   lengthFilter?: number;
   widthState?: string;
   setFilters: Function;
   filters: any;
 }) => {
-  const [dataType, setDataType] = useState(tagGroups[0].id);
-  const [selectedTags, setSelectedTag] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const [dataType, setDataType] = useState(groupsTags.keys().next().value);
 
-  const groupsTags = useMemo(
-    () =>
-      tagGroups.reduce(
-        (groupsMap: Map<string, Object>, props: any) =>
-          groupsMap.set(
-            props.id,
-            props.tags.reduce(
-              (map: Map<string, Object>, props: any) =>
-                map.set(props.id, {
-                  id: props.id,
-                  name: props.name,
-                  value: 0,
-                }),
-              new Map()
-            )
-          ),
-        new Map()
-      ),
-    [tagGroups]
-  );
+  let groupTags = cloneDeep(groupsTags.get(dataType)!);
 
-  let groupTags = groupsTags.get(dataType);
   tags.forEach(tag => {
-    if (groupTags.get(tag.id)) groupTags.get(tag.id).value++;
+    if (groupTags.has(tag.id)) groupTags.get(tag.id)!.value++;
   });
 
   let data: ChartData[] = Array.from(groupTags.values());
@@ -133,16 +112,14 @@ const TagsChart = ({
           widthState={widthState}
           setFilters={setFilters}
           filters={filters}
-          selectedTags={selectedTags}
-          setSelectedTag={setSelectedTag}
+          selectedTags={groupsTags.get(dataType)!}
         />
       ) : (
         <BarChart
           data={data}
           setFilters={setFilters}
           filters={filters}
-          selectedTags={selectedTags}
-          setSelectedTag={setSelectedTag}
+          selectedTags={groupsTags.get(dataType)!}
         />
       )}
     </>

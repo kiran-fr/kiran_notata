@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
@@ -267,6 +267,28 @@ export default function Connections({ history }) {
   const tagGroups =
     (tagGroupsQuery.data && tagGroupsQuery.data.accountGet.tagGroups) || [];
 
+  const groupsTags = useMemo(
+    () =>
+      tagGroups.reduce(
+        (groupsMap, props) =>
+          groupsMap.set(
+            props.id,
+            props.tags.reduce(
+              (map, props) =>
+                map.set(props.id, {
+                  id: props.id,
+                  name: props.name,
+                  value: 0,
+                  selected: chartFilters.tags.some(({ id }) => id === props.id),
+                }),
+              new Map()
+            )
+          ),
+        new Map()
+      ),
+    [tagGroups, chartFilters]
+  );
+
   if (error || tagGroupsQuery.error) {
     console.log("error", error);
     console.log("tagGroupsQuery.error", tagGroupsQuery.error);
@@ -328,6 +350,7 @@ export default function Connections({ history }) {
       <Card maxWidth={1200} style={{ paddingBottom: "20px" }}>
         <ChartArea
           connections={connectionsGeneral}
+          groupsTags={groupsTags}
           tagGroups={tagGroups}
           setFilters={setChartFilters}
           filters={chartFilters}

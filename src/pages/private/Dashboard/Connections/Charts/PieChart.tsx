@@ -111,14 +111,12 @@ const PieChart = ({
   setFilters,
   filters,
   selectedTags,
-  setSelectedTag,
 }: {
   data: ChartData[];
   widthState?: string;
   setFilters: Function;
   filters: any;
-  selectedTags: { [key: string]: boolean };
-  setSelectedTag: Function;
+  selectedTags: Map<string, ChartData>;
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -144,28 +142,23 @@ const PieChart = ({
               <Cell
                 key={`cell-${index}`}
                 fill={
-                  Object.keys(selectedTags).length > 0
-                    ? selectedTags[entry.id]
+                  selectedTags.size > 0 &&
+                  Array.from(selectedTags.values()).some(
+                    value => value.selected
+                  )
+                    ? selectedTags.get(entry.id)?.selected
                       ? COLORS[index % COLORS.length]
                       : "grey"
                     : COLORS[index % COLORS.length]
                 }
                 onClick={() => {
-                  if (selectedTags[entry.id]) {
-                    delete selectedTags[entry.id];
-                    setSelectedTag({
-                      ...selectedTags,
-                    });
+                  if (selectedTags.get(entry.id)?.selected) {
                     setFilters({
                       tags: filters.tags.filter(
                         ({ id }: any) => id !== entry.id
                       ),
                     });
                   } else {
-                    setSelectedTag({
-                      ...selectedTags,
-                      [entry.id]: true,
-                    });
                     setFilters({
                       tags: [...filters.tags, { id: entry.id }],
                     });

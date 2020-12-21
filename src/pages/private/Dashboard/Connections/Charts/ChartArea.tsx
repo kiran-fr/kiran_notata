@@ -3,7 +3,7 @@ import { Button } from "../../../../../Components/elements";
 import TagsChart from "./TagsChart/TagsChart";
 import StageChart from "./StageChart/StageChart";
 import ScoresChart from "./StageChart/ScoresChart";
-import { Connection } from "../types";
+import { Connection, ChartData } from "../types";
 import { ChartBlock, WidthState } from "./ChartBlock";
 import styles from "./ChartArea.module.css";
 
@@ -14,11 +14,13 @@ type TagChartItem = {
 const ChartArea = ({
   connections,
   tagGroups,
+  groupsTags,
   setFilters,
   filters,
 }: {
   connections: Connection[];
   tagGroups: any[];
+  groupsTags: Map<string, Map<string, ChartData>>;
   setFilters: any;
   filters: any;
 }) => {
@@ -55,6 +57,7 @@ const ChartArea = ({
             <TagsChart
               tags={connections.map(connection => connection.tags).flat()}
               tagGroups={tagGroups}
+              groupsTags={groupsTags}
               setFilters={setFilters}
               filters={filters}
             />

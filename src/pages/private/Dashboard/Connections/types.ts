@@ -211,4 +211,5 @@ export type ChartData = {
   id: string;
   name: string;
   value: number;
+  selected?: boolean;
 };
