@@ -1,6 +1,7 @@
 import * as React from "react";
 import { XAxis, BarChart, Bar, Cell, ResponsiveContainer } from "recharts";
 import { ChartData, Connection } from "../../types";
+import { CHART_COLORS } from "../ChartArea";
 
 const StageChart = ({ connections }: { connections: Connection[] }) => {
   const dataMap = connections.reduce(
@@ -24,16 +25,6 @@ const StageChart = ({ connections }: { connections: Connection[] }) => {
   );
 
   const data = Array.from(dataMap.values());
-
-  const colors = [
-    "#FFBF00",
-    "#ff6402",
-    "#3ea943",
-    "#ff00c9",
-    "#7d00ff",
-    "#0027ff",
-    "#00a2ff",
-  ];
 
   const CustomizedAxisTick = (props: any) => {
     const { x, y, payload } = props;
@@ -70,8 +61,8 @@ const StageChart = ({ connections }: { connections: Connection[] }) => {
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={colors[index]}
-                stroke={colors[index]}
+                fill={CHART_COLORS[index]}
+                stroke={CHART_COLORS[index]}
               />
             ))}
           </Bar>

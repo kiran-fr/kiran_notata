@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   PieChart as Chart,
   Pie,
@@ -9,37 +9,20 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ChartData } from "../types";
-
-// const COLORS = [
-//   "#A8A7A7",
-//   "#CC527A",
-//   "#E8175D",
-//   "#932432",
-//   "#3C1874",
-//   "#474747",
-//   "#363636",
-// ];
-const COLORS = [
-  "#68bb35",
-  "#339af6",
-  "#6d6d6d",
-  "#f1a627",
-  "#e74226",
-  "#bf0045",
-  "#4a00f5",
-];
+import { CHART_COLORS } from "./ChartArea";
 
 const style = {
   halfBlock: {
-    top: 0,
-    left: 225,
-    width: "45%",
+    top: 20,
+    left: 245,
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
     overflowY: "scroll",
     lineHeight: "20px",
     fontSize: "14px",
   },
   fullBlock: {
-    top: 0,
+    top: 20,
     left: 510,
     lineHeight: "20px",
     fontSize: "14px",
@@ -72,12 +55,12 @@ const renderActiveShape = (props: any) => {
         textAnchor="middle"
         fill={fill}
       >
-        <tspan x={cx} dy="0">
+        <tspan fontWeight="bold" x={cx} dy="0">
           {payload.name.length > 35
             ? `${payload.name.slice(0, 20)}...`
             : payload.name}
         </tspan>
-        <tspan x={cx} dy="1em">
+        <tspan x={cx} dy="1.1em">
           {(percent * 100).toFixed(2)}%
         </tspan>
       </text>
@@ -119,19 +102,25 @@ const PieChart = ({
   selectedTags: Map<string, ChartData>;
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [width, setWidth] = useState(0);
+
+  const ref = useRef<any>(null);
+  useEffect(() => {
+    setWidth(ref.current.clientWidth);
+  }, [widthState]);
 
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div style={{ width: "100%", height: 300 }} ref={ref}>
       <ResponsiveContainer>
         <Chart margin={{ top: 25, right: 0, left: 10 }}>
           <Pie
             activeIndex={activeIndex}
-            activeShape={widthState === "FULL" ? renderActiveShape : undefined}
+            activeShape={renderActiveShape}
             onMouseEnter={(data: any, index: number) => setActiveIndex(index)}
             cursor={"pointer"}
             dataKey="value"
             data={data}
-            cx={widthState === "FULL" ? 230 : 80}
+            cx={widthState === "FULL" ? 230 : 100}
             cy={120}
             labelLine={false}
             innerRadius={widthState === "FULL" ? 110 : 70}
@@ -147,9 +136,9 @@ const PieChart = ({
                     value => value.selected
                   )
                     ? selectedTags.get(entry.id)?.selected
-                      ? COLORS[index % COLORS.length]
+                      ? CHART_COLORS[index % CHART_COLORS.length]
                       : "grey"
-                    : COLORS[index % COLORS.length]
+                    : CHART_COLORS[index % CHART_COLORS.length]
                 }
                 onClick={() => {
                   if (selectedTags.get(entry.id)?.selected) {
@@ -170,6 +159,7 @@ const PieChart = ({
           <Legend
             iconSize={10}
             height={260}
+            width={width - (widthState === "FULL" ? 500 : 230)}
             layout="vertical"
             verticalAlign="middle"
             wrapperStyle={
@@ -179,7 +169,6 @@ const PieChart = ({
               `${value} - ${(entry?.payload.percent * 100).toFixed(2)}%`
             }
           />
-          {widthState !== "FULL" && <Tooltip />}
         </Chart>
       </ResponsiveContainer>
     </div>

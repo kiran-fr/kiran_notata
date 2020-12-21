@@ -299,7 +299,7 @@ export default function Connections({ history }) {
   if (!tagGroupsQuery.data && tagGroupsQuery.loading) return <GhostLoader />;
 
   let connections = data.connectionsGet;
-  let connectionsGeneral;
+  let connectionsGeneral = [];
 
   if (connections.length >= 10) {
     connectionsGeneral = applyFilters({ connections, filters });
@@ -308,6 +308,8 @@ export default function Connections({ history }) {
       connections: connectionsGeneral,
       filters: chartFilters,
     });
+  } else {
+    connectionsGeneral.concat(connections);
   }
 
   let showTagsForConnection;

@@ -10,26 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ChartData } from "../types";
-
-// const COLORS = [
-//   "#A8A7A7",
-//   "#CC527A",
-//   "#E8175D",
-//   "#932432",
-//   "#3C1874",
-//   "#474747",
-//   "#363636",
-// ];
-
-const COLORS = [
-  "#68bb35",
-  "#339af6",
-  "#6d6d6d",
-  "#f1a627",
-  "#e74226",
-  "#bf0045",
-  "#4a00f5",
-];
+import { CHART_COLORS } from "./ChartArea";
 
 const BarChart = ({
   data,
@@ -60,9 +41,9 @@ const BarChart = ({
                     value => value.selected
                   )
                     ? selectedTags.get(entry.id)?.selected
-                      ? COLORS[index % COLORS.length]
+                      ? CHART_COLORS[index % CHART_COLORS.length]
                       : "grey"
-                    : COLORS[index % COLORS.length]
+                    : CHART_COLORS[index % CHART_COLORS.length]
                 }
                 onClick={() => {
                   if (selectedTags.get(entry.id)?.selected) {
