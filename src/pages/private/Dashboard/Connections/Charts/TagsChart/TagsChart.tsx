@@ -1,11 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import Select, { components } from "react-select";
 import { cloneDeep } from "lodash";
 import { Tag, ChartData } from "../../types";
 import PieChart from "../PieChart";
 import BarChart from "../BarChart";
 import { ChartType } from "../ChartBlock";
-import styles from "../ChartBlock.module.scss";
 
 const Placeholder = (props: any) => {
   return (
@@ -70,6 +69,8 @@ const TagsChart = ({
   widthState,
   setFilters,
   filters,
+  dataType,
+  setDataType,
 }: {
   tags: Tag[];
   tagGroups: any;
@@ -79,9 +80,9 @@ const TagsChart = ({
   widthState?: string;
   setFilters: Function;
   filters: any;
+  dataType?: any;
+  setDataType?: Function;
 }) => {
-  const [dataType, setDataType] = useState(groupsTags.keys().next().value);
-
   let groupTags = cloneDeep(groupsTags.get(dataType)!);
 
   tags.forEach(tag => {
@@ -98,7 +99,7 @@ const TagsChart = ({
       <Select
         options={tagGroups}
         defaultValue={tagGroups[0]}
-        onChange={val => setDataType(val.id)}
+        onChange={val => setDataType!(val.id)}
         components={{ Placeholder, SingleValue }}
         getOptionLabel={option => option.name}
         isOptionSelected={option => option.id === dataType.id}

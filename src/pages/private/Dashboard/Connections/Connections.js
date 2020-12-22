@@ -35,8 +35,6 @@ import ChartArea from "./Charts/ChartArea";
 function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
   filters = filters || {};
-  filters.tags = filters.tags || [];
-  filters.funnelTags = filters.funnelTags || [];
   filters.dateRange = filters.dateRange || [null, null];
 
   if (!filters) return connections;
@@ -99,13 +97,13 @@ function applyFilters({ connections, filters }) {
     );
   }
 
-  if (filters.tags.length) {
+  if (filters.tags?.length) {
     connections = connections.filter(({ tags }) =>
       filters.tags.every(ft => tags.map(({ id }) => id).includes(ft.id))
     );
   }
 
-  if (filters.funnelTags.length) {
+  if (filters.funnelTags?.length) {
     connections = connections.filter(({ funnelTags }) => {
       if (!funnelTags.length) return false;
 

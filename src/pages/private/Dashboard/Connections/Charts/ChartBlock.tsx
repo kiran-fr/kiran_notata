@@ -16,6 +16,9 @@ export const ChartBlock = ({
   showSelector,
   initialWidthState = WidthState.HALF,
   onDeleteBlock,
+  onChangeDataType,
+  groupsTags,
+  dataType,
   ...props
 }: any) => {
   const [chartType, setChartType] = useState<ChartType>(ChartType.PIE);
@@ -34,7 +37,7 @@ export const ChartBlock = ({
         <div className={styles.block_controls}>
           <div className={styles.input_filter}>
             <div>
-              <i className="fas fa-filter"/>
+              <i className="fas fa-filter" />
             </div>
             <input
               onChange={e => setlengthFilter(parseInt(e.target.value))}
@@ -75,7 +78,10 @@ export const ChartBlock = ({
             />
           </button>
 
-          <button className={styles.button_width} onClick={onDeleteBlock}>
+          <button
+            className={styles.button_width}
+            onClick={() => onDeleteBlock(dataType)}
+          >
             <i className="fas fa-trash-alt" />
           </button>
         </div>
@@ -85,6 +91,8 @@ export const ChartBlock = ({
         {React.cloneElement(props.children, {
           chartType,
           widthState,
+          dataType,
+          setDataType: onChangeDataType,
           lengthFilter,
         })}
       </div>

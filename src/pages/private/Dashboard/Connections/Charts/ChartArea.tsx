@@ -9,6 +9,7 @@ import styles from "./ChartArea.module.css";
 
 type TagChartItem = {
   id: number;
+  tagGroupId: string;
 };
 
 export const CHART_COLORS = [
@@ -37,13 +38,14 @@ const ChartArea = ({
   setFilters: any;
   filters: any;
 }) => {
-  const [tagCharts, setTagCharts] = useState<TagChartItem[]>([{ id: 0 }]);
+  const [tagCharts, setTagCharts] = useState<{ [key: number]: TagChartItem }>({
+    0: { id: 0, tagGroupId: groupsTags.keys().next().value },
+  });
 
   const onDeleteBlock = (index: number) => {
-    tagCharts.splice(index, 1);
-    setTagCharts(tagCharts.slice());
+    delete tagCharts[index];
+    setTagCharts({ ...tagCharts });
   };
-
   return (
     <>
       <div className={styles.flex}>
@@ -58,12 +60,52 @@ const ChartArea = ({
         </ChartBlock>
       </div>
       <div className={styles.flex}>
-        {tagCharts.map((chart, index) => (
+        {Object.values(tagCharts).map((chart, index) => (
           <ChartBlock
             showSelector={true}
             key={`tag-${chart.id}`}
-            index={index}
-            onDeleteBlock={() => onDeleteBlock(index)}
+            groupsTags={groupsTags}
+            dataType={tagCharts[chart.id].tagGroupId}
+            onDeleteBlock={(id: string) => {
+              onDeleteBlock(chart.id);
+
+              const existingIndex = Object.values(tagCharts).findIndex(
+                ({ tagGroupId }) => tagGroupId === id
+              );
+              let groupTags = groupsTags.get(id);
+
+              // Delete all filters from this group
+              if (existingIndex === -1)
+                setFilters({
+                  tags: filters.tags.filter(
+                    ({ id }: any) => !groupTags?.has(id)
+                  ),
+                });
+            }}
+            onChangeDataType={(id: string) => {
+              const currentId = tagCharts[chart.id].tagGroupId;
+
+              setTagCharts({
+                ...tagCharts,
+                [chart.id]: {
+                  ...tagCharts[chart.id],
+                  tagGroupId: id,
+                },
+              });
+
+              const existingIndex = Object.values(tagCharts).findIndex(
+                ({ tagGroupId }) => tagGroupId === currentId
+              );
+              let groupTags = groupsTags.get(currentId);
+
+              // Delete all filters from this group
+              if (existingIndex === -1)
+                setFilters({
+                  tags: filters.tags.filter(
+                    ({ id }: any) => !groupTags?.has(id)
+                  ),
+                });
+            }}
           >
             <TagsChart
               tags={connections.map(connection => connection.tags).flat()}
@@ -79,15 +121,19 @@ const ChartArea = ({
       <Button
         type={"just_text"}
         onClick={() =>
-          setTagCharts(
-            tagCharts.concat([
-              {
-                id: tagCharts.length
-                  ? tagCharts[tagCharts.length - 1]?.id + 1
-                  : 0,
-              },
-            ])
-          )
+          setTagCharts({
+            ...tagCharts,
+            [Object.values(tagCharts).length
+              ? Object.values(tagCharts)[Object.values(tagCharts).length - 1]
+                  ?.id + 1
+              : 0]: {
+              id: Object.values(tagCharts).length
+                ? Object.values(tagCharts)[Object.values(tagCharts).length - 1]
+                    ?.id + 1
+                : 0,
+              tagGroupId: groupsTags.keys().next().value,
+            },
+          })
         }
       >
         Add Graph

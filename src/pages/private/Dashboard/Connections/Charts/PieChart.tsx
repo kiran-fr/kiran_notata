@@ -5,7 +5,6 @@ import {
   Sector,
   Cell,
   Legend,
-  Tooltip,
   ResponsiveContainer,
 } from "recharts";
 import { ChartData } from "../types";
