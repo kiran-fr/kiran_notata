@@ -120,7 +120,7 @@ const PieChart = ({
         tags: [...filters.tags, { id: entry.id }],
       });
     }
-  }
+  };
 
   return (
     <div style={{ width: "100%", height: 300 }} ref={ref}>

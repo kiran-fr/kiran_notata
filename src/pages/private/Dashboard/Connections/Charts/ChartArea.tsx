@@ -42,10 +42,6 @@ const ChartArea = ({
     0: { id: 0, tagGroupId: groupsTags.keys().next().value },
   });
 
-  const onDeleteBlock = (index: number) => {
-    delete tagCharts[index];
-    setTagCharts({ ...tagCharts });
-  };
   return (
     <>
       <div className={styles.flex}>
@@ -67,7 +63,8 @@ const ChartArea = ({
             groupsTags={groupsTags}
             dataType={tagCharts[chart.id].tagGroupId}
             onDeleteBlock={(id: string) => {
-              onDeleteBlock(chart.id);
+              delete tagCharts[chart.id];
+              setTagCharts({ ...tagCharts });
 
               const existingIndex = Object.values(tagCharts).findIndex(
                 ({ tagGroupId }) => tagGroupId === id
@@ -85,12 +82,9 @@ const ChartArea = ({
             onChangeDataType={(id: string) => {
               const currentId = tagCharts[chart.id].tagGroupId;
 
+              tagCharts[chart.id].tagGroupId = id;
               setTagCharts({
                 ...tagCharts,
-                [chart.id]: {
-                  ...tagCharts[chart.id],
-                  tagGroupId: id,
-                },
               });
 
               const existingIndex = Object.values(tagCharts).findIndex(
