@@ -19,6 +19,7 @@ const style = {
     overflowY: "scroll",
     lineHeight: "20px",
     fontSize: "14px",
+    cursor: "pointer",
   },
   fullBlock: {
     top: 20,
@@ -26,6 +27,7 @@ const style = {
     lineHeight: "20px",
     fontSize: "14px",
     overflowY: "scroll",
+    cursor: "pointer",
   },
 };
 
@@ -108,6 +110,18 @@ const PieChart = ({
     setWidth(ref.current.clientWidth);
   }, [widthState]);
 
+  const handleFilters = (entry: { id: string }) => {
+    if (selectedTags.get(entry.id)?.selected) {
+      setFilters({
+        tags: filters.tags.filter(({ id }: any) => id !== entry.id),
+      });
+    } else {
+      setFilters({
+        tags: [...filters.tags, { id: entry.id }],
+      });
+    }
+  }
+
   return (
     <div style={{ width: "100%", height: 300 }} ref={ref}>
       <ResponsiveContainer>
@@ -116,7 +130,7 @@ const PieChart = ({
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             onMouseEnter={(data: any, index: number) => setActiveIndex(index)}
-            cursor={"pointer"}
+            cursor="pointer"
             dataKey="value"
             data={data}
             cx={widthState === "FULL" ? 230 : 100}
@@ -139,19 +153,7 @@ const PieChart = ({
                       : "grey"
                     : CHART_COLORS[index % CHART_COLORS.length]
                 }
-                onClick={() => {
-                  if (selectedTags.get(entry.id)?.selected) {
-                    setFilters({
-                      tags: filters.tags.filter(
-                        ({ id }: any) => id !== entry.id
-                      ),
-                    });
-                  } else {
-                    setFilters({
-                      tags: [...filters.tags, { id: entry.id }],
-                    });
-                  }
-                }}
+                onClick={() => handleFilters(entry)}
               />
             ))}
           </Pie>
@@ -167,6 +169,7 @@ const PieChart = ({
             formatter={(value, entry: any) =>
               `${value} - ${(entry?.payload.percent * 100).toFixed(2)}%`
             }
+            onClick={entry => handleFilters(entry.payload)}
           />
         </Chart>
       </ResponsiveContainer>
