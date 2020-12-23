@@ -153,8 +153,6 @@ export const RouterComponent = ({ history }) => {
         component={SectionPage}
       />
 
-      <Route exact path={team} component={Team} />
-
       <Route exact path={external_form} component={ExternalForm} />
 
       <Route render={() => <div>404</div>} />
