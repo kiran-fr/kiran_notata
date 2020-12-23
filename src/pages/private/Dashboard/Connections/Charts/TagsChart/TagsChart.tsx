@@ -98,7 +98,7 @@ const TagsChart = ({
     <>
       <Select
         options={tagGroups}
-        defaultValue={tagGroups[0]}
+        defaultValue={tagGroups.find((group: any) => group.id === dataType)}
         onChange={val => setDataType!(val.id)}
         components={{ Placeholder, SingleValue }}
         getOptionLabel={option => option.name}

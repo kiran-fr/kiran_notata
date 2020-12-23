@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../../../../../Components/elements";
 import TagsChart from "./TagsChart/TagsChart";
 import StageChart from "./StageChart/StageChart";
@@ -42,14 +42,24 @@ const ChartArea = ({
     0: { id: 0, tagGroupId: groupsTags.keys().next().value },
   });
 
+  useEffect(() => {
+    let savedSharts = JSON.parse(localStorage.getItem("dashboard_charts")!);
+    if (savedSharts) setTagCharts(savedSharts);
+  }, []);
+
+  function saveChart(chartData: {}) {
+    localStorage.setItem("dashboard_charts", JSON.stringify(chartData));
+    setTagCharts(chartData);
+  }
+
   return (
     <>
       <div className={styles.flex}>
-        <ChartBlock header={"Stage"} initialWidthState={WidthState.HALF}>
+        <ChartBlock header="Stage" initialWidthState={WidthState.HALF}>
           <StageChart connections={connections} />
         </ChartBlock>
         <ChartBlock
-          header={"Subjective Scores"}
+          header="Subjective Scores"
           initialWidthState={WidthState.HALF}
         >
           <ScoresChart connections={connections} />
@@ -64,7 +74,7 @@ const ChartArea = ({
             dataType={tagCharts[chart.id].tagGroupId}
             onDeleteBlock={(id: string) => {
               delete tagCharts[chart.id];
-              setTagCharts({ ...tagCharts });
+              saveChart({ ...tagCharts });
 
               const existingIndex = Object.values(tagCharts).findIndex(
                 ({ tagGroupId }) => tagGroupId === id
@@ -83,7 +93,7 @@ const ChartArea = ({
               const currentId = tagCharts[chart.id].tagGroupId;
 
               tagCharts[chart.id].tagGroupId = id;
-              setTagCharts({
+              saveChart({
                 ...tagCharts,
               });
 
@@ -113,9 +123,9 @@ const ChartArea = ({
       </div>
 
       <Button
-        type={"just_text"}
+        type="just_text"
         onClick={() =>
-          setTagCharts({
+          saveChart({
             ...tagCharts,
             [Object.values(tagCharts).length
               ? Object.values(tagCharts)[Object.values(tagCharts).length - 1]
