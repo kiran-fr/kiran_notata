@@ -148,7 +148,10 @@ export function Log({ group, user }: { group: any; user: any }) {
       <div className={styles.comments_section}>
         {logsState.length ? (
           logsState.map((logItem: any, i: any) => (
-            <div key={`log-${logItem.id}`} className={styles.log_feed_item}>
+            <div
+              key={`log-${logItem.id}`}
+              className={styles.log_feed_item}
+              >
               <div className={styles.log_feed_byline}>
                 <span className={styles.name}>
                   {(logItem.createdBy === user?.cognitoIdentityId &&

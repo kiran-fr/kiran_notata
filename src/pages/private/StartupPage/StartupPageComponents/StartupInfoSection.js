@@ -31,7 +31,7 @@ function Summaries({ answers }) {
       {(website || slideDeck || contactPerson) && (
         <div className={styles.summaries_tags}>
           {website && (
-            <Tag className={styles.link_tag}>
+            <Tag active={true} isButton={true}>
               <a href={website} target="_blank" rel="noopener noreferrer">
                 Website <i className="fal fa-external-link-square" />
               </a>
@@ -39,7 +39,7 @@ function Summaries({ answers }) {
           )}
 
           {slideDeck && (
-            <Tag className={styles.link_tag}>
+            <Tag active={true} isButton={true}>
               <a href={slideDeck} target="_blank" rel="noopener noreferrer">
                 Slide deck <i className="fal fa-external-link-square" />
               </a>

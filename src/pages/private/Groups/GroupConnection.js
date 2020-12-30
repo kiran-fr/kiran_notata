@@ -436,7 +436,7 @@ function Summaries({ answers }) {
       {(d.website || d.slideDeck) && (
         <div style={{ paddingBottom: "10px" }}>
           {d.website && (
-            <Tag className={link_tag}>
+            <Tag active={true} isButton={true}>
               <a href={d.website} target="_blank" rel="noopener noreferrer">
                 Website <i className="fal fa-external-link-square" />
               </a>
@@ -444,7 +444,7 @@ function Summaries({ answers }) {
           )}
 
           {d.slideDeck && (
-            <Tag className={link_tag}>
+            <Tag active={true} isButton={true}>
               <a href={d.slideDeck} target="_blank" rel="noopener noreferrer">
                 Slide deck <i className="fal fa-external-link-square" />
               </a>
@@ -511,7 +511,7 @@ export default function GroupConnection({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
-            state: { rightMenu: true }
+            state: { rightMenu: true },
           },
           {
             val: `Startup: ${(connection.creative || {}).name}`,

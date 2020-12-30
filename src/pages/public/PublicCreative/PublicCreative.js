@@ -146,12 +146,12 @@ export function PublicCreative({ match }) {
   const { id, accountId } = match.params;
 
   const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
-  let creative = (creativeQuery.data || {}).publicCreativeGet;
+  let creative = creativeQuery.data?.publicCreativeGet;
 
   const [getCreativeTemplate, creativeTemplateQuery] = useLazyQuery(
     publicCreativeTemplateGet
   );
-  const template = (creativeTemplateQuery.data || {}).publicCreativeTemplateGet;
+  const template = creativeTemplateQuery.data?.publicCreativeTemplateGet;
 
   useEffect(() => {
     if (id) getCreative({ variables: { id } });
@@ -170,7 +170,7 @@ export function PublicCreative({ match }) {
     console.log("creativeTemplateQuery.error", creativeTemplateQuery.error);
 
     return (
-      <Content maxWidth={600} center>
+      <Content maxWidth={1200} center>
         <ErrorBox>Form not found...</ErrorBox>
       </Content>
     );
@@ -191,7 +191,7 @@ export function PublicCreative({ match }) {
 
   if (!loading && creative && template)
     return (
-      <Content maxWidth={600}>
+      <Content maxWidth={1200}>
         <CompanyName creative={creative} />
 
         {creative.id && (

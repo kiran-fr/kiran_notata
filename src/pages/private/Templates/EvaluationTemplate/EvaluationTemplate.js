@@ -28,6 +28,7 @@ import {
 import TemplateInfo from "./TemplateInfo";
 
 import { delete_bucket } from "./EvaluationTemplate.module.css";
+import tableStyles from "../../../../Components/elements/NotataComponents/Table.module.css";
 
 function NameAndDescription({ template }) {
   const [mutate] = useMutation(evaluationTemplatePut);
@@ -211,7 +212,7 @@ export default function EvaluationTemplate({ match, history }) {
       title: "",
       dataIndex: "id",
       key: "delete",
-      width: 20,
+      width: 50,
       className: delete_bucket,
       render: sectionId => <Delete sectionId={sectionId} template={template} />,
     },
@@ -220,8 +221,9 @@ export default function EvaluationTemplate({ match, history }) {
       title: "Section name",
       dataIndex: "id",
       key: "name",
-      render: id => {
-        let section = (template.sections || []).find(s => s.id === id) || {};
+      render: sectionId => {
+        let section =
+          (template.sections || []).find(s => s.id === sectionId) || {};
         let questions = section.questions || [];
 
         let possibleScore = 0;
@@ -248,43 +250,58 @@ export default function EvaluationTemplate({ match, history }) {
         return (
           <div>
             <div
-              style={{
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                maxWidth: "400px",
+              onClick={() => {
+                let path = `${evaluation_template}/${id}/${sectionId}`;
+                history.push(path);
               }}
+              className={tableStyles.background_clicker}
+            />
+
+            <div
+              className={tableStyles.actual_content}
+              style={{ pointerEvents: "none" }}
             >
-              {section.name}
-            </div>
-            <div style={{ opacity: 0.5, fontSize: "12px" }}>
-              {questions.length} questions - {possibleScore} points
+              <div
+                style={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  maxWidth: "400px",
+                  fontWeight: "var(--font-weight-bold)",
+                  color: "var(--color-secondary)",
+                }}
+              >
+                {section.name}
+              </div>
+              <div style={{ opacity: 0.5, fontSize: "12px" }}>
+                {questions.length} questions - {possibleScore} points
+              </div>
             </div>
           </div>
         );
       },
     },
 
-    {
-      title: "",
-      dataIndex: "id",
-      key: "section_button",
-      width: 30,
-      render: sectionId => {
-        return (
-          <Button
-            // type="tiny_right"
-            type="right_arrow"
-            size="small"
-            onClick={() => {
-              let path = `${evaluation_template}/${id}/${sectionId}`;
-              history.push(path);
-            }}
-          >
-            View
-          </Button>
-        );
-      },
-    },
+    // {
+    //   title: "",
+    //   dataIndex: "id",
+    //   key: "section_button",
+    //   width: 30,
+    //   render: sectionId => {
+    //     return (
+    //       <Button
+    //         // type="tiny_right"
+    //         type="right_arrow"
+    //         size="small"
+    //         onClick={() => {
+    //           let path = `${evaluation_template}/${id}/${sectionId}`;
+    //           history.push(path);
+    //         }}
+    //       >
+    //         View
+    //       </Button>
+    //     );
+    //   },
+    // },
   ];
 
   return (
@@ -305,15 +322,15 @@ export default function EvaluationTemplate({ match, history }) {
           },
         ]}
       />
-      <Content maxWidth={600}>
+      <Content maxWidth={780}>
         <TemplateInfo template={template} />
 
-        <Card style={{ paddingTop: "5px" }}>
+        <Card noMargin={true}>
           <Table
             dataSource={template.sections || []}
             columns={columns}
             pagination={false}
-            loading={loading.toString()}
+            loading={loading}
             disableHead={true}
           />
         </Card>

@@ -22,6 +22,8 @@ export function CommentSection({ section, question, creative }) {
           inputType: "COMMENT",
           questionId: question.id,
           question: question.name,
+          sectionId: section.id,
+          sectionName: section.name,
           val: comment,
         },
       },

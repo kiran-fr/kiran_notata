@@ -60,6 +60,8 @@ export default function SingleChoiceInputContainer({
                 inputType: question.inputType,
                 questionId: question.id,
                 question: question.name,
+                sectionId: section.id,
+                sectionName: section.name,
                 sid,
                 val,
               };

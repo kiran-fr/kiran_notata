@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { History } from "history";
+import { Link } from "react-router-dom"
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
@@ -10,11 +11,16 @@ import {
   creativesGet,
   creativeTemplateGet,
   connectionsGet,
+  presentationsGet
 } from "Apollo/Queries";
-import { groupMarkAsSeen, creativeDelete } from "Apollo/Mutations";
+import {
+  groupMarkAsSeen,
+  creativeDelete,
+  presentationPut
+} from "Apollo/Mutations";
 
 // import { startup_page } from "../../definitions";
-import { group as group_route } from "../../definitions";
+import { group as group_route, public_presentation } from "../../definitions";
 
 import { Card, Modal } from "Components/elements";
 
@@ -50,6 +56,7 @@ type InboxData = {
   groupId: string;
   sharedBy?: string;
   connection?: any;
+  id?: string;
   creative?: Creative;
 }
 
@@ -57,6 +64,7 @@ type InboxData = {
 
 
 export default function Sharings({ history }: { history: History }) {
+
   // STATES
   const [expanded, setExpanded] = useState(false);
   const [selectedInbox, setSelectedInbox] = useState<Inbox | null>(null);
@@ -68,6 +76,8 @@ export default function Sharings({ history }: { history: History }) {
   const creativesGetQuery = useQuery(creativesGet);
   const connectionsGetQuery = useQuery(connectionsGet);
   const creativeTemplateQuery = useQuery(creativeTemplateGet);
+  const presentationsQuery = useQuery(presentationsGet);
+
 
   // MUTATIONS
   const [creativeDeleteQuery, { loading: creativeDeleteLoading}] = useMutation(creativeDelete);
@@ -78,24 +88,35 @@ export default function Sharings({ history }: { history: History }) {
     awaitRefetchQueries: true,
   });
 
+  const [markSharingAsSeen] = useMutation(presentationPut, {
+    refetchQueries: [{ query: presentationsGet }],
+    awaitRefetchQueries: true,
+  });
+
+
   // DEFINITIONS
   const isLoading =
     userGetQuery.loading ||
     groupsGetQuery.loading ||
     creativesGetQuery.loading ||
-    connectionsGetQuery.loading;
+    connectionsGetQuery.loading ||
+    presentationsQuery.loading;
 
   const hasError =
     userGetQuery.error ||
     groupsGetQuery.error ||
     creativesGetQuery.error ||
-    connectionsGetQuery.error;
+    connectionsGetQuery.error ||
+    presentationsQuery.error;
 
   const missingData =
     !userGetQuery.data ||
     !groupsGetQuery.data ||
     !creativesGetQuery.data ||
-    !connectionsGetQuery.data;
+    !connectionsGetQuery.data ||
+    !presentationsQuery.data;
+
+
 
   // ================
   // HELPER FUNCTIONS
@@ -171,6 +192,9 @@ export default function Sharings({ history }: { history: History }) {
   let groups: Groups[] = groupsGetQuery.data.groupsGet;
   let creatives = creativesGetQuery.data.creativesGet || [];
   let connections = connectionsGetQuery.data.connectionsGet || [];
+  let presentations = presentationsQuery.data.presentationsGet || [];
+
+
   // Item to be populated
   let inboxData: Inbox[] = [];
 
@@ -212,43 +236,45 @@ export default function Sharings({ history }: { history: History }) {
     })
   }
 
+  for (let presentation of presentations) {
+
+    if (!presentation.seen) {
+      inboxData.push({
+        timeStamp: moment(presentation.createdAt, 'x').format(),
+        type: InboxType.SHARING,
+        data: {
+          name: presentation?.creativeDetails?.name || "New Company",
+          sharedBy: presentation?.sharedBy || "",
+          groupId: "",
+          id: presentation?.id,
+          creative: {
+            id: presentation?.creativeId,
+            createdAt: new Date().getTime(),
+            name: "",
+            description: "",
+            templateId: "",
+            sharedByEmail: "",
+            sharedWithEmail: "",
+            submit: true,
+            answers: []
+          }
+        }
+      })
+    }
+
+  }
 
   inboxData = inboxData
     .sort(
       (a, b) =>
         new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime()
     )
-    .filter(({ type }) => type !== InboxType.SHARING);
 
   let capListAt = 5;
 
   if (!inboxData.length) return <span />;
   return (
     <Card label="Inbox" maxWidth={1200} style={{ paddingBottom: "20px" }}>
-
-      {
-        /*
-          <div
-            className={styles.mark_all}
-            onClick={async () => {
-              try {
-                setLoadingMark({ ALL: true });
-                await markAsSeen({ variables: { markAll: true } });
-              } catch (error) {
-                console.log("error", error);
-              }
-              setLoadingMark({ ALL: false });
-            }}
-            >
-            {loadingMark.ALL && (
-              <span>
-                <i className="fa fa-spinner fa-spin"/>{" "}
-              </span>
-            )}
-            mark all as seen
-          </div>
-        */
-      }
 
       {
         // inbox
@@ -269,35 +295,30 @@ export default function Sharings({ history }: { history: History }) {
                   </div>
                   <div>
                     You have been invited to join the group{" "}
-                    <span
+                    <Link
                       className={styles.highlight_1}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        let path = `${group_route}/${data.groupId}`;
-                        history.push(path);
+                      to={{
+                        pathname: `${group_route}/${data.groupId}`,
+                        state: { rightMenu: true }
                       }}
                     >
                       {data.name}
-                    </span>
+                    </Link>
                   </div>
 
                   <div
                     className={styles.mark_as_seen}
                     onClick={async () => {
                       if (loadingMark[data.groupId]) return;
-
                       try {
                         setLoadingMark({ [data.groupId]: true });
                         await markAsSeen({ variables: { groupId: data.groupId } });
-
                       } catch (error) {
                         console.error(error)
                       }
-
                       setLoadingMark({ [data.groupId]: false });
-
                     }}
-                  >
+                    >
                     mark as seen{" "}
                     {loadingMark[data.groupId] && (
                       <i className="fa fa-spinner fa-spin"/>
@@ -319,50 +340,86 @@ export default function Sharings({ history }: { history: History }) {
                     <span className={styles.highlight_2}>{data.sharedBy}</span>
                     <span> shared </span>
 
-                    <span
-                      className={styles.highlight_1}
-                      onClick={() => {
-                        let path = `${group_route}/${data.groupId}/${data?.connection?.id}`;
-                        history.push(path);
-                      }}
-                    >
-                      {data?.connection?.creative.name}
+                    <span className={styles.highlight_1}>
+                      <a
+                        href={`${public_presentation}/${data?.id}/${user?.email}`}
+                        target={"_blank"}
+                        >
+                        {data?.name}
+                      </a>
                     </span>
 
-                    <span> with the group </span>
 
-                    <span
-                      className={styles.highlight_1}
-                      onClick={() => {
-                        let path = `${group_route}/${data.groupId}`;
-                        history.push(path);
-                      }}
-                    >
-                      {data.name}
-                    </span>
+                    <span> with you</span>
                   </div>
 
+                  {
+                    !connections
+                      .find(({ creative }: { creative: Creative }) => {
+                          return creative.id === data?.creative?.id
+                        }
+                      ) && (
+                      <div
+                        className={styles.mark_as_seen}
+                        style={{paddingRight: "5px"}}
+                        onClick={() => {
+                          setSelectedInbox({ actionState: "SAVE", timeStamp, type, data })
+                        }}>
+                         save
+                      </div>
+                    )
+
+                  }
+
                   <div
-                    className={styles.mark_as_seen}
+                    className={styles.delete_creative}
+                    style={{marginLeft: "0px"}}
                     onClick={async () => {
-                      if (loadingMark[`${data?.connection?.id}-${data.sharedBy}`])
-                        return;
+
+                      if (loadingMark[`${data.id}`]) return
+                      setLoadingMark({ [`${data.id}`]: true });
+
                       let variables = {
-                        groupId: data.groupId,
-                        connectionId: data?.connection?.id,
-                        sharedBy: data.sharedBy,
-                      };
-                      setLoadingMark({
-                        [`${data?.connection?.id}-${data.sharedBy}`]: true,
-                      });
-                      markAsSeen({ variables });
-                    }}
-                  >
+                        id: data.id,
+                        markAsSeen: new Date().getTime()
+                      }
+
+                      try {
+                        await markSharingAsSeen({ variables })
+                      } catch (error) {
+                        console.log('error', error)
+                      }
+                      setLoadingMark({ [`${data.id}`]: false });
+                    }}>
                     mark as seen{" "}
-                    {loadingMark[`${data?.connection?.id}-${data.sharedBy}`] && (
+                    {loadingMark[`${data.id}`] && (
                       <i className="fa fa-spinner fa-spin"/>
                     )}
                   </div>
+
+
+                  {/*<div*/}
+                  {/*  className={styles.mark_as_seen}*/}
+                  {/*  onClick={async () => {*/}
+                  {/*    // if (loadingMark[`${data?.connection?.id}-${data.sharedBy}`])*/}
+                  {/*    //   return;*/}
+                  {/*    // let variables = {*/}
+                  {/*    //   groupId: data.groupId,*/}
+                  {/*    //   connectionId: data?.connection?.id,*/}
+                  {/*    //   sharedBy: data.sharedBy,*/}
+                  {/*    // };*/}
+                  {/*    // setLoadingMark({*/}
+                  {/*    //   [`${data?.connection?.id}-${data.sharedBy}`]: true,*/}
+                  {/*    // });*/}
+                  {/*    // markAsSeen({ variables });*/}
+                  {/*  }}*/}
+                  {/*>*/}
+                  {/*  mark as seen{" "}*/}
+                  {/*  {loadingMark[`${data?.connection?.id}-${data.sharedBy}`] && (*/}
+                  {/*    <i className="fa fa-spinner fa-spin"/>*/}
+                  {/*  )}*/}
+                  {/*</div>*/}
+
                 </div>
               )}
 

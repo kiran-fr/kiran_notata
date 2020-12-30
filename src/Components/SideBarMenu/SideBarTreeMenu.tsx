@@ -305,10 +305,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
               >
                 {node.label}
               </Link>
-            </span>:
+            </span> :
             <span
               className={styles.link}
-              style={{maxWidth: `${203 - 27 * level}px`}}
+              style={{
+                maxWidth: `${203 - 27 * level}px`,
+                opacity: 0.5
+              }}
               >
               {node.label}
             </span>

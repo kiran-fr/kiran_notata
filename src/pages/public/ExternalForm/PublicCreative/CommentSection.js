@@ -26,6 +26,8 @@ export function CommentSection({ answers, section, question, setAnswers }) {
       inputType: "COMMENT",
       questionId: question.id,
       question: question.name,
+      sectionId: section.id,
+      sectionName: section.name,
       val: comment,
     };
     setAnswers([...answers, newComment]);

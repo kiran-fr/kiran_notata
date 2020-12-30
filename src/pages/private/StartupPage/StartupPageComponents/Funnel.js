@@ -52,24 +52,23 @@ export function Funnel({ connection }) {
           funnelTags: tags,
         },
       },
-
-      update: (proxy, { data: { connectionFunnelTagAdd } }) => {
-        const data = proxy.readQuery({
-          query: connectionGet,
-          variables: { id: connection.id },
-        });
-
-        proxy.writeQuery({
-          query: connectionGet,
-          variables: { id: connection.id },
-          data: {
-            connectionGet: {
-              ...data.connectionGet,
-              funnelTags: [...connectionFunnelTagAdd.funnelTags],
-            },
-          },
-        });
-      },
+      // update: (proxy, { data: { connectionFunnelTagAdd } }) => {
+      //   const data = proxy.readQuery({
+      //     query: connectionGet,
+      //     variables: { id: connection.id },
+      //   });
+      //
+      //   proxy.writeQuery({
+      //     query: connectionGet,
+      //     variables: { id: connection.id },
+      //     data: {
+      //       connectionGet: {
+      //         ...data.connectionGet,
+      //         funnelTags: [...connectionFunnelTagAdd.funnelTags],
+      //       },
+      //     },
+      //   });
+      // },
     });
   }
 

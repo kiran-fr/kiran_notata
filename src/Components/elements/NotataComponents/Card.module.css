@@ -10,9 +10,11 @@
 
 .no_margin .content {
   margin: -20px;
+  padding-bottom: 20px;
 }
 
 .content {
+  min-width: 100%;
 }
 
 .card_label {
@@ -31,5 +33,13 @@
 @media screen and (max-width: 500px) {
   .container {
     padding: 15px;
+  }
+
+  .content {
+    padding-bottom: 0px !important;
+  }
+
+  .no_margin .content {
+    margin: -15px !important;
   }
 }

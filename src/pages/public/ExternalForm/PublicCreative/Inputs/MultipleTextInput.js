@@ -4,6 +4,7 @@ import { MultipleTextInput } from "../../Forms";
 
 export default function MultipleTextInputContainer({
   question,
+  section,
   setAnswers,
   answers,
 }) {
@@ -12,6 +13,7 @@ export default function MultipleTextInputContainer({
       setAnswers={setAnswers}
       question={question}
       answers={answers}
+      section={section}
     />
   );
 }

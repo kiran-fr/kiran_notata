@@ -187,7 +187,7 @@ function PendingInvitations({ accountInvitations }) {
     <Table
       dataSource={accountInvitations}
       columns={columns}
-      loading={loading.toString()}
+      loading={loading}
       disableHead={true}
       pagination={false}
     />

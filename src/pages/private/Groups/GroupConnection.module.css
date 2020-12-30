@@ -122,14 +122,14 @@
   white-space: pre-wrap;
 }
 
-.link_tag {
-  background: #ff6869;
-}
+/*.link_tag {*/
+/*  background: #ff6869;*/
+/*}*/
 
-.link_tag a {
-  color: white;
-  text-decoration: none;
-}
+/*.link_tag a {*/
+/*  color: white;*/
+/*  text-decoration: none;*/
+/*}*/
 
 .link_extend {
   text-align: right;

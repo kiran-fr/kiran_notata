@@ -57,6 +57,7 @@ function Submit({
   setSuccess,
 }) {
   const [mutate, mres] = useMutation(publicCreativePut);
+
   const [errors, setErrors] = useState([]);
 
   function findErrors(variables) {
@@ -202,7 +203,7 @@ export function PublicCreative({ match }) {
 
   if (error) {
     return (
-      <Content maxWidth={600} center>
+      <Content maxWidth={780} center>
         <ErrorBox>Form not found...</ErrorBox>
       </Content>
     );
@@ -223,7 +224,7 @@ export function PublicCreative({ match }) {
 
   if (!loading && creative && template)
     return (
-      <Content maxWidth={600}>
+      <Content maxWidth={780}>
         {!success && (
           <div>
             <div

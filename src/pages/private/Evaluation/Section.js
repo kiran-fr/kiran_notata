@@ -181,17 +181,6 @@ export default function Section({ match, history }) {
     return <p>We are updating</p>;
   }
 
-  // // Filter out current evaluation
-  // const evaluation = connection.evaluations.find(
-  //   ({ id }) => id === evaluationId
-  // ) || { answers: [] };
-
-  // for (let q of evaluationTemplateSection.questions) {
-  //   let hasAnswered = evaluation.answers.some(
-  //     ({ questionId }) => questionId === q.id
-  //   );
-  // }
-
   return (
     <div>
       <BreadCrumbs

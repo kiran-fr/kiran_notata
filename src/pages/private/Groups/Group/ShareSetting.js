@@ -25,23 +25,24 @@ function ShareSetting({ group, connection, mutate, done }) {
     try {
       await mutate({
         variables,
-        update: (proxy, { data: { groupPut } }) => {
-          const data = proxy.readQuery({
-            query: groupGet,
-            variables: { id: group.id },
-          });
-
-          proxy.writeQuery({
-            query: groupGet,
-            variables: { id: group.id },
-            data: {
-              groupGet: {
-                ...data.groupGet,
-                startups: [...data.groupGet.startups, groupPut],
-              },
-            },
-          });
-        },
+        // update: (proxy, { data: { groupPut } }) => {
+        //   const data = proxy.readQuery({
+        //     query: groupGet,
+        //     variables: { id: group.id },
+        //   });
+        //
+        //   proxy.writeQuery({
+        //     query: groupGet,
+        //     variables: { id: group.id },
+        //     data: {
+        //       groupGet: {
+        //         ...data.groupGet,
+        //         startups: [...data.groupGet.startups, groupPut],
+        //       },
+        //     },
+        //   });
+        //
+        // },
       });
       done();
     } catch (error) {

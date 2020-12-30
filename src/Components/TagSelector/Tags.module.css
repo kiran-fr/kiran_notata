@@ -71,6 +71,7 @@
   justify-content: space-between;
   font-size: 15px;
   line-height: 2.7;
+  cursor: pointer;
 }
 
 .dropdown_group_title {
@@ -111,10 +112,12 @@
 .dropdown_group_item_check {
   font-size: 15px;
   line-height: 2.7;
+  width: 100%;
 }
 
 .dropdown_group_item_check label {
   cursor: pointer;
+  width: 100%;
 }
 
 .dropdown_group_item_check input {

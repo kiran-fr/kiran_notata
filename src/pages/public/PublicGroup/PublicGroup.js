@@ -7,7 +7,7 @@ export function PublicCreative({ match }) {
   let { id } = match.params;
   if (error) {
     return (
-      <Content maxWidth={600} center>
+      <Content maxWidth={1200} center>
         <ErrorBox>Form not found...</ErrorBox>
       </Content>
     );

@@ -55,7 +55,7 @@ export default function Summary({ match, history }) {
 
   return (
     <div>
-      <Content maxWidth={600}>
+      <Content maxWidth={780}>
         <h1>{template.name}</h1>
 
         {template.sections.map(({ name, questions, id }) => {

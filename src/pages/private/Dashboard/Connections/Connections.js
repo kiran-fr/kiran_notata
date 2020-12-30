@@ -316,11 +316,11 @@ export default function Connections({ history }) {
   const f = filters || defaultFilters;
 
   let hasFilters =
-    f.tags.length ||
-    f.funnelTags.length ||
+    f?.tags?.length ||
+    f?.funnelTags?.length ||
     f.search ||
     f.starred ||
-    (f.dateRange.length && (f.dateRange[0] || f.dateRange[1]));
+    (f?.dateRange?.length && (f?.dateRange?.[0] || f?.dateRange?.[1]));
 
   return (
     <>
@@ -363,7 +363,11 @@ export default function Connections({ history }) {
         />
       )}
 
-      <Card maxWidth={1200} noMargin={true} style={{ paddingBottom: "20px" }}>
+      <Card
+        maxWidth={1200}
+        noMargin={true}
+        // style={{ paddingBottom: "20px" }}
+      >
         {/*{!connections.length && (*/}
         {/*  <div className={void_list}>*/}
         {/*    <div className={void_list_label}>No results to show</div>*/}
@@ -379,9 +383,6 @@ export default function Connections({ history }) {
           disableHead={false}
           pagination={false}
           allowSorting={true}
-          // rowLinkFn={d => {
-          //   console.log('hey', d)
-          // }}
           loading={loading}
           emptyLabel={"No results."}
         />

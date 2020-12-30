@@ -68,12 +68,12 @@ export default function StartupPage({ match, history }) {
     return <div>We are updating</div>;
   }
 
-  const user = userGetData.userGet;
-  const connection = connectionGetData.connectionGet;
-  const groups = groupsGetData.groupsGet;
+  const user = userGetData?.userGet;
+  const connection = connectionGetData?.connectionGet;
+  const groups = groupsGetData?.groupsGet;
 
-  let evaluationsCount = connection.evaluations.length;
-  for (let shared of connection.sharedWithMe) {
+  let evaluationsCount = connection?.evaluations?.length;
+  for (let shared of connection?.sharedWithMe) {
     if (shared.connection) {
       evaluationsCount += (shared.connection.evaluations || []).length;
     }

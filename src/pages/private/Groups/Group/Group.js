@@ -357,16 +357,44 @@ export default function Group({ match, history }) {
 
   if (!hasAllData && loading) return <GhostLoader />;
 
-  const group = groupQuery.data?.groupGet;
-  const connections = connectionsQuery.data?.connectionsGet;
+  // const group = groupQuery.data?.groupGet;
+
+  let g = groupQuery.data?.groupGet;
+
+  let group = {
+    ...g,
+    startups: [
+      ...g.startups.map(s => {
+        return {
+          ...s,
+          connection: {
+            ...s.connection,
+            id: s?.connection?.id?.split("?")[0],
+          },
+        };
+      }),
+    ],
+  };
+
+  const connections = connectionsQuery.data?.connectionsGet || [];
   const user = userQuery.data?.userGet;
   const settings = group.settings || {};
+
+  // console.log('group', group)
+  // console.log('connections.length', connections.length)
 
   let isActualAdmin = group?.members?.some(
     ({ email, role }) => email === user.email && role === "admin"
   );
 
   let isAdmin = memberView ? !memberView : isActualAdmin;
+
+  console.log("group", group);
+
+  for (let { connection } of group.startups) {
+    let { subjectiveScores } = connection;
+    console.log(JSON.stringify(subjectiveScores, null, 2));
+  }
 
   return (
     <>
@@ -379,7 +407,7 @@ export default function Group({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
-            state: { rightMenu: true }
+            state: { rightMenu: true },
           },
         ]}
       />
@@ -457,7 +485,7 @@ export default function Group({ match, history }) {
 
         {!!group.startups.length && (
           <StartupList2
-            connections={connections}
+            connections={connections || []}
             group={group}
             mutate={mutate}
             history={history}

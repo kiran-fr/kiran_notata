@@ -1,9 +1,12 @@
 .button_container {
   border: none;
   outline: none;
-  background-color: var(--color-primary);
-  color: white;
-  border-radius: 20px;
+  background: white;
+  /*background-color: var(--color-primary);*/
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  /*color: white;*/
+  border-radius: 4px;
   padding: 13px 30px 13px 30px;
   position: relative;
   cursor: pointer;
@@ -14,16 +17,17 @@
 
 .secondary_style {
   color: var(--color-gray-dark);
-  background: var(--color-gray-light);
+  background: var(--color-gray-pale);
+  border: 1px solid var(--color-gray-light);
 }
 
-/*
-  @media screen and (max-width: 600px) {
-    .button_container {
-      width: 100%;
-    }
-  }
-*/
+.danger_style {
+  color: white;
+  background: var(--color-primary);
+}
+.danger_style i {
+  color: white;
+}
 
 /* Default (large) */
 .icon_padding {
@@ -51,7 +55,8 @@
 }
 
 .loading_icon {
-  color: white;
+  /*color: white;*/
+  color: var(--color-primary);
   border-radius: 100%;
   position: absolute;
   text-align: center;
@@ -130,7 +135,7 @@
   top: 6px;
   left: 2px;
   font-size: 13px;
-  font-weight: 600;
+  /*font-weight: 600;*/
 }
 
 .medium_button .loading_icon {

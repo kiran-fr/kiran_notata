@@ -85,10 +85,12 @@ export default function Groups({
             ]}
           />
 
-          <Content maxWidth={600}>
+          <Content maxWidth={780}>
             <h1>Groups</h1>
             {!!groups?.length && (
-              <Card style={{ paddingTop: "5px" }}>
+              <Card
+                noMargin={true}
+                >
                 <Table
                   dataSource={groups}
                   columns={columns}

@@ -14,6 +14,7 @@ import {
   input_button_wrapper,
   input_button_icon,
   text_button,
+  danger_style,
 } from "./Button.module.css";
 
 const StandardButton = ({
@@ -42,7 +43,8 @@ const StandardButton = ({
         button_container,
         sizeClass,
         withIconPadding && icon_padding,
-        buttonStyle && buttonStyle === "secondary" && secondary_style
+        buttonStyle && buttonStyle === "secondary" && secondary_style,
+        buttonStyle && buttonStyle === "danger" && danger_style
       )}
       style={style || {}}
       onClick={onClick}

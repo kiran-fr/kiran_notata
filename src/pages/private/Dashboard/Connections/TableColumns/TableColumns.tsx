@@ -10,6 +10,7 @@ import {
 } from "pages/private/Dashboard/Connections/types";
 
 import styles from "../Connections.module.css";
+import tableStyles from "Components/elements/NotataComponents/Table.module.css"
 
 import moment from "moment";
 import { History } from "history";
@@ -83,14 +84,14 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
 
           <div
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.actual_content}
+            className={tableStyles.actual_content}
             >
             {connection.creative.name}
           </div>
@@ -124,12 +125,10 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
 
-          <div
-            className={styles.actual_content}
-          >
+          <div className={tableStyles.actual_content}>
 
             {!funnelTags.length && (
               <span style={{ color: "#DADEE2" }}>n/a</span>
@@ -139,6 +138,7 @@ export default ({
                 active={false}
                 isButton={false}
                 onClick={() => {}}
+                kill={false}
               >
                 {tag?.name}
               </Tag>
@@ -163,11 +163,11 @@ export default ({
           onClick={() => {
             history.push(`${startup_page}/${connection.id}`);
           }}
-          className={styles.background_clicker}
+          className={tableStyles.background_clicker}
         />
 
         <div
-          className={styles.actual_content}
+          className={tableStyles.actual_content}
           >
 
           {(connection.tags || []).slice(0, 3).map(({ name, id }) => (
@@ -177,6 +177,7 @@ export default ({
               active={false}
               className={""}
               onClick={() => {}}
+              kill={false}
               >
               {name}
             </Tag>
@@ -190,6 +191,7 @@ export default ({
             onClick={() => {
               setShowTagGroup(connection.id);
             }}
+            kill={false}
             >
             +
           </Tag>
@@ -215,11 +217,11 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
 
           <div
-            className={styles.actual_content}
+            className={tableStyles.actual_content}
           >
 
             {avg && (
@@ -238,6 +240,7 @@ export default ({
                 onClick={() => {
                   setShowEvaluate(connection.id);
                 }}
+                kill={false}
               >
                 +
               </Tag>
@@ -265,11 +268,11 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
 
           <div
-            className={styles.actual_content}
+            className={tableStyles.actual_content}
           >
             <span className={styles.date_style}>{moment(connection.updatedAt).format("ll")}</span>
           </div>
