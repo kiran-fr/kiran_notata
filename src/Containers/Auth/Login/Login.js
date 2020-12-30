@@ -7,7 +7,13 @@ import queryString from "query-string";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { Content, Card, Button, SuccessBox, ErrorBox } from "../../elements/";
+import {
+  Content,
+  Card,
+  Button,
+  SuccessBox,
+  ErrorBox,
+} from "Components/elements/";
 
 import { userLoggedIn } from "Modules/user";
 import { getUserIsLoggedIn } from "Modules";
@@ -18,15 +24,15 @@ const getErrorMessage = ({ error }) => {
   console.log("getErrorMessage");
   console.log(JSON.stringify(error, null, 2));
 
-  let { code } = error;
+  // let { code } = error;
 
-  let defaultError = "Yo, something went wrong, innit";
+  // let defaultError = "Yo, something went wrong, innit";
 
-  let codeMap = {
-    NotAuthorizedException: "Email and password does not match",
-  };
+  // let codeMap = {
+  //   NotAuthorizedException: "Email and password does not match",
+  // };
 
-  let errorMessage = codeMap[code] || defaultError;
+  // let errorMessage = codeMap[code] || defaultError;
 
   // return errorMessage;
 

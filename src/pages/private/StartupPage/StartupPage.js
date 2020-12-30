@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 
 import { Content, Card, BreadCrumbs, GhostLoader } from "Components/elements";
 
+import { StartupActivity } from "./StartupPageComponents/Activity";
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
 import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationBox";
 import { Log } from "./StartupPageComponents/Log";
@@ -72,12 +73,12 @@ export default function StartupPage({ match, history }) {
   const connection = connectionGetData.connectionGet;
   const groups = groupsGetData.groupsGet;
 
-  let evaluationsCount = connection.evaluations.length;
-  for (let shared of connection.sharedWithMe) {
-    if (shared.connection) {
-      evaluationsCount += (shared.connection.evaluations || []).length;
-    }
-  }
+  // let evaluationsCount = connection.evaluations.length;
+  // for (let shared of connection.sharedWithMe) {
+  //   if (shared.connection) {
+  //     evaluationsCount += (shared.connection.evaluations || []).length;
+  //   }
+  // }
 
   let sharedWithGroups =
     groups.filter(g =>
@@ -102,10 +103,12 @@ export default function StartupPage({ match, history }) {
           {
             val: `Startup: ${connection.creative.name}`,
             link: `${startup_page}/${match.params.id}`,
-          },
+            state: { rightMenu: true },
+        },
         ]}
       />
 
+      <StartupActivity user={user} connection={connection} />
       <Content maxWidth={780}>
         {/*FACTS*/}
         <Facts

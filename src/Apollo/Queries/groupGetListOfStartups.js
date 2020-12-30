@@ -6,7 +6,6 @@ import {
   funnelTagFragments,
   creativeFragments,
   connectionFragments,
-  evaluationFragments,
 } from "../Fragments";
 
 export default gql`

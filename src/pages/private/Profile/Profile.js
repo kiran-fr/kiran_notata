@@ -114,7 +114,7 @@ export default function Profile() {
   const [hasPhoneNumber, setHasPhoneNumber] = useState(false);
   const [cognitoUser, setCognitoUser] = useState();
 
-  const { register, handleSubmit, formState, getValues, setValue } = useForm();
+  const { register, handleSubmit, formState, setValue } = useForm();
 
   const { isSubmitting } = formState;
 
@@ -167,8 +167,6 @@ export default function Profile() {
       setHasPhoneNumber(true);
     }
   };
-
-  const values = getValues();
 
   return (
     <>

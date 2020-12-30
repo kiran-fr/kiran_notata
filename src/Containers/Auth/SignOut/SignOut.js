@@ -1,6 +1,6 @@
 import React from "react";
 import { Auth } from "aws-amplify";
-import { Content, SuccessBox } from "../../elements/";
+import { Content, SuccessBox } from "Components/elements/";
 
 export class SignOut extends React.Component {
   constructor(props) {

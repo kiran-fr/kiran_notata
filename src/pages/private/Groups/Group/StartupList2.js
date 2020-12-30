@@ -50,7 +50,7 @@ const getSummaries = (startups, hide, group) => {
         ) || [];
 
       for (let evaluation of evaluations) {
-        let { templateId, sections } = evaluation;
+        let { templateId } = evaluation;
 
         summaries.evaluations[templateId] = summaries.evaluations[
           templateId
@@ -204,12 +204,12 @@ function AddStartup({ creative, connections, isLoading }) {
         if (loading) return;
 
         try {
-          let res = await mutate({
+          await mutate({
             variables: {
               creativeId: creative.id,
             },
             update: (proxy, { data: { connectionPut } }) => {
-              const data = proxy.readQuery({
+              proxy.readQuery({
                 query: connectionsGet,
               });
               proxy.writeQuery({
@@ -306,7 +306,7 @@ function TemplateLogic({
   history,
 }) {
   const [currentLoading, setCurrentLoading] = useState("");
-  const [mutate, { loading }] = useMutation(evaluationPut);
+  const [mutate] = useMutation(evaluationPut);
 
   let { evaluationTemplates } = group;
 
@@ -348,7 +348,7 @@ function TemplateLogic({
 
                 setCurrentLoading(template.id);
 
-                let sectionId = template.sections[0]?.sectionId;
+                // let sectionId = template.sections[0]?.sectionId;
 
                 try {
                   let variables = {
@@ -567,7 +567,7 @@ function HideLogic({ hide, setHide, allUsedTemplates }) {
               onClick={() => {
                 setHide({
                   ...hide,
-                  ["subjectiveScores"]: !hide["subjectiveScores"],
+                  subjectiveScores: !hide["subjectiveScores"],
                 });
               }}
             >
@@ -678,7 +678,7 @@ function AddAll({
     setIsLoadingAddAll(true);
 
     for (let g of list) {
-      let { creative, startups } = g;
+      let { creative } = g;
 
       let match = connections.find(
         ({ creativeId }) => creativeId === creative.id
@@ -694,7 +694,7 @@ function AddAll({
               creativeId: creative.id,
             },
             update: (proxy, { data: { connectionPut } }) => {
-              const data = proxy.readQuery({
+              proxy.readQuery({
                 query: connectionsGet,
               });
               proxy.writeQuery({
@@ -857,7 +857,7 @@ function StartupList2({
                 onClick={() => {
                   if (!haveAddedStartup) return;
                   let path = `${startup_page}/${haveAddedStartup.id}`;
-                  history.push(path);
+                  history.push(path, { rightMenu: true });
                 }}
               >
                 {creative.name}

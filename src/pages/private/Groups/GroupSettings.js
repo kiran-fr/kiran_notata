@@ -1,29 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { userGet, groupGet } from "Apollo/Queries";
-import { groupPut, connectionPut } from "Apollo/Mutations";
+import { groupPut } from "Apollo/Mutations";
 
-import { yupResolver } from "@hookform/resolvers";
-import * as yup from "yup";
-
-import {
-  group as group_route,
-  group_settings,
-  startup_page,
-  evaluation_template_summary,
-} from "pages/definitions";
-
-import classnames from "classnames";
+import { group as group_route } from "pages/definitions";
 
 import {
   BreadCrumbs,
   Content,
   Card,
-  Table,
   Button,
-  Modal,
   GhostLoader,
   SuccessBox,
 } from "Components/elements";
@@ -31,7 +19,7 @@ import {
 export default function GroupSettings({ match, history }) {
   const [success, setSuccess] = useState(false);
 
-  const { register, handleSubmit, formState, setValue } = useForm();
+  const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   const id = match.params.id;
@@ -92,7 +80,7 @@ export default function GroupSettings({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
-            state: { rightMenu: true }
+            state: { rightMenu: true },
           },
           {
             val: `Settings`,

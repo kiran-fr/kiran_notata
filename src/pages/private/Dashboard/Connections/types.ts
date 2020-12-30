@@ -16,10 +16,11 @@ export type Connection = {
   evaluations: Evaluation[];
   log: LogItem[];
   sharedWithMe: GroupStartupList[];
-}
+};
 
-
-export const subjectiveScore = (connection?: Connection): number | undefined => {
+export const subjectiveScore = (
+  connection?: Connection
+): number | undefined => {
   let scores = connection?.subjectiveScores || [];
 
   let avg;
@@ -35,13 +36,12 @@ export const subjectiveScore = (connection?: Connection): number | undefined => 
   return avg;
 };
 
-
 export type SimpleUser = {
-  email: string
-  given_name: string
-  family_name: string
-  company: string
-}
+  email: string;
+  given_name: string;
+  family_name: string;
+  company: string;
+};
 
 export type Creative = {
   id: string;
@@ -53,16 +53,16 @@ export type Creative = {
   sharedByEmail: string;
   submit: boolean;
   answers: CreativeAnswer[];
-}
+};
 
 export type CreativeAnswer = {
   id: string;
-  inputType: EvaluationInputType
+  inputType: EvaluationInputType;
   questionId: string;
   sid: string;
   question: string;
   val: string;
-}
+};
 
 export type Tag = {
   id: string;
@@ -73,13 +73,11 @@ export type Tag = {
   createdAt: Date;
   index: number;
   createdByUser: SimpleUser;
-}
-
+};
 
 export const tagCount = (tags: Tag[]): number => {
   return tags.length;
 };
-
 
 export type FunnelTag = {
   id: string;
@@ -90,16 +88,16 @@ export type FunnelTag = {
   createdByUser: string;
   createdAt: Date;
   index: number;
-}
-
-
-export const highestFunnelTagIndex = (funnelTags: FunnelTag[]): number => {
-  return funnelTags.length ? funnelTags.reduce(
-    (max, tag) => (tag.index > max ? tag.index : max),
-    funnelTags[0].index
-  ) : -1;
 };
 
+export const highestFunnelTagIndex = (funnelTags: FunnelTag[]): number => {
+  return funnelTags.length
+    ? funnelTags.reduce(
+        (max, tag) => (tag.index > max ? tag.index : max),
+        funnelTags[0].index
+      )
+    : -1;
+};
 
 export type SubjectiveScore = {
   score: number;
@@ -107,7 +105,7 @@ export type SubjectiveScore = {
   createdByUser: SimpleUser;
   createdAt: Date;
   responseType: string;
-}
+};
 
 export type Evaluation = {
   id: string;
@@ -120,7 +118,7 @@ export type Evaluation = {
   templateId: string;
   answers: EvaluationAnswer[];
   summary: EvaluationSummary;
-}
+};
 
 export type LogItem = {
   id: string;
@@ -135,7 +133,7 @@ export type LogItem = {
   seenBy: string[];
   reference: KeyVal[];
   dataPairs: KeyVal[];
-}
+};
 
 export type GroupStartupList = {
   connectionId: string;
@@ -146,12 +144,12 @@ export type GroupStartupList = {
   evaluations: boolean;
   subjective_score: boolean;
   tags: boolean;
-  connection: Connection
+  connection: Connection;
   groupName: string;
   groupId: string;
   createdByUser: SimpleUser;
   members: GroupMember[];
-}
+};
 
 export type GroupMember = {
   accountId: string;
@@ -161,35 +159,35 @@ export type GroupMember = {
   joinedDate: Date;
   latestActivity: Date;
   user: SimpleUser;
-}
+};
 
 export type EvaluationAnswer = {
   id: string;
   inputType: EvaluationInputType;
   questionId: string;
   sid: string;
-  question: string
+  question: string;
   val: string;
-}
+};
 
 export type EvaluationSummary = {
   totalScore: number;
   possibleScore: number;
   templateName: string;
   sections: EvaluationSummarySection[];
-}
+};
 
 export type EvaluationSummarySection = {
   id: string;
   name: string;
   score: number;
   possibleScore: number;
-}
+};
 
 export type KeyVal = {
   key: string;
   val: string;
-}
+};
 
 export enum EvaluationInputType {
   RADIO,
@@ -208,3 +206,10 @@ export enum LogType {
   EVENT,
   COMMENT,
 }
+
+export type ChartData = {
+  id: string;
+  name: string;
+  value: number;
+  selected?: boolean;
+};

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { login } from "pages/definitions";
 import { useForm } from "react-hook-form";
 
-import { Content, Card, Button } from "../../elements/";
+import { Content, Card, Button } from "Components/elements/";
 
 export function EnterUsername({ done }) {
   const { register, handleSubmit, formState } = useForm();

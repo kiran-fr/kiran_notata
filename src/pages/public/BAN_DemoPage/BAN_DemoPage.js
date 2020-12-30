@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Content } from "../../../Components/elements";
 
@@ -110,6 +110,7 @@ export function BanDemoPage({ match }) {
           <iframe
             width="100%"
             height="100%"
+            title="NOTATA demo ban 2020 video"
             src="https://www.youtube.com/embed/KkZTXW9oe-4"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -124,7 +125,7 @@ export function BanDemoPage({ match }) {
 
               <div className={content_class}>
                 <div className={image_class}>
-                  <img src={image} />
+                  <img src={image} alt="" />
                 </div>
 
                 <div className={text_class}>{text}</div>

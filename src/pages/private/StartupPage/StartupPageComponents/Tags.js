@@ -6,17 +6,9 @@ import { connectionTagAdd, connectionTagRemove } from "Apollo/Mutations";
 
 import { Button, Tag } from "Components/elements";
 
-import {
-  button_container,
-  tag_each,
-  tag_name,
-  tag_kill,
-} from "./Tags.module.css";
+import { tag_each, tag_name, tag_kill } from "./Tags.module.css";
 
 import TagSelector from "Components/TagSelector/TagSelector";
-
-import TagOverview from "./TagOverview";
-import TagPage from "./TagPage";
 
 export function Tags({ connection, user, match }) {
   const [show, setShow] = useState(false);

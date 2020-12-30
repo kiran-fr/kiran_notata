@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Modal, SuccessBox, Tag } from "Components/elements";
+import { Card, Button, Modal, SuccessBox } from "Components/elements";
 
 import { useForm } from "react-hook-form";
 import { GeneralInput } from "./Inputs/GeneralInput";
@@ -42,7 +42,7 @@ function CompanyName({ creative }) {
 }
 
 export function Section({ section, template, updateTemplate }) {
-  const { name, description, questions } = section;
+  const { name, questions } = section;
   const [isEditingQuestion, setIsEditionQuestion] = useState({});
   const [editSectionMeta, setEditSectionMeta] = useState(undefined);
   const { register, handleSubmit } = useForm();
@@ -397,7 +397,6 @@ function TemplateHeader({ template, updateTemplate }) {
       <div>
         <Button
           size={"small"}
-          buttonStyle={"secondary"}
           buttonStyle={invitedView ? "primary" : "secondary"}
           onClick={() => setInvitedView(true)}
         >
@@ -507,7 +506,6 @@ function TemplateSuccessMessage({ template, updateTemplate }) {
         <div style={{ marginBottom: "10px" }}>
           <Button
             size={"small"}
-            buttonStyle={"secondary"}
             buttonStyle={invitedView ? "primary" : "secondary"}
             onClick={() => setInvitedView(true)}
           >

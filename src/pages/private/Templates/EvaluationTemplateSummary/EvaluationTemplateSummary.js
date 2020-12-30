@@ -1,19 +1,11 @@
 import React, { useEffect } from "react";
-import { useQuery, useLazyQuery } from "@apollo/client";
-import moment from "moment";
-import { Link } from "react-router-dom";
-import { connectionGet, evaluationTemplateGet } from "Apollo/Queries";
-import { startup_page } from "pages/definitions";
+import { useLazyQuery } from "@apollo/client";
+import { evaluationTemplateGet } from "Apollo/Queries";
 
-import { getPossibleScore, getScore } from "../../Evaluation/util";
-import classnames from "classnames";
-import { Card, BreadCrumbs, GhostLoader, Content } from "Components/elements";
+import { getPossibleScore } from "../../Evaluation/util";
+import { Card, GhostLoader, Content } from "Components/elements";
 
 import {
-  summary_score_section,
-  row,
-  summary_row,
-  row_score,
   header,
   header_title,
   header_details,
@@ -22,11 +14,6 @@ import {
   question_each,
   question_each_name,
   question_each_score,
-  question_answer,
-  question_comments,
-  no_answer,
-  small_traffic_light,
-  link_style,
 } from "./EvaluationTemplateSummary.module.css";
 
 export default function Summary({ match, history }) {
@@ -86,7 +73,7 @@ export default function Summary({ match, history }) {
               </div>
 
               {questions.map(question => {
-                let { name, id, inputType, options } = question;
+                let { name, id } = question;
 
                 return (
                   <div key={id} className={question_each}>

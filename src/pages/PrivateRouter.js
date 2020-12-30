@@ -69,7 +69,6 @@ import { GhostLoader } from "Components/elements";
 import Header from "Components/Header/Header";
 import ExternalForm from "./private/ExternalForm/ExternalForm";
 import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu";
-import SideBar from "../Components/SideBar/SideBar";
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -153,8 +152,6 @@ export const RouterComponent = ({ history }) => {
         path={`${startup_page}/:connectionId/evaluation/:evaluationId/section/:sectionId`}
         component={SectionPage}
       />
-
-      <Route exact path={team} component={Team} />
 
       <Route exact path={external_form} component={ExternalForm} />
 

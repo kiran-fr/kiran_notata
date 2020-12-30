@@ -12,6 +12,7 @@ export { default as evaluationTemplateSectionGet } from "./evaluationTemplateSec
 export { default as groupsGet } from "./groupsGet";
 export type { Groups as GroupsType } from "./groupsGet";
 export { default as groupGet } from "./groupGet";
+export type { LogItem } from "./groupLogGet";
 export { default as groupLogGet } from "./groupLogGet";
 export { default as creativeGet } from "./creativeGet";
 export { default as creativesGet } from "./creativesGet";

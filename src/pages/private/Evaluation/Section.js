@@ -163,8 +163,8 @@ export default function Section({ match, history }) {
     evaluationTemplateSectionQuery.data?.evaluationTemplateSectionGet;
 
   // Define loading & error
-  const loading =
-    connectionQuery.loading || evaluationTemplateSectionQuery.loading;
+  // const loading =
+  //   connectionQuery.loading || evaluationTemplateSectionQuery.loading;
 
   const error = connectionQuery.error || evaluationTemplateSectionQuery.error;
 
@@ -199,6 +199,7 @@ export default function Section({ match, history }) {
           {
             val: `Startup: ${connection.creative.name}`,
             link: `${startup_page}/${connectionId}`,
+            state: { rightMenu: true },
           },
           {
             val: `Template: ${evaluation.name}`,

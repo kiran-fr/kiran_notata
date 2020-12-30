@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
@@ -13,7 +13,6 @@ import {
 // COMPONENTS
 import Filters from "../Filters";
 import CreateNewStartup from "./CreateStartup";
-import EvaluateSelector from "./EvaluateStartup";
 import SetSubjectiveScore from "./SetSubjectiveScore";
 
 import { startup_page } from "pages/definitions";
@@ -25,28 +24,24 @@ import TagSelector from "Components/TagSelector/TagSelector";
 import moment from "moment";
 
 import {
-  void_list,
-  void_list_label,
-  void_list_icon,
   counter,
   small_text_flex,
   clear_filters,
 } from "./Connections.module.css";
 
 import tableColumns from "./TableColumns/TableColumns";
+import ChartArea from "./Charts/ChartArea";
 
 function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
   filters = filters || {};
-  filters.tags = filters.tags || [];
-  filters.funnelTags = filters.funnelTags || [];
   filters.dateRange = filters.dateRange || [null, null];
 
   if (!filters) return connections;
 
   if (filters.starred) {
     connections = connections.filter(connection => {
-      if (!connection) return;
+      if (!connection) return false;
       return connection.starred;
     });
   }
@@ -102,13 +97,13 @@ function applyFilters({ connections, filters }) {
     );
   }
 
-  if (filters.tags.length) {
+  if (filters.tags?.length) {
     connections = connections.filter(({ tags }) =>
       filters.tags.every(ft => tags.map(({ id }) => id).includes(ft.id))
     );
   }
 
-  if (filters.funnelTags.length) {
+  if (filters.funnelTags?.length) {
     connections = connections.filter(({ funnelTags }) => {
       if (!funnelTags.length) return false;
 
@@ -239,7 +234,14 @@ export default function Connections({ history }) {
   const [showTagGroup, setShowTagGroup] = useState(undefined);
   const [showEvaluate, setShowEvaluate] = useState(undefined);
 
-  const [filters, setFilterState] = useState();
+  const [filters, setFilterState] = useState({
+    tags: [],
+    funnelTags: [],
+    search: "",
+    starred: false,
+    dateRange: [null, null],
+  });
+  const [chartFilters, setChartFilters] = useState({ tags: [] });
 
   useEffect(() => {
     let f;
@@ -263,6 +265,28 @@ export default function Connections({ history }) {
   const tagGroups =
     (tagGroupsQuery.data && tagGroupsQuery.data.accountGet.tagGroups) || [];
 
+  const groupsTags = useMemo(
+    () =>
+      tagGroups.reduce(
+        (groupsMap, props) =>
+          groupsMap.set(
+            props.id,
+            props.tags.reduce(
+              (map, props) =>
+                map.set(props.id, {
+                  id: props.id,
+                  name: props.name,
+                  value: 0,
+                  selected: chartFilters.tags.some(({ id }) => id === props.id),
+                }),
+              new Map()
+            )
+          ),
+        new Map()
+      ),
+    [tagGroups, chartFilters]
+  );
+
   if (error || tagGroupsQuery.error) {
     console.log("error", error);
     console.log("tagGroupsQuery.error", tagGroupsQuery.error);
@@ -273,9 +297,17 @@ export default function Connections({ history }) {
   if (!tagGroupsQuery.data && tagGroupsQuery.loading) return <GhostLoader />;
 
   let connections = data.connectionsGet;
+  let connectionsGeneral = [];
 
   if (connections.length >= 10) {
-    connections = applyFilters({ connections, filters });
+    connectionsGeneral = applyFilters({ connections, filters });
+    // Apply filters from charts, affecting selection in table but not in charts themselves
+    connections = applyFilters({
+      connections: connectionsGeneral,
+      filters: chartFilters,
+    });
+  } else {
+    connectionsGeneral.concat(connections);
   }
 
   let showTagsForConnection;
@@ -305,25 +337,26 @@ export default function Connections({ history }) {
     mutateDelete(DeleteTagMutationOptions(tag, connection));
   }
 
-  const defaultFilters = {
-    tags: [],
-    funnelTags: [],
-    search: "",
-    starred: false,
-    dateRange: [null, null],
-  };
-
-  const f = filters || defaultFilters;
-
   let hasFilters =
-    f.tags.length ||
-    f.funnelTags.length ||
-    f.search ||
-    f.starred ||
-    (f.dateRange.length && (f.dateRange[0] || f.dateRange[1]));
+    filters.tags.length ||
+    filters.funnelTags.length ||
+    filters.search ||
+    filters.starred ||
+    (filters.dateRange.length &&
+      (filters.dateRange[0] || filters.dateRange[1]));
 
   return (
     <>
+      <Card maxWidth={1200} style={{ paddingBottom: "20px" }}>
+        <ChartArea
+          connections={connectionsGeneral}
+          groupsTags={groupsTags}
+          tagGroups={tagGroups}
+          setFilters={setChartFilters}
+          filters={chartFilters}
+        />
+      </Card>
+
       <CreateNewStartup
         history={history}
         setDone={connection => {
@@ -334,7 +367,6 @@ export default function Connections({ history }) {
         setShowEvaluate={setShowEvaluate}
         showModalOnly={false}
       />
-
       <div className={small_text_flex}>
         {(hasFilters && (
           <div

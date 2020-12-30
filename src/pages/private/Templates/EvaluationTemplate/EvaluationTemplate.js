@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { evaluationTemplateGet } from "Apollo/Queries";
 
 import {
-  evaluationTemplatePut,
+  // evaluationTemplatePut,
   evaluationTemplateSectionPut,
   evaluationTemplateSectionDelete,
 } from "Apollo/Mutations";
@@ -29,64 +29,64 @@ import TemplateInfo from "./TemplateInfo";
 
 import { delete_bucket } from "./EvaluationTemplate.module.css";
 
-function NameAndDescription({ template }) {
-  const [mutate] = useMutation(evaluationTemplatePut);
-  const { name, description } = template;
+// function NameAndDescription({ template }) {
+//   const [mutate] = useMutation(evaluationTemplatePut);
+//   const { name, description } = template;
 
-  const { register, handleSubmit, setValue } = useForm();
+//   const { register, handleSubmit, setValue } = useForm();
 
-  useEffect(() => {
-    setValue("input.name", name);
-    setValue("input.description", description);
-  });
+//   useEffect(() => {
+//     setValue("input.name", name);
+//     setValue("input.description", description);
+//   });
 
-  const onSubmit = async (data, event) => {
-    let variables = {
-      id: template.id,
-      ...data,
-    };
-    try {
-      await mutate({
-        variables,
-        optimisticResponse: {
-          __typename: "Mutation",
-          evaluationTemplatePut: {
-            ...template,
-            ...data.input,
-          },
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+//   const onSubmit = async (data, event) => {
+//     let variables = {
+//       id: template.id,
+//       ...data,
+//     };
+//     try {
+//       await mutate({
+//         variables,
+//         optimisticResponse: {
+//           __typename: "Mutation",
+//           evaluationTemplatePut: {
+//             ...template,
+//             ...data.input,
+//           },
+//         },
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
-  return (
-    <form
-      className="focus_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
-      <textarea
-        className="form_h1"
-        rows={1}
-        placeholder='I.e. "Early stage evaluations"'
-        name="input.name"
-        ref={register}
-        onBlur={handleSubmit(onSubmit)}
-      />
+//   return (
+//     <form
+//       className="focus_form"
+//       onSubmit={handleSubmit(onSubmit)}
+//       style={{ marginBottom: "20px" }}
+//     >
+//       <textarea
+//         className="form_h1"
+//         rows={1}
+//         placeholder='I.e. "Early stage evaluations"'
+//         name="input.name"
+//         ref={register}
+//         onBlur={handleSubmit(onSubmit)}
+//       />
 
-      <textarea
-        className="form_p1"
-        rows={1}
-        placeholder='I.e. "Template for evaluating early stage startups"'
-        name="input.description"
-        ref={register}
-        onBlur={handleSubmit(onSubmit)}
-      />
-    </form>
-  );
-}
+//       <textarea
+//         className="form_p1"
+//         rows={1}
+//         placeholder='I.e. "Template for evaluating early stage startups"'
+//         name="input.description"
+//         ref={register}
+//         onBlur={handleSubmit(onSubmit)}
+//       />
+//     </form>
+//   );
+// }
 
 function AddNewSection({ id, setShowModal }) {
   const [mutate] = useMutation(evaluationTemplateSectionPut);

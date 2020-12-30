@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import moment from "moment";
 
-import { groupLogPut } from "Apollo/Mutations";
-import { groupLogGet } from "Apollo/Queries";
-import { groupLogSubscription } from "Apollo/Subscriptions";
+import { LogItem } from "Apollo/Queries";
 
 import styles from "./Log.module.css";
-import { useSubscription } from "@apollo/client";
-
 const classnames = require("classnames");
 
-function LogInput({ user, group }: { user: any; group: any }) {
-  const [mutate] = useMutation(groupLogPut);
+function LogInput({ submitMutation }: { submitMutation: Function }) {
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
-  function downHandler(event: any) {
+  function downHandler(event: React.KeyboardEvent) {
     const { key, shiftKey } = event;
 
     if (shiftKey && key === "Enter") handleSubmit(onSubmit)(event);
@@ -28,57 +22,7 @@ function LogInput({ user, group }: { user: any; group: any }) {
     if (data.val.length < 1) return;
     if (isSubmitting) return;
 
-    let variables = {
-      groupId: group.id,
-      input: {
-        logType: "COMMENT",
-        dataPairs: [
-          {
-            key: "TEXT",
-            val: data.val,
-          },
-        ],
-      },
-    };
-
-    mutate({
-      variables,
-      // optimisticResponse: {
-      //   __typename: "Mutation",
-      //   groupLogPut: {
-      //     __typename: "GroupLogItem",
-      //     id: "",
-      //     groupId: group.id,
-      //     createdByUser: {
-      //       __typename: "SimpleUser",
-      //       given_name: user.given_name,
-      //       family_name: user.family_name,
-      //       email: user.email,
-      //     },
-      //     dataPairs: [
-      //       {
-      //         key: "TEXT",
-      //         val: data.val,
-      //         __typename: "KeyVal",
-      //       },
-      //     ],
-      //   },
-      // },
-      update: (proxy, { data: { groupLogPut } }) => {
-        const data: any = proxy.readQuery({
-          query: groupLogGet,
-          variables: { groupId: group.id },
-        });
-
-        proxy.writeQuery({
-          query: groupLogGet,
-          variables: { groupId: group.id },
-          data: {
-            groupLogGet: [...data?.groupLogGet, groupLogPut],
-          },
-        });
-      },
-    });
+    submitMutation(data.val);
 
     if (event.type === "submit") {
       event.target.reset();
@@ -100,55 +44,97 @@ function LogInput({ user, group }: { user: any; group: any }) {
         />
 
         <div className={styles.comment_submit}>
-          {(!isSubmitting && <i className="fal fa-paper-plane"/>) || (
-            <i className="fal fa-spinner fa-spin"/>
+          {(!isSubmitting && <i className="fal fa-paper-plane" />) || (
+            <i className="fal fa-spinner fa-spin" />
           )}
 
-          <input type="submit" value=""/>
+          <input type="submit" value="" />
         </div>
       </form>
     </div>
   );
 }
 
-export function Log({ group, user }: { group: any; user: any }) {
-  const logQuery = useQuery(groupLogGet, {
-    variables: { groupId: group.id },
-  });
-  const [logsState, setLogsState] = useState<any[]>([]);
+const isViewable = (parent: HTMLDivElement, child: HTMLDivElement): boolean => {
+  const parentRect = parent.getBoundingClientRect();
+  const childRect = child.getBoundingClientRect();
 
-  useSubscription(groupLogSubscription, {
-      onSubscriptionData: ({ client, subscriptionData: { data } }) => {
-        if (!data ||
-          data.subscribeToAllGroupLogPutEvents.groupId !== group.id ||
-          data.subscribeToAllGroupLogPutEvents.createdByUser.email === user.email) {
-          return;
-        }
-        const groupLogs = client.readQuery({ query: groupLogGet, variables: { groupId: group.id } });
-        client.writeQuery({
-          query: groupLogGet,
-          variables: { groupId: group.id },
-          data: {
-            groupLogGet: [...groupLogs.groupLogGet, data.subscribeToAllGroupLogPutEvents],
-          },
-        });
-        setLogsState([...groupLogs.groupLogGet, data.subscribeToAllGroupLogPutEvents].filter((l) => l.logType === "COMMENT"))
-      },
-    },
+  return (
+    childRect.top >= parentRect.top &&
+    childRect.top - (parentRect.top + parent.clientHeight) <= 90
   );
+};
+
+function usePrevious(value: any): any {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
+const scrollToBottom = (
+  parentRef: React.RefObject<HTMLDivElement>,
+  childRef: React.RefObject<HTMLDivElement>,
+  forceScroll?: boolean
+) => {
+  const node: HTMLDivElement | null = childRef.current;
+  if (node) {
+    const isChild = isViewable(
+      parentRef.current! as HTMLDivElement,
+      childRef.current! as HTMLDivElement
+    );
+    if (forceScroll || isChild)
+      (node as any).scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+export function Log({
+  logs,
+  user,
+  submitMutation,
+}: {
+  logs: LogItem[];
+  user: any;
+  submitMutation: Function;
+}) {
+  const [viewEvents, setViewEvents] = useState(false);
+  const ref = useRef(null);
+  const parentRef = useRef(null);
+
+  logs = logs.filter(l => (viewEvents ? l : l.logType === "COMMENT"));
+
+  const prevCount = usePrevious(logs);
 
   useEffect(() => {
-    if (logQuery.data?.groupLogGet) {
-      setLogsState(logQuery.data.groupLogGet.filter((l: any) => l.logType === "COMMENT"));
-    }
-  }, [logQuery.data]);
+    if (!prevCount?.length) scrollToBottom(parentRef, ref, true);
+    else scrollToBottom(parentRef, ref, false);
+  }, [logs, prevCount]);
 
   return (
     <>
-      <div className={styles.comments_section}>
-        {logsState.length ? (
-          logsState.map((logItem: any, i: any) => (
-            <div key={`log-${logItem.id}`} className={styles.log_feed_item}>
+      <div className={styles.tabs}>
+        <div
+          className={`${styles.tab} ${!viewEvents && styles.selected_tab}`}
+          onClick={() => setViewEvents(false)}
+        >
+          COMMENTS
+        </div>
+        <div
+          className={`${styles.tab} ${viewEvents && styles.selected_tab}`}
+          onClick={() => setViewEvents(true)}
+        >
+          ACTIVITIES
+        </div>
+      </div>
+      <div ref={parentRef} className={styles.comments_section}>
+        {logs.length ? (
+          logs.map((logItem: LogItem) => (
+            <div
+              ref={ref}
+              key={`log-${logItem.id}`}
+              className={styles.log_feed_item}
+            >
               <div className={styles.log_feed_byline}>
                 <span className={styles.name}>
                   {(logItem.createdBy === user?.cognitoIdentityId &&
@@ -167,7 +153,7 @@ export function Log({ group, user }: { group: any; user: any }) {
                 className={classnames(
                   styles.log_feed_text,
                   logItem.logType !== "COMMENT" &&
-                  styles.log_feed_type_SUBJECTIVE_SCORE,
+                    styles.log_feed_type_SUBJECTIVE_SCORE
                 )}
               >
                 {logItem.dataPairs[0].val}
@@ -185,8 +171,13 @@ export function Log({ group, user }: { group: any; user: any }) {
         )}
       </div>
 
-      <hr/>
-      <LogInput group={group} user={user}/>
+      <hr />
+      <LogInput
+        submitMutation={(value: string) => {
+          submitMutation(value);
+          scrollToBottom(parentRef, ref, true);
+        }}
+      />
     </>
   );
 }

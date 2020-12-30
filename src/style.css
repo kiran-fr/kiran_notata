@@ -534,3 +534,39 @@ input[type="submit"] {
     transform: rotate(360deg);
   }
 }
+
+/* Recharts Legend Style */
+
+.recharts-legend-wrapper {
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 14px !important;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.recharts-legend-wrapper::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+li.recharts-legend-item {
+  display: flex !important;
+  align-self: center;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0 !important;
+  height: 100%;
+}
+
+.recharts-surface {
+  flex-shrink: 0;
+}
+
+span.recharts-legend-item-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Recharts Legend Style */

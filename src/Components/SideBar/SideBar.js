@@ -2,16 +2,7 @@ import React from "react";
 
 import classnames from "classnames";
 
-import {
-  dashboard,
-  profile,
-  tags,
-  group,
-  team,
-  templates,
-  signOut,
-  settings,
-} from "pages/definitions";
+import { dashboard, group, signOut, settings } from "pages/definitions";
 
 import { sidebar_container, menu_container } from "./SideBar.module.css";
 import { MenuIconItem } from "../elements/NotataComponents/MenuIconItem";

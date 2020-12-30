@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { frontpage } from "pages/definitions";
 import { History } from "history";
@@ -6,7 +6,6 @@ import { History } from "history";
 // STYLE
 import styles from "./Header.module.css";
 
-import { MenuIconItem } from "../elements/";
 import { useDispatch, useSelector } from "react-redux";
 import {
   hideMobileNavigationMenu,

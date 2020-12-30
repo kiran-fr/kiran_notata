@@ -6,7 +6,7 @@ import { Button, Content, BreadCrumbs, GhostLoader } from "Components/elements";
 import styles from "./FactsTemplates.module.css";
 import { creativeTemplateGet } from "Apollo/Queries";
 import TemplatePreview from "./TemplatePreview/TemplatePreview";
-import { settings, facts_template, facts_templates } from "pages/definitions";
+import { settings, facts_templates } from "pages/definitions";
 
 export default function FactsTemplates({ history, match }) {
   const creativeTemplateQuery = useQuery(creativeTemplateGet);

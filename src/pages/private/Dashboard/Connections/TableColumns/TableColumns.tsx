@@ -1,9 +1,8 @@
 import * as React from "react";
 import { startup_page } from "pages/definitions";
-import { Button, Tag } from "Components/elements";
+import { Tag } from "Components/elements";
 import {
   Connection,
-  FunnelTag,
   highestFunnelTagIndex,
   subjectiveScore,
   tagCount,
@@ -13,8 +12,6 @@ import styles from "../Connections.module.css";
 
 import moment from "moment";
 import { History } from "history";
-
-import connectionGet from "Apollo/Queries/connectionGet";
 
 export default ({
   history,
@@ -67,18 +64,13 @@ export default ({
     className: styles.max_width_200,
     type: "string",
     render: (connection: Connection) => {
-
       let _style: React.CSSProperties = {
         cursor: "pointer",
         fontWeight: connection.starred && ("var(--font-weight-bold)" as "bold"),
       } as React.CSSProperties;
 
       return (
-        <div
-          style={_style}
-          className={styles.company_name}
-        >
-
+        <div style={_style} className={styles.company_name}>
           <div
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
@@ -88,10 +80,10 @@ export default ({
 
           <div
             onClick={() => {
-              history.push(`${startup_page}/${connection.id}`);
+              history.push(`${startup_page}/${connection.id}`, { rightMenu: true });
             }}
             className={styles.actual_content}
-            >
+          >
             {connection.creative.name}
           </div>
         </div>
@@ -103,23 +95,22 @@ export default ({
     // dataIndex: "funnelTags",
     key: "tags",
     responsive: "sm",
-    valueExpr: (connection: Connection) => highestFunnelTagIndex(connection.funnelTags),
+    valueExpr: (connection: Connection) =>
+      highestFunnelTagIndex(connection.funnelTags),
     render: (connection: Connection) => {
-
       let { funnelTags } = connection;
 
-      let tag
+      let tag;
       if (funnelTags.length) {
         let highest = funnelTags.reduce(
           (max, tag) => (tag.index > max ? tag.index : max),
-          funnelTags[0].index,
+          funnelTags[0].index
         );
         tag = funnelTags.find(({ index }) => index === highest);
       }
 
       return (
         <div>
-
           <div
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
@@ -127,13 +118,10 @@ export default ({
             className={styles.background_clicker}
           />
 
-          <div
-            className={styles.actual_content}
-          >
-
-            {!funnelTags.length && (
+          <div className={styles.actual_content}>
+            {(!funnelTags.length && (
               <span style={{ color: "#DADEE2" }}>n/a</span>
-            ) || (
+            )) || (
               <Tag
                 className={styles.funnel_tag}
                 active={false}
@@ -143,9 +131,7 @@ export default ({
                 {tag?.name}
               </Tag>
             )}
-
           </div>
-
         </div>
       );
     },
@@ -158,7 +144,6 @@ export default ({
     valueExpr: (connection: Connection) => tagCount(connection.tags),
     render: (connection: Connection) => (
       <div>
-
         <div
           onClick={() => {
             history.push(`${startup_page}/${connection.id}`);
@@ -166,10 +151,7 @@ export default ({
           className={styles.background_clicker}
         />
 
-        <div
-          className={styles.actual_content}
-          >
-
+        <div className={styles.actual_content}>
           {(connection.tags || []).slice(0, 3).map(({ name, id }) => (
             <Tag
               key={id}
@@ -177,11 +159,10 @@ export default ({
               active={false}
               className={""}
               onClick={() => {}}
-              >
+            >
               {name}
             </Tag>
           ))}
-
 
           <Tag
             isButton={true}
@@ -190,13 +171,10 @@ export default ({
             onClick={() => {
               setShowTagGroup(connection.id);
             }}
-            >
+          >
             +
           </Tag>
-
         </div>
-
-
       </div>
     ),
   },
@@ -210,7 +188,6 @@ export default ({
       let avg = subjectiveScore(connection);
       return (
         <div>
-
           <div
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
@@ -218,10 +195,7 @@ export default ({
             className={styles.background_clicker}
           />
 
-          <div
-            className={styles.actual_content}
-          >
-
+          <div className={styles.actual_content}>
             {avg && (
               <div className={styles.average_score}>
                 <span>{avg}</span>
@@ -242,7 +216,6 @@ export default ({
                 +
               </Tag>
             )}
-
           </div>
         </div>
       );
@@ -256,11 +229,8 @@ export default ({
     className: styles.pre_space,
     type: "date",
     render: (connection: Connection) => {
-
-
       return (
         <div>
-
           <div
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
@@ -268,16 +238,13 @@ export default ({
             className={styles.background_clicker}
           />
 
-          <div
-            className={styles.actual_content}
-          >
-            <span className={styles.date_style}>{moment(connection.updatedAt).format("ll")}</span>
+          <div className={styles.actual_content}>
+            <span className={styles.date_style}>
+              {moment(connection.updatedAt).format("ll")}
+            </span>
           </div>
-
         </div>
-      )
-    }
-
+      );
+    },
   },
-
 ];

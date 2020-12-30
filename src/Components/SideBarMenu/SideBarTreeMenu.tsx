@@ -6,14 +6,13 @@ import { Startups } from "Apollo/Queries/groupsGet";
 import {
   connectionsGet,
   groupsGet,
-  GroupsType,
   tagGroupGet,
   userGet,
 } from "Apollo/Queries";
 import {
   connectionTagAdd,
   connectionTagRemove,
-  connectionPut
+  connectionPut,
 } from "Apollo/Mutations";
 
 import { dashboard, group, signOut, settings } from "pages/definitions";
@@ -27,7 +26,6 @@ import {
   DeleteTagMutationOptions,
 } from "pages/private/Dashboard/Connections/Connections";
 import { hideMobileNavigationMenu } from "Modules/menu";
-import { Button } from "../elements";
 import styles from "./SideBarTreeMenu.module.css";
 
 const classnames = require("classnames");
@@ -42,7 +40,7 @@ type MenuItem = {
   showHashTag?: boolean;
   selected?: boolean;
   action?: () => void;
-  showRightMenu?: boolean
+  showRightMenu?: boolean;
 };
 
 const SideBarTreeMenu = ({ location, history }: any) => {
@@ -154,48 +152,50 @@ const SideBarTreeMenu = ({ location, history }: any) => {
 
   if (groupsQuery.data?.groupsGet.length) {
     const index = menuItems.findIndex((item) => item.key === "groups");
-    groupsQuery.data.groupsGet.slice().sort((a, b) => a.name.localeCompare(b.name))
-      .forEach((group) => {
+    groupsQuery.data.groupsGet
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .forEach(group => {
 
-      const isAdmin = group.members.some(
-        ({ email, role }) => email === user.email && role === "admin"
-      );
+        const isAdmin = group.members.some(
+          ({ email, role }) => email === user.email && role === "admin"
+        );
 
-      const startups = new Map<string, Startups[]>();
+        const startups = new Map<string, Startups[]>();
 
-      group.startups.forEach((s) => {
-        startups.get(s.creativeId) ?
-          startups.set(s.creativeId, [...startups.get(s.creativeId) || [], s]) :
-          startups.set(s.creativeId, [s]);
+        group.startups.forEach((s) => {
+          startups.get(s.creativeId) ?
+            startups.set(s.creativeId, [...startups.get(s.creativeId) || [], s]) :
+            startups.set(s.creativeId, [s]);
+        });
+
+        menuItems[index].nodes?.push({
+          key: group.id,
+          label: group.name,
+          link: `/dashboard/group/${group.id}`,
+          icon: isAdmin ? "fal fa-cog" : "",
+          selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
+          action: () => isAdmin && history.push(`/dashboard/group/${group.id}/settings`),
+          showRightMenu: true,
+          nodes: [...startups]
+            .sort((a, b) => a[1][0].connection?.creative?.name.localeCompare(b[1][0].connection?.creative?.name))
+            .map(([creativeId, value]) => {
+
+              const haveAddedStartup = connections.find((c: Connection) => c.creativeId === creativeId);
+              return {
+                key: creativeId,
+                link: haveAddedStartup && `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
+                label: value[0].connection?.creative?.name,
+                nodes: [],
+                selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`) || selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}`)),
+                showHashTag: true,
+                icon: !haveAddedStartup && (loadingState !== creativeId) ? "fal fa-cloud-download" : loadingState === creativeId ? "fa fa-spinner fa-spin" : "",
+                showRightMenu: true,
+                action: () => !haveAddedStartup && addStartup(creativeId),
+              } as MenuItem;
+            }),
+        });
       });
-
-      menuItems[index].nodes?.push({
-        key: group.id,
-        label: group.name,
-        link: `/dashboard/group/${group.id}`,
-        icon: isAdmin ? "fal fa-cog" : "",
-        selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
-        action: () => isAdmin && history.push(`/dashboard/group/${group.id}/settings`),
-        showRightMenu: true,
-        nodes: [...startups]
-          .sort((a, b) => a[1][0].connection?.creative?.name.localeCompare(b[1][0].connection?.creative?.name))
-          .map(([creativeId, value]) => {
-
-            const haveAddedStartup = connections.find((c: Connection) => c.creativeId === creativeId);
-            return {
-              key: creativeId,
-              link: haveAddedStartup && `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
-              label: value[0].connection?.creative?.name,
-              nodes: [],
-              selected: haveAddedStartup && selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`),
-              showHashTag: true,
-              icon: !haveAddedStartup && (loadingState !== creativeId) ? "fal fa-cloud-download" : loadingState === creativeId ? "fa fa-spinner fa-spin" : "",
-              action: () => !haveAddedStartup && addStartup(creativeId)
-            } as MenuItem;
-           }
-          )
-      });
-    });
   }
 
   // ================
@@ -352,7 +352,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   async function addStartup(creativeId: string) {
     setLoadingState(creativeId);
     try {
-       await mutateConnectionPut({
+      await mutateConnectionPut({
         variables: {
           creativeId: creativeId,
         },
