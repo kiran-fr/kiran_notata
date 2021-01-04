@@ -171,6 +171,8 @@ const getListOfStartups = ({ group, sortBy, hide, hideUser }) => {
     });
   }
 
+  list = list.filter(({ creative }) => creative);
+
   return list;
 };
 

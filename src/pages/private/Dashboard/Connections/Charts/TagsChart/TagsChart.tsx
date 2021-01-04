@@ -83,13 +83,17 @@ const TagsChart = ({
   dataType?: any;
   setDataType?: Function;
 }) => {
+
   let groupTags = cloneDeep(groupsTags.get(dataType)!);
 
+
   tags.forEach(tag => {
-    if (groupTags.has(tag.id)) groupTags.get(tag.id)!.value++;
+    if (groupTags && groupTags.has(tag.id)) groupTags.get(tag.id)!.value++;
   });
 
-  let data: ChartData[] = Array.from(groupTags.values());
+
+  let data: ChartData[] = groupTags ? Array.from(groupTags.values()) : [];
+
   if (lengthFilter && lengthFilter > 0)
     data = data.filter(group => group.value >= lengthFilter);
   data.sort((a, b) => b.value - a.value);

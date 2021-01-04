@@ -15,7 +15,7 @@ const ScoresChart = ({ connections }: { connections: Connection[] }) => {
 
   const dataMap = connections.reduce(
     (map: Map<number, ChartData>, connection: Connection) => {
-      connection.subjectiveScores.forEach(score => {
+      (connection.subjectiveScores || []).forEach(score => {
         const chartData = map.get(score.score);
         if (chartData) {
           chartData.value += 1;
