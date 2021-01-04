@@ -54,6 +54,8 @@ export default function MultipleChoiceInputContainer({
                   inputType: question.inputType,
                   questionId: question.id,
                   question: question.name,
+                  sectionId: section.id,
+                  sectionName: section.name,
                   sid,
                   val,
                 };

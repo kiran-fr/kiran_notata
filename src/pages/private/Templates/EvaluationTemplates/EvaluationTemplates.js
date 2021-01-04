@@ -26,6 +26,8 @@ import {
   evaluation_template,
   evaluation_templates,
 } from "pages/definitions";
+import { group } from "../../../definitions";
+import tableStyles from "../../../../Components/elements/NotataComponents/Table.module.css";
 
 function Delete({ id, templates }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
@@ -186,7 +188,7 @@ export default function EvaluationTemplates(props) {
       title: "",
       dataIndex: "id",
       key: "delete",
-      width: 20,
+      width: 50,
       className: delete_bucket,
       render: id => <Delete id={id} templates={templates} />,
     },
@@ -198,36 +200,57 @@ export default function EvaluationTemplates(props) {
       render: id => {
         let template = templates.find(t => t.id === id) || {};
         let { name, sections } = template;
+
         return (
-          <span>
-            <div>{name}</div>
-            <div style={{ opacity: 0.5, fontSize: "12px" }}>
-              {(sections || []).length} sections
+          <div>
+            <div
+              onClick={() => {
+                let path = `${evaluation_template}/${id}`;
+                props.history.push(path);
+              }}
+              className={tableStyles.background_clicker}
+            />
+
+            <div
+              className={tableStyles.actual_content}
+              style={{ pointerEvents: "none" }}
+            >
+              <div
+                style={{
+                  color: "var(--color-secondary)",
+                  fontWeight: "var(--font-weight-bold)",
+                }}
+              >
+                {name}
+              </div>
+              <div style={{ opacity: 0.5, fontSize: "12px" }}>
+                {(sections || []).length} sections
+              </div>
             </div>
-          </span>
+          </div>
         );
       },
     },
 
-    {
-      title: "",
-      dataIndex: "id",
-      key: "id",
-      width: 30,
-      render: id => (
-        <Button
-          //type="tiny_right"
-          type="right_arrow"
-          size="small"
-          onClick={() => {
-            let path = `${evaluation_template}/${id}`;
-            props.history.push(path);
-          }}
-        >
-          View
-        </Button>
-      ),
-    },
+    // {
+    //   title: "",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   width: 30,
+    //   render: id => (
+    //     <Button
+    //       //type="tiny_right"
+    //       type="right_arrow"
+    //       size="small"
+    //       onClick={() => {
+    //         let path = `${evaluation_template}/${id}`;
+    //         props.history.push(path);
+    //       }}
+    //     >
+    //       View
+    //     </Button>
+    //   ),
+    // },
   ];
 
   return (
@@ -244,14 +267,14 @@ export default function EvaluationTemplates(props) {
           },
         ]}
       />
-      <Content maxWidth={600}>
+      <Content maxWidth={780}>
         <h1>Evaluation templates</h1>
 
-        <Card style={{ paddingTop: "5px" }}>
+        <Card noMargin={true}>
           <Table
             dataSource={templates || []}
             columns={columns}
-            loading={loading.toString()}
+            loading={loading}
             disableHead={true}
           />
         </Card>

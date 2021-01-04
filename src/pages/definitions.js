@@ -22,6 +22,8 @@ export const dashboard = "/dashboard";
 
 export const startup_page = `${dashboard}/startup_page`;
 
+export const new_startup_page = `${dashboard}/new_startup_page`;
+
 export const profile = `${dashboard}/profile`;
 export const report = `${dashboard}/report`;
 export const inbox = `${dashboard}/inbox`;
@@ -29,16 +31,12 @@ export const activities = `${dashboard}/activities`;
 export const tags = `${dashboard}/tags`;
 export const settings = `${dashboard}/settings`;
 export const team = `${dashboard}/team`;
-
 export const evaluation_templates = `${dashboard}/templates`;
 export const evaluation_template = `${evaluation_templates}/edit`;
 export const evaluation_template_summary = `${evaluation_templates}/summary`;
-
 export const facts_templates = `${dashboard}/facts_templates`;
 export const facts_template = `${facts_templates}/edit`;
-
 export const group = `${dashboard}/group`;
-
 export const external_form = `${dashboard}/external_form`;
 
 // PUBLIC ROUTES
@@ -46,3 +44,6 @@ export const public_pages = `/public`;
 export const public_creative = `${public_pages}/creative`;
 export const demo_page = `${public_pages}/demo`;
 export const ban_demo_page = `${public_pages}/ban`;
+export const oia_demo_page = `${public_pages}/oia`;
+export const public_presentation = `${public_pages}/presentation`;
+export const product_demo = `${public_pages}/product_demo`;

@@ -9,6 +9,7 @@ import {
 } from "pages/private/Dashboard/Connections/types";
 
 import styles from "../Connections.module.css";
+import tableStyles from "Components/elements/NotataComponents/Table.module.css"
 
 import moment from "moment";
 import { History } from "history";
@@ -75,7 +76,7 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
 
           <div
@@ -83,7 +84,7 @@ export default ({
               history.push(`${startup_page}/${connection.id}`, { rightMenu: true });
             }}
             className={styles.actual_content}
-          >
+            >
             {connection.creative.name}
           </div>
         </div>
@@ -115,7 +116,7 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
 
           <div className={styles.actual_content}>
@@ -127,6 +128,7 @@ export default ({
                 active={false}
                 isButton={false}
                 onClick={() => {}}
+                kill={false}
               >
                 {tag?.name}
               </Tag>
@@ -148,7 +150,7 @@ export default ({
           onClick={() => {
             history.push(`${startup_page}/${connection.id}`);
           }}
-          className={styles.background_clicker}
+          className={tableStyles.background_clicker}
         />
 
         <div className={styles.actual_content}>
@@ -159,7 +161,8 @@ export default ({
               active={false}
               className={""}
               onClick={() => {}}
-            >
+              kill={false}
+              >
               {name}
             </Tag>
           ))}
@@ -168,6 +171,7 @@ export default ({
             isButton={true}
             active={false}
             className={""}
+            kill={false}
             onClick={() => {
               setShowTagGroup(connection.id);
             }}
@@ -192,7 +196,7 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
 
           <div className={styles.actual_content}>
@@ -212,6 +216,7 @@ export default ({
                 onClick={() => {
                   setShowEvaluate(connection.id);
                 }}
+                kill={false}
               >
                 +
               </Tag>
@@ -223,7 +228,6 @@ export default ({
   },
   {
     title: "Updated",
-    // dataIndex: "updatedAt",
     key: "updatedAt",
     responsive: "lg",
     className: styles.pre_space,
@@ -235,9 +239,8 @@ export default ({
             onClick={() => {
               history.push(`${startup_page}/${connection.id}`);
             }}
-            className={styles.background_clicker}
+            className={tableStyles.background_clicker}
           />
-
           <div className={styles.actual_content}>
             <span className={styles.date_style}>
               {moment(connection.updatedAt).format("ll")}
@@ -245,6 +248,7 @@ export default ({
           </div>
         </div>
       );
-    },
-  },
+    }
+  }
 ];
+

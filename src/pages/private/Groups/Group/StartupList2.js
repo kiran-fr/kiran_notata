@@ -15,6 +15,8 @@ import { getDataForEvaluationsSharedInGroup } from "../../StartupPage/StartupPag
 import EvaluationsByTemplate from "../../StartupPage/StartupPageComponents/EvaluationBox/EvaluationsByTemplate";
 
 const getSummaries = (startups, hide, group) => {
+  // console.log('getSummaries')
+
   let summaries = {
     subjectiveScores: 0,
     subjectiveScoresCount: 0,
@@ -24,6 +26,8 @@ const getSummaries = (startups, hide, group) => {
   };
 
   for (let startup of startups) {
+    // console.log('startup', startup)
+
     // Get subjective score summaries
     if (startup.subjective_score) {
       let subjectiveScores = startup.connection?.subjectiveScores || [];
@@ -101,6 +105,8 @@ const getSummaries = (startups, hide, group) => {
 };
 
 const getListOfStartups = ({ group, sortBy, hide, hideUser }) => {
+  // console.log('getListOfStartups', group)
+
   let ss = {};
 
   for (let startup of group.startups) {
@@ -109,6 +115,7 @@ const getListOfStartups = ({ group, sortBy, hide, hideUser }) => {
   }
 
   let list = [];
+
   for (let creativeId in ss) {
     if (ss[creativeId]?.[0]?.connection) {
       let evaluations = ss[creativeId]
@@ -122,6 +129,8 @@ const getListOfStartups = ({ group, sortBy, hide, hideUser }) => {
         evaluations,
         hide: hideUser,
       });
+
+      // console.log('data', data)
 
       let item = {
         creative: ss[creativeId][0].connection.creative,
@@ -161,6 +170,7 @@ const getListOfStartups = ({ group, sortBy, hide, hideUser }) => {
       return bVal - aVal;
     });
   }
+
   return list;
 };
 
@@ -312,7 +322,7 @@ function TemplateLogic({
 
   let mySharedStartup = group.startups.find(
     ({ connectionId, sharedBy }) =>
-      connection.id === connectionId && sharedBy === user.email
+      connection.id.split("?")[0] === connectionId && sharedBy === user.email
   );
 
   let unusedEvaluationTemplates = evaluationTemplates.filter(
@@ -338,10 +348,6 @@ function TemplateLogic({
             <Button
               type="right_arrow"
               size="medium"
-              // onClick={() => {
-              //  console.log(template)
-              // }}
-
               loading={currentLoading === template.id}
               onClick={async () => {
                 if (currentLoading === template.id) return;
@@ -352,7 +358,7 @@ function TemplateLogic({
 
                 try {
                   let variables = {
-                    connectionId: connection.id,
+                    connectionId: connection.id.split("?")[0],
                     groupId: group.id,
                     input: {
                       templateId: template.id,
@@ -364,7 +370,9 @@ function TemplateLogic({
                   let res = await mutate({ variables });
                   let evaluation = res.data.evaluationPut;
                   // let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}/section/${sectionId}`;
-                  let path = `${startup_page}/${connection.id}/evaluation/${evaluation.id}`;
+                  let path = `${startup_page}/${
+                    connection.id.split("?")[0]
+                  }/evaluation/${evaluation.id}`;
                   history.push(path);
                 } catch (error) {
                   console.log("error", error);
@@ -716,7 +724,7 @@ function AddAll({
           id: group.id,
           input: {
             addStartup: {
-              connectionId: match.id,
+              connectionId: match.id.split("?")[0],
               creativeId: match.creativeId,
               comments: true,
               evaluations: true,
@@ -747,6 +755,7 @@ function AddAll({
       <Button
         size="large"
         style={{ width: "100%" }}
+        buttonStyle={"danger"}
         loading={isLoadingAddAll}
         iconClass="fas fa-cloud-download"
         onClick={async () => {
@@ -856,8 +865,8 @@ function StartupList2({
                 }}
                 onClick={() => {
                   if (!haveAddedStartup) return;
-                  let path = `${startup_page}/${haveAddedStartup.id}`;
-                  history.push(path, { rightMenu: true });
+                  let path = `${startup_page}/${haveAddedStartup.id}?group=${group.id}`;
+                  history.push(path);
                 }}
               >
                 {creative.name}
@@ -942,42 +951,6 @@ function StartupList2({
                 })}
               </div>
             )}
-
-            {/* EVALUATIONS */}
-            {/*{settings.showScores &&*/}
-            {/*  !!Object.keys(summaries.evaluations).filter(*/}
-            {/*    templateId => !hide[templateId]*/}
-            {/*  ).length && (*/}
-            {/*    <div className={styles.list_outer_container}>*/}
-            {/*      <div className={styles.list_label}>Evaluations:</div>*/}
-            {/*      <div className={styles.list_container}>*/}
-            {/*        {Object.keys(summaries.evaluations)*/}
-            {/*          .filter(templateId => !hide[templateId])*/}
-            {/*          .map(templateId => {*/}
-
-            {/*            let item = summaries.evaluations[templateId];*/}
-
-            {/*            return (*/}
-            {/*              <div key={templateId} className={styles.list_item}>*/}
-            {/*                <div className={styles.list_item_label}>*/}
-            {/*                  {item.templateName}*/}
-            {/*                </div>*/}
-
-            {/*                <div className={styles.list_item_right}>*/}
-            {/*                  <div className={styles.list_item_sub_line}>*/}
-            {/*                    {item.count} submissions*/}
-            {/*                  </div>*/}
-
-            {/*                  <div className={styles.list_item_score}>*/}
-            {/*                    {item.percentageScore}%*/}
-            {/*                  </div>*/}
-            {/*                </div>*/}
-            {/*              </div>*/}
-            {/*            );*/}
-            {/*          })}*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*  )}*/}
 
             {/* TEMPLATE LOGIC */}
             {haveAddedStartup && haveSharedStartup && (

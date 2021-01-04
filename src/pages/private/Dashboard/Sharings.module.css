@@ -23,10 +23,12 @@
   font-size: 10px;
 }
 
-.highlight_1 {
+.highlight_1,
+.highlight_1 a {
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .highlight_2 {

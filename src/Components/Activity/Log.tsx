@@ -90,10 +90,10 @@ const scrollToBottom = (
 };
 
 export function Log({
-  logs,
-  user,
-  submitMutation,
-}: {
+                      logs,
+                      user,
+                      submitMutation,
+                    }: {
   logs: LogItem[];
   user: any;
   submitMutation: Function;
@@ -153,7 +153,7 @@ export function Log({
                 className={classnames(
                   styles.log_feed_text,
                   logItem.logType !== "COMMENT" &&
-                    styles.log_feed_type_SUBJECTIVE_SCORE
+                  styles.log_feed_type_SUBJECTIVE_SCORE
                 )}
               >
                 {logItem.dataPairs[0].val}

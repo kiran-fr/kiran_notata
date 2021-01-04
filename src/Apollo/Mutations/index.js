@@ -36,3 +36,10 @@ export { default as tagGroupDelete } from "./tagGroupDelete";
 export { default as funnelGroupDelete } from "./funnelGroupDelete";
 
 export { default as creativeTemplatePut } from "./creativeTemplatePut";
+
+export { default as presentationPut } from "./presentationPut";
+
+export { default as externalResourcePut } from "./externalResourcePut";
+export { default as externalResourceDelete } from "./externalResourceDelete";
+
+export { default as impactGoalsPut } from "./impactGoalsPut";

@@ -2,7 +2,12 @@ import React, { useState } from "react";
 
 import { inputWrapper, inputIcon } from "./MultipleTextInput.module.css";
 
-export default function MultipleTextInput({ setAnswers, question, answers }) {
+export default function MultipleTextInput({
+  setAnswers,
+  question,
+  section,
+  answers,
+}) {
   const [newAnswer, setnewAnswer] = useState("");
 
   const answerAnswers = answers.filter(
@@ -22,6 +27,8 @@ export default function MultipleTextInput({ setAnswers, question, answers }) {
         inputType: question.inputType,
         questionId: question.id,
         question: question.name,
+        sectionId: section.id,
+        sectionName: section.name,
         id,
         val: value,
       };

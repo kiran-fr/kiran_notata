@@ -166,6 +166,8 @@ textarea {
   --color-gray-medium: #a0a8b1;
   --color-gray-light: #dadee2;
   /*--color-gray-pale: #f2f5f6;*/
+  --color-gray-lighter: #f3f4f6;
+
   --color-gray-pale: #f8fafb;
 
   --color-message-bg: #f7f6f3;
@@ -226,9 +228,9 @@ h1 {
 
   .logged_in_page_content {
     left: 0;
-    padding-left: 12px;
+    padding-left: 10px;
     padding-right: 0;
-    margin-right: 12px;
+    margin-right: 10px;
   }
 }
 
@@ -247,11 +249,14 @@ h1 {
 .notata_form {
 }
 
+.notata_form .form_error {
+  border: 1px solid var(--color-primary) !important;
+}
+
 .notata_form label {
   font-size: 12px;
   color: var(--color-gray-medium);
   position: relative;
-  left: 10px;
   top: 5px;
 }
 
@@ -279,15 +284,16 @@ input[type="submit"] {
 .notata_form input[type="text"],
 .notata_form input[type="password"],
 .notata_form textarea {
-  border: 0;
+  /*border: 0;*/
+  border: 1px solid var(--color-gray-light);
   outline: none;
-  padding: 12px 20px;
+  padding: 12px 15px;
   text-align: left;
-  border-radius: 20px;
+  border-radius: 4px;
   width: 100%;
   margin-top: 5px;
   color: var(--color-gray-dark);
-  background: var(--color-gray-pale);
+  background: var(--color-gray-lighter);
   margin-bottom: 10px;
 }
 

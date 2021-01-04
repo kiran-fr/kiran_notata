@@ -83,7 +83,7 @@ export function DemoPage({ match }) {
   console.log("demo page....");
   return (
     <div style={{ marginTop: "100px" }}>
-      <Content maxWidth={900} center>
+      <Content maxWidth={1200} center>
         <h1>NOTATA WALK-THROUGH</h1>
 
         <div style={{ paddingTop: "20px", paddingBottom: "50px" }}>

@@ -49,12 +49,12 @@ export default function TagOverview({
         {!filter.length &&
           tagGroups.map((tagGroup, i) => (
             <div className={dropdown_group} key={i}>
-              <div className={dropdown_group_header}>
+              <div
+                className={dropdown_group_header}
+                onClick={() => setShowGroup(tagGroup.id)}
+              >
                 <div className={dropdown_group_title}>{tagGroup.name}</div>
-                <Button
-                  type="tiny_right"
-                  onClick={() => setShowGroup(tagGroup.id)}
-                />
+                <Button type="tiny_right" onClick={() => {}} />
               </div>
             </div>
           ))}

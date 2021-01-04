@@ -222,7 +222,15 @@ export const Table = ({
       </table>
 
       {
-        !dataSourceProcessed.length && (
+        loading && (
+          <div className={styles.loader}>
+            <i className={"fa fa-spinner fa-spin"}/>
+          </div>
+        )
+      }
+
+      {
+        (!dataSourceProcessed.length) && (
           <div
             className={styles.empty_list}
           >

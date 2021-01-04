@@ -34,6 +34,8 @@ export default function TextInputContainer({ question, section, creative }) {
           } else {
             variables.input.answerNew = {
               inputType: question.inputType,
+              sectionId: section.id,
+              sectionName: section.name,
               questionId: question.id,
               question: question.name,
               val: event.target.value,

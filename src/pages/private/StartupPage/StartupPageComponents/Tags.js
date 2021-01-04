@@ -13,9 +13,10 @@ import TagSelector from "Components/TagSelector/TagSelector";
 export function Tags({ connection, user, match }) {
   const [show, setShow] = useState(false);
   const { data, error, loading } = useQuery(tagGroupGet);
-  const [mutate] = useMutation(connectionTagAdd);
-  const [mutateDelete] = useMutation(connectionTagRemove);
+  const [mutate, mRes1] = useMutation(connectionTagAdd);
+  const [mutateDelete, mRes2] = useMutation(connectionTagRemove);
 
+  const loadingMutation = mRes1.loading || mRes2.loading;
   if (error) {
     console.log(error);
     return <div>We are updating</div>;
@@ -26,6 +27,7 @@ export function Tags({ connection, user, match }) {
   const tagGroups = data?.accountGet?.tagGroups || [];
 
   function addTag(tag) {
+    if (loadingMutation) return;
     mutate({
       variables: {
         connectionId: connection.id,
@@ -72,6 +74,7 @@ export function Tags({ connection, user, match }) {
   }
 
   function deleteTag(tag) {
+    if (loadingMutation) return;
     mutateDelete({
       variables: {
         connectionId: connection.id,

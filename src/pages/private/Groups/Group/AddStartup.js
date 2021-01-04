@@ -60,6 +60,7 @@ function AddNewStartup({ group, connections, mutate }) {
         onClick={() => setShowModal(true)}
         type="right_arrow"
         size="large"
+        buttonStyle="danger"
       >
         Add startup
       </Button>

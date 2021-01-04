@@ -5,10 +5,10 @@ import {
   GroupsType as Groups,
   UserType as User,
 } from "Apollo/Queries";
-import { group } from "pages/definitions";
+import { group, startup_page } from "pages/definitions";
 
-import { Button } from "Components/elements";
 import { History } from "history";
+import tableStyles from "Components/elements/NotataComponents/Table.module.css";
 
 export default ({
   history,
@@ -26,42 +26,49 @@ export default ({
   {
     title: "",
     key: "delete",
-    width: 20,
+    width: 50,
     className: "delete_bucket",
     render: (group: Groups) => {
       let isAdmin = group.members.some(
         ({ email, role }) => email === user?.email && role === "admin"
       );
-
       if (!isAdmin) return <span />;
 
-      if (groupPutLoading) return <i className="fa fa-spinner fa-spin" />;
-
       return (
-        <i
-          className="fal fa-trash-alt"
-          onClick={() => {
-            let variables = {
-              id: group.id,
-              input: { deleteGroup: true },
-            };
-            mutate({
-              variables,
-              update: (proxy: any) => {
-                const data = proxy.readQuery({
-                  query: groupsGet,
-                });
-                proxy.writeQuery({
-                  query: groupsGet,
-                  data: {
-                    groupsGet: data.groupsGet.filter((g: any) => g.id !== group.id),
-                  },
-                });
-              },
-            });
-          }}
-        />
-      );
+        <div
+          style={{textAlign: "center"}}
+          >
+          {
+            groupPutLoading && (
+              <i className="fa fa-spinner fa-spin" />
+            ) || (
+              <i
+                className="fal fa-trash-alt"
+                onClick={() => {
+                  let variables = {
+                    id: group.id,
+                    input: { deleteGroup: true },
+                  };
+                  mutate({
+                    variables,
+                    update: (proxy: any) => {
+                      const data = proxy.readQuery({
+                        query: groupsGet,
+                      });
+                      proxy.writeQuery({
+                        query: groupsGet,
+                        data: {
+                          groupsGet: data.groupsGet.filter((g: any) => g.id !== group.id),
+                        },
+                      });
+                    },
+                  });
+                }}
+              />
+            )
+          }
+        </div>
+      )
     },
   },
   {
@@ -84,44 +91,78 @@ export default ({
       let { latestActivity } = member || {};
 
       return (
-        <span>
-          {(!latestActivity && (
+        <div>
+
+          <div
+            onClick={() => {
+              let path = `${group}/${id}`;
+              history.push(path, {rightMenu: true});
+            }}
+            className={tableStyles.background_clicker}
+          />
+
+          <div
+            className={tableStyles.actual_content}
+            style={{
+              pointerEvents: "none"
+            }}
+          >
+
+
+            {/*{(!latestActivity && (*/}
+            {/*  <div*/}
+            {/*    style={{*/}
+            {/*      fontWeight: "var(--font-weight-bold)" as "bold",*/}
+            {/*      color: "var(--color-secondary)"*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    {name}*/}
+            {/*  </div>*/}
+            {/*)) || <div>{name}</div>}*/}
+
             <div
               style={{
                 fontWeight: "var(--font-weight-bold)" as "bold",
+                color: "var(--color-secondary)"
               }}
             >
               {name}
             </div>
-          )) || <div>{name}</div>}
 
-          <div style={{ opacity: 0.5, fontSize: "12px" }}>
-            {(isAdmin || settings?.showUsers) && (
-              <>{(members || []).length} members - </>
-            )}
-            {startupLength} startups
+            <div style={{
+              opacity: 0.5,
+              fontSize: "12px"
+            }}>
+              {(isAdmin || settings?.showUsers) && (
+                <>{(members || []).length} members - </>
+              )}
+              {startupLength} startups
+            </div>
+
           </div>
-        </span>
+
+
+        </div>
       );
     },
   },
-  {
-    title: "",
-    dataIndex: "id",
-    key: "id",
-    width: 30,
-    render: (id: string) => (
-      <Button
-        // type="tiny_right"
-        type="right_arrow"
-        size="small"
-        onClick={() => {
-          let path = `${group}/${id}`;
-          history.push(path, {rightMenu: true});
-        }}
-      >
-        View
-      </Button>
-    ),
-  },
+  // {
+  //   title: "",
+  //   dataIndex: "id",
+  //   key: "id",
+  //   width: 30,
+  //   render: (id: string) => (
+  //     <Button
+  //       // type="tiny_right"
+  //       type="right_arrow"
+  //       size="small"
+  //       onClick={() => {
+  //         let path = `${group}/${id}`;
+  //         history.push(path, {rightMenu: true});
+  //       }}
+  //     >
+  //       View
+  //     </Button>
+  //   ),
+  // },
 ];

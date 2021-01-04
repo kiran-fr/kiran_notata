@@ -360,7 +360,6 @@ export default function Connections({ history }) {
       <CreateNewStartup
         history={history}
         setDone={connection => {
-          console.log("connection...", connection);
           history.push(`${startup_page}/${connection.id}`);
         }}
         setShowTagGroup={setShowTagGroup}
@@ -395,25 +394,13 @@ export default function Connections({ history }) {
         />
       )}
 
-      <Card maxWidth={1200} noMargin={true} style={{ paddingBottom: "20px" }}>
-        {/*{!connections.length && (*/}
-        {/*  <div className={void_list}>*/}
-        {/*    <div className={void_list_label}>No results to show</div>*/}
-        {/*    <div className={void_list_icon}>*/}
-        {/*      <i className="fal fa-ghost" />*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*)}*/}
-
+      <Card maxWidth={1200} noMargin={true}>
         <Table
           dataSource={connections || []}
           columns={columns}
           disableHead={false}
           pagination={false}
           allowSorting={true}
-          // rowLinkFn={d => {
-          //   console.log('hey', d)
-          // }}
           loading={loading}
           emptyLabel={"No results."}
         />
@@ -435,16 +422,6 @@ export default function Connections({ history }) {
             }}
           />
         )}
-
-        {/*{showEvaluate && (*/}
-        {/*  <EvaluateSelector*/}
-        {/*    connection={showEvaluateForConnection}*/}
-        {/*    history={history}*/}
-        {/*    close={() => {*/}
-        {/*      setShowEvaluate(null);*/}
-        {/*    }}*/}
-        {/*  />*/}
-        {/*)}*/}
 
         {showEvaluate && (
           <SetSubjectiveScore

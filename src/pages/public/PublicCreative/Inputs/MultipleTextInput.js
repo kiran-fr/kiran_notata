@@ -30,6 +30,8 @@ export default function MultipleTextInputContainer({
         inputType: question.inputType,
         questionId: question.id,
         question: question.name,
+        sectionId: section.id,
+        sectionName: section.name,
         val: data.new,
       };
 

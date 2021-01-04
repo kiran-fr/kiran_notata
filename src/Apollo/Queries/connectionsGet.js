@@ -11,10 +11,13 @@ export default gql`
       creativeId
 
       subjectiveScores {
+        createdBy
+        createdAt
         score
       }
 
       creative {
+        id
         name
       }
 

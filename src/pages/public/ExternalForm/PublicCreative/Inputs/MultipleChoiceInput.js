@@ -4,6 +4,7 @@ import { MultipleChoiceInput } from "../../Forms";
 
 export default function MultipleChoiceInputContainer({
   question,
+  section,
   setAnswers,
   answers,
 }) {
@@ -29,6 +30,8 @@ export default function MultipleChoiceInputContainer({
             if (e.target.checked) {
               const answerNew = {
                 inputType: question.inputType,
+                sectionId: section.id,
+                sectionName: section.name,
                 questionId: question.id,
                 question: question.name,
                 sid,

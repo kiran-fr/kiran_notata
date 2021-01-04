@@ -13,11 +13,20 @@ export default gql`
     submit
     answers {
       id
+      index
       inputType
+      sectionId
+      sectionName
       questionId
-      sid
       question
+      sid
       val
+      pageMeta {
+        title
+        url
+        image
+        provider
+      }
     }
   }
 `;

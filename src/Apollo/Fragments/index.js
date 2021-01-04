@@ -18,3 +18,6 @@ export { default as logItemFragments } from "./logItemFragments";
 
 export { default as groupFragments } from "./groupFragments";
 export { default as grouplogItemFragments } from "./grouplogItemFragments";
+
+export { default as presentationFragments } from "./presentationFragments";
+export { default as pageMetaFragments } from "./pageMetaFragments";

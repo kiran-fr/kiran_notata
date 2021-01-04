@@ -13,6 +13,7 @@ export { InputTrafficLight } from "./NotataComponents/InputTrafficLight";
 export { BreadCrumbs } from "./NotataComponents/BreadCrumbs";
 
 export { SuccessBox } from "./NotataComponents/SuccessBox";
+export { MessageBox } from "./NotataComponents/MessageBox";
 export { ErrorBox } from "./NotataComponents/ErrorBox";
 export { GhostLoader } from "./NotataComponents/GhostLoader";
 

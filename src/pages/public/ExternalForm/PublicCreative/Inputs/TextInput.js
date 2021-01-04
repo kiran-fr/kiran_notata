@@ -1,7 +1,12 @@
 import React from "react";
 import { TextInput } from "Components/Forms";
 
-export default function TextInputContainer({ question, setAnswers, answers }) {
+export default function TextInputContainer({
+  question,
+  section,
+  setAnswers,
+  answers,
+}) {
   const answer = answers.find(
     ({ questionId, inputType }) =>
       questionId === question.id && inputType === question.inputType
@@ -18,6 +23,8 @@ export default function TextInputContainer({ question, setAnswers, answers }) {
           inputType: question.inputType,
           questionId: question.id,
           question: question.name,
+          sectionId: section.id,
+          sectionName: section.name,
           val: event.target.value,
         };
 

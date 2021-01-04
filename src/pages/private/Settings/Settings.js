@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Content, Card, Table } from "Components/elements";
-import { API } from "aws-amplify";
-import { subscribeToAllTestMutations } from "Apollo/Subscriptions/";
+// import { API } from "aws-amplify";
+// import { subscribeToAllTestMutations } from "Apollo/Subscriptions/";
 
 import {
   profile,
@@ -11,19 +11,25 @@ import {
   facts_templates,
   external_form,
 } from "pages/definitions";
+import { group } from "../../definitions";
+import tableStyles from "Components/elements/NotataComponents/Table.module.css";
 
 const Comp = ({ history }) => {
-  useEffect(() => {
-    let subscription;
-    subscription = API.graphql({
-      query: subscribeToAllTestMutations,
-    }).subscribe({
-      next: data => {
-        console.log(data);
-      },
-    });
-    return () => subscription.unsubscribe();
-  }, []);
+  // let subscription;
+  // useEffect(() => {
+  //   subscribe();
+  //   return () => subscription.unsubscribe();
+  // }, []);
+
+  // function subscribe() {
+  //   subscription = API.graphql({
+  //     query: subscribeToAllTestMutations,
+  //   }).subscribe({
+  //     next: data => {
+  //       console.log(data);
+  //     },
+  //   });
+  // }
 
   const linkList = [
     {
@@ -63,12 +69,12 @@ const Comp = ({ history }) => {
     {
       title: "Icon",
       key: "icon",
-      width: 20,
+      width: 50,
       // className: list_star,
       render: listItem => {
         return (
           <div
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", textAlign: "center" }}
             onClick={() => history.push(listItem.link)}
           >
             <i className={listItem.iconClass} />
@@ -82,22 +88,32 @@ const Comp = ({ history }) => {
       key: "link name",
       render: listItem => {
         return (
-          <span
-            style={{ cursor: "pointer" }}
-            onClick={() => history.push(listItem.link)}
-          >
-            {listItem.label}
-          </span>
+          <div>
+            <div
+              onClick={() => history.push(listItem.link)}
+              className={tableStyles.background_clicker}
+            />
+            <div
+              className={tableStyles.actual_content}
+              style={{
+                pointerEvents: "none",
+                color: "var(--color-secondary)",
+                fontWeight: "var(--font-weight-bold)",
+              }}
+            >
+              {listItem.label}
+            </div>
+          </div>
         );
       },
     },
   ];
 
   return (
-    <Content maxWidth={600}>
+    <Content maxWidth={780}>
       <h1>Settings</h1>
 
-      <Card style={{ paddingTop: "5px" }}>
+      <Card noMargin={true}>
         <Table
           dataSource={linkList}
           columns={columns}

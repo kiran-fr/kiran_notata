@@ -1,20 +1,34 @@
 import React from "react";
 import classnames from "classnames";
 
-import { container, content, active_tag, button_tag } from "./Tag.module.css";
+import styles from "./Tag.module.css";
 
-export const Tag = ({ className, active, isButton, onClick, ...children }) => {
+export const Tag = ({
+  className,
+  active,
+  isButton,
+  kill,
+  onClick,
+  ...children
+}) => {
   return (
     <div
       className={classnames(
-        container,
-        active && active_tag,
-        isButton && button_tag,
-        className && className
+        styles.container,
+        active && styles.active_tag,
+        isButton && styles.button_tag,
+        className && className,
+        kill && styles.kill_tag
       )}
       onClick={onClick}
     >
-      <div className={content} {...children} />
+      <div className={styles.content} {...children} />
+
+      {kill && (
+        <div className={styles.kill_button} onClick={kill}>
+          <i className={"fal fa-times"} />
+        </div>
+      )}
     </div>
   );
 };

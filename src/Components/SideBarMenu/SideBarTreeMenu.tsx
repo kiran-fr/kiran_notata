@@ -187,7 +187,8 @@ const SideBarTreeMenu = ({ location, history }: any) => {
                 link: haveAddedStartup && `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
                 label: value[0].connection?.creative?.name,
                 nodes: [],
-                selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`) || selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}`)),
+                // selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`) || selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}`)),
+                selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`)),
                 showHashTag: true,
                 icon: !haveAddedStartup && (loadingState !== creativeId) ? "fal fa-cloud-download" : loadingState === creativeId ? "fa fa-spinner fa-spin" : "",
                 showRightMenu: true,
@@ -305,10 +306,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
               >
                 {node.label}
               </Link>
-            </span>:
+            </span> :
             <span
               className={styles.link}
-              style={{maxWidth: `${203 - 27 * level}px`}}
+              style={{
+                maxWidth: `${203 - 27 * level}px`,
+                opacity: 0.5
+              }}
               >
               {node.label}
             </span>
