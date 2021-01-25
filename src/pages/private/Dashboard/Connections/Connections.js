@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { connect } from "react-redux";
+import moment from "moment";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
@@ -21,8 +23,6 @@ import { Table, Card, GhostLoader } from "Components/elements";
 
 import TagSelector from "Components/TagSelector/TagSelector";
 
-import moment from "moment";
-
 import {
   counter,
   small_text_flex,
@@ -30,7 +30,6 @@ import {
 } from "./Connections.module.css";
 
 import tableColumns from "./TableColumns/TableColumns";
-import ChartArea from "./Charts/ChartArea";
 
 function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
@@ -228,7 +227,7 @@ export const DeleteTagMutationOptions = (tag, connection) => ({
   },
 });
 
-export default function Connections({ history }) {
+function Connections({ history, chartFilters }) {
   const [mutate] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
   const [showTagGroup, setShowTagGroup] = useState(undefined);
@@ -241,7 +240,7 @@ export default function Connections({ history }) {
     starred: false,
     dateRange: [null, null],
   });
-  const [chartFilters, setChartFilters] = useState({ tags: [] });
+  // const [chartFilters, setChartFilters] = useState({ tags: [] });
 
   useEffect(() => {
     let f;
@@ -258,8 +257,7 @@ export default function Connections({ history }) {
 
   const [setStar] = useMutation(connectionSetStar);
 
-  const connectionsQuery = useQuery(connectionsGet);
-  const { data, loading, error } = connectionsQuery;
+  const { data, loading, error } = useQuery(connectionsGet);
 
   const tagGroupsQuery = useQuery(tagGroupGet);
   const tagGroups =
@@ -288,9 +286,7 @@ export default function Connections({ history }) {
   );
 
   if (error || tagGroupsQuery.error) {
-    console.log("error", error);
-    console.log("tagGroupsQuery.error", tagGroupsQuery.error);
-    return <div>We are updating </div>;
+    throw error || tagGroupsQuery.error;
   }
 
   if (!data && loading) return <GhostLoader />;
@@ -347,16 +343,6 @@ export default function Connections({ history }) {
 
   return (
     <>
-      <Card maxWidth={1200} style={{ paddingBottom: "20px" }}>
-        <ChartArea
-          connections={connectionsGeneral}
-          groupsTags={groupsTags}
-          tagGroups={tagGroups}
-          setFilters={setChartFilters}
-          filters={chartFilters}
-        />
-      </Card>
-
       <CreateNewStartup
         history={history}
         setDone={connection => {
@@ -391,6 +377,7 @@ export default function Connections({ history }) {
           setFilters={setFilters}
           filters={filters}
           tagGroups={tagGroups}
+          fullFilter={true}
         />
       )}
 
@@ -436,3 +423,9 @@ export default function Connections({ history }) {
     </>
   );
 }
+
+const mapStateToProps = state => ({
+  chartFilters: state.connections.chartFilters,
+});
+
+export default connect(mapStateToProps)(Connections);

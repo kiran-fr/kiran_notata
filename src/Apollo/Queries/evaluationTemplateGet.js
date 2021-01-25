@@ -1,14 +1,13 @@
 import gql from "graphql-tag";
 
-import { 
+import {
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
-  evaluationQuestionFragments
-} from '../Fragments';
+  evaluationQuestionFragments,
+} from "../Fragments";
 
 export default gql`
   query evaluationTemplateGet($id: ID!) {
-
     evaluationTemplateGet(id: $id) {
       ...evaluationTemplateFields
       sections {
@@ -18,10 +17,8 @@ export default gql`
         }
       }
     }
-
   }
   ${evaluationTemplateFragments}
   ${evaluationTemplateSectionFragments}
   ${evaluationQuestionFragments}
-`
-
+`;

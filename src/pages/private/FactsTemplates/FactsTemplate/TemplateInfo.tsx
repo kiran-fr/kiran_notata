@@ -40,11 +40,7 @@ function TemplateInfo({ template }: { template: any }) {
   };
 
   return (
-    <form
-      className="focus_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
+    <form className="focus_form mb3" onSubmit={handleSubmit(onSubmit)}>
       <AutoHeightTextarea
         className="form_h1"
         rows={1}

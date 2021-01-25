@@ -15,7 +15,7 @@ import {
   connectionPut,
 } from "Apollo/Mutations";
 
-import { dashboard, group, signOut, settings } from "pages/definitions";
+import { dashboard, group, settings, charts, signOut } from "pages/definitions";
 import CreateNewStartup from "pages/private/Dashboard/Connections/CreateStartup";
 import Groups, { GroupsData } from "pages/private/Groups/Groups";
 import EvaluateSelector from "pages/private/Dashboard/Connections/EvaluateStartup";
@@ -25,7 +25,7 @@ import {
   AddTagMutationOptions,
   DeleteTagMutationOptions,
 } from "pages/private/Dashboard/Connections/Connections";
-import { hideMobileNavigationMenu } from "Modules/menu";
+import { hideMobileNavigationMenu } from "actions/menu";
 import styles from "./SideBarTreeMenu.module.css";
 
 const classnames = require("classnames");
@@ -66,6 +66,12 @@ const SideBarTreeMenu = ({ location, history }: any) => {
       key: "settings",
       label: "Settings",
       link: settings,
+      root: true,
+    },
+    {
+      key: "charts",
+      label: "Charts",
+      link: charts,
       root: true,
     },
     {

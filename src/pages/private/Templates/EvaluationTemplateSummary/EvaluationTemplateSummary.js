@@ -33,10 +33,7 @@ export default function Summary({ match, history }) {
     return <GhostLoader />;
   }
 
-  if (error) {
-    console.log("error", error);
-    return <p>We are updating</p>;
-  }
+  if (error) throw error;
 
   const template = data.evaluationTemplateGet;
 

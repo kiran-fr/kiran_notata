@@ -17,10 +17,7 @@ export function Tags({ connection, user, match }) {
   const [mutateDelete, mRes2] = useMutation(connectionTagRemove);
 
   const loadingMutation = mRes1.loading || mRes2.loading;
-  if (error) {
-    console.log(error);
-    return <div>We are updating</div>;
-  }
+  if (error) throw error;
 
   if (!data && loading) return <span />;
 
@@ -146,7 +143,7 @@ export function Tags({ connection, user, match }) {
           </div>
         )}
 
-        <div style={{ textAlign: "right" }}>
+        <div className="text-right">
           <Button size="small" type="right_arrow" onClick={() => setShow(true)}>
             Add/remove tags
           </Button>

@@ -73,7 +73,7 @@ export default function TagPage({
 
         {addNewButton && (
           <div
-            style={{ textAlign: "right" }}
+            className="text-right"
             onClick={async () => {
               if (loading) return;
 

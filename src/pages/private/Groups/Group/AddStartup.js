@@ -77,7 +77,7 @@ function AddNewStartup({ group, connections, mutate }) {
           {!showShareSettings && (
             <>
               <form className="notata_form" onSubmit={e => e.preventDefault()}>
-                <div style={{ marginTop: "30px" }}>
+                <div className="mt3">
                   <input
                     type="text"
                     placeholder="search..."

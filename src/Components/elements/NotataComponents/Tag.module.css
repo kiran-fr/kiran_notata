@@ -32,9 +32,9 @@
 .kill_button i {
 }
 
-.content {
-  /*white-space: nowrap;*/
-}
+/* .content { */
+/*white-space: nowrap;*/
+/* } */
 
 .active_tag {
   background: white;

@@ -46,11 +46,7 @@ export default function CreateTagGroup({ index, type } : { index: number, type: 
 
   return (
     <Card>
-      <form
-        className="focus_form"
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ marginBottom: "20px" }}
-      >
+      <form className="focus_form mb3" onSubmit={handleSubmit(onSubmit)}>
         <textarea
           rows={1}
           className="form_h1"

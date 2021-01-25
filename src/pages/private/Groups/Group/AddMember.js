@@ -83,7 +83,7 @@ function AddNewMember({ group, mutate }) {
         top: "-40px",
       }}
     >
-      <div style={{ textAlign: "right" }}>
+      <div className="text-right">
         <Button onClick={() => setShowModal(true)} type="just_text">
           + invite new member
         </Button>
@@ -105,10 +105,10 @@ function AddNewMember({ group, mutate }) {
                 className="notata_form"
                 onSubmit={handleSubmit(onSubmitGroupName)}
               >
-                <div style={{ marginTop: "30px" }}>
+                <div className="mt3">
                   <input
                     type="text"
-                    placeholder={"Group name"}
+                    placeholder="Group name"
                     autoComplete="off"
                     ref={register({ required: true })}
                     name="name"
@@ -131,10 +131,10 @@ function AddNewMember({ group, mutate }) {
               className="notata_form"
               onSubmit={emailForm.handleSubmit(onSubmitInvite)}
             >
-              <div style={{ marginTop: "30px" }}>
+              <div className="mt3">
                 <input
                   type="text"
-                  placeholder={"name@email.com"}
+                  placeholder="name@email.com"
                   autoComplete="off"
                   ref={emailForm.register()}
                   name="email"

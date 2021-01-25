@@ -83,7 +83,7 @@ export function ConfirmUser({ email }) {
               id={ids.password}
             />
 
-            <div style={{ textAlign: "right" }}>
+            <div className="text-right">
               <Button
                 type="input"
                 value="Set password"

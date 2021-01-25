@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Card, Table } from "Components/elements";
 import moment from "moment";
 import { useLazyQuery } from "@apollo/client";

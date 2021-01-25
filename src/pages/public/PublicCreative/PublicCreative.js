@@ -28,7 +28,7 @@ function Question({ question, section, creative }) {
       <div className="form_h2">{name}</div>
       <div className="form_p2">{description}</div>
       <hr />
-      <div style={{ padding: "10px" }}>
+      <div className="p1">
         <GeneralInput
           question={question}
           section={section}
@@ -50,7 +50,7 @@ function Submit({ creative, accountId }) {
 
   return (
     <div>
-      <div style={{ textAlign: "right" }}>
+      <div className="text-right">
         <Button
           type="right_arrow"
           loading={loading}
@@ -74,14 +74,12 @@ function Submit({ creative, accountId }) {
       </div>
 
       {creative.submit && !loading && (
-        <div style={{ marginTop: "20px" }}>
-          <SuccessBox>
-            Your information has been submitted, and the investor that requested
-            this information have been notified on {creative.sharedByEmail}. You
-            may still change the information in this form. By clicking "submit"
-            again, the investor will get notified again.
-          </SuccessBox>
-        </div>
+        <SuccessBox>
+          Your information has been submitted, and the investor that requested
+          this information have been notified on {creative.sharedByEmail}. You
+          may still change the information in this form. By clicking "submit"
+          again, the investor will get notified again.
+        </SuccessBox>
       )}
     </div>
   );
@@ -105,11 +103,7 @@ function CompanyName({ creative }) {
   };
 
   return (
-    <form
-      className="focus_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
+    <form className="focus_form mb3" onSubmit={handleSubmit(onSubmit)}>
       <textarea
         className="form_h1"
         rows={1}

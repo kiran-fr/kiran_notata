@@ -34,6 +34,10 @@
   padding-right: 50px;
 }
 
+.icon_padding_left {
+  padding-right: 50px;
+}
+
 .chevron_icon {
   background: white;
   border-radius: 100%;
@@ -44,6 +48,26 @@
   height: 30px;
   right: 5px;
   top: 5px;
+}
+
+.chevron_icon_left {
+  background: white;
+  border-radius: 100%;
+  position: absolute;
+  text-align: center;
+
+  width: 30px;
+  height: 30px;
+  left: 5px;
+  top: 5px;
+}
+
+.chevron_icon_left i {
+  color: var(--color-primary);
+  position: relative;
+  top: 8px;
+  left: 2px;
+  font-size: 14px;
 }
 
 .chevron_icon i {
@@ -76,6 +100,10 @@
 /* Large button */
 .large_button {
   padding: 13px 50px 13px 30px;
+}
+
+.large_left_button {
+  padding: 13px 30px 13px 50px;
 }
 
 .large_button.icon_padding {

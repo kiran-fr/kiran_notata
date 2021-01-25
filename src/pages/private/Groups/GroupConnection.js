@@ -421,12 +421,10 @@ function Summaries({ answers }) {
   };
 
   return (
-    <div style={{ marginBottom: "20px" }}>
-      {d.oneLiner && <div style={{ padding: "10px" }}>{d.oneLiner}</div>}
+    <div className="mb3">
+      {d.oneLiner && <div className="p1">{d.oneLiner}</div>}
 
-      {!d.oneLiner && d.solution && (
-        <div style={{ padding: "10px" }}>{d.solution}</div>
-      )}
+      {!d.oneLiner && d.solution && <div className="p1">{d.solution}</div>}
 
       {(d.website || d.slideDeck) && (
         <div style={{ paddingBottom: "10px" }}>

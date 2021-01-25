@@ -55,10 +55,7 @@ export default function Groups({
 
   let user = userQuery.data?.userGet;
 
-  if (error) {
-    console.log("error", error);
-    return <div>We are updating </div>;
-  }
+  if (error) throw error;
 
   if (!data && loading && !showModalOnly) return <GhostLoader />;
 
@@ -121,15 +118,13 @@ export default function Groups({
               </Card>
             )}
 
-            <div style={{ marginTop: "20px" }}>
-              <Button
-                onClick={() => setShowModal(true)}
-                type="right_arrow"
-                size="large"
-              >
-                Create New Group
-              </Button>
-            </div>
+            <Button
+              onClick={() => setShowModal(true)}
+              type="right_arrow"
+              size="large"
+            >
+              Create New Group
+            </Button>
           </Content>
         </>
       )}
@@ -145,7 +140,7 @@ export default function Groups({
             mutate={mutate}
             setDone={(id: any) => {
               let path = `${group}/${id}`;
-              history.push(path, {rightMenu: true});
+              history.push(path, { rightMenu: true });
               showModalOnly && onCloseModalEvent();
             }}
           />

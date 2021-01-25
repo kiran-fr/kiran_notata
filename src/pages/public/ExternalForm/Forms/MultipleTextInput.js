@@ -38,17 +38,13 @@ export default function MultipleTextInput({
   }
 
   async function handleOnDelete(id) {
-    // let answersIN = answerAnswers.filter(
-    //   ({ id: answersId }) => answersId !== id
-    // );
-
     setAnswers(answers.filter(ans => ans.id !== id));
   }
 
   return (
     <div className="notata_form">
       {answerAnswers.map(({ id, val }, i) => (
-        <div className={inputWrapper} key={i}>
+        <div className={inputWrapper} key={id}>
           <input
             autoComplete="off"
             type="text"
@@ -57,12 +53,7 @@ export default function MultipleTextInput({
             disabled
             placeholder="Say something..."
           />
-          <div
-            className={inputIcon}
-            onClick={() => {
-              handleOnDelete(id);
-            }}
-          >
+          <div className={inputIcon} onClick={() => handleOnDelete(id)}>
             <i className="fal fa-times" />
           </div>
         </div>

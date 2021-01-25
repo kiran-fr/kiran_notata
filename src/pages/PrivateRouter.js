@@ -11,6 +11,7 @@ import { userGet } from "Apollo/Queries";
 import {
   signup,
   dashboard,
+  charts,
   profile,
   report,
   inbox,
@@ -32,6 +33,7 @@ import {
 
 // Landing page / list
 import Dashboard from "./private/Dashboard/DashboardPage";
+import Charts from "./private/Dashboard/Charts/ChartsPage";
 
 import Profile from "./private/Profile/Profile";
 
@@ -66,6 +68,7 @@ import GroupSettings from "./private/Groups/GroupSettings";
 
 // Loader
 import { GhostLoader } from "Components/elements";
+import { ErrorBoundary } from "Components/ErrorBoundary";
 
 // Styles
 import Header from "Components/Header/Header";
@@ -170,6 +173,8 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={external_form} component={ExternalForm} />
 
+      <Route exact path={charts} component={Charts} />
+
       <Route render={() => <div>404</div>} />
     </Switch>
   );
@@ -211,7 +216,9 @@ const WrapperComponent = ({ ...props }) => {
           props.location.state?.rightMenu ? "show_right_activity" : ""
         }`}
       >
-        <RouterComponent {...props} />
+        <ErrorBoundary>
+          <RouterComponent {...props} />
+        </ErrorBoundary>
       </div>
     </>
   );

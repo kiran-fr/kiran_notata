@@ -37,7 +37,7 @@ export function EnterUsername({ done }) {
             id="username"
           />
 
-          <div style={{ textAlign: "right" }}>
+          <div className="text-right">
             <Button type="input" value="Log in" loading={isSubmitting} />
           </div>
         </form>

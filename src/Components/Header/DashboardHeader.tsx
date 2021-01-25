@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   hideMobileNavigationMenu,
   showMobileNavigationMenu,
-} from "Modules/menu";
+} from "actions/menu";
 
 const classnames = require("classnames");
 

@@ -21,21 +21,29 @@ import styles from "./TagGroup.module.css";
 import { TagType } from "pages/private/Tags/index";
 import { FunnelTag, Tag } from "pages/private/Dashboard/Connections/types";
 
-function TagGroupNameAndDescription({ id, name, description, type }: { id: string, name: string, description: string, type: TagType }) {
+function TagGroupNameAndDescription({
+  id,
+  name,
+  type,
+}: {
+  id: string;
+  name: string;
+  type: TagType;
+}) {
   const [mutateTags] = useMutation(tagGroupPut);
   const delayedTagsMutation = useCallback(
     debounce(options => mutateTags(options), 1000),
-    [],
+    []
   );
 
   const [mutateFunnels] = useMutation(funnelGroupPut);
   const delayedFunnelsMutation = useCallback(
     debounce(options => mutateFunnels(options), 1000),
-    [],
+    []
   );
 
   return (
-    <form className="focus_form" style={{ marginBottom: "20px" }}>
+    <form className="focus_form mb3">
       <textarea
         rows={1}
         className="form_h2"
@@ -56,19 +64,18 @@ function TagGroupNameAndDescription({ id, name, description, type }: { id: strin
           }
         }}
       />
-      <hr/>
+      <hr />
     </form>
   );
 }
 
-function DeleteTag({ tag, type }:
-                     { tag: Tag | FunnelTag, type: TagType }) {
+function DeleteTag({ tag, type }: { tag: Tag | FunnelTag; type: TagType }) {
   let [mutateTagsDelete, { loading: tagDeleteLoading }] = useMutation(
     tagDelete,
     {
       refetchQueries: [{ query: tagGroupGet }],
       awaitRefetchQueries: true,
-    },
+    }
   );
 
   let [
@@ -94,7 +101,7 @@ function DeleteTag({ tag, type }:
     >
       {loading && (
         <span>
-          <i className="fa fa-spinner fa-spin"/>{" "}
+          <i className="fa fa-spinner fa-spin" />{" "}
         </span>
       )}
       delete
@@ -102,8 +109,19 @@ function DeleteTag({ tag, type }:
   );
 }
 
-function TagInput({ tag, tagGroupId, funnelGroupId, index, type }:
-                    { tag?: Tag | FunnelTag, tagGroupId: string, funnelGroupId: string, index: number, type: TagType }) {
+function TagInput({
+  tag,
+  tagGroupId,
+  funnelGroupId,
+  index,
+  type,
+}: {
+  tag?: Tag | FunnelTag;
+  tagGroupId: string;
+  funnelGroupId: string;
+  index: number;
+  type: TagType;
+}) {
   const [mutateTags, { loading: tagPutLoading }] = useMutation(tagPut, {
     refetchQueries: [{ query: tagGroupGet }],
     awaitRefetchQueries: true,
@@ -114,11 +132,14 @@ function TagInput({ tag, tagGroupId, funnelGroupId, index, type }:
     {
       refetchQueries: [{ query: funnelGroupGet }],
       awaitRefetchQueries: true,
-    },
+    }
   );
 
   return (
-    <div className={styles.option_dashed_container} style={{ paddingLeft: "10px" }}>
+    <div
+      className={styles.option_dashed_container}
+      style={{ paddingLeft: "10px" }}
+    >
       <SimpleInputForm
         placeholder="Create new tag"
         val={tag ? tag.name : ""}
@@ -152,20 +173,31 @@ function TagInput({ tag, tagGroupId, funnelGroupId, index, type }:
         <div className={styles.option_save}>
           {(tagPutLoading || funnelTagPutLoading) && (
             <span>
-              <i className="fa fa-spinner fa-spin"/>{" "}
+              <i className="fa fa-spinner fa-spin" />{" "}
             </span>
           )}
           add
         </div>
       )}
 
-      {tag && <DeleteTag tag={tag} type={type}/>}
+      {tag && <DeleteTag tag={tag} type={type} />}
     </div>
   );
 }
 
-function TagList({ tags, funnelTags, tagGroupId, funnelGroupId, type }:
-                   { tags: Tag[], funnelTags: FunnelTag[], tagGroupId: string, funnelGroupId: string, type: TagType }) {
+function TagList({
+  tags,
+  funnelTags,
+  tagGroupId,
+  funnelGroupId,
+  type,
+}: {
+  tags: Tag[];
+  funnelTags: FunnelTag[];
+  tagGroupId: string;
+  funnelGroupId: string;
+  type: TagType;
+}) {
   const data = type === TagType.FUNNELS ? funnelTags : tags;
 
   return (
@@ -193,7 +225,17 @@ function TagList({ tags, funnelTags, tagGroupId, funnelGroupId, type }:
   );
 }
 
-function DeleteTagGroup({ tags, groupId, name, type }: { tags: Tag[] | FunnelTag[], groupId: string, name: string, type: TagType }) {
+function DeleteTagGroup({
+  tags,
+  groupId,
+  name,
+  type,
+}: {
+  tags: Tag[] | FunnelTag[];
+  groupId: string;
+  name: string;
+  type: TagType;
+}) {
   let [
     tagGroupDeleteMutation,
     { loading: tagGroupDeleteLoading },
@@ -238,7 +280,7 @@ function DeleteTagGroup({ tags, groupId, name, type }: { tags: Tag[] | FunnelTag
         >
           {loading && (
             <span>
-              <i className="fa fa-spinner fa-spin"/>{" "}
+              <i className="fa fa-spinner fa-spin" />{" "}
             </span>
           )}
           <span>
@@ -256,8 +298,9 @@ function DeleteTagGroup({ tags, groupId, name, type }: { tags: Tag[] | FunnelTag
           showScrollBar={false}
         >
           <span>
-            You have to delete all the {type === TagType.TAGS ? "tags" : "funnels"} in
-            the group before you can delete the group.
+            You have to delete all the{" "}
+            {type === TagType.TAGS ? "tags" : "funnels"} in the group before you
+            can delete the group.
           </span>
         </Modal>
       )}
@@ -265,8 +308,23 @@ function DeleteTagGroup({ tags, groupId, name, type }: { tags: Tag[] | FunnelTag
   );
 }
 
-export default function TagGroup({ id, name, description, tags, funnelTags, index, type, }:
-  { id: string, name: string, description: string, tags: Tag[], funnelTags: FunnelTag[], index: number, type: TagType }) {
+export default function TagGroup({
+  id,
+  name,
+  description,
+  tags,
+  funnelTags,
+  index,
+  type,
+}: {
+  id: string;
+  name: string;
+  description: string;
+  tags: Tag[];
+  funnelTags: FunnelTag[];
+  index: number;
+  type: TagType;
+}) {
   return (
     <Card>
       <DeleteTagGroup
@@ -276,12 +334,7 @@ export default function TagGroup({ id, name, description, tags, funnelTags, inde
         type={type}
       />
 
-      <TagGroupNameAndDescription
-        id={id}
-        name={name}
-        description={description}
-        type={type}
-      />
+      <TagGroupNameAndDescription id={id} name={name} type={type} />
       <TagList
         tags={tags}
         tagGroupId={id}
@@ -289,7 +342,7 @@ export default function TagGroup({ id, name, description, tags, funnelTags, inde
         funnelGroupId={id}
         type={type}
       />
-      <div className={styles.tag_group_footer}/>
+      <div className={styles.tag_group_footer} />
     </Card>
   );
 }

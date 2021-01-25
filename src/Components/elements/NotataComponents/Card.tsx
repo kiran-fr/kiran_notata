@@ -1,15 +1,15 @@
 import React from "react";
 
 import styles from "./Card.module.css";
+const classnames = require("classnames");
 
 interface Props {
   maxWidth?: number;
   noMargin?: boolean;
   label?: string;
-  style?: {[key: string]: string}
+  style?: { [key: string]: string };
   children?: any;
 }
-const classnames = require('classnames');
 
 export const Card = ({ maxWidth, noMargin, label, style, ...children }: Props) => {
   return (

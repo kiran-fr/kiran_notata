@@ -4,7 +4,6 @@ import { SingleChoiceInput } from "Components/Forms";
 import { evaluationPut } from "Apollo/Mutations";
 
 export default function SingleChoiceInputContainer({
-  section,
   question,
   templateId,
   evaluation,

@@ -33,7 +33,6 @@ import { Groups } from "Apollo/Queries/groupsGet";
 import { connectionPut } from "Apollo/Mutations/index";
 import { ViewSummary } from "./ViewSummary";
 
-
 // *********
 // * TYPES *
 // *********
@@ -59,9 +58,6 @@ type InboxData = {
   id?: string;
   creative?: Creative;
 }
-
-// *********
-
 
 export default function Sharings({ history }: { history: History }) {
 
@@ -477,7 +473,7 @@ export default function Sharings({ history }: { history: History }) {
           close={() => setSelectedInbox(null)}
           loading={creativeDeleteLoading || connectionPutLoading}
           disableFoot={false}
-          key={"actionModal"}
+          key="actionModal"
           noKill
           showScrollBar={false}
         >
@@ -492,7 +488,7 @@ export default function Sharings({ history }: { history: History }) {
           title={selectedInbox.data.name}
           close={() => setSelectedInbox(null)}
           disableFoot={false}
-          key={"actionModal"}
+          key="actionModal"
           noKill
           loading={false}
           showScrollBar={true}

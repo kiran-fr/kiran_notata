@@ -4,9 +4,11 @@ import classnames from "classnames";
 import {
   button_container,
   chevron_icon,
+  chevron_icon_left,
   loading_icon,
   icon_padding,
   large_button,
+  large_left_button,
   medium_button,
   small_button,
   tiny_right_button_container,
@@ -32,6 +34,7 @@ const StandardButton = ({
   let withIconPadding = loading || type === "right_arrow" || iconClass;
 
   const sizeClass =
+    (size && size === "large" && type === "left_arrow" && large_left_button) ||
     (size && size === "large" && large_button) ||
     (size && size === "medium" && medium_button) ||
     (size && size === "small" && small_button) ||
@@ -54,6 +57,12 @@ const StandardButton = ({
       {type === "right_arrow" && !loading && (
         <span className={chevron_icon}>
           <i className="fal fa-chevron-right" />
+        </span>
+      )}
+
+      {type === "left_arrow" && !loading && (
+        <span className={chevron_icon_left}>
+          <i className="fal fa-chevron-left" />
         </span>
       )}
 

@@ -47,35 +47,8 @@ function Navigation({ connection, evaluationId, sectionId, history }) {
 
   let currentIndex = sections.map(s => s.id).indexOf(sectionId);
 
-  if (currentIndex === sections.length - 1) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Button
-          type="right_arrow"
-          onClick={() => {
-            let path = `${startup_page}/${connection.id}/evaluation/${evaluationId}/summary`;
-            history.push(path);
-          }}
-        >
-          Go to summary
-        </Button>
-      </div>
-    );
-  }
-
   return (
-    <div
-      style={{
-        textAlign: "right",
-        // display: "flex",
-        // justifyContent: "space-between",
-      }}
-    >
+    <div className="text-right">
       <div style={{ marginBottom: "10px" }}>
         {(currentIndex !== sections.length - 1 && (
           <Button
@@ -176,10 +149,7 @@ export default function Section({ match, history }) {
     return <GhostLoader />;
   }
 
-  if (error) {
-    console.log(error);
-    return <p>We are updating</p>;
-  }
+  if (error) throw error;
 
   return (
     <div>

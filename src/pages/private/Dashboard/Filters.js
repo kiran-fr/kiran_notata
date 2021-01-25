@@ -10,21 +10,20 @@ import moment from "moment";
 
 import {
   container,
+  container_mini,
   content,
   footer,
   filter_star,
   filter_icon_container,
   filter_icon,
-  tag_list,
   tag_each,
-  tag_name,
   tag_kill,
   filter_container,
   filter_content,
   funnel_tag_container,
   funnel_tag,
   funnel_tag_active,
-} from "./Filters.module.css";
+} from "./Filters.module.scss";
 
 import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 
@@ -152,7 +151,12 @@ const DateSelector = ({ filters, setFilters }) => {
   );
 };
 
-export default function Filters({ filters, setFilters, tagGroups }) {
+export default function Filters({
+  filters,
+  setFilters,
+  tagGroups,
+  fullFilter,
+}) {
   const formatDateTag = range => {
     let result = "";
     if (range[0]) {
@@ -167,51 +171,55 @@ export default function Filters({ filters, setFilters, tagGroups }) {
   // if (!tagGroups) return <span />;
 
   return (
-    <div className={container}>
+    <div className={fullFilter ? container : container_mini}>
       <div className={footer}>
         <div className={filter_container}>
           {/*STAR*/}
-          <div className={filter_content}>
-            <div
-              className={filter_star}
-              onClick={() => {
-                setFilters({
-                  ...filters,
-                  starred: !filters.starred,
-                });
-              }}
-            >
-              {(filters.starred && (
-                <i
-                  className="fas fa-star"
-                  style={{ color: "var(--color-orange)" }}
-                />
-              )) || (
-                <i
-                  className="fal fa-star"
-                  style={{ color: "var(--color-gray-light)" }}
-                />
-              )}
+          {fullFilter && (
+            <div className={filter_content}>
+              <div
+                className={filter_star}
+                onClick={() => {
+                  setFilters({
+                    ...filters,
+                    starred: !filters.starred,
+                  });
+                }}
+              >
+                {(filters.starred && (
+                  <i
+                    className="fas fa-star"
+                    style={{ color: "var(--color-orange)" }}
+                  />
+                )) || (
+                  <i
+                    className="fal fa-star"
+                    style={{ color: "var(--color-gray-light)" }}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/*SEARCH*/}
-          <div className={filter_content} style={{ width: "100%" }}>
-            <div className="notata_form" style={{ width: "100%" }}>
-              <input
-                style={{
-                  marginBottom: "6px",
-                  width: "100%",
-                }}
-                type="text"
-                value={filters.search}
-                onChange={e =>
-                  setFilters({ ...filters, search: e.target.value })
-                }
-                placeholder="Filter list..."
-              />
+          {fullFilter && (
+            <div className={filter_content} style={{ width: "100%" }}>
+              <div className="notata_form" style={{ width: "100%" }}>
+                <input
+                  style={{
+                    marginBottom: "6px",
+                    width: "100%",
+                  }}
+                  type="text"
+                  value={filters.search}
+                  onChange={e =>
+                    setFilters({ ...filters, search: e.target.value })
+                  }
+                  placeholder="Filter list..."
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           {/*FUNNEL*/}
           <div className={filter_content}>
@@ -242,12 +250,12 @@ export default function Filters({ filters, setFilters, tagGroups }) {
         filters.dateRange[0] ||
         filters.dateRange[1]) && (
         <div className={content}>
-          <div className={tag_list}>
+          <div>
             {filters.funnelTags.map(funnelTag => {
               return (
                 <Tag key={funnelTag.id}>
                   <div className={tag_each}>
-                    <div className={tag_name}>
+                    <div>
                       <i className="fal fa-filter" /> {funnelTag.name}
                     </div>
                     <div
@@ -272,7 +280,7 @@ export default function Filters({ filters, setFilters, tagGroups }) {
               return (
                 <Tag key={tag.id}>
                   <div className={tag_each}>
-                    <div className={tag_name}>
+                    <div>
                       <i className="fal fa-tag" /> {group.name}: {tag.name}
                     </div>
                     <div
@@ -294,7 +302,7 @@ export default function Filters({ filters, setFilters, tagGroups }) {
             {(filters.dateRange[0] || filters.dateRange[1]) && (
               <Tag key="dateFilterTag">
                 <div className={tag_each}>
-                  <div className={tag_name}>
+                  <div>
                     <i className="fal fa-calendar" /> Date:{" "}
                     {formatDateTag(filters.dateRange)}
                   </div>

@@ -5,7 +5,7 @@ import styles from "../PresentationPage.module.css";
 
 export function TagsSection({ presentation, setPresentation }) {
   const [showModal, setShowModal] = useState(false);
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit } = useForm();
   let _tags = presentation?.tags || [];
 
   function handleKeyDown(e) {

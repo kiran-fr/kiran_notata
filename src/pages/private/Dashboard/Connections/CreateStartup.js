@@ -85,7 +85,7 @@ export const CreateNewStartup = ({
         >
           {!showConnection && (
             <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-              <div style={{ marginTop: "30px" }}>
+              <div className="mt3">
                 <input
                   type="text"
                   placeholder={`I.e. "Money Press Inc."`}

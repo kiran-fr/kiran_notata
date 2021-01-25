@@ -46,11 +46,7 @@ function VerifyPhoneNumber({ phoneVerified }: { phoneVerified: any }) {
   }
 
   return (
-    <form
-      className="notata_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
+    <form className="notata_form mb3" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div className={styles.verify_title}>
           Please verify your phone number

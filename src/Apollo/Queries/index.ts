@@ -17,6 +17,8 @@ export { default as groupLogGet } from "./groupLogGet";
 export { default as creativeGet } from "./creativeGet";
 export { default as creativesGet } from "./creativesGet";
 export { default as creativeTemplateGet } from "./creativeTemplateGet";
+export { default as publicEvaluationTemplateGet } from "./publicEvaluationTemplateGet";
+export { default as publicEvaluationTemplateSectionGet } from "./publicEvaluationTemplateSectionGet";
 export { default as publicCreativeGet } from "./publicCreativeGet";
 export { default as publicCreativeTemplateGet } from "./publicCreativeTemplateGet";
 export { default as publicPresentationGet } from './publicPresentationGet';

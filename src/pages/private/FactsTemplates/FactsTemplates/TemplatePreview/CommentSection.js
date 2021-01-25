@@ -4,7 +4,7 @@ import { Button } from "Components/elements/";
 
 export function CommentSection({ section, question }) {
   return (
-    <div className="comment_form" style={{ textAlign: "right" }}>
+    <div className="comment_form text-right">
       <div>
         <Button
           size="small"

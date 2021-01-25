@@ -4,8 +4,8 @@ import { Button, Card, Modal } from "Components/elements";
 import styles from "../PresentationPage.module.css";
 
 export function IntroMessage({ presentation, setPresentation }) {
-  const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting } = formState;
+  const { register, handleSubmit } = useForm();
+
   const [showModal, setShowModal] = useState(false);
 
   function onSubmit({ message }, event) {
@@ -19,25 +19,16 @@ export function IntroMessage({ presentation, setPresentation }) {
 
   return (
     <div>
-      <Card
-        label={"Introduction"}
-        style={{
-          paddingBottom: "20px",
-          paddingLeft: "30px",
-          paddingRight: "30px",
-          whiteSpace: "pre-wrap",
-          lineHeight: "2",
-        }}
-      >
+      <Card label="Introduction" style={{ paddingBottom: "20px" }}>
         <div>{presentation?.message}</div>
 
         {((!presentation?.message || presentation?.message === "") && (
-          <Button size={"small"} onClick={() => setShowModal(true)}>
+          <Button size="small" onClick={() => setShowModal(true)}>
             set
           </Button>
         )) || (
           <div className={styles.small_edit_button}>
-            <Button type={"just_text"} onClick={() => setShowModal(true)}>
+            <Button type="just_text" onClick={() => setShowModal(true)}>
               edit
             </Button>
           </div>
@@ -54,7 +45,7 @@ export function IntroMessage({ presentation, setPresentation }) {
             <textarea
               rows={12}
               style={{ resize: "none" }}
-              placeholder={"message"}
+              placeholder="message"
               autoComplete="off"
               defaultValue={presentation?.message}
               ref={register}
@@ -63,7 +54,7 @@ export function IntroMessage({ presentation, setPresentation }) {
             />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span />
-              <Button type={"submit"} size={"medium"}>
+              <Button type="submit" size="medium">
                 OK
               </Button>
             </div>

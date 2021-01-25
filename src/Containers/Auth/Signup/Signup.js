@@ -8,10 +8,11 @@ import * as yup from "yup";
 
 import { Content, Card, Button, ErrorBox } from "Components/elements/";
 
-import { userLoggedIn } from "Modules/user";
-import { getUserIsLoggedIn } from "Modules";
+import { userLoggedIn } from "actions/user";
+import { getUserIsLoggedIn } from "reducers/selectors/user";
 
 import { dashboard, awaiting, login } from "pages/definitions";
+import styles from "../Auth.module.css";
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [errorMessage, setErrorMessage] = useState();
@@ -72,18 +73,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               id="email"
             />
             {errors && errors.email && (
-              <p
-                style={{
-                  color: "var(--color-primary)",
-                  fontSize: "12px",
-                  textAlign: "right",
-                  position: "relative",
-                  top: "-6px",
-                  right: "4px",
-                }}
-              >
-                that email does not look valid
-              </p>
+              <p className={styles.error}>that email does not look valid</p>
             )}
 
             <label for="password">Password</label>
@@ -104,22 +94,11 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               placeholder="confirm password"
             />
             {errors && errors.passwordConfirmation && (
-              <p
-                style={{
-                  color: "var(--color-primary)",
-                  fontSize: "12px",
-                  textAlign: "right",
-                  position: "relative",
-                  top: "-6px",
-                  right: "4px",
-                }}
-              >
-                passwords don't match
-              </p>
+              <p className={styles.error}>passwords don't match</p>
             )}
           </div>
 
-          <div style={{ textAlign: "right" }}>
+          <div className="text-right">
             <Button
               type="input"
               value="Sign up"

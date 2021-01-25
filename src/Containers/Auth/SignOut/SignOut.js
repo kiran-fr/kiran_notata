@@ -26,7 +26,7 @@ export class SignOut extends React.Component {
       <Content center maxWidth={600}>
         <SuccessBox title="Bye bye 😭">You have been logged out!</SuccessBox>
 
-        <div style={{ textAlign: "right" }}>
+        <div className="text-right">
           <a href="/login">Log in</a>
         </div>
       </Content>

@@ -55,11 +55,7 @@ function VerifyPhoneNumberComp({ phoneVerified }) {
   }
 
   return (
-    <form
-      className="notata_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
+    <form className="notata_form mb2" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div className={verify_title}>Please verify your phone number</div>
 
@@ -196,11 +192,7 @@ export default function Profile() {
         )}
 
         <Card>
-          <form
-            className="notata_form"
-            onSubmit={handleSubmit(onSubmit)}
-            style={{ marginBottom: "20px" }}
-          >
+          <form className="notata_form mb2" onSubmit={handleSubmit(onSubmit)}>
             <label for="input.given_name">Given name</label>
             <input
               type="text"

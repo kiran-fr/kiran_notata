@@ -19,13 +19,9 @@ export default function FactsTemplates({ history, match }) {
     }
   }, [creativeTemplate]);
 
-  if (creativeTemplateQuery.loading || !template) {
-    return <GhostLoader />;
-  }
+  if (creativeTemplateQuery.loading || !template) return <GhostLoader />;
 
-  if (creativeTemplateQuery.error) {
-    return <span>We are updating</span>;
-  }
+  if (creativeTemplateQuery.error) throw creativeTemplateQuery.error;
 
   return (
     <>

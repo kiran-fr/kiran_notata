@@ -19,6 +19,7 @@ export const link_bridge = `/link`;
 // LOGGED IN PAGES
 
 export const dashboard = "/dashboard";
+export const charts = `${dashboard}/charts`;
 
 export const startup_page = `${dashboard}/startup_page`;
 
@@ -46,4 +47,5 @@ export const demo_page = `${public_pages}/demo`;
 export const ban_demo_page = `${public_pages}/ban`;
 export const oia_demo_page = `${public_pages}/oia`;
 export const public_presentation = `${public_pages}/presentation`;
+export const public_evaluation = `${public_pages}/evaluation`;
 export const product_demo = `${public_pages}/product_demo`;

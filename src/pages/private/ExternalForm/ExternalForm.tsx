@@ -47,20 +47,15 @@ export default function ExternalForm({ history }: { history: History}) {
 
   return (
     <Content maxWidth={780}>
-
-      <h1 style={{ marginBottom: "10px" }}>External Web Form</h1>
+      <h1 className="mb1">External Web Form</h1>
 
       <Card style={{ paddingBottom: "20px" }}>
-
         <div className={styles.share_text}>
-          This form can be posted on your website. Please copy and paste the embeddable code below, or refer to the link.
+          This form can be posted on your website. Please copy and paste the
+          embeddable code below, or refer to the link.
         </div>
 
-        <div
-          style={{
-            marginBottom: '20px'
-          }}
-          >
+        <div className="mb3">
           <div>Link</div>
           <SuccessBox
             style={{
@@ -83,11 +78,7 @@ export default function ExternalForm({ history }: { history: History}) {
           </SuccessBox>
         </div>
 
-        <div
-          style={{
-            marginBottom: "20px",
-          }}
-        >
+        <div className="mb2">
           <div>Embed</div>
 
           <SuccessBox
@@ -104,8 +95,7 @@ export default function ExternalForm({ history }: { history: History}) {
           </SuccessBox>
 
           <div
-            style={{ textAlign: "right" }}
-            className={styles.copy_link}
+            className={`${styles.copy_link} text-right`}
             onClick={copyToClipboard}
           >
             {copySuccess ? "code copied to clipboard" : "copy code"}
@@ -116,13 +106,11 @@ export default function ExternalForm({ history }: { history: History}) {
           size={"medium"}
           buttonStyle={"secondary"}
           onClick={() => {
-            history.push(facts_templates)
+            history.push(facts_templates);
           }}
-          >
+        >
           Customize form
         </Button>
-
-
       </Card>
     </Content>
   );

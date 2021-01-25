@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Content, Card, Table } from "Components/elements";
 // import { API } from "aws-amplify";
 // import { subscribeToAllTestMutations } from "Apollo/Subscriptions/";
@@ -14,7 +14,7 @@ import {
 import { group } from "../../definitions";
 import tableStyles from "Components/elements/NotataComponents/Table.module.css";
 
-const Comp = ({ history }) => {
+const Settings = ({ history }) => {
   // let subscription;
   // useEffect(() => {
   //   subscribe();
@@ -125,4 +125,4 @@ const Comp = ({ history }) => {
   );
 };
 
-export default Comp;
+export default Settings;

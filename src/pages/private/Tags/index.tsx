@@ -9,14 +9,15 @@ import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
 import { useEffect } from "react";
 
 import { settings, tags } from "pages/definitions";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import { materialTheme } from "index";
-import { ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from "@material-ui/core/styles";
 import { Card } from "Components/elements/NotataComponents/Card";
 
 export enum TagType {
-  TAGS = 'tags', FUNNELS = 'funnels'
+  TAGS = "tags",
+  FUNNELS = "funnels",
 }
 
 export default function Tags() {
@@ -52,18 +53,14 @@ export default function Tags() {
     }
   }, [getFunnels, getTags, type]);
 
-
   if (funnelGroupGetError || tagGroupGetError) {
-    console.log(funnelGroupGetError);
-    console.log(tagGroupGetError);
-
-    return <div>We are updating</div>;
+    throw funnelGroupGetError || tagGroupGetError;
   }
 
-  const loadingData = type === TagType.FUNNELS ?
-    (!funnelGroupGetCalled ||
-      (!funnelGroupGetData && funnelGroupGetLoading)) :
-    (!tagGroupGetCalled || (!tagGroupGetData && tagGroupGetLoading));
+  const loadingData =
+    type === TagType.FUNNELS
+      ? !funnelGroupGetCalled || (!funnelGroupGetData && funnelGroupGetLoading)
+      : !tagGroupGetCalled || (!tagGroupGetData && tagGroupGetLoading);
 
   const data =
     (type === TagType.FUNNELS
@@ -91,27 +88,30 @@ export default function Tags() {
 
       <Content maxWidth={600}>
         <h1>{type === TagType.FUNNELS ? "Funnels" : "Tags"}</h1>
-          <Card style={{paddingTop: '0', marginBottom: '20px'}}>
-            <ThemeProvider theme={materialTheme}>
-              <Tabs
-                value={type}
-                indicatorColor="primary"
-                textColor="primary"
-                onChange={handleTabChange}
-                aria-label="Funnels And Tags"
-              >
-                <Tab value={TagType.TAGS} label="Tags" />
-                <Tab value={TagType.FUNNELS} label="Funnels" />
-              </Tabs>
-            </ThemeProvider>
-          </Card>
+        <Card style={{ paddingTop: "0", marginBottom: "20px" }}>
+          <ThemeProvider theme={materialTheme}>
+            <Tabs
+              value={type}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={handleTabChange}
+              aria-label="Funnels And Tags"
+            >
+              <Tab value={TagType.TAGS} label="Tags" />
+              <Tab value={TagType.FUNNELS} label="Funnels" />
+            </Tabs>
+          </ThemeProvider>
+        </Card>
 
-        {!loadingData && [...data].map((props, index) => (
-          <TagGroup {...props} key={props.id} index={index} type={type} />
-        ))}
-        {
-          !loadingData ? ( <CreateTagGroup index={data.length} type={type} />) : (<GhostLoader />)
-        }
+        {!loadingData &&
+          [...data].map((props, index) => (
+            <TagGroup {...props} key={props.id} index={index} type={type} />
+          ))}
+        {!loadingData ? (
+          <CreateTagGroup index={data.length} type={type} />
+        ) : (
+          <GhostLoader />
+        )}
       </Content>
     </>
   );

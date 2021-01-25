@@ -64,9 +64,8 @@ import tableStyles from "../../../../Components/elements/NotataComponents/Table.
 
 //   return (
 //     <form
-//       className="focus_form"
+//       className="focus_form mb3"
 //       onSubmit={handleSubmit(onSubmit)}
-//       style={{ marginBottom: "20px" }}
 //     >
 //       <textarea
 //         className="form_h1"
@@ -131,7 +130,7 @@ function AddNewSection({ id, setShowModal }) {
 
   return (
     <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-      <div style={{ marginTop: "30px" }}>
+      <div className="mt3">
         <input
           type="text"
           placeholder='I.e. "Team"'
@@ -201,7 +200,7 @@ export default function EvaluationTemplate({ match, history }) {
     }
   }, [getData, id]);
 
-  if (error) return <div>We are updating</div>;
+  if (error) throw error;
 
   if (loading && !data) {
     return <GhostLoader />;
@@ -335,15 +334,13 @@ export default function EvaluationTemplate({ match, history }) {
           />
         </Card>
 
-        <div style={{ marginTop: "20px" }}>
-          <Button
-            onClick={() => setShowModal(true)}
-            type="right_arrow"
-            size="large"
-          >
-            Create New Section
-          </Button>
-        </div>
+        <Button
+          onClick={() => setShowModal(true)}
+          type="right_arrow"
+          size="large"
+        >
+          Create New Section
+        </Button>
 
         {showModal && (
           <Modal

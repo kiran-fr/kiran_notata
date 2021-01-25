@@ -121,7 +121,7 @@ export default function CommentInput({
             />
 
             <div>
-              <div style={{ textAlign: "right" }}>
+              <div className="text-right">
                 <Button
                   type="input"
                   loading={isSubmitting || loading}

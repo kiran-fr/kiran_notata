@@ -75,10 +75,7 @@ export default function Summary({ match, history }) {
   }
 
   if (connectionGetError || evaluationTemplateGetError) {
-    console.log(connectionGetError);
-    console.log(evaluationTemplateGetError);
-
-    return <p>We are updating</p>;
+    throw connectionGetError || evaluationTemplateGetError;
   }
 
   const evaluation = connectionGetData.connectionGet.evaluations.find(

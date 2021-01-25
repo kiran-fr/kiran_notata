@@ -62,10 +62,7 @@ export default function StartupPage({ match, history }) {
   }
 
   if (userGetError || connectionGetError || groupsGetError) {
-    console.log("userGetError", userGetError);
-    console.log("connectionGetError", connectionGetError);
-    console.log("groupsGetError", groupsGetError);
-    return <div>We are updating</div>;
+    throw userGetError || connectionGetError || groupsGetError;
   }
 
   const user = userGetData?.userGet;
@@ -102,6 +99,7 @@ export default function StartupPage({ match, history }) {
           {
             val: `Startup: ${connection.creative.name}`,
             link: `${startup_page}/${match.params.id}`,
+            state: { rightMenu: true },
           },
         ]}
       />

@@ -99,10 +99,10 @@ function Invite({ account, user }) {
           disableFoot={true}
         >
           <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-            <div style={{ marginTop: "30px" }}>
+            <div className="mt3">
               <input
                 type="text"
-                placeholder={"name@email.com"}
+                placeholder="name@email.com"
                 autoComplete="off"
                 ref={register()}
                 name="email"

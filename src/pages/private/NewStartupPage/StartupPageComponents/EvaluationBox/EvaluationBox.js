@@ -9,6 +9,7 @@ import { startup_page, group as group_route } from "pages/definitions";
 import { Button, Table, Modal } from "Components/elements";
 
 import styles from "./EvaluationBox.module.css";
+import { EvaluationRequest } from "./EvaluationRequest";
 
 function getEvaluationSummaries({
   connection,
@@ -700,6 +701,8 @@ function NewEvaluationLogic({ evaluations, templates, connection, history }) {
           + new evaluation
         </Button>
       </div>
+
+      <EvaluationRequest connection={connection} />
 
       {showModal && (
         <Modal

@@ -25,7 +25,7 @@ export function Facts({ connection, user, match, history }) {
       // label="STARTUP INFO"
       style={{ paddingBottom: "20px" }}
     >
-      <div style={{ padding: "10px" }}>
+      <div className="p1">
         <h1 style={{ marginBottom: "10px" }}>{connection.creative.name}</h1>
 
         {!isUntouched && (

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, SuccessBox, MessageBox } from "Components/elements";
+import { omit } from "lodash";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { Button, Card, SuccessBox } from "Components/elements";
 import { presentationPut } from "Apollo/Mutations";
 import { presentationsGet } from "Apollo/Queries";
-import { useLazyQuery, useMutation } from "@apollo/client";
 import styles from "./PresentationPage.module.css";
-import { omit } from "lodash";
 import { IntroMessage } from "./PresentationComponents/IntroMessage";
 import { TagsSection } from "./PresentationComponents/TagsSection";
 import { ExternalLinks } from "./PresentationComponents/ExternalLinks";
@@ -23,8 +23,8 @@ function EditPresentation({ presentations, creative, isViewing, defaultData }) {
   const [copySuccess, setCopySuccess] = useState(undefined);
 
   useEffect(() => {
-    let dirty = presentations.find(({ email }) => email === isViewing);
-    let clean = getCleanData(dirty);
+    const dirty = presentations.find(({ email }) => email === isViewing);
+    const clean = getCleanData(dirty);
     setPresentation(clean);
   }, [isViewing]);
 
@@ -36,7 +36,7 @@ function EditPresentation({ presentations, creative, isViewing, defaultData }) {
     });
   }
 
-  let publicLink = `${window.location.protocol}//${
+  const publicLink = `${window.location.protocol}//${
     window.location.host
   }${public_presentation}/${presentation?.id}/${encodeURI(
     presentation?.email
@@ -110,16 +110,16 @@ function EditPresentation({ presentations, creative, isViewing, defaultData }) {
           position: "relative",
         }}
       >
-        <Button size={"medium"} buttonStyle={"secondary"} onClick={revert}>
+        <Button size="medium" buttonStyle="secondary" onClick={revert}>
           revert to original
         </Button>
         <Button
-          size={"medium"}
+          size="medium"
           loading={loading}
-          iconClass={"fal fa-cloud-download"}
+          iconClass="fal fa-cloud-download"
           onClick={async () => {
             setSaveSuccess(false);
-            let variables = {
+            const variables = {
               id: presentation.id,
               input: {
                 email: presentation.email,
@@ -185,11 +185,7 @@ function EditPresentation({ presentations, creative, isViewing, defaultData }) {
                 color: "var(--color-secondary)",
               }}
             >
-              <a
-                href={`${publicLink}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={publicLink} target="_blank" rel="noopener noreferrer">
                 {publicLink}
               </a>
             </SuccessBox>
@@ -220,11 +216,11 @@ function EditPresentation({ presentations, creative, isViewing, defaultData }) {
 }
 
 function addQuestionIndex(creativeAnswersBySection) {
-  let res = {};
+  const res = {};
 
-  for (let sectionId in creativeAnswersBySection) {
-    let section = creativeAnswersBySection[sectionId];
-    let answersByQuestion = {};
+  for (const sectionId in creativeAnswersBySection) {
+    const section = creativeAnswersBySection[sectionId];
+    const answersByQuestion = {};
     let indexCount = 0;
     section.answers.forEach(answer => {
       answersByQuestion[answer.questionId] = answersByQuestion[
@@ -239,8 +235,8 @@ function addQuestionIndex(creativeAnswersBySection) {
 
     let newAnswers = [];
 
-    for (let questionId in answersByQuestion) {
-      let { index, answers } = answersByQuestion[questionId];
+    for (const questionId in answersByQuestion) {
+      const { index, answers } = answersByQuestion[questionId];
       newAnswers = [...newAnswers, ...answers.map(a => ({ ...a, index }))];
     }
 
@@ -264,7 +260,7 @@ function getDefaultData({ creative }) {
         answers: [],
       };
 
-      let newAnswer = {
+      const newAnswer = {
         ...omit(answer, ["__typename"]),
       };
 
@@ -278,38 +274,38 @@ function getDefaultData({ creative }) {
 
   creativeAnswersBySection = addQuestionIndex(creativeAnswersBySection);
 
-  let sections = Object.keys(creativeAnswersBySection || {}).map(
+  const sections = Object.keys(creativeAnswersBySection || {}).map(
     (sectionId, index) => ({
       ...creativeAnswersBySection[sectionId],
       index,
     })
   );
 
-  let creativeDetails = {
+  const creativeDetails = {
     sections,
   };
 
-  let website = creative.answers.find(
+  const website = creative.answers.find(
     ({ questionId }) => questionId === "q06_section_info"
   );
-  let slideDecks = creative.answers.find(
+  const slideDecks = creative.answers.find(
     ({ questionId }) => questionId === "q01_section_materials"
   );
 
-  let seeking = creative.answers.find(
+  const seeking = creative.answers.find(
     ({ questionId }) => questionId === "q03_section_money"
   );
-  let valuation = creative.answers.find(
+  const valuation = creative.answers.find(
     ({ questionId }) => questionId === "q04_section_money"
   );
 
-  let location = creative.answers.find(
+  const location = creative.answers.find(
     ({ questionId }) => questionId === "q04_section_info"
   );
-  let contactPerson = creative.answers.find(
+  const contactPerson = creative.answers.find(
     ({ questionId }) => questionId === "q05_section_info"
   );
-  let name = creative.name;
+  const name = creative.name;
 
   if (location) {
     creativeDetails.location = location.val;
@@ -340,9 +336,9 @@ function getDefaultData({ creative }) {
   }
 
   if (seeking) {
-    let parts = seeking.val.split(" ");
-    let key = parts[0];
-    let val = parts.slice(1, parts.length).join(" ");
+    const parts = seeking.val.split(" ");
+    const key = parts[0];
+    const val = parts.slice(1, parts.length).join(" ");
     creativeDetails.seeking = {
       key,
       val,
@@ -350,9 +346,9 @@ function getDefaultData({ creative }) {
   }
 
   if (valuation) {
-    let parts = valuation.val.split(" ");
-    let key = parts[0];
-    let val = parts.slice(1, parts.length).join(" ");
+    const parts = valuation.val.split(" ");
+    const key = parts[0];
+    const val = parts.slice(1, parts.length).join(" ");
     creativeDetails.valuation = {
       key,
       val,
@@ -379,8 +375,8 @@ export function PresentationPage({
     }
   }, [connectionId]);
 
-  let presentations = presentationsQuery?.data?.presentationsGet;
-  let defaultData = getDefaultData({ creative });
+  const presentations = presentationsQuery?.data?.presentationsGet;
+  const defaultData = getDefaultData({ creative });
 
   return (
     <div>

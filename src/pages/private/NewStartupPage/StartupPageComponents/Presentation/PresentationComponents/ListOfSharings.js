@@ -166,7 +166,7 @@ export function ListOfSharings({
       width: 110,
       render: email => (
         <Button
-          size={"small"}
+          size="small"
           buttonStyle={isViewing !== email && "secondary"}
           onClick={() => setIsViewing(email)}
           style={{ width: "100%" }}
@@ -182,12 +182,10 @@ export function ListOfSharings({
       responsive: "md",
       render: presentation => (
         <Button
-          size={"small"}
-          buttonStyle={"secondary"}
-          onClick={() => {
-            setShowModal(getCleanData(presentation));
-          }}
-          iconClass={"fal fa-copy"}
+          size="small"
+          buttonStyle="secondary"
+          onClick={() => setShowModal(getCleanData(presentation))}
+          iconClass="fal fa-copy"
         >
           Duplicate
         </Button>
@@ -197,7 +195,7 @@ export function ListOfSharings({
 
   return (
     <div>
-      <Card label={"SHARING"} noMargin={true}>
+      <Card label="SHARING" noMargin={true}>
         <Table
           loading={!presentations}
           dataSource={(presentations || [])
@@ -252,14 +250,14 @@ export function ListOfSharings({
             }}
           >
             <Button
-              size={"medium"}
-              buttonStyle={"secondary"}
+              size="medium"
+              buttonStyle="secondary"
               onClick={() => setShowDeleteModal(undefined)}
             >
               Cancel
             </Button>
             <Button
-              size={"medium"}
+              size="medium"
               loading={isDeleting}
               onClick={() => {
                 onDelete(showDeleteModal.id);
@@ -296,7 +294,7 @@ export function ListOfSharings({
           <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
             <input
               type="text"
-              placeholder={"email"}
+              placeholder="email"
               autoComplete="off"
               ref={register({ required: true })}
               id="email"
@@ -306,7 +304,7 @@ export function ListOfSharings({
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span />
 
-              <Button type={"submit"} size={"medium"} loading={isSubmitting}>
+              <Button type="submit" size="medium" loading={isSubmitting}>
                 Start
               </Button>
             </div>

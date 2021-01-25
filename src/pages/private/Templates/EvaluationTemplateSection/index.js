@@ -49,11 +49,7 @@ function NameAndDescription({ template, section }) {
   };
 
   return (
-    <form
-      className="focus_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
+    <form className="focus_form mb3" onSubmit={handleSubmit(onSubmit)}>
       <textarea
         className="form_h1"
         rows={1}
@@ -136,12 +132,9 @@ export default function EvaluationTemplateSection({ match }) {
     }
   }, [getData, id]);
 
-  if (error) console.log("error", error);
-  if (error) return <div>We are updating </div>;
+  if (error) throw error;
 
-  if (loading && !data) {
-    return <GhostLoader />;
-  }
+  if (loading && !data) return <GhostLoader />;
 
   let section = {};
   if (sectionId) {

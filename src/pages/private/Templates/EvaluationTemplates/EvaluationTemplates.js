@@ -95,7 +95,7 @@ const CreateNewTemplate = ({ setShowModal }) => {
 
   return (
     <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-      <div style={{ marginTop: "30px" }}>
+      <div className="mt3">
         <input
           type="text"
           placeholder={`I.e. "Early Stage Companies"`}
@@ -168,10 +168,7 @@ export default function EvaluationTemplates(props) {
   const [showModal, setShowModal] = useState(false);
   const { data, loading, error } = useQuery(evaluationTemplatesGet);
 
-  if (error) {
-    console.log("error", error);
-    return <div>We are updating </div>;
-  }
+  if (error) throw error;
 
   let templates;
   if (data) {
@@ -179,9 +176,7 @@ export default function EvaluationTemplates(props) {
     templates = evaluationTemplates;
   }
 
-  if (loading && !data) {
-    return <GhostLoader />;
-  }
+  if (loading && !data) return <GhostLoader />;
 
   const columns = [
     {
@@ -283,15 +278,13 @@ export default function EvaluationTemplates(props) {
             <SharedWithMe />
           */}
 
-        <div style={{ marginTop: "20px" }}>
-          <Button
-            onClick={() => setShowModal(true)}
-            type="right_arrow"
-            size="large"
-          >
-            New Evaluation Template
-          </Button>
-        </div>
+        <Button
+          onClick={() => setShowModal(true)}
+          type="right_arrow"
+          size="large"
+        >
+          New Evaluation Template
+        </Button>
 
         {showModal && (
           <Modal

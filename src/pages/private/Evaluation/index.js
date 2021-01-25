@@ -49,10 +49,7 @@ export default function Evaluation({ match, history }) {
     return <GhostLoader />;
   }
 
-  if (error) {
-    console.log("error", error);
-    return <p>We are updating</p>;
-  }
+  if (error) throw error;
 
   const evaluation =
     (connection.evaluations || []).find(({ id }) => id === evaluationId) || [];
@@ -145,7 +142,7 @@ export default function Evaluation({ match, history }) {
           />
         </Card>
 
-        <div style={{ textAlign: "right" }}>
+        <div className="text-right">
           <Button
             type="right_arrow"
             onClick={() => {

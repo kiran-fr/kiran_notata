@@ -10,6 +10,7 @@ import {
   ban_demo_page,
   product_demo,
   public_presentation,
+  public_evaluation,
   oia_demo_page,
 } from "./definitions";
 
@@ -21,6 +22,8 @@ import { OIADemoPage } from "./public/OIA_DemoPage/OIA_DemoPage";
 import { PublicCreative as ExternalForm } from "./public/ExternalForm/PublicCreative/PublicCreative";
 // import { PublicCreative } from "./public/PublicCreative/PublicCreative";
 import { PublicPresentationPage } from "./public/PublicPresentationPage/PublicPresentationPage";
+import { PublicPresentationPage2 } from "./public/PublicPresentationPage/PublicPresentationPage2";
+import { EvaluationPage } from "./public/EvaluationPage/EvaluationPage";
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -34,6 +37,18 @@ export const RouterComponent = ({ history }) => {
         exact
         path={`${public_presentation}/:id/:email`}
         component={PublicPresentationPage}
+      />
+
+      <Route
+        exact
+        path={`${public_presentation}/:id`}
+        component={PublicPresentationPage2}
+      />
+
+      <Route
+        exact
+        path={`${public_evaluation}/:connectionId/:creativeId/:templateId`}
+        component={EvaluationPage}
       />
 
       <Route

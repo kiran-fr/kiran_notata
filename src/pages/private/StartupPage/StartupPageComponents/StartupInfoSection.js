@@ -93,7 +93,7 @@ function Extended({ creative, collapsable }) {
       )}
 
       {((collapsable && open) || !collapsable) && (
-        <div style={{ marginTop: "20px" }}>
+        <div className="mt2">
           {Object.keys(answersByQuestion).map(questionId => {
             let item = answersByQuestion[questionId];
             let { questionName, answers } = item;

@@ -10,18 +10,14 @@ import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { Routes } from "./pages/routes";
 import { appsyncClient, initializeAwsConfig } from "./awsconfig";
-import rootReducer from "./Modules/index";
-import {
-  setUserAttributes,
-  userLoggedIn,
-  userNotLoggedIn,
-} from "./Modules/user";
+import rootReducer from "./reducers/index";
+import { setUserAttributes, userLoggedIn, userNotLoggedIn } from "actions/user";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
-import "babel-polyfill";
-import "./fonts/font-awesome-4.7.0/css/font-awesome.min.css";
-import "./fonts/fontawesome-pro-5.13.0-web/css/all.min.css";
-import "./style.css";
+import "core-js/stable";
+import "./styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css";
+import "./styles/fonts/fontawesome-pro-5.13.0-web/css/all.min.css";
+import "./styles/style.scss";
 import { createMuiTheme } from "@material-ui/core";
 
 initializeAwsConfig();

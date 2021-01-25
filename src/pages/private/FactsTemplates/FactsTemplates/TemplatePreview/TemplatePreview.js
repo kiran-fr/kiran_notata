@@ -24,11 +24,7 @@ function CompanyName({ creative }) {
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data, event) => {};
   return (
-    <form
-      className="focus_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
+    <form className="focus_form mb3" onSubmit={handleSubmit(onSubmit)}>
       <textarea
         className="form_h1"
         rows={1}
@@ -172,7 +168,7 @@ export function Section({ section, template, updateTemplate }) {
         >
           <div>
             <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-              <div style={{ marginTop: "30px" }}>
+              <div className="mt3">
                 <input
                   type="text"
                   placeholder="Section title"
@@ -360,7 +356,7 @@ export function Question({
 
           <div className="form_p2">{question.description}</div>
           <hr />
-          <div style={{ padding: "10px" }}>
+          <div className="p1">
             <GeneralInput question={question} section={section} />
           </div>
           <CommentSection question={question} section={section} />
@@ -396,7 +392,7 @@ function TemplateHeader({ template, updateTemplate }) {
     <div>
       <div>
         <Button
-          size={"small"}
+          size="small"
           buttonStyle={invitedView ? "primary" : "secondary"}
           onClick={() => setInvitedView(true)}
         >
@@ -408,7 +404,7 @@ function TemplateHeader({ template, updateTemplate }) {
           <span> Header message for invited startup form</span>
         </Button>
         <Button
-          size={"small"}
+          size="small"
           buttonStyle={invitedView ? "secondary" : "primary"}
           onClick={() => setInvitedView(false)}
         >
@@ -446,7 +442,7 @@ function TemplateHeader({ template, updateTemplate }) {
         >
           <div>
             <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-              <div style={{ marginTop: "30px" }}>
+              <div className="mt3">
                 <textarea
                   type="text"
                   placeholder="Success message"
@@ -538,7 +534,7 @@ function TemplateSuccessMessage({ template, updateTemplate }) {
           </div>
         </SuccessBox>
 
-        <div style={{ textAlign: "right" }}>
+        <div className="text-right">
           <Button
             type="just_text"
             onClick={() =>
@@ -560,7 +556,7 @@ function TemplateSuccessMessage({ template, updateTemplate }) {
         >
           <div>
             <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-              <div style={{ marginTop: "30px" }}>
+              <div className="mt3">
                 <textarea
                   type="text"
                   placeholder="Success message"
@@ -826,7 +822,7 @@ export default function TemplatePreview({ template, setTemplate }) {
         >
           <div>
             <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-              <div style={{ marginTop: "30px" }}>
+              <div className="mt3">
                 <input
                   type="text"
                   placeholder="Section title"

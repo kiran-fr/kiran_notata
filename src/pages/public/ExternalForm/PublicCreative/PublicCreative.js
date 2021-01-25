@@ -27,7 +27,7 @@ function Question({ question, section, creative, setAnswers, answers }) {
       <div className="form_h2">{name}</div>
       <div className="form_p2">{description}</div>
       <hr />
-      <div style={{ padding: "10px" }}>
+      <div className="p1">
         <GeneralInput
           question={question}
           section={section}
@@ -91,7 +91,7 @@ function Submit({
   return (
     <div>
       {!success && (
-        <div style={{ textAlign: "right" }}>
+        <div className="text-right">
           <Button
             type="right_arrow"
             loading={mres.loading}
@@ -140,7 +140,7 @@ function Submit({
       )}
 
       {success && (
-        <div style={{ marginTop: "20px" }}>
+        <div className="mt2">
           <SuccessBox>
             {creative.id && <div>{template.successMessageInvited || ""}</div>}
 
@@ -153,7 +153,7 @@ function Submit({
 }
 
 const CompanyName = ({ setName, creative }) => (
-  <div className="focus_form" style={{ marginBottom: "20px" }}>
+  <div className="focus_form mb3">
     <textarea
       className="form_h1"
       rows={1}

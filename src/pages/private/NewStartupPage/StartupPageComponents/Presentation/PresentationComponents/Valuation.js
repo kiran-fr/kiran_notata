@@ -25,7 +25,7 @@ export function Valuation({ presentation, setPresentation }) {
   return (
     <div className={styles.infoBox}>
       <Card
-        label={"Valuation"}
+        label="Valuation"
         style={{
           paddingBottom: "20px",
           height: "110px",
@@ -46,12 +46,12 @@ export function Valuation({ presentation, setPresentation }) {
           </div>
 
           {(!presentation?.creativeDetails?.valuation && (
-            <Button size={"small"} onClick={() => setShowModal(true)}>
+            <Button size="small" onClick={() => setShowModal(true)}>
               set
             </Button>
           )) || (
             <div className={styles.small_edit_button}>
-              <Button type={"just_text"} onClick={() => setShowModal(true)}>
+              <Button type="just_text" onClick={() => setShowModal(true)}>
                 edit
               </Button>
             </div>
@@ -69,7 +69,7 @@ export function Valuation({ presentation, setPresentation }) {
             <label>Number</label>
             <input
               type="text"
-              placeholder={"3-8"}
+              placeholder="3-8"
               autoComplete="off"
               ref={register}
               defaultValue={presentation?.creativeDetails?.valuation?.key || ""}
@@ -80,7 +80,7 @@ export function Valuation({ presentation, setPresentation }) {
             <label>Currency</label>
             <input
               type="text"
-              placeholder={"million NOK"}
+              placeholder="million NOK"
               autoComplete="off"
               ref={register}
               defaultValue={presentation?.creativeDetails?.valuation?.val || ""}
@@ -90,7 +90,7 @@ export function Valuation({ presentation, setPresentation }) {
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span />
-              <Button type={"submit"} size={"medium"}>
+              <Button type="submit" size="medium">
                 OK
               </Button>
             </div>
