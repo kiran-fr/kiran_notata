@@ -271,16 +271,9 @@ export function EvaluationRequest({ connection }) {
             onClick={() => {
               if (currentLoading) return;
 
-              let haveUsedThisTemplateBefore = evaluations.some(
-                evaluation => evaluation.templateId === templateId
-              );
+              setShowConfirmModal({ templateId, name, description });
+              setShowModal(false);
 
-              if (!haveUsedThisTemplateBefore) {
-                selectTemplate({ templateId, name, description });
-              } else {
-                setShowConfirmModal({ templateId, name, description });
-                setShowModal(false);
-              }
             }}
             loading={loading && currentLoading === templateId}
           >
@@ -356,7 +349,7 @@ export function EvaluationRequest({ connection }) {
       {showConfirmModal && (
         <Modal
           title="Request Evaluation"
-          close={() => setShowModal(false)}
+          close={() => setShowConfirmModal(false)}
           disableFoot={true}
         >
           <div>
