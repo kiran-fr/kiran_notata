@@ -22,7 +22,7 @@ import { OIADemoPage } from "./public/OIA_DemoPage/OIA_DemoPage";
 import { PublicCreative as ExternalForm } from "./public/ExternalForm/PublicCreative/PublicCreative";
 // import { PublicCreative } from "./public/PublicCreative/PublicCreative";
 import { PublicPresentationPage } from "./public/PublicPresentationPage/PublicPresentationPage";
-import { PublicPresentationPage2 } from "./public/PublicPresentationPage/PublicPresentationPage2";
+import { PublicCompanyInfo } from "./public/PublicPresentationPage/PublicCompanyInfo";
 import { EvaluationPage } from "./public/EvaluationPage/EvaluationPage";
 
 export const RouterComponent = ({ history }) => {
@@ -42,7 +42,7 @@ export const RouterComponent = ({ history }) => {
       <Route
         exact
         path={`${public_presentation}/:id`}
-        component={PublicPresentationPage2}
+        component={PublicCompanyInfo}
       />
 
       <Route

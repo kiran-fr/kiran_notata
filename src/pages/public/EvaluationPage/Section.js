@@ -68,15 +68,14 @@ function Navigation({
 function SubmitForm({ setPersonalData }) {
   const { register, handleSubmit } = useForm();
 
-  async function onSubmit(data, event) {
-    setPersonalData(data);
-  }
-
   return (
     <Card key="submit" style={{ marginBottom: "30px" }}>
       <div className="form_h2">Who are you?</div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="notata_form mb3">
+      <form
+        onSubmit={handleSubmit(setPersonalData)}
+        className="notata_form mb3"
+      >
         <div className={styles.inputWrapper}>
           <input
             autoComplete="off"
@@ -84,7 +83,7 @@ function SubmitForm({ setPersonalData }) {
             ref={register}
             name="firstname"
             placeholder="First name"
-            onBlur={handleSubmit(onSubmit)}
+            onBlur={handleSubmit(setPersonalData)}
           />
         </div>
         <div className={styles.inputWrapper}>
@@ -94,7 +93,7 @@ function SubmitForm({ setPersonalData }) {
             ref={register}
             name="lastname"
             placeholder="Last name"
-            onBlur={handleSubmit(onSubmit)}
+            onBlur={handleSubmit(setPersonalData)}
           />
         </div>
         <div className={styles.inputWrapper}>
@@ -104,7 +103,7 @@ function SubmitForm({ setPersonalData }) {
             ref={register}
             name="email"
             placeholder="Email"
-            onBlur={handleSubmit(onSubmit)}
+            onBlur={handleSubmit(setPersonalData)}
           />
         </div>
       </form>
