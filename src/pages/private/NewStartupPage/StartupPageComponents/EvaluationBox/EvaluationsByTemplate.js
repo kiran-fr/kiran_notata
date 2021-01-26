@@ -1,5 +1,4 @@
 import React from "react";
-import React from "react";
 import styles from "./EvaluationBox.module.css";
 import SummaryLine from "./SummaryLine";
 import classnames from "classnames";

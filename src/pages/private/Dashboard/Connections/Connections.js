@@ -246,8 +246,8 @@ function Connections({ history, chartFilters }) {
     let f;
     try {
       f = JSON.parse(localStorage.getItem("filters"));
-      setFilterState(f);
     } catch (error) {}
+    if (f) setFilterState(f);
   }, []);
 
   function setFilters(filterData) {

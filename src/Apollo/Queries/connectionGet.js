@@ -13,6 +13,42 @@ export default gql`
     connectionGet(id: $id) {
       ...connectionFields
 
+      publicEvaluations {
+        id
+        name
+        email
+        family_name
+        given_name
+        description
+        createdAt
+        updatedAt
+        templateId
+        answers {
+          id
+          inputType
+          questionId
+          sid
+          question
+          val
+        }
+        summary {
+          templateName
+          sections {
+            name
+            score
+            possibleScore
+            scorePerAnswer {
+              score
+              possibleScore
+              questionId
+              question
+            }
+          }
+          totalScore
+          possibleScore
+        }
+      }
+
       sharedWithMe {
         sharedBy
         createdAt

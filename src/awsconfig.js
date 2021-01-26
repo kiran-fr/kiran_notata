@@ -1,5 +1,6 @@
 import AWS from "aws-sdk/global";
 import Amplify, { Auth } from "aws-amplify";
+import API from "@aws-amplify/api";
 import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
 import { AUTH_TYPE, createAuthLink } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
@@ -34,8 +35,13 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: "GoogleAuth",
-        endpoint: "https://hkr5guxwhl.execute-api.eu-west-1.amazonaws.com",
+        name: "GQL_APIG",
+        endpoint: "https://pz8exapn2b.execute-api.eu-west-1.amazonaws.com",
+        region: awsconfig.region,
+      },
+      {
+        name: "GQL_LOCAL",
+        endpoint: "http://localhost:3000",
         region: awsconfig.region,
       },
     ],
@@ -47,6 +53,41 @@ Amplify.configure({
     },
   },
 });
+
+// ********************************* //
+// * GQL LAMBDA API GATEWAY TESTER * //
+// ********************************* //
+
+const STAGE = "dev2";
+const GQL_APIG = "GQL_APIG";
+const GQL_LOCAL = "GQL_LOCAL";
+
+const privatePath = `/${STAGE}/private_graphql`;
+const publicPath = `/${STAGE}/public_graphql`;
+
+const privateInit = {
+  body: {
+    operationName: null,
+    query: "query{userGet{email}}",
+  },
+};
+
+const publicInit = {
+  body: {
+    operationName: null,
+    query: 'query {publicCreativeTemplateGet(id:"default") {name}}',
+  },
+};
+
+API.post(GQL_APIG, privatePath, privateInit)
+  .then(r => console.log(r))
+  .catch(e => console.error(e));
+
+API.post(GQL_APIG, publicPath, publicInit)
+  .then(r => console.log(r))
+  .catch(e => console.error(e));
+
+// ********************************* //
 
 // const dev_URL_id = "soaim5drvjdfplwdjyllz2ru6i";
 // const dev_URL_id = "soaim5drvjdfplwdjyllz2ru6i";

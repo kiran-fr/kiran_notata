@@ -93,7 +93,7 @@ export const FrontPage = () => {
           <p>
             Ane Nordahl Carlsen, CEO
             <br />
-            ane@ataton.no
+            ane@notata.io
           </p>
         </div>
       </div>

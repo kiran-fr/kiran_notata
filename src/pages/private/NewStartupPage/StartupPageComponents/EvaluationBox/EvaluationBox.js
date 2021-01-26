@@ -280,6 +280,59 @@ function EvaluationsByTemplate({
   );
 }
 
+function PublicEvaluations({ publicEvaluations, history }) {
+  let [showList, setShowList] = useState(false);
+  let [hide, setHide] = useState({});
+
+  function toggleHide(evaluationId) {
+    setHide({
+      ...hide,
+      [evaluationId]: !hide[evaluationId],
+    });
+  }
+
+  if (!publicEvaluations.length) {
+    return <span />;
+  }
+
+  return (
+    <div className={styles.group_of_evaluations}>
+      <div className={styles.from_group}>
+        <span>External evaluations</span>
+      </div>
+      {publicEvaluations.map((evaluation, i) => {
+        let { given_name, family_name, email } = evaluation;
+
+        let percentageScore = Math.round(
+          (evaluation.summary.totalScore / evaluation.summary.possibleScore) *
+            100
+        );
+
+        let list = (evaluation.summary?.sections || []).map(item => ({
+          name: item.name,
+          percentageScore: Math.round((item.score / item.possibleScore) * 100),
+        }));
+
+        return (
+          <SummaryLine
+            key={i}
+            hide={hide}
+            toggleHide={toggleHide}
+            evaluationId={evaluation.id}
+            timeStamp={moment(evaluation.updatedAt).format("ll")}
+            name={`${given_name} ${family_name}`}
+            isYou={false}
+            percentageScore={percentageScore}
+            className={classnames(styles.each_evaluation_line)}
+            list={list}
+            history={history}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 function GroupEvaluations({
   connection,
   groups,
@@ -320,17 +373,12 @@ function GroupEvaluations({
         })
         .map(groupEvaluations => {
           let { groupName, groupId } = groupEvaluations[0] || {};
-
           let group = groups.find(({ id }) => id === groupId);
-
           const settings = group.settings || {};
-
           let isActualAdmin = group?.members?.some(
             ({ email, role }) => email === user.email && role === "admin"
           );
-
           let isAdmin = isActualAdmin;
-
           let groupEvaluationTemplates = (
             group.evaluationTemplates || []
           ).filter(template => {
@@ -587,7 +635,6 @@ function TeamEvaluatons({
                   hide={hide}
                   toggleHide={toggleHide}
                   evaluationId={evaluation.id}
-                  key={evaluation.id}
                   timeStamp={moment(evaluation.updatedAt).format("ll")}
                   name={`${given_name} ${family_name}`}
                   isYou={user.email === email}
@@ -804,6 +851,7 @@ export function EvaluationBox({ connection, groups, user, history }) {
   if (!connection) return <span />;
 
   const evaluations = connection.evaluations || [];
+  const publicEvaluations = connection.publicEvaluations || [];
 
   return (
     <>
@@ -818,6 +866,14 @@ export function EvaluationBox({ connection, groups, user, history }) {
           </div>
         </div>
       )}
+
+      <PublicEvaluations
+        publicEvaluations={publicEvaluations}
+        connection={connection}
+        history={history}
+        evaluationTemplates={templates}
+        user={user}
+      />
 
       <GroupEvaluations
         groups={groups}

@@ -50,6 +50,9 @@ const CumulativeChart = ({ connections }: { connections: Connection[] }) => {
   const data: ChartData[] = Array.from(dataMap.values());
   data.sort((a, b) => a.id - b.id);
 
+  if (data.length <= 1) return <span/>
+
+
   data.reduce((prevValue, curValue) => {
     if (prevValue?.total) curValue.total = prevValue.total + curValue.value;
     else {
