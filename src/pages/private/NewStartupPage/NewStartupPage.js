@@ -11,6 +11,7 @@ import {
 } from "Components/elements";
 
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
+import { StartupActivity } from "./StartupPageComponents/Activity";
 import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationBox";
 import { Log } from "./StartupPageComponents/Log";
 import { Share } from "./StartupPageComponents/Share";
@@ -135,180 +136,183 @@ export default function StartupPage({ match, location, history }) {
   }
 
   return (
-    <Content className={styles.container}>
-      <div className={styles.header}>{connection.creative.name}</div>
+    <>
+      <StartupActivity user={user} connection={connection} />
+      <Content className={styles.container}>
+        <div className={styles.header}>{connection.creative.name}</div>
 
-      <div className={styles.inner_container}>
-        <div className={styles.tabs_container}>
-          {tabList
-            .filter(({ hidden }) => !hidden)
-            .map(tabItem => (
-              <div
-                key={tabItem.key}
-                className={classnames(
-                  styles.tab,
-                  activeTab.key === tabItem.key && styles.active_tab
-                )}
-                onClick={() => {
-                  let parsed = queryString.parse(location.search);
-                  let stringified = queryString.stringify({
-                    ...parsed,
-                    tab: tabItem.key,
-                  });
-                  let pathName = `${new_startup_page}/${connection.id}?${stringified}`;
-                  history.push(pathName);
-                }}
-              >
-                {tabItem.content}
+        <div className={styles.inner_container}>
+          <div className={styles.tabs_container}>
+            {tabList
+              .filter(({ hidden }) => !hidden)
+              .map(tabItem => (
+                <div
+                  key={tabItem.key}
+                  className={classnames(
+                    styles.tab,
+                    activeTab.key === tabItem.key && styles.active_tab
+                  )}
+                  onClick={() => {
+                    let parsed = queryString.parse(location.search);
+                    let stringified = queryString.stringify({
+                      ...parsed,
+                      tab: tabItem.key,
+                    });
+                    let pathName = `${new_startup_page}/${connection.id}?${stringified}`;
+                    history.push(pathName);
+                  }}
+                >
+                  {tabItem.content}
+                </div>
+              ))}
+          </div>
+
+          <div className={styles.inner_content}>
+            {activeTab.key === "overview" && (
+              <div>
+                {/*FACTS*/}
+                <Facts
+                  connection={connection}
+                  user={user}
+                  match={match}
+                  history={history}
+                  label={"COMPANY INFO"}
+                />
+
+                <Card label="YOUR SUBJECTIVE SCORE">
+                  <SubjectiveScore
+                    connection={connection}
+                    user={user}
+                    history={history}
+                    onlyMe={true}
+                  />
+                </Card>
+
+                <Impact connectionId={connection.id} user={user} match={match} />
+
+                {/*FUNNEL*/}
+                <Funnel connection={connection} user={user} match={match} />
+
+                {/*TAGS*/}
+                <Tags connection={connection} user={user} match={match} />
+
+                <ExternalResources
+                  history={history}
+                  location={location}
+                  connectionId={connection.id}
+                />
+
+                {/*SHARING*/}
+                <SimpleListOfSharings
+                  history={history}
+                  location={location}
+                  connectionId={connection.id}
+                />
+
+                <div
+                  className={delete_link}
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        `Are you sure you want to delete this startup permanently?`
+                      )
+                    ) {
+                      /* Do nothing */
+                    } else {
+                      return;
+                    }
+                    connectionDeleteMutation({
+                      variables: { id: connection.id },
+                    });
+                  }}
+                >
+                  {(connectionDeleteRes.loading && <span>... deleting</span>) || (
+                    <span>delete permanently</span>
+                  )}
+                </div>
               </div>
-            ))}
-        </div>
+            )}
 
-        <div className={styles.inner_content}>
-          {activeTab.key === "overview" && (
-            <div>
-              {/*FACTS*/}
+            {activeTab.key === "info" && (
               <Facts
                 connection={connection}
                 user={user}
                 match={match}
                 history={history}
-                label={"COMPANY INFO"}
               />
+            )}
 
-              <Card label="YOUR SUBJECTIVE SCORE">
-                <SubjectiveScore
-                  connection={connection}
-                  user={user}
-                  history={history}
-                  onlyMe={true}
-                />
-              </Card>
+            {activeTab.key === "resources" && (
+              <div>Here you will be able to upload your own resources</div>
+            )}
 
-              <Impact connectionId={connection.id} user={user} match={match} />
+            {activeTab.key === "evaluations" && (
+              <div>
+                {/*SUBJECTIVE SCORE*/}
+                <Card label="SUBJECTIVE SCORE">
+                  <SubjectiveScore
+                    connection={connection}
+                    user={user}
+                    history={history}
+                  />
+                </Card>
 
-              {/*FUNNEL*/}
-              <Funnel connection={connection} user={user} match={match} />
-
-              {/*TAGS*/}
-              <Tags connection={connection} user={user} match={match} />
-
-              <ExternalResources
-                history={history}
-                location={location}
-                connectionId={connection.id}
-              />
-
-              {/*SHARING*/}
-              <SimpleListOfSharings
-                history={history}
-                location={location}
-                connectionId={connection.id}
-              />
-
-              <div
-                className={delete_link}
-                onClick={() => {
-                  if (
-                    window.confirm(
-                      `Are you sure you want to delete this startup permanently?`
-                    )
-                  ) {
-                    /* Do nothing */
-                  } else {
-                    return;
-                  }
-                  connectionDeleteMutation({
-                    variables: { id: connection.id },
-                  });
-                }}
-              >
-                {(connectionDeleteRes.loading && <span>... deleting</span>) || (
-                  <span>delete permanently</span>
-                )}
+                <Card label="EVALUATIONS" style={{ paddingTop: "0px" }}>
+                  <EvaluationBox
+                    connection={connection}
+                    groups={groups}
+                    user={user}
+                    history={history}
+                  />
+                </Card>
+                {/* <div
+                  style={{
+                    marginTop: "-35px",
+                    textAlign: "right",
+                  }}
+                >
+                  <Button
+                    type="just_text"
+                    size="small"
+                    onClick={() =>
+                      getPresentations({
+                        variables: { connectionId: connection.id },
+                      })
+                    }
+                  >
+                    request evaluation
+                  </Button>
+                </div> */}
               </div>
-            </div>
-          )}
+            )}
 
-          {activeTab.key === "info" && (
-            <Facts
-              connection={connection}
-              user={user}
-              match={match}
-              history={history}
-            />
-          )}
-
-          {activeTab.key === "resources" && (
-            <div>Here you will be able to upload your own resources</div>
-          )}
-
-          {activeTab.key === "evaluations" && (
-            <div>
-              {/*SUBJECTIVE SCORE*/}
-              <Card label="SUBJECTIVE SCORE">
-                <SubjectiveScore
-                  connection={connection}
-                  user={user}
-                  history={history}
-                />
-              </Card>
-
-              <Card label="EVALUATIONS" style={{ paddingTop: "0px" }}>
-                <EvaluationBox
+            {activeTab.key === "groups" && (
+              <Card label="GROUPS">
+                <Share
                   connection={connection}
                   groups={groups}
                   user={user}
                   history={history}
                 />
               </Card>
-              {/* <div
-                style={{
-                  marginTop: "-35px",
-                  textAlign: "right",
-                }}
-              >
-                <Button
-                  type="just_text"
-                  size="small"
-                  onClick={() =>
-                    getPresentations({
-                      variables: { connectionId: connection.id },
-                    })
-                  }
-                >
-                  request evaluation
-                </Button>
-              </div> */}
-            </div>
-          )}
+            )}
 
-          {activeTab.key === "groups" && (
-            <Card label="GROUPS">
-              <Share
-                connection={connection}
-                groups={groups}
-                user={user}
+            {activeTab.key === "presentations" && (
+              <PresentationPage
+                connectionId={connection?.id}
+                creativeId={connection?.creative?.id}
+                creative={connection?.creative}
                 history={history}
               />
-            </Card>
-          )}
+            )}
 
-          {activeTab.key === "presentations" && (
-            <PresentationPage
-              connectionId={connection?.id}
-              creativeId={connection?.creative?.id}
-              creative={connection?.creative}
-              history={history}
-            />
-          )}
-
-          {/*LOG/COMMENTS*/}
-          {/*<Card label="LOG/COMMENTS">*/}
-          {/*  <Log connection={connection} user={user} />*/}
-          {/*</Card>*/}
+            {/*LOG/COMMENTS*/}
+            {/*<Card label="LOG/COMMENTS">*/}
+            {/*  <Log connection={connection} user={user} />*/}
+            {/*</Card>*/}
+          </div>
         </div>
-      </div>
-    </Content>
+      </Content>
+    </>
   );
 }
