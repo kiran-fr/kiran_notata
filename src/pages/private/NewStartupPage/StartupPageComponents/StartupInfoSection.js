@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Tag } from "Components/elements";
 import styles from "./Facts.module.css";
-import { AnswerSection } from "../../../public/PublicPresentationPage/PublicPresentationPage";
+import AnswerSection from "pages/public/PublicPresentationPage/AnswerSection";
 
 function Summaries({ answers }) {
   let website;
@@ -52,35 +52,6 @@ function Summaries({ answers }) {
       )}
     </div>
   );
-}
-
-function getAnswersByQuestion(answers) {
-  let answersByQuestion = {};
-  answers.forEach(answer => {
-    answersByQuestion[answer.questionId] = answersByQuestion[
-      answer.questionId
-    ] || {
-      questionName: answer.question,
-      index: answer.index,
-      answers: [],
-    };
-    answersByQuestion[answer.questionId].answers.push(answer);
-  });
-
-  for (let questionId in answersByQuestion) {
-    let sortedAnswers = answersByQuestion[questionId]?.answers?.sort(
-      (a, b) => a.index - b.index
-    );
-
-    answersByQuestion[questionId] = {
-      ...answersByQuestion[questionId],
-      answers: sortedAnswers,
-    };
-  }
-
-  return Object.keys(answersByQuestion)
-    .map(questionId => ({ questionId, ...answersByQuestion[questionId] }))
-    .sort((a, b) => a.index - b.index);
 }
 
 function Extended({ creative, collapsable }) {

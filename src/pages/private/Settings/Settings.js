@@ -1,7 +1,5 @@
 import React from "react";
 import { Content, Card, Table } from "Components/elements";
-// import { API } from "aws-amplify";
-// import { subscribeToAllTestMutations } from "Apollo/Subscriptions/";
 
 import {
   profile,
@@ -11,60 +9,43 @@ import {
   facts_templates,
   external_form,
 } from "pages/definitions";
-import { group } from "../../definitions";
 import tableStyles from "Components/elements/NotataComponents/Table.module.css";
 
+const linkList = [
+  {
+    label: "Evaluation templates",
+    iconClass: "fal fa-copy",
+    link: evaluation_templates,
+  },
+  {
+    label: "Tags & Funnels",
+    iconClass: "fal fa-tag",
+    link: tags,
+  },
+
+  {
+    label: "User profile",
+    iconClass: "fal fa-user",
+    link: profile,
+  },
+  {
+    label: "Your team",
+    iconClass: "fal fa-users",
+    link: team,
+  },
+  {
+    label: "Web Form",
+    iconClass: "fal fa-inbox",
+    link: external_form,
+  },
+  {
+    label: "Startup template",
+    iconClass: "fal fa-copy",
+    link: facts_templates,
+  },
+];
+
 const Settings = ({ history }) => {
-  // let subscription;
-  // useEffect(() => {
-  //   subscribe();
-  //   return () => subscription.unsubscribe();
-  // }, []);
-
-  // function subscribe() {
-  //   subscription = API.graphql({
-  //     query: subscribeToAllTestMutations,
-  //   }).subscribe({
-  //     next: data => {
-  //       console.log(data);
-  //     },
-  //   });
-  // }
-
-  const linkList = [
-    {
-      label: "Evaluation templates",
-      iconClass: "fal fa-copy",
-      link: evaluation_templates,
-    },
-    {
-      label: "Tags & Funnels",
-      iconClass: "fal fa-tag",
-      link: tags,
-    },
-
-    {
-      label: "User profile",
-      iconClass: "fal fa-user",
-      link: profile,
-    },
-    {
-      label: "Your team",
-      iconClass: "fal fa-users",
-      link: team,
-    },
-    {
-      label: "Web Form",
-      iconClass: "fal fa-inbox",
-      link: external_form,
-    },
-    {
-      label: "Startup template",
-      iconClass: "fal fa-copy",
-      link: facts_templates,
-    },
-  ];
-
   const columns = [
     {
       title: "Icon",

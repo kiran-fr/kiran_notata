@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./PublicPresentationPage.module.css";
 
-export function AnswerSection({ answers }) {
+export default function AnswerSection({ answers }) {
   let answersByQuestion = {};
 
   answers.forEach(answer => {
