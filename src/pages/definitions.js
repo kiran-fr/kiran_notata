@@ -26,9 +26,6 @@ export const startup_page = `${dashboard}/startup_page`;
 export const new_startup_page = `${dashboard}/new_startup_page`;
 
 export const profile = `${dashboard}/profile`;
-export const report = `${dashboard}/report`;
-export const inbox = `${dashboard}/inbox`;
-export const activities = `${dashboard}/activities`;
 export const tags = `${dashboard}/tags`;
 export const settings = `${dashboard}/settings`;
 export const team = `${dashboard}/team`;

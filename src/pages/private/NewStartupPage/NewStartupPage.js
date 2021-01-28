@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import queryString from "query-string";
 
-import {
-  Content,
-  Card,
-  Button,
-  BreadCrumbs,
-  GhostLoader,
-} from "Components/elements";
+import { Content, Card, GhostLoader } from "Components/elements";
 
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
 import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationBox";
-import { Log } from "./StartupPageComponents/Log";
 import { Share } from "./StartupPageComponents/Share";
 import { Facts } from "./StartupPageComponents/Facts";
 import { Tags } from "./StartupPageComponents/Tags";
@@ -21,7 +14,6 @@ import { PresentationPage } from "./StartupPageComponents/Presentation/Presentat
 
 import { userGet, connectionGet, groupsGet } from "Apollo/Queries";
 import { connectionDelete } from "Apollo/Mutations";
-import { presentationsGet } from "Apollo/Queries";
 
 import { dashboard, new_startup_page } from "pages/definitions";
 
@@ -52,10 +44,6 @@ const tabList = [
 ];
 
 export default function StartupPage({ match, location, history }) {
-  const [getPresentations, presentationsQuery] = useLazyQuery(presentationsGet);
-  const presentations = presentationsQuery?.data?.presentationsGet;
-  console.log("presentations", presentations);
-
   const [activeTab, setActiveTab] = useState(tabList[0]);
 
   useEffect(() => {
@@ -262,24 +250,6 @@ export default function StartupPage({ match, location, history }) {
                   history={history}
                 />
               </Card>
-              {/* <div
-                style={{
-                  marginTop: "-35px",
-                  textAlign: "right",
-                }}
-              >
-                <Button
-                  type="just_text"
-                  size="small"
-                  onClick={() =>
-                    getPresentations({
-                      variables: { connectionId: connection.id },
-                    })
-                  }
-                >
-                  request evaluation
-                </Button>
-              </div> */}
             </div>
           )}
 
@@ -302,11 +272,6 @@ export default function StartupPage({ match, location, history }) {
               history={history}
             />
           )}
-
-          {/*LOG/COMMENTS*/}
-          {/*<Card label="LOG/COMMENTS">*/}
-          {/*  <Log connection={connection} user={user} />*/}
-          {/*</Card>*/}
         </div>
       </div>
     </Content>
