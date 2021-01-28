@@ -14,10 +14,10 @@ import {
   oia_demo_page,
 } from "./definitions";
 
-import { ProductDemo } from "./public/ProductDemo/ProductDemo";
-import { DemoPage } from "./public/DemoPage/DemoPage";
+import { ProductDemo } from "./public/DemoPages/ProductDemo/ProductDemo";
+import { DemoPage } from "./public/DemoPages/DemoPage/DemoPage";
 // import { BanDemoPage } from "./public/BAN_DemoPage/BAN_DemoPage";
-import { OIADemoPage } from "./public/OIA_DemoPage/OIA_DemoPage";
+import { OIADemoPage } from "./public/DemoPages/OIA_DemoPage/OIA_DemoPage";
 
 import { PublicCreative as ExternalForm } from "./public/ExternalForm/PublicCreative/PublicCreative";
 // import { PublicCreative } from "./public/PublicCreative/PublicCreative";
@@ -55,7 +55,7 @@ export const RouterComponent = ({ history }) => {
         exact
         path={[
           `${public_creative}/:accountId/:id`,
-          `${public_pages}/:accountId/form2.html`,
+          `${public_pages}/:accountId/form.html`,
         ]}
         component={ExternalForm}
       />

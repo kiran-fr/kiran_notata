@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import { Content } from "../../../Components/elements";
+import { Content } from "Components/elements";
 
 import PIC1 from "./gifs/001.png";
 import PIC2 from "./gifs/002.png";
