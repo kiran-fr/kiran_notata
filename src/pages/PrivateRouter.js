@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Auth } from "aws-amplify";
 import { Redirect, Switch } from "react-router-dom";
-import Route from "react-router/es/Route";
+import { Route } from "react-router";
 
 // API
 import { useQuery } from "@apollo/client";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, withRouter } from "react-router-dom";
-import Route from "react-router/es/Route";
+import { Route } from "react-router";
 
 // ROUTES
 import {
@@ -53,13 +53,10 @@ export const RouterComponent = ({ history }) => {
 
       <Route
         exact
-        path={`${public_creative}/:accountId/:id`}
-        component={ExternalForm}
-        // component={PublicCreative}
-      />
-      <Route
-        exact
-        path={`${public_pages}/:accountId/form.html`}
+        path={[
+          `${public_creative}/:accountId/:id`,
+          `${public_pages}/:accountId/form2.html`,
+        ]}
         component={ExternalForm}
       />
       <Route render={() => <div>404</div>} />
