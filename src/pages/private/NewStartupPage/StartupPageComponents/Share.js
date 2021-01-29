@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import classnames from "classnames";
 import { yupResolver } from "@hookform/resolvers";
 import moment from "moment";
 import * as yup from "yup";
@@ -13,11 +12,7 @@ import { groupPut } from "Apollo/Mutations";
 import validateEmail from "utils/validateEmail";
 import { group as group_route } from "pages/definitions";
 
-import styles, {
-  share_description,
-  icon_item,
-  action_link,
-} from "./Share.module.css";
+import styles, { share_description, action_link } from "./Share.module.css";
 import { Link } from "react-router-dom";
 
 function ShareSetting({ group, connection, mutate, done }) {
@@ -37,7 +32,7 @@ function ShareSetting({ group, connection, mutate, done }) {
     };
 
     try {
-      let res = await mutate({
+      await mutate({
         variables,
         refetchQueries: [
           {
@@ -120,7 +115,7 @@ function ShareSetting({ group, connection, mutate, done }) {
 }
 
 function RevokeSharing({ group, connection, user }) {
-  const [mutate, { data, loading, error }] = useMutation(groupPut);
+  const [mutate, { loading }] = useMutation(groupPut);
 
   return (
     <div
@@ -169,9 +164,7 @@ function RevokeSharing({ group, connection, user }) {
 }
 
 function SharedWithGroupList(props) {
-  let { groups, connection, user, shareStartup, history } = props;
-
-  const [mutate, { loading }] = useMutation(groupPut);
+  let { groups, connection, user, shareStartup } = props;
 
   const columns = [
     {
@@ -241,13 +234,6 @@ function SharedWithGroupList(props) {
         >
           VIEW
         </Link>
-        // <Button
-        //   type="tiny_right"
-        //   onClick={() => {
-        //     let path = `${group_route}/${group.id}`;
-        //     history.push(path);
-        //   }}
-        // />
       ),
     },
   ];

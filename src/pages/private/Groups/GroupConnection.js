@@ -38,7 +38,6 @@ import {
   comment_each,
   small_traffic_light,
   question_comments,
-  link_tag,
   link_extend,
 } from "./GroupConnection.module.css";
 
@@ -219,40 +218,6 @@ function Facts({ answers, creativeTemplate, with_comments }) {
       </div>
     );
   });
-
-  // return (
-  //   <div className={facts_container}>
-  //     {creativeTemplate.sections.map((section, i) => {
-  //       const { name, description, questions } = section;
-  //       return (
-  //         <div key={`section-${i}`} className={facts_section_container}>
-  //           <div className={facts_section_header}>{name}</div>
-  //           <div className={facts_section_description}>{description}</div>
-  //           <div>
-  //             {questions
-  //               .filter(question => hasAnswer(question))
-  //               .map((question, ii) => {
-  //                 return (
-  //                   <div
-  //                     key={`question-${i}-${ii}`}
-  //                     className={facts_question_container}
-  //                   >
-  //                     <div className={facts_question_header}>
-  //                       {question.name}
-  //                     </div>
-  //                     <GeneralAnswer answers={answers} question={question} />
-  //                     {with_comments && (
-  //                       <CommentSection question={question} answers={answers} />
-  //                     )}
-  //                   </div>
-  //                 );
-  //               })}
-  //           </div>
-  //         </div>
-  //       );
-  //     })}
-  //   </div>
-  // );
 }
 
 function Comments({ connection }) {

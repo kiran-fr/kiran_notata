@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 
 import { userUpdate } from "Apollo/Mutations";
-import { dashboard } from "pages/definitions";
 
 import { omit } from "lodash";
 import styles from "./Profile.module.css";

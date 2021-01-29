@@ -16,7 +16,6 @@ import {
   title_class,
   image_class,
   text_class,
-  content_class,
   iframe_container,
 } from "./DemoPage.module.css";
 
@@ -89,6 +88,7 @@ export function OIADemoPage({ match }) {
 
         <div className={iframe_container}>
           <iframe
+            title="Demo video"
             width="100%"
             height="100%"
             src="https://www.youtube.com/embed/bzbAqhtPqI4"
@@ -112,7 +112,7 @@ export function OIADemoPage({ match }) {
                     maxWidth: "900px",
                   }}
                 >
-                  <img src={image} />
+                  <img src={image} alt="Screenshot" />
                 </div>
               </div>
             </div>

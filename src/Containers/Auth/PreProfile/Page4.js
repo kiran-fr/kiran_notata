@@ -8,15 +8,14 @@ import { useMutation } from "@apollo/client";
 import { userUpdate } from "Apollo/Mutations";
 import { dashboard } from "pages/definitions";
 
-import { Content, Card, Button, MessageBox } from "Components/elements/";
+import { Card, Button, MessageBox } from "Components/elements/";
 import styles from "./Profile.module.css";
 
 export default function Page4({ setPage, extraInputs, history }) {
   const [mutate] = useMutation(userUpdate);
 
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting, isDirty } = formState;
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data, event) => {
     event.preventDefault();

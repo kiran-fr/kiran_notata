@@ -103,13 +103,6 @@ export default function StartupPage({ match, location, history }) {
   const connection = connectionGetData.connectionGet;
   const groups = groupsGetData.groupsGet;
 
-  let evaluationsCount = connection.evaluations.length;
-  for (let shared of connection.sharedWithMe) {
-    if (shared.connection) {
-      evaluationsCount += (shared.connection.evaluations || []).length;
-    }
-  }
-
   let sharedWithGroups =
     groups.filter(g =>
       g.startups.some(s => s.connectionId === connection.id)

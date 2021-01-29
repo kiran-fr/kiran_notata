@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { presentationPut } from "Apollo/Mutations";
 import { presentationsGet } from "Apollo/Queries";
 import { Button, Card, Table, Modal } from "Components/elements";
-import { public_presentation } from "pages/definitions";
 import moment from "moment";
 import { omit } from "lodash";
 import getCleanData from "../getCleanData";
@@ -14,8 +13,6 @@ export function ListOfSharings({
   connectionId,
   creativeId,
   presentations,
-  creative,
-  history,
   isViewing,
   setIsViewing,
   defaultData,

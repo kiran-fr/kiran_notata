@@ -64,7 +64,7 @@ export default function AnswerSection({ answers }) {
                             </div>
 
                             <div className={styles.pageMeta_image}>
-                              <img src={answer.pageMeta.image} />
+                              <img src={answer.pageMeta.image} alt="" />
                             </div>
                           </div>
                         </a>

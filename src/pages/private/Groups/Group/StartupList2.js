@@ -393,7 +393,7 @@ function TemplateLogic({
 
 function SortBy({ sortBy, setSortBy, allUsedTemplates }) {
   const [showModal, setShowModal] = useState(false);
-  let [label, templateId] = sortBy.split("::");
+  let templateId = sortBy.split("::")[1];
 
   let sortByName = sortBy ? sortBy : "choose";
 
@@ -644,7 +644,6 @@ function AddAll({
   user,
   connections,
   settings,
-  isLoadingDownload,
   setIsLoadingDownload,
 }) {
   const [isLoadingAddAll, setIsLoadingAddAll] = useState(false);

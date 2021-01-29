@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Card, Modal } from "Components/elements";
+import { Button, Modal } from "Components/elements";
 import styles from "../PresentationPage.module.css";
 
 export function CompanyMeta({ presentation, setPresentation }) {

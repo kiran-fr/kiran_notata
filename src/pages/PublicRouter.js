@@ -7,7 +7,7 @@ import {
   public_creative,
   demo_page,
   public_pages,
-  ban_demo_page,
+  // ban_demo_page,
   product_demo,
   public_presentation,
   public_evaluation,
