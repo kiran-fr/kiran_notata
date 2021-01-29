@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { History } from "history";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
@@ -11,15 +11,14 @@ import {
   creativesGet,
   creativeTemplateGet,
   connectionsGet,
-  presentationsGet
+  presentationsGet,
 } from "Apollo/Queries";
 import {
   groupMarkAsSeen,
   creativeDelete,
-  presentationPut
+  presentationPut,
 } from "Apollo/Mutations";
 
-// import { startup_page } from "../../definitions";
 import { group as group_route, public_presentation } from "../../definitions";
 
 import { Card, Modal } from "Components/elements";
@@ -33,10 +32,6 @@ import { Groups } from "Apollo/Queries/groupsGet";
 import { connectionPut } from "Apollo/Mutations/index";
 import { ViewSummary } from "./ViewSummary";
 
-// *********
-// * TYPES *
-// *********
-
 enum InboxType {
   GROUP = "GROUP",
   SHARING = "SHARING",
@@ -48,7 +43,7 @@ type Inbox = {
   type: InboxType;
   data: InboxData;
   actionState?: "SAVE" | "DELETE" | "DETAILS";
-}
+};
 
 type InboxData = {
   name: string;
@@ -57,14 +52,26 @@ type InboxData = {
   connection?: any;
   id?: string;
   creative?: Creative;
+};
+
+function getUnbindedCreatives(
+  connections: Connection[],
+  creatives: Creative[]
+): Creative[] {
+  const existCreativeIds = new Set(
+    connections.map(({ creativeId }) => creativeId)
+  );
+  return creatives
+    .filter(creative => !existCreativeIds.has(creative.id))
+    .sort((a, b) => b.createdAt - a.createdAt);
 }
 
 export default function Sharings({ history }: { history: History }) {
-
-  // STATES
   const [expanded, setExpanded] = useState(false);
   const [selectedInbox, setSelectedInbox] = useState<Inbox | null>(null);
-  const [loadingMark, setLoadingMark] = useState<{ [key: string]: boolean }>({ ALL: false });
+  const [loadingMark, setLoadingMark] = useState<{ [key: string]: boolean }>({
+    ALL: false,
+  });
 
   // QUERIES
   const userGetQuery = useQuery(userGet);
@@ -74,10 +81,13 @@ export default function Sharings({ history }: { history: History }) {
   const creativeTemplateQuery = useQuery(creativeTemplateGet);
   const presentationsQuery = useQuery(presentationsGet);
 
-
   // MUTATIONS
-  const [creativeDeleteQuery, { loading: creativeDeleteLoading}] = useMutation(creativeDelete);
-  const [mutateConnection, { loading: connectionPutLoading}] = useMutation(connectionPut);
+  const [creativeDeleteQuery, { loading: creativeDeleteLoading }] = useMutation(
+    creativeDelete
+  );
+  const [mutateConnection, { loading: connectionPutLoading }] = useMutation(
+    connectionPut
+  );
 
   const [markAsSeen] = useMutation(groupMarkAsSeen, {
     refetchQueries: [{ query: groupsGet }],
@@ -88,7 +98,6 @@ export default function Sharings({ history }: { history: History }) {
     refetchQueries: [{ query: presentationsGet }],
     awaitRefetchQueries: true,
   });
-
 
   // DEFINITIONS
   const isLoading =
@@ -111,19 +120,6 @@ export default function Sharings({ history }: { history: History }) {
     !creativesGetQuery.data ||
     !connectionsGetQuery.data ||
     !presentationsQuery.data;
-
-
-
-  // ================
-  // HELPER FUNCTIONS
-  // ================
-
-  function getUnbindedCreatives(connections: Connection[], creatives: Creative[]): Creative[] {
-    const existCreativeIds = new Set(connections.map(({creativeId}) => creativeId));
-    return creatives
-      .filter((creative) => !existCreativeIds.has(creative.id))
-      .sort((a, b) => b.createdAt - a.createdAt)
-  }
 
   if (isLoading) return <span />;
 
@@ -190,7 +186,6 @@ export default function Sharings({ history }: { history: History }) {
   let connections = connectionsGetQuery.data.connectionsGet || [];
   let presentations = presentationsQuery.data.presentationsGet || [];
 
-
   // Item to be populated
   let inboxData: Inbox[] = [];
 
@@ -199,10 +194,12 @@ export default function Sharings({ history }: { history: History }) {
     let { members } = group;
 
     let isAdmin = group.members.some(
-      ({ email, role }) => email === user.email && role === "admin",
+      ({ email, role }) => email === user.email && role === "admin"
     );
 
-    let member = members.find(({ email }) => email === user.email) || { latestActivity: null };
+    let member = members.find(({ email }) => email === user.email) || {
+      latestActivity: null,
+    };
 
     let { latestActivity } = member;
 
@@ -216,27 +213,25 @@ export default function Sharings({ history }: { history: History }) {
         },
       });
     }
-
   }
 
   // Populate list with web form items
   for (let creative of getUnbindedCreatives(connections, creatives)) {
     inboxData.push({
-      timeStamp: moment(creative.createdAt, 'x').format(),
+      timeStamp: moment(creative.createdAt, "x").format(),
       type: InboxType.EXTERNAL_FORM,
       data: {
         name: creative.name || "New Company",
         groupId: "",
         creative: creative,
-      }
-    })
+      },
+    });
   }
 
   for (let presentation of presentations) {
-
     if (!presentation.seen) {
       inboxData.push({
-        timeStamp: moment(presentation.createdAt, 'x').format(),
+        timeStamp: moment(presentation.createdAt, "x").format(),
         type: InboxType.SHARING,
         data: {
           name: presentation?.creativeDetails?.name || "New Company",
@@ -252,38 +247,31 @@ export default function Sharings({ history }: { history: History }) {
             sharedByEmail: "",
             sharedWithEmail: "",
             submit: true,
-            answers: []
-          }
-        }
-      })
+            answers: [],
+          },
+        },
+      });
     }
-
   }
 
-  inboxData = inboxData
-    .sort(
-      (a, b) =>
-        new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime()
-    )
+  inboxData = inboxData.sort(
+    (a, b) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime()
+  );
 
   let capListAt = 5;
 
   if (!inboxData.length) return <span />;
   return (
     <Card label="Inbox" maxWidth={1200} style={{ paddingBottom: "20px" }}>
-
-      {
-        // inbox
-        inboxData
+      {inboxData
         .filter((a, i) => (expanded ? true : i < capListAt))
         .map(({ timeStamp, type, data }, i) => {
           return (
             <div key={i} className={styles.list_item}>
-
               {type === "GROUP" && (
                 <div className={styles.group_list_item}>
                   <div className={styles.list_icon}>
-                    <i className="fal fa-users"/>
+                    <i className="fal fa-users" />
                   </div>
 
                   <div className={styles.time_stamp}>
@@ -295,7 +283,7 @@ export default function Sharings({ history }: { history: History }) {
                       className={styles.highlight_1}
                       to={{
                         pathname: `${group_route}/${data.groupId}`,
-                        state: { rightMenu: true }
+                        state: { rightMenu: true },
                       }}
                     >
                       {data.name}
@@ -308,16 +296,18 @@ export default function Sharings({ history }: { history: History }) {
                       if (loadingMark[data.groupId]) return;
                       try {
                         setLoadingMark({ [data.groupId]: true });
-                        await markAsSeen({ variables: { groupId: data.groupId } });
+                        await markAsSeen({
+                          variables: { groupId: data.groupId },
+                        });
                       } catch (error) {
-                        console.error(error)
+                        console.error(error);
                       }
                       setLoadingMark({ [data.groupId]: false });
                     }}
-                    >
+                  >
                     mark as seen{" "}
                     {loadingMark[data.groupId] && (
-                      <i className="fa fa-spinner fa-spin"/>
+                      <i className="fa fa-spinner fa-spin" />
                     )}
                   </div>
                 </div>
@@ -326,7 +316,7 @@ export default function Sharings({ history }: { history: History }) {
               {type === "SHARING" && (
                 <div className={styles.sharing_list_item}>
                   <div className={styles.list_icon}>
-                    <i className="fal fa-share-alt"/>
+                    <i className="fal fa-share-alt" />
                   </div>
 
                   <div className={styles.time_stamp}>
@@ -340,89 +330,66 @@ export default function Sharings({ history }: { history: History }) {
                       <a
                         href={`${public_presentation}/${data?.id}/${user?.email}`}
                         target={"_blank"}
-                        >
+                        rel="noopener noreferrer"
+                      >
                         {data?.name}
                       </a>
                     </span>
 
-
                     <span> with you</span>
                   </div>
 
-                  {
-                    !connections
-                      .find(({ creative }: { creative: Creative }) => {
-                          return creative.id === data?.creative?.id
-                        }
-                      ) && (
-                      <div
-                        className={styles.mark_as_seen}
-                        style={{paddingRight: "5px"}}
-                        onClick={() => {
-                          setSelectedInbox({ actionState: "SAVE", timeStamp, type, data })
-                        }}>
-                         save
-                      </div>
-                    )
-
-                  }
+                  {!connections.find(({ creative }: { creative: Creative }) => {
+                    return creative.id === data?.creative?.id;
+                  }) && (
+                    <div
+                      className={styles.mark_as_seen}
+                      style={{ paddingRight: "5px" }}
+                      onClick={() => {
+                        setSelectedInbox({
+                          actionState: "SAVE",
+                          timeStamp,
+                          type,
+                          data,
+                        });
+                      }}
+                    >
+                      save
+                    </div>
+                  )}
 
                   <div
                     className={styles.delete_creative}
-                    style={{marginLeft: "0px"}}
+                    style={{ marginLeft: "0px" }}
                     onClick={async () => {
-
-                      if (loadingMark[`${data.id}`]) return
+                      if (loadingMark[`${data.id}`]) return;
                       setLoadingMark({ [`${data.id}`]: true });
 
                       let variables = {
                         id: data.id,
-                        markAsSeen: new Date().getTime()
-                      }
+                        markAsSeen: new Date().getTime(),
+                      };
 
                       try {
-                        await markSharingAsSeen({ variables })
+                        await markSharingAsSeen({ variables });
                       } catch (error) {
-                        console.log('error', error)
+                        console.log("error", error);
                       }
                       setLoadingMark({ [`${data.id}`]: false });
-                    }}>
+                    }}
+                  >
                     mark as seen{" "}
                     {loadingMark[`${data.id}`] && (
-                      <i className="fa fa-spinner fa-spin"/>
+                      <i className="fa fa-spinner fa-spin" />
                     )}
                   </div>
-
-
-                  {/*<div*/}
-                  {/*  className={styles.mark_as_seen}*/}
-                  {/*  onClick={async () => {*/}
-                  {/*    // if (loadingMark[`${data?.connection?.id}-${data.sharedBy}`])*/}
-                  {/*    //   return;*/}
-                  {/*    // let variables = {*/}
-                  {/*    //   groupId: data.groupId,*/}
-                  {/*    //   connectionId: data?.connection?.id,*/}
-                  {/*    //   sharedBy: data.sharedBy,*/}
-                  {/*    // };*/}
-                  {/*    // setLoadingMark({*/}
-                  {/*    //   [`${data?.connection?.id}-${data.sharedBy}`]: true,*/}
-                  {/*    // });*/}
-                  {/*    // markAsSeen({ variables });*/}
-                  {/*  }}*/}
-                  {/*>*/}
-                  {/*  mark as seen{" "}*/}
-                  {/*  {loadingMark[`${data?.connection?.id}-${data.sharedBy}`] && (*/}
-                  {/*    <i className="fa fa-spinner fa-spin"/>*/}
-                  {/*  )}*/}
-                  {/*</div>*/}
-
                 </div>
               )}
 
               {type === "EXTERNAL_FORM" && (
                 <div className={styles.sharing_list_item}>
                   <div className={styles.list_icon}>
-                    <i className="fal fa-inbox"/>
+                    <i className="fal fa-inbox" />
                   </div>
 
                   <div className={styles.time_stamp}>
@@ -433,19 +400,43 @@ export default function Sharings({ history }: { history: History }) {
 
                     <span
                       onClick={() =>
-                        setSelectedInbox({ actionState: "DETAILS", timeStamp, type, data })
+                        setSelectedInbox({
+                          actionState: "DETAILS",
+                          timeStamp,
+                          type,
+                          data,
+                        })
                       }
                       className={styles.highlight_1}
-                      >
+                    >
                       {data.name}
                     </span>
                   </div>
-                  <div className={styles.mark_as_seen}
-                       onClick={() => setSelectedInbox({ actionState: "SAVE", timeStamp, type, data })}>save
+                  <div
+                    className={styles.mark_as_seen}
+                    onClick={() =>
+                      setSelectedInbox({
+                        actionState: "SAVE",
+                        timeStamp,
+                        type,
+                        data,
+                      })
+                    }
+                  >
+                    save
                   </div>
-                  <div className={styles.delete_creative}
-                       onClick={() => setSelectedInbox({ actionState: "DELETE", timeStamp, type, data })}>delete
-                    permanently
+                  <div
+                    className={styles.delete_creative}
+                    onClick={() =>
+                      setSelectedInbox({
+                        actionState: "DELETE",
+                        timeStamp,
+                        type,
+                        data,
+                      })
+                    }
+                  >
+                    delete permanently
                   </div>
                 </div>
               )}
@@ -453,22 +444,28 @@ export default function Sharings({ history }: { history: History }) {
           );
         })}
 
-      {
-        inboxData.length > capListAt && !expanded && (
+      {inboxData.length > capListAt && !expanded && (
         <div onClick={() => setExpanded(true)} className={styles.list_expander}>
           <span>View {inboxData.length - capListAt} more items...</span>
         </div>
       )}
 
       {expanded && (
-        <div onClick={() => setExpanded(false)} className={styles.list_expander}>
+        <div
+          onClick={() => setExpanded(false)}
+          className={styles.list_expander}
+        >
           <span>View less</span>
         </div>
       )}
 
       {selectedInbox && selectedInbox.actionState !== "DETAILS" && (
         <Modal
-          title={selectedInbox.actionState === "SAVE" ? "Save Startup" : "Delete Permanently"}
+          title={
+            selectedInbox.actionState === "SAVE"
+              ? "Save Startup"
+              : "Delete Permanently"
+          }
           submit={() => processCreative()}
           close={() => setSelectedInbox(null)}
           loading={creativeDeleteLoading || connectionPutLoading}
@@ -477,7 +474,11 @@ export default function Sharings({ history }: { history: History }) {
           noKill
           showScrollBar={false}
         >
-          <span>{selectedInbox.actionState === "SAVE" ? "Save " : "Do you really want to delete "}</span>
+          <span>
+            {selectedInbox.actionState === "SAVE"
+              ? "Save "
+              : "Do you really want to delete "}
+          </span>
           <span className={styles.highlight_1}>{selectedInbox.data.name}</span>
           <span>?</span>
         </Modal>
@@ -499,7 +500,6 @@ export default function Sharings({ history }: { history: History }) {
           />
         </Modal>
       )}
-
     </Card>
   );
 }
