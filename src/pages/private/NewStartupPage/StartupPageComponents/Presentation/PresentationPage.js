@@ -249,7 +249,7 @@ function addQuestionIndex(creativeAnswersBySection) {
   return res;
 }
 
-function getDefaultData({ creative }) {
+export function getDefaultData({ creative }) {
   let creativeAnswersBySection = {};
   (creative?.answers || []).forEach((answer, index) => {
     if (answer.sectionId) {
@@ -307,17 +307,11 @@ function getDefaultData({ creative }) {
   );
   const name = creative.name;
 
-  if (location) {
-    creativeDetails.location = location.val;
-  }
+  if (location) creativeDetails.location = location.val;
 
-  if (contactPerson) {
-    creativeDetails.contactPerson = contactPerson.val;
-  }
+  if (contactPerson) creativeDetails.contactPerson = contactPerson.val;
 
-  if (name) {
-    creativeDetails.name = name;
-  }
+  if (name) creativeDetails.name = name;
 
   creativeDetails.externalLinks = [];
 

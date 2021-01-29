@@ -2,14 +2,7 @@ import React from "react";
 
 import { Content } from "Components/elements";
 
-import {
-  container,
-  title_class,
-  image_class,
-  text_class,
-  content_class,
-  iframe_container,
-} from "./ProductDemo.module.css";
+import { iframe_container } from "./ProductDemo.module.css";
 
 export function ProductDemo({ match }) {
   return (

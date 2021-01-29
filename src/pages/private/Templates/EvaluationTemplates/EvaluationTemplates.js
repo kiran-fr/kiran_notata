@@ -26,8 +26,7 @@ import {
   evaluation_template,
   evaluation_templates,
 } from "pages/definitions";
-import { group } from "../../../definitions";
-import tableStyles from "../../../../Components/elements/NotataComponents/Table.module.css";
+import tableStyles from "Components/elements/NotataComponents/Table.module.css";
 
 function Delete({ id, templates }) {
   const [mutate, { loading }] = useMutation(evaluationTemplateDelete, {
@@ -117,53 +116,6 @@ const CreateNewTemplate = ({ setShowModal }) => {
   );
 };
 
-// function SharedWithMe() {
-//   console.log("SharedWithMe");
-//   const { data, loading, error } = useQuery(groupsGet);
-
-//   if (error) {
-//     return <span />;
-//   }
-
-//   if (loading && !data) {
-//     return <span />;
-//   }
-
-//   let groups = data.groupsGet;
-//   let templates = [];
-
-//   if (groups) {
-//     for (let group of groups) {
-//       templates = templates.concat(group.evaluationTemplates || []);
-//     }
-//   }
-
-//   let groupsWithTemplates = groups.filter(
-//     ({ evaluationTemplates }) =>
-//       evaluationTemplates && evaluationTemplates.length
-//   );
-
-//   if (!templates.length) {
-//     return <span />;
-//   }
-
-//   return (
-//     <Card style={{ paddingTop: "5px" }} title="SHARED WITH ME">
-//       {groupsWithTemplates.map(group => {
-//         return (
-//           <div key={group.id}>
-//             <div>{group.name}</div>
-
-//             {group.evaluationTemplates}
-//           </div>
-//         );
-//       })}
-
-//       <pre>{JSON.stringify(templates, null, 2)}</pre>
-//     </Card>
-//   );
-// }
-
 export default function EvaluationTemplates(props) {
   const [showModal, setShowModal] = useState(false);
   const { data, loading, error } = useQuery(evaluationTemplatesGet);
@@ -226,26 +178,6 @@ export default function EvaluationTemplates(props) {
         );
       },
     },
-
-    // {
-    //   title: "",
-    //   dataIndex: "id",
-    //   key: "id",
-    //   width: 30,
-    //   render: id => (
-    //     <Button
-    //       //type="tiny_right"
-    //       type="right_arrow"
-    //       size="small"
-    //       onClick={() => {
-    //         let path = `${evaluation_template}/${id}`;
-    //         props.history.push(path);
-    //       }}
-    //     >
-    //       View
-    //     </Button>
-    //   ),
-    // },
   ];
 
   return (
@@ -273,10 +205,6 @@ export default function EvaluationTemplates(props) {
             disableHead={true}
           />
         </Card>
-
-        {/*
-            <SharedWithMe />
-          */}
 
         <Button
           onClick={() => setShowModal(true)}

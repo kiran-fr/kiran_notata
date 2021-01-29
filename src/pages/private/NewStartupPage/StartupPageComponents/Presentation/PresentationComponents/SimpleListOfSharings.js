@@ -6,10 +6,37 @@ import { presentationsGet } from "Apollo/Queries";
 import queryString from "query-string";
 import { new_startup_page } from "pages/definitions";
 
+const columns = [
+  {
+    title: "",
+    dataIndex: "email",
+    key: "name",
+    width: 50,
+    render: email => <span />,
+  },
+  {
+    title: "Shared with",
+    dataIndex: "email",
+    key: "name",
+    render: email => <span>{email}</span>,
+  },
+  {
+    title: "Last opened",
+    dataIndex: "opened",
+    key: "opened",
+    responsive: "sm",
+    width: 250,
+    render: opened => {
+      if (!opened) {
+        return <span style={{ color: "var(--color-gray-light)" }}>never</span>;
+      }
+      return <span>{moment(opened).format("lll")}</span>;
+    },
+  },
+];
+
 export function SimpleListOfSharings({ connectionId, history, location }) {
-  const [getPresentations, { data, loading, error }] = useLazyQuery(
-    presentationsGet
-  );
+  const [getPresentations, { data, loading }] = useLazyQuery(presentationsGet);
 
   useEffect(() => {
     if (connectionId) {
@@ -20,37 +47,6 @@ export function SimpleListOfSharings({ connectionId, history, location }) {
   }, [connectionId]);
 
   let presentations = data?.presentationsGet || [];
-
-  const columns = [
-    {
-      title: "",
-      dataIndex: "email",
-      key: "name",
-      width: 50,
-      render: email => <span />,
-    },
-    {
-      title: "Shared with",
-      dataIndex: "email",
-      key: "name",
-      render: email => <span>{email}</span>,
-    },
-    {
-      title: "Last opened",
-      dataIndex: "opened",
-      key: "opened",
-      responsive: "sm",
-      width: 250,
-      render: opened => {
-        if (!opened) {
-          return (
-            <span style={{ color: "var(--color-gray-light)" }}>never</span>
-          );
-        }
-        return <span>{moment(opened).format("lll")}</span>;
-      },
-    },
-  ];
 
   return (
     <div>

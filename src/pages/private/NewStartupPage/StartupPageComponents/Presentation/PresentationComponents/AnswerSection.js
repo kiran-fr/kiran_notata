@@ -4,7 +4,6 @@ import { Button, Modal } from "Components/elements";
 import { PageMeta } from "./PageMeta";
 import { omit } from "lodash";
 import classnames from "classnames";
-import { func } from "prop-types";
 
 function isUrl(str) {
   const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*) ?/gi;
@@ -253,7 +252,7 @@ export function AnswerSection({
                             </div>
 
                             <div className={styles.pageMeta_image}>
-                              <img src={answer.pageMeta.image} />
+                              <img src={answer.pageMeta.image} alt="" />
                             </div>
                           </div>
                         </a>

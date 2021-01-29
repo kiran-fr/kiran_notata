@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 
@@ -262,28 +262,6 @@ function Connections({ history, chartFilters }) {
   const tagGroupsQuery = useQuery(tagGroupGet);
   const tagGroups =
     (tagGroupsQuery.data && tagGroupsQuery.data.accountGet.tagGroups) || [];
-
-  const groupsTags = useMemo(
-    () =>
-      tagGroups.reduce(
-        (groupsMap, props) =>
-          groupsMap.set(
-            props.id,
-            props.tags.reduce(
-              (map, props) =>
-                map.set(props.id, {
-                  id: props.id,
-                  name: props.name,
-                  value: 0,
-                  selected: chartFilters.tags.some(({ id }) => id === props.id),
-                }),
-              new Map()
-            )
-          ),
-        new Map()
-      ),
-    [tagGroups, chartFilters]
-  );
 
   if (error || tagGroupsQuery.error) {
     throw error || tagGroupsQuery.error;

@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { evaluationTemplatesGet } from "Apollo/Queries";
-import { evaluationPut } from "Apollo/Mutations";
-import {
-  startup_page,
-  group as group_route,
-  public_evaluation,
-} from "pages/definitions";
+import { public_evaluation } from "pages/definitions";
 import { Button, Table, Modal, SuccessBox } from "Components/elements";
 
 export function EvaluationRequest({ connection }) {
@@ -56,7 +51,6 @@ export function EvaluationRequest({ connection }) {
     templates =
       evaluationTemplatesQuery.data.accountGet.evaluationTemplates || [];
   }
-
   if (!connection) return <span />;
 
   return (
@@ -112,10 +106,7 @@ export function EvaluationRequest({ connection }) {
       {showConfirmModal && (
         <Modal
           title="Request Evaluation"
-          close={() => {
-            setShowConfirmModal(undefined);
-            setShowModal(false);
-          }}
+          close={() => setShowConfirmModal(false)}
           disableFoot={true}
         >
           <div>

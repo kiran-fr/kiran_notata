@@ -9,17 +9,17 @@ import styles from "../StartupPage.module.css";
 // import queryString from "query-string";
 // import { new_startup_page } from "pages/definitions";
 
-export function ExternalResources({ connectionId, history, location }) {
+export function ExternalResources({ connectionId }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(undefined);
 
-  const [getExternalResources, { data, loading, error }] = useLazyQuery(
+  const [getExternalResources, { data, loading }] = useLazyQuery(
     externalResourcesGet
   );
 
-  const [putMutation, putRes] = useMutation(externalResourcePut);
-  const [deleteMutation, delRes] = useMutation(externalResourceDelete);
+  const [putMutation] = useMutation(externalResourcePut);
+  const [deleteMutation] = useMutation(externalResourceDelete);
 
   const { register, errors, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;

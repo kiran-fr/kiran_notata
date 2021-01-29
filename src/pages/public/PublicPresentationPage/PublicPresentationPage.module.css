@@ -131,9 +131,6 @@
   color: var(--color-gray-dark);
 }
 
-.pageMeta_outer {
-}
-
 .pageMeta_outer a {
   text-decoration: none;
 }

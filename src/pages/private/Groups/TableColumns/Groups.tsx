@@ -5,7 +5,7 @@ import {
   GroupsType as Groups,
   UserType as User,
 } from "Apollo/Queries";
-import { group, startup_page } from "pages/definitions";
+import { group } from "pages/definitions";
 
 import { History } from "history";
 import tableStyles from "Components/elements/NotataComponents/Table.module.css";
@@ -35,40 +35,36 @@ export default ({
       if (!isAdmin) return <span />;
 
       return (
-        <div
-          style={{textAlign: "center"}}
-          >
-          {
-            groupPutLoading && (
-              <i className="fa fa-spinner fa-spin" />
-            ) || (
-              <i
-                className="fal fa-trash-alt"
-                onClick={() => {
-                  let variables = {
-                    id: group.id,
-                    input: { deleteGroup: true },
-                  };
-                  mutate({
-                    variables,
-                    update: (proxy: any) => {
-                      const data = proxy.readQuery({
-                        query: groupsGet,
-                      });
-                      proxy.writeQuery({
-                        query: groupsGet,
-                        data: {
-                          groupsGet: data.groupsGet.filter((g: any) => g.id !== group.id),
-                        },
-                      });
-                    },
-                  });
-                }}
-              />
-            )
-          }
+        <div style={{ textAlign: "center" }}>
+          {(groupPutLoading && <i className="fa fa-spinner fa-spin" />) || (
+            <i
+              className="fal fa-trash-alt"
+              onClick={() => {
+                let variables = {
+                  id: group.id,
+                  input: { deleteGroup: true },
+                };
+                mutate({
+                  variables,
+                  update: (proxy: any) => {
+                    const data = proxy.readQuery({
+                      query: groupsGet,
+                    });
+                    proxy.writeQuery({
+                      query: groupsGet,
+                      data: {
+                        groupsGet: data.groupsGet.filter(
+                          (g: any) => g.id !== group.id
+                        ),
+                      },
+                    });
+                  },
+                });
+              }}
+            />
+          )}
         </div>
-      )
+      );
     },
   },
   {
@@ -87,16 +83,13 @@ export default ({
       let startupLength = [
         ...new Set(startups?.map(({ creativeId }) => creativeId)),
       ].length;
-      let member = members?.find(({ email }) => email === user?.email);
-      let { latestActivity } = member || {};
 
       return (
         <div>
-
           <div
             onClick={() => {
               let path = `${group}/${id}`;
-              history.push(path, {rightMenu: true});
+              history.push(path, { rightMenu: true });
             }}
             className={tableStyles.background_clicker}
           />
@@ -104,11 +97,9 @@ export default ({
           <div
             className={tableStyles.actual_content}
             style={{
-              pointerEvents: "none"
+              pointerEvents: "none",
             }}
           >
-
-
             {/*{(!latestActivity && (*/}
             {/*  <div*/}
             {/*    style={{*/}
@@ -123,25 +114,23 @@ export default ({
             <div
               style={{
                 fontWeight: "var(--font-weight-bold)" as "bold",
-                color: "var(--color-secondary)"
+                color: "var(--color-secondary)",
               }}
             >
               {name}
             </div>
 
-            <div style={{
-              opacity: 0.5,
-              fontSize: "12px"
-            }}>
-              {(isAdmin || settings?.showUsers) && (
-                <>{(members || []).length} members - </>
-              )}
+            <div
+              style={{
+                opacity: 0.5,
+                fontSize: "12px",
+              }}
+            >
+              {(isAdmin || settings?.showUsers) &&
+                `${(members || []).length} members -`}
               {startupLength} startups
             </div>
-
           </div>
-
-
         </div>
       );
     },
