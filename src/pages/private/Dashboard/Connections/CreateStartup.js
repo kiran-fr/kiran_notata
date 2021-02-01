@@ -145,7 +145,9 @@ export const CreateNewStartup = ({
                   type="right_arrow"
                   size="medium"
                   onClick={() => {
-                    history.push(`${startup_page}/${showConnection}`);
+                    history.push(`${startup_page}/${showConnection}`, {
+                      rightMenu: true,
+                    });
                     showModalOnly && onCloseModalEvent();
                   }}
                 >
