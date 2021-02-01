@@ -1,8 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { groupGet } from "Apollo/Queries";
-
 import { share_title, share_description } from "./Group.module.css";
 
 import { Button } from "Components/elements";

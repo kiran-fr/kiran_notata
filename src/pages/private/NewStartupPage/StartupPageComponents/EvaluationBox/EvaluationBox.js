@@ -11,13 +11,7 @@ import { Button, Table, Modal } from "Components/elements";
 import styles from "./EvaluationBox.module.css";
 import { EvaluationRequest } from "./EvaluationRequest";
 
-function getEvaluationSummaries({
-  connection,
-  groups,
-  evaluations,
-  evaluationTemplates,
-  hide,
-}) {
+function getEvaluationSummaries({ connection, groups, hide }) {
   // Get all shared evaluations
   // ––––––––––––––––––––––––––
   let sharedEvaluations = [];
@@ -52,7 +46,7 @@ function getEvaluationSummaries({
     // Cluster evaluations by template ID
     // ––––––––––––––––––––––––––––––––––
     let evaluationsByTemplate = {};
-    for (let { evaluation, sharedItem } of sharedEvaluationsInGroup) {
+    for (let { evaluation } of sharedEvaluationsInGroup) {
       evaluationsByTemplate[evaluation.templateId] =
         evaluationsByTemplate[evaluation.templateId] || [];
       evaluationsByTemplate[evaluation.templateId].push(evaluation);
@@ -220,8 +214,6 @@ function EvaluationsByTemplate({
   history,
   settings,
 }) {
-  let [showList, setShowList] = useState(false);
-
   let list = (data.templateSections || []).map(item => ({
     name: item.name,
     percentageScore: Math.round((item.score / item.possibleScore) * 100),
@@ -260,11 +252,10 @@ function EvaluationsByTemplate({
 
           return (
             <SummaryLine
-              key={i}
+              key={evaluation.id}
               hide={hide}
               toggleHide={toggleHide}
               evaluationId={evaluation.id}
-              key={evaluation.id}
               timeStamp={moment(evaluation.updatedAt).format("ll")}
               name={`${given_name} ${family_name}`}
               isYou={user.email === email}
@@ -341,10 +332,9 @@ function GroupEvaluations({
   evaluationTemplates,
   history,
 }) {
-  const [showList, setShowList] = useState(false);
   const [hide, setHide] = useState({});
   const [currentLoading, setCurrentLoading] = useState("");
-  const [mutate, { loading }] = useMutation(evaluationPut);
+  const [mutate] = useMutation(evaluationPut);
 
   let data = getEvaluationSummaries({
     connection,
@@ -375,10 +365,6 @@ function GroupEvaluations({
           let { groupName, groupId } = groupEvaluations[0] || {};
           let group = groups.find(({ id }) => id === groupId);
           const settings = group.settings || {};
-          let isActualAdmin = group?.members?.some(
-            ({ email, role }) => email === user.email && role === "admin"
-          );
-          let isAdmin = isActualAdmin;
           let groupEvaluationTemplates = (
             group.evaluationTemplates || []
           ).filter(template => {
@@ -551,14 +537,7 @@ function getEvaluationSummariesForTeam({ evaluations, hide }) {
   return data;
 }
 
-function TeamEvaluatons({
-  connection,
-  user,
-  evaluations,
-  evaluationTemplates,
-  history,
-}) {
-  let [showList, setShowList] = useState(false);
+function TeamEvaluatons({ connection, user, evaluations, history }) {
   let [hide, setHide] = useState({});
 
   let data = getEvaluationSummariesForTeam({ evaluations, hide });
@@ -583,7 +562,6 @@ function TeamEvaluatons({
       {data.map((templateData, i) => {
         let {
           templateName,
-          templateId,
           averagePercentageScore,
           evaluations,
           templateSections,
@@ -631,7 +609,7 @@ function TeamEvaluatons({
 
               return (
                 <SummaryLine
-                  key={`${i}-${ii}`}
+                  key={evaluation.id}
                   hide={hide}
                   toggleHide={toggleHide}
                   evaluationId={evaluation.id}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Auth } from "aws-amplify";
 import { Redirect, Switch } from "react-router-dom";
-import Route from "react-router/es/Route";
+import { Route } from "react-router";
 
 // API
 import { useQuery } from "@apollo/client";
@@ -13,9 +13,6 @@ import {
   dashboard,
   charts,
   profile,
-  report,
-  inbox,
-  activities,
   tags,
   settings,
   team,
@@ -37,13 +34,9 @@ import Charts from "./private/Dashboard/Charts/ChartsPage";
 
 import Profile from "./private/Profile/Profile";
 
-import Report from "./private/Report/Report";
-import Inbox from "./private/Inbox/Inbox";
-import Activities from "./private/Activities/Activities";
 import Tags from "./private/Tags";
 import Settings from "./private/Settings/Settings";
 import Team from "./private/Team/Team";
-import StartupPage from "./private/StartupPage/StartupPage";
 import NewStartupPage from "./private/NewStartupPage/NewStartupPage";
 import FactsPage from "./private/StartupPage/Facts/Facts";
 
@@ -82,17 +75,9 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={profile} component={Profile} />
 
-      <Route exact path={report} component={Report} />
-
-      <Route exact path={inbox} component={Inbox} />
-
-      <Route exact path={activities} component={Activities} />
-
       <Route exact path={tags} component={Tags} />
 
       <Route exact path={settings} component={Settings} />
-
-      <Route exact path={team} component={Team} />
 
       <Route exact path={facts_templates} component={FactsTemplates} />
 
@@ -198,8 +183,6 @@ const WrapperComponent = ({ ...props }) => {
   if (loading && !data) return <GhostLoader />;
 
   if (!loading && !error && data) {
-    // console.log("data", data);
-
     let user = data.userGet || {};
     if (user.email === null) {
       return <Redirect to={pre_profile} />;
@@ -210,7 +193,6 @@ const WrapperComponent = ({ ...props }) => {
     <>
       <Header />
       <SideBarTreeMenu {...props} />
-      {/*<SideBar {...props} />*/}
       <div
         className={`logged_in_page_content ${
           props.location.state?.rightMenu ? "show_right_activity" : ""

@@ -4,7 +4,6 @@ import { Button, Card } from "Components/elements";
 import { startup_page } from "pages/definitions";
 
 import StartupInfoSection from "./StartupInfoSection";
-import { omit } from "lodash";
 
 export function Facts({ label, hideTitle, connection, user, match, history }) {
   const { creative } = connection;

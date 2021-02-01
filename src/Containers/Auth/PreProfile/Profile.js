@@ -6,7 +6,6 @@ import Page4 from "./Page4";
 import { Content } from "Components/elements/";
 import classnames from "classnames";
 import styles from "./Profile.module.css";
-import { useMutation } from "@apollo/client";
 
 function Dots({ page, setPage }) {
   let pages = [1, 2, 3, 4];

@@ -47,6 +47,34 @@ function Question({ question, section, creative, setAnswers, answers }) {
   );
 }
 
+function findErrors(variables) {
+  let errs = [];
+
+  console.log(variables);
+
+  if (!variables.input.name) {
+    errs.push("Company name must be provided.");
+  }
+
+  if (
+    !variables.input.answers.find(
+      ({ questionId }) => questionId === "q01_section_terms"
+    )
+  ) {
+    errs.push("Terms and conditions are not accepted.");
+  }
+
+  if (
+    !variables.input.answers.find(
+      ({ questionId }) => questionId === "q05_section_info"
+    )
+  ) {
+    errs.push("Contact person is not provided.");
+  }
+
+  return errs;
+}
+
 function Submit({
   creative,
   template,
@@ -60,34 +88,6 @@ function Submit({
 
   const [errors, setErrors] = useState([]);
 
-  function findErrors(variables) {
-    let errs = [];
-
-    console.log(variables);
-
-    if (!variables.input.name) {
-      errs.push("Company name must be provided.");
-    }
-
-    if (
-      !variables.input.answers.find(
-        ({ questionId }) => questionId === "q01_section_terms"
-      )
-    ) {
-      errs.push("Terms and conditions are not accepted.");
-    }
-
-    if (
-      !variables.input.answers.find(
-        ({ questionId }) => questionId === "q05_section_info"
-      )
-    ) {
-      errs.push("Contact person is not provided.");
-    }
-
-    return errs;
-  }
-
   return (
     <div>
       {!success && (
@@ -98,16 +98,13 @@ function Submit({
             onClick={async () => {
               if (mres.loading) return;
 
-              const nAnswers = answers.map(ans =>
-                omit(ans, ["__typename", "id"])
-              );
               const variables = {
                 id: creative.id || "",
                 accountId: accountId,
                 input: {
                   name: name,
                   submit: true,
-                  answers: nAnswers,
+                  answers: answers.map(ans => omit(ans, ["__typename", "id"])),
                 },
               };
 

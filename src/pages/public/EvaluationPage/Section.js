@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import { Card, Button, GhostLoader } from "Components/elements";
+import { Card, Button, ErrorBox, GhostLoader } from "Components/elements";
 
 import { publicEvaluationTemplateSectionGet } from "Apollo/Queries";
 
@@ -68,15 +68,14 @@ function Navigation({
 function SubmitForm({ setPersonalData }) {
   const { register, handleSubmit } = useForm();
 
-  async function onSubmit(data, event) {
-    setPersonalData(data);
-  }
-
   return (
     <Card key="submit" style={{ marginBottom: "30px" }}>
       <div className="form_h2">Who are you?</div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="notata_form mb3">
+      <form
+        onSubmit={handleSubmit(setPersonalData)}
+        className="notata_form mb3"
+      >
         <div className={styles.inputWrapper}>
           <input
             autoComplete="off"
@@ -84,7 +83,7 @@ function SubmitForm({ setPersonalData }) {
             ref={register}
             name="firstname"
             placeholder="First name"
-            onBlur={handleSubmit(onSubmit)}
+            onBlur={handleSubmit(setPersonalData)}
           />
         </div>
         <div className={styles.inputWrapper}>
@@ -94,7 +93,7 @@ function SubmitForm({ setPersonalData }) {
             ref={register}
             name="lastname"
             placeholder="Last name"
-            onBlur={handleSubmit(onSubmit)}
+            onBlur={handleSubmit(setPersonalData)}
           />
         </div>
         <div className={styles.inputWrapper}>
@@ -104,12 +103,26 @@ function SubmitForm({ setPersonalData }) {
             ref={register}
             name="email"
             placeholder="Email"
-            onBlur={handleSubmit(onSubmit)}
+            onBlur={handleSubmit(setPersonalData)}
           />
         </div>
       </form>
     </Card>
   );
+}
+
+function checkErrors(answers, personalData) {
+  let errs = [];
+
+  if (answers.length === 0)
+    errs.push(
+      "You didn't provide any evaluations, please return to previous sections and fill in at least 1 question."
+    );
+
+  if (!personalData.firstname || !personalData.lastname || !personalData.email)
+    errs.push("Contact info is not provided.");
+
+  return errs;
 }
 
 export default function Section({
@@ -122,6 +135,8 @@ export default function Section({
 }) {
   const [isSubmit, setSubmit] = useState(false);
   const [personalData, setPersonalData] = useState({});
+  const [errors, setErrors] = useState([]);
+
   // Get evaluation template section
   const evaluationTemplateSectionQuery = useQuery(
     publicEvaluationTemplateSectionGet,
@@ -162,6 +177,14 @@ export default function Section({
     <>
       {currentForm}
 
+      {!!errors.length && isSubmit && (
+        <ErrorBox className="mb3">
+          {errors.map((err, i) => (
+            <div key={i}>{err}</div>
+          ))}
+        </ErrorBox>
+      )}
+
       <Navigation
         sections={sections}
         sectionId={sectionId}
@@ -169,6 +192,9 @@ export default function Section({
         setSubmit={setSubmit}
         isSubmit={isSubmit}
         submitEvaluation={() => {
+          const errors = checkErrors(answers, personalData);
+          setErrors(errors);
+          if (errors.length) return;
           submitEvaluation(personalData);
         }}
       />

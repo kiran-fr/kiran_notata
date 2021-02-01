@@ -80,10 +80,8 @@ export function EvaluationPage({ match }) {
       </div>
     );
 
-  const evaluationTemplate =
-    evaluationTemplateQuery.data?.publicEvaluationTemplateGet || {};
-
-  const sections = evaluationTemplate.sections || [];
+  const sections =
+    evaluationTemplateQuery.data?.publicEvaluationTemplateGet.sections || [];
 
   if (sections.length > 0 && !sectionId) setSectionId(sections[0].id);
 

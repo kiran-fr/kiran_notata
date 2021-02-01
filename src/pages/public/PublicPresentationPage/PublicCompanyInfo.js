@@ -1,38 +1,31 @@
-import React, { useEffect } from "react";
-import { useLazyQuery } from "@apollo/client";
-import { publicPresentationGet } from "Apollo/Queries";
-import moment from "moment";
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { publicCreativeGet } from "Apollo/Queries";
 
-import styles from "./PublicPresentationPage.module.css";
 import {
   Content,
   ErrorBox,
   GhostLoader,
   Card,
-  Tag,
+  // Tag,
   Button,
 } from "Components/elements";
+import styles from "./PublicPresentationPage.module.css";
 import AnswerSection from "./AnswerSection";
+import { getDefaultData } from "pages/private/NewStartupPage/StartupPageComponents/Presentation/PresentationPage";
 
-export function PublicPresentationPage({ match }) {
-  let { id, email } = match.params;
-  const [
-    getPublicPresentation,
-    { loading, called, error, data },
-  ] = useLazyQuery(publicPresentationGet);
-  let presentation = data?.publicPresentationGet;
+export function PublicCompanyInfo({ match }) {
+  let { id } = match.params;
 
-  useEffect(() => {
-    if (id && email) {
-      getPublicPresentation({
-        variables: { id, email },
-      });
-    }
-  }, [id && email && getPublicPresentation]);
+  const { data, loading, error } = useQuery(publicCreativeGet, {
+    variables: { id },
+  });
 
-  if (loading || !called) {
-    return <GhostLoader />;
-  }
+  if (loading) return <GhostLoader />;
+
+  const defaultData = getDefaultData({ creative: data?.publicCreativeGet });
+
+  const presentation = defaultData;
 
   if (error || (!loading && !presentation)) {
     return (
@@ -49,34 +42,13 @@ export function PublicPresentationPage({ match }) {
     <Content maxWidth={780} style={{ position: "relative", top: "-20px" }}>
       <h1 className={styles.header}>{presentation?.creativeDetails?.name}</h1>
 
-      <div className={styles.info_line}>
-        <a href={`mailto:${presentation.sharedBy}`}>{presentation.sharedBy}</a>{" "}
-        shared this case with you on{" "}
-        {moment(presentation.createdAt).format("lll")}.
-      </div>
-
-      {presentation?.message && (
-        <Card
-          label={"Introduction"}
-          style={{
-            paddingBottom: "20px",
-            paddingLeft: "30px",
-            paddingRight: "30px",
-            whiteSpace: "pre-wrap",
-            lineHeight: "2",
-          }}
-        >
-          {presentation?.message}
-        </Card>
-      )}
-
-      {!!presentation?.tags?.length && (
-        <Card label={"Tags"} style={{ paddingBottom: "20px" }}>
+      {/* {!!presentation?.tags?.length && (
+        <Card label="Tags" style={{ paddingBottom: "20px" }}>
           {presentation.tags.map(tag => (
             <Tag>{tag}</Tag>
           ))}
         </Card>
-      )}
+      )} */}
 
       <hr />
 
@@ -105,7 +77,7 @@ export function PublicPresentationPage({ match }) {
         {presentation?.creativeDetails?.externalLinks && (
           <div className={styles.infoBox}>
             <Card
-              label={"Links"}
+              label="Links"
               style={{
                 paddingBottom: "20px",
                 height: "110px",
@@ -122,8 +94,8 @@ export function PublicPresentationPage({ match }) {
                         <a href={key} target="_blank" rel="noopener noreferrer">
                           <Button
                             style={{ width: "100%" }}
-                            iconClass={"fal fa-external-link"}
-                            size={"small"}
+                            iconClass="fal fa-external-link"
+                            size="small"
                           >
                             {val}
                           </Button>
@@ -140,7 +112,7 @@ export function PublicPresentationPage({ match }) {
         {presentation?.creativeDetails?.seeking && (
           <div className={styles.infoBox}>
             <Card
-              label={"Seeking"}
+              label="Seeking"
               style={{
                 paddingBottom: "20px",
                 height: "110px",
@@ -167,7 +139,7 @@ export function PublicPresentationPage({ match }) {
         {presentation?.creativeDetails?.valuation && (
           <div className={styles.infoBox}>
             <Card
-              label={"Valuation"}
+              label="Valuation"
               style={{
                 paddingBottom: "20px",
                 height: "110px",
@@ -210,6 +182,4 @@ export function PublicPresentationPage({ match }) {
       </div>
     </Content>
   );
-
-  // return <GhostLoader />;
 }

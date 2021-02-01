@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Card, Table } from "Components/elements";
-import moment from "moment";
+import { Button, Card } from "Components/elements";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { impactGoalsGet } from "Apollo/Queries";
 import { impactGoalsPut } from "Apollo/Mutations";
-import { useForm } from "react-hook-form";
 import styles from "./Impact.module.css";
 import images from "./img/";
 import { omit } from "lodash";
 import classnames from "classnames";
-import { funnelGroupGet } from "../../../../../Apollo/Queries";
 
 export function Impact({ connectionId, history, location }) {
   const [isLoading, setIsLoading] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
-  const [getImpactGoals, { data, called, loading, error }] = useLazyQuery(
-    impactGoalsGet
-  );
+  const [getImpactGoals, { data, called }] = useLazyQuery(impactGoalsGet);
 
-  const [mutate, mRes] = useMutation(impactGoalsPut, {
+  const [mutate] = useMutation(impactGoalsPut, {
     refetchQueries: [
       {
         query: impactGoalsGet,
@@ -119,7 +113,10 @@ export function Impact({ connectionId, history, location }) {
                     styles.each_select
                   )}
                 >
-                  <img src={images?.find(g => g.key === key.toString()).src} />
+                  <img
+                    src={images?.find(g => g.key === key.toString()).src}
+                    alt="goal"
+                  />
                 </div>
               ))}
             </div>
@@ -161,7 +158,7 @@ export function Impact({ connectionId, history, location }) {
                   {/*    </div>*/}
                   {/*  )*/}
                   {/*}*/}
-                  <img src={src} />
+                  <img src={src} alt="goal" />
                 </div>
               ))}
             </div>
