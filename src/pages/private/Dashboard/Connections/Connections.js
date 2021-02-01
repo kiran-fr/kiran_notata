@@ -31,7 +31,7 @@ import {
 
 import tableColumns from "./TableColumns/TableColumns";
 
-function applyFilters({ connections, filters }) {
+export function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
   filters = filters || {};
   filters.dateRange = filters.dateRange || [null, null];
