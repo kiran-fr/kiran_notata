@@ -92,6 +92,7 @@
     "@types/node": "^14.14.10",
     "@types/react-dom": "^17.0.0",
     "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.8",
     "aws-amplify": "^3.3.10",
     "aws-appsync": "^4.0.0",
     "aws-appsync-auth-link": "^3.0.2",

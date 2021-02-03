@@ -5,6 +5,7 @@ import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
 import { AUTH_TYPE, createAuthLink } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 import { apolloInMemoryCache } from "./apollo-cache";
+import { CognitoUserPool } from "amazon-cognito-identity-js";
 
 export const awsconfig = {
   region: "eu-west-1",
@@ -13,6 +14,19 @@ export const awsconfig = {
   ClientId: "7flhi2kis1di7u9cdd1jtovtrn",
   loginProvider: "cognito-idp.eu-west-1.amazonaws.com/eu-west-1_iSzNjqM0u",
 };
+
+const userPool = new CognitoUserPool({
+  UserPoolId: awsconfig.UserPoolId,
+  ClientId: awsconfig.ClientId,
+});
+
+const cognitoUser = userPool.getCurrentUser();
+cognitoUser.getSession(function (err, session) {
+  let token = session.getIdToken().getJwtToken();
+  let expiration = session.getAccessToken().getExpiration();
+  console.log("token", token);
+  console.log("expiration", expiration);
+});
 
 export const initializeAwsConfig = () => {
   AWS.config.region = awsconfig.region;
@@ -94,7 +108,7 @@ API.post(GQL_APIG, publicPath, publicInit)
 // const prodtest_URL_id = "pm4namovdzgpboqy5s2vgafzjy";
 
 const dev2_URL_id = "3mlk5clgsvdptfcfo7utvkqhim";
-// const V2PROD_URL_id = "ahh7xy4e2vgsrmf6uyo4fxyk3y";
+const V2PROD_URL_id = "ahh7xy4e2vgsrmf6uyo4fxyk3y";
 
 const appsync_URL_id = dev2_URL_id;
 

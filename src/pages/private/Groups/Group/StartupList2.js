@@ -375,7 +375,7 @@ function TemplateLogic({
                   let path = `${startup_page}/${
                     connection.id.split("?")[0]
                   }/evaluation/${evaluation.id}`;
-                  history.push(path);
+                  history.push(path, { rightMenu: true });
                 } catch (error) {
                   console.log("error", error);
                 }

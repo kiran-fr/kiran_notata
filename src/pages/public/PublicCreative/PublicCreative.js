@@ -135,8 +135,6 @@ function CompanyName({ creative }) {
 }
 
 export function PublicCreative({ match }) {
-  console.log("mamma");
-
   const { id, accountId } = match.params;
 
   const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
@@ -149,15 +147,11 @@ export function PublicCreative({ match }) {
 
   useEffect(() => {
     if (id) getCreative({ variables: { id } });
-
     getCreativeTemplate();
   }, [id && getCreative, getCreativeTemplate, id]);
 
   const error = creativeQuery.error || creativeTemplateQuery.error;
   const loading = creativeQuery.loading || creativeTemplateQuery.loading;
-
-  // console.log("creative", creative)
-  // console.log("template", template);
 
   if (error) {
     console.log("creativeQuery.error", creativeQuery.error);
@@ -169,19 +163,6 @@ export function PublicCreative({ match }) {
       </Content>
     );
   }
-
-  // if (!creative) {
-  //   creative = {
-  //     id: null,
-  //     name: "",
-  //     description: "External Form",
-  //     templateId: "",
-  //     sharedWithEmail: null,
-  //     sharedByEmail: null,
-  //     submit: false,
-  //     answers: [],
-  //   };
-  // }
 
   if (!loading && creative && template)
     return (

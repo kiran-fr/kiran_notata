@@ -82,7 +82,7 @@ export function SimpleListOfSharings({ connectionId, history, location }) {
               tab: "presentations",
             });
             let pathName = `${new_startup_page}/${connectionId}?${stringified}`;
-            history.push(pathName);
+            history.push(pathName, { rightMenu: true });
           }}
         >
           Go to sharing
