@@ -7,7 +7,6 @@ import { externalResourcePut, externalResourceDelete } from "Apollo/Mutations";
 import { useForm } from "react-hook-form";
 import styles from "../StartupPage.module.css";
 // import queryString from "query-string";
-// import { new_startup_page } from "pages/definitions";
 
 export function ExternalResources({ connectionId }) {
   const [isDeleting, setIsDeleting] = useState(false);

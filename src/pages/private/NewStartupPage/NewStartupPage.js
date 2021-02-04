@@ -16,7 +16,7 @@ import { PresentationPage } from "./StartupPageComponents/Presentation/Presentat
 import { userGet, connectionGet, groupsGet } from "Apollo/Queries";
 import { connectionDelete } from "Apollo/Mutations";
 
-import { dashboard, new_startup_page } from "pages/definitions";
+import { dashboard, startup_page } from "pages/definitions";
 
 import classnames from "classnames";
 import styles, { delete_link } from "./StartupPage.module.css";
@@ -139,7 +139,7 @@ export default function StartupPage({ match, location, history }) {
                       ...parsed,
                       tab: tabItem.key,
                     });
-                    let pathName = `${new_startup_page}/${connection.id}?${stringified}`;
+                    let pathName = `${startup_page}/${connection.id}?${stringified}`;
                     history.push(pathName);
                   }}
                 >

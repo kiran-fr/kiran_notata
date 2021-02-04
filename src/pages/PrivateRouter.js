@@ -20,7 +20,6 @@ import {
   evaluation_template,
   evaluation_template_summary,
   startup_page,
-  new_startup_page,
   pre_profile,
   group,
   external_form,
@@ -119,12 +118,7 @@ export const RouterComponent = ({ history }) => {
         component={GroupConnection}
       />
 
-      <Route
-        exact
-        path={`${startup_page}/:id`}
-        // component={StartupPage}
-        component={NewStartupPage}
-      />
+      <Route exact path={`${startup_page}/:id`} component={NewStartupPage} />
 
       <Route
         exact
@@ -146,12 +140,6 @@ export const RouterComponent = ({ history }) => {
         exact
         path={`${startup_page}/:connectionId/evaluation/:evaluationId/section/:sectionId`}
         component={SectionPage}
-      />
-
-      <Route
-        exact
-        path={`${new_startup_page}/:id`}
-        component={NewStartupPage}
       />
 
       <Route exact path={team} component={Team} />
