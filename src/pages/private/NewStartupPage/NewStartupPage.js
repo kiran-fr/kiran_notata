@@ -97,7 +97,7 @@ export default function StartupPage({ match, location, history }) {
   }
 
   if (userGetError || connectionGetError || groupsGetError) {
-    return <div>We are updating</div>;
+    throw userGetError || connectionGetError || groupsGetError;
   }
 
   const user = userGetData.userGet;

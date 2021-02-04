@@ -37,7 +37,7 @@ import Tags from "./private/Tags";
 import Settings from "./private/Settings/Settings";
 import Team from "./private/Team/Team";
 import NewStartupPage from "./private/NewStartupPage/NewStartupPage";
-import FactsPage from "./private/StartupPage/Facts/Facts";
+import FactsPage from "./private/NewStartupPage/Facts/Facts";
 
 // Evaluation templates
 import EvaluationTemplates from "./private/Templates/EvaluationTemplates/EvaluationTemplates";

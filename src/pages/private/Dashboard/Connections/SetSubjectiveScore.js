@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { connectionSubjectiveScorePut } from "Apollo/Mutations";
 import classnames from "classnames";
 import { Modal } from "Components/elements";
-import styles from "../../StartupPage/StartupPageComponents/SubjectiveScore.module.css";
+import styles from "../../NewStartupPage/StartupPageComponents/SubjectiveScore.module.css";
 
 export default function SetSubjectiveScore({ connection, close }) {
   const [mutate] = useMutation(connectionSubjectiveScorePut);

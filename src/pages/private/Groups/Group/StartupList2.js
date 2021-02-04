@@ -8,11 +8,11 @@ import styles from "./StartupList2.module.css";
 import ShareSetting from "./ShareSetting";
 import { startup_page } from "pages/definitions";
 
-import StartupInfoSection from "../../StartupPage/StartupPageComponents/StartupInfoSection";
+import StartupInfoSection from "../../NewStartupPage/StartupPageComponents/StartupInfoSection";
 
 import classnames from "classnames";
-import { getDataForEvaluationsSharedInGroup } from "../../StartupPage/StartupPageComponents/EvaluationBox/getEvaluationSummaries";
-import EvaluationsByTemplate from "../../StartupPage/StartupPageComponents/EvaluationBox/EvaluationsByTemplate";
+import { getDataForEvaluationsSharedInGroup } from "../../NewStartupPage/StartupPageComponents/EvaluationBox/getEvaluationSummaries";
+import EvaluationsByTemplate from "../../NewStartupPage/StartupPageComponents/EvaluationBox/EvaluationsByTemplate";
 
 const getSummaries = (startups, hide, group) => {
   // console.log('getSummaries')
