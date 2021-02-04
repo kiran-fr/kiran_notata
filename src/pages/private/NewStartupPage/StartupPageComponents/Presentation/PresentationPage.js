@@ -363,6 +363,9 @@ export function PresentationPage({
 
   useEffect(() => {
     if (connectionId) {
+      console.log("presentationsGet", presentationsGet);
+      console.log("connectionId", connectionId);
+
       getPresentations({
         variables: { connectionId },
       });

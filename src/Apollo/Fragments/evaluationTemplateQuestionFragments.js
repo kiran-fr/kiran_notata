@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  fragment evaluationQuestionFields on EvaluationQuestion {
+  fragment evaluationTemplateQuestionFields on EvaluationTemplateQuestion {
     id
     createdBy
     accountId
@@ -15,9 +15,6 @@ export default gql`
       score
       index
       sid
-    }    
+    }
   }
 `;
-
-
-

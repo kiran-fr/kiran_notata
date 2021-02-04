@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import {
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
-  evaluationQuestionFragments,
+  evaluationTemplateQuestionFragments,
 } from "../Fragments";
 
 export default gql`
@@ -14,12 +14,12 @@ export default gql`
         ...evaluationTemplateSectionFields
 
         questions {
-          ...evaluationQuestionFields
+          ...evaluationTemplateQuestionFields
         }
       }
     }
   }
   ${evaluationTemplateFragments}
   ${evaluationTemplateSectionFragments}
-  ${evaluationQuestionFragments}
+  ${evaluationTemplateQuestionFragments}
 `;

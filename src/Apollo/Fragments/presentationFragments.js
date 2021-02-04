@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  fragment presentationFields on PublicPresentation {
+  fragment presentationFields on Presentation {
     id
     creativeId
     email

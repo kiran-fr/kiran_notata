@@ -506,13 +506,6 @@ export default function Group({ match, history }) {
 
   let isAdmin = memberView ? !memberView : isActualAdmin;
 
-  console.log("group", group);
-
-  for (let { connection } of group.startups) {
-    let { subjectiveScores } = connection;
-    console.log(JSON.stringify(subjectiveScores, null, 2));
-  }
-
   return (
     <>
       <BreadCrumbs

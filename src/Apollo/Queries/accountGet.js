@@ -5,7 +5,7 @@ import {
   accountMemberFragments,
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
-  evaluationQuestionFragments,
+  evaluationTemplateQuestionFragments,
   tagGroupFragments,
   tagFragments,
   funnelGroupFragments,
@@ -26,13 +26,13 @@ export default gql`
         sections {
           ...evaluationTemplateSectionFields
           questions {
-            ...evaluationQuestionFields
+            ...evaluationTemplateQuestionFields
           }
         }
       }
 
-      evaluationQuestions {
-        ...evaluationQuestionFields
+      evaluationTemplateQuestions {
+        ...evaluationTemplateQuestionFields
       }
 
       tagGroups {
@@ -54,7 +54,7 @@ export default gql`
   ${accountMemberFragments}
   ${evaluationTemplateFragments}
   ${evaluationTemplateSectionFragments}
-  ${evaluationQuestionFragments}
+  ${evaluationTemplateQuestionFragments}
   ${tagGroupFragments}
   ${tagFragments}
   ${funnelGroupFragments}

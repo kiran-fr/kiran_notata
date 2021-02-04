@@ -4,7 +4,7 @@ export { default as accountFragments } from "./accountFragments";
 export { default as accountMemberFragments } from "./accountMemberFragments";
 export { default as evaluationTemplateFragments } from "./evaluationTemplateFragments";
 export { default as evaluationTemplateSectionFragments } from "./evaluationTemplateSectionFragments";
-export { default as evaluationQuestionFragments } from "./evaluationQuestionFragments";
+export { default as evaluationTemplateQuestionFragments } from "./evaluationTemplateQuestionFragments";
 export { default as tagGroupFragments } from "./tagGroupFragments";
 export { default as tagFragments } from "./tagFragments";
 export { default as funnelGroupFragments } from "./funnelGroupFragments";

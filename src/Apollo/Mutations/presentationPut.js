@@ -6,7 +6,7 @@ export default gql`
     $id: ID
     $input: PresentationInput
     $delete: Boolean
-    $markAsSeen: AWSTimestamp
+    $markAsSeen: Float
   ) {
     presentationPut(
       id: $id

@@ -8,8 +8,8 @@ import classnames from "classnames";
 import { evaluationTemplateGet } from "Apollo/Queries";
 
 import {
-  evaluationQuestionPut,
-  evaluationQuestionDelete,
+  evaluationTemplateQuestionPut,
+  evaluationTemplateQuestionDelete,
 } from "Apollo/Mutations";
 
 import { delete_question } from "./EvaluationTemplateSection.module.css";
@@ -60,7 +60,7 @@ const inputMap = [
 ];
 
 function QuestionNameAndDescription({ templateId, sectionId, question }) {
-  const [mutate] = useMutation(evaluationQuestionPut);
+  const [mutate] = useMutation(evaluationTemplateQuestionPut);
   const { register, handleSubmit, setValue } = useForm();
 
   const { name, description } = question;
@@ -109,7 +109,7 @@ function QuestionNameAndDescription({ templateId, sectionId, question }) {
 }
 
 function ToggleInputType({ question }) {
-  const [mutate] = useMutation(evaluationQuestionPut);
+  const [mutate] = useMutation(evaluationTemplateQuestionPut);
 
   return (
     <div className={tag_list}>
@@ -129,7 +129,7 @@ function ToggleInputType({ question }) {
                 variables,
                 optimisticResponse: {
                   __typename: "Mutation",
-                  evaluationQuestionPut: {
+                  evaluationTemplateQuestionPut: {
                     ...question,
                     inputType,
                   },
@@ -233,7 +233,7 @@ function InputTextLinesOption() {
 }
 
 function RadioOption({ question, inputType }) {
-  const [mutate] = useMutation(evaluationQuestionPut);
+  const [mutate] = useMutation(evaluationTemplateQuestionPut);
 
   return (
     <div>
@@ -272,7 +272,7 @@ function RadioOption({ question, inputType }) {
                   variables,
                   optimisticResponse: {
                     __typename: "Mutation",
-                    evaluationQuestionPut: {
+                    evaluationTemplateQuestionPut: {
                       ...question,
                       options: optimisticOptions,
                     },
@@ -303,7 +303,7 @@ function RadioOption({ question, inputType }) {
                         variables,
                         optimisticResponse: {
                           __typename: "Mutation",
-                          evaluationQuestionPut: {
+                          evaluationTemplateQuestionPut: {
                             ...question,
                             options: question.options.map(o =>
                               o.sid === option.sid ? { ...o, score } : o
@@ -334,7 +334,7 @@ function RadioOption({ question, inputType }) {
                         variables,
                         optimisticResponse: {
                           __typename: "Mutation",
-                          evaluationQuestionPut: {
+                          evaluationTemplateQuestionPut: {
                             ...question,
                             options: question.options.map(o =>
                               o.sid === option.sid ? { ...o, score } : o
@@ -365,7 +365,7 @@ function RadioOption({ question, inputType }) {
                     variables,
                     optimisticResponse: {
                       __typename: "Mutation",
-                      evaluationQuestionPut: {
+                      evaluationTemplateQuestionPut: {
                         ...question,
                         options: question.options.filter(
                           o => o.sid !== option.sid
@@ -413,7 +413,7 @@ function RadioOption({ question, inputType }) {
                 sid: "tmp_sid",
                 val: input_val,
                 score: 0,
-                __typename: "EvaluationQuestionOption",
+                __typename: "evaluationTemplateQuestionOption",
               },
             ];
 
@@ -421,7 +421,7 @@ function RadioOption({ question, inputType }) {
               variables,
               optimisticResponse: {
                 __typename: "Mutation",
-                evaluationQuestionPut: {
+                evaluationTemplateQuestionPut: {
                   ...question,
                   options: optimisticOptions,
                 },
@@ -437,7 +437,7 @@ function RadioOption({ question, inputType }) {
 }
 
 function DeleteQuestion({ templateId, sectionId, question }) {
-  const [mutate] = useMutation(evaluationQuestionDelete);
+  const [mutate] = useMutation(evaluationTemplateQuestionDelete);
 
   return (
     <div
@@ -460,7 +460,7 @@ function DeleteQuestion({ templateId, sectionId, question }) {
           let variables = { id: question.id };
           mutate({
             variables,
-            //            update: (proxy, { data: { evaluationQuestionDelete } }) => {
+            //            update: (proxy, { data: { evaluationTemplateQuestionDelete } }) => {
             //              let data = proxy.readQuery({
             //                query: evaluationTemplateGet,
             //                variables: { id: templateId }

@@ -6,7 +6,7 @@ import Question from "./QuestionComp";
 
 import { evaluationTemplateGet } from "Apollo/Queries";
 import {
-  evaluationQuestionPut,
+  evaluationTemplateQuestionPut,
   evaluationTemplateSectionPut,
 } from "Apollo/Mutations";
 
@@ -73,7 +73,7 @@ function NameAndDescription({ template, section }) {
 
 function NewQuestion({ sectionId, templateId }) {
   const [loading, setLoading] = useState(false);
-  const [mutate] = useMutation(evaluationQuestionPut);
+  const [mutate] = useMutation(evaluationTemplateQuestionPut);
 
   return (
     <Button
