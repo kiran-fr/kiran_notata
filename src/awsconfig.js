@@ -53,19 +53,57 @@ Amplify.configure({
 
   API: {
     endpoints: [
+      /* **** */
+      /* dev2 */
+      /* **** */
+
       {
-        name: "GQL_APIG_V2PROD",
-        endpoint: "https://65x7mif1h9.execute-api.eu-west-1.amazonaws.com",
-        region: awsconfig.region,
-      },
-      {
-        name: "GQL_APIG_DEV2",
+        // private
+        name: "GQL_APIG_PRIVATE_dev2",
         endpoint: "https://9vtydtu114.execute-api.eu-west-1.amazonaws.com",
         region: awsconfig.region,
       },
+
       {
-        name: "GQL_LOCAL",
+        // public
+        name: "GQL_APIG_PUBLIC_dev2",
+        endpoint: "https://v29pv4mmz3.execute-api.eu-west-1.amazonaws.com",
+        region: awsconfig.region,
+      },
+
+      /* ****** */
+      /* v2prod */
+      /* ****** */
+
+      {
+        // private
+        name: "GQL_APIG_PRIVATE_v2prod",
+        endpoint: "https://65x7mif1h9.execute-api.eu-west-1.amazonaws.com",
+        region: awsconfig.region,
+      },
+
+      {
+        // public
+        name: "GQL_APIG_PUBLIC_v2prod",
+        endpoint: "https://jpu8yabr6h.execute-api.eu-west-1.amazonaws.com",
+        region: awsconfig.region,
+      },
+
+      /* ***** */
+      /* local */
+      /* ***** */
+
+      {
+        // private
+        name: "GQL_APIG_PRIVATE_local",
         endpoint: "http://localhost:4001",
+        region: awsconfig.region,
+      },
+
+      {
+        // public
+        name: "GQL_APIG_PUBLIC_local",
+        endpoint: "http://localhost:4002",
         region: awsconfig.region,
       },
     ],
@@ -82,25 +120,26 @@ Amplify.configure({
 // * GQL LAMBDA API GATEWAY TESTER * //
 // ********************************* //
 
+const STAGE = "dev2";
+const isLocal = false;
+
 const GQL = {
-  dev2: {
-    endpoint: "GQL_APIG_DEV2",
-    path: `/dev2/private_graphql`,
+  private: {
+    path: `/${STAGE}/private_graphql`,
+    endpoint: `GQL_APIG_PRIVATE_${isLocal ? "local" : STAGE}`,
   },
-  v2prod: {
-    endpoint: "GQL_APIG_V2PROD",
-    path: `/v2prod/private_graphql`,
-  },
-  local: {
-    endpoint: "GQL_LOCAL",
-    path: `/dev2/private_graphql`,
+
+  public: {
+    path: `/${STAGE}/public_graphql`,
+    endpoint: `GQL_APIG_PUBLIC_${isLocal ? "local" : STAGE}`,
   },
 };
 
-const STAGE = "dev2";
+console.log("GQL.private.endpoint", GQL.private.endpoint);
+console.log("GQL.private.path", GQL.private.path);
 
 const awsGraphqlFetch = (uri, options) => {
-  return API.post(GQL[STAGE].endpoint, GQL[STAGE].path, {
+  return API.post(GQL.private.endpoint, GQL.private.path, {
     body: JSON.parse(options.body),
   }).then(response => {
     const result = {};
@@ -127,32 +166,3 @@ export const appsyncClient = new ApolloClient({
     },
   },
 });
-
-// const dev2_URL_id = "3mlk5clgsvdptfcfo7utvkqhim";
-// const V2PROD_URL_id = "ahh7xy4e2vgsrmf6uyo4fxyk3y";
-// const appsync_URL_id = V2PROD_URL_id;
-//
-// const appsyncUrl = `https://${appsync_URL_id}.appsync-api.eu-west-1.amazonaws.com/graphql`;
-//
-// const config = {
-//   url: appsyncUrl,
-//   region: awsconfig.region,
-//   auth: {
-//     type: AUTH_TYPE.AWS_IAM,
-//     credentials: (...params) => Auth.currentCredentials(...params),
-//   },
-//   disableOffline: true,
-// };
-//
-// export const appsyncClient = new ApolloClient({
-//   link: ApolloLink.from([
-//     createAuthLink(config),
-//     createSubscriptionHandshakeLink(config),
-//   ]),
-//   cache: new InMemoryCache(apolloInMemoryCache),
-//   defaultOptions: {
-//     watchQuery: {
-//       fetchPolicy: "cache-and-network",
-//     },
-//   },
-// });
