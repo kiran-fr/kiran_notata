@@ -36,8 +36,8 @@ import Profile from "./private/Profile/Profile";
 import Tags from "./private/Tags";
 import Settings from "./private/Settings/Settings";
 import Team from "./private/Team/Team";
-import NewStartupPage from "./private/NewStartupPage/NewStartupPage";
-import FactsPage from "./private/NewStartupPage/Facts/Facts";
+import StartupPage from "./private/StartupPage/StartupPage";
+import FactsPage from "./private/StartupPage/Facts/Facts";
 
 // Evaluation templates
 import EvaluationTemplates from "./private/Templates/EvaluationTemplates/EvaluationTemplates";
@@ -118,7 +118,7 @@ export const RouterComponent = ({ history }) => {
         component={GroupConnection}
       />
 
-      <Route exact path={`${startup_page}/:id`} component={NewStartupPage} />
+      <Route exact path={`${startup_page}/:id`} component={StartupPage} />
 
       <Route
         exact

@@ -11,7 +11,7 @@ import {
   no_answer,
   question_comments,
   small_traffic_light,
-} from "../NewStartupPage/Facts/Facts.module.css";
+} from "../StartupPage/Facts/Facts.module.css";
 
 function MultipleChoiceAnswer({ question, answers }) {
   const _answers = answers.filter(({ inputType, questionId }) => {
