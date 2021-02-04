@@ -281,10 +281,7 @@ export default function Sharings({ history }: { history: History }) {
                     You have been invited to join the group{" "}
                     <Link
                       className={styles.highlight_1}
-                      to={{
-                        pathname: `${group_route}/${data.groupId}`,
-                        state: { rightMenu: true },
-                      }}
+                      to={{ pathname: `${group_route}/${data.groupId}` }}
                     >
                       {data.name}
                     </Link>

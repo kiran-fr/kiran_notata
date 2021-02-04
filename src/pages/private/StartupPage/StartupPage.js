@@ -99,7 +99,6 @@ export default function StartupPage({ match, history }) {
           {
             val: `Startup: ${connection.creative.name}`,
             link: `${startup_page}/${match.params.id}`,
-            state: { rightMenu: true },
           },
         ]}
       />

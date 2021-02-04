@@ -140,7 +140,7 @@ export default function StartupPage({ match, location, history }) {
                       tab: tabItem.key,
                     });
                     let pathName = `${new_startup_page}/${connection.id}?${stringified}`;
-                    history.push(pathName, { rightMenu: true });
+                    history.push(pathName);
                   }}
                 >
                   {tabItem.content}

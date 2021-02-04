@@ -125,7 +125,6 @@ export default function Evaluation({ match, history }) {
           {
             val: `Startup: ${(connection.creative || {}).name}`,
             link: `${startup_page}/${connectionId}`,
-            state: { rightMenu: true },
           },
         ]}
       />

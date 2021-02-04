@@ -469,12 +469,10 @@ export default function GroupConnection({ match, history }) {
           {
             val: `Group: ${group.name}`,
             link: `${group_route}/${id}`,
-            state: { rightMenu: true },
           },
           {
             val: `Startup: ${(connection.creative || {}).name}`,
             link: `${group_route}/${id}/${connection.id}`,
-            state: { rightMenu: true },
           },
         ]}
       />

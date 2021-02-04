@@ -229,7 +229,6 @@ function SharedWithGroupList(props) {
           className={styles.link}
           to={{
             pathname: `${group_route}/${group.id}`,
-            state: { rightMenu: true },
           }}
         >
           VIEW

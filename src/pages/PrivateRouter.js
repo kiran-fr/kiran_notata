@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Auth } from "aws-amplify";
 import { Redirect, Switch } from "react-router-dom";
-import { Route } from "react-router";
+import { Route, matchPath } from "react-router";
 
 // API
 import { useQuery } from "@apollo/client";
@@ -195,7 +195,13 @@ const WrapperComponent = ({ ...props }) => {
       <SideBarTreeMenu {...props} />
       <div
         className={`logged_in_page_content ${
-          props.location.state?.rightMenu ? "show_right_activity" : ""
+          matchPath(props.location.pathname, {
+            path: [`${startup_page}/:id`, `${group}/:id`],
+            exact: true,
+            strict: false,
+          })
+            ? "show_right_activity"
+            : ""
         }`}
       >
         <ErrorBoundary>

@@ -89,7 +89,7 @@ export default ({
           <div
             onClick={() => {
               let path = `${group}/${id}`;
-              history.push(path, { rightMenu: true });
+              history.push(path);
             }}
             className={tableStyles.background_clicker}
           />

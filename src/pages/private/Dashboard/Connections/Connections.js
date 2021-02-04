@@ -324,7 +324,7 @@ function Connections({ history, chartFilters }) {
       <CreateNewStartup
         history={history}
         setDone={connection => {
-          history.push(`${startup_page}/${connection.id}`, { rightMenu: true });
+          history.push(`${startup_page}/${connection.id}`);
         }}
         setShowTagGroup={setShowTagGroup}
         setShowEvaluate={setShowEvaluate}

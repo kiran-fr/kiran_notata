@@ -84,7 +84,6 @@ export function SubjectiveScore({ connection, user, onlyMe, history }) {
                       <Link
                         to={{
                           pathname: `${group_route}/${ss.ref.id}`,
-                          state: { rightMenu: true },
                         }}
                       >
                         {ss.ref.name}

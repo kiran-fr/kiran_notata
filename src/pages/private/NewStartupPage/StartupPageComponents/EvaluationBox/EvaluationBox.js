@@ -387,7 +387,6 @@ function GroupEvaluations({
                     <Link
                       to={{
                         pathname: `${group_route}/${groupId}`,
-                        state: { rightMenu: true },
                       }}
                     >
                       {groupName}

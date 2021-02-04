@@ -140,7 +140,7 @@ export default function Groups({
             mutate={mutate}
             setDone={(id: any) => {
               let path = `${group}/${id}`;
-              history.push(path, { rightMenu: true });
+              history.push(path);
               showModalOnly && onCloseModalEvent();
             }}
           />
