@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { connectionFragments, funnelTagFragments } from "../Fragments";
+import { connectionExtendedFragments } from "../Fragments";
 
 export default gql`
   mutation connectionFunnelTagAdd($connectionId: ID!, $funnelTagId: String!) {
@@ -7,12 +7,8 @@ export default gql`
       connectionId: $connectionId
       funnelTagId: $funnelTagId
     ) {
-      ...connectionFields
-      funnelTags {
-        ...funnelTagFields
-      }
+      ...connectionExtendedFields
     }
   }
-  ${connectionFragments}
-  ${funnelTagFragments}
+  ${connectionExtendedFragments}
 `;

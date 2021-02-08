@@ -12,7 +12,7 @@ import {
 import {
   connectionTagAdd,
   connectionTagRemove,
-  connectionPut,
+  connectionCreate,
 } from "Apollo/Mutations";
 
 import { dashboard, group, settings, charts, signOut } from "pages/definitions";
@@ -170,9 +170,11 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const connections = connectionsQuery.data?.connectionsGet || [];
   const user = userQuery.data?.userGet;
   const tagGroups = tagGroupsQuery.data?.accountGet.tagGroups || [];
+
   const [mutateConnectionTagAdd] = useMutation(connectionTagAdd);
   const [mutateconnectionTagRemove] = useMutation(connectionTagRemove);
-  const [mutateConnectionPut] = useMutation(connectionPut);
+  const [connectionCreateMutate] = useMutation(connectionCreate);
+
 
   if (groupsQuery.data?.groupsGet.length) {
     const index = menuItems.findIndex(item => item.key === "groups");
@@ -408,18 +410,18 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   async function addStartup(creativeId: string) {
     setLoadingState(creativeId);
     try {
-      await mutateConnectionPut({
+      await connectionCreateMutate({
         variables: {
           creativeId: creativeId,
         },
-        update: (proxy, { data: { connectionPut } }) => {
+        update: (proxy, { data: { connectionCreate } }) => {
           const data: any = proxy.readQuery({
             query: connectionsGet,
           });
           proxy.writeQuery({
             query: connectionsGet,
             data: {
-              connectionsGet: [...data.connectionsGet, connectionPut],
+              connectionsGet: [...data.connectionsGet, connectionCreate],
             },
           });
         },

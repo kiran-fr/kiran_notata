@@ -6,7 +6,6 @@ import { externalResourcesGet } from "Apollo/Queries";
 import { externalResourcePut, externalResourceDelete } from "Apollo/Mutations";
 import { useForm } from "react-hook-form";
 import styles from "../StartupPage.module.css";
-// import queryString from "query-string";
 
 export function ExternalResources({ connectionId }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -17,7 +16,16 @@ export function ExternalResources({ connectionId }) {
     externalResourcesGet
   );
 
-  const [putMutation] = useMutation(externalResourcePut);
+  const [putMutation] = useMutation(
+    externalResourcePut
+    // {
+    // refetchQueries: [
+    //   getExternalResources({
+    //      variables: { connectionId },
+    //    })
+    // ]
+    // }
+  );
   const [deleteMutation] = useMutation(externalResourceDelete);
 
   const { register, errors, handleSubmit, formState } = useForm();
@@ -32,19 +40,21 @@ export function ExternalResources({ connectionId }) {
     try {
       await putMutation({
         variables,
+
         update: (proxy, { data: { externalResourcePut } }) => {
           const data = proxy.readQuery({
             query: externalResourcesGet,
             variables: { connectionId },
           });
+
           proxy.writeQuery({
             query: externalResourcesGet,
             variables: { connectionId },
             data: {
-              externalResourcesGet: {
+              externalResourcesGet: [
                 ...data.externalResourcesGet,
-                ...data.externalResourcePut,
-              },
+                externalResourcePut,
+              ],
             },
           });
         },

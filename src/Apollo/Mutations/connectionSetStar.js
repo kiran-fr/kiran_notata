@@ -1,15 +1,11 @@
 import gql from "graphql-tag";
-import { connectionFragments, creativeFragments } from "../Fragments";
+import { connectionExtendedFragments } from "../Fragments";
 
 export default gql`
   mutation connectionSetStar($id: ID) {
     connectionSetStar(id: $id) {
-      ...connectionFields
-      creative {
-        ...creativeFields
-      }
+      ...connectionExtendedFields
     }
   }
-  ${connectionFragments}
-  ${creativeFragments}
+  ${connectionExtendedFragments}
 `;

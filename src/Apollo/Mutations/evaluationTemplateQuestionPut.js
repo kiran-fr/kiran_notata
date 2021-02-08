@@ -5,7 +5,7 @@ export default gql`
   mutation evaluationTemplateQuestionPut(
     $id: ID
     $sectionId: ID
-    $input: evaluationTemplateQuestionInput
+    $input: EvaluationTemplateQuestionInput
   ) {
     evaluationTemplateQuestionPut(
       id: $id

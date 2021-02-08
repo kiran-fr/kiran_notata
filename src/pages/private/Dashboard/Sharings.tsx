@@ -13,10 +13,12 @@ import {
   connectionsGet,
   presentationsGet,
 } from "Apollo/Queries";
+
 import {
   groupMarkAsSeen,
   creativeDelete,
   presentationPut,
+  connectionCreate
 } from "Apollo/Mutations";
 
 import { group as group_route, public_presentation } from "../../definitions";
@@ -29,7 +31,6 @@ import {
   Creative,
 } from "pages/private/Dashboard/Connections/types";
 import { Groups } from "Apollo/Queries/groupsGet";
-import { connectionPut } from "Apollo/Mutations/index";
 import { ViewSummary } from "./ViewSummary";
 
 enum InboxType {
@@ -85,8 +86,8 @@ export default function Sharings({ history }: { history: History }) {
   const [creativeDeleteQuery, { loading: creativeDeleteLoading }] = useMutation(
     creativeDelete
   );
-  const [mutateConnection, { loading: connectionPutLoading }] = useMutation(
-    connectionPut
+  const [mutateConnectionCreate, { loading: connectionCreateLoading }] = useMutation(
+    connectionCreate
   );
 
   const [markAsSeen] = useMutation(groupMarkAsSeen, {
@@ -148,16 +149,16 @@ export default function Sharings({ history }: { history: History }) {
           },
         });
       } else if (selectedInbox?.actionState === "SAVE") {
-        await mutateConnection({
+        await mutateConnectionCreate({
           variables: { creativeId: selectedInbox.data.creative?.id },
-          update: (proxy, { data: { connectionPut } }) => {
+          update: (proxy, { data: { connectionCreate } }) => {
             let data: any = proxy.readQuery({
               query: connectionsGet,
             });
             proxy.writeQuery({
               query: connectionsGet,
               data: {
-                connectionsGet: [connectionPut, ...data.connectionsGet],
+                connectionsGet: [connectionCreate, ...data.connectionsGet],
               },
             });
           },
@@ -465,7 +466,7 @@ export default function Sharings({ history }: { history: History }) {
           }
           submit={() => processCreative()}
           close={() => setSelectedInbox(null)}
-          loading={creativeDeleteLoading || connectionPutLoading}
+          loading={creativeDeleteLoading || connectionCreateLoading}
           disableFoot={false}
           key="actionModal"
           noKill

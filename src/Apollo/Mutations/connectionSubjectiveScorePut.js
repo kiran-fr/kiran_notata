@@ -1,48 +1,11 @@
 import gql from "graphql-tag";
-import { 
-  tagFragments,
-  funnelTagFragments,
-  creativeFragments,
-  connectionFragments,
-  evaluationFragments
-} from '../Fragments';
+import { connectionExtendedFragments } from "../Fragments";
 
 export default gql`
   mutation connectionSubjectiveScorePut($id: ID!, $score: Int!) {
     connectionSubjectiveScorePut(id: $id, score: $score) {
-      
-      ...connectionFields
-      
-      creative {
-        ...creativeFields
-      }
-
-      tags {
-        ...tagFields
-      }
-
-      funnelTags {
-        ...funnelTagFields
-      }
-
-      evaluations {
-        ...evaluationFields
-      }
-
+      ...connectionExtendedFields
     }
-
   }
-  ${tagFragments}
-  ${funnelTagFragments}
-  ${creativeFragments}
-  ${connectionFragments}
-  ${evaluationFragments}
-`
-
-
-
-
-
-
-  
-
+  ${connectionExtendedFragments}
+`;

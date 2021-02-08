@@ -12,6 +12,7 @@ export { default as funnelTagFragments } from "./funnelTagFragments";
 
 export { default as creativeFragments } from "./creativeFragments";
 export { default as connectionFragments } from "./connectionFragments";
+export { default as connectionExtendedFragments } from "./connectionExtendedFragments";
 export { default as evaluationFragments } from "./evaluationFragments";
 
 export { default as logItemFragments } from "./logItemFragments";

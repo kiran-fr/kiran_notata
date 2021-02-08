@@ -144,6 +144,8 @@ export default function Section({ match, history }) {
   // Filter out current evaluation
   let evaluation = connection.evaluations.find(({ id }) => id === evaluationId);
 
+  console.log("evaluation", evaluation);
+
   // if (loading && !connectionQuery.data) {
   if (!evaluation || !evaluationTemplateSection) {
     return <GhostLoader />;
