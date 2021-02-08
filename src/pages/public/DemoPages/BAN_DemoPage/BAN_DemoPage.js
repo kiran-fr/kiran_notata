@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Content } from "../../../../Components/elements";
+import { Content } from "Components/elements";
 
 import SIGNUP from "./gifs/01_signup.gif";
 import LOGIN from "./gifs/02_login.gif";

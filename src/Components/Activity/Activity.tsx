@@ -12,13 +12,18 @@ const Activity = ({ user, logs, submitMutation }: any) => {
   const clickListener = useCallback((e: MouseEvent) => {
     if (!(ref.current! as any).contains(e.target)) setVisibleMobile(false);
   }, []);
+  const touchListener = useCallback((e: TouchEvent) => {
+    if (!(ref.current! as any).contains(e.target)) setVisibleMobile(false);
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", clickListener);
+    document.addEventListener("touchstart", touchListener);
     return () => {
       document.removeEventListener("mousedown", clickListener);
+      document.removeEventListener("touchstart", touchListener);
     };
-  }, [clickListener]);
+  }, [clickListener, touchListener]);
 
   return (
     <>

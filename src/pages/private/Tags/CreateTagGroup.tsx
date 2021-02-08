@@ -7,7 +7,13 @@ import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
 import { Card, Button } from "Components/elements";
 import { TagType } from "pages/private/Tags/index";
 
-export default function CreateTagGroup({ index, type } : { index: number, type: TagType }) {
+export default function CreateTagGroup({
+  index,
+  type,
+}: {
+  index: number;
+  type: TagType;
+}) {
   const [mutateTags] = useMutation(tagGroupPut, {
     refetchQueries: [{ query: tagGroupGet }],
     awaitRefetchQueries: true,

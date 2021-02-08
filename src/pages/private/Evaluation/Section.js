@@ -158,7 +158,6 @@ export default function Section({ match, history }) {
           {
             val: `Startup: ${connection.creative.name}`,
             link: `${startup_page}/${connectionId}`,
-            state: { rightMenu: true },
           },
           {
             val: `Template: ${evaluation.name}`,

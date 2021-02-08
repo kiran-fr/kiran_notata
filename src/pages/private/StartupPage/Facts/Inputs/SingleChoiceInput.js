@@ -5,11 +5,7 @@ import { SingleChoiceInput } from "Components/Forms";
 
 import { creativePut } from "Apollo/Mutations";
 
-export default function SingleChoiceInputContainer({
-  question,
-  section,
-  creative,
-}) {
+export default function SingleChoiceInputContainer({ question, creative }) {
   const { options } = question;
   const [mutate] = useMutation(creativePut);
   const answer = (creative.answers || []).find(({ inputType, questionId }) => {
@@ -59,8 +55,6 @@ export default function SingleChoiceInputContainer({
               inputType: question.inputType,
               questionId: question.id,
               question: question.name,
-              sectionId: section.id,
-              sectionName: section.name,
               sid,
               val,
             };

@@ -4,7 +4,7 @@ import moment from "moment";
 import { useLazyQuery } from "@apollo/client";
 import { presentationsGet } from "Apollo/Queries";
 import queryString from "query-string";
-import { new_startup_page } from "pages/definitions";
+import { startup_page } from "pages/definitions";
 
 const columns = [
   {
@@ -81,8 +81,8 @@ export function SimpleListOfSharings({ connectionId, history, location }) {
               ...parsed,
               tab: "presentations",
             });
-            let pathName = `${new_startup_page}/${connectionId}?${stringified}`;
-            history.push(pathName, { rightMenu: true });
+            let pathName = `${startup_page}/${connectionId}?${stringified}`;
+            history.push(pathName);
           }}
         >
           Go to sharing

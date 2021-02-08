@@ -5,7 +5,7 @@ import { startup_page } from "pages/definitions";
 
 import StartupInfoSection from "./StartupInfoSection";
 
-export function Facts({ connection, user, match, history }) {
+export function Facts({ label, hideTitle, connection, user, match, history }) {
   const { creative } = connection;
   const { sharedWithEmail, submit: submitted } = creative;
   const answers = (creative && creative.answers) || [];
@@ -16,34 +16,37 @@ export function Facts({ connection, user, match, history }) {
 
   const isMine = creative.accountId === user.accountId;
 
-  // if (!isMine && isUntouched) {
-  //   return <span/>
-  // }
+  const oneLiner = (
+    answers.find(({ questionId }) => questionId === "q01_section_info") || {}
+  ).val;
 
   return (
-    <Card
-      // label="STARTUP INFO"
-      style={{ paddingBottom: "20px" }}
-    >
-      <div className="p1">
-        <h1 style={{ marginBottom: "10px" }}>{connection.creative.name}</h1>
+    <Card label={label || ""} style={{ paddingBottom: "20px" }}>
+      <div style={{ padding: "10px" }}>
+        {hideTitle && (
+          <h1 style={{ marginBottom: "10px" }}>{connection.creative.name}</h1>
+        )}
+
+        {!oneLiner && (
+          <div
+            style={{
+              color: "var(--color-gray-medium)",
+              fontStyle: "italic",
+              marginBottom: "15px",
+            }}
+          >
+            There is not much information about this company
+          </div>
+        )}
 
         {!isUntouched && (
-          <StartupInfoSection creative={creative} answers={answers} />
+          <StartupInfoSection
+            creative={creative}
+            answers={answers}
+            hideTitle={hideTitle}
+          />
         )}
       </div>
-
-      {/*{isUntouched && (*/}
-      {/*  <div>*/}
-      {/*    <div style={{ fontSize: "18px" }}>Facts</div>*/}
-      {/*    <div*/}
-      {/*      style={{ padding: "20px 0px", color: "var(--color-gray-medium)" }}*/}
-      {/*    >*/}
-      {/*      Facts is the part that you share with the startups. You can invite a*/}
-      {/*      startup to fill out this part .*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*)}*/}
 
       {isMine && (
         <div

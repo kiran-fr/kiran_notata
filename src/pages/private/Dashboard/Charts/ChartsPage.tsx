@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
-import moment from "moment";
 
-// API
 import { useQuery } from "@apollo/client";
 import { connectionsGet, tagGroupGet } from "Apollo/Queries";
 
-// COMPONENTS
 import Filters from "../Filters";
 
 import { Content, Table, Card, GhostLoader } from "Components/elements";
@@ -16,113 +13,7 @@ import styles from "../Connections/Connections.module.css";
 
 import tableColumns from "./TableColumns/TableColumns";
 import ChartArea from "./ChartArea";
-import { Connection } from "../Connections/types";
-
-function applyFilters({
-  connections,
-  filters,
-}: {
-  connections: Connection[];
-  filters: any;
-}) {
-  // Check if we have all the vals:
-  filters = filters || {};
-  filters.dateRange = filters.dateRange || [null, null];
-
-  if (!filters) return connections;
-
-  if (filters.starred) {
-    connections = connections.filter(connection => {
-      if (!connection) return false;
-      return connection.starred;
-    });
-  }
-
-  if (filters.search && filters.search.length !== 0) {
-    let firstTwo = filters.search.slice(0, 2);
-
-    if (firstTwo === ":f") {
-      let [, funnelName] = filters.search.split(" ");
-
-      if (!funnelName) {
-        connections = connections.filter(({ funnelTags }) => funnelTags.length);
-      }
-
-      if (funnelName) {
-        connections = connections.filter(({ funnelTags }) => {
-          let containsTag = funnelTags.find(({ name }) =>
-            name.toLowerCase().includes((funnelName || "").toLowerCase())
-          );
-
-          if (!containsTag) return false;
-
-          if (containsTag) {
-            let highest = funnelTags.reduce(
-              (max, tag) => (tag.index > max ? tag.index : max),
-              funnelTags[0].index
-            );
-            return containsTag.index >= highest;
-          }
-          return false;
-        });
-      }
-    }
-
-    if (firstTwo === ":t") {
-      let [, tagName] = filters.search.split(" ");
-      connections = connections.filter(({ tags }) =>
-        tags.some(({ name }) =>
-          name.toLowerCase().includes((tagName || "").toLowerCase())
-        )
-      );
-    }
-
-    if (firstTwo !== ":f" && firstTwo !== ":t") {
-      let search = filters.search.toLowerCase();
-      connections = connections.filter(({ creative }) =>
-        creative.name.toLowerCase().includes(search)
-      );
-    }
-    let search = filters.search.toLowerCase();
-    connections = connections.filter(({ creative }) =>
-      creative.name.toLowerCase().includes(search)
-    );
-  }
-
-  if (filters.tags?.length) {
-    connections = connections.filter(({ tags }) =>
-      filters.tags.every((ft: any) => tags.map(({ id }) => id).includes(ft.id))
-    );
-  }
-
-  if (filters.funnelTags?.length) {
-    connections = connections.filter(({ funnelTags }) => {
-      if (!funnelTags.length) return false;
-
-      let highest = funnelTags.reduce(
-        (max, tag) => (tag.index > max ? tag.index : max),
-        funnelTags[0].index
-      );
-      let tag = funnelTags.find(({ index }) => index === highest);
-
-      return filters.funnelTags.some(({ id }: any) => id === tag?.id);
-    });
-  }
-
-  if (filters.dateRange[0] || filters.dateRange[1]) {
-    const [start, end] = [
-      filters.dateRange[0] ? moment(filters.dateRange[0]).valueOf() : null,
-      filters.dateRange[1] ? moment(filters.dateRange[1]).valueOf() : null,
-    ];
-    connections = connections.filter(
-      connection =>
-        (start ? start <= connection.updatedAt.valueOf() : true) &&
-        (end ? end >= connection.updatedAt.valueOf() : true)
-    );
-  }
-
-  return connections;
-}
+import { applyFilters } from "../Connections/Connections";
 
 function Connections({
   history,
@@ -138,7 +29,6 @@ function Connections({
     starred: false,
     dateRange: [null, null],
   });
-  // const [chartFilters, setChartFilters] = useState({ tags: [] });
 
   useEffect(() => {
     let f;
@@ -191,6 +81,14 @@ function Connections({
   let connections = data.connectionsGet;
   let connectionsGeneral: any[] = [];
 
+  if (connections.length <= 1) {
+    return (
+      <div className="m2">
+        You don't have enough startups available to you, once you'll have 2 or
+        more you will be able to see charts on this page.
+      </div>
+    );
+  }
   if (connections.length >= 10) {
     connectionsGeneral = applyFilters({ connections, filters });
     // Apply filters from charts, affecting selection in table but not in charts themselves

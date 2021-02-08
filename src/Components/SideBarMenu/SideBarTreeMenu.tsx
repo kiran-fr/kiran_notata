@@ -82,17 +82,21 @@ const SideBarTreeMenu = ({ location, history }: any) => {
     },
   ];
 
-  // ================
-  // STATE REGION
-  // ================
-
-  const [expandedState, setExpandedState] = useState<Set<string>>(new Set<string>());
-  const [selectedNodes, setSelectedNodes] = useState<Set<string>>(new Set<string>());
-  const [showNewStartupModal, setShowNewStartupModal] = useState<{state: boolean}>({state: false});
-  const [showNewGroupModal, setShowNewGroupModal] = useState<{state: boolean}>({state: false});
-  const [showEvaluate, setShowEvaluate] = useState<string | undefined>(undefined);
-  const [showTagGroup, setShowTagGroup] = useState<string | undefined>(undefined);
-  const [loadingState, setLoadingState] = useState<string | undefined>(undefined);
+  const [expandedState, setExpandedState] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [selectedNodes, setSelectedNodes] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [showNewStartupModal, setShowNewStartupModal] = useState<{
+    state: boolean;
+  }>({ state: false });
+  const [showNewGroupModal, setShowNewGroupModal] = useState<{
+    state: boolean;
+  }>({ state: false });
+  const [showEvaluate, setShowEvaluate] = useState<string>();
+  const [showTagGroup, setShowTagGroup] = useState<string>();
+  const [loadingState, setLoadingState] = useState<string>();
 
   function changeExpanded(key: string): void {
     const node = expandedState.has(key);
@@ -109,7 +113,9 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   // ================
   // HANDLE ACTION MENU CLICK REGION
   // ================
-  const visibleMobileLeftMenu = useSelector((state: any) => state.menu.visibleMobileLeftMenu);
+  const visibleMobileLeftMenu = useSelector(
+    (state: any) => state.menu.visibleMobileLeftMenu
+  );
 
   // visibleMobileLeftMenu && menuItems.unshift({
   //   key: "notata",
@@ -121,15 +127,23 @@ const SideBarTreeMenu = ({ location, history }: any) => {
 
   const useOnClickOutside = (ref: any, handler: any) => {
     useEffect(() => {
-      const listener = (event: MouseEvent) => {
+      const clickListener = (event: MouseEvent) => {
         if (!ref.current || ref.current.contains(event.target)) {
           return;
         }
         handler(event);
       };
-      document.addEventListener("mousedown", listener);
+      const touchListener = (event: TouchEvent) => {
+        if (!ref.current || ref.current.contains(event.target)) {
+          return;
+        }
+        handler(event);
+      };
+      document.addEventListener("mousedown", clickListener);
+      document.addEventListener("touchstart", touchListener);
       return () => {
-        document.removeEventListener("mousedown", listener);
+        document.removeEventListener("mousedown", clickListener);
+        document.removeEventListener("touchstart", touchListener);
       };
     }, [ref, handler]);
   };
@@ -145,8 +159,12 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   // QUERY REGION
   // ================
 
-  const groupsQuery = useQuery<GroupsData>(groupsGet, { fetchPolicy: "cache-first" });
-  const connectionsQuery = useQuery(connectionsGet, { fetchPolicy: "cache-first" });
+  const groupsQuery = useQuery<GroupsData>(groupsGet, {
+    fetchPolicy: "cache-first",
+  });
+  const connectionsQuery = useQuery(connectionsGet, {
+    fetchPolicy: "cache-first",
+  });
   const tagGroupsQuery = useQuery(tagGroupGet, { fetchPolicy: "cache-first" });
   const userQuery = useQuery(userGet, { fetchPolicy: "cache-first" });
   const connections = connectionsQuery.data?.connectionsGet || [];
@@ -157,22 +175,24 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const [mutateConnectionPut] = useMutation(connectionPut);
 
   if (groupsQuery.data?.groupsGet.length) {
-    const index = menuItems.findIndex((item) => item.key === "groups");
+    const index = menuItems.findIndex(item => item.key === "groups");
     groupsQuery.data.groupsGet
       .slice()
       .sort((a, b) => a.name.localeCompare(b.name))
       .forEach(group => {
-
         const isAdmin = group.members.some(
           ({ email, role }) => email === user.email && role === "admin"
         );
 
         const startups = new Map<string, Startups[]>();
 
-        group.startups.forEach((s) => {
-          startups.get(s.creativeId) ?
-            startups.set(s.creativeId, [...startups.get(s.creativeId) || [], s]) :
-            startups.set(s.creativeId, [s]);
+        group.startups.forEach(s => {
+          startups.get(s.creativeId)
+            ? startups.set(s.creativeId, [
+                ...(startups.get(s.creativeId) || []),
+                s,
+              ])
+            : startups.set(s.creativeId, [s]);
         });
 
         menuItems[index].nodes?.push({
@@ -180,23 +200,42 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           label: group.name,
           link: `/dashboard/group/${group.id}`,
           icon: isAdmin ? "fal fa-cog" : "",
-          selected: (selectedNodes.has(`/dashboard/group/${group.id}`) || selectedNodes.has(`/dashboard/group/${group.id}/settings`)),
-          action: () => isAdmin && history.push(`/dashboard/group/${group.id}/settings`),
+          selected:
+            selectedNodes.has(`/dashboard/group/${group.id}`) ||
+            selectedNodes.has(`/dashboard/group/${group.id}/settings`),
+          action: () =>
+            isAdmin && history.push(`/dashboard/group/${group.id}/settings`),
           showRightMenu: true,
           nodes: [...startups]
-            .sort((a, b) => a[1][0].connection?.creative?.name.localeCompare(b[1][0].connection?.creative?.name))
+            .sort((a, b) =>
+              a[1][0].connection?.creative?.name.localeCompare(
+                b[1][0].connection?.creative?.name
+              )
+            )
             .map(([creativeId, value]) => {
-
-              const haveAddedStartup = connections.find((c: Connection) => c.creativeId === creativeId);
+              const haveAddedStartup = connections.find(
+                (c: Connection) => c.creativeId === creativeId
+              );
               return {
                 key: creativeId,
-                link: haveAddedStartup && `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
+                link:
+                  haveAddedStartup &&
+                  `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`,
                 label: value[0].connection?.creative?.name,
                 nodes: [],
                 // selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`) || selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}`)),
-                selected: haveAddedStartup && (selectedNodes.has(`/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`)),
+                selected:
+                  haveAddedStartup &&
+                  selectedNodes.has(
+                    `/dashboard/startup_page/${haveAddedStartup.id}?group=${group.id}`
+                  ),
                 showHashTag: true,
-                icon: !haveAddedStartup && (loadingState !== creativeId) ? "fal fa-cloud-download" : loadingState === creativeId ? "fa fa-spinner fa-spin" : "",
+                icon:
+                  !haveAddedStartup && loadingState !== creativeId
+                    ? "fal fa-cloud-download"
+                    : loadingState === creativeId
+                    ? "fa fa-spinner fa-spin"
+                    : "",
                 showRightMenu: true,
                 action: () => !haveAddedStartup && addStartup(creativeId),
               } as MenuItem;
@@ -209,7 +248,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   // NODE REGION
   // ================
 
-  function NodeItems({ node, level }: { node: MenuItem, level: number }): JSX.Element {
+  function NodeItems({
+    node,
+    level,
+  }: {
+    node: MenuItem;
+    level: number;
+  }): JSX.Element {
     const collapsed = !expandedState.has(node.key);
     const hasSelectedChildItem = itemOrItemNodesSelected(node);
     if (node.nodes?.length) {
@@ -300,29 +345,30 @@ const SideBarTreeMenu = ({ location, history }: any) => {
           />
         )}
         {node.showHashTag && <span className={styles.hash_tag}>#</span>}
-        {
-          node.link ?
-            <span
-              onClick={() => dispatch(hideMobileNavigationMenu())}
-              >
-              <Link
-                to={{pathname: node.link, state: { rightMenu: node.showRightMenu} }}
-                className={styles.link}
-                style={{maxWidth: `${203 - 27 * level}px`}}
-              >
-                {node.label}
-              </Link>
-            </span> :
-            <span
-              className={styles.link}
-              style={{
-                maxWidth: `${203 - 27 * level}px`,
-                opacity: 0.5
+        {node.link ? (
+          <span onClick={() => dispatch(hideMobileNavigationMenu())}>
+            <Link
+              to={{
+                pathname: node.link,
+                state: { rightMenu: node.showRightMenu },
               }}
-              >
+              className={styles.link}
+              style={{ maxWidth: `${203 - 27 * level}px` }}
+            >
               {node.label}
-            </span>
-        }
+            </Link>
+          </span>
+        ) : (
+          <span
+            className={styles.link}
+            style={{
+              maxWidth: `${203 - 27 * level}px`,
+              opacity: 0.5,
+            }}
+          >
+            {node.label}
+          </span>
+        )}
         {node.icon && (
           <i
             onClick={node.action}

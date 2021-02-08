@@ -18,3 +18,9 @@
   padding: 10px 0px;
   cursor: pointer;
 }
+
+.link {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-size: 14px;
+}

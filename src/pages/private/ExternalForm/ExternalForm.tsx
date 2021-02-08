@@ -5,20 +5,17 @@ import {
   Content,
   Card,
   SuccessBox,
-  Button
+  Button,
 } from "Components/elements/";
 
-import {
-  facts_templates
-} from "pages/definitions";
+import { facts_templates } from "pages/definitions";
 
 import { useQuery } from "@apollo/client";
 import accountGet from "Apollo/Queries/accountGet";
 import styles from "pages/private/StartupPage/Facts/Facts.module.css";
 import { History } from "history";
 
-
-export default function ExternalForm({ history }: { history: History}) {
+export default function ExternalForm({ history }: { history: History }) {
   const [copySuccess, setCopySuccess] = useState(false);
 
   const accountQuery = useQuery(accountGet);

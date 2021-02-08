@@ -89,7 +89,6 @@ export default function Summary({ match, history }) {
           {
             val: `Startup: ${connectionGetData.connectionGet.creative.name}`,
             link: `${startup_page}/${match.params.connectionId}`,
-            state: { rightMenu: true },
           },
         ]}
       />
@@ -245,7 +244,6 @@ export default function Summary({ match, history }) {
           <Link
             to={{
               pathname: `${startup_page}/${connectionGetData.connectionGet.id}`,
-              state: { rightMenu: true },
             }}
           >
             &#60; Back to startup

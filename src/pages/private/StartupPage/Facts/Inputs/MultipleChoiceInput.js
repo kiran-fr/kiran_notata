@@ -4,11 +4,7 @@ import { useMutation } from "@apollo/client";
 import { MultipleChoiceInput } from "Components/Forms";
 import { creativePut } from "Apollo/Mutations";
 
-export default function MultipleChoiceInputContainer({
-  question,
-  section,
-  creative,
-}) {
+export default function MultipleChoiceInputContainer({ question, creative }) {
   const { options } = question;
   const [mutate] = useMutation(creativePut);
 
@@ -52,8 +48,6 @@ export default function MultipleChoiceInputContainer({
                 inputType: question.inputType,
                 questionId: question.id,
                 question: question.name,
-                sectionId: section.id,
-                sectionName: section.name,
                 sid,
                 val,
               };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Auth } from "aws-amplify";
 import { Redirect, Switch } from "react-router-dom";
-import { Route } from "react-router";
+import { Route, matchPath } from "react-router";
 
 // API
 import { useQuery } from "@apollo/client";
@@ -20,7 +20,6 @@ import {
   evaluation_template,
   evaluation_template_summary,
   startup_page,
-  new_startup_page,
   pre_profile,
   group,
   external_form,
@@ -37,7 +36,7 @@ import Profile from "./private/Profile/Profile";
 import Tags from "./private/Tags";
 import Settings from "./private/Settings/Settings";
 import Team from "./private/Team/Team";
-import NewStartupPage from "./private/NewStartupPage/NewStartupPage";
+import StartupPage from "./private/StartupPage/StartupPage";
 import FactsPage from "./private/StartupPage/Facts/Facts";
 
 // Evaluation templates
@@ -119,12 +118,7 @@ export const RouterComponent = ({ history }) => {
         component={GroupConnection}
       />
 
-      <Route
-        exact
-        path={`${startup_page}/:id`}
-        // component={StartupPage}
-        component={NewStartupPage}
-      />
+      <Route exact path={`${startup_page}/:id`} component={StartupPage} />
 
       <Route
         exact
@@ -146,12 +140,6 @@ export const RouterComponent = ({ history }) => {
         exact
         path={`${startup_page}/:connectionId/evaluation/:evaluationId/section/:sectionId`}
         component={SectionPage}
-      />
-
-      <Route
-        exact
-        path={`${new_startup_page}/:id`}
-        component={NewStartupPage}
       />
 
       <Route exact path={team} component={Team} />
@@ -195,7 +183,13 @@ const WrapperComponent = ({ ...props }) => {
       <SideBarTreeMenu {...props} />
       <div
         className={`logged_in_page_content ${
-          props.location.state?.rightMenu ? "show_right_activity" : ""
+          matchPath(props.location.pathname, {
+            path: [`${startup_page}/:id`, `${group}/:id`],
+            exact: true,
+            strict: false,
+          })
+            ? "show_right_activity"
+            : ""
         }`}
       >
         <ErrorBoundary>

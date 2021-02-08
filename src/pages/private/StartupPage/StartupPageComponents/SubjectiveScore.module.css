@@ -79,7 +79,8 @@
   line-height: 1.1;
 }
 
-.from_group span {
+.from_group a {
+  text-decoration: none;
   color: var(--color-primary);
   cursor: pointer;
 }

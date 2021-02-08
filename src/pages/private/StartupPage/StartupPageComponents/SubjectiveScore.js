@@ -1,7 +1,8 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { connectionSubjectiveScorePut } from "Apollo/Mutations";
-import { group as group_route } from "../../../definitions";
+import { Link } from "react-router-dom";
+import { group as group_route } from "pages/definitions";
 
 import {
   subjective_score_name,
@@ -16,7 +17,7 @@ import {
 } from "./SubjectiveScore.module.css";
 import classnames from "classnames";
 
-export function SubjectiveScore({ connection, user, history }) {
+export function SubjectiveScore({ connection, user, onlyMe, history }) {
   const [mutate] = useMutation(connectionSubjectiveScorePut);
   let subjectiveScores = connection.subjectiveScores || [];
 
@@ -60,7 +61,7 @@ export function SubjectiveScore({ connection, user, history }) {
 
   return (
     <div>
-      {allScores.length > 1 && (
+      {allScores.length > 1 && !onlyMe && (
         <>
           <div className={subjective_score_average}>
             <div className={subjective_score_name}>
@@ -78,14 +79,15 @@ export function SubjectiveScore({ connection, user, history }) {
                     <span style={{ opacity: 0.4 }}> (you)</span>
                   )}
                   {ss.ref && (
-                    <div
-                      className={from_group}
-                      onClick={() => {
-                        let path = `${group_route}/${ss.ref.id}`;
-                        history.push(path);
-                      }}
-                    >
-                      From group: <span>{ss.ref.name}</span>
+                    <div className={from_group}>
+                      From group:{" "}
+                      <Link
+                        to={{
+                          pathname: `${group_route}/${ss.ref.id}`,
+                        }}
+                      >
+                        {ss.ref.name}
+                      </Link>
                     </div>
                   )}
                 </div>

@@ -4,16 +4,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import moment from "moment";
 import * as yup from "yup";
-
 import { Modal, Table, Button } from "Components/elements";
 
 import { groupsGet, connectionGet } from "Apollo/Queries";
 import { groupPut } from "Apollo/Mutations";
 
 import validateEmail from "utils/validateEmail";
-import { group as group_route } from "../../../definitions";
+import { group as group_route } from "pages/definitions";
 
-import { share_description, action_link } from "./Share.module.css";
+import styles, { share_description, action_link } from "./Share.module.css";
+import { Link } from "react-router-dom";
 
 function ShareSetting({ group, connection, mutate, done }) {
   const { register, handleSubmit, formState } = useForm();
@@ -164,9 +164,7 @@ function RevokeSharing({ group, connection, user }) {
 }
 
 function SharedWithGroupList(props) {
-  let { groups, connection, user, shareStartup, history } = props;
-
-  // const [mutate] = useMutation(groupPut);
+  let { groups, connection, user, shareStartup } = props;
 
   const columns = [
     {
@@ -227,13 +225,14 @@ function SharedWithGroupList(props) {
       key: "connectionId",
       width: 30,
       render: group => (
-        <Button
-          type="tiny_right"
-          onClick={() => {
-            let path = `${group_route}/${group.id}`;
-            history.push(path);
+        <Link
+          className={styles.link}
+          to={{
+            pathname: `${group_route}/${group.id}`,
           }}
-        />
+        >
+          VIEW
+        </Link>
       ),
     },
   ];

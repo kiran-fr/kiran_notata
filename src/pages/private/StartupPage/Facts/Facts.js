@@ -60,7 +60,7 @@ export function Question({ question, section, creative }) {
       <div className="form_h2">{question.name}</div>
       <div className="form_p2">{question.description}</div>
       <hr />
-      <div className="p1">
+      <div style={{ padding: "10px" }}>
         <GeneralInput
           question={question}
           section={section}
@@ -207,10 +207,10 @@ function InviteStartup({ creative, connectionId, mutate, loading }) {
           disableFoot={true}
         >
           <form className="notata_form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="mt3">
+            <div style={{ marginTop: "30px" }}>
               <input
                 type="text"
-                placeholder="name@email.com"
+                placeholder={"name@email.com"}
                 autoComplete="off"
                 ref={register({ required: true })}
                 name="email"
@@ -253,7 +253,11 @@ function CompanyName({ creative, name }) {
   };
 
   return (
-    <form className="focus_form mb3" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="focus_form"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ marginBottom: "20px" }}
+    >
       <textarea
         className="form_h1"
         rows={1}
@@ -304,12 +308,10 @@ export default function Facts({ history, match }) {
           {
             val: `Startup: ${creative.name}`,
             link: `${startup_page}/${connectionId}`,
-            state: { rightMenu: true },
           },
           {
             val: `Startup Info`,
             link: `${startup_page}/${connectionId}/creative/${creative.id}`,
-            state: { rightMenu: true },
           },
         ]}
       />

@@ -23,8 +23,6 @@ export const charts = `${dashboard}/charts`;
 
 export const startup_page = `${dashboard}/startup_page`;
 
-export const new_startup_page = `${dashboard}/new_startup_page`;
-
 export const profile = `${dashboard}/profile`;
 export const tags = `${dashboard}/tags`;
 export const settings = `${dashboard}/settings`;

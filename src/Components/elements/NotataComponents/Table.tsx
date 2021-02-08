@@ -52,10 +52,7 @@ export const Table = ({
   paginateAt,
   allowSorting,
   emptyLabel,
-}: // rowLinkFn
-Props) => {
-  // region SortRegion
-
+}: Props) => {
   const [sort, setSort] = React.useState<Map<number, SortType>>(
     new Map<number, SortType>()
   );
@@ -248,24 +245,17 @@ Props) => {
         </tbody>
       </table>
 
-      {
-        loading && (
-          <div className={styles.loader}>
-            <i className={"fa fa-spinner fa-spin"}/>
-          </div>
-        )
-      }
+      {loading && (
+        <div className={styles.loader}>
+          <i className={"fa fa-spinner fa-spin"} />
+        </div>
+      )}
 
-      {
-        (!dataSourceProcessed.length) && (
-          <div
-            className={styles.empty_list}
-          >
-            {emptyLabel || 'This list is empty'}
-          </div>
-        )
-      }
-
+      {!dataSourceProcessed.length && (
+        <div className={styles.empty_list}>
+          {emptyLabel || "This list is empty"}
+        </div>
+      )}
     </div>
   );
 };

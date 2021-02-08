@@ -31,7 +31,7 @@ import {
 
 import tableColumns from "./TableColumns/TableColumns";
 
-function applyFilters({ connections, filters }) {
+export function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
   filters = filters || {};
   filters.dateRange = filters.dateRange || [null, null];
@@ -324,7 +324,7 @@ function Connections({ history, chartFilters }) {
       <CreateNewStartup
         history={history}
         setDone={connection => {
-          history.push(`${startup_page}/${connection.id}`, { rightMenu: true });
+          history.push(`${startup_page}/${connection.id}`);
         }}
         setShowTagGroup={setShowTagGroup}
         setShowEvaluate={setShowEvaluate}
