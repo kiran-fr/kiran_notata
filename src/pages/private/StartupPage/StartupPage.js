@@ -169,11 +169,7 @@ export default function StartupPage({ match, location, history }) {
                   />
                 </Card>
 
-                <Impact
-                  connectionId={connection.id}
-                  user={user}
-                  match={match}
-                />
+                <Impact connection={connection} user={user} match={match} />
 
                 {/*FUNNEL*/}
                 <Funnel connection={connection} user={user} match={match} />

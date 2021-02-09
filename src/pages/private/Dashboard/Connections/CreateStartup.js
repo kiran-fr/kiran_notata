@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { connectionsGet } from "Apollo/Queries";
-import { connectionPut, creativePut } from "Apollo/Mutations";
+import { connectionCreate, creativePut } from "Apollo/Mutations";
 
 import { startup_page } from "pages/definitions";
 
@@ -26,7 +26,7 @@ export const CreateNewStartup = ({
   const [showConnection, setShowConnection] = useState();
 
   const [mutateCreative] = useMutation(creativePut);
-  const [mutateConnection] = useMutation(connectionPut, {
+  const [mutateConnectionCreate] = useMutation(connectionCreate, {
     refetchQueries: [{ query: connectionsGet }],
   });
 
@@ -44,9 +44,9 @@ export const CreateNewStartup = ({
           creativePut: { id: creativeId },
         },
       } = await mutateCreative(data);
-      const res = await mutateConnection({ variables: { creativeId } });
+      const res = await mutateConnectionCreate({ variables: { creativeId } });
       const {
-        data: { connectionPut: connection },
+        data: { connectionCreate: connection },
       } = res;
       setShowConnection(connection.id);
     } catch (error) {

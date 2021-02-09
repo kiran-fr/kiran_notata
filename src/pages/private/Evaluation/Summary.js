@@ -3,8 +3,7 @@ import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { evaluationPut } from "Apollo/Mutations";
-import { connectionGet, evaluationTemplateGet } from "Apollo/Queries";
-
+import { connectionGet, userGet, evaluationTemplateGet } from "Apollo/Queries";
 import { startup_page } from "pages/definitions";
 import { getPossibleScore, getScore } from "./util";
 import classnames from "classnames";
@@ -34,6 +33,9 @@ import {
 export default function Summary({ match, history }) {
   const [mutate, { loading: loadingMutation }] = useMutation(evaluationPut);
 
+  const userQuery = useQuery(userGet);
+  const cognitoIdentityId = userQuery?.data?.userGet?.cognitoIdentityId;
+
   const {
     data: connectionGetData,
     loading: connectionGetLoading,
@@ -58,11 +60,13 @@ export default function Summary({ match, history }) {
         ({ id }) => id === match.params.evaluationId
       );
 
-      getData({
-        variables: {
-          id: evaluation.templateId,
-        },
-      });
+      if (evaluation) {
+        getData({
+          variables: {
+            id: evaluation.templateId,
+          },
+        });
+      }
     }
   }, [connectionGetData, getData, match.params.evaluationId]);
 
@@ -81,6 +85,12 @@ export default function Summary({ match, history }) {
   const evaluation = connectionGetData.connectionGet.evaluations.find(
     ({ id }) => id === match.params.evaluationId
   );
+
+  const isYou = evaluation.createdBy === cognitoIdentityId;
+
+  if (!evaluation) {
+    return <div>No evaluation..</div>;
+  }
 
   return (
     <div>
@@ -147,15 +157,18 @@ export default function Summary({ match, history }) {
                 <div className={header}>
                   <div className={header_title}>
                     {name}
-                    <div
-                      className={link_style}
-                      onClick={() => {
-                        let path = `${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}/section/${id}`;
-                        history.push(path);
-                      }}
-                    >
-                      <i className="fal fa-edit" />
-                    </div>
+
+                    {isYou && (
+                      <div
+                        className={link_style}
+                        onClick={() => {
+                          let path = `${startup_page}/${match.params.connectionId}/evaluation/${evaluation.id}/section/${id}`;
+                          history.push(path);
+                        }}
+                      >
+                        <i className="fal fa-edit" />
+                      </div>
+                    )}
                   </div>
 
                   <div className={header_details}>
@@ -250,7 +263,7 @@ export default function Summary({ match, history }) {
           </Link>
         }
 
-        {
+        {isYou && (
           <div
             className={delete_link_style}
             onClick={async () => {
@@ -267,7 +280,7 @@ export default function Summary({ match, history }) {
               }
 
               let path = `${startup_page}/${connectionGetData.connectionGet.id}`;
-              history.push(path);
+              history.push(path, { rightMenu: true });
             }}
           >
             {loadingMutation && (
@@ -277,7 +290,7 @@ export default function Summary({ match, history }) {
             )}
             delete evaluation
           </div>
-        }
+        )}
       </Content>
     </div>
   );

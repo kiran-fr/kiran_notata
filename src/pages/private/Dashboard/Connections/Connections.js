@@ -240,7 +240,6 @@ function Connections({ history, chartFilters }) {
     starred: false,
     dateRange: [null, null],
   });
-  // const [chartFilters, setChartFilters] = useState({ tags: [] });
 
   useEffect(() => {
     let f;

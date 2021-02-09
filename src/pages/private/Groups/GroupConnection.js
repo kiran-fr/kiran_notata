@@ -9,7 +9,7 @@ import {
   connectionsGet,
 } from "Apollo/Queries";
 
-import { connectionPut } from "Apollo/Mutations";
+import { connectionCreate } from "Apollo/Mutations";
 import { startup_page, group as group_route } from "pages/definitions";
 
 import {
@@ -286,10 +286,7 @@ function Evaluation({ evaluation, with_comments }) {
 }
 
 function AddButton({ creative, history }) {
-  const [mutate, { data, error, loading }] = useMutation(connectionPut);
-
-  console.log("error", error);
-
+  const [mutate, { data, error, loading }] = useMutation(connectionCreate);
   const { data: query_data, loading: query_loading } = useQuery(connectionsGet);
 
   if (query_loading && !query_data) {
@@ -339,7 +336,7 @@ function AddButton({ creative, history }) {
         fontSize: "14px",
       }}
       onClick={() => {
-        let id = connection ? connection.id : data.connectionPut.id;
+        let id = connection ? connection.id : data.connectionCreate.id;
         history.push(`${startup_page}/${id}`);
       }}
     >

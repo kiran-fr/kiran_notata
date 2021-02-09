@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 
 import { connectionsGet, groupGet } from "Apollo/Queries";
-import { groupPut, connectionPut, evaluationPut } from "Apollo/Mutations";
+import { groupPut, connectionCreate, evaluationPut } from "Apollo/Mutations";
 import { Button, Card, Modal, Tag } from "Components/elements";
 import styles from "./StartupList2.module.css";
 import ShareSetting from "./ShareSetting";
@@ -207,7 +207,7 @@ const getAllUsedTemplates = list => {
 };
 
 function AddStartup({ creative, connections, isLoading }) {
-  const [mutate, { loading }] = useMutation(connectionPut);
+  const [mutate, { loading }] = useMutation(connectionCreate);
 
   return (
     <div
@@ -220,14 +220,14 @@ function AddStartup({ creative, connections, isLoading }) {
             variables: {
               creativeId: creative.id,
             },
-            update: (proxy, { data: { connectionPut } }) => {
+            update: (proxy, { data: { connectionCreate } }) => {
               proxy.readQuery({
                 query: connectionsGet,
               });
               proxy.writeQuery({
                 query: connectionsGet,
                 data: {
-                  connectionsGet: [...connections, connectionPut],
+                  connectionsGet: [...connections, connectionCreate],
                 },
               });
             },
@@ -657,7 +657,7 @@ function AddAll({
     ],
   });
 
-  const [connectionPutMutate] = useMutation(connectionPut);
+  const [connectionCreateMutate] = useMutation(connectionCreate);
 
   function getAddAllStatus() {
     let saveAndShare = 0;
@@ -698,21 +698,21 @@ function AddAll({
       // SAVE STARTUP
       if (!match) {
         try {
-          await connectionPutMutate({
+          await connectionCreateMutate({
             variables: {
               creativeId: creative.id,
             },
-            update: (proxy, { data: { connectionPut } }) => {
+            update: (proxy, { data: { connectionCreate } }) => {
               proxy.readQuery({
                 query: connectionsGet,
               });
               proxy.writeQuery({
                 query: connectionsGet,
                 data: {
-                  connectionsGet: [...connections, connectionPut],
+                  connectionsGet: [...connections, connectionCreate],
                 },
               });
-              match = connectionPut;
+              match = connectionCreate;
             },
           });
         } catch (error) {
@@ -867,7 +867,7 @@ function StartupList2({
                 onClick={() => {
                   if (!haveAddedStartup) return;
                   let path = `${startup_page}/${haveAddedStartup.id}?group=${group.id}`;
-                  history.push(path);
+                  history.push(path, { rightMenu: true });
                 }}
               >
                 {creative.name}

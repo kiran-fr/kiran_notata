@@ -1,4 +1,6 @@
 export function getPossibleScore(questions) {
+  if (!questions || !questions.length) return {};
+
   return questions.reduce((acc, { inputType, options }) => {
     if (inputType === "TRAFFIC_LIGHTS") {
       return acc + 2;
@@ -23,6 +25,8 @@ export function getPossibleScore(questions) {
 }
 
 export function getScore(questions, answers) {
+  if (!questions || !questions.length) return {};
+
   return questions.reduce((acc, { inputType, options, id }) => {
     const answer = answers.find(({ questionId }) => id === questionId);
 

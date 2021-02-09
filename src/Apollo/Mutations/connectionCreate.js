@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 import { connectionExtendedFragments } from "../Fragments";
 
 export default gql`
-  mutation connectionTagAdd($connectionId: ID!, $tagId: String!) {
-    connectionTagAdd(connectionId: $connectionId, tagId: $tagId) {
+  mutation connectionCreate($creativeId: String!, $input: ConnectionInput) {
+    connectionCreate(creativeId: $creativeId, input: $input) {
       ...connectionExtendedFields
     }
   }

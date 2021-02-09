@@ -8,7 +8,7 @@ import images from "./img/";
 import { omit } from "lodash";
 import classnames from "classnames";
 
-export function Impact({ connectionId, history, location }) {
+export function Impact({ connection, history, location }) {
   const [isLoading, setIsLoading] = useState({});
   const [isEditing, setIsEditing] = useState(false);
 
@@ -18,18 +18,18 @@ export function Impact({ connectionId, history, location }) {
     refetchQueries: [
       {
         query: impactGoalsGet,
-        variables: { id: connectionId },
+        variables: { id: connection.id },
       },
     ],
   });
 
   useEffect(() => {
-    if (connectionId && !called) {
+    if (connection && !called) {
       getImpactGoals({
-        variables: { id: connectionId },
+        variables: { id: connection.id },
       });
     }
-  }, [connectionId]);
+  }, [connection, called]);
 
   let impactGoals = data?.impactGoalsGet || {};
 
@@ -65,7 +65,7 @@ export function Impact({ connectionId, history, location }) {
     }
 
     let variables = {
-      id: connectionId,
+      id: connection.id,
       ...pre,
     };
 
@@ -73,7 +73,7 @@ export function Impact({ connectionId, history, location }) {
       __typename: "Mutation",
       impactGoalsPut: {
         __typename: "ImpactGoals",
-        id: connectionId,
+        id: connection.id,
         goals:
           pre?.input?.goals?.map(g => ({ ...g, __typename: "KeyVal" })) || [],
       },
@@ -149,15 +149,6 @@ export function Impact({ connectionId, history, location }) {
                     setGoals(key);
                   }}
                 >
-                  {/*{*/}
-                  {/*  isLoading[key] && (*/}
-                  {/*    <div*/}
-                  {/*      className={styles.each_loading}*/}
-                  {/*      >*/}
-                  {/*      <i className={"fa fa-spinner fa-spin"} />*/}
-                  {/*    </div>*/}
-                  {/*  )*/}
-                  {/*}*/}
                   <img src={src} alt="goal" />
                 </div>
               ))}
