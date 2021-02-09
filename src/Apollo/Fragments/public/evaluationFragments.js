@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  fragment publicEvaluationFields on PublicEvaluation {
+  fragment evaluationFields on PublicEvaluation {
     id
     name
     description

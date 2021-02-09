@@ -64,11 +64,9 @@ export const RouterComponent = ({ history }) => {
 
 const WrapperComponent = ({ ...props }) => {
   return (
-    <>
-      <div className="public_shared_page_content">
-        <RouterComponent {...props} />
-      </div>
-    </>
+    <div className="public_shared_page_content">
+      <RouterComponent {...props} />
+    </div>
   );
 };
 

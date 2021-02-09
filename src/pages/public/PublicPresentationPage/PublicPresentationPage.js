@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
-import { publicPresentationGet } from "Apollo/Queries";
+import { presentationGet } from "Apollo/Queries/public";
 import moment from "moment";
 
 import styles from "./PublicPresentationPage.module.css";
@@ -19,14 +19,12 @@ export function PublicPresentationPage({ match }) {
   const [
     getPublicPresentation,
     { loading, called, error, data },
-  ] = useLazyQuery(publicPresentationGet);
-  let presentation = data?.publicPresentationGet;
+  ] = useLazyQuery(presentationGet, { context: { clientName: "public" } });
+  let presentation = data?.presentationGet;
 
   useEffect(() => {
     if (id && email) {
-      getPublicPresentation({
-        variables: { id, email },
-      });
+      getPublicPresentation({ variables: { id, email } });
     }
   }, [id && email && getPublicPresentation]);
 

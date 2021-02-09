@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { omit } from "lodash";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
-import { publicCreativeGet, publicEvaluationTemplateGet } from "Apollo/Queries";
-import { publicEvaluationPut } from "Apollo/Mutations";
+import { creativeGet, evaluationTemplateGet } from "Apollo/Queries/public";
+import { evaluationPut } from "Apollo/Mutations";
 import { public_presentation } from "pages/definitions";
 
 import styles from "./EvaluationPage.module.css";
@@ -41,19 +41,22 @@ export function EvaluationPage({ match }) {
   let { connectionId, creativeId, templateId } = match.params;
 
   const [getEvaluationTemplateData, evaluationTemplateQuery] = useLazyQuery(
-    publicEvaluationTemplateGet
+    evaluationTemplateGet,
+    {
+      context: { clientName: "public" },
+    }
   );
-  const { data, loading, error } = useQuery(publicCreativeGet, {
+  const { data, loading, error } = useQuery(creativeGet, {
     variables: { id: creativeId },
+    context: { clientName: "public" },
   });
-  const [mutate, { loading: mutateLoading, data: mutateData }] = useMutation(
-    publicEvaluationPut
-  );
+  const [
+    mutate,
+    { loading: mutateLoading, data: mutateData },
+  ] = useMutation(evaluationPut, { context: { clientName: "public" } });
 
   useEffect(() => {
-    getEvaluationTemplateData({
-      variables: { id: templateId },
-    });
+    getEvaluationTemplateData({ variables: { id: templateId } });
   }, [getEvaluationTemplateData]);
 
   const submitEvaluation = async ({ firstname, lastname, email }) => {
@@ -71,7 +74,7 @@ export function EvaluationPage({ match }) {
     });
   };
 
-  if (mutateData?.publicEvaluationPut)
+  if (mutateData?.evaluationPut)
     return (
       <div className={styles.success}>
         <SuccessBox>
@@ -81,14 +84,14 @@ export function EvaluationPage({ match }) {
     );
 
   const sections =
-    evaluationTemplateQuery.data?.publicEvaluationTemplateGet.sections || [];
+    evaluationTemplateQuery.data?.evaluationTemplateGet.sections || [];
 
   if (sections.length > 0 && !sectionId) setSectionId(sections[0].id);
 
   if (loading || mutateLoading) return <GhostLoader />;
 
   const presentation = getDefaultData({
-    creative: data?.publicCreativeGet,
+    creative: data?.creativeGet,
   });
 
   if (error || (!loading && !presentation)) {

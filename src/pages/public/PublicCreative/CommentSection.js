@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { publicCreativePut } from "Apollo/Mutations";
+import { creativePut } from "Apollo/Mutations";
 import {
   comments_label,
   comments_list,
@@ -10,7 +10,7 @@ import {
 } from "./CommentSection.module.css";
 
 export function CommentSection({ section, question, creative }) {
-  const [mutate] = useMutation(publicCreativePut);
+  const [mutate] = useMutation(creativePut);
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 

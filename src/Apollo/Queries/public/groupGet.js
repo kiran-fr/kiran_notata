@@ -6,11 +6,11 @@ import {
   funnelTagFragments,
   creativeFragments,
   connectionFragments,
-} from "../Fragments";
+} from "../../Fragments";
 
 export default gql`
-  query publicGroupGet($id: ID!) {
-    publicGroupGet(id: $id) {
+  query groupGet($id: ID!) {
+    groupGet(id: $id) {
       ...groupFields
 
       startups {

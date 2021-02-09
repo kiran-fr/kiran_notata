@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { publicCreativeGet } from "Apollo/Queries";
+import { creativeGet } from "Apollo/Queries/public";
 
 import {
   Content,
@@ -17,13 +17,14 @@ import { getDefaultData } from "pages/private/StartupPage/StartupPageComponents/
 export function PublicCompanyInfo({ match }) {
   let { id } = match.params;
 
-  const { data, loading, error } = useQuery(publicCreativeGet, {
+  const { data, loading, error } = useQuery(creativeGet, {
     variables: { id },
+    context: { clientName: "public" },
   });
 
   if (loading) return <GhostLoader />;
 
-  const defaultData = getDefaultData({ creative: data?.publicCreativeGet });
+  const defaultData = getDefaultData({ creative: data?.creativeGet });
 
   const presentation = defaultData;
 

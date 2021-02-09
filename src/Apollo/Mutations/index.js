@@ -15,8 +15,6 @@ export { default as evaluationTemplateQuestionPut } from "./evaluationTemplateQu
 export { default as evaluationTemplateQuestionDelete } from "./evaluationTemplateQuestionDelete";
 export { default as groupPut } from "./groupPut";
 export { default as groupLogPut } from "./groupLogPut";
-export { default as publicCreativePut } from "./publicCreativePut";
-export { default as publicEvaluationPut } from "./publicEvaluationPut";
 export { default as tagGroupPut } from "./tagGroupPut";
 export { default as tagPut } from "./tagPut";
 export { default as connectionTagAdd } from "./connectionTagAdd";

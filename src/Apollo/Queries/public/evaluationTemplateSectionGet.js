@@ -1,10 +1,8 @@
 import gql from "graphql-tag";
 
-import {} from "../Fragments";
-
 export default gql`
-  query publicEvaluationTemplateSectionGet($id: ID!) {
-    publicEvaluationTemplateSectionGet(id: $id) {
+  query evaluationTemplateSectionGet($id: ID!) {
+    evaluationTemplateSectionGet(id: $id) {
       id
       name
       description

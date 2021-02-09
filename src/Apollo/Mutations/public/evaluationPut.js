@@ -1,16 +1,16 @@
 import gql from "graphql-tag";
-import { publicEvaluationFragments } from "../Fragments";
+import { evaluationFragments } from "../../Fragments/public";
 
 export default gql`
-  mutation publicEvaluationPut(
+  mutation evaluationPut(
     $id: ID
     $connectionId: String
     $given_name: String
     $family_name: String
     $email: String
-    $input: PublicEvaluationInput
+    $input: EvaluationInput
   ) {
-    publicEvaluationPut(
+    evaluationPut(
       id: $id
       connectionId: $connectionId
       input: $input
@@ -18,8 +18,8 @@ export default gql`
       family_name: $family_name
       email: $email
     ) {
-      ...publicEvaluationFields
+      ...evaluationFields
     }
   }
-  ${publicEvaluationFragments}
+  ${evaluationFragments}
 `;

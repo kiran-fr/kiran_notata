@@ -4,11 +4,11 @@ import {
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
   evaluationTemplateQuestionFragments,
-} from "../Fragments";
+} from "../../Fragments";
 
 export default gql`
-  query publicEvaluationTemplateGet($id: ID!) {
-    publicEvaluationTemplateGet(id: $id) {
+  query evaluationTemplateGet($id: ID!) {
+    evaluationTemplateGet(id: $id) {
       ...evaluationTemplateFields
       sections {
         ...evaluationTemplateSectionFields

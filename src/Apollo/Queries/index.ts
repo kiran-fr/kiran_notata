@@ -17,12 +17,7 @@ export { default as groupLogGet } from "./groupLogGet";
 export { default as creativeGet } from "./creativeGet";
 export { default as creativesGet } from "./creativesGet";
 export { default as creativeTemplateGet } from "./creativeTemplateGet";
-export { default as publicEvaluationTemplateGet } from "./publicEvaluationTemplateGet";
-export { default as publicEvaluationTemplateSectionGet } from "./publicEvaluationTemplateSectionGet";
-export { default as publicCreativeGet } from "./publicCreativeGet";
-export { default as publicCreativeTemplateGet } from "./publicCreativeTemplateGet";
-export { default as publicPresentationGet } from './publicPresentationGet';
-export { default as presentationsGet } from './presentationsGet';
+export { default as presentationsGet } from "./presentationsGet";
 
 export { default as tagGroupGet } from "./tagGroupGet";
 export { default as funnelGroupGet } from "./funnelGroupGet";
@@ -32,5 +27,3 @@ export { default as evaluationTemplateNamesGet } from "./evaluationTemplateNames
 export { default as pageMetaGet } from "./pageMetaGet";
 export { default as externalResourcesGet } from "./externalResourcesGet";
 export { default as impactGoalsGet } from "./impactGoalsGet";
-
-

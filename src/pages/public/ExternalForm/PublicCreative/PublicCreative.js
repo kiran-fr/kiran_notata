@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { publicCreativePut } from "Apollo/Mutations";
+import { creativePut } from "Apollo/Mutations";
 import { omit } from "lodash";
-import { publicCreativeGet, publicCreativeTemplateGet } from "Apollo/Queries";
+import { creativeGet, creativeTemplateGet } from "Apollo/Queries/public";
 
 import {
   Content,
@@ -84,7 +84,7 @@ function Submit({
   success,
   setSuccess,
 }) {
-  const [mutate, mres] = useMutation(publicCreativePut);
+  const [mutate, mres] = useMutation(creativePut);
 
   const [errors, setErrors] = useState([]);
 
@@ -169,13 +169,14 @@ export function PublicCreative({ match }) {
   let { id, accountId } = match.params;
   const [answers, setAnswers] = useState({});
   const [name, setName] = useState("");
-  const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
-  let creative = creativeQuery.data?.publicCreativeGet;
+  const [getCreative, creativeQuery] = useLazyQuery(creativeGet);
+  let creative = creativeQuery.data?.creativeGet;
 
-  const [getCreativeTemplate, creativeTemplateQuery] = useLazyQuery(
-    publicCreativeTemplateGet
-  );
-  const template = creativeTemplateQuery?.data?.publicCreativeTemplateGet;
+  const [
+    getCreativeTemplate,
+    creativeTemplateQuery,
+  ] = useLazyQuery(creativeTemplateGet, { context: { clientName: "public" } });
+  const template = creativeTemplateQuery?.data?.creativeTemplateGet;
 
   useEffect(() => {
     if (accountId) {

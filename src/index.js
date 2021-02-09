@@ -93,11 +93,10 @@ syncAttributes.onHubCapsule = capsule => {
 Hub.listen("auth", syncAttributes);
 
 const render = () => {
-  let client = appsyncClient;
   ReactDOM.render(
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <Provider store={store}>
-        <ApolloProvider client={client}>
+        <ApolloProvider client={appsyncClient}>
           <Routes />
         </ApolloProvider>
       </Provider>

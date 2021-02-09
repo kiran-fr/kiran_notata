@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { Card, Button, ErrorBox, GhostLoader } from "Components/elements";
 
-import { publicEvaluationTemplateSectionGet } from "Apollo/Queries";
+import { evaluationTemplateSectionGet } from "Apollo/Queries/public";
 
 import GeneralInput from "./form_containers/GeneralInput";
 import styles from "./EvaluationPage.module.css";
@@ -139,14 +139,15 @@ export default function Section({
 
   // Get evaluation template section
   const evaluationTemplateSectionQuery = useQuery(
-    publicEvaluationTemplateSectionGet,
+    evaluationTemplateSectionGet,
     {
       variables: { id: sectionId },
+      context: { clientName: "public" },
     }
   );
 
   const evaluationTemplateSection =
-    evaluationTemplateSectionQuery.data?.publicEvaluationTemplateSectionGet;
+    evaluationTemplateSectionQuery.data?.evaluationTemplateSectionGet;
 
   if (!evaluationTemplateSection) return <GhostLoader />;
 
