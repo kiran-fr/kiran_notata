@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { creativePut } from "Apollo/Mutations";
+import { publicCreativePut } from "Apollo/Mutations";
 
-import { creativeGet, creativeTemplateGet } from "Apollo/Queries/public";
+import { publicCreativeGet, publicCreativeTemplateGet } from "Apollo/Queries";
 
 import {
   Content,
@@ -46,7 +46,7 @@ function Question({ question, section, creative }) {
 
 function Submit({ creative, accountId }) {
   // const [success, setSuccess] = useState(false);
-  const [mutate, { loading }] = useMutation(creativePut);
+  const [mutate, { loading }] = useMutation(publicCreativePut);
 
   return (
     <div>
@@ -86,7 +86,7 @@ function Submit({ creative, accountId }) {
 }
 
 function CompanyName({ creative }) {
-  const [mutate] = useMutation(creativePut);
+  const [mutate] = useMutation(publicCreativePut);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data, event) => {
@@ -137,13 +137,13 @@ function CompanyName({ creative }) {
 export function PublicCreative({ match }) {
   const { id, accountId } = match.params;
 
-  const [getCreative, creativeQuery] = useLazyQuery(creativeGet);
-  let creative = creativeQuery.data?.creativeGet;
+  const [getCreative, creativeQuery] = useLazyQuery(publicCreativeGet);
+  let creative = creativeQuery.data?.publicCreativeGet;
 
   const [getCreativeTemplate, creativeTemplateQuery] = useLazyQuery(
-    creativeTemplateGet
+    publicCreativeTemplateGet
   );
-  const template = creativeTemplateQuery.data?.creativeTemplateGet;
+  const template = creativeTemplateQuery.data?.publicCreativeTemplateGet;
 
   useEffect(() => {
     if (id) getCreative({ variables: { id } });

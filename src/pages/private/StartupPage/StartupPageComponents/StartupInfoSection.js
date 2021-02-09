@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Tag } from "Components/elements";
 import styles from "./Facts.module.css";
-import AnswerSection from "pages/public/PublicPresentationPage/AnswerSection";
 
 function Summaries({ answers }) {
   let website;
@@ -55,28 +54,18 @@ function Summaries({ answers }) {
 }
 
 function Extended({ creative, collapsable }) {
+  let answersByQuestion = {};
   const [open, setOpen] = useState(false);
 
-  let creativeAnswersBySection = {};
-  (creative.answers || []).forEach((answer, index) => {
-    if (answer.sectionId) {
-      creativeAnswersBySection[answer.sectionId] = creativeAnswersBySection[
-        answer.sectionId
-      ] || {
-        name: answer.sectionName,
-        answers: [],
-      };
-      creativeAnswersBySection[answer.sectionId].answers.push(answer);
-    }
-  });
-
-  let order = [
-    "section_info",
-    "section_business",
-    "section_money",
-    "section_materials",
-  ];
-  let sections = order.map(key => creativeAnswersBySection[key]);
+  for (let answer of creative.answers) {
+    answersByQuestion[answer.questionId] = answersByQuestion[
+      answer.questionId
+    ] || {
+      questionName: answer.question,
+      answers: [],
+    };
+    answersByQuestion[answer.questionId].answers.push(answer);
+  }
 
   return (
     <div className={styles.facts_section_container}>
@@ -104,50 +93,40 @@ function Extended({ creative, collapsable }) {
       )}
 
       {((collapsable && open) || !collapsable) && (
-        <div style={{ marginTop: "20px" }}>
-          {sections
-            .filter(x => x)
-            .map((section, i) => (
-              <div key={section.name}>
-                <div>{section.name}</div>
+        <div className="mt2">
+          {Object.keys(answersByQuestion).map(questionId => {
+            let item = answersByQuestion[questionId];
+            let { questionName, answers } = item;
 
-                <AnswerSection answers={section.answers || []} />
+            return (
+              <div
+                style={{
+                  paddingTop: collapsable ? "10px" : "0px",
+                }}
+                className={styles.facts_question_container}
+                key={questionId}
+              >
+                <div className={styles.question_header}>{questionName}</div>
+
+                {answers
+                  .sort((a, b) => (a.inputType === "COMMENT" ? 1 : -1))
+                  .map((answer, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className={
+                          answer.inputType === "COMMENT"
+                            ? styles.facts_comment
+                            : styles.facts_answer
+                        }
+                      >
+                        {answer.val}
+                      </div>
+                    );
+                  })}
               </div>
-            ))}
-
-          {/*{Object.keys(answersByQuestion).map(questionId => {*/}
-          {/*  let item = answersByQuestion[questionId];*/}
-          {/*  let { questionName, answers } = item;*/}
-
-          {/*  return (*/}
-          {/*    <div*/}
-          {/*      style={{*/}
-          {/*        paddingTop: collapsable ? "10px" : "0px",*/}
-          {/*      }}*/}
-          {/*      className={styles.facts_question_container}*/}
-          {/*      key={questionId}*/}
-          {/*    >*/}
-          {/*      <div className={styles.question_header}>{questionName}</div>*/}
-
-          {/*      {answers*/}
-          {/*        .sort((a, b) => (a.inputType === "COMMENT" ? 1 : -1))*/}
-          {/*        .map((answer, i) => {*/}
-          {/*          return (*/}
-          {/*            <div*/}
-          {/*              key={i}*/}
-          {/*              className={*/}
-          {/*                answer.inputType === "COMMENT"*/}
-          {/*                  ? styles.facts_comment*/}
-          {/*                  : styles.facts_answer*/}
-          {/*              }*/}
-          {/*            >*/}
-          {/*              {answer.val}*/}
-          {/*            </div>*/}
-          {/*          );*/}
-          {/*        })}*/}
-          {/*    </div>*/}
-          {/*  );*/}
-          {/*})}*/}
+            );
+          })}
         </div>
       )}
 

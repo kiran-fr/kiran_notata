@@ -114,6 +114,7 @@ function SummaryLine({
   timeStamp,
   isYou,
   editLink,
+  summaryLink,
   history,
 }) {
   let [showList, setShowList] = useState(false);
@@ -138,11 +139,18 @@ function SummaryLine({
               )}
             </div>
           )}
-          {isYou ? (
-            <span className={styles.isYou}>{name} (you)</span>
-          ) : (
-            <span>{name}</span>
-          )}
+
+          <span
+            onClick={() => {
+              summaryLink && history.push(summaryLink);
+            }}
+          >
+            {isYou ? (
+              <span className={styles.isYou}>{name} (you)</span>
+            ) : (
+              <span>{name}</span>
+            )}
+          </span>
         </div>
 
         <div className={styles.score_container}>
@@ -260,6 +268,7 @@ function EvaluationsByTemplate({
               name={`${given_name} ${family_name}`}
               isYou={user.email === email}
               editLink={editLink}
+              summaryLink={`${editLink}/summary`}
               percentageScore={percentageScore}
               className={classnames(styles.each_evaluation_line)}
               list={list.length > 1 && list}
@@ -616,6 +625,7 @@ function TeamEvaluatons({ connection, user, evaluations, history }) {
                   name={`${given_name} ${family_name}`}
                   isYou={user.email === email}
                   editLink={editLink}
+                  summaryLink={`${editLink}/summary`}
                   percentageScore={percentageScore}
                   className={classnames(styles.each_evaluation_line)}
                   list={list.length > 1 && list}

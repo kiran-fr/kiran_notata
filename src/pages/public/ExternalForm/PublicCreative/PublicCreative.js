@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { creativePut } from "Apollo/Mutations";
+import { creativePut } from "Apollo/Mutations/public";
 import { omit } from "lodash";
 import { creativeGet, creativeTemplateGet } from "Apollo/Queries/public";
 
@@ -84,7 +84,11 @@ function Submit({
   success,
   setSuccess,
 }) {
-  const [mutate, mres] = useMutation(creativePut);
+  console.log("accountId", accountId);
+
+  const [mutate, mres] = useMutation(creativePut, {
+    context: { clientName: "public" },
+  });
 
   const [errors, setErrors] = useState([]);
 
@@ -166,10 +170,14 @@ const CompanyName = ({ setName, creative }) => (
 
 export function PublicCreative({ match }) {
   const [success, setSuccess] = useState(false);
+
   let { id, accountId } = match.params;
+
   const [answers, setAnswers] = useState({});
   const [name, setName] = useState("");
-  const [getCreative, creativeQuery] = useLazyQuery(creativeGet);
+  const [getCreative, creativeQuery] = useLazyQuery(creativeGet, {
+    context: { clientName: "public" },
+  });
   let creative = creativeQuery.data?.creativeGet;
 
   const [
@@ -186,7 +194,9 @@ export function PublicCreative({ match }) {
 
   useEffect(() => {
     if (id) {
-      getCreative({ variables: { id } });
+      let [creativeId] = id.split("&");
+
+      getCreative({ variables: { id: creativeId } });
     }
   }, [id && getCreative, getCreativeTemplate, id]);
 

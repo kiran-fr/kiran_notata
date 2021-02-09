@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { omit } from "lodash";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { creativeGet, evaluationTemplateGet } from "Apollo/Queries/public";
-import { evaluationPut } from "Apollo/Mutations";
+import { evaluationPut } from "Apollo/Mutations/public";
 import { public_presentation } from "pages/definitions";
 
 import styles from "./EvaluationPage.module.css";

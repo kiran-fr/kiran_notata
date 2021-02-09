@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import { evaluationFragments } from "../../Fragments/public";
 
 export default gql`
   mutation evaluationPut(
@@ -18,8 +17,7 @@ export default gql`
       family_name: $family_name
       email: $email
     ) {
-      ...evaluationFields
+      message
     }
   }
-  ${evaluationFragments}
 `;
