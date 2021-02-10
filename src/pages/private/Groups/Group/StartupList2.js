@@ -329,7 +329,7 @@ function TemplateLogic({
 
   let unusedEvaluationTemplates = evaluationTemplates.filter(
     ({ id }) =>
-      !mySharedStartup.connection.evaluations.some(
+      !mySharedStartup?.connection?.evaluations?.some(
         ({ templateId }) => templateId === id
       )
   );
