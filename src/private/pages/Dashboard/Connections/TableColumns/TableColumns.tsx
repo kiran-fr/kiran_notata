@@ -25,7 +25,6 @@ export default ({
   setShowTagGroup: Function;
   setShowEvaluate: Function;
 }) => {
-
   const gotoStartup = (connection: Connection) => {
     history.push(`${startup_page}/${connection.id}`, {
       rightMenu: true,
@@ -73,7 +72,6 @@ export default ({
       className: styles.max_width_200,
       type: "string",
       render: (connection: Connection) => {
-
         let _style: React.CSSProperties = {
           cursor: "pointer",
           fontWeight:
@@ -93,7 +91,6 @@ export default ({
             >
               {connection.creative.name}
             </div>
-
           </div>
         );
       },
