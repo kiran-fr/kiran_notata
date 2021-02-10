@@ -7,7 +7,7 @@ import { CommentSection } from "./CommentSection";
 import EditQuestion from "../EditQuestion";
 import classnames from "classnames";
 import { useMutation } from "@apollo/client";
-import { creativeTemplatePut } from "Apollo/Mutations";
+import { creativeTemplatePut } from "private/Apollo/Mutations";
 import { omit } from "lodash";
 
 import {

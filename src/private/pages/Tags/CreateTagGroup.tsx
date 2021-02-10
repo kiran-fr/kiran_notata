@@ -1,8 +1,8 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { tagGroupPut, funnelGroupPut } from "Apollo/Mutations";
-import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
+import { tagGroupPut, funnelGroupPut } from "private/Apollo/Mutations";
+import { tagGroupGet, funnelGroupGet } from "private/Apollo/Queries";
 
 import { Card, Button } from "Components/elements";
 import { TagType } from "private/pages/Tags/index";

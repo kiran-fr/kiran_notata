@@ -2,8 +2,12 @@ import React, { useEffect } from "react";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { evaluationPut } from "Apollo/Mutations";
-import { connectionGet, userGet, evaluationTemplateGet } from "Apollo/Queries";
+import { evaluationPut } from "private/Apollo/Mutations";
+import {
+  connectionGet,
+  userGet,
+  evaluationTemplateGet,
+} from "private/Apollo/Queries";
 import { startup_page } from "definitions.js";
 import { getPossibleScore, getScore } from "./util";
 import classnames from "classnames";

@@ -2,8 +2,8 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 import { TrafficLightInput } from "Components/Forms";
 
-import { evaluationPut } from "Apollo/Mutations";
-import { connectionGet } from "Apollo/Queries";
+import { evaluationPut } from "private/Apollo/Mutations";
+import { connectionGet } from "private/Apollo/Queries";
 
 export default function TrafficLightInputContainer({
   section,

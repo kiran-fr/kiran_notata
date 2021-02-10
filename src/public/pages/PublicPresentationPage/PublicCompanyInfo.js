@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { creativeGet } from "Apollo/Queries/public";
+import { creativeGet } from "public/Apollo/Queries";
 
 import {
   Content,

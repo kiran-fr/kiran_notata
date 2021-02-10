@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { connectionSubjectiveScorePut } from "Apollo/Mutations";
+import { connectionSubjectiveScorePut } from "private/Apollo/Mutations";
 import classnames from "classnames";
 import { Modal } from "Components/elements";
 import styles from "../../StartupPage/StartupPageComponents/SubjectiveScore.module.css";

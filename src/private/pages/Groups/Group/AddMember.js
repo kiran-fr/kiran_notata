@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { groupGet } from "Apollo/Queries";
+import { groupGet } from "private/Apollo/Queries";
 
 import validateEmail from "utils/validateEmail";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { creativePut } from "Apollo/Mutations";
+import { creativePut } from "public/Apollo/Mutations";
 import {
   comments_label,
   comments_list,

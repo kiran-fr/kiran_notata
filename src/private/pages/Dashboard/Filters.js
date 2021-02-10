@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TagSelector from "Components/TagSelector/TagSelector";
-import { funnelGroupGet } from "Apollo/Queries";
+import { funnelGroupGet } from "private/Apollo/Queries";
 import { useQuery } from "@apollo/client";
 import { Tag, Modal } from "Components/elements/";
 import { cloneDeep } from "lodash";

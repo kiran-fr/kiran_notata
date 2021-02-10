@@ -3,8 +3,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { cloneDeep } from "lodash";
 import classnames from "classnames";
 
-import { funnelGroupGet, connectionGet } from "Apollo/Queries";
-import { connectionFunnelTagAdd } from "Apollo/Mutations";
+import { funnelGroupGet, connectionGet } from "private/Apollo/Queries";
+import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
 
 import { Card } from "Components/elements";
 

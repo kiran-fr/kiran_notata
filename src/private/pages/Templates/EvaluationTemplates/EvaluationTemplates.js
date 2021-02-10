@@ -14,12 +14,12 @@ import {
 
 import { delete_bucket } from "./EvaluationTemplates.module.css";
 
-import { evaluationTemplatesGet } from "Apollo/Queries";
+import { evaluationTemplatesGet } from "private/Apollo/Queries";
 
 import {
   evaluationTemplatePut,
   evaluationTemplateDelete,
-} from "Apollo/Mutations";
+} from "private/Apollo/Mutations";
 
 import {
   settings,

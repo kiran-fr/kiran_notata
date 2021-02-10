@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
-import { evaluationTemplateGet } from "Apollo/Queries";
+import { evaluationTemplateGet } from "private/Apollo/Queries";
 
 import { getPossibleScore } from "../../Evaluation/util";
 import { Card, GhostLoader, Content } from "Components/elements";

@@ -3,8 +3,8 @@ import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import { evaluationTemplatesGet } from "Apollo/Queries";
-import { evaluationPut } from "Apollo/Mutations";
+import { evaluationTemplatesGet } from "private/Apollo/Queries";
+import { evaluationPut } from "private/Apollo/Mutations";
 import { startup_page, group as group_route } from "definitions.js";
 import { Button, Table, Modal } from "Components/elements";
 

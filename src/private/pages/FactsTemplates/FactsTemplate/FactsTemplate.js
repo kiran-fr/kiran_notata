@@ -2,13 +2,13 @@ import React from "react";
 // import { useLazyQuery, useMutation } from "@apollo/client";
 // import { useForm } from "react-hook-form";
 
-// import { evaluationTemplateGet } from "Apollo/Queries";
+// import { evaluationTemplateGet } from "private/Apollo/Queries";
 
 // import {
 //   evaluationTemplatePut,
 //   evaluationTemplateSectionPut,
 //   evaluationTemplateSectionDelete,
-// } from "Apollo/Mutations";
+// } from "private/Apollo/Mutations";
 // import {
 //   settings,
 //   evaluation_template,

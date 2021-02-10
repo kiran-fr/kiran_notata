@@ -12,14 +12,14 @@ import {
   creativeTemplateGet,
   connectionsGet,
   presentationsGet,
-} from "Apollo/Queries";
+} from "private/Apollo/Queries";
 
 import {
   groupMarkAsSeen,
   creativeDelete,
   presentationPut,
   connectionCreate,
-} from "Apollo/Mutations";
+} from "private/Apollo/Mutations";
 
 import { group as group_route, public_presentation } from "definitions.js";
 
@@ -30,7 +30,7 @@ import {
   Connection,
   Creative,
 } from "private/pages/Dashboard/Connections/types";
-import { Groups } from "Apollo/Queries/groupsGet";
+import { Groups } from "private/Apollo/Queries/groupsGet";
 import { ViewSummary } from "./ViewSummary";
 
 enum InboxType {

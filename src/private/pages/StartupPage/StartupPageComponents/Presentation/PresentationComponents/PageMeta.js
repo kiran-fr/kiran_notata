@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ErrorBox, SuccessBox } from "Components/elements";
-import { pageMetaGet } from "Apollo/Queries";
+import { pageMetaGet } from "private/Apollo/Queries";
 import { useLazyQuery } from "@apollo/client";
 import { omit } from "lodash";
 import styles from "public/pages/PublicPresentationPage/PublicPresentationPage.module.css";

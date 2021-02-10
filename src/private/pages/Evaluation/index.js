@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
 
-import { connectionGet, evaluationTemplateGet } from "Apollo/Queries";
+import { connectionGet, evaluationTemplateGet } from "private/Apollo/Queries";
 
 import { startup_page } from "definitions.js";
 

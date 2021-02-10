@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { creativePut } from "Apollo/Mutations/public";
+import { creativePut } from "public/Apollo/Mutations";
 import { omit } from "lodash";
-import { creativeGet, creativeTemplateGet } from "Apollo/Queries/public";
+import { creativeGet, creativeTemplateGet } from "public/Apollo/Queries";
 
 import {
   Content,

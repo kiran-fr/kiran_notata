@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { CommentInput } from "Components/Forms";
-import { evaluationPut } from "Apollo/Mutations";
+import { evaluationPut } from "private/Apollo/Mutations";
 
 export default function CommentInputContainer({
   section,

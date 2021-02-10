@@ -4,7 +4,7 @@ import InfoModal from "Components/InfoModal/InfoModal";
 
 import { Button, Content, BreadCrumbs, GhostLoader } from "Components/elements";
 import styles from "./FactsTemplates.module.css";
-import { creativeTemplateGet } from "Apollo/Queries";
+import { creativeTemplateGet } from "private/Apollo/Queries";
 import TemplatePreview from "./TemplatePreview/TemplatePreview";
 import { settings, facts_templates } from "definitions.js";
 

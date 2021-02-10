@@ -5,7 +5,7 @@ import { Content, GhostLoader, BreadCrumbs } from "Components/elements";
 import CreateTagGroup from "./CreateTagGroup";
 import TagGroup from "./TagsGroup";
 
-import { tagGroupGet, funnelGroupGet } from "Apollo/Queries";
+import { tagGroupGet, funnelGroupGet } from "private/Apollo/Queries";
 import { useEffect } from "react";
 
 import { settings, tags } from "definitions.js";

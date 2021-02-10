@@ -7,9 +7,9 @@ import {
   logGet,
   evaluationTemplateGet,
   connectionsGet,
-} from "Apollo/Queries";
+} from "private/Apollo/Queries";
 
-import { connectionCreate } from "Apollo/Mutations";
+import { connectionCreate } from "private/Apollo/Mutations";
 import { startup_page, group as group_route } from "definitions.js";
 
 import {

@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 
 import { SingleChoiceInput } from "Components/Forms";
 
-import { creativePut } from "Apollo/Mutations";
+import { creativePut } from "private/Apollo/Mutations";
 
 export default function SingleChoiceInputContainer({ question, creative }) {
   const { options } = question;

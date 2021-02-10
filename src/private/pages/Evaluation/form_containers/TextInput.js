@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
 import { TextInput } from "Components/Forms";
 
-import { evaluationPut } from "Apollo/Mutations";
+import { evaluationPut } from "private/Apollo/Mutations";
 
 export default function TextInputContainer({
   section,

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
-import { presentationGet } from "Apollo/Queries/public";
+import { presentationGet } from "public/Apollo/Queries";
 import moment from "moment";
 
 import styles from "./PublicPresentationPage.module.css";

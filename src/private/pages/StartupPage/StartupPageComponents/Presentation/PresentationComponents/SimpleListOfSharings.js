@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Card, Table } from "Components/elements";
 import moment from "moment";
 import { useLazyQuery } from "@apollo/client";
-import { presentationsGet } from "Apollo/Queries";
+import { presentationsGet } from "private/Apollo/Queries";
 import queryString from "query-string";
 import { startup_page } from "definitions.js";
 

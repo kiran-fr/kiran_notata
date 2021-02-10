@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { connectionSubjectiveScorePut } from "Apollo/Mutations";
+import { connectionSubjectiveScorePut } from "private/Apollo/Mutations";
 import { Link } from "react-router-dom";
 import { group as group_route } from "definitions.js";
 

@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 
 import Question from "./QuestionComp";
 
-import { evaluationTemplateGet } from "Apollo/Queries";
+import { evaluationTemplateGet } from "private/Apollo/Queries";
 import {
   evaluationTemplateQuestionPut,
   evaluationTemplateSectionPut,
-} from "Apollo/Mutations";
+} from "private/Apollo/Mutations";
 
 import {
   settings,

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { publicCreativePut } from "Apollo/Mutations";
+import { publicCreativePut } from "public/Apollo/Mutations";
 
-import { publicCreativeGet, publicCreativeTemplateGet } from "Apollo/Queries";
+import {
+  publicCreativeGet,
+  publicCreativeTemplateGet,
+} from "public/Apollo/Queries";
 
 import {
   Content,

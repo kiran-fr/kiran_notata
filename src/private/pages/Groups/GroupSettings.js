@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
-import { userGet, groupGet } from "Apollo/Queries";
-import { groupPut } from "Apollo/Mutations";
+import { userGet, groupGet } from "private/Apollo/Queries";
+import { groupPut } from "private/Apollo/Mutations";
 
 import { group as group_route } from "definitions.js";
 

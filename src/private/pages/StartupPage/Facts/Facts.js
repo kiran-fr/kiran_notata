@@ -4,8 +4,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
-import { userGet, creativeGet, creativeTemplateGet } from "Apollo/Queries";
-import { creativePut } from "Apollo/Mutations";
+import {
+  userGet,
+  creativeGet,
+  creativeTemplateGet,
+} from "private/Apollo/Queries";
+import { creativePut } from "private/Apollo/Mutations";
 
 import validateEmail from "utils/validateEmail";
 

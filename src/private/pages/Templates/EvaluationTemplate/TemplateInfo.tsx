@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import { evaluationTemplatePut } from "Apollo/Mutations";
+import { evaluationTemplatePut } from "private/Apollo/Mutations";
 
 import { AutoHeightTextarea } from "Components/elements";
 

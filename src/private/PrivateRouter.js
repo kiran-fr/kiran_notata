@@ -5,7 +5,7 @@ import { Route, matchPath } from "react-router";
 
 // API
 import { useQuery } from "@apollo/client";
-import { userGet } from "Apollo/Queries";
+import { userGet } from "private/Apollo/Queries";
 
 // ROUTES
 import {

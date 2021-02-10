@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 // API STUFF
 import { useQuery, useMutation } from "@apollo/client";
 
-import { userGet } from "Apollo/Queries";
-import { userUpdate } from "Apollo/Mutations";
+import { userGet } from "private/Apollo/Queries";
+import { userUpdate } from "private/Apollo/Mutations";
 
 // COMPONENTS
 import {

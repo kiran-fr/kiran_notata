@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import Activity from "Components/Activity/Activity";
-import { logPut } from "Apollo/Mutations";
-import { logGet } from "Apollo/Queries";
+import { logPut } from "private/Apollo/Mutations";
+import { logGet } from "private/Apollo/Queries";
 
 export const StartupActivity = ({ user, connection }) => {
   const [mutate] = useMutation(logPut);

@@ -11,9 +11,12 @@ import {
   userInvitationsGet,
   accountGet,
   accountInvitationsGet,
-} from "Apollo/Queries";
+} from "private/Apollo/Queries";
 
-import { accountInvite, userInvitationResponse } from "Apollo/Mutations";
+import {
+  accountInvite,
+  userInvitationResponse,
+} from "private/Apollo/Mutations";
 
 import {
   delete_bucket,

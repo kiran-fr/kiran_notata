@@ -5,12 +5,12 @@ import { useMutation } from "@apollo/client";
 import { omit } from "lodash";
 import classnames from "classnames";
 
-import { evaluationTemplateGet } from "Apollo/Queries";
+import { evaluationTemplateGet } from "private/Apollo/Queries";
 
 import {
   evaluationTemplateQuestionPut,
   evaluationTemplateQuestionDelete,
-} from "Apollo/Mutations";
+} from "private/Apollo/Mutations";
 
 import { delete_question } from "./EvaluationTemplateSection.module.css";
 

@@ -4,13 +4,13 @@ import moment from "moment";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
-import { connectionsGet, tagGroupGet } from "Apollo/Queries";
+import { connectionsGet, tagGroupGet } from "private/Apollo/Queries";
 
 import {
   connectionSetStar,
   connectionTagAdd,
   connectionTagRemove,
-} from "Apollo/Mutations";
+} from "private/Apollo/Mutations";
 
 // COMPONENTS
 import Filters from "../Filters";

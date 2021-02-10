@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { Card, Button, ErrorBox, GhostLoader } from "Components/elements";
 
-import { evaluationTemplateSectionGet } from "Apollo/Queries/public";
+import { evaluationTemplateSectionGet } from "public/Apollo/Queries";
 
 import GeneralInput from "./form_containers/GeneralInput";
 import styles from "./EvaluationPage.module.css";

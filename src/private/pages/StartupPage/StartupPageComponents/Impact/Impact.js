@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "Components/elements";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { impactGoalsGet } from "Apollo/Queries";
-import { impactGoalsPut } from "Apollo/Mutations";
+import { impactGoalsGet } from "private/Apollo/Queries";
+import { impactGoalsPut } from "private/Apollo/Mutations";
 import styles from "./Impact.module.css";
 import images from "./img/";
 import { omit } from "lodash";

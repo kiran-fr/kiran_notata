@@ -4,7 +4,7 @@ import {
   groupsGet,
   GroupsType as Groups,
   UserType as User,
-} from "Apollo/Queries";
+} from "private/Apollo/Queries";
 import { group } from "definitions.js";
 
 import { History } from "history";

@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 
 import { TextInput } from "Components/Forms";
 
-import { creativePut } from "Apollo/Mutations";
+import { creativePut } from "private/Apollo/Mutations";
 
 export default function TextInputContainer({ question, section, creative }) {
   const [mutate, { loading }] = useMutation(creativePut);

@@ -13,9 +13,9 @@ import {
   tagGroupDelete,
   tagGroupPut,
   tagPut,
-} from "Apollo/Mutations";
+} from "private/Apollo/Mutations";
 
-import { funnelGroupGet, tagGroupGet } from "Apollo/Queries";
+import { funnelGroupGet, tagGroupGet } from "private/Apollo/Queries";
 
 import styles from "./TagGroup.module.css";
 import { TagType } from "private/pages/Tags/index";

@@ -13,8 +13,8 @@ import { Tags } from "./StartupPageComponents/Tags";
 import { Funnel } from "./StartupPageComponents/Funnel";
 import { PresentationPage } from "./StartupPageComponents/Presentation/PresentationPage";
 
-import { userGet, connectionGet, groupsGet } from "Apollo/Queries";
-import { connectionDelete } from "Apollo/Mutations";
+import { userGet, connectionGet, groupsGet } from "private/Apollo/Queries";
+import { connectionDelete } from "private/Apollo/Mutations";
 
 import { dashboard, startup_page } from "definitions.js";
 

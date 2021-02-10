@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
-import { connectionsGet } from "Apollo/Queries";
-import { connectionCreate, creativePut } from "Apollo/Mutations";
+import { connectionsGet } from "private/Apollo/Queries";
+import { connectionCreate, creativePut } from "private/Apollo/Mutations";
 
 import { startup_page } from "definitions.js";
 

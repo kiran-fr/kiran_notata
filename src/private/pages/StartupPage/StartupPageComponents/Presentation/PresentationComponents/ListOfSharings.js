@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import { presentationPut } from "Apollo/Mutations";
-import { presentationsGet } from "Apollo/Queries";
+import { presentationPut } from "private/Apollo/Mutations";
+import { presentationsGet } from "private/Apollo/Queries";
 import { Button, Card, Table, Modal } from "Components/elements";
 import moment from "moment";
 import { omit } from "lodash";

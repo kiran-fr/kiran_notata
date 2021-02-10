@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Card, Table } from "Components/elements";
 import moment from "moment";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { externalResourcesGet } from "Apollo/Queries";
-import { externalResourcePut, externalResourceDelete } from "Apollo/Mutations";
+import { externalResourcesGet } from "private/Apollo/Queries";
+import {
+  externalResourcePut,
+  externalResourceDelete,
+} from "private/Apollo/Mutations";
 import { useForm } from "react-hook-form";
 import styles from "../StartupPage.module.css";
 

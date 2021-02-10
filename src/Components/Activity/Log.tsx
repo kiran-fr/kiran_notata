@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import moment from "moment";
 
-import { LogItem } from "Apollo/Queries";
+import { LogItem } from "private/Apollo/Queries";
 
 import styles from "./Log.module.css";
 const classnames = require("classnames");

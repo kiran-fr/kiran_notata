@@ -2,7 +2,7 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 
 import { MultipleChoiceInput } from "Components/Forms";
-import { creativePut } from "Apollo/Mutations";
+import { creativePut } from "private/Apollo/Mutations";
 
 export default function MultipleChoiceInputContainer({ question, creative }) {
   const { options } = question;

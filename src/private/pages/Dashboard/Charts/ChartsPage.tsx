@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 
 import { useQuery } from "@apollo/client";
-import { connectionsGet, tagGroupGet } from "Apollo/Queries";
+import { connectionsGet, tagGroupGet } from "private/Apollo/Queries";
 
 import Filters from "../Filters";
 

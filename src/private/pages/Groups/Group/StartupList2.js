@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 
-import { connectionsGet, groupGet } from "Apollo/Queries";
-import { groupPut, connectionCreate, evaluationPut } from "Apollo/Mutations";
+import { connectionsGet, groupGet } from "private/Apollo/Queries";
+import {
+  groupPut,
+  connectionCreate,
+  evaluationPut,
+} from "private/Apollo/Mutations";
 import { Button, Card, Modal, Tag } from "Components/elements";
 import styles from "./StartupList2.module.css";
 import ShareSetting from "./ShareSetting";

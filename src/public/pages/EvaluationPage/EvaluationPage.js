@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { omit } from "lodash";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
-import { creativeGet, evaluationTemplateGet } from "Apollo/Queries/public";
-import { evaluationPut } from "Apollo/Mutations/public";
+import { creativeGet, evaluationTemplateGet } from "public/Apollo/Queries";
+import { evaluationPut } from "public/Apollo/Mutations";
 import { public_presentation } from "definitions.js";
 
 import styles from "./EvaluationPage.module.css";

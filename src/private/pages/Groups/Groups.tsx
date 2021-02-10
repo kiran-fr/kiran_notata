@@ -7,8 +7,8 @@ import {
   // groupGetListOfStartups,
   GroupsType,
   UserType as User,
-} from "Apollo/Queries";
-import { groupPut } from "Apollo/Mutations";
+} from "private/Apollo/Queries";
+import { groupPut } from "private/Apollo/Mutations";
 
 import CreateNewGroup from "./CreateGroup";
 import { group } from "definitions.js";

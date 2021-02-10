@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { evaluationTemplatesGet } from "Apollo/Queries";
+import { evaluationTemplatesGet } from "private/Apollo/Queries";
 import { public_evaluation } from "definitions.js";
 import { Button, Table, Modal, SuccessBox } from "Components/elements";
 

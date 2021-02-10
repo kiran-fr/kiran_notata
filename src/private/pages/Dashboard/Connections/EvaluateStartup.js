@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
-import { evaluationTemplateNamesGet } from "Apollo/Queries";
-import { evaluationPut } from "Apollo/Mutations";
+import { evaluationTemplateNamesGet } from "private/Apollo/Queries";
+import { evaluationPut } from "private/Apollo/Mutations";
 
 import { startup_page } from "definitions.js";
 

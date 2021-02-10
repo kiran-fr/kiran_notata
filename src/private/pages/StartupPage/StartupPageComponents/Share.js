@@ -6,8 +6,8 @@ import moment from "moment";
 import * as yup from "yup";
 import { Modal, Table, Button } from "Components/elements";
 
-import { groupsGet, connectionGet } from "Apollo/Queries";
-import { groupPut } from "Apollo/Mutations";
+import { groupsGet, connectionGet } from "private/Apollo/Queries";
+import { groupPut } from "private/Apollo/Mutations";
 
 import validateEmail from "utils/validateEmail";
 import { group as group_route } from "definitions.js";

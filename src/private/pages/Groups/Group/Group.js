@@ -11,11 +11,11 @@ import {
   groupGet,
   connectionsGet,
   evaluationTemplateNamesGet,
-} from "Apollo/Queries";
+} from "private/Apollo/Queries";
 
-import { groupLogGet } from "Apollo/Queries";
-import { groupPut, groupLogPut } from "Apollo/Mutations";
-import { groupLogSubscription } from "Apollo/Subscriptions";
+import { groupLogGet } from "private/Apollo/Queries";
+import { groupPut, groupLogPut } from "private/Apollo/Mutations";
+import { groupLogSubscription } from "private/Apollo/Subscriptions";
 import AddNewMember from "./AddMember";
 import AddNewStartup from "./AddStartup";
 import StartupList2 from "./StartupList2";

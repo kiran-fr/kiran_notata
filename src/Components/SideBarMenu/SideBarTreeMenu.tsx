@@ -2,18 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQuery } from "@apollo/client";
-import { Startups } from "Apollo/Queries/groupsGet";
+import { Startups } from "private/Apollo/Queries/groupsGet";
 import {
   connectionsGet,
   groupsGet,
   tagGroupGet,
   userGet,
-} from "Apollo/Queries";
+} from "private/Apollo/Queries";
 import {
   connectionTagAdd,
   connectionTagRemove,
   connectionCreate,
-} from "Apollo/Mutations";
+} from "private/Apollo/Mutations";
 
 import { dashboard, group, settings, charts, signOut } from "definitions.js";
 import CreateNewStartup from "private/pages/Dashboard/Connections/CreateStartup";

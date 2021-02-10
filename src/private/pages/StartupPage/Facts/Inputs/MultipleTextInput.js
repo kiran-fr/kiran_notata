@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 
 import { MultipleTextInput } from "Components/Forms";
 
-import { creativePut } from "Apollo/Mutations";
+import { creativePut } from "private/Apollo/Mutations";
 
 export default function MultipleTextInputContainer({
   question,

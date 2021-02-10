@@ -13,7 +13,7 @@ import {
   evaluationTemplateGet,
   evaluationTemplateSectionGet,
   connectionGet,
-} from "Apollo/Queries";
+} from "private/Apollo/Queries";
 
 import GeneralInput from "./form_containers/GeneralInput";
 import { startup_page } from "definitions.js";

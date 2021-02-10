@@ -2,7 +2,7 @@ import React from "react";
 
 // API
 import { useQuery } from "@apollo/client";
-import { userInvitationsGet } from "Apollo/Queries";
+import { userInvitationsGet } from "private/Apollo/Queries";
 
 import { Card } from "Components/elements";
 

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
-import { tagGroupGet, connectionGet } from "Apollo/Queries";
-import { connectionTagAdd, connectionTagRemove } from "Apollo/Mutations";
+import { tagGroupGet, connectionGet } from "private/Apollo/Queries";
+import {
+  connectionTagAdd,
+  connectionTagRemove,
+} from "private/Apollo/Mutations";
 
 import { Button, Tag, Card } from "Components/elements";
 

@@ -11,7 +11,7 @@ import {
 import { facts_templates } from "definitions.js";
 
 import { useQuery } from "@apollo/client";
-import accountGet from "Apollo/Queries/accountGet";
+import accountGet from "private/Apollo/Queries/accountGet";
 import styles from "private/pages/StartupPage/Facts/Facts.module.css";
 import { History } from "history";
 
