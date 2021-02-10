@@ -15,16 +15,16 @@ import {
   connectionCreate,
 } from "Apollo/Mutations";
 
-import { dashboard, group, settings, charts, signOut } from "pages/definitions";
-import CreateNewStartup from "pages/private/Dashboard/Connections/CreateStartup";
-import Groups, { GroupsData } from "pages/private/Groups/Groups";
-import EvaluateSelector from "pages/private/Dashboard/Connections/EvaluateStartup";
+import { dashboard, group, settings, charts, signOut } from "definitions.js";
+import CreateNewStartup from "private/pages/Dashboard/Connections/CreateStartup";
+import Groups, { GroupsData } from "private/pages/Groups/Groups";
+import EvaluateSelector from "private/pages/Dashboard/Connections/EvaluateStartup";
 import TagSelector from "Components/TagSelector/TagSelector";
-import { Connection, Tag } from "pages/private/Dashboard/Connections/types";
+import { Connection, Tag } from "private/pages/Dashboard/Connections/types";
 import {
   AddTagMutationOptions,
   DeleteTagMutationOptions,
-} from "pages/private/Dashboard/Connections/Connections";
+} from "private/pages/Dashboard/Connections/Connections";
 import { hideMobileNavigationMenu } from "actions/menu";
 import styles from "./SideBarTreeMenu.module.css";
 

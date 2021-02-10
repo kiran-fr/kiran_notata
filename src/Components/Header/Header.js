@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { DashboardHeader } from "./DashboardHeader";
-import { dashboard } from "pages/definitions";
+import { dashboard } from "definitions.js";
 
 const HeaderComponent = () => {
   return (

@@ -72,5 +72,5 @@ export default function PreProfile({ history }) {
 // // API STUFF
 // import { useMutation } from "@apollo/client";
 // import { userUpdate } from "Apollo/Mutations";
-// import { dashboard } from "pages/definitions";
+// import { dashboard } from "definitions.js";
 // import { omit } from "lodash";

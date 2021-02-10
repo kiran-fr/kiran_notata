@@ -18,7 +18,7 @@ import {
 import { userLoggedIn } from "actions/user";
 import { getUserIsLoggedIn } from "reducers/selectors/user";
 
-import { dashboard, forgotPassword } from "pages/definitions";
+import { dashboard, forgotPassword } from "definitions.js";
 import styles from "../Auth.module.css";
 
 const getErrorMessage = ({ error }) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
-import { login } from "pages/definitions";
+import { login } from "definitions.js";
 import { useForm } from "react-hook-form";
 
 import { Content, Card, Button } from "Components/elements/";

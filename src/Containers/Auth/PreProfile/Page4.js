@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 // API STUFF
 import { useMutation } from "@apollo/client";
 import { userUpdate } from "Apollo/Mutations";
-import { dashboard } from "pages/definitions";
+import { dashboard } from "definitions.js";
 
 import { Card, Button, MessageBox } from "Components/elements/";
 import styles from "./Profile.module.css";

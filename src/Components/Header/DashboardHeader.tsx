@@ -1,6 +1,6 @@
 import React from "react";
 
-import { frontpage } from "pages/definitions";
+import { frontpage } from "definitions.js";
 import { History } from "history";
 
 // STYLE
