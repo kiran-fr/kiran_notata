@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@apollo/client";
-import { connectionsGet } from "private/Apollo/Queries";
-import { connectionCreate, creativePut } from "private/Apollo/Mutations";
-
+import { useQuery, useMutation } from "@apollo/client";
+import { connectionsGet, tagGroupGet } from "private/Apollo/Queries";
+import {
+  connectionCreate,
+  creativePut,
+  connectionTagAdd,
+  connectionTagRemove,
+} from "private/Apollo/Mutations";
+import {
+  AddTagMutationOptions,
+  DeleteTagMutationOptions,
+} from "private/pages/Dashboard/Connections/Connections";
 import { startup_page } from "definitions.js";
 
 import { Button, Modal } from "Components/elements";
+import TagSelector from "Components/TagSelector/TagSelector";
+import SetSubjectiveScore from "private/pages/Dashboard/Connections/SetSubjectiveScore";
 
 import {
   shortcuts_list,
@@ -14,21 +24,22 @@ import {
 } from "./Connections.module.css";
 
 export const CreateNewStartup = ({
-  setDone,
   history,
-  setShowTagGroup,
-  setShowEvaluate,
   showModalOnly,
   showModalState,
   onCloseModalEvent,
 }) => {
   const [showModal, setShowModal] = useState(showModalState?.state);
   const [showConnection, setShowConnection] = useState();
+  const [showTagGroup, setShowTagGroup] = useState();
+  const [showEvaluate, setShowEvaluate] = useState();
 
   const [mutateCreative] = useMutation(creativePut);
   const [mutateConnectionCreate] = useMutation(connectionCreate, {
     refetchQueries: [{ query: connectionsGet }],
   });
+  const [mutateConnectionTagAdd] = useMutation(connectionTagAdd);
+  const [mutateconnectionTagRemove] = useMutation(connectionTagRemove);
 
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
@@ -53,6 +64,34 @@ export const CreateNewStartup = ({
       console.log(error);
     }
   };
+  const connectionsQuery = useQuery(connectionsGet, {
+    fetchPolicy: "cache-first",
+  });
+  const connections = connectionsQuery.data?.connectionsGet || [];
+
+  const tagGroupsQuery = useQuery(tagGroupGet, { fetchPolicy: "cache-first" });
+  const tagGroups = tagGroupsQuery.data?.accountGet.tagGroups || [];
+
+  let showTagsForConnection;
+  if (showTagGroup) {
+    showTagsForConnection = (connections || []).find(
+      ({ id }) => id === showTagGroup
+    );
+  }
+  let showEvaluateForConnection;
+  if (showEvaluate) {
+    showEvaluateForConnection = (connections || []).find(
+      ({ id }) => id === showEvaluate
+    );
+  }
+
+  function addTag(tag, connection) {
+    mutateConnectionTagAdd(AddTagMutationOptions(tag, connection));
+  }
+
+  function deleteTag(tag, connection) {
+    mutateconnectionTagRemove(DeleteTagMutationOptions(tag, connection));
+  }
 
   return (
     <>
@@ -88,7 +127,7 @@ export const CreateNewStartup = ({
               <div className="mt3">
                 <input
                   type="text"
-                  placeholder={`I.e. "Money Press Inc."`}
+                  placeholder='I.e. "Money Press Inc."'
                   autoComplete="off"
                   ref={register({ required: true })}
                   name="variables.input.name"
@@ -157,6 +196,33 @@ export const CreateNewStartup = ({
             </div>
           )}
         </Modal>
+      )}
+      {showTagGroup && (
+        <TagSelector
+          title={showTagsForConnection?.creative.name}
+          show={showTagsForConnection}
+          tagGroups={tagGroups}
+          checkedTags={showTagsForConnection?.tags}
+          addTag={tag => addTag(tag, showTagsForConnection)}
+          deleteTag={tag => deleteTag(tag, showTagsForConnection)}
+          close={() => {
+            setShowModal(true);
+            setShowConnection(showTagGroup);
+            setShowTagGroup(undefined);
+          }}
+        />
+      )}
+
+      {showEvaluate && (
+        <SetSubjectiveScore
+          connection={showEvaluateForConnection}
+          history={history}
+          close={() => {
+            setShowModal(true);
+            setShowConnection(showEvaluate);
+            setShowEvaluate(undefined);
+          }}
+        />
       )}
     </>
   );

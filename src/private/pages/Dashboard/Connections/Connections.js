@@ -17,8 +17,6 @@ import Filters from "../Filters";
 import CreateNewStartup from "./CreateStartup";
 import SetSubjectiveScore from "./SetSubjectiveScore";
 
-import { startup_page } from "definitions.js";
-
 import { Table, Card, GhostLoader } from "Components/elements";
 
 import TagSelector from "Components/TagSelector/TagSelector";
@@ -320,15 +318,7 @@ function Connections({ history, chartFilters }) {
 
   return (
     <>
-      <CreateNewStartup
-        history={history}
-        setDone={connection => {
-          history.push(`${startup_page}/${connection.id}`);
-        }}
-        setShowTagGroup={setShowTagGroup}
-        setShowEvaluate={setShowEvaluate}
-        showModalOnly={false}
-      />
+      <CreateNewStartup history={history} showModalOnly={false} />
       <div className={small_text_flex}>
         {(hasFilters && (
           <div
@@ -375,15 +365,9 @@ function Connections({ history, chartFilters }) {
             show={showTagsForConnection}
             tagGroups={tagGroups}
             checkedTags={showTagsForConnection?.tags}
-            addTag={tag => {
-              addTag(tag, showTagsForConnection);
-            }}
-            deleteTag={tag => {
-              deleteTag(tag, showTagsForConnection);
-            }}
-            close={() => {
-              setShowTagGroup(null);
-            }}
+            addTag={tag => addTag(tag, showTagsForConnection)}
+            deleteTag={tag => deleteTag(tag, showTagsForConnection)}
+            close={() => setShowTagGroup(null)}
           />
         )}
 

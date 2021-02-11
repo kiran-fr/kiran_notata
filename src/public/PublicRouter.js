@@ -7,7 +7,6 @@ import {
   public_creative,
   demo_page,
   public_pages,
-  // ban_demo_page,
   product_demo,
   public_presentation,
   public_evaluation,
@@ -27,7 +26,6 @@ export const RouterComponent = ({ history }) => {
   return (
     <Switch>
       <Route exact path={demo_page} component={DemoPage} />
-      {/*<Route exact path={ban_demo_page} component={BanDemoPage} />*/}
       <Route exact path={oia_demo_page} component={OIADemoPage} />
       <Route exact path={product_demo} component={ProductDemo} />
 

@@ -11,17 +11,13 @@ export default function TagSelector(props) {
 
   const { show, tagGroups } = props;
 
-  // console.log('tagGroups', tagGroups)
-
   if (!show) return <span />;
 
   return (
     <Modal
       title={props.title || ""}
       noKill
-      close={() => {
-        props.close();
-      }}
+      close={props.close}
       disableFoot={true}
     >
       <SelectedTags {...props} />
