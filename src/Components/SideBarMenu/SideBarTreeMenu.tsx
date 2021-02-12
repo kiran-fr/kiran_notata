@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQuery } from "@apollo/client";
 import { Startups } from "private/Apollo/Queries/groupsGet";
 import { connectionsGet, groupsGet, userGet } from "private/Apollo/Queries";
@@ -10,7 +9,6 @@ import { dashboard, group, settings, charts, signOut } from "definitions.js";
 import CreateNewStartup from "private/pages/Dashboard/Connections/CreateStartup";
 import Groups, { GroupsData } from "private/pages/Groups/Groups";
 import { Connection } from "private/pages/Dashboard/Connections/types";
-import { hideMobileNavigationMenu } from "actions/menu";
 import styles from "./SideBarTreeMenu.module.css";
 
 const classnames = require("classnames");
@@ -34,12 +32,14 @@ function NodeItems({
   expandedState,
   selectedNodes,
   changeExpanded,
+  setVisibleMobile,
 }: {
   node: MenuItem;
   level: number;
   expandedState: Set<string>;
   selectedNodes: Set<string>;
   changeExpanded: Function;
+  setVisibleMobile: Function;
 }): JSX.Element {
   const collapsed = !expandedState.has(node.key);
   const hasSelectedChildItem = itemOrItemNodesSelected(node);
@@ -57,6 +57,7 @@ function NodeItems({
             expandedState={expandedState}
             selectedNodes={selectedNodes}
             changeExpanded={changeExpanded}
+            setVisibleMobile={setVisibleMobile}
           />
           <ul className={classnames(collapsed && styles.collapsed)}>
             {node.nodes.map((item, i) => (
@@ -67,6 +68,7 @@ function NodeItems({
                 expandedState={expandedState}
                 selectedNodes={selectedNodes}
                 changeExpanded={changeExpanded}
+                setVisibleMobile={setVisibleMobile}
               />
             ))}
           </ul>
@@ -85,6 +87,7 @@ function NodeItems({
                     expandedState={expandedState}
                     selectedNodes={selectedNodes}
                     changeExpanded={changeExpanded}
+                    setVisibleMobile={setVisibleMobile}
                   />
                 </ul>
               </li>
@@ -104,6 +107,7 @@ function NodeItems({
         expandedState={expandedState}
         selectedNodes={selectedNodes}
         changeExpanded={changeExpanded}
+        setVisibleMobile={setVisibleMobile}
       />
     </li>
   );
@@ -122,6 +126,7 @@ function Item({
   expandedState,
   selectedNodes,
   changeExpanded,
+  setVisibleMobile,
 }: {
   node: MenuItem;
   level: number;
@@ -131,9 +136,8 @@ function Item({
   expandedState: Set<string>;
   selectedNodes: Set<string>;
   changeExpanded: Function;
+  setVisibleMobile: Function;
 }): JSX.Element {
-  const dispatch = useDispatch();
-
   return (
     <div
       className={`${styles.item} ${
@@ -155,7 +159,7 @@ function Item({
       )}
       {node.showHashTag && <span className={styles.hash_tag}>#</span>}
       {node.link ? (
-        <span onClick={() => dispatch(hideMobileNavigationMenu())}>
+        <span onClick={() => setVisibleMobile(false)}>
           <Link
             to={{
               pathname: node.link,
@@ -227,6 +231,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
     },
   ];
 
+  const [visibleMobile, setVisibleMobile] = useState(false);
   const [expandedState, setExpandedState] = useState(new Set<string>());
   const [selectedNodes, setSelectedNodes] = useState(new Set<string>());
   const [showNewStartupModal, setShowNewStartupModal] = useState({
@@ -259,20 +264,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
     setSelectedNodes(new Set(selectedNodes));
   }
 
-  const visibleMobileLeftMenu = useSelector(
-    (state: any) => state.menu.visibleMobileLeftMenu
-  );
-
-  const dispatch = useDispatch();
   const menuRef = useRef(null);
 
   const clickListener = useCallback((e: MouseEvent) => {
-    if (!(menuRef.current! as any).contains(e.target))
-      dispatch(hideMobileNavigationMenu());
+    if (!(menuRef.current! as any).contains(e.target)) setVisibleMobile(false);
   }, []);
   const touchListener = useCallback((e: TouchEvent) => {
-    if (!(menuRef.current! as any).contains(e.target))
-      dispatch(hideMobileNavigationMenu());
+    if (!(menuRef.current! as any).contains(e.target)) setVisibleMobile(false);
   }, []);
 
   useEffect(() => {
@@ -390,9 +388,9 @@ const SideBarTreeMenu = ({ location, history }: any) => {
         ref={menuRef}
         className={classnames(
           styles.sidebar_container,
-          !visibleMobileLeftMenu
-            ? styles.closed_mobile_container
-            : styles.open_mobile_container
+          visibleMobile
+            ? styles.open_mobile_container
+            : styles.closed_mobile_container
         )}
       >
         <div className={styles.menu_container}>
@@ -405,10 +403,17 @@ const SideBarTreeMenu = ({ location, history }: any) => {
                 expandedState={expandedState}
                 selectedNodes={selectedNodes}
                 changeExpanded={changeExpanded}
+                setVisibleMobile={setVisibleMobile}
               />
             ))}
           </ul>
         </div>
+      </div>
+      <div
+        className={classnames(styles.icons, "mobile_only")}
+        onClick={() => setVisibleMobile(!visibleMobile)}
+      >
+        <i className="fas fa-bars" />
       </div>
       <CreateNewStartup
         showModalOnly={true}

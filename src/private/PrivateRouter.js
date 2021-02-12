@@ -63,7 +63,7 @@ import { GhostLoader } from "Components/elements";
 import { ErrorBoundary } from "Components/ErrorBoundary";
 
 // Styles
-import Header from "Components/Header/Header";
+import { DashboardHeader } from "Components/Header/DashboardHeader";
 import ExternalForm from "./pages/ExternalForm/ExternalForm";
 import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu";
 
@@ -179,7 +179,7 @@ const WrapperComponent = ({ ...props }) => {
 
   return (
     <>
-      <Header />
+      <DashboardHeader history={props.history} />
       <SideBarTreeMenu {...props} />
       <div
         className={`logged_in_page_content ${
