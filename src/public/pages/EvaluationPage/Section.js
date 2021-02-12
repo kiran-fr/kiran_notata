@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
@@ -19,50 +19,55 @@ function Navigation({
 }) {
   let currentIndex = sections.map(s => s.id).indexOf(sectionId);
 
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ marginBottom: "10px" }}>
-        {(isSubmit && (
-          <Button
-            type="left_arrow"
-            size="large"
-            onClick={() => setSubmit(false)}
-          >
-            {sections[currentIndex].name}
-          </Button>
-        )) ||
-          (currentIndex !== 0 && (
+  const cols = useMemo(() => {
+    window.scrollTo(0, 0);
+    return (
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ marginBottom: "10px" }}>
+          {(isSubmit && (
             <Button
               type="left_arrow"
               size="large"
-              onClick={() => setSectionId(sections[currentIndex - 1].id)}
+              onClick={() => setSubmit(false)}
             >
-              {sections[currentIndex - 1].name}
+              {sections[currentIndex].name}
             </Button>
           )) ||
-          ""}
-      </div>
-      <div style={{ marginBottom: "10px" }}>
-        {(isSubmit && (
-          <Button type="right_arrow" onClick={submitEvaluation}>
-            Submit
-          </Button>
-        )) ||
-          (currentIndex !== sections.length - 1 && (
-            <Button
-              type="right_arrow"
-              onClick={() => setSectionId(sections[currentIndex + 1].id)}
-            >
-              {sections[currentIndex + 1].name}
+            (currentIndex !== 0 && (
+              <Button
+                type="left_arrow"
+                size="large"
+                onClick={() => setSectionId(sections[currentIndex - 1].id)}
+              >
+                {sections[currentIndex - 1].name}
+              </Button>
+            )) ||
+            ""}
+        </div>
+        <div style={{ marginBottom: "10px" }}>
+          {(isSubmit && (
+            <Button type="right_arrow" onClick={submitEvaluation}>
+              Submit
             </Button>
-          )) || (
-            <Button type="right_arrow" onClick={() => setSubmit(true)}>
-              Continue
-            </Button>
-          )}
+          )) ||
+            (currentIndex !== sections.length - 1 && (
+              <Button
+                type="right_arrow"
+                onClick={() => setSectionId(sections[currentIndex + 1].id)}
+              >
+                {sections[currentIndex + 1].name}
+              </Button>
+            )) || (
+              <Button type="right_arrow" onClick={() => setSubmit(true)}>
+                Continue
+              </Button>
+            )}
+        </div>
       </div>
-    </div>
-  );
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setSectionId, isSubmit, setSubmit, currentIndex, sections]);
+  return cols;
 }
 
 function SubmitForm({ setPersonalData }) {
