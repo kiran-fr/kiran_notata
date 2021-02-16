@@ -155,10 +155,12 @@
 }
 
 .log_item_buttons {
+  display: none;
   margin-left: 215px;
   margin-top: -28px;
   font-size: 14px;
   position: sticky;
+  position: -webkit-sticky;
   background-color: white;
   color: var(--color-primary);
   border: 1px solid var(--color-gray-light);
@@ -172,9 +174,6 @@
   margin-left: 10px;
 }
 
-.log_feed_item:hover ~ .log_item_buttons {
-  /* display: initial; */
-  /* display: block; */
-  background-color: green;
-  font-size: 26px;
+.log_feed_item:hover .log_item_buttons {
+  display: inherit;
 }
