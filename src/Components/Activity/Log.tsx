@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import moment from "moment";
-
-import { LogItem } from "private/Apollo/Queries";
+import { LogItem as ILogItem } from "private/Apollo/Queries";
+import { LogItem } from "./LogItem";
+import { AutoHeightTextarea } from "Components/elements";
 
 import styles from "./Log.module.css";
 const classnames = require("classnames");
@@ -93,16 +93,26 @@ export function Log({
   logs,
   user,
   submitMutation,
+  updateMutation,
+  deleteMutation,
 }: {
-  logs: LogItem[];
+  logs: ILogItem[];
   user: any;
   submitMutation: Function;
+  updateMutation: Function;
+  deleteMutation: Function;
 }) {
   const [viewEvents, setViewEvents] = useState(false);
+  const [editingId, setEditingId] = useState("");
   const ref = useRef(null);
   const parentRef = useRef(null);
 
-  logs = logs.filter(l => (viewEvents ? l : l.logType === "COMMENT"));
+  logs = logs
+    .filter(l => (viewEvents ? l : l.logType === "COMMENT"))
+    .sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
 
   const prevCount = usePrevious(logs);
 
@@ -129,40 +139,16 @@ export function Log({
       </div>
       <div ref={parentRef} className={styles.comments_section}>
         {logs.length ? (
-          logs.map((logItem: LogItem) => (
-            <div
+          logs.map((logItem: ILogItem) => (
+            <LogItem
               ref={ref}
-              key={`log-${logItem.id}`}
-              className={styles.log_feed_item}
-            >
-              <div className={styles.log_feed_byline}>
-                <span className={styles.name}>
-                  {(logItem.createdBy === user?.cognitoIdentityId &&
-                    "You ") || (
-                    <span>
-                      {`${logItem.createdByUser.given_name} ${logItem.createdByUser.family_name} `}
-                    </span>
-                  )}
-                </span>
-                <span className={styles.date}>
-                  {`– ${moment(logItem.createdAt).format("lll")}`}
-                </span>
-              </div>
-
-              <div
-                className={classnames(
-                  styles.log_feed_text,
-                  logItem.logType !== "COMMENT" &&
-                    styles.log_feed_type_SUBJECTIVE_SCORE
-                )}
-              >
-                {logItem.dataPairs[0].val}
-              </div>
-
-              {logItem.createdAt !== logItem.updatedAt && (
-                <div className={styles.log_item_edited}>(edited)</div>
-              )}
-            </div>
+              logItem={logItem}
+              user={user}
+              deleteMutation={deleteMutation}
+              updateMutation={updateMutation}
+              editingId={editingId}
+              setEditingId={setEditingId}
+            />
           ))
         ) : (
           <div style={{ color: "var(--color-gray-medium)" }}>

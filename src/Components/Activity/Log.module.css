@@ -3,10 +3,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: calc(100% - 141px);
-  padding-left: 45px;
   display: flex;
   flex-flow: column nowrap;
-  padding-right: 45px;
 }
 
 .comments_section > :first-child {
@@ -18,23 +16,18 @@
   display: none;
 }
 
-.event_toggle_button {
-  cursor: pointer;
-  position: absolute;
-  right: 0px;
-  font-size: 12px;
-  top: -20px;
-  color: #306f7a;
-  z-index: 1;
+.log_feed_byline {
+  padding: 0 15px;
 }
 
-.log_feed_byline {
-}
 .log_feed_item {
   font-size: 12px;
-  margin-bottom: 25px;
+  padding: 10px 30px;
   line-height: 1.8;
-  /* padding-left: 25px; */
+}
+
+.log_feed_item:hover {
+  background-color: var(--color-gray-pale);
 }
 
 .name {
@@ -49,6 +42,15 @@
 
 .log_feed_text {
   white-space: pre-wrap;
+  padding: 0 15px;
+}
+
+.log_feed_text_editing {
+  background-color: white;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 10px;
+  font-size: 12px;
+  padding: 5px 15px;
 }
 
 .log_feed_type_SUBJECTIVE_SCORE {
@@ -61,6 +63,7 @@
 .log_item_edited {
   color: #999;
   font-style: italic;
+  padding: 0 15px;
 }
 
 .empty_message {
@@ -77,13 +80,12 @@
   font-size: 12px;
   outline: none;
   padding: 12px 20px;
+  padding-right: 40px;
   text-align: left;
   border-radius: 20px;
   width: 100%;
-  /*margin-top: 5px;*/
   color: var(--color-gray-dark);
   background: var(--color-gray-pale);
-  /*margin-bottom: 10px;*/
 }
 
 .comment_submit {
@@ -150,4 +152,29 @@
 .selected_tab {
   font-weight: 600;
   color: #2f6e7b;
+}
+
+.log_item_buttons {
+  margin-left: 215px;
+  margin-top: -28px;
+  font-size: 14px;
+  position: sticky;
+  background-color: white;
+  color: var(--color-primary);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 10px;
+  width: 60px;
+}
+
+.close_modal {
+  display: initial;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.log_feed_item:hover ~ .log_item_buttons {
+  /* display: initial; */
+  /* display: block; */
+  background-color: green;
+  font-size: 26px;
 }
