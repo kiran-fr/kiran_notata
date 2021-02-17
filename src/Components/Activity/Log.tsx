@@ -6,9 +6,10 @@ import { LogItem } from "./LogItem";
 import { AutoHeightTextarea } from "Components/elements";
 
 import styles from "./Log.module.css";
-const classnames = require("classnames");
 
 function LogInput({ submitMutation }: { submitMutation: Function }) {
+  const [value, setValue] = useState<string | null>("");
+
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
@@ -25,7 +26,10 @@ function LogInput({ submitMutation }: { submitMutation: Function }) {
     submitMutation(data.val);
 
     if (event.type === "submit") {
-      event.target.reset();
+      // filthy hack to clear the input
+      setValue(null);
+      setValue("");
+      // event.target.reset();
     } else {
       event.target.value = "";
     }
@@ -34,12 +38,13 @@ function LogInput({ submitMutation }: { submitMutation: Function }) {
   return (
     <div className={styles.comment_form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
+        <AutoHeightTextarea
           className={styles.comment_input}
           placeholder="Write a comment..."
           autoComplete="off"
+          value={value}
           name="val"
-          ref={register({ required: true })}
+          refObj={register({ required: true })}
           onKeyDown={downHandler}
         />
 
