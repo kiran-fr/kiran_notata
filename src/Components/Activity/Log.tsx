@@ -25,14 +25,14 @@ function LogInput({ submitMutation }: { submitMutation: Function }) {
 
     submitMutation(data.val);
 
-    if (event.type === "submit") {
-      // filthy hack to clear the input
-      setValue(null);
-      setValue("");
-      // event.target.reset();
-    } else {
-      event.target.value = "";
-    }
+    // if (event.type === "submit") {
+    // filthy hack to clear the input
+    setValue(null);
+    setValue("");
+    // event.target.reset();
+    // } else {
+    // event.target.value = "";
+    // }
   };
 
   return (
@@ -156,9 +156,7 @@ export function Log({
             />
           ))
         ) : (
-          <div style={{ color: "var(--color-gray-medium)" }}>
-            No comments yet...
-          </div>
+          <div className={styles.log_empty}>No comments yet...</div>
         )}
       </div>
 

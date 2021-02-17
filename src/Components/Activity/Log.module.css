@@ -30,6 +30,11 @@
   background-color: var(--color-gray-pale);
 }
 
+.log_empty {
+  padding-left: 30px;
+  color: var(--color-gray-medium);
+}
+
 .name {
   font-weight: 600;
   color: #2f6e7b;
