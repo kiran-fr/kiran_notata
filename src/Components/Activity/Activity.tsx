@@ -42,7 +42,7 @@ const Activity = ({ user, logs, submitMutation }: any) => {
         className={classnames(styles.icons, "mobile_only")}
         onClick={() => setVisibleMobile(!visibleMobile)}
       >
-        <i className="far fa-comment"></i>
+        <i className="far fa-comment" />
       </div>
     </>
   );

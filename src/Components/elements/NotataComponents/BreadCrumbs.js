@@ -12,7 +12,9 @@ export function BreadCrumbs({ list }) {
       {list.map((listItem, i) => (
         <div className={breadcrumb_link} key={`crumb-${i}`}>
           <i className="fas fa-caret-right" />
-          <Link to={{ pathname: listItem.link, state: listItem?.state }}>{listItem.val}</Link>
+          <Link to={{ pathname: listItem.link, state: listItem?.state }}>
+            {listItem.val}
+          </Link>
         </div>
       ))}
     </div>

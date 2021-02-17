@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 // API STUFF
 import { useMutation } from "@apollo/client";
 
-import { userUpdate } from "Apollo/Mutations";
+import { userUpdate } from "private/Apollo/Mutations";
 
 import { omit } from "lodash";
 import styles from "./Profile.module.css";

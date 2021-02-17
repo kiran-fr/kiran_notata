@@ -2,12 +2,10 @@ import { combineReducers } from "redux";
 import { USER_ACTIONS } from "actions";
 import connections from "./connections";
 import user from "./user";
-import menu from "./menu";
 
 const rootReducer = combineReducers({
   connections,
   user,
-  menu,
 });
 
 export default (state, action) => {

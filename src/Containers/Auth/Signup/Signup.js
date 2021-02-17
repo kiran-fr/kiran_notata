@@ -11,7 +11,7 @@ import { Content, Card, Button, ErrorBox } from "Components/elements/";
 import { userLoggedIn } from "actions/user";
 import { getUserIsLoggedIn } from "reducers/selectors/user";
 
-import { dashboard, awaiting, login } from "pages/definitions";
+import { dashboard, awaiting, login } from "definitions.js";
 import styles from "../Auth.module.css";
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {

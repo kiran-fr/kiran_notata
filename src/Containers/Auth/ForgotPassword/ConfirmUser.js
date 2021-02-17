@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { login } from "pages/definitions";
+import { login } from "definitions.js";
 import {
   Content,
   Card,

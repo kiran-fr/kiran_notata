@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { tagGroupGet } from "Apollo/Queries";
-import { tagPut } from "Apollo/Mutations";
+import { tagGroupGet } from "private/Apollo/Queries";
+import { tagPut } from "private/Apollo/Mutations";
 
 import {
   dropdown_inner,

@@ -8,7 +8,7 @@ import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import { Routes } from "./pages/routes";
+import { Routes } from "./routes";
 import { appsyncClient, initializeAwsConfig } from "./awsconfig";
 import rootReducer from "./reducers/index";
 import { setUserAttributes, userLoggedIn, userNotLoggedIn } from "actions/user";
@@ -93,11 +93,10 @@ syncAttributes.onHubCapsule = capsule => {
 Hub.listen("auth", syncAttributes);
 
 const render = () => {
-  let client = appsyncClient;
   ReactDOM.render(
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <Provider store={store}>
-        <ApolloProvider client={client}>
+        <ApolloProvider client={appsyncClient}>
           <Routes />
         </ApolloProvider>
       </Provider>
