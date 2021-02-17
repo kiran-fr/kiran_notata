@@ -83,8 +83,8 @@ Amplify.configure({
   },
 });
 
-const STAGE = "v2prod";
-const isLocal = false;
+const STAGE = "dev2";
+const isLocal = true;
 
 const GQL = {
   private: {
@@ -97,9 +97,6 @@ const GQL = {
     endpoint: `GQL_APIG_PUBLIC_${isLocal ? "local" : STAGE}`,
   },
 };
-
-console.log("GQL.private.endpoint", GQL.private.endpoint);
-console.log("GQL.private.path", GQL.private.path);
 
 const awsGraphqlFetch = (uri, options) => {
   return API.post(GQL.private.endpoint, GQL.private.path, {
