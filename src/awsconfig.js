@@ -83,8 +83,8 @@ Amplify.configure({
   },
 });
 
-const STAGE = "v2prod";
-const isLocal = false;
+const STAGE = "dev2";
+const isLocal = true;
 
 const GQL = {
   private: {

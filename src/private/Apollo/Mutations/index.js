@@ -1,6 +1,7 @@
 export { default as logCreate } from "./logCreate";
 export { default as logUpdate } from "./logUpdate";
 export { default as logDelete } from "./logDelete";
+
 export { default as connectionSubjectiveScorePut } from "./connectionSubjectiveScorePut";
 export { default as userUpdate } from "./userUpdate";
 export { default as creativePut } from "./creativePut";
