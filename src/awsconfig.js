@@ -98,9 +98,6 @@ const GQL = {
   },
 };
 
-console.log("GQL.private.endpoint", GQL.private.endpoint);
-console.log("GQL.private.path", GQL.private.path);
-
 const awsGraphqlFetch = (uri, options) => {
   return API.post(GQL.private.endpoint, GQL.private.path, {
     body: JSON.parse(options.body),
