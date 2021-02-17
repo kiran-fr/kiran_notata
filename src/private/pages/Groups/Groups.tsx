@@ -85,9 +85,7 @@ export default function Groups({
           <Content maxWidth={780}>
             <h1>Groups</h1>
             {!!groups?.length && (
-              <Card
-                noMargin={true}
-                >
+              <Card noMargin={true}>
                 <Table
                   dataSource={groups}
                   columns={columns}

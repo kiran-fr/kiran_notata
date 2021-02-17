@@ -61,11 +61,9 @@ export default function AutoHeightTextarea({
     <textarea
       ref={mergeRefs(refObj, textareaRef)}
       style={style}
+      onChange={e => setCurrentValue(e.target.value)}
       {...etc}
       value={currentValue}
-      onChange={e => {
-        setCurrentValue(e.target.value);
-      }}
     />
   );
 }

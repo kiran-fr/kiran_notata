@@ -5,7 +5,13 @@ import { Log } from "./Log";
 
 const classnames = require("classnames");
 
-const Activity = ({ user, logs, submitMutation }: any) => {
+const Activity = ({
+  user,
+  logs,
+  submitMutation,
+  updateMutation,
+  deleteMutation,
+}: any) => {
   const [visibleMobile, setVisibleMobile] = useState(false);
 
   const ref = useRef(null);
@@ -36,7 +42,13 @@ const Activity = ({ user, logs, submitMutation }: any) => {
             : styles.closed_mobile_container
         )}
       >
-        <Log user={user} logs={logs} submitMutation={submitMutation} />
+        <Log
+          user={user}
+          logs={logs}
+          submitMutation={submitMutation}
+          updateMutation={updateMutation}
+          deleteMutation={deleteMutation}
+        />
       </div>
       <div
         className={classnames(styles.icons, "mobile_only")}
