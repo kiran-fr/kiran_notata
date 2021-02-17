@@ -2,11 +2,11 @@ import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import Activity from "Components/Activity/Activity";
-import { logPut, logUpdate, logDelete } from "private/Apollo/Mutations";
+import { logCreate, logUpdate, logDelete } from "private/Apollo/Mutations";
 import { logGet } from "private/Apollo/Queries";
 
 export const StartupActivity = ({ user, connection }) => {
-  const [mutateCreate] = useMutation(logPut);
+  const [mutateCreate] = useMutation(logCreate);
   const [mutateUpdate] = useMutation(logUpdate);
   const [mutateDelete] = useMutation(logDelete);
   const logQuery = useQuery(logGet, {
@@ -36,7 +36,7 @@ export const StartupActivity = ({ user, connection }) => {
       variables,
       optimisticResponse: {
         __typename: "Mutation",
-        logPut: {
+        logCreate: {
           __typename: "LogItem",
           accountId: "",
           id: "",
@@ -63,7 +63,7 @@ export const StartupActivity = ({ user, connection }) => {
           ],
         },
       },
-      update: (proxy, { data: { logPut } }) => {
+      update: (proxy, { data: { logCreate } }) => {
         const data = proxy.readQuery({
           query: logGet,
           variables: { connectionId: connection.id },
@@ -73,7 +73,7 @@ export const StartupActivity = ({ user, connection }) => {
           query: logGet,
           variables: { connectionId: connection.id },
           data: {
-            logGet: [...data.logGet, logPut],
+            logGet: [...data.logGet, logCreate],
           },
         });
       },
@@ -98,7 +98,7 @@ export const StartupActivity = ({ user, connection }) => {
       variables,
       optimisticResponse: {
         __typename: "Mutation",
-        logPut: {
+        logUpdate: {
           __typename: "LogItem",
           accountId: "",
           id: "",
@@ -119,7 +119,7 @@ export const StartupActivity = ({ user, connection }) => {
           dataPairs: [
             {
               key: "TEXT",
-              val: value,
+              val: value.value,
               __typename: "KeyVal",
             },
           ],

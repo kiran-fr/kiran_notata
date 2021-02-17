@@ -148,7 +148,7 @@ export function Log({
             <LogItem
               ref={ref}
               logItem={logItem}
-              user={user}
+              isAuthor={logItem.createdBy === user?.cognitoIdentityId}
               deleteMutation={deleteMutation}
               updateMutation={updateMutation}
               editingId={editingId}

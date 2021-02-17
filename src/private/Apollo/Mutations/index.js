@@ -1,4 +1,4 @@
-export { default as logPut } from "./logPut";
+export { default as logCreate } from "./logCreate";
 export { default as logUpdate } from "./logUpdate";
 export { default as logDelete } from "./logDelete";
 export { default as connectionSubjectiveScorePut } from "./connectionSubjectiveScorePut";

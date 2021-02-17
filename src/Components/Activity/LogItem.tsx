@@ -12,13 +12,13 @@ const classnames = require("classnames");
 export function LogItem({
   logItem,
   ref,
-  user,
+  isAuthor,
   deleteMutation,
   updateMutation,
 }: {
   logItem: ILogItem;
   ref: React.MutableRefObject<null>;
-  user: any;
+  isAuthor: boolean;
   deleteMutation: Function;
   updateMutation: Function;
   editingId: string;
@@ -30,7 +30,7 @@ export function LogItem({
     <div ref={ref} key={`log-${logItem.id}`} className={styles.log_feed_item}>
       <div className={styles.log_feed_byline}>
         <span className={styles.name}>
-          {(logItem.createdBy === user?.cognitoIdentityId && "You ") || (
+          {(isAuthor && "You ") || (
             <span>
               {`${logItem.createdByUser.given_name} ${logItem.createdByUser.family_name} `}
             </span>
@@ -39,19 +39,19 @@ export function LogItem({
         <span className={styles.date}>
           {`– ${moment(logItem.createdAt).format("lll")}`}
         </span>
-        {logItem.createdBy === user?.cognitoIdentityId && (
+        {isAuthor && (
           <div className={styles.log_item_buttons}>
             <div
               onClick={() =>
                 setEditing({ state: true, message: logItem.dataPairs[0].val })
               }
-              className={styles.close_modal}
+              className={styles.message_button}
             >
               <i className="far fa-edit" />
             </div>
             <div
               onClick={() => deleteMutation(logItem.id)}
-              className={styles.close_modal}
+              className={styles.message_button}
             >
               <i className="fas fa-trash-alt" />
             </div>
@@ -68,7 +68,7 @@ export function LogItem({
                 styles.log_feed_type_SUBJECTIVE_SCORE
             )}
             value={editing.message}
-            onChange={(e: any) =>
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setEditing({ state: true, message: e.target.value })
             }
           />
