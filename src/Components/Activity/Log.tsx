@@ -108,7 +108,6 @@ export function Log({
   deleteMutation: Function;
 }) {
   const [viewEvents, setViewEvents] = useState(false);
-  const [editingId, setEditingId] = useState("");
   const ref = useRef(null);
   const parentRef = useRef(null);
 
@@ -151,8 +150,6 @@ export function Log({
               isAuthor={logItem.createdBy === user?.cognitoIdentityId}
               deleteMutation={deleteMutation}
               updateMutation={updateMutation}
-              editingId={editingId}
-              setEditingId={setEditingId}
             />
           ))
         ) : (

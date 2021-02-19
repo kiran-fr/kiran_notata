@@ -106,7 +106,7 @@ export const StartupActivity = ({ user, connection }) => {
           reference: null,
           notifyUsers: null,
           connectionId: connection.id,
-          createdAt: new Date().getTime(),
+          createdAt: value.createdAt,
           updatedAt: new Date().getTime(),
           createdBy: user.cognitoIdentityId,
           logType: "COMMENT",

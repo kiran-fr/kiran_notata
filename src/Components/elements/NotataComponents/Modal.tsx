@@ -30,12 +30,13 @@ export const Modal = ({
   useEffect(() => {
     function downHandler(e: KeyboardEvent) {
       e.key === "Escape" && close(e);
+      e.key === "Enter" && !loading && submit && submit(e);
     }
     window.addEventListener("keydown", downHandler);
     return () => {
       window.removeEventListener("keydown", downHandler);
     };
-  }, [close]);
+  }, [close, loading, submit]);
 
   return (
     <div className={styles.container}>
