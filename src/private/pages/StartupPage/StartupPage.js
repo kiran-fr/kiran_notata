@@ -6,7 +6,7 @@ import { Content, Card, GhostLoader } from "Components/elements";
 
 import { SubjectiveScore } from "./StartupPageComponents/SubjectiveScore";
 import { StartupActivity } from "./StartupPageComponents/Activity";
-import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationBox";
+import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationBoxV2";
 import { Share } from "./StartupPageComponents/Share";
 import { Facts } from "./StartupPageComponents/Facts";
 import { Tags } from "./StartupPageComponents/Tags";
@@ -55,9 +55,10 @@ export default function StartupPage({ match, location, history }) {
     }
   }, [location]);
 
-  const [connectionDeleteMutation, connectionDeleteRes] = useMutation(
-    connectionDelete
-  );
+  const [
+    connectionDeleteMutation,
+    connectionDeleteRes, // data, called, loading
+  ] = useMutation(connectionDelete);
 
   let idString = match.params.id;
   let [id] = idString.split("?");
@@ -100,9 +101,13 @@ export default function StartupPage({ match, location, history }) {
     throw userGetError || connectionGetError || groupsGetError;
   }
 
-  const user = userGetData.userGet;
-  const connection = connectionGetData.connectionGet;
-  const groups = groupsGetData.groupsGet;
+  const user = userGetData?.userGet;
+  const connection = connectionGetData?.connectionGet;
+  const groups = groupsGetData?.groupsGet;
+
+  if (!connection) {
+    return <GhostLoader />;
+  }
 
   let sharedWithGroups =
     groups.filter(g =>
@@ -119,6 +124,7 @@ export default function StartupPage({ match, location, history }) {
   return (
     <>
       <StartupActivity user={user} connection={connection} />
+
       <Content className={styles.container}>
         <div className={styles.header}>{connection.creative.name}</div>
 

@@ -8,6 +8,10 @@ export { default as creativeDelete } from "./creativeDelete";
 export { default as accountInvite } from "./accountInvite";
 export { default as userInvitationResponse } from "./userInvitationResponse";
 export { default as evaluationPut } from "./evaluationPut";
+
+export { default as evaluationCreate } from "./evaluationCreate";
+export { default as evaluationUpdate } from "./evaluationUpdate";
+
 export { default as evaluationTemplatePut } from "./evaluationTemplatePut";
 export { default as evaluationTemplateDelete } from "./evaluationTemplateDelete";
 export { default as evaluationTemplateSectionPut } from "./evaluationTemplateSectionPut";

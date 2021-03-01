@@ -34,7 +34,6 @@ const StandardButton = ({
   let withIconPadding = loading || type === "right_arrow" || iconClass;
 
   const sizeClass =
-    (size && size === "large" && type === "left_arrow" && large_left_button) ||
     (size && size === "large" && large_button) ||
     (size && size === "medium" && medium_button) ||
     (size && size === "small" && small_button) ||
@@ -47,7 +46,8 @@ const StandardButton = ({
         sizeClass,
         withIconPadding && icon_padding,
         buttonStyle && buttonStyle === "secondary" && secondary_style,
-        buttonStyle && buttonStyle === "danger" && danger_style
+        buttonStyle && buttonStyle === "danger" && danger_style,
+        size && size === "large" && type === "left_arrow" && large_left_button
       )}
       style={style || {}}
       onClick={onClick}

@@ -22,17 +22,9 @@ function LogInput({ submitMutation }: { submitMutation: Function }) {
   const onSubmit = async (data: any, event: any) => {
     if (data.val.length < 1) return;
     if (isSubmitting) return;
-
     submitMutation(data.val);
-
-    // if (event.type === "submit") {
-    // filthy hack to clear the input
     setValue(null);
     setValue("");
-    // event.target.reset();
-    // } else {
-    // event.target.value = "";
-    // }
   };
 
   return (

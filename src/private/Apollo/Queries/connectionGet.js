@@ -6,6 +6,7 @@ import {
   creativeFragments,
   connectionFragments,
   evaluationFragments,
+  evaluationTemplateFragments,
 } from "Apollo/Fragments";
 
 export default gql`
@@ -79,11 +80,10 @@ export default gql`
             createdBy
             templateId
             answers {
-              id
               inputType
               questionId
+              sectionId
               sid
-              question
               val
             }
             createdByUser {
@@ -125,6 +125,9 @@ export default gql`
 
       evaluations {
         ...evaluationFields
+        template {
+          ...evaluationTemplateFields
+        }
       }
     }
   }
@@ -133,4 +136,5 @@ export default gql`
   ${creativeFragments}
   ${connectionFragments}
   ${evaluationFragments}
+  ${evaluationTemplateFragments}
 `;

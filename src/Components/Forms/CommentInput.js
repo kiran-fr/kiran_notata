@@ -19,6 +19,7 @@ export default function CommentInput({
   handleUpdateComment,
   handleDeleteComment,
   loading,
+  singleComment,
 }) {
   const [showModal, setShowModal] = useState(undefined);
 
@@ -54,7 +55,7 @@ export default function CommentInput({
           <div className={comments_list}>
             <div className={comments_label}>Comments</div>
             {comments.map(({ val, id }) => (
-              <div key={id} className={comment_item}>
+              <div key={id || val} className={comment_item}>
                 {val}
 
                 <div
@@ -86,21 +87,23 @@ export default function CommentInput({
           </div>
         )}
 
-        <div
-          style={{
-            marginLeft: "-15px",
-            marginRight: "-15px",
-            textAlign: "right",
-          }}
-        >
-          <Button
-            size="small"
-            buttonStyle="secondary"
-            onClick={() => setShowModal({})}
+        {!(singleComment && !!comments.length) && (
+          <div
+            style={{
+              marginLeft: "-15px",
+              marginRight: "-15px",
+              textAlign: "right",
+            }}
           >
-            Add comment
-          </Button>
-        </div>
+            <Button
+              size="small"
+              buttonStyle="secondary"
+              onClick={() => setShowModal({})}
+            >
+              Add comment
+            </Button>
+          </div>
+        )}
       </div>
 
       {showModal && (

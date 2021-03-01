@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { useLazyQuery } from "@apollo/client";
+import React, { useState, useEffect } from "react";
+
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 import { Content, GhostLoader, BreadCrumbs } from "Components/elements";
+
+import { useLazyQuery } from "@apollo/client";
 import CreateTagGroup from "./CreateTagGroup";
 import TagGroup from "./TagsGroup";
 
 import { tagGroupGet, funnelGroupGet } from "private/Apollo/Queries";
-import { useEffect } from "react";
 
 import { settings, tags } from "definitions.js";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+
 import { materialTheme } from "index";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Card } from "Components/elements/NotataComponents/Card";
@@ -21,6 +23,7 @@ export enum TagType {
 }
 
 export default function Tags() {
+
   const [type, setType] = useState<TagType>(TagType.TAGS);
 
   // QUERIES

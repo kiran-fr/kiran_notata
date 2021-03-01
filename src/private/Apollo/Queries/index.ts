@@ -27,3 +27,5 @@ export { default as evaluationTemplateNamesGet } from "./evaluationTemplateNames
 export { default as pageMetaGet } from "./pageMetaGet";
 export { default as externalResourcesGet } from "./externalResourcesGet";
 export { default as impactGoalsGet } from "./impactGoalsGet";
+
+export { default as evaluationGet } from "./evaluationGet";

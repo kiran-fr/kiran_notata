@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  fragment evaluationFields on Evaluation {
+  fragment evaluationV2Fields on Evaluation {
     id
     name
     description
@@ -9,14 +9,10 @@ export default gql`
     updatedAt
     createdBy
     templateId
-    templateName
-
     answers {
       inputType
       questionId
       sectionId
-      sectionName
-      questionName
       sid
       val
     }

@@ -30,9 +30,7 @@ import {
 // Landing page / list
 import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";
-
 import Profile from "./pages/Profile/Profile";
-
 import Tags from "./pages/Tags";
 import Settings from "./pages/Settings/Settings";
 import Team from "./pages/Team/Team";
@@ -44,13 +42,10 @@ import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/Evaluatio
 import EvaluationTemplate from "./pages/Templates/EvaluationTemplate/EvaluationTemplate";
 import EvaluationTemplateSection from "./pages/Templates/EvaluationTemplateSection";
 import EvaluationTemplateSummary from "./pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
-
-import EvaluationPage from "./pages/Evaluation";
-import SectionPage from "./pages/Evaluation/Section";
-import SummaryPage from "./pages/Evaluation/Summary";
-
 import FactsTemplates from "./pages/FactsTemplates/FactsTemplates/FactsTemplates";
 import FactsTemplate from "./pages/FactsTemplates/FactsTemplate/FactsTemplate";
+import EvaluationV2Page from "./pages/EvaluationV2/Sections";
+import EvaluationSummary from "./pages/EvaluationV2/Summary";
 
 // Groups
 import Groups from "./pages/Groups/Groups";
@@ -128,18 +123,20 @@ export const RouterComponent = ({ history }) => {
 
       <Route
         exact
-        path={`${startup_page}/:connectionId/evaluation/:evaluationId`}
-        component={EvaluationPage}
+        path={`${startup_page}/:connectionId/evaluationV2/template/:templateId`}
+        component={EvaluationV2Page}
       />
+
       <Route
         exact
-        path={`${startup_page}/:connectionId/evaluation/:evaluationId/summary`}
-        component={SummaryPage}
+        path={`${startup_page}/:connectionId/evaluationV2/template/:templateId/evaluation/:evaluationId`}
+        component={EvaluationV2Page}
       />
+
       <Route
         exact
-        path={`${startup_page}/:connectionId/evaluation/:evaluationId/section/:sectionId`}
-        component={SectionPage}
+        path={`${startup_page}/:connectionId/evaluation_summary/:evaluationId`}
+        component={EvaluationSummary}
       />
 
       <Route exact path={team} component={Team} />

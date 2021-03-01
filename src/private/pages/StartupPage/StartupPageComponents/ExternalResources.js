@@ -2,33 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Card, Table } from "Components/elements";
 import moment from "moment";
 import { useLazyQuery, useMutation } from "@apollo/client";
+
 import { externalResourcesGet } from "private/Apollo/Queries";
+
 import {
   externalResourcePut,
   externalResourceDelete,
 } from "private/Apollo/Mutations";
+
 import { useForm } from "react-hook-form";
+
 import styles from "../StartupPage.module.css";
 
 export function ExternalResources({ connectionId }) {
   const [isDeleting, setIsDeleting] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
+
   const [showDeleteModal, setShowDeleteModal] = useState(undefined);
 
   const [getExternalResources, { data, loading }] = useLazyQuery(
     externalResourcesGet
   );
 
-  const [putMutation] = useMutation(
-    externalResourcePut
-    // {
-    // refetchQueries: [
-    //   getExternalResources({
-    //      variables: { connectionId },
-    //    })
-    // ]
-    // }
-  );
+  const [putMutation] = useMutation(externalResourcePut);
   const [deleteMutation] = useMutation(externalResourceDelete);
 
   const { register, errors, handleSubmit, formState } = useForm();
@@ -50,15 +47,17 @@ export function ExternalResources({ connectionId }) {
             variables: { connectionId },
           });
 
+          const newData = {
+            externalResourcesGet: [
+              ...data.externalResourcesGet,
+              externalResourcePut,
+            ],
+          };
+
           proxy.writeQuery({
             query: externalResourcesGet,
             variables: { connectionId },
-            data: {
-              externalResourcesGet: [
-                ...data.externalResourcesGet,
-                externalResourcePut,
-              ],
-            },
+            data: newData,
           });
         },
       });

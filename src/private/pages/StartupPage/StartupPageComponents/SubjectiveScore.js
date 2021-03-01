@@ -19,6 +19,7 @@ import classnames from "classnames";
 
 export function SubjectiveScore({ connection, user, onlyMe, history }) {
   const [mutate] = useMutation(connectionSubjectiveScorePut);
+
   let subjectiveScores = connection.subjectiveScores || [];
 
   let otherScores = [];
@@ -142,7 +143,7 @@ export function SubjectiveScore({ connection, user, onlyMe, history }) {
                 sS = [...subjectiveScores, optimisticItem];
               }
 
-              // Update exisiting
+              // Update existing
               if (action === "update") {
                 sS = subjectiveScores.map(s =>
                   s.createdBy !== user.cognitoIdentityId
@@ -151,15 +152,17 @@ export function SubjectiveScore({ connection, user, onlyMe, history }) {
                 );
               }
 
+              let optimisticResponse = {
+                __typename: "Mutation",
+                connectionSubjectiveScorePut: {
+                  ...connection,
+                  subjectiveScores: sS,
+                },
+              };
+
               mutate({
                 variables,
-                optimisticResponse: {
-                  __typename: "Mutation",
-                  connectionSubjectiveScorePut: {
-                    ...connection,
-                    subjectiveScores: sS,
-                  },
-                },
+                optimisticResponse,
               });
             }}
           >

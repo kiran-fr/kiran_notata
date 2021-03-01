@@ -27,17 +27,17 @@ export default function MultipleTextInput({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
       {answers.map(({ id, val }, i) => (
-        <div className={inputWrapper} key={id}>
+        <div className={inputWrapper} key={id || val}>
           <input
             autoComplete="off"
             type="text"
             ref={register}
-            name={id}
+            name={id || i}
             defaultValue={val}
             placeholder="Say something..."
             onBlur={handleSubmit(onSubmit)}
-          />
-          <div className={inputIcon} onClick={() => onDelete(id)}>
+          ></input>
+          <div className={inputIcon} onClick={() => onDelete(id || i)}>
             <i className="fal fa-times" />
           </div>
         </div>

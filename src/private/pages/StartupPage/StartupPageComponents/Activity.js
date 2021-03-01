@@ -34,6 +34,7 @@ export const StartupActivity = ({ user, connection }) => {
 
     mutateCreate({
       variables,
+
       optimisticResponse: {
         __typename: "Mutation",
         logCreate: {
@@ -63,6 +64,7 @@ export const StartupActivity = ({ user, connection }) => {
           ],
         },
       },
+
       update: (proxy, { data: { logCreate } }) => {
         const data = proxy.readQuery({
           query: logGet,

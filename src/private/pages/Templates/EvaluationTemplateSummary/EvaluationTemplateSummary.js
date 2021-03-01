@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { evaluationTemplateGet } from "private/Apollo/Queries";
 
-import { getPossibleScore } from "../../Evaluation/util";
+import { getPossibleScore } from "../../EvaluationV2/Summary/util";
 import { Card, GhostLoader, Content } from "Components/elements";
 
 import {

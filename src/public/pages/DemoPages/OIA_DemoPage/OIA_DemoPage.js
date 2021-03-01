@@ -42,7 +42,7 @@ let list = [
   },
   {
     image: PIC5,
-    title: "5) Summary",
+    title: "5) Index",
     text: `When you get to the summary section, click the "TOP 15 PITCHING COMPETITION" group to get back to the group overview.`,
   },
   {

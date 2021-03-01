@@ -76,15 +76,12 @@ Amplify.configure({
     ],
   },
   Storage: {
-    AWSS3: {
-      // bucket: "adbooker.userfiles",
-      // region: "eu-west-1",
-    },
+    AWSS3: {},
   },
 });
 
 const STAGE = "dev2";
-const isLocal = true;
+const isLocal = false;
 
 const GQL = {
   private: {
