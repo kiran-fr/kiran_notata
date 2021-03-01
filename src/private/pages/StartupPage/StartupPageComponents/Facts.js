@@ -8,7 +8,7 @@ import StartupInfoSection from "./StartupInfoSection";
 export function Facts({ label, hideTitle, connection, user, match, history }) {
   const { creative } = connection;
   const { sharedWithEmail, submit: submitted } = creative;
-  const answers = (creative && creative.answers) || [];
+  const answers = creative?.answers || [];
 
   const answerCount = [...new Set(answers.map(({ questionId }) => questionId))]
     .length;

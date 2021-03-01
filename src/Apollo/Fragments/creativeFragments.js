@@ -18,7 +18,7 @@ export default gql`
       sectionId
       sectionName
       questionId
-      question
+      questionName
       sid
       val
       pageMeta {

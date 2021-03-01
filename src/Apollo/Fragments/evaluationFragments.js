@@ -15,8 +15,8 @@ export default gql`
       inputType
       questionId
       sectionId
-      sectionName
       questionName
+      sectionName
       sid
       val
     }
@@ -36,7 +36,9 @@ export default gql`
           score
           possibleScore
           questionId
-          question
+          questionName
+          sectionId
+          sectionName
         }
       }
       totalScore

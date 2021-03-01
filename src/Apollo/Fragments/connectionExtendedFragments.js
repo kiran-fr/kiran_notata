@@ -41,8 +41,10 @@ export default gql`
         id
         inputType
         questionId
+        sectionId
+        questionName
+        sectionName
         sid
-        question
         val
       }
       summary {
@@ -55,7 +57,9 @@ export default gql`
             score
             possibleScore
             questionId
-            question
+            questionName
+            sectionId
+            sectionName
           }
         }
         totalScore
@@ -96,8 +100,10 @@ export default gql`
             id
             inputType
             questionId
+            sectionId
+            questionName
+            sectionName
             sid
-            question
             val
           }
           createdByUser {
@@ -115,7 +121,9 @@ export default gql`
                 score
                 possibleScore
                 questionId
-                question
+                questionName
+                sectionId
+                sectionName
               }
             }
             totalScore
@@ -142,7 +150,7 @@ export default gql`
         sectionId
         sectionName
         questionId
-        question
+        questionName
         sid
         val
         pageMeta {
@@ -186,8 +194,10 @@ export default gql`
         id
         inputType
         questionId
+        sectionId
+        questionName
+        sectionName
         sid
-        question
         val
       }
       createdByUser {
@@ -206,7 +216,9 @@ export default gql`
             score
             possibleScore
             questionId
-            question
+            questionName
+            sectionId
+            sectionName
           }
         }
         totalScore

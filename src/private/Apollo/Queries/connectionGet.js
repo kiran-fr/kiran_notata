@@ -27,9 +27,11 @@ export default gql`
         answers {
           id
           inputType
+          sectionId
+          sectionName
           questionId
+          questionName
           sid
-          question
           val
         }
         summary {
@@ -42,7 +44,9 @@ export default gql`
               score
               possibleScore
               questionId
-              question
+              questionName
+              sectionId
+              sectionName
             }
           }
           totalScore
@@ -81,8 +85,10 @@ export default gql`
             templateId
             answers {
               inputType
-              questionId
               sectionId
+              sectionName
+              questionId
+              questionName
               sid
               val
             }
@@ -101,7 +107,9 @@ export default gql`
                   score
                   possibleScore
                   questionId
-                  question
+                  questionName
+                  sectionId
+                  sectionName
                 }
               }
               totalScore
