@@ -69,8 +69,8 @@ export default gql`
               id
               inputType
               questionId
+              questionName
               sid
-              question
               val
             }
           }

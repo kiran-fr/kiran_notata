@@ -36,8 +36,10 @@ export default gql`
           index
           inputType
           questionId
+          questionName
+          sectionId
+          sectionName
           sid
-          question
           val
           pageMeta {
             title
