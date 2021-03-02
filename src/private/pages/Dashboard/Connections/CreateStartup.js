@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
-import { connectionsGet, tagGroupGet } from "private/Apollo/Queries";
+import { connectionsGet, tagGroupsGet } from "private/Apollo/Queries";
 import {
   connectionCreate,
   creativePut,
@@ -67,10 +67,10 @@ export const CreateNewStartup = ({
   const connectionsQuery = useQuery(connectionsGet, {
     fetchPolicy: "cache-first",
   });
-  const connections = connectionsQuery.data?.connectionsGet || [];
+  const connections = connectionsQuery?.data?.connectionsGet || [];
 
-  const tagGroupsQuery = useQuery(tagGroupGet, { fetchPolicy: "cache-first" });
-  const tagGroups = tagGroupsQuery.data?.accountGet.tagGroups || [];
+  const tagGroupsQuery = useQuery(tagGroupsGet, { fetchPolicy: "cache-first" });
+  const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
 
   let showTagsForConnection;
   if (showTagGroup) {

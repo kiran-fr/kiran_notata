@@ -15,7 +15,7 @@ import {
   tagPut,
 } from "private/Apollo/Mutations";
 
-import { funnelGroupGet, tagGroupGet } from "private/Apollo/Queries";
+import { funnelGroupGet, tagGroupsGet } from "private/Apollo/Queries";
 
 import styles from "./TagGroup.module.css";
 import { TagType } from "private/pages/Tags/index";
@@ -73,7 +73,7 @@ function DeleteTag({ tag, type }: { tag: Tag | FunnelTag; type: TagType }) {
   let [mutateTagsDelete, { loading: tagDeleteLoading }] = useMutation(
     tagDelete,
     {
-      refetchQueries: [{ query: tagGroupGet }],
+      refetchQueries: [{ query: tagGroupsGet }],
       awaitRefetchQueries: true,
     }
   );
@@ -123,7 +123,7 @@ function TagInput({
   type: TagType;
 }) {
   const [mutateTags, { loading: tagPutLoading }] = useMutation(tagPut, {
-    refetchQueries: [{ query: tagGroupGet }],
+    refetchQueries: [{ query: tagGroupsGet }],
     awaitRefetchQueries: true,
   });
 
@@ -240,7 +240,7 @@ function DeleteTagGroup({
     tagGroupDeleteMutation,
     { loading: tagGroupDeleteLoading },
   ] = useMutation(tagGroupDelete, {
-    refetchQueries: [{ query: tagGroupGet }],
+    refetchQueries: [{ query: tagGroupsGet }],
     awaitRefetchQueries: true,
   });
 

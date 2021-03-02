@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { tagGroupGet } from "private/Apollo/Queries";
+import { tagGroupsGet } from "private/Apollo/Queries";
 import { tagPut } from "private/Apollo/Mutations";
 
 import {
@@ -25,7 +25,7 @@ export default function TagPage({
   tagGroups,
 }) {
   let [mutate, { loading }] = useMutation(tagPut, {
-    refetchQueries: [{ query: tagGroupGet }],
+    refetchQueries: [{ query: tagGroupsGet }],
     awaitRefetchQueries: true,
   });
 

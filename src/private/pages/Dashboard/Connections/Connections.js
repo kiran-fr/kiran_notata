@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import moment from "moment";
 
 // API
 import { useQuery, useMutation } from "@apollo/client";
-import { connectionsGet, tagGroupGet } from "private/Apollo/Queries";
+import { connectionsGet, tagGroupsGet } from "private/Apollo/Queries";
 
 import {
   connectionSetStar,
@@ -21,6 +20,7 @@ import { Table, Card, GhostLoader } from "Components/elements";
 
 import TagSelector from "Components/TagSelector/TagSelector";
 
+// STYLING
 import {
   counter,
   small_text_flex,
@@ -28,6 +28,10 @@ import {
 } from "./Connections.module.css";
 
 import tableColumns from "./TableColumns/TableColumns";
+
+// ====================
+// END OF IMPORT REGION
+// ====================
 
 export function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
@@ -225,20 +229,33 @@ export const DeleteTagMutationOptions = (tag, connection) => ({
   },
 });
 
-function Connections({ history, chartFilters }) {
+export default function Connections({ history }) {
+  // Mutations
   const [mutate] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
+  const [setStar] = useMutation(connectionSetStar);
+
+  // Queries
+  const { data, loading, error } = useQuery(connectionsGet);
+  const tagGroupsQuery = useQuery(tagGroupsGet);
+
+  const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
+
+  // States
   const [showTagGroup, setShowTagGroup] = useState(undefined);
   const [showEvaluate, setShowEvaluate] = useState(undefined);
 
-  const [filters, setFilterState] = useState({
+  const defaultFilters = {
     tags: [],
     funnelTags: [],
     search: "",
     starred: false,
     dateRange: [null, null],
-  });
+  };
 
+  const [filters, setFilterState] = useState(defaultFilters);
+
+  // Load filters from local store
   useEffect(() => {
     let f;
     try {
@@ -247,18 +264,11 @@ function Connections({ history, chartFilters }) {
     if (f) setFilterState(f);
   }, []);
 
+  // Setting filters: save to local store
   function setFilters(filterData) {
     localStorage.setItem("filters", JSON.stringify(filterData));
     setFilterState(filterData);
   }
-
-  const [setStar] = useMutation(connectionSetStar);
-
-  const { data, loading, error } = useQuery(connectionsGet);
-
-  const tagGroupsQuery = useQuery(tagGroupGet);
-  const tagGroups =
-    (tagGroupsQuery.data && tagGroupsQuery.data.accountGet.tagGroups) || [];
 
   if (error || tagGroupsQuery.error) {
     throw error || tagGroupsQuery.error;
@@ -275,7 +285,6 @@ function Connections({ history, chartFilters }) {
     // Apply filters from charts, affecting selection in table but not in charts themselves
     connections = applyFilters({
       connections: connectionsGeneral,
-      filters: chartFilters,
     });
   } else {
     connectionsGeneral.concat(connections);
@@ -384,9 +393,3 @@ function Connections({ history, chartFilters }) {
     </>
   );
 }
-
-const mapStateToProps = state => ({
-  chartFilters: state.connections.chartFilters,
-});
-
-export default connect(mapStateToProps)(Connections);

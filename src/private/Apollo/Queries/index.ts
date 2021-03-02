@@ -19,7 +19,7 @@ export { default as creativesGet } from "./creativesGet";
 export { default as creativeTemplateGet } from "./creativeTemplateGet";
 export { default as presentationsGet } from "./presentationsGet";
 
-export { default as tagGroupGet } from "./tagGroupGet";
+export { default as tagGroupsGet } from "./tagGroupsGet";
 export { default as funnelGroupGet } from "./funnelGroupGet";
 export { default as groupGetListOfStartups } from "./groupGetListOfStartups";
 export { default as evaluationTemplateNamesGet } from "./evaluationTemplateNamesGet";

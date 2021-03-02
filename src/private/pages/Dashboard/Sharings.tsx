@@ -59,6 +59,7 @@ function getUnbindedCreatives(
   connections: Connection[],
   creatives: Creative[]
 ): Creative[] {
+
   const existCreativeIds = new Set(
     connections.map(({ creativeId }) => creativeId)
   );

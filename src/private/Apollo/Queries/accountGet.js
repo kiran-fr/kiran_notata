@@ -35,7 +35,7 @@ export default gql`
         ...evaluationTemplateQuestionFields
       }
 
-      tagGroups {
+      tagGroupsGet {
         ...tagGroupFields
         tags {
           ...tagFields

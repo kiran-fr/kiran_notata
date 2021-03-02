@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
-import { tagGroupGet, connectionGet } from "private/Apollo/Queries";
+import { tagGroupsGet, connectionGet } from "private/Apollo/Queries";
 import {
   connectionTagAdd,
   connectionTagRemove,
@@ -15,7 +15,7 @@ import TagSelector from "Components/TagSelector/TagSelector";
 
 export function Tags({ connection, user, match }) {
   const [show, setShow] = useState(false);
-  const { data, error, loading } = useQuery(tagGroupGet);
+  const { data, error, loading } = useQuery(tagGroupsGet);
   const [mutate] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
 
@@ -26,7 +26,7 @@ export function Tags({ connection, user, match }) {
 
   if (!data && loading) return <span />;
 
-  const tagGroups = data?.accountGet?.tagGroups || [];
+  const tagGroups = data?.tagGroupsGet || [];
 
   function addTag(tag) {
     mutate({

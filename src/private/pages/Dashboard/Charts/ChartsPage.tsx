@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 
 import { useQuery } from "@apollo/client";
-import { connectionsGet, tagGroupGet } from "private/Apollo/Queries";
+import { connectionsGet, tagGroupsGet } from "private/Apollo/Queries";
 
 import Filters from "../Filters";
 
@@ -45,9 +45,9 @@ function Connections({
 
   const { data, loading, error } = useQuery(connectionsGet);
 
-  const tagGroupsQuery = useQuery(tagGroupGet);
+  const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups =
-    (tagGroupsQuery.data && tagGroupsQuery.data.accountGet.tagGroups) || [];
+    (tagGroupsQuery.data && tagGroupsQuery.data.tagGroupsGet) || [];
 
   const groupsTags = useMemo(
     () =>

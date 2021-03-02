@@ -9,7 +9,7 @@ import { useLazyQuery } from "@apollo/client";
 import CreateTagGroup from "./CreateTagGroup";
 import TagGroup from "./TagsGroup";
 
-import { tagGroupGet, funnelGroupGet } from "private/Apollo/Queries";
+import { tagGroupsGet, funnelGroupGet } from "private/Apollo/Queries";
 
 import { settings, tags } from "definitions.js";
 
@@ -31,12 +31,12 @@ export default function Tags() {
   const [
     getTags,
     {
-      data: tagGroupGetData,
-      loading: tagGroupGetLoading,
-      error: tagGroupGetError,
-      called: tagGroupGetCalled,
+      data: tagGroupsGetData,
+      loading: tagGroupsGetLoading,
+      error: tagGroupsGetError,
+      called: tagGroupsGetCalled,
     },
-  ] = useLazyQuery(tagGroupGet);
+  ] = useLazyQuery(tagGroupsGet);
 
   const [
     getFunnels,
@@ -56,19 +56,19 @@ export default function Tags() {
     }
   }, [getFunnels, getTags, type]);
 
-  if (funnelGroupGetError || tagGroupGetError) {
-    throw funnelGroupGetError || tagGroupGetError;
+  if (funnelGroupGetError || tagGroupsGetError) {
+    throw funnelGroupGetError || tagGroupsGetError;
   }
 
   const loadingData =
     type === TagType.FUNNELS
       ? !funnelGroupGetCalled || (!funnelGroupGetData && funnelGroupGetLoading)
-      : !tagGroupGetCalled || (!tagGroupGetData && tagGroupGetLoading);
+      : !tagGroupsGetCalled || (!tagGroupsGetData && tagGroupsGetLoading);
 
   const data =
     (type === TagType.FUNNELS
       ? funnelGroupGetData?.accountGet.funnelGroups
-      : tagGroupGetData?.accountGet.tagGroups) || [];
+      : tagGroupsGetData?.tagGroupsGet) || [];
 
   const handleTabChange = (event: any, newValue: TagType) => {
     setType(newValue);

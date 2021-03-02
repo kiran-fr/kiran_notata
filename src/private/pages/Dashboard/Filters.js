@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import TagSelector from "Components/TagSelector/TagSelector";
+import { Tag, Modal } from "Components/elements/";
+import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
+
 import { funnelGroupGet } from "private/Apollo/Queries";
 import { useQuery } from "@apollo/client";
-import { Tag, Modal } from "Components/elements/";
 import { cloneDeep } from "lodash";
 import classnames from "classnames";
 
@@ -24,8 +26,6 @@ import {
   funnel_tag,
   funnel_tag_active,
 } from "./Filters.module.scss";
-
-import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 
 const Tags = ({ filters, tagGroups, setFilters }) => {
   const [show, setShow] = useState(false);
@@ -167,8 +167,6 @@ export default function Filters({
     }
     return result;
   };
-
-  // if (!tagGroups) return <span />;
 
   return (
     <div className={fullFilter ? container : container_mini}>
