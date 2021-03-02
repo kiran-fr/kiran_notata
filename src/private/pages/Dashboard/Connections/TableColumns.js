@@ -1,51 +1,40 @@
 import * as React from "react";
 import { startup_page } from "definitions";
 import { Tag } from "Components/elements";
+import styles from "./Connections.module.css";
+
+import tableStyles from "Components/elements/NotataComponents/Table.module.css";
 import {
-  Connection,
   highestFunnelTagIndex,
   subjectiveScore,
   tagCount,
 } from "private/pages/Dashboard/Connections/types";
 
-import styles from "../Connections.module.css";
-import tableStyles from "Components/elements/NotataComponents/Table.module.css";
-
 import moment from "moment";
-import { History } from "history";
 
 export default ({
   history,
-  setStar,
-  setShowTagGroup,
-  setShowEvaluate,
-}: {
-  history: History;
-  setStar: Function;
-  setShowTagGroup: Function;
-  setShowEvaluate: Function;
+  setStarMutation,
+  setShowTagGroupForId,
+  setShowSubjectiveScoreForId,
 }) => {
-  const gotoStartup = (connection: Connection) => {
-    history.push(`${startup_page}/${connection.id}`, {
-      rightMenu: true,
-    });
-  };
-
   return [
+    // Star
     {
       title: "",
       key: "starred",
       width: 50,
       className: styles.list_star,
       allowSorting: false,
-
-      render: (connection: Connection) => {
+      render: connection => {
         const { starred, id } = connection;
+
         return (
           <div
             onClick={() => {
-              setStar({
+              setStarMutation({
                 variables: { id },
+
                 optimisticResponse: {
                   __typename: "Mutation",
                   connectionSetStar: {
@@ -66,27 +55,20 @@ export default ({
         );
       },
     },
+
     {
       title: "Company name",
-      key: "creative.name",
       className: styles.max_width_200,
       type: "string",
-      render: (connection: Connection) => {
-        let _style: React.CSSProperties = {
-          cursor: "pointer",
-          fontWeight:
-            connection.starred && ("var(--font-weight-bold)" as "bold"),
-        } as React.CSSProperties;
-
+      render: connection => {
         return (
-          <div style={_style} className={styles.company_name}>
+          <div className={styles.company_name}>
             <div
-              onClick={() => gotoStartup(connection)}
-              className={tableStyles.background_clicker}
-            />
-
-            <div
-              onClick={() => gotoStartup(connection)}
+              onClick={() => {
+                history.push(`${startup_page}/${connection.id}`, {
+                  rightMenu: true,
+                });
+              }}
               className={styles.actual_content}
             >
               {connection.creative.name}
@@ -95,14 +77,14 @@ export default ({
         );
       },
     },
+
     {
       title: "Funnels",
       // dataIndex: "funnelTags",
       key: "tags",
       responsive: "sm",
-      valueExpr: (connection: Connection) =>
-        highestFunnelTagIndex(connection.funnelTags),
-      render: (connection: Connection) => {
+      valueExpr: connection => highestFunnelTagIndex(connection.funnelTags),
+      render: connection => {
         let { funnelTags } = connection;
 
         let tag;
@@ -117,7 +99,7 @@ export default ({
         return (
           <div>
             <div
-              onClick={() => gotoStartup(connection)}
+              // onClick={() => gotoStartup(connection)}
               className={tableStyles.background_clicker}
             />
 
@@ -140,21 +122,18 @@ export default ({
         );
       },
     },
+
     {
       title: "Tags",
-      // dataIndex: "tags",
       key: "tags",
       responsive: "md",
-      valueExpr: (connection: Connection) => tagCount(connection.tags),
-      render: (connection: Connection) => (
+      valueExpr: connection => tagCount(connection.tags),
+      render: connection => (
         <div>
-          <div
-            onClick={() => gotoStartup(connection)}
-            className={tableStyles.background_clicker}
-          />
+          <div className={tableStyles.background_clicker} />
 
           <div className={styles.actual_content}>
-            {(connection.tags || []).slice(0, 3).map(({ name, id }) => (
+            {(connection.tags || []).slice(0, 3).map(({ name, id, group }) => (
               <Tag
                 key={id}
                 isButton={false}
@@ -163,7 +142,7 @@ export default ({
                 onClick={() => {}}
                 kill={false}
               >
-                {name}
+                {group.name}: {name}
               </Tag>
             ))}
 
@@ -173,7 +152,7 @@ export default ({
               className={""}
               kill={false}
               onClick={() => {
-                setShowTagGroup(connection.id);
+                setShowTagGroupForId(connection.id);
               }}
             >
               +
@@ -182,18 +161,19 @@ export default ({
         </div>
       ),
     },
+
     {
       title: "Subjective score",
       key: "subjectiveScores",
       responsive: "sm",
       type: "number",
-      valueExpr: (connection: Connection) => subjectiveScore(connection) || 0,
-      render: (connection: Connection) => {
+      valueExpr: connection => subjectiveScore(connection) || 0,
+      render: connection => {
         let avg = subjectiveScore(connection);
         return (
           <div>
             <div
-              onClick={() => gotoStartup(connection)}
+              // onClick={() => gotoStartup(connection)}
               className={tableStyles.background_clicker}
             />
 
@@ -204,15 +184,13 @@ export default ({
                 </div>
               )}
 
-              {/*{!avg && <span style={{ color: "#DADEE2" }}>n/a</span>}*/}
-
               {!avg && (
                 <Tag
                   isButton={true}
                   active={false}
                   className={""}
                   onClick={() => {
-                    setShowEvaluate(connection.id);
+                    setShowSubjectiveScoreForId(connection.id);
                   }}
                   kill={false}
                 >
@@ -224,17 +202,18 @@ export default ({
         );
       },
     },
+
     {
       title: "Updated",
       key: "updatedAt",
       responsive: "lg",
       className: styles.pre_space,
       type: "date",
-      render: (connection: Connection) => {
+      render: connection => {
         return (
           <div>
             <div
-              onClick={() => gotoStartup(connection)}
+              // onClick={() => gotoStartup(connection)}
               className={tableStyles.background_clicker}
             />
             <div className={styles.actual_content}>

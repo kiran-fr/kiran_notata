@@ -14,7 +14,10 @@ interface Props {
 export const Card = ({ maxWidth, noMargin, label, style, ...children }: Props) => {
   return (
     <div
-      className={classnames(styles.container, noMargin && styles.no_margin)}
+      className={classnames(
+        styles.container,
+        noMargin && styles.no_margin
+      )}
       style={{
         ...style,
         maxWidth: maxWidth ? maxWidth : "auto",

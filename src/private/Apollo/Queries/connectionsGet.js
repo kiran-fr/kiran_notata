@@ -25,6 +25,10 @@ export default gql`
         tagGroupId
         id
         name
+        group {
+          id
+          name
+        }
       }
 
       funnelTags {

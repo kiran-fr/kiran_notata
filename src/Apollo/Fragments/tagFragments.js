@@ -9,5 +9,9 @@ export default gql`
     createdBy
     createdAt
     index
+    group {
+      id
+      name
+    }
   }
 `;

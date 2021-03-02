@@ -53,9 +53,11 @@ export const Table = ({
   allowSorting,
   emptyLabel,
 }: Props) => {
+
   const [sort, setSort] = React.useState<Map<number, SortType>>(
     new Map<number, SortType>()
   );
+
   let [dataSourceProcessed, setDataSourceProcessed] = React.useState<any[]>([]);
 
   useEffect(() => {

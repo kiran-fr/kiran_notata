@@ -8,10 +8,9 @@ import {
   connectionTagAdd,
   connectionTagRemove,
 } from "private/Apollo/Mutations";
-import {
-  AddTagMutationOptions,
-  DeleteTagMutationOptions,
-} from "private/pages/Dashboard/Connections/Connections";
+
+import mutationOptions from "./mutationOptions";
+
 import { startup_page } from "definitions.js";
 
 import { Button, Modal } from "Components/elements";
@@ -86,11 +85,11 @@ export const CreateNewStartup = ({
   }
 
   function addTag(tag, connection) {
-    mutateConnectionTagAdd(AddTagMutationOptions(tag, connection));
+    mutateConnectionTagAdd(mutationOptions.addTag(tag, connection));
   }
 
   function deleteTag(tag, connection) {
-    mutateconnectionTagRemove(DeleteTagMutationOptions(tag, connection));
+    mutateconnectionTagRemove(mutationOptions.deleteTag(tag, connection));
   }
 
   return (

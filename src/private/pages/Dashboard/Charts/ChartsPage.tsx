@@ -13,7 +13,7 @@ import styles from "../Connections/Connections.module.css";
 
 import tableColumns from "./TableColumns/TableColumns";
 import ChartArea from "./ChartArea";
-import { applyFilters } from "../Connections/Connections";
+import applyFilters from "../Connections/applyFilters";
 
 function Connections({
   history,
@@ -112,14 +112,15 @@ function Connections({
 
   return (
     <Content maxWidth={1200}>
-      {data.connectionsGet.length >= 10 && (
-        <Filters
-          setFilters={setFilters}
-          filters={filters}
-          tagGroups={tagGroups}
-          fullFilter={false}
-        />
-      )}
+      {/*{data.connectionsGet.length >= 10 && (*/}
+      {/*  <Filters*/}
+      {/*    connections={}*/}
+      {/*    setFilters={setFilters}*/}
+      {/*    filters={filters}*/}
+      {/*    tagGroups={tagGroups}*/}
+      {/*    fullFilter={false}*/}
+      {/*  />*/}
+      {/*)}*/}
       <Card maxWidth={1200} style={{ paddingBottom: "20px" }}>
         <ChartArea
           connections={connectionsGeneral}
