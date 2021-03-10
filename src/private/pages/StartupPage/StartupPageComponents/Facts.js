@@ -20,9 +20,6 @@ export function Facts({ label, hideTitle, connection, user, match, history }) {
     answers.find(({ questionId }) => questionId === "q01_section_info") || {}
   ).val;
 
-  // console.log('creative', creative)
-  // console.log('answers', answers)
-
   return (
     <Card label={label || ""} style={{ paddingBottom: "20px" }}>
       <div style={{ padding: "10px" }}>

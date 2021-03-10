@@ -55,13 +55,16 @@ function Summaries({ answers }) {
 
 function Extended({ creative, collapsable }) {
   let answersByQuestion = {};
+
   const [open, setOpen] = useState(false);
+
+  console.log("creative", creative);
 
   for (let answer of creative.answers) {
     answersByQuestion[answer.questionId] = answersByQuestion[
       answer.questionId
     ] || {
-      questionName: answer.question,
+      questionName: answer.questionName,
       answers: [],
     };
     answersByQuestion[answer.questionId].answers.push(answer);

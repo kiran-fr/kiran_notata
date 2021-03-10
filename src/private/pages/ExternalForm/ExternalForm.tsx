@@ -12,7 +12,7 @@ import { facts_templates } from "definitions.js";
 
 import { useQuery } from "@apollo/client";
 import accountGet from "private/Apollo/Queries/accountGet";
-import styles from "private/pages/StartupPage/Facts/Facts.module.css";
+import styles from "private/pages/StartupPage/StartupInfo/StartupInfo.module.css";
 import { History } from "history";
 
 export default function ExternalForm({ history }: { history: History }) {

@@ -89,7 +89,7 @@ function QuestionNameAndDescription({ templateId, sectionId, question }) {
     <form className="focus_form" onSubmit={handleSubmit(onSubmit)}>
       <textarea
         className="form_h2"
-        placeholder="Question name"
+        placeholder="InfoQuestion name"
         rows={1}
         name="input.name"
         ref={register}
@@ -489,7 +489,7 @@ function DeleteQuestion({ templateId, sectionId, question }) {
   );
 }
 
-export default function Question({ templateId, sectionId, question }) {
+export default function InfoQuestion({ templateId, sectionId, question }) {
   return (
     <div>
       <QuestionNameAndDescription

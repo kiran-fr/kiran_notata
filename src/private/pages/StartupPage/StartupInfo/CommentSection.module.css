@@ -1,4 +1,9 @@
-.comments_label {
+.container {
+  padding: 15px;
+  padding-bottom: 0px;
+}
+
+.label {
   position: absolute;
   top: -21px;
   left: 0;
@@ -7,7 +12,7 @@
   color: var(--color-gray-medium);
 }
 
-.comments_list {
+.list {
   border-top: 1px solid var(--color-gray-light);
   padding-top: 14px;
   margin-left: -15px;
@@ -16,7 +21,7 @@
   margin-top: 15px;
 }
 
-.comment_item {
+.item {
   background: var(--color-message-bg);
   display: block;
   padding: 4px 12px;

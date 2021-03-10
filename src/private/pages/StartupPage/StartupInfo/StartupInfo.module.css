@@ -14,6 +14,10 @@
   color: var(--color-gray-medium);
 }
 
+.share_text b {
+  color: var(--color-primary);
+}
+
 .copy_link {
   padding-top: 5px;
   font-size: 12px;
@@ -23,9 +27,9 @@
 .facts_container {
 }
 
-.facts_section_container {
-  margin-bottom: 20px;
-}
+/*.facts_section_container {*/
+/*  margin-bottom: 20px;*/
+/*}*/
 
 .facts_section_header {
   color: var(--color-secondary);
@@ -99,4 +103,46 @@
   line-height: 1.8;
   font-weight: 400;
   color: var(--color-gray-dark);
+}
+
+/* INFO SECTION */
+.section_container {
+}
+
+.section_name {
+  margin-top: 30px;
+  font-size: 28px;
+  position: relative;
+  bottom: -8px;
+  color: var(--color-secondary);
+}
+
+.section_description {
+}
+
+.section_question_card {
+  margin-bottom: 10px;
+  padding-bottom: 15px;
+}
+
+.section_question_input {
+  padding: 10px;
+}
+
+/* COMMENT SECTION */
+
+/* INVITATION SECTION */
+.invitation_success {
+  padding: 5px;
+  font-size: 12px;
+  color: var(--color-secondary);
+}
+
+.invitation_button_container {
+  margin-top: 5px;
+  text-align: right;
+}
+
+.invitation_input_container {
+  margin-top: 30px;
 }

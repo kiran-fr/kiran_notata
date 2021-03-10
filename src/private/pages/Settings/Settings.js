@@ -9,6 +9,7 @@ import {
   facts_templates,
   external_form,
 } from "definitions.js";
+
 import tableStyles from "Components/elements/NotataComponents/Table.module.css";
 
 const linkList = [

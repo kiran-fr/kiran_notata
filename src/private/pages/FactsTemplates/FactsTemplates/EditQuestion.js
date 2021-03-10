@@ -70,7 +70,7 @@ function QuestionNameAndDescription({
     <form className="focus_form" onSubmit={handleSubmit(onSubmit)}>
       <textarea
         className="form_h2"
-        placeholder="Question name"
+        placeholder="InfoQuestion name"
         rows={1}
         name="input.name"
         ref={register}

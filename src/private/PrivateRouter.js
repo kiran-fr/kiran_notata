@@ -35,7 +35,7 @@ import Tags from "./pages/Tags";
 import Settings from "./pages/Settings/Settings";
 import Team from "./pages/Team/Team";
 import StartupPage from "./pages/StartupPage/StartupPage";
-import FactsPage from "./pages/StartupPage/Facts/Facts";
+import FactsPage from "./pages/StartupPage/StartupInfo";
 
 // Evaluation templates
 import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";

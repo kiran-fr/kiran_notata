@@ -62,7 +62,7 @@ function NameAndDescription({ template, section }) {
       <textarea
         className="form_p1"
         rows={1}
-        placeholder='I.e. "Section to evaluate team"'
+        placeholder='I.e. "InfoSection to evaluate team"'
         name="input.description"
         ref={register}
         onBlur={handleSubmit(onSubmit)}
@@ -158,7 +158,7 @@ export default function EvaluationTemplateSection({ match }) {
             link: `${evaluation_template}/${id}`,
           },
           {
-            val: `Section: ${section.name}`,
+            val: `InfoSection: ${section.name}`,
             link: `${evaluation_template}/${id}/${sectionId}`,
           },
         ]}

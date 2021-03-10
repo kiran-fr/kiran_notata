@@ -56,7 +56,7 @@ export default function Evaluation({ match, history }) {
 
   const columns = [
     {
-      title: "Section name",
+      title: "InfoSection name",
       dataIndex: "id",
       key: "name",
       render: id => {

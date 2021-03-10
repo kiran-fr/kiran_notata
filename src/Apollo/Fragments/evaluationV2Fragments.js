@@ -32,7 +32,7 @@ export default gql`
           score
           possibleScore
           questionId
-          question
+          questionName
         }
       }
       totalScore
