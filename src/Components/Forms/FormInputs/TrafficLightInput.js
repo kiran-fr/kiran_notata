@@ -1,5 +1,5 @@
 import React from "react";
-import { InputTrafficLight } from "../elements";
+import { InputTrafficLight } from "../../elements";
 
 export default function TrafficLightInput({ value, handleOnClick }) {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 
-import { MultipleTextInput } from "Components/Forms";
+import { MultipleTextInput } from "Components/Forms/FormInputs";
 
 import { publicCreativePut } from "public/Apollo/Mutations";
 

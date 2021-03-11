@@ -17,5 +17,4 @@ export { MessageBox } from "./NotataComponents/MessageBox";
 export { ErrorBox } from "./NotataComponents/ErrorBox";
 export { GhostLoader } from "./NotataComponents/GhostLoader";
 
-// export { default as AutoHeightTextarea } from "./NotataComponents/AutoHeightTextArea";
 export { default as AutoHeightTextarea } from "./NotataComponents/AutoHeightTextArea.tsx";

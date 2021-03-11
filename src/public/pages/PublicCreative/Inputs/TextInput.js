@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useMutation } from "@apollo/client";
-import { TextInput } from "Components/Forms";
+import { TextInput } from "Components/Forms/FormInputs";
 import { publicCreativePut } from "public/Apollo/Mutations";
 
 export default function TextInputContainer({ question, section, creative }) {

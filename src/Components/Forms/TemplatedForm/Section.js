@@ -1,35 +1,35 @@
 import React from "react";
 
 // Components
-import InfoQuestion from "./InfoQuestion";
+import Question from "./Question";
 
 // Styles
-import styles from "./StartupInfo.module.css";
+import styles from "./TemplatedForm.module.css";
 
 // *****************
 // * Main function *
 // *****************
-export default function InfoSection({ templateId, section, answers }) {
+export default function Section({ section, answers, setAnswers }) {
   // Definitions
   const { name, description } = section;
   const questions = section.questions || [];
 
   return (
     <div className={styles.section_container}>
-      {/* InfoSection name */}
+      {/* Section name */}
       <div className={styles.section_name}>{name}</div>
 
-      {/* InfoSection description */}
+      {/* Section description */}
       <div className={styles.section_description}>{description}</div>
 
       {/* List of questions */}
       {questions.map(question => (
-        <InfoQuestion
+        <Question
           key={question.id}
-          templateId={templateId}
           section={section}
           question={question}
           answers={answers}
+          setAnswers={setAnswers}
         />
       ))}
     </div>

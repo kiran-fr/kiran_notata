@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { TrafficLightInput } from "Components/Forms";
+import { TrafficLightInput } from "Components/Forms/FormInputs";
 
 import { evaluationPut } from "private/Apollo/Mutations";
 import { connectionGet } from "private/Apollo/Queries";

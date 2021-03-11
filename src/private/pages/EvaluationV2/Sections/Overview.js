@@ -10,7 +10,7 @@ export const Overview = ({
 }) => {
   const columns = [
     {
-      title: "InfoSection name",
+      title: "Section name",
       dataIndex: "id",
       key: "name",
       render: id => {

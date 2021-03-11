@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { MultipleChoiceInput } from "Components/Forms";
+import { MultipleChoiceInput } from "Components/Forms/FormInputs";
 import { evaluationPut } from "private/Apollo/Mutations";
 
 export default function MultipleChoiceInputContainer({

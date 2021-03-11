@@ -1,5 +1,5 @@
 import React from "react";
-import { SingleChoiceInput } from "Components/Forms";
+import { SingleChoiceInput } from "Components/Forms/FormInputs";
 
 export default function SingleChoiceInputContainer({
   question,

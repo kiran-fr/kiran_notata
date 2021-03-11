@@ -1,16 +1,13 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
-
-import { MultipleChoiceInput } from "Components/Forms";
-import { creativePut } from "private/Apollo/Mutations";
+import { MultipleChoiceInput } from "Components/Forms/FormInputs";
 
 export default function MultipleChoiceInputContainer({
-  templateId,
   section,
   question,
   answers,
   setAnswers,
 }) {
+  // Get options
   const { options } = question;
 
   // Get answer from array of answers
@@ -35,7 +32,6 @@ export default function MultipleChoiceInputContainer({
           [
             ...answers,
             {
-              templateId: templateId,
               sectionId: section.id,
               questionId: question.id,
               sectionName: section.name,

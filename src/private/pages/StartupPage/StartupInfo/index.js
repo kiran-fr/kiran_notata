@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 
 // API: apollo
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 // API: queries
 import { creativeGet, creativeTemplateGet } from "private/Apollo/Queries";
+
+// API: mutations
+import { creativeUpdate } from "private/Apollo/Mutations";
 
 // Router: definitions
 import { dashboard, startup_page, facts_templates } from "definitions.js";
@@ -16,12 +19,30 @@ import { Content, BreadCrumbs, Button, GhostLoader } from "Components/elements";
 import NameInput from "./NameInput";
 import InviteStartup from "./InviteStartup";
 
-import InfoForm from "./InfoForm";
+// Components: general
+import TemplatedForm from "Components/Forms/TemplatedForm";
+
+// Utils
+import { omit } from "lodash";
+
+function getCleanContentData({ creative }) {
+  if (!creative) {
+    return;
+  }
+
+  let answers = creative.answers || [];
+
+  answers = answers.map(a => ({
+    ...omit(a, ["__typename"]),
+    pageMeta: a.pageMeta ? omit(a.pageMeta, ["__typename"]) : {},
+  }));
+
+  return answers;
+}
 
 // *****************
 // * Main function *
 // *****************
-
 export default function StartupInfo({ history, match }) {
   // Get url params
   const { id: connectionId, creativeId } = match.params;
@@ -35,6 +56,9 @@ export default function StartupInfo({ history, match }) {
   const { data: templateData, loading: templateLoading } = useQuery(
     creativeTemplateGet
   );
+
+  // Mutations
+  const [mutate, { loading: mutationLoading }] = useMutation(creativeUpdate);
 
   // Definitions
   const creative = creativeData?.creativeGet || {};
@@ -55,6 +79,11 @@ export default function StartupInfo({ history, match }) {
   if (creativeLoading || templateLoading) {
     return <GhostLoader />;
   }
+
+  // Define template data to include in form
+  const formSections = creativeTemplate.sections.filter(
+    ({ id }) => id !== "section_terms"
+  );
 
   // ===========
   // Return page
@@ -79,27 +108,36 @@ export default function StartupInfo({ history, match }) {
       />
 
       <Content maxWidth={600}>
+        {/* Edit startup name */}
         <NameInput creativeId={creative.id} name={creative.name} />
 
+        {/* Invite startup */}
         <InviteStartup connectionId={connectionId} creative={creative} />
 
-        <InfoForm
-          connectionId={connectionId}
-          creative={creative}
-          creativeTemplate={creativeTemplate}
+        {/* Roll out templated form */}
+        <TemplatedForm
+          template={{ sections: formSections }}
+          content={getCleanContentData({ creative })}
+          submit={answers => {
+            let variables = {
+              id: creative.id,
+              input: { answers },
+            };
+            mutate({ variables });
+          }}
         />
 
-        {/* Link to edit template */}
-        <div style={{ textAlign: "right", marginTop: "35px" }}>
-          <Button
-            type={"just_text"}
-            onClick={() => {
-              history.push(facts_templates);
-            }}
-          >
-            edit form template
-          </Button>
-        </div>
+        {/*/!* Link to edit template *!/*/}
+        {/*<div style={{ textAlign: "right", marginTop: "35px" }}>*/}
+        {/*  <Button*/}
+        {/*    type={"just_text"}*/}
+        {/*    onClick={() => {*/}
+        {/*      history.push(facts_templates);*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    edit form template*/}
+        {/*  </Button>*/}
+        {/*</div>*/}
       </Content>
     </>
   );

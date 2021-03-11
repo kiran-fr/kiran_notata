@@ -217,7 +217,7 @@ export default function EvaluationTemplate({ match, history }) {
     },
 
     {
-      title: "InfoSection name",
+      title: "Section name",
       dataIndex: "id",
       key: "name",
       render: sectionId => {
@@ -339,12 +339,12 @@ export default function EvaluationTemplate({ match, history }) {
           type="right_arrow"
           size="large"
         >
-          Create New InfoSection
+          Create New Section
         </Button>
 
         {showModal && (
           <Modal
-            title="New InfoSection"
+            title="New Section"
             close={() => setShowModal(false)}
             disableFoot={true}
           >

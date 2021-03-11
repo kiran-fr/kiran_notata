@@ -1,12 +1,8 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
 
-import { SingleChoiceInput } from "Components/Forms";
-
-import { creativePut } from "private/Apollo/Mutations";
+import { SingleChoiceInput } from "Components/Forms/FormInputs";
 
 export default function SingleChoiceInputContainer({
-  templateId,
   section,
   question,
   answers,
@@ -35,7 +31,6 @@ export default function SingleChoiceInputContainer({
 
       // Add new answer
       {
-        templateId: templateId,
         sectionId: section.id,
         questionId: question.id,
         sectionName: section.name,

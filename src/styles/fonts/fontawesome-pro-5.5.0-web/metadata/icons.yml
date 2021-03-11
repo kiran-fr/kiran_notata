@@ -13601,7 +13601,7 @@ map-marker-plus:
 map-marker-question:
   changes:
     - 5.2.0
-  label: Map Marker InfoQuestion
+  label: Map Marker Question
   search:
     terms: []
   styles:
@@ -16468,7 +16468,7 @@ question:
   changes:
     - '3.1'
     - 5.0.0
-  label: InfoQuestion
+  label: Question
   search:
     terms:
       - help
@@ -16484,7 +16484,7 @@ question-circle:
   changes:
     - '1'
     - 5.0.0
-  label: InfoQuestion Circle
+  label: Question Circle
   search:
     terms:
       - help
@@ -16499,7 +16499,7 @@ question-circle:
 question-square:
   changes:
     - 5.0.0
-  label: InfoQuestion Square
+  label: Question Square
   search:
     terms:
       - help

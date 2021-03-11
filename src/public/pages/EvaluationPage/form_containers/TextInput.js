@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { debounce } from "lodash";
-import { TextInput } from "Components/Forms";
+import { TextInput } from "Components/Forms/FormInputs";
 
 export default function TextInputContainer({ question, setAnswers, answers }) {
   const delayedSet = useCallback(

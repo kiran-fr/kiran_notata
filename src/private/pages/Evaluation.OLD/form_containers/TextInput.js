@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
-import { TextInput } from "Components/Forms";
+import { TextInput } from "Components/Forms/FormInputs";
 
 import { evaluationPut } from "private/Apollo/Mutations";
 

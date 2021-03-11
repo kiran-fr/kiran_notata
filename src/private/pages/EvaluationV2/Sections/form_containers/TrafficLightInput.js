@@ -1,5 +1,5 @@
 import React from "react";
-import { TrafficLightInput } from "Components/Forms";
+import { TrafficLightInput } from "Components/Forms/FormInputs";
 
 export default function TrafficLightInputContainer({
   section,

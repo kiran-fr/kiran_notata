@@ -12,7 +12,7 @@ export default gql`
     sharedByEmail
     submit
     answers {
-      id
+      #      id
       index
       inputType
       sectionId

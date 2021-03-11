@@ -105,32 +105,6 @@
   color: var(--color-gray-dark);
 }
 
-/* INFO SECTION */
-.section_container {
-}
-
-.section_name {
-  margin-top: 30px;
-  font-size: 28px;
-  position: relative;
-  bottom: -8px;
-  color: var(--color-secondary);
-}
-
-.section_description {
-}
-
-.section_question_card {
-  margin-bottom: 10px;
-  padding-bottom: 15px;
-}
-
-.section_question_input {
-  padding: 10px;
-}
-
-/* COMMENT SECTION */
-
 /* INVITATION SECTION */
 .invitation_success {
   padding: 5px;

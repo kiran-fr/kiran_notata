@@ -1,17 +1,13 @@
 import React from "react";
 
 // Styles
-import styles from "./CommentSection.module.css";
+import styles from "./TemplatedForm.module.css";
 import classnames from "classnames";
 
 // *****************
 // * Main function *
 // *****************
-
-export function CommentSection({ questionId, creative }) {
-  // Get answers from creative
-  const answers = creative.answers || [];
-
+export function Comments({ questionId, answers }) {
   // Isolate comments
   const comments = answers.filter(
     ({ inputType, questionId: id }) =>
@@ -19,14 +15,13 @@ export function CommentSection({ questionId, creative }) {
   );
 
   return (
-    <div className={classnames("comment_form", styles.container)}>
+    <div className={classnames("comment_form", styles.comments_container)}>
       {!!comments.length && (
         <>
-          <div className={styles.list}>
-            <div className={styles.label}>Comments</div>
-
+          <div className={styles.comments_list}>
+            <div className={styles.comments_label}>Comments</div>
             {comments.map(({ val, id }) => (
-              <div key={id} className={styles.item}>
+              <div key={id} className={styles.comments_item}>
                 {val}
               </div>
             ))}

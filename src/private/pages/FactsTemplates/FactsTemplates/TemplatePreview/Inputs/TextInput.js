@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput } from "Components/Forms";
+import { TextInput } from "Components/Forms/FormInputs";
 
 export default function TextInputContainer({ question, section }) {
   const answer = {};

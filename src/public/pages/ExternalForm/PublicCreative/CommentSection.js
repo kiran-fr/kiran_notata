@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CommentInput } from "Components/Forms";
+import { CommentInput } from "Components/Forms/FormInputs";
 
 export function CommentSection({ answers, section, question, setAnswers }) {
   // const [ comments, setComments ] = useState([])

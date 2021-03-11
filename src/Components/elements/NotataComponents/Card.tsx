@@ -8,15 +8,17 @@ interface Props {
   noMargin?: boolean;
   label?: string;
   style?: { [key: string]: string };
+  className?: string;
   children?: any;
 }
 
-export const Card = ({ maxWidth, noMargin, label, style, ...children }: Props) => {
+export const Card = ({ maxWidth, noMargin, label, style, className, ...children }: Props) => {
   return (
     <div
       className={classnames(
         styles.container,
-        noMargin && styles.no_margin
+        noMargin && styles.no_margin,
+        className && className
       )}
       style={{
         ...style,

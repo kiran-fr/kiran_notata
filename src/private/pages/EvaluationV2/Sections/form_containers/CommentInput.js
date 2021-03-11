@@ -1,5 +1,5 @@
 import React from "react";
-import { CommentInput } from "Components/Forms";
+import { CommentInput } from "Components/Forms/FormInputs";
 
 export default function CommentInputContainer({
   section,

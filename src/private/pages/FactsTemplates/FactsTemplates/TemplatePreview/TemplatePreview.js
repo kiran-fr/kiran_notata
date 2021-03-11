@@ -171,7 +171,7 @@ export function Section({ section, template, updateTemplate }) {
               <div className="mt3">
                 <input
                   type="text"
-                  placeholder="InfoSection title"
+                  placeholder="Section title"
                   autoComplete="off"
                   defaultValue={editSectionMeta.name}
                   ref={register}
@@ -825,7 +825,7 @@ export default function TemplatePreview({ template, setTemplate }) {
               <div className="mt3">
                 <input
                   type="text"
-                  placeholder="InfoSection title"
+                  placeholder="Section title"
                   autoComplete="off"
                   // defaultValue={editSectionMeta.name}
                   ref={register}

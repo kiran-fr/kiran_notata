@@ -1,28 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Components: general
 import { Card } from "Components/elements";
 
 // Components: unique
 import { GeneralInput } from "./Inputs/GeneralInput";
-import { CommentSection } from "./CommentSection";
+import { Comments } from "./Comments";
 
 // Styles
-import styles from "./StartupInfo.module.css";
+import styles from "./TemplatedForm.module.css";
 
 // *****************
 // * Main function *
 // *****************
-// export default function InfoQuestion({question, section, answers}) {
-export default function InfoQuestion({ question, section, templateId }) {
-  const [answers, setAnswers] = useState([]);
-
+export default function Question({ question, section, answers, setAnswers }) {
   return (
-    <Card key={question.id} className={styles.section_question_card}>
-      {/* InfoQuestion name */}
+    <Card className={styles.section_question_card}>
+      {/* Question name */}
       <div className="form_h2">{question.name}</div>
 
-      {/* InfoQuestion description */}
+      {/* Question description */}
       <div className="form_p2">{question.description}</div>
 
       <hr />
@@ -30,7 +27,6 @@ export default function InfoQuestion({ question, section, templateId }) {
       {/* Each input */}
       <div className={styles.section_question_input}>
         <GeneralInput
-          templateId={templateId}
           section={section}
           question={question}
           answers={answers}
@@ -39,10 +35,7 @@ export default function InfoQuestion({ question, section, templateId }) {
       </div>
 
       {/* Comment section */}
-      {/*<CommentSection*/}
-      {/*  questionId={question.id}*/}
-      {/*  answers={answers}*/}
-      {/*/>*/}
+      <Comments questionId={question.id} answers={answers} />
     </Card>
   );
 }
