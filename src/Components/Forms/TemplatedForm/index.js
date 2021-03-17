@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-// Helpers
-import { omit } from "lodash";
-
 // Components
 import { Button } from "Components/elements";
 import Section from "./Section";
@@ -56,10 +53,11 @@ export default function TemplatedForm({ template, content, submit, loading }) {
         <Button
           loading={loading}
           onClick={() => {
+            console.log("submit form...");
             submit(answers);
           }}
         >
-          Submit it, innit
+          SAVE
         </Button>
       </div>
     </div>

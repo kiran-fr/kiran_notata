@@ -11,6 +11,9 @@ import {
 
 import { evaluationCreate, evaluationUpdate } from "../../../Apollo/Mutations";
 
+// Components: general
+import TemplatedForm from "Components/Forms/TemplatedForm";
+
 import { Section } from "./Section";
 import { Overview } from "./Overview";
 
@@ -163,37 +166,57 @@ export default function Evaluation({ match, location, history }) {
     return <GhostLoader />;
   }
 
-  if (sectionId === "all") {
-    return (
-      <Overview
-        evaluationTemplate={evaluationTemplate}
-        connection={connection}
-        evaluation={evaluation}
-        history={history}
-        match={match}
-        location={location}
+  return (
+    <div>
+      {/* Roll out templated form */}
+      <TemplatedForm
+        template={{ sections: evaluationTemplate.sections }}
+        // content={getCleanContentData({ creative })}
+        // content={{}}
+        submit={answers => {
+          console.log("answers", answers);
+          // let variables = {
+          //   id: creative.id,
+          //   input: { answers },
+          // };
+          // mutate({ variables });
+        }}
       />
-    );
-  }
+    </div>
+  );
 
-  let section = evaluationTemplate.sections.find(({ id }) => id === sectionId);
-  if (section) {
-    return (
-      <Section
-        evaluationTemplate={evaluationTemplate}
-        connection={connection}
-        evaluation={evaluation}
-        history={history}
-        match={match}
-        location={location}
-        section={section}
-        answers={answers}
-        setAnswers={setAnswers}
-        save={save}
-        loading={loading}
-      />
-    );
-  }
-
-  return <div>This got weird...</div>;
+  //
+  // if (sectionId === "all") {
+  //   return (
+  //     <Overview
+  //       evaluationTemplate={evaluationTemplate}
+  //       connection={connection}
+  //       evaluation={evaluation}
+  //       history={history}
+  //       match={match}
+  //       location={location}
+  //     />
+  //   );
+  // }
+  //
+  // let section = evaluationTemplate.sections.find(({ id }) => id === sectionId);
+  // if (section) {
+  //   return (
+  //     <Section
+  //       evaluationTemplate={evaluationTemplate}
+  //       connection={connection}
+  //       evaluation={evaluation}
+  //       history={history}
+  //       match={match}
+  //       location={location}
+  //       section={section}
+  //       answers={answers}
+  //       setAnswers={setAnswers}
+  //       save={save}
+  //       loading={loading}
+  //     />
+  //   );
+  // }
+  //
+  // return <div>This got weird...</div>;
 }

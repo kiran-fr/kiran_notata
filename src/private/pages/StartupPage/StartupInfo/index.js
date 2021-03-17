@@ -10,10 +10,10 @@ import { creativeGet, creativeTemplateGet } from "private/Apollo/Queries";
 import { creativeUpdate } from "private/Apollo/Mutations";
 
 // Router: definitions
-import { dashboard, startup_page, facts_templates } from "definitions.js";
+import { dashboard, startup_page } from "definitions.js";
 
 // Components: general
-import { Content, BreadCrumbs, Button, GhostLoader } from "Components/elements";
+import { Content, BreadCrumbs, GhostLoader } from "Components/elements";
 
 // Components: unique
 import NameInput from "./NameInput";
