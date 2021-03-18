@@ -15,17 +15,19 @@ import styles from "./TemplatedForm.module.css";
 // *****************
 export default function Question({ question, section, answers, setAnswers }) {
   return (
-    <Card className={styles.section_question_card}>
+    <div className={styles.question_container}>
       {/* Question name */}
-      <div className="form_h2">{question.name}</div>
+      <div className={styles.question_title}>{question.name}</div>
 
       {/* Question description */}
-      <div className="form_p2">{question.description}</div>
-
-      <hr />
+      {question.description && (
+        <div className={styles.question_description}>
+          {question.description}
+        </div>
+      )}
 
       {/* Each input */}
-      <div className={styles.section_question_input}>
+      <div className={styles.question_options}>
         <GeneralInput
           section={section}
           question={question}
@@ -36,6 +38,6 @@ export default function Question({ question, section, answers, setAnswers }) {
 
       {/* Comment section */}
       <Comments questionId={question.id} answers={answers} />
-    </Card>
+    </div>
   );
 }

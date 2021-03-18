@@ -3,7 +3,7 @@ import { InputTrafficLight } from "../../elements";
 
 export default function TrafficLightInput({ value, handleOnClick }) {
   return (
-    <form className="notata_form">
+    <form>
       <div style={{ display: "flex", justifyContent: "center" }}>
         {["red", "yellow", "green"].map(color => (
           <InputTrafficLight

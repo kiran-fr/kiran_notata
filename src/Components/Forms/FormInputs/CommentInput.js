@@ -50,7 +50,7 @@ export default function CommentInput({
 
   return (
     <>
-      <div className="comment_form" style={style}>
+      <div style={style}>
         {!!comments.length && (
           <div className={comments_list}>
             <div className={comments_label}>Comments</div>
@@ -112,7 +112,7 @@ export default function CommentInput({
           close={() => setShowModal(undefined)}
           disableFoot={true}
         >
-          <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
+          <form onSubmit={handleSubmit(onSubmit)}>
             <textarea
               placeholder={placeholder || "Write a comment..."}
               rows={rows | 12}

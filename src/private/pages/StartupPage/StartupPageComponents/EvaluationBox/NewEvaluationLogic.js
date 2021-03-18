@@ -20,8 +20,7 @@ export default function NewEvaluationLogic({ connection, history }) {
   async function selectTemplate({ templateId, name, description }) {
     let path =
       `${startup_page}/${connection.id}/evaluationV2` +
-      `/template/${templateId}` +
-      `?section=all`;
+      `/template/${templateId}`;
     history.push(path);
   }
 

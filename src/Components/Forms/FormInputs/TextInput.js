@@ -10,7 +10,7 @@ export default function TextInput({
   onBlur,
 }) {
   return (
-    <form onSubmit={e => e.preventDefault()} className="notata_form">
+    <form onSubmit={e => e.preventDefault()}>
       <textarea
         rows={rows || 7}
         style={style}

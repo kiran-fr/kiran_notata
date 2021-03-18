@@ -25,7 +25,7 @@ export default function MultipleTextInput({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
+    <form onSubmit={handleSubmit(onSubmit)}>
       {answers.map(({ id, val }, i) => (
         <div className={inputWrapper} key={id || val}>
           <input

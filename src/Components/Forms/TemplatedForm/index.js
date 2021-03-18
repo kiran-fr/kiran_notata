@@ -10,7 +10,15 @@ import styles from "./TemplatedForm.module.css";
 // *****************
 // * Main function *
 // *****************
-export default function TemplatedForm({ template, content, submit, loading }) {
+export default function TemplatedForm({
+  template,
+  content,
+  submit,
+  loading,
+  location,
+}) {
+  let { hash } = location;
+
   // State: form answers
   const [answers, setAnswers] = useState(content || []);
 
@@ -44,6 +52,7 @@ export default function TemplatedForm({ template, content, submit, loading }) {
           section={section}
           answers={answers}
           setAnswers={setAnswers}
+          open={`#${section.id}` === hash}
         />
       ))}
 

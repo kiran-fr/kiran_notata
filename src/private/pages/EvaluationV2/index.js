@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import queryString from "query-string";
 import { omit } from "lodash";
 
 import {
@@ -9,21 +8,20 @@ import {
   evaluationGet,
 } from "private/Apollo/Queries";
 
-import { evaluationCreate, evaluationUpdate } from "../../../Apollo/Mutations";
+import { evaluationCreate, evaluationUpdate } from "../../Apollo/Mutations";
 
-// Components: general
+import { startup_page } from "definitions";
+
+// Components
+import { ContentCard } from "Components/UI_kit/";
+import { GhostLoader } from "Components/elements";
 import TemplatedForm from "Components/Forms/TemplatedForm";
 
-import { Section } from "./Section";
-import { Overview } from "./Overview";
+import BackButton from "./BackButton";
+import Navigation from "./Navigation";
 
-import { GhostLoader } from "Components/elements";
-import { startup_page } from "../../../../definitions";
-
-export default function Evaluation({ match, location, history }) {
+export default function Evaluation({ match, history, location }) {
   const { connectionId, templateId, evaluationId } = match.params;
-
-  const sectionId = queryString.parse(location.search).section;
 
   const [answers, setAnswersState] = useState([]);
 
@@ -167,56 +165,55 @@ export default function Evaluation({ match, location, history }) {
   }
 
   return (
-    <div>
-      {/* Roll out templated form */}
-      <TemplatedForm
-        template={{ sections: evaluationTemplate.sections }}
-        // content={getCleanContentData({ creative })}
-        // content={{}}
-        submit={answers => {
-          console.log("answers", answers);
-          // let variables = {
-          //   id: creative.id,
-          //   input: { answers },
-          // };
-          // mutate({ variables });
-        }}
-      />
-    </div>
-  );
+    <ContentCard>
+      <div
+      // style={{
+      //   position: "relative",
+      //   padding: "30px 40px"
+      // }}
+      >
+        <BackButton
+          connection={connection}
+          onClick={() => {
+            let path = `${startup_page}/${connection.id}?tab=evaluations`;
+            history.push(path);
+          }}
+        />
+      </div>
 
-  //
-  // if (sectionId === "all") {
-  //   return (
-  //     <Overview
-  //       evaluationTemplate={evaluationTemplate}
-  //       connection={connection}
-  //       evaluation={evaluation}
-  //       history={history}
-  //       match={match}
-  //       location={location}
-  //     />
-  //   );
-  // }
-  //
-  // let section = evaluationTemplate.sections.find(({ id }) => id === sectionId);
-  // if (section) {
-  //   return (
-  //     <Section
-  //       evaluationTemplate={evaluationTemplate}
-  //       connection={connection}
-  //       evaluation={evaluation}
-  //       history={history}
-  //       match={match}
-  //       location={location}
-  //       section={section}
-  //       answers={answers}
-  //       setAnswers={setAnswers}
-  //       save={save}
-  //       loading={loading}
-  //     />
-  //   );
-  // }
-  //
-  // return <div>This got weird...</div>;
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "start",
+          marginTop: "35px",
+        }}
+      >
+        <div style={{ width: "350px" }}>
+          <Navigation
+            sections={evaluationTemplate.sections || []}
+            history={history}
+            location={location}
+          />
+        </div>
+
+        <div>
+          {/* Roll out templated form */}
+          <TemplatedForm
+            template={{
+              sections: evaluationTemplate.sections,
+            }}
+            location={location}
+            submit={answers => {
+              console.log("answers", answers);
+              // let variables = {
+              //   id: creative.id,
+              //   input: { answers },
+              // };
+              // mutate({ variables });
+            }}
+          />
+        </div>
+      </div>
+    </ContentCard>
+  );
 }

@@ -44,7 +44,7 @@ import EvaluationTemplateSection from "./pages/Templates/EvaluationTemplateSecti
 import EvaluationTemplateSummary from "./pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
 import FactsTemplates from "./pages/FactsTemplates/FactsTemplates/FactsTemplates";
 import FactsTemplate from "./pages/FactsTemplates/FactsTemplate/FactsTemplate";
-import EvaluationV2Page from "./pages/EvaluationV2/Sections";
+import EvaluationV2Page from "./pages/EvaluationV2/";
 import EvaluationSummary from "./pages/EvaluationV2/Summary";
 
 // Groups
