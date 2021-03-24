@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // API
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
@@ -20,6 +20,7 @@ import defaultFilters from "./defaultFilters";
 
 // Components
 import { Table, Card, GhostLoader } from "Components/elements";
+import Paginator from "./Paginator";
 import tableColumns from "./TableColumns";
 
 export default function Connections({ history }) {
@@ -29,9 +30,13 @@ export default function Connections({ history }) {
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState(
     undefined
   );
+  const [currentPage, setCurrentPage] = useState(undefined);
 
   // Queries
-  const { data, called, loading, error } = useQuery(connectionsGet);
+  // const [getConnections, { data, called, loading, error }] = useLazyQuery(connectionsGet);
+  const { data, fetchMore, called, loading, error } = useQuery(connectionsGet, {
+    variables: { LastEvaluatedId: undefined },
+  });
 
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
@@ -56,10 +61,31 @@ export default function Connections({ history }) {
     throw error;
   }
 
-  // Handle loading
-  if (called && loading) {
-    return <GhostLoader />;
-  }
+  // // Handle loading
+  // if (called && loading && !data) {
+  //   return <div>LOADING...</div>;
+  //   // return <GhostLoader />;
+  // }
+
+  // useEffect(() => {
+  //   if (!currentPage) {
+  //     return getConnections()
+  //   }
+  //   let { LastEvaluatedId } = currentPage;
+  //   let variables = { LastEvaluatedId }
+  //   getConnections({variables})
+  // }, [currentPage])
+
+  // useEffect(() => {
+  //   if (!currentPage) {
+  //     return;
+  //   }
+  //
+  //   let { LastEvaluatedId } = currentPage;
+  //   let variables = { LastEvaluatedId }
+  //   fetchMore({variables})
+  //
+  // }, [currentPage])
 
   // Define data
   const connections = data?.connectionsGet || [];
@@ -74,8 +100,21 @@ export default function Connections({ history }) {
     setShowSubjectiveScoreForId,
   });
 
+  console.log("data", data);
+
   return (
     <>
+      <Paginator
+        currentPage={currentPage}
+        setCurrentPage={cP => {
+          // setCurrentPage(cP)
+          let { LastEvaluatedId } = cP;
+          let variables = { LastEvaluatedId };
+          fetchMore({ variables });
+        }}
+        // setCurrentPage={setCurrentPage}
+      />
+
       {connections.length >= 10 && (
         <Filters
           setFilters={setFilters}

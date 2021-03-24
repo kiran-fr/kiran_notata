@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query connectionsGet($filters: ConnectionFilters) {
-    connectionsGet(filters: $filters) {
+  query connectionsGet($filters: ConnectionFilters, $LastEvaluatedId: String) {
+    connectionsGet(filters: $filters, LastEvaluatedId: $LastEvaluatedId) {
       id
       name
       createdAt
