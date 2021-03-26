@@ -8,7 +8,7 @@ import { connectionSetStar } from "private/Apollo/Mutations";
 // COMPONENTS
 import Filters from "../Filters";
 import SelectTagsForStartup from "./SelectTagsForStartup";
-import SetSubjectiveScore from "./SetSubjectiveScore";
+// import SetSubjectiveScore from "./SetSubjectiveScore";
 
 // import CreateNewStartup from "./CreateStartup";
 
@@ -103,17 +103,17 @@ function ListOfStartups({ filters, currentPage, history }) {
         />
       )}
 
-      {showSubjectiveScoreForId && (
-        <SetSubjectiveScore
-          connection={connections.find(
-            ({ id }) => id === showSubjectiveScoreForId
-          )}
-          history={history}
-          close={() => {
-            setShowSubjectiveScoreForId(undefined);
-          }}
-        />
-      )}
+      {/*{showSubjectiveScoreForId && (*/}
+      {/*  <SetSubjectiveScore*/}
+      {/*    connection={connections.find(*/}
+      {/*      ({ id }) => id === showSubjectiveScoreForId*/}
+      {/*    )}*/}
+      {/*    history={history}*/}
+      {/*    close={() => {*/}
+      {/*      setShowSubjectiveScoreForId(undefined);*/}
+      {/*    }}*/}
+      {/*  />*/}
+      {/*)}*/}
     </Card>
   );
 }
