@@ -1,10 +1,3 @@
-.option_dashed_container {
-  border: 2px dashed var(--color-gray-light);
-  padding: 7px 115px 7px 35px;
-  position: relative;
-  margin-bottom: 10px;
-}
-
 .option_delete_container {
   position: absolute;
   left: 12px;
@@ -22,13 +15,6 @@
   font-size: 12px;
   cursor: pointer;
 }
-
-.tag_group_footer {
-  position: relative;
-  text-align: right;
-  padding-bottom: 10px;
-}
-
 .delete_tag_group {
   position: absolute;
   bottom: 7px;
@@ -53,4 +39,50 @@
 }
 
 .order_down {
+}
+
+/* Tag Groups */
+
+.option_dashed_container {
+  border: 2px dashed var(--color-gray-light);
+  padding: 7px 115px 7px 35px;
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.funnel_tag_input {
+  border: 2px dashed var(--color-gray-light);
+  padding: 7px 115px 7px 35px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.tag_group_footer {
+  position: relative;
+  text-align: right;
+  padding-bottom: 10px;
+}
+
+.option_save {
+  position: absolute;
+  right: 12px;
+  top: 9px;
+  color: var(--color-primary);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Create Tag group */
+
+.create_tag {
+  position: relative;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.submit_button {
+  position: relative;
+  text-align: right;
+  margin-top: 10px;
 }

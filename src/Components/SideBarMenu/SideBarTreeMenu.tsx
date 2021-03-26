@@ -6,7 +6,7 @@ import { connectionsGet, groupsGet, userGet } from "private/Apollo/Queries";
 import { connectionCreate } from "private/Apollo/Mutations";
 
 import { dashboard, group, settings, charts, signOut } from "definitions.js";
-import CreateNewStartup from "private/pages/Dashboard/Connections/CreateStartup";
+import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 import Groups, { GroupsData } from "private/pages/Groups/Groups";
 import { Connection } from "private/pages/Dashboard/Connections/types";
 import styles from "./SideBarTreeMenu.module.css";
@@ -200,7 +200,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
       link: dashboard,
       root: true,
       icon: "fal fa-plus",
-      action: () => setShowNewStartupModal({ state: true }),
+      action: () => setShowNewStartupModal(true),
     },
     {
       key: "groups",
@@ -234,9 +234,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
   const [visibleMobile, setVisibleMobile] = useState(false);
   const [expandedState, setExpandedState] = useState(new Set<string>());
   const [selectedNodes, setSelectedNodes] = useState(new Set<string>());
-  const [showNewStartupModal, setShowNewStartupModal] = useState({
-    state: false,
-  });
+  const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showNewGroupModal, setShowNewGroupModal] = useState({ state: false });
   const [loadingState, setLoadingState] = useState<string>();
 
@@ -415,12 +413,13 @@ const SideBarTreeMenu = ({ location, history }: any) => {
       >
         <i className="fas fa-bars" />
       </div>
-      <CreateNewStartup
-        showModalOnly={true}
+
+      <CreateStartupModal
         history={history}
-        showModalState={showNewStartupModal}
-        onCloseModalEvent={() => setShowNewStartupModal({ state: false })}
+        open={showNewStartupModal}
+        close={() => setShowNewStartupModal(false)}
       />
+
       <Groups
         history={history}
         showModalOnly={true}

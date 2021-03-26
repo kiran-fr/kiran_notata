@@ -17,6 +17,7 @@ export default ({
   setStarMutation,
   setShowTagGroupForId,
   setShowSubjectiveScoreForId,
+  setShowFunnelScoreForId,
 }) => {
   return [
     // Star
@@ -102,17 +103,28 @@ export default ({
               // onClick={() => gotoStartup(connection)}
               className={tableStyles.background_clicker}
             />
-
             <div className={styles.actual_content}>
               {(!funnelTags.length && (
-                <span style={{ color: "#DADEE2" }}>n/a</span>
+                <Tag
+                  className={""}
+                  active={false}
+                  isButton={false}
+                  onClick={() => {
+                    setShowFunnelScoreForId(connection.id);
+                  }}
+                  kill={false}
+                >
+                  +
+                </Tag>
               )) || (
                 <Tag
                   className={styles.funnel_tag}
                   active={false}
                   isButton={false}
-                  onClick={() => {}}
                   kill={false}
+                  onClick={() => {
+                    setShowFunnelScoreForId(connection.id);
+                  }}
                 >
                   {tag?.name}
                 </Tag>
@@ -179,7 +191,12 @@ export default ({
 
             <div className={styles.actual_content}>
               {avg && (
-                <div className={styles.average_score}>
+                <div
+                  className={styles.average_score}
+                  onClick={() => {
+                    setShowSubjectiveScoreForId(connection.id);
+                  }}
+                >
                   <span>{avg}</span>
                 </div>
               )}

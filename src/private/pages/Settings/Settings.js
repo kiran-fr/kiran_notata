@@ -4,6 +4,7 @@ import { Content, Card, Table } from "Components/elements";
 import {
   profile,
   tags,
+  funnels,
   team,
   evaluation_templates,
   facts_templates,
@@ -19,8 +20,13 @@ const linkList = [
     link: evaluation_templates,
   },
   {
-    label: "Tags & Funnels",
+    label: "Funnels",
     iconClass: "fal fa-tag",
+    link: funnels,
+  },
+  {
+    label: "Tags",
+    iconClass: "fal fa-filter",
     link: tags,
   },
 

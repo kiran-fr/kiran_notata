@@ -22,6 +22,7 @@ export const startup_page = `${dashboard}/startup_page`;
 
 export const profile = `${dashboard}/profile`;
 export const tags = `${dashboard}/tags`;
+export const funnels = `${dashboard}/funnels`;
 export const settings = `${dashboard}/settings`;
 export const team = `${dashboard}/team`;
 export const evaluation_templates = `${dashboard}/templates`;
@@ -31,6 +32,8 @@ export const facts_templates = `${dashboard}/facts_templates`;
 export const facts_template = `${facts_templates}/edit`;
 export const group = `${dashboard}/group`;
 export const external_form = `${dashboard}/external_form`;
+export const ui_components = `${dashboard}/components/ui`;
+export const navigation = `${dashboard}/components/ui/navigation`;
 
 // PUBLIC ROUTES
 export const public_pages = `/public`;

@@ -10,7 +10,7 @@ import { EvaluationBox } from "./StartupPageComponents/EvaluationBox/EvaluationB
 import { Share } from "./StartupPageComponents/Share";
 import { Facts } from "./StartupPageComponents/Facts";
 import { Tags } from "./StartupPageComponents/Tags";
-import { Funnel } from "./StartupPageComponents/Funnel";
+import { Funnel } from "Components/Funnel/Funnel";
 import { PresentationPage } from "./StartupPageComponents/Presentation/PresentationPage";
 
 import { userGet, connectionGet, groupsGet } from "private/Apollo/Queries";
@@ -21,7 +21,7 @@ import { dashboard, startup_page } from "definitions.js";
 import classnames from "classnames";
 import styles, { delete_link } from "./StartupPage.module.css";
 import { SimpleListOfSharings } from "./StartupPageComponents/Presentation/PresentationComponents/SimpleListOfSharings";
-import { ExternalResources } from "./StartupPageComponents/ExternalResources";
+import { ExternalResources } from "./StartupPageComponents/ExternalResource/ExternalResources";
 import { Impact } from "./StartupPageComponents/Impact/Impact";
 
 const tabList = [
@@ -169,7 +169,7 @@ export default function StartupPage({ match, location, history }) {
                 <Card label="YOUR SUBJECTIVE SCORE">
                   <SubjectiveScore
                     connection={connection}
-                    user={user}
+                    // user={user}
                     history={history}
                     onlyMe={true}
                   />
@@ -178,7 +178,9 @@ export default function StartupPage({ match, location, history }) {
                 <Impact connection={connection} user={user} match={match} />
 
                 {/*FUNNEL*/}
-                <Funnel connection={connection} user={user} match={match} />
+                <Card label="FUNNEL" style={{ paddingBottom: "20px" }}>
+                  <Funnel connection={connection} user={user} match={match} />
+                </Card>
 
                 {/*TAGS*/}
                 <Tags connection={connection} user={user} match={match} />
@@ -239,7 +241,7 @@ export default function StartupPage({ match, location, history }) {
                 <Card label="SUBJECTIVE SCORE">
                   <SubjectiveScore
                     connection={connection}
-                    user={user}
+                    // user={user}
                     history={history}
                   />
                 </Card>

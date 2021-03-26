@@ -14,7 +14,9 @@ import {
   charts,
   profile,
   tags,
+  funnels,
   settings,
+  ui_components,
   team,
   evaluation_templates,
   evaluation_template,
@@ -25,6 +27,7 @@ import {
   external_form,
   facts_templates,
   facts_template,
+  navigation,
 } from "../definitions";
 
 // Landing page / list
@@ -32,10 +35,12 @@ import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";
 import Profile from "./pages/Profile/Profile";
 import Tags from "./pages/Tags";
+import Funnels from "./pages/Funnels";
 import Settings from "./pages/Settings/Settings";
 import Team from "./pages/Team/Team";
 import StartupPage from "./pages/StartupPage/StartupPage";
-import FactsPage from "./pages/StartupPage/StartupInfo";
+import FactsPage from "./pages/StartupPage/Facts/Facts";
+import UI_Components from "./pages/UI_Components";
 
 // Evaluation templates
 import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
@@ -60,7 +65,9 @@ import { ErrorBoundary } from "Components/ErrorBoundary";
 // Styles
 import { DashboardHeader } from "Components/Header/DashboardHeader";
 import ExternalForm from "./pages/ExternalForm/ExternalForm";
-import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu";
+import Navigation from "./pages/UI_Components/Navigation/Navigation";
+
+/* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -70,6 +77,8 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={profile} component={Profile} />
 
       <Route exact path={tags} component={Tags} />
+
+      <Route exact path={funnels} component={Funnels} />
 
       <Route exact path={settings} component={Settings} />
 
@@ -145,6 +154,10 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={charts} component={Charts} />
 
+      <Route exact path={ui_components} component={UI_Components} />
+
+      <Route exact path={navigation} component={Navigation} />
+
       <Route render={() => <div>404</div>} />
     </Switch>
   );
@@ -177,7 +190,8 @@ const WrapperComponent = ({ ...props }) => {
   return (
     <>
       <DashboardHeader history={props.history} />
-      <SideBarTreeMenu {...props} />
+      <Navigation />
+      {/* <SideBarTreeMenu {...props} /> */}
       <div
         className={`logged_in_page_content ${
           matchPath(props.location.pathname, {

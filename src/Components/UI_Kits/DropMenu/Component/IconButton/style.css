@@ -1,0 +1,25 @@
+.icon-btn-div {
+  display: flex;
+  justify-content: center;
+}
+
+.click-btn {
+  text-decoration: none;
+  color: grey;
+}
+
+.click-btn-after {
+  color: red;
+}
+
+i {
+  color: grey;
+}
+
+.i-after {
+  color: red;
+}
+
+.icon {
+  color: grey;
+}
