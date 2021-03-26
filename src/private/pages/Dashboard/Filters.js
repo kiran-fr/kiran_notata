@@ -167,13 +167,7 @@ function getHasFilters(filters) {
   return hasFilters;
 }
 
-export default function Filters({
-  itemCount,
-  filters,
-  setFilters,
-  // tagGroups,
-  fullFilter,
-}) {
+export default function Filters({ filters, setFilters, fullFilter }) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
 
@@ -193,7 +187,7 @@ export default function Filters({
   return (
     <div>
       <div className={small_text_flex}>
-        {(hasFilters && (
+        {!!hasFilters && (
           <div
             className={clear_filters}
             onClick={() => {
@@ -207,9 +201,7 @@ export default function Filters({
           >
             clear all filters
           </div>
-        )) || <div />}
-
-        <div className={counter}>Showing {itemCount} results</div>
+        )}
       </div>
 
       <div className={fullFilter ? container : container_mini}>
