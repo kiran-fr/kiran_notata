@@ -16,7 +16,7 @@ import { SignOut } from "Containers/Auth/SignOut/SignOut";
 import PreProfile from "Containers/Auth/PreProfile/Profile";
 
 // SHARING
-import LinkBridge from "Components/Shared/LinkBridge/LinkBridge";
+import { LinkBridge } from "Components/Shared/LinkBridge/LinkBridge";
 
 import { LoggedInRouter } from "./private/PrivateRouter";
 
