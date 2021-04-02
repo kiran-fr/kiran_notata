@@ -5,11 +5,13 @@ import { Dropdown } from "Components/UI_Kits";
 import { Content, Card } from "Components/elements";
 import { Button } from "Components/UI_Kits";
 import { Tags } from "Components/UI_Kits";
+import { DatePickers } from "Components/UI_Kits";
 
 export default function UI_Components() {
   const listForm = ["email", "password", "number", "url", ""];
   const [position, setPosition] = useState(4);
   const [validate, setValidate] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("2014-08-18");
 
   const setNextFlag = index => {
     console.log("ee");
@@ -17,6 +19,11 @@ export default function UI_Components() {
       setPosition(index === "email" ? 1 : index === "password" ? 2 : 3);
     }
   };
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
+
   return (
     <>
       <Content
@@ -524,6 +531,30 @@ export default function UI_Components() {
           </div>
         </div>
       </div>
+      <Card>
+        <h1 style={{ fontWeight: "500" }}>Date Picker</h1>
+        <div
+          style={{
+            padding: "10px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <DatePickers
+            id={"DatePickers"}
+            label={"From"}
+            selectedDate={selectedDate}
+            handleDateChange={handleDateChange}
+          />
+          <DatePickers
+            id={"DatePickers"}
+            label={"To"}
+            selectedDate={selectedDate}
+            handleDateChange={handleDateChange}
+          />
+        </div>
+      </Card>
     </>
   );
 }
