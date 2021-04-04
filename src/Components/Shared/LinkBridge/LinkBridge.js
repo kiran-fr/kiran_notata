@@ -9,11 +9,11 @@ export const LinkBridge = props => {
 
   useEffect(() => {
     if (props.location.search) {
-      let { link } = qp(props.location.search);
-      setLink(link[0]);
-      window.location.href = link[0] ? link[0] : link;
+      let { linkValue } = qp(props.location.search);
+      setLink(linkValue ? linkValue[0] : null);
+      window.location.href = linkValue ? linkValue[0] : link;
     } else {
-      window.location.href = link;
+      console.log("error");
     }
   }, []);
 
