@@ -7,3 +7,5 @@ export { TopMenu } from "./TopMenu/index";
 export { CheckBoxes } from "./CheckBox/CheckBox";
 export { RadioButtons } from "./RadioButton/RadioButton";
 export { DatePickers } from "./DatePicker/index";
+export { Blocks } from "./Blocks";
+export { Popup } from "./Popup";

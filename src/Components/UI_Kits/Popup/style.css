@@ -1,0 +1,15 @@
+.modalView {
+  align-items: center;
+  justify-content: center;
+}
+
+.btnContainer,
+.modalView {
+  display: flex;
+}
+
+.dialogTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

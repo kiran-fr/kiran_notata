@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-
-import { InputForm } from "Components/UI_Kits";
-import { Dropdown } from "Components/UI_Kits";
+import {
+  InputForm,
+  Dropdown,
+  Button,
+  Tags,
+  DatePickers,
+  Blocks,
+  Popup,
+} from "Components/UI_Kits";
 import { Content, Card } from "Components/elements";
-import { Button } from "Components/UI_Kits";
-import { Tags } from "Components/UI_Kits";
-import { DatePickers } from "Components/UI_Kits";
 
 export default function UI_Components() {
   const listForm = ["email", "password", "number", "url", ""];
   const [position, setPosition] = useState(4);
   const [validate, setValidate] = useState(false);
   const [selectedDate, setSelectedDate] = useState("2014-08-18");
+  const [tabValue, setTabValue] = useState(1);
+  const [open, setOpen] = useState(false);
 
   const setNextFlag = index => {
     console.log("ee");
@@ -22,6 +27,18 @@ export default function UI_Components() {
 
   const handleDateChange = date => {
     setSelectedDate(date);
+  };
+
+  const handleTab = date => {
+    if (tabValue === 1) {
+      setTabValue(2);
+    } else {
+      setTabValue(1);
+    }
+  };
+
+  const handleModal = () => {
+    setOpen(!open);
   };
 
   return (
@@ -531,6 +548,32 @@ export default function UI_Components() {
           </div>
         </div>
       </div>
+      <Blocks
+        primaryTxt={"GROUP UPATES"}
+        secondaryTxt={"TEAM UPATES"}
+        tabValue={tabValue}
+        handleTabChange={handleTab}
+        text1={
+          "svg is an XML namespace, first defined in the Scalable Vector Graphics (SVG) 1.0 Specification "
+        }
+        text2={
+          "svg is an XML namespace, first defined in the Scalable Vector Graphics (SVG) 1.0 Specification "
+        }
+        text3={
+          "sv Graphics (SVG) 1.0 Specificationsvg is an XML namespace, first defined  first defined "
+        }
+        text4={
+          "svin the Scalable Vector Graphics (SVG) 1.0 Specification svg is an XML namespace, first defined  "
+        }
+        image1={"s1"}
+        image2={"s1"}
+        image3={"s2"}
+        image4={"s4"}
+        img1Alt={"s1"}
+        img2Alt={"s1"}
+        img3Alt={"s1"}
+        img4Alt={"s1"}
+      />
       <Card>
         <h1 style={{ fontWeight: "500" }}>Date Picker</h1>
         <div
@@ -555,6 +598,17 @@ export default function UI_Components() {
           />
         </div>
       </Card>
+      <Button onClick={handleModal} buttonStyle="secondary" size="large">
+        Modal Open
+      </Button>
+      <Popup
+        btnprimaryTxt="EDIT"
+        btnSecondaryTxt="OK"
+        isOpen={open}
+        header="Popup"
+        content="About. Notata is a software where investors can evaluate startups and share deals. The software was developed for a small Norwegian family office that "
+        handleModalClose={handleModal}
+      />
     </>
   );
 }
