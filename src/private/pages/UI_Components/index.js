@@ -7,6 +7,9 @@ import {
   DatePickers,
   Blocks,
   Popup,
+  TextField,
+  DropMenu,
+  Toggle,
 } from "Components/UI_Kits";
 import { Content, Card } from "Components/elements";
 
@@ -17,6 +20,7 @@ export default function UI_Components() {
   const [selectedDate, setSelectedDate] = useState("2014-08-18");
   const [tabValue, setTabValue] = useState(1);
   const [open, setOpen] = useState(false);
+  const [check, setCheck] = useState(false);
 
   const setNextFlag = index => {
     console.log("ee");
@@ -39,6 +43,10 @@ export default function UI_Components() {
 
   const handleModal = () => {
     setOpen(!open);
+  };
+
+  const handleChecked = () => {
+    setCheck(!check);
   };
 
   return (
@@ -548,38 +556,47 @@ export default function UI_Components() {
           </div>
         </div>
       </div>
-      <Blocks
-        primaryTxt={"GROUP UPATES"}
-        secondaryTxt={"TEAM UPATES"}
-        tabValue={tabValue}
-        handleTabChange={handleTab}
-        text1={
-          "svg is an XML namespace, first defined in the Scalable Vector Graphics (SVG) 1.0 Specification "
-        }
-        text2={
-          "svg is an XML namespace, first defined in the Scalable Vector Graphics (SVG) 1.0 Specification "
-        }
-        text3={
-          "sv Graphics (SVG) 1.0 Specificationsvg is an XML namespace, first defined  first defined "
-        }
-        text4={
-          "svin the Scalable Vector Graphics (SVG) 1.0 Specification svg is an XML namespace, first defined  "
-        }
-        image1={"s1"}
-        image2={"s1"}
-        image3={"s2"}
-        image4={"s4"}
-        img1Alt={"s1"}
-        img2Alt={"s1"}
-        img3Alt={"s1"}
-        img4Alt={"s1"}
-      />
-      <Card>
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <Blocks
+          primaryTxt={"GROUP UPATES"}
+          secondaryTxt={"TEAM UPATES"}
+          tabValue={tabValue}
+          handleTabChange={handleTab}
+          text1={
+            "svg is an XML namespace, first defined in the Scalable Vector Graphics (SVG) 1.0 Specification "
+          }
+          text2={
+            "svg is an XML namespace, first defined in the Scalable Vector Graphics (SVG) 1.0 Specification "
+          }
+          text3={
+            "sv Graphics (SVG) 1.0 Specificationsvg is an XML namespace, first defined  first defined "
+          }
+          text4={
+            "svin the Scalable Vector Graphics (SVG) 1.0 Specification svg is an XML namespace, first defined  "
+          }
+          image1={"s1"}
+          image2={"s1"}
+          image3={"s2"}
+          image4={"s4"}
+          img1Alt={"s1"}
+          img2Alt={"s1"}
+          img3Alt={"s1"}
+          img4Alt={"s1"}
+        />
+        <TextField
+          title="TEXT FIELDS"
+          subTitle="sub Title"
+          description="description"
+          placeholder="Placeholder"
+        />
+      </div>
+      <Card style={{ margin: "60px" }}>
         <h1 style={{ fontWeight: "500" }}>Date Picker</h1>
         <div
           style={{
             padding: "10px",
             display: "flex",
+
             flexDirection: "row",
             justifyContent: "space-around",
           }}
@@ -598,9 +615,25 @@ export default function UI_Components() {
           />
         </div>
       </Card>
-      <Button onClick={handleModal} buttonStyle="secondary" size="large">
-        Modal Open
-      </Button>
+      <div
+        style={{
+          display: "flex",
+          marginBottom: "60px",
+          justifyContent: "space-around",
+        }}
+      >
+        <Button onClick={handleModal} buttonStyle="secondary" size="large">
+          Modal Open
+        </Button>
+        <div>
+          <h4>Drop Menu</h4>
+          <DropMenu />
+        </div>
+      </div>
+      <Card>
+        <h4>Toggle</h4>
+        <Toggle checked={check} handleChecked={handleChecked} />
+      </Card>
       <Popup
         btnprimaryTxt="EDIT"
         btnSecondaryTxt="OK"

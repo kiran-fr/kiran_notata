@@ -1,15 +1,17 @@
 .icon-btn-div {
-  display: flex;
-  justify-content: center;
+  padding: 1px;
+  cursor: pointer;
 }
 
 .click-btn {
   text-decoration: none;
   color: grey;
+  padding-left: 5px;
 }
 
 .click-btn-after {
   color: red;
+  padding-left: 5px;
 }
 
 i {

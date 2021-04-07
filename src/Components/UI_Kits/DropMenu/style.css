@@ -1,6 +1,5 @@
-.drop-menu-div {
+.drop-menu-card {
   width: 170px;
-  height: 80px;
-  color: aliceblue;
-  border: 2px solid black;
+  height: 100px;
+  padding: 16px;
 }

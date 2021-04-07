@@ -13,4 +13,5 @@
 
 .text-box {
   border-radius: 5px;
+  border: 1px solid var(--ui-color-gray-pale2);
 }
