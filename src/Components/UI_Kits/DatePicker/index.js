@@ -5,7 +5,7 @@ import React from "react";
 import { TextField } from "@material-ui/core";
 import "./style.css";
 
-export function DatePickers({ id, label, selectedDate, handleDateChange }) {
+export const DatePickers = ({ id, label, selectedDate, handleDateChange }) => {
   return (
     <TextField
       id={id}
@@ -22,4 +22,4 @@ export function DatePickers({ id, label, selectedDate, handleDateChange }) {
       }}
     />
   );
-}
+};

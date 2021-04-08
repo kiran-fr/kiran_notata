@@ -13,6 +13,8 @@ export function Modal({
   disableFoot,
   loading,
   showScrollBar,
+  submitTxt,
+  closeTxt,
   ...children
 }) {
   useEffect(() => {
@@ -70,7 +72,7 @@ export function Modal({
                   size="small1"
                   buttonStyle="white"
                 >
-                  Close
+                  {closeTxt}
                 </Button>
               )}
               {submit && (
@@ -82,7 +84,7 @@ export function Modal({
                   type="right_arrow"
                   loading={loading}
                 >
-                  OK
+                  {submitTxt}
                 </Button>
               )}
             </div>

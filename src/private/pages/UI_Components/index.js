@@ -643,24 +643,13 @@ export default function UI_Components() {
           submit={() => handleModal(false)}
           disableFoot={false}
           loading={false}
+          submitTxt={"Edit"}
+          closeTxt={"Close"}
           showScrollBar={false}
         >
           <h1>Welcome :)</h1>
         </Modal>
       )}
-      {/* <Modal
-        btnprimaryTxt="EDIT"
-        btnSecondaryTxt="OK"
-        isOpen={open}
-        header="Popup"
-        handleModalClose={handleModal}
-      /> */}
-      {/* <Tabs
-        children = {[
-          {activeTab: 1, label: "GROUP UPDATES"},
-          {activeTab: 2, label: "TEAM UPDATES" }
-        ]}
-      /> */}
     </>
   );
 }
