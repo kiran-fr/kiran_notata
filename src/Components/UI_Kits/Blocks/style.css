@@ -1,19 +1,6 @@
 .width {
-  max-width: 380px;
-}
-
-.MuiTab-textColorPrimary.Mui-selected {
-  color: var(--ui-color-gray-medium) !important;
-}
-
-.MuiTab-textColorPrimary {
-  color: var(--ui-color-gray-pale2) !important;
-}
-
-.PrivateTabIndicator-colorPrimary-2 {
-  background-color: var(--ui-color-gray-medium) !important;
-  height: 5px !important;
-  border-radius: 6px !important;
+  max-width: auto;
+  max-height: 500px;
 }
 
 .cardContent {
@@ -29,4 +16,10 @@
 
 .underline {
   border: 1px solid var(--ui-color-gray-pale1);
+}
+
+.contentScroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 60%;
 }

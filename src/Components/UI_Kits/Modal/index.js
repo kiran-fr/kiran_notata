@@ -31,7 +31,6 @@ export function Modal({
   return (
     <div className={"container"}>
       <div className={"ghost"} />
-
       <div
         style={{ overflow: showScrollBar ? "hidden" : "auto" }}
         className={"content"}

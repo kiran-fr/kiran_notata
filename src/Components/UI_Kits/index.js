@@ -12,5 +12,5 @@ export { Modal } from "./Modal";
 export { TextField } from "./TextField/index";
 export { DropMenu } from "./DropMenu/index";
 export { Toggle } from "./Toggle/index";
-export { Tabs } from "./Tabs/index";
+export { Tabsection } from "./Tabs/index";
 // export { Card } from ".Card/index";
