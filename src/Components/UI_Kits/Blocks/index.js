@@ -9,7 +9,7 @@ import Tab from "@material-ui/core/Tab";
 import CardHeader from "@material-ui/core/CardHeader";
 import "./style.css";
 
-export const Blocks = ({
+export function Blocks({
   tabValue,
   handleTabChange,
   primaryTxt,
@@ -26,7 +26,7 @@ export const Blocks = ({
   img2Alt,
   img3Alt,
   img4Alt,
-}) => {
+}) {
   return (
     <Card className="width">
       <CardHeader
@@ -66,4 +66,4 @@ export const Blocks = ({
       </CardContent>
     </Card>
   );
-};
+}

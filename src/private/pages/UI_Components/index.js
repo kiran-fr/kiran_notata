@@ -6,10 +6,11 @@ import {
   Tags,
   DatePickers,
   Blocks,
-  Popup,
+  Modal,
   TextField,
   DropMenu,
   Toggle,
+  Tabs,
 } from "Components/UI_Kits";
 import { Content, Card } from "Components/elements";
 
@@ -41,7 +42,7 @@ export default function UI_Components() {
     }
   };
 
-  const handleModal = () => {
+  const handleModal = val => {
     setOpen(!open);
   };
 
@@ -626,22 +627,40 @@ export default function UI_Components() {
           Modal Open
         </Button>
         <div>
-          <h4>Drop Menu</h4>
+          <h1 style={{ fontWeight: "500" }}>Drop Menu</h1>
           <DropMenu />
         </div>
       </div>
       <Card>
-        <h4>Toggle</h4>
+        <h1 style={{ fontWeight: "500" }}>Toggle</h1>
         <Toggle checked={check} handleChecked={handleChecked} />
       </Card>
-      <Popup
+
+      {open && (
+        <Modal
+          title="Notata"
+          close={() => handleModal(false)}
+          submit={() => handleModal(false)}
+          disableFoot={false}
+          loading={false}
+          showScrollBar={false}
+        >
+          <h1>Welcome :)</h1>
+        </Modal>
+      )}
+      {/* <Modal
         btnprimaryTxt="EDIT"
         btnSecondaryTxt="OK"
         isOpen={open}
         header="Popup"
-        content="About. Notata is a software where investors can evaluate startups and share deals. The software was developed for a small Norwegian family office that "
         handleModalClose={handleModal}
-      />
+      /> */}
+      {/* <Tabs
+        children = {[
+          {activeTab: 1, label: "GROUP UPDATES"},
+          {activeTab: 2, label: "TEAM UPDATES" }
+        ]}
+      /> */}
     </>
   );
 }
