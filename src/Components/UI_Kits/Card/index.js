@@ -1,14 +1,14 @@
 import React from "react";
 import "./style.css";
 
-export const Card = ({
+export function Card({
   maxWidth,
   noMargin,
   label,
   style,
   className,
   ...children
-}) => {
+}) {
   return (
     <div
       className={classnames(
@@ -25,4 +25,4 @@ export const Card = ({
       <div className={styles.content} {...children} />
     </div>
   );
-};
+}
