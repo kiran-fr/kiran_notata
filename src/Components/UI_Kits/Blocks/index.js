@@ -36,7 +36,7 @@ export function Blocks({ tabValue, tabArr, contentArr, children, width }) {
                     <img
                       src={item.image}
                       alt={item.imageAlt}
-                      width="40"
+                      width="50"
                       height="40"
                     ></img>
                     <div>{item.text}</div>

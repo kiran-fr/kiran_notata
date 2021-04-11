@@ -557,47 +557,13 @@ export default function UI_Components() {
           </div>
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <Blocks
-          tabValue={tabValue}
-          tabArr={[
-            {
-              value: 1,
-              text: "GROUP TEAMS",
-            },
-            {
-              value: 2,
-              text: "GROUP",
-            },
-            {
-              value: 3,
-              text: "USER SECTION",
-            },
-          ]}
-          contentArr={[
-            { text: "text1", image: "s1", imageAlt: "alt", value: 1 },
-            { text: "text2", image: "s2", imageAlt: "alt", value: 2 },
-            { text: "text3", image: "s3", imageAlt: "alt", value: 3 },
-            { text: "text4", image: "s3", imageAlt: "alt", value: 2 },
-            { text: "text4", image: "s3", imageAlt: "alt", value: 2 },
-            { text: "text4", image: "s3", imageAlt: "alt", value: 2 },
-            { text: "text4", image: "s3", imageAlt: "alt", value: 2 },
-          ]}
-        />
-        <TextField
-          title="TEXT FIELDS"
-          subTitle="sub Title"
-          description="description"
-          placeholder="Placeholder"
-        />
-      </div>
       <Card style={{ margin: "60px" }}>
         <h1 style={{ fontWeight: "500" }}>Date Picker</h1>
         <div
           style={{
-            padding: "10px",
+            paddingBottom: "60px",
+            paddingTop: "10px",
             display: "flex",
-
             flexDirection: "row",
             justifyContent: "space-around",
           }}
@@ -616,31 +582,130 @@ export default function UI_Components() {
           />
         </div>
       </Card>
-      <div
-        style={{
-          display: "flex",
-          marginBottom: "60px",
-          justifyContent: "space-around",
-        }}
-      >
-        <Button onClick={handleModal} buttonStyle="secondary" size="large">
-          Modal Open
-        </Button>
-        <div>
-          <h1 style={{ fontWeight: "500" }}>Drop Menu</h1>
-          <DropMenu
-            dropMenuArr={[
-              { title: "Request Startup", iconName: "fa fa-briefcase" },
-              { title: "Archive Startup", iconName: "fa fa-briefcase" },
-              { title: "Remove Startup", iconName: "fa fa-briefcase" },
+      <Card>
+        <div
+          style={{
+            display: "flex",
+            marginBottom: "60px",
+            justifyContent: "space-around",
+          }}
+        >
+          <Button onClick={handleModal} buttonStyle="secondary" size="large">
+            Modal Open
+          </Button>
+          <div>
+            <h1 style={{ fontWeight: "500" }}>Drop Menu</h1>
+            <DropMenu
+              dropMenuArr={[
+                { title: "Request Startup", iconName: "fa fa-briefcase" },
+                { title: "Archive Startup", iconName: "fa fa-briefcase" },
+                { title: "Remove Startup", iconName: "fa fa-briefcase" },
+              ]}
+            />
+          </div>
+        </div>
+      </Card>
+      <Card>
+        <h1 style={{ fontWeight: "500" }}>Toggle</h1>
+        <div
+          style={{
+            display: "flex",
+            marginBottom: "60px",
+            justifyContent: "space-around",
+          }}
+        >
+          <Toggle checked={check} handleChecked={handleChecked} />
+          <Tabsection
+            tabValue={tabValue}
+            handleTabChange={handleTab}
+            tabArr={[
+              {
+                value: 1,
+                text: "Primary",
+              },
+              {
+                value: 2,
+                text: "Secondary",
+              },
             ]}
           />
         </div>
-      </div>
-      <Card>
-        <h1 style={{ fontWeight: "500" }}>Toggle</h1>
-        <Toggle checked={check} handleChecked={handleChecked} />
       </Card>
+      <div
+        style={{
+          display: "flex",
+          marginBottom: "200px",
+          justifyContent: "space-around",
+        }}
+      >
+        <Blocks
+          tabValue={tabValue}
+          tabArr={[
+            {
+              value: 1,
+              text: "GROUP TEAMS",
+            },
+            {
+              value: 2,
+              text: "GROUP",
+            },
+            {
+              value: 3,
+              text: "USER SECTION",
+            },
+          ]}
+          contentArr={[
+            {
+              text: "How are you? ",
+              image: "https://picsum.photos/200/300?grayscale",
+              imageAlt: "alt",
+              value: 1,
+            },
+            {
+              text: "Welcome to you Notata :)",
+              image: "https://picsum.photos/seed/picsum/200/300",
+              imageAlt: "alt",
+              value: 2,
+            },
+            {
+              text: "For investors and startups",
+              image: "https://picsum.photos/id/237/200/300",
+              imageAlt: "alt",
+              value: 3,
+            },
+            {
+              text: "Am busy:)",
+              image: "https://picsum.photos/id/237/200/300",
+              imageAlt: "alt",
+              value: 3,
+            },
+            {
+              text: "React+ Nodejs  = devs ?",
+              image: "https://picsum.photos/id/237/200/300",
+              imageAlt: "alt",
+              value: 1,
+            },
+            {
+              text: "1+1 =3",
+              image: "https://picsum.photos/200/300",
+              imageAlt: "alt",
+              value: 2,
+            },
+            {
+              text: "404 error. see u later ",
+              image: "https://picsum.photos/200/300",
+              imageAlt: "alt",
+              value: 2,
+            },
+          ]}
+        />
+        <TextField
+          title="TEXT FIELDS"
+          subTitle="sub Title"
+          description="description"
+          placeholder="Placeholder"
+        />
+      </div>
 
       {open && (
         <Modal
@@ -656,20 +721,6 @@ export default function UI_Components() {
           <h1>Welcome :)</h1>
         </Modal>
       )}
-      <Tabsection
-        tabValue={tabValue}
-        handleTabChange={handleTab}
-        tabArr={[
-          {
-            value: 1,
-            text: "primary",
-          },
-          {
-            value: 2,
-            text: "secondary",
-          },
-        ]}
-      />
     </>
   );
 }
