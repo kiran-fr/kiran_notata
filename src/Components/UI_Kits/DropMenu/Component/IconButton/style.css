@@ -6,12 +6,13 @@
 .click-btn {
   text-decoration: none;
   color: grey;
-  padding-left: 5px;
+  background-color: brown;
+  margin-left: 5px;
 }
 
 .click-btn-after {
   color: red;
-  padding-left: 5px;
+  margin-left: 5px;
 }
 
 i {
@@ -19,9 +20,11 @@ i {
 }
 
 .i-after {
-  color: red;
+  margin-right: 5px;
+  color: red !important;
 }
 
 .icon {
+  margin-right: 5px;
   color: grey;
 }
