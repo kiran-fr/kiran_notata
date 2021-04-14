@@ -1,0 +1,95 @@
+/* error  */
+.error {
+  color: var(--color-primary);
+  font-size: 12px;
+  text-align: right;
+  position: relative;
+  top: -6px;
+  right: 4px;
+}
+
+/* error  */
+
+/* SignUP */
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.mainContent {
+  position: absolute;
+  width: 341px;
+  height: 664px;
+  left: 232px;
+  top: 153px;
+}
+
+.imgSize {
+  height: 666px;
+  width: 736px;
+  left: 804px;
+  top: 125px;
+  border-radius: 0px;
+}
+
+/* //line with text  */
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 340px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: var(--ui-color-gray-medium);
+  font-weight: bold;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--ui-color-gray-pale);
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+/* //line with text  */
+
+.socialSignupimgSize {
+  width: 20px;
+}
+
+.floatimg {
+  float: right;
+}
+
+.socialSignupTxt {
+  margin-right: 5px;
+}
+
+.logoContainer {
+  text-align: center !important;
+}
+
+/* media Query start  */
+@media (max-width: 1011px) {
+  .separator {
+    width: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .imgSize {
+    display: none;
+  }
+}
+
+/* SignUP end */

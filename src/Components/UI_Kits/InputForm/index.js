@@ -88,9 +88,9 @@ export function InputForm({
   required,
   val,
   position,
-  submit,
   setNextFlag,
   validate,
+  reference,
   // Cus error message to be displayed to the right of field!
   errorMessage,
 }) {
@@ -103,33 +103,29 @@ export function InputForm({
   );
 
   // Form
-  const { handleSubmit, setValue } = useForm();
-  const inputRef = useRef(null);
+  // const { handleSubmit, setValue } = useForm();
+  // const inputRef = useRef(null);
 
-  useEffect(() => {
-    val && setValue(inputType, val || "");
-  }, [val, inputType, setValue]);
+  // useEffect(() => {
+  //   val && setValue(inputType, val || "");
+  // }, [val, inputType, setValue]);
 
-  useEffect(() => {
-    console.log("use");
-    if (position && position === inputType) {
-      setFocus();
-    }
-  }, [position, inputType]);
+  // useEffect(() => {
+  //   console.log("use");
+  //   if (position && position === inputType) {
+  //     // setFocus();
+  //   }
+  // }, [position, inputType]);
 
-  useEffect(() => {
-    if (validate) {
-      validateFormInput(inputRef.current.value);
-    }
-  }, [validate]);
-  function setFocus() {
-    inputRef.current.focus();
-  }
-  // Submit function (form function)
-  const onSubmit = async (data, e) => {
-    e.preventDefault();
-    submit && submit(data);
-  };
+  // useEffect(() => {
+  //   if (validate) {
+  //     validateFormInput(inputRef.current.value);
+  //   }
+  // }, [validate]);
+
+  // function setFocus() {
+  //   inputRef.current.focus();
+  // }
 
   // Blur function (form function)
   function handleBlur(e) {
@@ -186,7 +182,7 @@ export function InputForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+    <div className={styles.container}>
       {label && <label className={styles.input_label}>{label}</label>}
       <div
         className={classnames(
@@ -210,7 +206,7 @@ export function InputForm({
           )}
           name={inputType}
           placeholder={placeholderVal}
-          ref={inputRef}
+          ref={reference}
           onKeyDown={handleKeyDown}
           onKeyPress={keyPress}
           onFocus={() => setPlaceholderVal("")}
@@ -243,6 +239,6 @@ export function InputForm({
         </p>
       )}
       {error && <p className={styles.valError}>{error}</p>}
-    </form>
+    </div>
   );
 }

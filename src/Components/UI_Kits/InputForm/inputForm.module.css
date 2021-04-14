@@ -2,7 +2,7 @@
   display: inline-block;
   position: relative;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 .input_label {
@@ -51,6 +51,12 @@ input::placeholder {
   padding: 11px 22px;
   width: 340px;
   margin-top: 3px;
+}
+
+@media (max-width: 425px) {
+  .input_container {
+    width: 280px;
+  }
 }
 
 .redStyle {

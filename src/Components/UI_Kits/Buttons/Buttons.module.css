@@ -64,12 +64,18 @@
 /* Large button */
 .large_button {
   /*position: absolute;*/
-  width: 320px;
+  width: 340px;
   height: 40px;
   border-radius: 20px;
   font-size: 14px;
   line-height: 17px;
   letter-spacing: 0.12em;
+}
+
+@media (max-width: 425px) {
+  .large_button {
+    width: 280px;
+  }
 }
 
 /* large button 1*/

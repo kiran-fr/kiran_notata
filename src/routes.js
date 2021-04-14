@@ -8,8 +8,11 @@ import ScrollToTop from "./ScrollToTop";
 import { FrontPage } from "Containers/FrontPage/FrontPage";
 
 // USER
-import { Signup } from "Containers/Auth/Signup/Signup";
-import { Login } from "Containers/Auth/Login/Login";
+import { Signup } from "Containers/NewDesign/SignUp/SignUp";
+// import { Login } from "Containers/Auth/Signup/Signup";
+import { Login } from "Containers/NewDesign/Login/index";
+
+// import { Login } from "Containers/Auth/Login/Login";
 import { ForgotPassword } from "Containers/Auth/ForgotPassword/ForgotPassword";
 import { Awaiting } from "Containers/Auth/Awaiting/Awaiting";
 import { SignOut } from "Containers/Auth/SignOut/SignOut";
