@@ -133,46 +133,88 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
             size="large"
             style={{ marginBottom: "15px", marginTop: "10px" }}
           >
-            <img
-              className={styles.socialSignupimgSize}
-              src={googlePlus}
-              alt="logo"
-              className={styles.socialSignupTxt}
-            />{" "}
-            Sign up with Google
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                fontSize: 14,
+              }}
+            >
+              <div style={{ flex: 1 }}>
+                <img
+                  className={styles.socialSignupimgSize}
+                  src={googlePlus}
+                  alt="logo"
+                  className={styles.socialSignupTxt}
+                />
+              </div>
+              <div style={{ flex: 4 }}> Sign up with Google</div>
+              <div style={{ flex: 1 }}></div>
+            </div>
           </Button>
           <Button
             buttonStyle="primary"
             size="large"
             style={{ marginBottom: "15px" }}
           >
-            <img
-              className={styles.socialSignupimgSize}
-              src={facebook}
-              alt="logo"
-              className={styles.socialSignupTxt}
-            />{" "}
-            Sign up with Facebook
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                fontSize: 14,
+              }}
+            >
+              <div style={{ flex: 1 }}>
+                <img
+                  className={styles.socialSignupimgSize}
+                  src={facebook}
+                  alt="logo"
+                  className={styles.socialSignupTxt}
+                />
+              </div>
+              <div style={{ flex: 4 }}>Sign up with Facebook</div>
+              <div style={{ flex: 1 }}></div>
+            </div>
           </Button>
           <Button
             size="large"
             style={{ marginBottom: "15px" }}
             buttonStyle="primary"
           >
-            <img
-              className={styles.socialSignupimgSize}
-              src={linkedIn}
-              alt="logo"
-              className={styles.socialSignupTxt}
-            />{" "}
-            Sign up with LinkedIn
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                fontSize: 14,
+              }}
+            >
+              <div style={{ flex: 1 }}>
+                <img
+                  className={styles.socialSignupimgSize}
+                  src={linkedIn}
+                  alt="logo"
+                  className={styles.socialSignupTxt}
+                />
+              </div>
+              <div style={{ flex: 4 }}>Sign up with LinkedIn</div>
+              <div style={{ flex: 1 }}></div>
+            </div>
           </Button>
           <div
             style={{
-              fontSize: "12px",
+              fontSize: "14px",
+              textAlign: "center",
             }}
           >
-            <Link to={login}>Already on Notata? Sign in</Link>
+            <Link
+              to={login}
+              style={{ textDecoration: "none", color: "#969BA3" }}
+            >
+              Already on Notata? Sign in
+            </Link>
           </div>
         </div>
       </Grid>

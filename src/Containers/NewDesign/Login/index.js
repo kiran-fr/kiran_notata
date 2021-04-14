@@ -98,16 +98,111 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   }
 
   return (
-    <Content maxWidth={600} center>
-      <h1>Log in</h1>
+    // {s.verified && (
+    //   <SuccessBox title="Whoop whoop 🎉" style={{ marginBottom: "35px" }}>
+    //     Your email have been verified, so now you are ready to rock'n rumble!
+    //   </SuccessBox>
+    // )}
 
-      {s.verified && (
-        <SuccessBox title="Whoop whoop 🎉" style={{ marginBottom: "35px" }}>
-          Your email have been verified, so now you are ready to rock'n rumble!
-        </SuccessBox>
-      )}
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={6}>
+        <div className={styles.mainContent}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.logoContainer}>
+              <img
+                style={{ width: "40px", height: "40px" }}
+                src={notata}
+                alt="logo"
+                className={styles.logo}
+              />
+              <h1>Log in</h1>
+            </div>
 
-      <Grid container spacing={3}>
+            <InputForm
+              label="Email"
+              inputType="email"
+              placeholder="Email"
+              position={listForm[position]}
+              setNextFlag={setNextFlag}
+              validate={validate}
+              required
+              reference={register({ required: true })}
+            />
+            <InputForm
+              label="Password"
+              inputType="password"
+              placeholder="Password"
+              position={listForm[position]}
+              setNextFlag={setNextFlag}
+              validate={validate}
+              reference={register({ required: true })}
+            />
+            <Button
+              buttonStyle="secondary"
+              size="large"
+              buttonStyle="gray"
+              style={{ marginBottom: "15px" }}
+              onClick={() => {
+                setValidate(true);
+              }}
+            >
+              {" "}
+              SIGN UP
+            </Button>
+          </form>
+          <div className={styles.separator}>OR</div>
+          <Button
+            buttonStyle="secondary"
+            size="large"
+            style={{ marginBottom: "15px", marginTop: "10px" }}
+          >
+            <img
+              className={styles.socialSignupimgSize}
+              src={googlePlus}
+              alt="logo"
+              className={styles.socialSignupTxt}
+            />{" "}
+            Sign up with Google
+          </Button>
+          <Button
+            buttonStyle="primary"
+            size="large"
+            style={{ marginBottom: "15px" }}
+          >
+            <img
+              className={styles.socialSignupimgSize}
+              src={facebook}
+              alt="logo"
+              className={styles.socialSignupTxt}
+            />{" "}
+            Sign up with Facebook
+          </Button>
+          <Button
+            size="large"
+            style={{ marginBottom: "15px" }}
+            buttonStyle="primary"
+          >
+            <img
+              className={styles.socialSignupimgSize}
+              src={linkedIn}
+              alt="logo"
+              className={styles.socialSignupTxt}
+            />{" "}
+            Sign up with LinkedIn
+          </Button>
+        </div>
+      </Grid>
+      <Grid item className="imgSize" sm={6}>
+        <img
+          style={{ float: "right" }}
+          className="floatimg"
+          src={loginImg}
+          alt="signup-image"
+        />
+      </Grid>
+    </Grid>
+
+    /* <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <div className="text-center pt-3">
             <img
@@ -197,66 +292,21 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
         <Grid item className="d-none d-sm-block leftImg" sm={6}>
           <img className="float-left" src={loginImg} alt="login" />
         </Grid>
-      </Grid>
-      <Card style={{ paddingBottom: "20px" }}>
-        {/* <form onSubmit={handleSubmit(onSubmit)} className="notata_form">
-          {!SMS_MFA && (
-            <div>
-              <label for="email">Email</label>
-              <input
-                type="text"
-                placeholder="email"
-                ref={register({ required: true })}
-                name="email"
-                id="email"
-              />
-              {errors && errors.email && (
-                <p className={styles.error}>that email does not look valid</p>
-              )}
+      </Grid> */
+    // <Card style={{ paddingBottom: "20px" }}>
+    //   <div
+    //     style={{
+    //       position: "absolute",
+    //       fontSize: "12px",
+    //       bottom: "-23px",
+    //       left: "2px",
+    //     }}
+    //   >
+    //     <Link to={forgotPassword}>I forgot my password</Link>
+    //   </div>
+    // </Card>
 
-              <label for="password">Password</label>
-              <input
-                type="password"
-                placeholder="password"
-                ref={register({ required: true })}
-                name="password"
-                id="password"
-              />
-            </div>
-          )}
-
-          {signinUser && SMS_MFA && (
-            <div>
-              <label for="code">SMS code</label>
-              <input
-                type="text"
-                placeholder="SMS code"
-                ref={register({ required: true })}
-                name="code"
-                id="code"
-              />
-            </div>
-          )}
-
-          <div className="text-right">
-            <Button type="input" value="Log in" loading={isSubmitting} />
-          </div>
-        </form> */}
-
-        <div
-          style={{
-            position: "absolute",
-            fontSize: "12px",
-            bottom: "-23px",
-            left: "2px",
-          }}
-        >
-          <Link to={forgotPassword}>I forgot my password</Link>
-        </div>
-      </Card>
-
-      {errorMessage && <ErrorBox>{errorMessage}</ErrorBox>}
-    </Content>
+    // {errorMessage && <ErrorBox>{errorMessage}</ErrorBox>}
   );
 }
 

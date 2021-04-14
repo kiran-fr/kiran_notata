@@ -103,29 +103,29 @@ export function InputForm({
   );
 
   // Form
-  // const { handleSubmit, setValue } = useForm();
-  // const inputRef = useRef(null);
+  const { handleSubmit, setValue } = useForm();
+  const inputRef = useRef(null);
 
-  // useEffect(() => {
-  //   val && setValue(inputType, val || "");
-  // }, [val, inputType, setValue]);
+  useEffect(() => {
+    val && setValue(inputType, val || "");
+  }, [val, inputType, setValue]);
 
-  // useEffect(() => {
-  //   console.log("use");
-  //   if (position && position === inputType) {
-  //     // setFocus();
-  //   }
-  // }, [position, inputType]);
+  useEffect(() => {
+    console.log("use");
+    if (position && position === inputType) {
+      setFocus();
+    }
+  }, [position, inputType]);
 
-  // useEffect(() => {
-  //   if (validate) {
-  //     validateFormInput(inputRef.current.value);
-  //   }
-  // }, [validate]);
+  useEffect(() => {
+    if (validate) {
+      validateFormInput(inputRef.current.value);
+    }
+  }, [validate]);
 
-  // function setFocus() {
-  //   inputRef.current.focus();
-  // }
+  function setFocus() {
+    inputRef.current.focus();
+  }
 
   // Blur function (form function)
   function handleBlur(e) {
@@ -206,7 +206,7 @@ export function InputForm({
           )}
           name={inputType}
           placeholder={placeholderVal}
-          ref={reference}
+          ref={inputRef}
           onKeyDown={handleKeyDown}
           onKeyPress={keyPress}
           onFocus={() => setPlaceholderVal("")}

@@ -12,6 +12,8 @@
 
 /* SignUP */
 
+/* SignUP end */
+
 .logo {
   width: 40px;
   height: 40px;
@@ -22,7 +24,7 @@
   width: 341px;
   height: 664px;
   left: 232px;
-  top: 153px;
+  top: 100px;
 }
 
 .imgSize {
@@ -67,10 +69,6 @@
   width: 20px;
 }
 
-.floatimg {
-  float: right;
-}
-
 .socialSignupTxt {
   margin-right: 5px;
 }
@@ -92,4 +90,6 @@
   }
 }
 
-/* SignUP end */
+#floatImg {
+  float: "right";
+}
