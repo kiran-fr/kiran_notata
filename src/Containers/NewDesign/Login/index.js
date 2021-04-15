@@ -15,7 +15,7 @@ import { InputForm, Button } from "Components/UI_Kits";
 import { userLoggedIn } from "actions/user";
 import { getUserIsLoggedIn } from "reducers/selectors/user";
 
-import { dashboard, forgotPassword } from "definitions.js";
+import { dashboard, forgotPassword, signup } from "definitions.js";
 import loginImg from "../../../assets/images/login.svg";
 import notata from "../../../assets/images/notata.svg";
 import linkedIn from "../../../assets/images/linkedIn.svg";
@@ -147,9 +147,22 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               }}
             >
               {" "}
-              SIGN UP
+              Login
             </Button>
           </form>
+          <div
+            style={{
+              fontSize: "14px",
+              textAlign: "center",
+            }}
+          >
+            <Link
+              to={forgotPassword}
+              style={{ textDecoration: "none", color: "#969BA3" }}
+            >
+              Forgot Password?
+            </Link>
+          </div>
           <div className={styles.separator}>OR</div>
           <Button
             buttonStyle="secondary"
@@ -162,7 +175,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               alt="logo"
               className={styles.socialSignupTxt}
             />{" "}
-            Sign up with Google
+            Login with Google
           </Button>
           <Button
             buttonStyle="primary"
@@ -175,7 +188,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               alt="logo"
               className={styles.socialSignupTxt}
             />{" "}
-            Sign up with Facebook
+            Login with Facebook
           </Button>
           <Button
             size="large"
@@ -188,8 +201,21 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               alt="logo"
               className={styles.socialSignupTxt}
             />{" "}
-            Sign up with LinkedIn
+            Login with LinkedIn
           </Button>
+          <div
+            style={{
+              fontSize: "14px",
+              textAlign: "center",
+            }}
+          >
+            <Link
+              to={signup}
+              style={{ textDecoration: "none", color: "#969BA3" }}
+            >
+              Not a member? Sign up
+            </Link>
+          </div>
         </div>
       </Grid>
       <Grid item className="imgSize" sm={6}>
@@ -201,112 +227,6 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
         />
       </Grid>
     </Grid>
-
-    /* <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <div className="text-center pt-3">
-            <img
-              style={{ width: "40px", height: "40px" }}
-              src={notata}
-              alt="logo"
-              className={styles.logoImg}
-            />
-            <h1>Log in</h1>
-          </div>
-          <div className={styles.alignCent}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <InputForm
-                label="Email"
-                inputType="email"
-                placeholder="Email"
-                position={listForm[position]}
-                setNextFlag={setNextFlag}
-                validate={validate}
-                required
-                reference={register({ required: true })}
-              />
-              <InputForm
-                label="Password"
-                inputType="password"
-                placeholder="Password"
-                position={listForm[position]}
-                setNextFlag={setNextFlag}
-                validate={validate}
-                reference={register({ required: true })}
-              />
-              <Button
-                buttonStyle="secondary"
-                size="large"
-                buttonStyle="gray"
-                style={{ marginBottom: "15px" }}
-                onClick={() => {
-                  setValidate(true);
-                }}
-              >
-                {" "}
-                Log in
-              </Button>
-            </form>
-            <div className={styles.separator}>OR</div>
-            <Button
-              buttonStyle="secondary"
-              size="large"
-              style={{ marginBottom: "15px", marginTop: "10px" }}
-            >
-              <img
-                style={{ width: "20px" }}
-                src={googlePlus}
-                alt="logo"
-                className="mr-1"
-              />{" "}
-              Log in with Google
-            </Button>
-            <Button
-              buttonStyle="primary"
-              size="large"
-              style={{ marginBottom: "15px" }}
-            >
-              <img
-                style={{ width: "20px" }}
-                src={facebook}
-                alt="logo"
-                className="mr-1"
-              />{" "}
-              Log in with Facebook
-            </Button>
-            <Button
-              size="large"
-              style={{ marginBottom: "15px" }}
-              buttonStyle="primary"
-            >
-              <img
-                style={{ width: "20px" }}
-                src={linkedIn}
-                alt="logo"
-                className="mr-1"
-              />{" "}
-              Log in with LinkedIn
-            </Button>
-          </div>
-        </Grid>
-        <Grid item className="d-none d-sm-block leftImg" sm={6}>
-          <img className="float-left" src={loginImg} alt="login" />
-        </Grid>
-      </Grid> */
-    // <Card style={{ paddingBottom: "20px" }}>
-    //   <div
-    //     style={{
-    //       position: "absolute",
-    //       fontSize: "12px",
-    //       bottom: "-23px",
-    //       left: "2px",
-    //     }}
-    //   >
-    //     <Link to={forgotPassword}>I forgot my password</Link>
-    //   </div>
-    // </Card>
-
-    // {errorMessage && <ErrorBox>{errorMessage}</ErrorBox>}
   );
 }
 

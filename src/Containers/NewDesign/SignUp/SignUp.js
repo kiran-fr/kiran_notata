@@ -119,9 +119,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               size="large"
               buttonStyle="gray"
               style={{ marginBottom: "15px" }}
-              onClick={() => {
-                setValidate(true);
-              }}
+              onClick={validate}
             >
               {" "}
               SIGN UP
@@ -219,7 +217,11 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
         </div>
       </Grid>
       <Grid item className="imgSize" sm={6}>
-        <img className="floatimg" src={man_standing} alt="signup-image" />
+        <img
+          className={styles.floatImg}
+          src={man_standing}
+          alt="signup-image"
+        />
       </Grid>
     </Grid>
   );

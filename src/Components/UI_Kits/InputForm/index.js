@@ -104,7 +104,7 @@ export function InputForm({
 
   // Form
   const { handleSubmit, setValue } = useForm();
-  const inputRef = useRef(null);
+  const inputRef = reference;
 
   useEffect(() => {
     val && setValue(inputType, val || "");
@@ -119,12 +119,12 @@ export function InputForm({
 
   useEffect(() => {
     if (validate) {
-      validateFormInput(inputRef.current.value);
+      // validateFormInput(inputRef.current.value);
     }
   }, [validate]);
 
   function setFocus() {
-    inputRef.current.focus();
+    // inputRef.current.focus();
   }
 
   // Blur function (form function)
@@ -229,7 +229,7 @@ export function InputForm({
         )}
       </div>
       {error && inputType === "password" && (
-        <p className={styles.inputError}>
+        <p className={true ? styles.inputError : styles.inputGrayError}>
           <i className="fa fa-exclamation-circle"></i>
           <span>
             Password must be between 8-20 characters with at least 1 alpha, 1

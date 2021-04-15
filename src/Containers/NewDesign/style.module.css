@@ -84,12 +84,16 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .imgSize {
     display: none;
   }
+
+  .mainContent {
+    position: inherit;
+  }
 }
 
-#floatImg {
-  float: "right";
+.floatImg {
+  float: right;
 }

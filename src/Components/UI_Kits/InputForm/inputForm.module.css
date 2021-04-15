@@ -113,6 +113,20 @@ input::placeholder {
   top: 0px;
   padding: 0 10px;
 }
+
+.inputGrayError {
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--ui-color-gray-medium) !important;
+  line-height: 13px;
+  width: 270px;
+  position: absolute;
+  display: grid;
+  left: 350px;
+  top: 0px;
+  padding: 0 10px;
+}
+
 span {
   margin-top: 5px !important;
 }
