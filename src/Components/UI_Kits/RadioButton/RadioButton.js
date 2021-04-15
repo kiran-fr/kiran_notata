@@ -19,7 +19,7 @@ function RadioButton({ id, value, label, isSelected, handleChange, name }) {
 }
 
 export function RadioButtons({ name, data }) {
-  const [checked, setChecked] = useState("option1");
+  const [checked, setChecked] = useState(data.length ? data[0].value : "");
 
   function handleChange({ target }) {
     const { value } = target;

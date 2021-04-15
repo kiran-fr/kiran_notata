@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import "./style.css";
+import { Content } from "Components/elements";
 
 export function Tabsection({ tabValue, tabArr, tabFuc }) {
   const [value, setValue] = useState(tabValue);

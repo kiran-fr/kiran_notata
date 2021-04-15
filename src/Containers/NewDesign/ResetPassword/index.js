@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { login } from "definitions.js";
 import Grid from "@material-ui/core/Grid";
 
 import { InputForm, Button } from "Components/UI_Kits";
-import { Content, Card, SuccessBox, ErrorBox } from "Components/elements/";
 import man_standing from "../../../assets/images/man_standing.svg";
 import notata from "../../../assets/images/notata.svg";
 import styles from "../style.module.css";

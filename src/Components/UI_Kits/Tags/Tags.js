@@ -27,6 +27,9 @@ export const Tags = ({
   closeIcon,
   ulSize,
   tagButtons,
+  optionalTxt,
+  suggested,
+  heading,
 }) => {
   // States
   const [selectedTags, setSelectedTags] = useState([]);
@@ -42,11 +45,12 @@ export const Tags = ({
 
   return (
     <div className={styles.tag_wrapper}>
-      <div className={styles.tag_title}>TAGS</div>
-
+      {heading && <div className={styles.tag_title}>TAGS</div>}
       <div className={styles.tag_sub_title1}>TAGS</div>
 
-      <div className={styles.tag_sub_title2}>Write or choose tags</div>
+      <div className={styles.tag_sub_title2}>
+        {optionalTxt ? optionalTxt : "Write or choose tags"}
+      </div>
       <div>
         <TagsInput
           selectTags={selectTags}
@@ -58,8 +62,7 @@ export const Tags = ({
           ulSize={ulSize}
         />
       </div>
-      <div className={styles.tag_sub_title3}>Suggested tags</div>
-
+      {suggested && <div className={styles.tag_sub_title3}>Suggested tags</div>}
       <div>
         {items.map(item => (
           // TODO: Should not be a button item
