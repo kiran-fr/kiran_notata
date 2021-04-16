@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Tabsection } from "Components/UI_Kits";
-import { Group } from "./group";
+import { Group } from "./page3";
 import { Content } from "Components/elements";
-import { LookingFor } from "./lookingfor";
-import { PersonalInfo } from "./personalInfo";
+import { LookingFor } from "./page2";
+import Page1 from "./page1";
 import "./style.css";
 
 export function Onboard() {
@@ -43,7 +43,7 @@ export function Onboard() {
       />
       <div style={{ marginTop: "20px" }}>
         {tabValue === 1 ? (
-          <PersonalInfo />
+          <Page1 />
         ) : tabValue === 2 ? (
           <LookingFor />
         ) : (
