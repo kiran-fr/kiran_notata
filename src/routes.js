@@ -55,7 +55,7 @@ export const Routes = () => (
         <Route exact path={signup} component={Signup} />
         <Route exact path={login} component={Login} />
         <Route exact path={signOut} component={SignOut} />
-        <Route exact path={forgotPassword} component={PreProfile} />
+        <Route exact path={forgotPassword} component={forgotPassword} />
         <Route exact path={resetPassword} component={ResetPassword} />
         <Route exact path={awaiting} component={Awaiting} />
 
