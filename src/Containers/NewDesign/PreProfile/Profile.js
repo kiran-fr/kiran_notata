@@ -1,29 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
-import Page4 from "./Page4";
+// import Page4 from "./Page4";
 import { Content } from "Components/elements/";
-import classnames from "classnames";
-import styles from "./Profile.module.css";
-
-function Dots({ page, setPage }) {
-  let pages = [1, 2, 3, 4];
-  return (
-    <div className={styles.dots_container}>
-      {pages.map(n => (
-        <div
-          key={n}
-          className={classnames(styles.dot, page >= n && styles.dot_active)}
-        ></div>
-      ))}
-    </div>
-  );
-}
+import { Tabsection } from "Components/UI_Kits";
 
 export default function PreProfile({ history }) {
   const [page, setPage] = useState(1);
   const [extraInputs, setExtraInputs] = useState({ interests: [], skills: [] });
+  const [render, setRender] = useState(false);
+
+  const handleTab = value => {
+    setPage(value);
+  };
+
+  useEffect(() => {
+    setRender(!render);
+  }, [page]);
 
   return (
     <Content
@@ -33,9 +27,27 @@ export default function PreProfile({ history }) {
         marginTop: "-20px",
       }}
     >
-      {page === 2 && <Page1 history={history} setPage={setPage} />}
+      <Tabsection
+        tabValue={page}
+        tabFuc={data => handleTab(data)}
+        tabArr={[
+          {
+            value: 1,
+            text: "p",
+          },
+          {
+            value: 2,
+            text: "w",
+          },
+          {
+            value: 3,
+            text: "g",
+          },
+        ]}
+      />
+      {page === 1 && <Page1 history={history} setPage={setPage} />}
 
-      {page === 1 && (
+      {page === 2 && (
         <Page2
           extraInputs={extraInputs}
           setExtraInputs={setExtraInputs}
@@ -51,26 +63,9 @@ export default function PreProfile({ history }) {
         />
       )}
 
-      {page === 4 && (
+      {/* {page === 4 && (
         <Page4 extraInputs={extraInputs} history={history} setPage={setPage} />
-      )}
-
-      <Dots page={page} setPage={setPage} />
+      )} */}
     </Content>
   );
 }
-
-// const [mutate] = useMutation(userUpdate);
-// // let { input } = data;
-// // try {
-// //   await mutate({ variables: { input } });
-// // } catch (error) {
-// //   console.log("error", error);
-// // }
-// // history.push(dashboard);
-
-// // API STUFF
-// import { useMutation } from "@apollo/client";
-// import { userUpdate } from "Apollo/Mutations";
-// import { dashboard } from "definitions.js";
-// import { omit } from "lodash";
