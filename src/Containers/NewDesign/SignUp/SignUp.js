@@ -125,7 +125,6 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                   <p className={styles.error}>passwords don't match</p>
                 )}
                 <Button
-                  buttonStyle="secondary"
                   size="large"
                   buttonStyle="gray"
                   style={{ marginBottom: "5px" }}
