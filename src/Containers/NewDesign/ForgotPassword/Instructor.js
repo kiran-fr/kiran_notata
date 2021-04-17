@@ -1,6 +1,5 @@
 /* eslint-disable */
 import React, { useState } from "react";
-import { Auth } from "aws-amplify";
 import { ResetPassword } from "./ResetPassword";
 import { useForm } from "react-hook-form";
 import { InputForm, Button } from "Components/UI_Kits";
@@ -82,7 +81,6 @@ export function Instructor({ email, history }) {
                     required
                     reference={register({ required: true })}
                   />
-
                   <Button
                     buttonStyle="secondary"
                     size="large"

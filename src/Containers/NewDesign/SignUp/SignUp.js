@@ -9,7 +9,6 @@ import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 import { InputForm, Button } from "Components/UI_Kits";
 
-import { Content, Card, SuccessBox, ErrorBox } from "Components/elements/";
 import { userLoggedIn } from "actions/user";
 import { getUserIsLoggedIn } from "reducers/selectors/user";
 import { Message } from "../Message/index";
@@ -122,12 +121,16 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                   validate={validate}
                   reference={register({ required: true })}
                 />
+                {errors && errors.passwordConfirmation && (
+                  <p className={styles.error}>passwords don't match</p>
+                )}
                 <Button
                   buttonStyle="secondary"
                   size="large"
                   buttonStyle="gray"
                   style={{ marginBottom: "5px" }}
                   onClick={validate}
+                  loading={isSubmitting || isLoading}
                 >
                   {" "}
                   SIGN UP

@@ -75,6 +75,7 @@ export default function PreProfile({ history }) {
           />
         )}
         <div
+          style={{ marginTop: "30px" }}
           className={
             page > 1 ? styles.button_container_justify : styles.button_container
           }
@@ -83,6 +84,7 @@ export default function PreProfile({ history }) {
             <Button
               size="medium"
               buttonStyle="white"
+              type="left_arrow"
               onClick={() => setPage(() => page - 1)}
             >
               PREV
@@ -92,6 +94,7 @@ export default function PreProfile({ history }) {
           <Button
             size="medium"
             buttonStyle="green"
+            type="right_arrow"
             onClick={() => {
               if (page > 2) return;
               setPage(() => page + 1);

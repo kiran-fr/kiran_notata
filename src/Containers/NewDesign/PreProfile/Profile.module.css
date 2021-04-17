@@ -41,12 +41,15 @@
 }
 .profile_onboard {
   font-family: var(--proxima);
+  max-width: 100vw;
+  overflow: hidden;
 }
 .tabs_section {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 30px;
+  margin-top: -10px;
 }
 .tabs_section_child {
   width: 30%;
@@ -73,4 +76,70 @@ label {
   width: 100%;
   display: flex;
   justify-content: space-between !important;
+}
+
+.profile_onboard input {
+  color: #6a6a6a;
+  font-size: 14px;
+  caret-color: #6a6a6a;
+}
+.profile_onboard label {
+  font-size: 14px;
+}
+
+.profile3 h1 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 37px;
+  letter-spacing: 0.03em;
+  color: #6a6a6a;
+}
+.profile3 h4 {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+}
+@media screen and (min-width: 1400px) {
+  .button_container_justify {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    max-width: 600px;
+    transform: translateX(-50%);
+  }
+  .button_container {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    max-width: 600px;
+    transform: translateX(-50%);
+  }
+}
+@media screen and (max-width: 500px) {
+  .profile_onboard input {
+    width: 100%;
+  }
+  .button_container button {
+    height: 30px;
+    width: 103px !important;
+    font-size: 12px !important;
+  }
+  .button_container i {
+    font-size: 12px;
+  }
+  .button_container_justify button {
+    height: 30px;
+    width: 103px !important;
+    font-size: 12px !important;
+  }
+  .button_container_justify i {
+    font-size: 12px;
+  }
+  .profile3 h1 {
+    font-size: 18px !important;
+    line-height: 22px !important;
+    letter-spacing: 0.03em;
+  }
 }

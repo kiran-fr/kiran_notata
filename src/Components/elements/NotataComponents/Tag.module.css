@@ -4,6 +4,8 @@
   background: var(--color-gray-pale);
   border: 1px solid var(--color-gray-light);
   padding: 3px 12px;
+  box-sizing: border-box;
+  max-width: 100%;
   display: inline-block;
   font-size: 12px;
   margin: 2px;

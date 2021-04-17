@@ -11,14 +11,16 @@ import { FrontPage } from "Containers/FrontPage/FrontPage";
 import { Signup } from "Containers/NewDesign/SignUp/SignUp";
 import { Login } from "Containers/NewDesign/Login/index";
 import { ForgotPassword } from "Containers/NewDesign/ForgotPassword/index";
+import { SignOut } from "Containers/NewDesign/SignOut/index";
+import PreProfile from "Containers/NewDesign/PreProfile/Profile";
 
 // import { Signup } from "Containers/Auth/Signup/Signup";
 // import { Login } from "Containers/Auth/Login/Login";
 // import { ForgotPassword } from "Containers/Auth/ForgotPassword/ForgotPassword";
+// import { SignOut } from "Containers/Auth/SignOut/SignOut";
+// import PreProfile from "Containers/Auth/PreProfile/Profile";
 
 import { Awaiting } from "Containers/Auth/Awaiting/Awaiting";
-import { SignOut } from "Containers/Auth/SignOut/SignOut";
-import PreProfile from "Containers/NewDesign/PreProfile/Profile";
 
 // SHARING
 import { LinkBridge } from "Components/Shared/LinkBridge/LinkBridge";

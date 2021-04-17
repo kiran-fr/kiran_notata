@@ -1,12 +1,16 @@
 .tag_wrapper {
-  width: 250px;
   font-style: normal;
   font-weight: normal;
   user-select: none;
+  max-width: 340px;
+}
+@media screen and (max-width: 500px) {
+  .tag_wrapper {
+    max-width: 100%;
+  }
 }
 
 /* tags */
-
 .tag_title {
   /* font-family: Proxima Nova; */
   font-weight: bold;
@@ -29,14 +33,14 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ui-color-gray-medium);
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 }
 .tag_sub_title2 {
   /* font-family: Roboto; */
   font-size: 12px;
   line-height: 14px;
   color: var(--ui-color-gray-medium);
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 }
 
 .tag_sub_title3 {
@@ -46,7 +50,7 @@
   font-size: 12px;
   line-height: 14px;
   color: var(--ui-color-gray-dark1);
-  margin-bottom: 20px;
+  margin-bottom: 4px;
 }
 
 /* small input*/
@@ -77,6 +81,19 @@
   box-sizing: border-box;
   border-radius: 20px;
   margin-bottom: 20px;
+}
+
+@media screen and (max-width: 500px) {
+  .bigInput {
+    min-height: 30px;
+    overflow: hidden;
+  }
+  .bigInput ul {
+    padding: 0 !important;
+  }
+  .bigInput input {
+    margin-top: -6px !important;
+  }
 }
 
 /* small Tag*/
@@ -208,7 +225,9 @@
   text-align: center;
   cursor: pointer;
 }
-
+.tagBigButton button {
+  padding-bottom: 3px;
+}
 .tag_btn:focus {
   outline: none !important;
 }

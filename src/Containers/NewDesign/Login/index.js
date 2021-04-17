@@ -33,8 +33,6 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [position, setPosition] = useState(4);
   const [validate, setValidate] = useState(false);
 
-  console.log(errorMessage);
-
   const { register, handleSubmit, formState, setValue } = useForm({
     resolver: SMS_MFA
       ? undefined
@@ -96,12 +94,6 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   }
 
   return (
-    // {s.verified && (
-    //   <SuccessBox title="Whoop whoop 🎉" style={{ marginBottom: "35px" }}>
-    //     Your email have been verified, so now you are ready to rock'n rumble!
-    //   </SuccessBox>
-    // )}
-
     <div className={styles.auth_structure}>
       <div className={styles.auth_structure_left}>
         <div className={styles.mainContent}>
@@ -115,7 +107,6 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               />
               <h1>Login</h1>
             </div>
-
             <InputForm
               label="Email"
               inputType="email"
@@ -136,12 +127,13 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               reference={register({ required: true })}
             />
             <Button
-              buttonStyle="secondary gray"
+              buttonStyle="gray"
               size="large"
               style={{ marginBottom: "15px" }}
               onClick={() => {
                 setValidate(true);
               }}
+              loading={isSubmitting}
             >
               LOGIN
             </Button>

@@ -85,7 +85,7 @@ export default function TagsInput({
     }
     const newTag = {
       id: new Date().getTime(),
-      name: e.target.value,
+      name: e.target.value.split(",")[0],
     };
 
     let newTags = [...selectedTags, newTag];
@@ -95,7 +95,10 @@ export default function TagsInput({
 
   console.log("selectedtag", selectedTags);
   return (
-    <Tag className={classnames(getInputSize(size))}>
+    <Tag
+      className={classnames(getInputSize(size))}
+      style={{ display: "flex", flexWrap: "wrap" }}
+    >
       <ul className={classnames(getULSize(ulSize))}>
         {selectedTags.map((tag, index) => (
           <li key={index} className={classnames(getTagSize(tagSize))}>
@@ -108,11 +111,16 @@ export default function TagsInput({
             </span>
           </li>
         ))}
+        <div className={styles.tag_inputt}>
+          <input
+            style={{
+              marginTop: selectedTags.length > 0 ? "3px" : "2px",
+              width: "100px",
+            }}
+            onKeyUp={event => (event.key === "Enter" ? addTags(event) : null)}
+          />
+        </div>
       </ul>
-
-      <input
-        onKeyUp={event => (event.key === "Enter" ? addTags(event) : null)}
-      />
     </Tag>
   );
 }

@@ -79,7 +79,6 @@ export function ForgotPassword({ history }) {
                     required
                     reference={register({ required: true })}
                   />
-
                   <Button
                     buttonStyle="secondary"
                     size="large"

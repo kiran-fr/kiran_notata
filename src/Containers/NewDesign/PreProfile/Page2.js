@@ -60,7 +60,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs }) {
           title="domain"
           items={[]}
         />
-        <h4>Statge</h4>
+        <h4>Stage</h4>
         <CheckBoxes
           data={[
             { id: 1, value: "Pre seed", label: "Pre seed" },

@@ -57,13 +57,15 @@ export default function Page1({ setPage }) {
   };
 
   return (
-    <div>
-      <h1>Personal info</h1>
+    <div className={styles.profile3}>
+      <h1 style={{ margin: "0", padding: "0", marginTop: "20px" }}>
+        Personal info
+      </h1>
       <p
         style={{
-          margin: "0px 0 25px 0",
-          lineHeight: "18.05px",
-          fontSize: "15px",
+          margin: "0px 0 30px 0",
+          lineHeight: "17px",
+          fontSize: "14px",
           color: "#969BA3",
         }}
       >
@@ -74,53 +76,55 @@ export default function Page1({ setPage }) {
           label="First Name"
           inputType="text"
           placeholder="First Name"
-          // position={listForm[position]}
-          // setNextFlag={setNextFlag}
-          // validate={validate}
-          // reference={register({ required: true })}
+          // position = {listForm[position]}
+          // setNextFlag = {setNextFlag}
+          // validate = {validate}
+          // reference = {register({ required: true })}
         />
         <InputForm
           label="Second Name"
           inputType="text"
           placeholder="Second Name"
-          // position={listForm[position]}
-          // setNextFlag={setNextFlag}
-          // validate={validate}
-          // reference={register({ required: true })}
+          // position = {listForm[position]}
+          // setNextFlag = {setNextFlag}
+          // validate = {validate}
+          // reference = {register({ required: true })}
         />
         <InputForm
           label="Company"
           inputType="text"
           placeholder="Company"
-          // position={listForm[position]}
-          // setNextFlag={setNextFlag}
-          // validate={validate}
-          // reference={register({ required: true })}
+          // position = {listForm[position]}
+          // setNextFlag = {setNextFlag}
+          // validate = {validate}
+          // reference = {register({ required: true })}
         />
 
-        {/* <label for="input.family_name">Family name</label>
+        {/* <label for = "input.family_name">Family name</label>
         <input
-          type="text"
-          placeholder={"Family name"}
-          autoComplete="off"
-          ref={register({ required: true })}
-          id="input.family_name"
-          name="input.family_name"
+          type = "text"
+          placeholder = {"Family name"}
+          autoComplete = "off"
+          ref = {register({ required: true })}
+          id = "input.family_name"
+          name = "input.family_name"
         />
 
-        <label for="input.company">Company</label>
+        <label for = "input.company">Company</label>
         <input
-          type="text"
-          placeholder={"Company"}
-          autoComplete="off"
-          ref={register}
-          id="input.company"
-          name="input.company"
+          type = "text"
+          placeholder = {"Company"}
+          autoComplete = "off"
+          ref = {register}
+          id = "input.company"
+          name = "input.company"
         /> */}
-        <h4>What is your domain expertise?</h4>
+        <h4 style={{ margin: "0", padding: "0", marginTop: "8px" }}>
+          What is your domain expertise?
+        </h4>
         <div
           style={{
-            marginTop: "50px",
+            marginTop: "10px",
           }}
         >
           <Tags
@@ -140,7 +144,16 @@ export default function Page1({ setPage }) {
             ]}
           />
         </div>
-        <h4>Who are you?</h4>
+        <h4
+          style={{
+            margin: "0",
+            padding: "0",
+            marginTop: "20px",
+            marginBottom: "10px",
+          }}
+        >
+          Who are you?
+        </h4>
         <RadioButtons
           name="whoare"
           data={[

@@ -19,14 +19,17 @@ const PASSWORD = "password";
 const NUMBER = "number";
 const URL = "url";
 const REQUIRED = "required";
+const CONFIRMPASSWORD = "confirmPassword";
+const MATCH = "match";
 
 // Error message map
 const errorMessage = {
-  email: "email error",
-  required: "required error",
+  email: "Please enter a valid email",
+  required: "Can't be Blank",
   password: "password error",
   number: "number error",
   url: "url error",
+  match: "Passwords Do Not Match",
 };
 
 // Get error functions
@@ -40,7 +43,10 @@ const getError = {
     let isPassword = reg_pass.test(str);
     return isPassword ? false : errorMessage[PASSWORD];
   },
-
+  confirmPassword: str => {
+    let isPassword = reg_pass.test(str);
+    return isPassword ? false : errorMessage[MATCH];
+  },
   number: str => {
     let isNumber = reg_num.test(str);
 
@@ -55,12 +61,15 @@ const getError = {
 };
 
 // GET ERROR MESSAGE (if any)
-function getErrorMessage({ value, inputType, required }) {
+function getErrorMessage({ value, inputType, required, passwordConfirm }) {
   // Validate required field
   if (required && value === "") {
-    return errorMessage[REQUIRED];
+    return inputType + " " + errorMessage[REQUIRED];
   }
-
+  console.log("confirm", passwordConfirm);
+  if (passwordConfirm) {
+    return getError[CONFIRMPASSWORD](value);
+  }
   // Validate the different input fields
   switch (inputType) {
     case EMAIL:
@@ -91,6 +100,7 @@ export function InputForm({
   setNextFlag,
   validate,
   reference,
+  passwordConfirm,
   // Cus error message to be displayed to the right of field!
   errorMessage,
 }) {
@@ -101,7 +111,6 @@ export function InputForm({
   const [placeholderVal, setPlaceholderVal] = useState(
     placeholder || "Say something..."
   );
-
   // Form
   const { setValue } = useForm();
   const inputRef = reference;
@@ -149,6 +158,7 @@ export function InputForm({
           value: e.target.value || "",
           inputType,
           required,
+          passwordConfirm,
         }) === false &&
         error === false
       )
@@ -175,7 +185,12 @@ export function InputForm({
   // Validate form input
   const validateFormInput = value => {
     // Check for error
-    let errorMessage = getErrorMessage({ value, inputType, required });
+    let errorMessage = getErrorMessage({
+      value,
+      inputType,
+      required,
+      passwordConfirm,
+    });
 
     // If error, set error message
     setError(errorMessage);
@@ -183,7 +198,7 @@ export function InputForm({
 
   return (
     <div className={styles.container}>
-      {error && inputType === "password" && (
+      {error && inputType === "password" && !passwordConfirm && (
         <p className={true ? styles.inputError : styles.inputGrayError}>
           <i className="fa fa-exclamation-circle"></i>
           <span>
@@ -238,7 +253,7 @@ export function InputForm({
           />
         )}
       </div>
-      {error && inputType !== "password" && (
+      {error && (
         <p style={{ textTransform: "capitalize" }} className={styles.valError}>
           {error}
         </p>

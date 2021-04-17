@@ -1,5 +1,4 @@
-/* error  */
-.error {
+error .error {
   color: var(--color-primary);
   font-size: 12px;
   text-align: right;
@@ -106,6 +105,9 @@
 .auth_structure_left form input {
   margin: auto;
   height: 16px;
+  color: #6a6a6a;
+  font-size: 14px;
+  caret-color: #6a6a6a;
 }
 .auth_structure_right {
   width: 55%;
@@ -129,8 +131,9 @@
 .go_social button p {
   display: block;
   position: absolute;
-  text-align: center;
-  width: calc(100%);
+  text-align: left;
+  width: 68% !important;
+  font-weight: 700;
   right: 0px;
   top: 50%;
   transform: translateY(-50%);
@@ -170,7 +173,7 @@
   }
 }
 
-@media screen and (max-width: 422px) {
+@media screen and (max-width: 500px) {
   .mainContent {
     align-items: center;
     justify-content: center;
@@ -186,9 +189,13 @@
   .go_social button {
     margin-bottom: 15px !important;
   }
-  button {
+  .auth_structure button {
     width: 100% !important;
-    height: 40px;
+    height: 30px !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
   }
   .auth_structure {
     height: auto !important;

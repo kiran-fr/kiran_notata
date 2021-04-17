@@ -29,6 +29,9 @@
   color: var(--ui-color-gray-medium);
   border: 1px solid var(--ui-color-gray-medium);
 }
+.white_button i {
+  color: var(--ui-color-gray-medium);
+}
 
 /*color hover*/
 .secondary_hover:hover {
