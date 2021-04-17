@@ -1,15 +1,13 @@
 /* eslint-disable */
 import React from "react";
 import { Button } from "Components/UI_Kits";
-import man_standing from "../../../assets/images/man_standing.svg";
 import notata from "../../../assets/images/auth_logo.png";
-import { login } from "../../../definitions";
 import styles from "../style.module.css";
 import FloatingLoginButtons from "Components/floatingLoginButtons/floatingLoginButtons";
 
-export default function Message({ history }) {
+export function Message({ history, heading, subHead1, subHead2, path, image }) {
   const redirectlogin = () => {
-    history.push(login);
+    history.push(path);
   };
 
   return (
@@ -24,7 +22,7 @@ export default function Message({ history }) {
                 alt="logo"
                 className={styles.logo}
               />
-              <h1>Password Reset</h1>
+              <h1>{heading}</h1>
               <p
                 style={{
                   margin: "25px 0",
@@ -33,7 +31,7 @@ export default function Message({ history }) {
                   color: "#969BA3",
                 }}
               >
-                Your password has been reset.
+                {subHead1}
               </p>
               <p
                 style={{
@@ -43,7 +41,7 @@ export default function Message({ history }) {
                   color: "#969BA3",
                 }}
               >
-                please, click next to login.
+                {subHead2}
               </p>
             </div>
             <div style={{ marginTop: "20px" }}>
@@ -60,7 +58,7 @@ export default function Message({ history }) {
           </div>
         </div>
         <div className={styles.auth_structure_right}>
-          <img src={man_standing} alt="man_standing" />
+          <img src={image} alt="man_standing" />
         </div>
         <FloatingLoginButtons />
       </div>

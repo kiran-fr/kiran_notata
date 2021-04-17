@@ -12,7 +12,7 @@ import { InputForm, Button } from "Components/UI_Kits";
 import { Content, Card, SuccessBox, ErrorBox } from "Components/elements/";
 import { userLoggedIn } from "actions/user";
 import { getUserIsLoggedIn } from "reducers/selectors/user";
-
+import { Message } from "../Message/index";
 import { dashboard, awaiting, login } from "definitions.js";
 import man_standing from "../../../assets/images/man_standing.svg";
 import notata from "../../../assets/images/auth_logo.png";
@@ -24,6 +24,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const listForm = ["email", "password", "confirmPassword"];
   const [position, setPosition] = useState(4);
   const [validate, setValidate] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(
@@ -51,13 +52,11 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
       attributes: { email },
     })
       .then(res => {
-        let path = `${awaiting}?=awaitingConfirm=true&email=${encodeURIComponent(
-          email
-        )}`;
-        history.push(path);
+        setRedirect(true);
         setIsLoading(false);
       })
       .catch(error => {
+        setRedirect(false);
         setErrorMessage(error.message);
         setIsLoading(false);
       });
@@ -69,80 +68,95 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   };
 
   return (
-    <div className={styles.auth_structure}>
-      <div className={styles.auth_structure_left}>
-        <div className={styles.mainContent}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.logoContainer}>
-              <img
-                style={{ width: "40px", height: "40px" }}
-                src={notata}
-                alt="logo"
-                className={styles.logo}
-              />
-              <h1>Sign up</h1>
-            </div>
+    <>
+      {redirect ? (
+        <Message
+          heading={"We have sent you an email 🚀"}
+          subHead1={
+            "To be able to log in you have to verify your identity by clicking the link in the email."
+          }
+          image={man_standing}
+          history={history}
+          path={login}
+        />
+      ) : (
+        <div className={styles.auth_structure}>
+          <div className={styles.auth_structure_left}>
+            <div className={styles.mainContent}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className={styles.logoContainer}>
+                  <img
+                    style={{ width: "40px", height: "40px" }}
+                    src={notata}
+                    alt="logo"
+                    className={styles.logo}
+                  />
+                  <h1>Sign up</h1>
+                </div>
 
-            <InputForm
-              label="Email"
-              inputType="email"
-              placeholder="Email"
-              position={listForm[position]}
-              setNextFlag={setNextFlag}
-              validate={validate}
-              required
-              reference={register({ required: true })}
-            />
-            <InputForm
-              label="Password"
-              inputType="password"
-              placeholder="Password"
-              position={listForm[position]}
-              setNextFlag={setNextFlag}
-              validate={validate}
-              reference={register({ required: true })}
-            />
-            <InputForm
-              label="Confirm Password"
-              inputType="password"
-              placeholder="Password"
-              position={listForm[position]}
-              setNextFlag={setNextFlag}
-              validate={validate}
-              reference={register({ required: true })}
-            />
-            <Button
-              buttonStyle="secondary"
-              size="large"
-              buttonStyle="gray"
-              style={{ marginBottom: "5px" }}
-              onClick={validate}
-            >
-              {" "}
-              SIGN UP
-            </Button>
-          </form>
-          <div className={styles.separator}>OR</div>
-          <SocialLogin type="Sign up" />
-          <div
-            style={{
-              fontSize: "14px",
-              textAlign: "center",
-            }}
-          >
-            <Link
-              to={login}
-              style={{ textDecoration: "none", color: "#969BA3" }}
-            >
-              Already on Notata? <u style={{ fontWeight: "600" }}>Sign in</u>
-            </Link>
+                <InputForm
+                  label="Email"
+                  inputType="email"
+                  placeholder="Email"
+                  position={listForm[position]}
+                  setNextFlag={setNextFlag}
+                  validate={validate}
+                  required
+                  reference={register({ required: true })}
+                />
+                <InputForm
+                  label="Password"
+                  inputType="password"
+                  placeholder="Password"
+                  position={listForm[position]}
+                  setNextFlag={setNextFlag}
+                  validate={validate}
+                  reference={register({ required: true })}
+                />
+                <InputForm
+                  label="Confirm Password"
+                  inputType="password"
+                  placeholder="Password"
+                  position={listForm[position]}
+                  setNextFlag={setNextFlag}
+                  validate={validate}
+                  reference={register({ required: true })}
+                />
+                <Button
+                  buttonStyle="secondary"
+                  size="large"
+                  buttonStyle="gray"
+                  style={{ marginBottom: "5px" }}
+                  onClick={validate}
+                >
+                  {" "}
+                  SIGN UP
+                </Button>
+              </form>
+              <div className={styles.separator}>OR</div>
+              <SocialLogin type="Sign up" />
+              <div
+                style={{
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
+              >
+                <Link
+                  to={login}
+                  style={{ textDecoration: "none", color: "#969BA3" }}
+                >
+                  Already on Notata?{" "}
+                  <u style={{ fontWeight: "600" }}>Sign in</u>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className={styles.auth_structure_right}>
+            <img src={man_standing} alt="auth_image" />
           </div>
         </div>
-      </div>
-      <div className={styles.auth_structure_right}>
-        <img src={man_standing} alt="auth_image" />
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

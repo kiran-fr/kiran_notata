@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useForm } from "react-hook-form";
 
+import { login } from "definitions.js";
 import { InputForm, Button } from "Components/UI_Kits";
+import FloatingLoginButtons from "Components/floatingLoginButtons/floatingLoginButtons";
+import { Message } from "../Message/index";
 import man_standing from "../../../assets/images/man_standing.svg";
 import notata from "../../../assets/images/auth_logo.png";
 import styles from "../style.module.css";
-import FloatingLoginButtons from "Components/floatingLoginButtons/floatingLoginButtons";
-import Message from "./Message";
 
 export function ResetPassword({ email, code, history }) {
   const [errorMessage, setErrorMessage] = useState();
@@ -40,7 +41,14 @@ export function ResetPassword({ email, code, history }) {
   return (
     <>
       {successMessage ? (
-        <Message history={history} />
+        <Message
+          heading={"Password Reset🚀"}
+          subHead1={"Your password has been reset."}
+          subHead2={"please, click next to login."}
+          image={man_standing}
+          history={history}
+          path={login}
+        />
       ) : (
         <div className={styles.auth_structure}>
           <div className={styles.auth_structure_left}>
