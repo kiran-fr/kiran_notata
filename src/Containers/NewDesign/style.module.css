@@ -15,24 +15,8 @@
 /* SignUP end */
 
 .logo {
-  width: 40px;
-  height: 40px;
-}
-
-.mainContent {
-  position: absolute;
-  width: 341px;
-  height: 664px;
-  left: 232px;
-  top: 100px;
-}
-
-.imgSize {
-  height: 666px;
-  width: 736px;
-  left: 804px;
-  top: 125px;
-  border-radius: 0px;
+  width: 25px;
+  height: 25px;
 }
 
 /* //line with text  */
@@ -75,25 +59,144 @@
 
 .logoContainer {
   text-align: center !important;
+  margin-top: 10px;
+  margin-bottom: -10px;
+}
+.logoContainer h1 {
+  font-size: 21px;
+  font-weight: 600;
+  color: #969ba3;
 }
 
 /* media Query start  */
 @media (max-width: 1011px) {
   .separator {
-    width: 280px;
+    width: 100%;
   }
 }
+.auth_structure {
+  position: relative;
+  max-width: 100%;
+  height: 100vh;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+  font-family: "Proxima Nova", Georgia, sans-serif;
+}
+.auth_structure_left {
+  width: 45%;
+  display: flex;
+  margin-left: 10%;
+  align-items: center;
+}
+.auth_structure_left button {
+  height: 38px;
+  font-size: 13px;
+  text-transform: none;
+}
+.auth_structure_left .mainContent {
+  width: 339px;
+  display: flex;
+  flex-direction: column;
+}
+.auth_structure_left form {
+  display: flex;
+  flex-direction: column;
+}
+.auth_structure_left form input {
+  margin: auto;
+  height: 16px;
+}
+.auth_structure_right {
+  width: 55%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.auth_structure_right img {
+  width: 100%;
+  max-height: 90%;
+}
+.go_social {
+  display: flex;
+  flex-direction: column;
+}
+.go_social button {
+  position: relative;
+  align-items: center !important;
+}
+.go_social button p {
+  display: block;
+  position: absolute;
+  text-align: center;
+  width: calc(100%);
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 13px;
+}
+.auth_button_image {
+  position: absolute;
+  width: 70px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+}
 
-@media (max-width: 900px) {
-  .imgSize {
+@media screen and (max-width: 940px) {
+  .auth_structure {
+    flex-direction: column;
+  }
+  .auth_structure_left {
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+    height: 100%;
+  }
+  .auth_structure_right {
     display: none;
   }
-
-  .mainContent {
-    position: inherit;
+  .auth_structure {
+    height: auto !important;
+    padding: 30px 0;
+    flex-direction: column;
   }
 }
 
-.floatImg {
-  float: right;
+@media screen and (max-width: 422px) {
+  .mainContent {
+    align-items: center;
+    justify-content: center;
+    width: 85% !important;
+    padding-bottom: 20px;
+  }
+  form {
+    width: 100%;
+  }
+  .go_social {
+    width: 100%;
+  }
+  .go_social button {
+    margin-bottom: 15px !important;
+  }
+  button {
+    width: 100% !important;
+    height: 40px;
+  }
+  .auth_structure {
+    height: auto !important;
+    max-height: auto !important;
+    max-height: 100% !important;
+  }
+  .auth_structure_left form input {
+    margin: auto;
+    height: 18px;
+  }
 }

@@ -225,6 +225,7 @@ textarea {
   --font-weight-regular: 300;
   --font-weight-normal: 400;
   --font-weight-bold: 500;
+  --proxima: 'Proxima Nova', Georgia, sans-serif;
 }
 
 h1 {
@@ -288,10 +289,6 @@ h1 {
     padding: 0px 20px;
   }*/
 }
-
-.notata_form {
-}
-
 .notata_form .form_error {
   border: 1px solid var(--color-primary) !important;
 }
@@ -302,10 +299,6 @@ h1 {
   position: relative;
   top: 5px;
 }
-
-.notata_form .check_container {
-}
-
 .notata_form .check_container label {
   font-size: 16px;
   color: var(--color-gray-dark);

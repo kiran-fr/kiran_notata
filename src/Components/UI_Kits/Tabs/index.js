@@ -7,7 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import "./style.css";
 import { Content } from "Components/elements";
 
-export function Tabsection({ tabValue, tabArr, tabFuc }) {
+export function Tabsection({ tabValue, tabArr, tabFuc, active }) {
   const [value, setValue] = useState(tabValue);
 
   const handleTabChange = val => {
@@ -32,6 +32,7 @@ export function Tabsection({ tabValue, tabArr, tabFuc }) {
             onClick={() => handleTabChange(item.value)}
             value={item.value}
             label={item.text}
+            activeTab={index === active ? "active" : null}
           />
         ))}
     </Tabs>

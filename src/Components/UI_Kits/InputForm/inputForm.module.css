@@ -2,7 +2,7 @@
   display: inline-block;
   position: relative;
   width: 100%;
-  margin-bottom: 25px;
+  margin-bottom: 17px;
 }
 
 .input_label {
@@ -12,7 +12,7 @@
   line-height: 20px;
   letter-spacing: 0.4px;
   margin-left: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
   display: block;
 }
 
@@ -48,23 +48,24 @@ input::placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  padding: 11px 22px;
+  padding: 10px 22px !important;
   width: 340px;
-  margin-top: 3px;
+  margin-top: 0px;
 }
 
 @media (max-width: 425px) {
   .input_container {
-    width: 280px;
+    width: 100%;
   }
 }
 
 .redStyle {
   border-color: var(--ui-color-red) !important;
   border-color: red !important;
+  padding: 10px 22px !important;
 }
 .valError {
-  position: absolute;
+  position: relative;
   width: 200px;
   height: 13px;
   padding-top: 5px;
@@ -113,6 +114,18 @@ input::placeholder {
   top: 0px;
   padding: 0 10px;
 }
+.inputError i {
+  color: var(--ui-color-red) !important;
+}
+@media screen and (max-width: 422px) {
+  .inputError {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 6px;
+    width: 100%;
+  }
+}
 
 .inputGrayError {
   font-weight: 500;
@@ -131,14 +144,13 @@ span {
   margin-top: 5px !important;
 }
 .input_pass {
-  font-size: 25px;
   font-weight: 900;
   color: var(--ui-color-gray-medium) !important;
   letter-spacing: 0.4rem;
 }
-.input_pass_div {
+/* .input_pass_div {
   padding: 3.8px 22px !important;
-}
+} */
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

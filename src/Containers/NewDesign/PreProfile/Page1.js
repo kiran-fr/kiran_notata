@@ -59,7 +59,16 @@ export default function Page1({ setPage }) {
   return (
     <div>
       <h1>Personal info</h1>
-      <p>We want to know a little bit more about you.</p>
+      <p
+        style={{
+          margin: "0px 0 25px 0",
+          lineHeight: "18.05px",
+          fontSize: "15px",
+          color: "#969BA3",
+        }}
+      >
+        We want to know a little bit more about you.
+      </p>
       <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: "20px" }}>
         <InputForm
           label="First Name"
@@ -148,18 +157,7 @@ export default function Page1({ setPage }) {
               display: "flex",
               justifyContent: "space-between",
             }}
-          >
-            <Button
-              buttonStyle="secondary"
-              size="small"
-              buttonStyle="gray"
-              // onClick={validate}
-              loading={isSubmitting}
-            >
-              {" "}
-              SAVE
-            </Button>
-          </div>
+          ></div>
         </div>
       </form>
     </div>

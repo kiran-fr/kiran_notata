@@ -90,23 +90,7 @@ export default function Page3({ setPage, extraInputs, setExtraInputs }) {
               justifyContent: "space-between",
               marginBottom: "20px",
             }}
-          >
-            <Button
-              size={"medium"}
-              buttonStyle={"secondary"}
-              onClick={() => setPage(2)}
-            >
-              back
-            </Button>
-
-            <Button
-              size={"medium"}
-              loading={isSubmitting}
-              onClick={() => setPage(4)}
-            >
-              {extraInputs.skills.length ? "NEXT" : "SKIP"}
-            </Button>
-          </div>
+          ></div>
         </div>
       </Card>
     </div>

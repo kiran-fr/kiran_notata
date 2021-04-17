@@ -41,7 +41,7 @@ export function ConfirmUser({ email }) {
     const password = data[ids.password];
 
     try {
-      await Auth.forgotPasswordSubmit(email, code, password);
+      await Auth.forgotPasswordSubmit(email, 136456);
       setSuccessMessage("New password has been reset. You can now log in!");
       setErrorMessage(null);
     } catch (error) {

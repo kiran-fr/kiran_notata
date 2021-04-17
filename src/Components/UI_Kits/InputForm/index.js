@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // Styles
@@ -103,7 +103,7 @@ export function InputForm({
   );
 
   // Form
-  const { handleSubmit, setValue } = useForm();
+  const { setValue } = useForm();
   const inputRef = reference;
 
   useEffect(() => {
@@ -183,6 +183,16 @@ export function InputForm({
 
   return (
     <div className={styles.container}>
+      {error && inputType === "password" && (
+        <p className={true ? styles.inputError : styles.inputGrayError}>
+          <i className="fa fa-exclamation-circle"></i>
+          <span>
+            Password must be between 8-20 characters with at least 1 alpha, 1
+            numeric character and one special character from the list
+            ‘@#$%^&+=!’. Passwords are case sensitive. Space are not allowed.
+          </span>
+        </p>
+      )}
       {label && <label className={styles.input_label}>{label}</label>}
       <div
         className={classnames(
@@ -216,29 +226,23 @@ export function InputForm({
 
         {inputType === "password" && (
           <i
+            style={{ fontSize: "15px", color: "#c4c4c4" }}
             className={classnames(
               "fal",
               passFlag && "fa-eye-slash",
               !passFlag && "fa-eye"
             )}
-            style={{ color: "#c4c4c4" }}
             onClick={() => {
               setPassFlag(!passFlag);
             }}
           />
         )}
       </div>
-      {error && inputType === "password" && (
-        <p className={true ? styles.inputError : styles.inputGrayError}>
-          <i className="fa fa-exclamation-circle"></i>
-          <span>
-            Password must be between 8-20 characters with at least 1 alpha, 1
-            numeric character and one special character from the list
-            ‘@#$%^&+=!’. Passwords are case sensitive. Space are not allowed.
-          </span>
+      {error && inputType !== "password" && (
+        <p style={{ textTransform: "capitalize" }} className={styles.valError}>
+          {error}
         </p>
       )}
-      {error && <p className={styles.valError}>{error}</p>}
     </div>
   );
 }

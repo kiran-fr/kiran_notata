@@ -76,23 +76,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs }) {
             justifyContent: "space-between",
             marginBottom: "20px",
           }}
-        >
-          <Button
-            size={"medium"}
-            buttonStyle={"secondary"}
-            onClick={() => setPage(1)}
-          >
-            back
-          </Button>
-
-          <Button
-            size={"medium"}
-            loading={isSubmitting}
-            onClick={() => setPage(3)}
-          >
-            {extraInputs.interests.length ? "NEXT" : "SKIP"}
-          </Button>
-        </div>
+        ></div>
       </div>
     </div>
   );

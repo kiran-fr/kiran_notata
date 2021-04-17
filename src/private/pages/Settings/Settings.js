@@ -9,6 +9,7 @@ import {
   evaluation_templates,
   facts_templates,
   external_form,
+  signOut,
 } from "definitions.js";
 
 import tableStyles from "Components/elements/NotataComponents/Table.module.css";
@@ -49,6 +50,11 @@ const linkList = [
     label: "Startup template",
     iconClass: "fal fa-copy",
     link: facts_templates,
+  },
+  {
+    label: "Logout",
+    iconClass: "fal fa-sign-out",
+    link: signOut,
   },
 ];
 

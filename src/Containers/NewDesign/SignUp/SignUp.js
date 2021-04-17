@@ -1,11 +1,12 @@
+/* eslint-disable */
 import React, { useState } from "react";
+import SocialLogin from "Components/socialLogin/socialLogin";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-import Grid from "@material-ui/core/Grid";
 import { InputForm, Button } from "Components/UI_Kits";
 
 import { Content, Card, SuccessBox, ErrorBox } from "Components/elements/";
@@ -14,11 +15,7 @@ import { getUserIsLoggedIn } from "reducers/selectors/user";
 
 import { dashboard, awaiting, login } from "definitions.js";
 import man_standing from "../../../assets/images/man_standing.svg";
-import notata from "../../../assets/images/notata.svg";
-import linkedIn from "../../../assets/images/linkedIn.svg";
-import facebook from "../../../assets/images/facebook.svg";
-import googlePlus from "../../../assets/images/googlePlus.svg";
-
+import notata from "../../../assets/images/auth_logo.png";
 import styles from "../style.module.css";
 
 function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
@@ -72,8 +69,8 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   };
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={6}>
+    <div className={styles.auth_structure}>
+      <div className={styles.auth_structure_left}>
         <div className={styles.mainContent}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.logoContainer}>
@@ -118,7 +115,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               buttonStyle="secondary"
               size="large"
               buttonStyle="gray"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "5px" }}
               onClick={validate}
             >
               {" "}
@@ -126,81 +123,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
             </Button>
           </form>
           <div className={styles.separator}>OR</div>
-          <Button
-            buttonStyle="secondary"
-            size="large"
-            style={{ marginBottom: "15px", marginTop: "10px" }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                fontSize: 14,
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <img
-                  className={styles.socialSignupimgSize}
-                  src={googlePlus}
-                  alt="logo"
-                  className={styles.socialSignupTxt}
-                />
-              </div>
-              <div style={{ flex: 4 }}> Sign up with Google</div>
-              <div style={{ flex: 1 }}></div>
-            </div>
-          </Button>
-          <Button
-            buttonStyle="primary"
-            size="large"
-            style={{ marginBottom: "15px" }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                fontSize: 14,
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <img
-                  className={styles.socialSignupimgSize}
-                  src={facebook}
-                  alt="logo"
-                  className={styles.socialSignupTxt}
-                />
-              </div>
-              <div style={{ flex: 4 }}>Sign up with Facebook</div>
-              <div style={{ flex: 1 }}></div>
-            </div>
-          </Button>
-          <Button
-            size="large"
-            style={{ marginBottom: "15px" }}
-            buttonStyle="primary"
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                fontSize: 14,
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <img
-                  className={styles.socialSignupimgSize}
-                  src={linkedIn}
-                  alt="logo"
-                  className={styles.socialSignupTxt}
-                />
-              </div>
-              <div style={{ flex: 4 }}>Sign up with LinkedIn</div>
-              <div style={{ flex: 1 }}></div>
-            </div>
-          </Button>
+          <SocialLogin type="Sign up" />
           <div
             style={{
               fontSize: "14px",
@@ -211,19 +134,15 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               to={login}
               style={{ textDecoration: "none", color: "#969BA3" }}
             >
-              Already on Notata? Sign in
+              Already on Notata? <u style={{ fontWeight: "600" }}>Sign in</u>
             </Link>
           </div>
         </div>
-      </Grid>
-      <Grid item className="imgSize" sm={6}>
-        <img
-          className={styles.floatImg}
-          src={man_standing}
-          alt="signup-image"
-        />
-      </Grid>
-    </Grid>
+      </div>
+      <div className={styles.auth_structure_right}>
+        <img src={man_standing} alt="auth_image" />
+      </div>
+    </div>
   );
 }
 

@@ -1,14 +1,13 @@
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
+import SocialLogin from "Components/socialLogin/socialLogin";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import queryString from "query-string";
-import Grid from "@material-ui/core/Grid";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
-
-import { Content, Card, SuccessBox, ErrorBox } from "Components/elements/";
 
 import { InputForm, Button } from "Components/UI_Kits";
 
@@ -17,10 +16,7 @@ import { getUserIsLoggedIn } from "reducers/selectors/user";
 
 import { dashboard, forgotPassword, signup } from "definitions.js";
 import loginImg from "../../../assets/images/login.svg";
-import notata from "../../../assets/images/notata.svg";
-import linkedIn from "../../../assets/images/linkedIn.svg";
-import facebook from "../../../assets/images/facebook.svg";
-import googlePlus from "../../../assets/images/googlePlus.svg";
+import authLogo from "../../../assets/images/auth_logo.png";
 
 import styles from "../style.module.css";
 
@@ -37,7 +33,9 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [position, setPosition] = useState(4);
   const [validate, setValidate] = useState(false);
 
-  const { register, handleSubmit, formState, setValue, errors } = useForm({
+  console.log(errorMessage);
+
+  const { register, handleSubmit, formState, setValue } = useForm({
     resolver: SMS_MFA
       ? undefined
       : yupResolver(
@@ -104,18 +102,18 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
     //   </SuccessBox>
     // )}
 
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={6}>
+    <div className={styles.auth_structure}>
+      <div className={styles.auth_structure_left}>
         <div className={styles.mainContent}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.logoContainer}>
               <img
                 style={{ width: "40px", height: "40px" }}
-                src={notata}
+                src={authLogo}
                 alt="logo"
                 className={styles.logo}
               />
-              <h1>Log in</h1>
+              <h1>Login</h1>
             </div>
 
             <InputForm
@@ -138,16 +136,14 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               reference={register({ required: true })}
             />
             <Button
-              buttonStyle="secondary"
+              buttonStyle="secondary gray"
               size="large"
-              buttonStyle="gray"
               style={{ marginBottom: "15px" }}
               onClick={() => {
                 setValidate(true);
               }}
             >
-              {" "}
-              Login
+              LOGIN
             </Button>
           </form>
           <div
@@ -158,51 +154,17 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
           >
             <Link
               to={forgotPassword}
-              style={{ textDecoration: "none", color: "#969BA3" }}
+              style={{
+                textDecoration: "none",
+                color: "#969BA3",
+                fontWeight: "600",
+              }}
             >
-              Forgot Password?
+              <u>Forgot Password?</u>
             </Link>
           </div>
           <div className={styles.separator}>OR</div>
-          <Button
-            buttonStyle="secondary"
-            size="large"
-            style={{ marginBottom: "15px", marginTop: "10px" }}
-          >
-            <img
-              className={styles.socialSignupimgSize}
-              src={googlePlus}
-              alt="logo"
-              className={styles.socialSignupTxt}
-            />{" "}
-            Login with Google
-          </Button>
-          <Button
-            buttonStyle="primary"
-            size="large"
-            style={{ marginBottom: "15px" }}
-          >
-            <img
-              className={styles.socialSignupimgSize}
-              src={facebook}
-              alt="logo"
-              className={styles.socialSignupTxt}
-            />{" "}
-            Login with Facebook
-          </Button>
-          <Button
-            size="large"
-            style={{ marginBottom: "15px" }}
-            buttonStyle="primary"
-          >
-            <img
-              className={styles.socialSignupimgSize}
-              src={linkedIn}
-              alt="logo"
-              className={styles.socialSignupTxt}
-            />{" "}
-            Login with LinkedIn
-          </Button>
+          <SocialLogin type="Log in" />
           <div
             style={{
               fontSize: "14px",
@@ -211,22 +173,21 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
           >
             <Link
               to={signup}
-              style={{ textDecoration: "none", color: "#969BA3" }}
+              style={{
+                textDecoration: "none",
+                color: "#969BA3",
+                fontWeight: "500",
+              }}
             >
-              Not a member? Sign up
+              Not a member? <u style={{ fontWeight: "600" }}>Sign up</u>
             </Link>
           </div>
         </div>
-      </Grid>
-      <Grid item className="imgSize" sm={6}>
-        <img
-          style={{ float: "right" }}
-          className="floatimg"
-          src={loginImg}
-          alt="signup-image"
-        />
-      </Grid>
-    </Grid>
+      </div>
+      <div className={styles.auth_structure_right}>
+        <img src={loginImg} alt="auth_image" />
+      </div>
+    </div>
   );
 }
 

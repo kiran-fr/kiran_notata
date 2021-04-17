@@ -8,7 +8,6 @@ export const login = "/login";
 export const forgotPassword = "/forgotPassword";
 export const signup = "/signup";
 export const awaiting = "/awaiting";
-export const resetPassword = "/resetPassword";
 
 export const pre_profile = "/profile";
 // SHARING

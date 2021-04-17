@@ -8,20 +8,16 @@ import ScrollToTop from "./ScrollToTop";
 import { FrontPage } from "Containers/FrontPage/FrontPage";
 
 // USER
-// import { Signup } from "Containers/NewDesign/SignUp/SignUp";
-// import { Login } from "Containers/NewDesign/Login/index";
+import { Signup } from "Containers/NewDesign/SignUp/SignUp";
+import { Login } from "Containers/NewDesign/Login/index";
 import { ForgotPassword } from "Containers/NewDesign/ForgotPassword/index";
-import { ResetPassword } from "Containers/NewDesign/ResetPassword/index";
-import { PasswordMsg } from "Containers/NewDesign/ResetPassword/passwordRestMsg";
 
-import { Signup } from "Containers/Auth/Signup/Signup";
-import { Login } from "Containers/Auth/Login/Login";
+// import { Signup } from "Containers/Auth/Signup/Signup";
+// import { Login } from "Containers/Auth/Login/Login";
 // import { ForgotPassword } from "Containers/Auth/ForgotPassword/ForgotPassword";
 
 import { Awaiting } from "Containers/Auth/Awaiting/Awaiting";
 import { SignOut } from "Containers/Auth/SignOut/SignOut";
-// import PreProfile from "Containers/Auth/PreProfile/Profile";
-
 import PreProfile from "Containers/NewDesign/PreProfile/Profile";
 
 // SHARING
@@ -41,7 +37,6 @@ import {
   link_bridge,
   dashboard,
   public_pages,
-  resetPassword,
 } from "./definitions";
 
 import "./routes.css";
@@ -55,8 +50,7 @@ export const Routes = () => (
         <Route exact path={signup} component={Signup} />
         <Route exact path={login} component={Login} />
         <Route exact path={signOut} component={SignOut} />
-        <Route exact path={forgotPassword} component={forgotPassword} />
-        <Route exact path={resetPassword} component={ResetPassword} />
+        <Route exact path={forgotPassword} component={ForgotPassword} />
         <Route exact path={awaiting} component={Awaiting} />
 
         <Route exact path={pre_profile} component={PreProfile} />
