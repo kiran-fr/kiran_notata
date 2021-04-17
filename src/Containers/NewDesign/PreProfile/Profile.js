@@ -87,7 +87,7 @@ export default function PreProfile({ history }) {
               type="left_arrow"
               onClick={() => setPage(() => page - 1)}
             >
-              PREV
+              BACK
             </Button>
           )}
 
