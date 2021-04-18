@@ -1,4 +1,7 @@
-error .error {
+/* Date : 15/04/2020 */
+/* Created By : Vikrant */
+
+.error {
   color: var(--color-primary);
   font-size: 12px;
   text-align: right;

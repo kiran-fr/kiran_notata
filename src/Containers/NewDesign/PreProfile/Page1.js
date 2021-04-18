@@ -1,3 +1,6 @@
+/* Date : 10/04/2020 */
+/* Created By : siva */
+
 import React, { useEffect, useState } from "react";
 
 // REACT STUFF
@@ -99,26 +102,6 @@ export default function Page1({ setPage }) {
           // validate = {validate}
           // reference = {register({ required: true })}
         />
-
-        {/* <label for = "input.family_name">Family name</label>
-        <input
-          type = "text"
-          placeholder = {"Family name"}
-          autoComplete = "off"
-          ref = {register({ required: true })}
-          id = "input.family_name"
-          name = "input.family_name"
-        />
-
-        <label for = "input.company">Company</label>
-        <input
-          type = "text"
-          placeholder = {"Company"}
-          autoComplete = "off"
-          ref = {register}
-          id = "input.company"
-          name = "input.company"
-        /> */}
         <h4 style={{ margin: "0", padding: "0", marginTop: "8px" }}>
           What is your domain expertise?
         </h4>

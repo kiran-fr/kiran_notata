@@ -1,3 +1,6 @@
+/* Date : 10/04/2020 */
+/* Created By : siva */
+
 import React from "react";
 
 // REACT STUFF
@@ -37,7 +40,6 @@ export default function Page2({ setPage, extraInputs, setExtraInputs }) {
     <div>
       <h1>What are you looking for?</h1>
       <h4>Investment opportunities</h4>
-
       <form
         className="notata_form"
         onSubmit={handleSubmit(onSubmit)}

@@ -1,3 +1,6 @@
+// Date : 15/04/2020
+// Created By : siva
+
 /* eslint-disable */
 import React from "react";
 import { Button } from "Components/UI_Kits";
@@ -17,8 +20,8 @@ export function Message({ history, heading, subHead1, subHead2, path, image }) {
           <div className={styles.mainContent}>
             <div className={styles.logoContainer}>
               <img
-                style={{ width: "40px", height: "40px", marginBottom: "15px" }}
                 src={notata}
+                style={{ width: "40px", height: "40px", marginBottom: "15px" }}
                 alt="logo"
                 className={styles.logo}
               />

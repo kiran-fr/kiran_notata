@@ -1,3 +1,6 @@
+// Date : 12/04/2020
+// Created By : siva
+
 /* eslint-disable */
 import React, { useState } from "react";
 import SocialLogin from "Components/socialLogin/socialLogin";
@@ -85,14 +88,13 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.logoContainer}>
                   <img
-                    style={{ width: "40px", height: "40px" }}
                     src={notata}
+                    style={{ width: "40px", height: "40px" }}
                     alt="logo"
                     className={styles.logo}
                   />
                   <h1>Sign up</h1>
                 </div>
-
                 <InputForm
                   label="Email"
                   inputType="email"
