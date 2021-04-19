@@ -93,7 +93,7 @@ export function Instructor({ email, history }) {
                     loading={isSubmitting}
                   >
                     {" "}
-                    NEXT
+                    {!isSubmitting && "NEXT"}
                   </Button>
                 </div>
               </form>

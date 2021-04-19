@@ -94,7 +94,7 @@ export function ResetPassword({ email, code, history }) {
                     loading={isSubmitting}
                   >
                     {" "}
-                    SAVE
+                    {!isSubmitting && "SAVE"}
                   </Button>
                 </div>
               </form>

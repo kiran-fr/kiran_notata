@@ -134,7 +134,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                   loading={isSubmitting || isLoading}
                 >
                   {" "}
-                  SIGN UP
+                  {!isSubmitting && "SIGN UP"}
                 </Button>
               </form>
               <div className={styles.separator}>OR</div>

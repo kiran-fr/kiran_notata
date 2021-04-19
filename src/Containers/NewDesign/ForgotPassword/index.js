@@ -91,7 +91,7 @@ export function ForgotPassword({ history }) {
                     loading={isSubmitting}
                   >
                     {" "}
-                    SEND INSTRUCTIONS
+                    {!isSubmitting && "SEND INSTRUCTIONS"}
                   </Button>
                 </div>
               </form>

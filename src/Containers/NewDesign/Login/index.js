@@ -138,7 +138,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               }}
               loading={isSubmitting}
             >
-              LOGIN
+              {!isSubmitting && "LOGIN"}
             </Button>
           </form>
           <div
