@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { signup, login } from "definitions.js";
 import styles from "./style.module.css";
 import { Button } from "../UI_Kits";
 
@@ -15,7 +16,7 @@ export default function Floatingloginbuttons() {
         buttonStyle="secondary"
         size="small"
         buttonStyle="white"
-        onClick={() => handlePush("/login")}
+        onClick={() => handlePush(login)}
       >
         SIGN IN
       </Button>
@@ -23,7 +24,7 @@ export default function Floatingloginbuttons() {
         buttonStyle="secondary"
         size="small"
         buttonStyle="green"
-        onClick={() => handlePush("/signup")}
+        onClick={() => handlePush(signup)}
       >
         SIGN UP
       </Button>

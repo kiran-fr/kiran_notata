@@ -61,6 +61,12 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
     setPosition(index === "email" ? 1 : index === "password" ? 2 : 3);
   };
 
+  const handleInputChange = (val, name) => {
+    if (name === "email") {
+      setErrorMessage("");
+    }
+  };
+
   const onSubmit = async (data, event) => {
     event.preventDefault();
 
@@ -87,7 +93,10 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
         }
         userLoggedIn(signinUser);
       } catch (error) {
-        setErrorMessage(getErrorMessage({ error }));
+        // setErrorMessage(getErrorMessage({ error }));
+        setErrorMessage(
+          "we couldn't find an account mactching the email and password you entered.Please check your email and password and try again."
+        );
       }
     }
   };
@@ -110,10 +119,20 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               />
               <h1>Login</h1>
             </div>
+            {errorMessage && (
+              <p className={styles.error}>
+                <i className="fa fa-exclamation-circle"></i>
+                <span>{errorMessage}</span>
+              </p>
+            )}
             <InputForm
               label="Email"
-              inputType="email"
+              type="email"
+              name="email"
               placeholder="Email"
+              handleInputChange={(value, name) =>
+                handleInputChange(value, name)
+              }
               position={listForm[position]}
               setNextFlag={setNextFlag}
               validate={validate}
@@ -122,7 +141,8 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
             />
             <InputForm
               label="Password"
-              inputType="password"
+              type="password"
+              name="password"
               placeholder="Password"
               position={listForm[position]}
               setNextFlag={setNextFlag}

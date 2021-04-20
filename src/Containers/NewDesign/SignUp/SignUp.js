@@ -27,6 +27,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   const [position, setPosition] = useState(4);
   const [validate, setValidate] = useState(false);
   const [redirect, setRedirect] = useState(false);
+  const [password, setPassword] = useState("");
 
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(
@@ -69,6 +70,15 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
     setPosition(index === "email" ? 1 : index === "password" ? 2 : 3);
   };
 
+  const handleInputChange = (val, name) => {
+    if (name === "email") {
+      setErrorMessage("");
+    }
+    if (name === "password") {
+      setPassword(val);
+    }
+  };
+
   return (
     <>
       {redirect ? (
@@ -97,30 +107,45 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                 </div>
                 <InputForm
                   label="Email"
-                  inputType="email"
+                  type="email"
+                  name="email"
                   placeholder="Email"
                   position={listForm[position]}
                   setNextFlag={setNextFlag}
                   validate={validate}
                   required
+                  errorMessage={errorMessage}
+                  handleInputChange={(value, name) =>
+                    handleInputChange(value, name)
+                  }
                   reference={register({ required: true })}
                 />
                 <InputForm
                   label="Password"
-                  inputType="password"
+                  type="password"
                   placeholder="Password"
+                  name="password"
                   position={listForm[position]}
                   setNextFlag={setNextFlag}
                   validate={validate}
+                  handleInputChange={(value, name) =>
+                    handleInputChange(value, name)
+                  }
                   reference={register({ required: true })}
                 />
                 <InputForm
                   label="Confirm Password"
-                  inputType="password"
+                  type="password"
                   placeholder="Password"
+                  name="confirmPassword"
+                  handleInputChange={(value, name) =>
+                    handleInputChange(value, name)
+                  }
                   position={listForm[position]}
                   setNextFlag={setNextFlag}
+                  passwordConfirm={true}
                   validate={validate}
+                  primaryPwdVal={password}
                   reference={register({ required: true })}
                 />
                 {errors && errors.passwordConfirmation && (
@@ -134,7 +159,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                   loading={isSubmitting || isLoading}
                 >
                   {" "}
-                  {!isSubmitting && "SIGN UP"}
+                  {!isLoading && "SIGN UP"}
                 </Button>
               </form>
               <div className={styles.separator}>OR</div>

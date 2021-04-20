@@ -13,18 +13,18 @@ import man_standing from "../../../assets/images/man_standing.svg";
 import notata from "../../../assets/images/auth_logo.png";
 import styles from "../style.module.css";
 
-export function ResetPassword({ email, code, history }) {
-  const [errorMessage, setErrorMessage] = useState();
+export function ResetPassword({ email, code, history, handleBack }) {
+  const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState(false);
   const listForm = ["password", "pwd"];
   const [position, setPosition] = useState(4);
   const [validate, setValidate] = useState(false);
+  const [password, setPassword] = useState("");
 
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
   const setNextFlag = index => {
-    console.log("index", index);
     setPosition(index === "email" ? 1 : index === "password" ? 2 : 3);
   };
 
@@ -36,11 +36,22 @@ export function ResetPassword({ email, code, history }) {
       setSuccessMessage("New password has been reset. You can now log in!");
       setErrorMessage(null);
     } catch (error) {
-      console.log("failed with error", error);
-      setErrorMessage("Something went wrong...");
+      setErrorMessage(error.message);
       setSuccessMessage(null);
     }
   };
+
+  const handleInputChange = (val, name) => {
+    if (name === "password" && val === "") {
+      setErrorMessage("");
+    }
+    if (name === "password") {
+      setPassword(val);
+    }
+  };
+
+  const data = { code: "" };
+
   return (
     <>
       {successMessage ? (
@@ -69,20 +80,28 @@ export function ResetPassword({ email, code, history }) {
                 <div style={{ marginTop: "20px" }}>
                   <InputForm
                     label="Password"
-                    inputType="password"
+                    type="password"
+                    name="password"
                     placeholder="New Password"
                     position={listForm[position]}
                     setNextFlag={setNextFlag}
+                    handleInputChange={(value, name) =>
+                      handleInputChange(value, name)
+                    }
                     validate={validate}
                     reference={register({ required: true })}
                   />
                   <InputForm
                     label="Confirm Password"
-                    inputType="password"
+                    type="password"
+                    name="confirmPassword"
                     placeholder="Password"
                     position={listForm[position]}
                     setNextFlag={setNextFlag}
                     validate={validate}
+                    passwordConfirm={true}
+                    errorMessage={errorMessage}
+                    primaryPwdVal={password}
                     reference={register({ required: true })}
                   />
                   <Button
@@ -90,11 +109,11 @@ export function ResetPassword({ email, code, history }) {
                     size="large"
                     buttonStyle="green"
                     style={{ marginBottom: "15px" }}
-                    onClick={validate}
+                    onClick={errorMessage ? () => handleBack(data) : validate}
                     loading={isSubmitting}
                   >
                     {" "}
-                    {!isSubmitting && "SAVE"}
+                    {!isSubmitting && (!errorMessage ? "SAVE" : "BACK")}
                   </Button>
                 </div>
               </form>

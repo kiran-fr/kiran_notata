@@ -2,7 +2,7 @@
 // Created By : siva
 
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ResetPassword } from "./ResetPassword";
 import { useForm } from "react-hook-form";
 import { InputForm, Button } from "Components/UI_Kits";
@@ -11,28 +11,27 @@ import notata from "../../../assets/images/auth_logo.png";
 import styles from "../style.module.css";
 import FloatingLoginButtons from "Components/floatingLoginButtons/floatingLoginButtons";
 
-export function Instructor({ email, history }) {
+export function Instructor({ email, history, handleResend, loader }) {
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
-  const listForm = ["code"];
-
-  const [position, setPosition] = useState(4);
-  const [validate, setValidate] = useState(false);
   const [code, setCode] = useState("");
 
-  const setNextFlag = index => {
-    setPosition(index === "text" ? 1 : 0);
-  };
-
-  const onSubmit = async (data, event) => {
+  const onSubmit = async data => {
     setCode(data.code);
   };
+
+  const data = { email: email };
 
   return (
     <>
       {code ? (
-        <ResetPassword history={history} email={email} code={code} />
+        <ResetPassword
+          handleBack={onSubmit}
+          history={history}
+          email={email}
+          code={code}
+        />
       ) : (
         <div className={styles.auth_structure}>
           <div className={styles.auth_structure_left}>
@@ -58,9 +57,10 @@ export function Instructor({ email, history }) {
                       color: "#969BA3",
                     }}
                   >
-                    please check your email ({email}) and follow the
-                    instructions to vertify it. if you did not receive an email
-                    or if it expired , you can resend one.
+                    please check your email (
+                    <span className={styles.instructorEmail}>{email}</span>) and
+                    follow the instructions to vertify it. if you did not
+                    receive an email or if it expired , you can resend one.
                   </p>
                   <p
                     style={{
@@ -76,11 +76,9 @@ export function Instructor({ email, history }) {
                 <div style={{ marginTop: "20px" }}>
                   <InputForm
                     label="CODE"
-                    inputType="code"
+                    type="text"
+                    name="code"
                     placeholder="Code"
-                    position={listForm[position]}
-                    setNextFlag={setNextFlag}
-                    validate={validate}
                     required
                     reference={register({ required: true })}
                   />
@@ -89,7 +87,6 @@ export function Instructor({ email, history }) {
                     size="large"
                     buttonStyle="green"
                     style={{ marginBottom: "15px" }}
-                    onClick={validate}
                     loading={isSubmitting}
                   >
                     {" "}
@@ -97,6 +94,17 @@ export function Instructor({ email, history }) {
                   </Button>
                 </div>
               </form>
+              <Button
+                buttonStyle="secondary"
+                size="large"
+                buttonStyle="white"
+                style={{ marginBottom: "15px" }}
+                loading={loader}
+                onClick={() => handleResend(data)}
+              >
+                {" "}
+                {!loader && "RESEND"}
+              </Button>
             </div>
           </div>
           <div className={styles.auth_structure_right}>

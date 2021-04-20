@@ -14,33 +14,40 @@ import FloatingLoginButtons from "Components/floatingLoginButtons/floatingLoginB
 
 export function ForgotPassword({ history }) {
   const { register, handleSubmit, formState } = useForm();
+
   const { isSubmitting } = formState;
-
-  const listForm = ["password", "confirmPassword"];
-
-  const [position, setPosition] = useState(4);
-  const [validate, setValidate] = useState(false);
   const [emailSent, SetEmail] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+  const [loader, setLoader] = useState(false);
 
-  const setNextFlag = index => {
-    setPosition(index === "email" ? 1 : 0);
-  };
-
-  const onSubmit = async (data, event) => {
+  const onSubmit = async data => {
     const { email } = data;
+    setLoader(true);
     try {
       await Auth.forgotPassword(email);
       SetEmail(email);
+      setLoader(false);
     } catch (error) {
-      console.log("error", error);
-      /* Will not throw errors */
+      setLoader(false);
+      setErrorMessage(error.message);
+    }
+  };
+
+  const handleInputChange = (val, name) => {
+    if (name === "email") {
+      setErrorMessage("");
     }
   };
 
   return (
     <>
       {emailSent ? (
-        <Instructor email={emailSent} history={history} />
+        <Instructor
+          loader={loader}
+          handleResend={onSubmit}
+          email={emailSent}
+          history={history}
+        />
       ) : (
         <div className={styles.auth_structure}>
           <div className={styles.auth_structure_left}>
@@ -74,11 +81,13 @@ export function ForgotPassword({ history }) {
                 <div style={{ marginTop: "20px" }}>
                   <InputForm
                     label="Email"
-                    inputType="email"
+                    type="email"
+                    errorMessage={errorMessage}
+                    name="email"
                     placeholder="Email"
-                    position={listForm[position]}
-                    setNextFlag={setNextFlag}
-                    validate={validate}
+                    handleInputChange={(value, name) =>
+                      handleInputChange(value, name)
+                    }
                     required
                     reference={register({ required: true })}
                   />
@@ -87,7 +96,6 @@ export function ForgotPassword({ history }) {
                     size="large"
                     buttonStyle="green"
                     style={{ marginBottom: "15px" }}
-                    onClick={validate}
                     loading={isSubmitting}
                   >
                     {" "}

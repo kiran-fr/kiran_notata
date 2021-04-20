@@ -1,101 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-
-// Styles
 import styles from "./inputForm.module.css";
 import classnames from "classnames";
-
-// Regex
-import {
-  email as reg_email,
-  password as reg_pass,
-  url as reg_url,
-  number as reg_num,
-} from "../../../utils/regex";
-
-// Definitions
-const EMAIL = "email";
-const PASSWORD = "password";
-const NUMBER = "number";
-const URL = "url";
-const REQUIRED = "required";
-const CONFIRMPASSWORD = "confirmPassword";
-const MATCH = "match";
-
-// Error message map
-const errorMessage = {
-  email: "Please enter a valid email",
-  required: "Can't be Blank",
-  password: "password error",
-  number: "number error",
-  url: "url error",
-  match: "Passwords Do Not Match",
-};
-
-// Get error functions
-const getError = {
-  email: str => {
-    let isEmail = reg_email.test(String(str).toLocaleLowerCase());
-    return isEmail ? false : errorMessage[EMAIL];
-  },
-
-  password: str => {
-    let isPassword = reg_pass.test(str);
-    return isPassword ? false : errorMessage[PASSWORD];
-  },
-  confirmPassword: str => {
-    let isPassword = reg_pass.test(str);
-    return isPassword ? false : errorMessage[MATCH];
-  },
-  number: str => {
-    let isNumber = reg_num.test(str);
-
-    //    let isNumber = str.match(reg_num);
-    return isNumber ? false : errorMessage[NUMBER];
-  },
-
-  url: str => {
-    let isUrl = reg_url.test(str);
-    return isUrl ? false : errorMessage[URL];
-  },
-};
-
-// GET ERROR MESSAGE (if any)
-function getErrorMessage({ value, inputType, required, passwordConfirm }) {
-  // Validate required field
-  if (required && value === "") {
-    return inputType + " " + errorMessage[REQUIRED];
-  }
-  console.log("confirm", passwordConfirm);
-  if (passwordConfirm) {
-    return getError[CONFIRMPASSWORD](value);
-  }
-  // Validate the different input fields
-  switch (inputType) {
-    case EMAIL:
-      return getError[EMAIL](value);
-
-    case PASSWORD:
-      return getError[PASSWORD](value);
-
-    case NUMBER:
-      return getError[NUMBER](value);
-
-    case URL:
-      return getError[URL](value);
-
-    default:
-      return false;
-  }
-}
+import { getErrorMessage, storngPwd } from "./validation";
 
 // Main function
 export function InputForm({
-  inputType,
+  type,
   label,
   placeholder,
+  name,
   required,
-  val,
   position,
   setNextFlag,
   validate,
@@ -103,6 +17,8 @@ export function InputForm({
   passwordConfirm,
   // Cus error message to be displayed to the right of field!
   errorMessage,
+  handleInputChange,
+  primaryPwdVal,
 }) {
   // States
   const [error, setError] = useState(false);
@@ -111,20 +27,15 @@ export function InputForm({
   const [placeholderVal, setPlaceholderVal] = useState(
     placeholder || "Say something..."
   );
-  // Form
-  const { setValue } = useForm();
+
   const inputRef = reference;
 
   useEffect(() => {
-    val && setValue(inputType, val || "");
-  }, [val, inputType, setValue]);
-
-  useEffect(() => {
     console.log("use");
-    if (position && position === inputType) {
+    if (position && position === type) {
       setFocus();
     }
-  }, [position, inputType]);
+  }, [position, type]);
 
   useEffect(() => {
     if (validate) {
@@ -145,9 +56,14 @@ export function InputForm({
 
   // Change function (form function)
   function handleChange(e) {
-    if (inputType === "password" && !passFlag) setPassStyle(true);
-    if (!error) return;
+    // passwordConfirm match testing
+
+    if (handleInputChange) {
+      handleInputChange(e.target.value, e.target.name);
+    }
+
     validateFormInput(e.target.value);
+    if (type === "password" && !passFlag) setPassStyle(true);
   }
 
   //KeyDown
@@ -156,23 +72,23 @@ export function InputForm({
       if (
         getErrorMessage({
           value: e.target.value || "",
-          inputType,
+          type,
           required,
           passwordConfirm,
         }) === false &&
         error === false
       )
-        setNextFlag(inputType);
-      else validateFormInput(e.target.value);
+        if (setNextFlag) {
+          setNextFlag(type);
+        } else validateFormInput(e.target.value);
     } else {
     }
   }
 
   function keyPress(e) {
-    console.log("--- key donw");
     if (e.keyCode === 13) return true;
     const charCode = e.which ? e.which : e.keyCode;
-    if (inputType === "number") {
+    if (type === "number") {
       if (charCode <= 32 || charCode === 43 || (charCode > 47 && charCode < 58))
         return true;
       e.preventDefault();
@@ -187,9 +103,10 @@ export function InputForm({
     // Check for error
     let errorMessage = getErrorMessage({
       value,
-      inputType,
+      type,
       required,
       passwordConfirm,
+      primaryPwdVal,
     });
 
     // If error, set error message
@@ -198,14 +115,10 @@ export function InputForm({
 
   return (
     <div className={styles.container}>
-      {error && inputType === "password" && !passwordConfirm && (
+      {error && type === "password" && !passwordConfirm && (
         <p className={true ? styles.inputError : styles.inputGrayError}>
           <i className="fa fa-exclamation-circle"></i>
-          <span>
-            Password must be between 8-20 characters with at least 1 alpha, 1
-            numeric character and one special character from the list
-            ‘@#$%^&+=!’. Passwords are case sensitive. Space are not allowed.
-          </span>
+          <span>{storngPwd}</span>
         </p>
       )}
       {label && <label className={styles.input_label}>{label}</label>}
@@ -218,18 +131,15 @@ export function InputForm({
       >
         <input
           type={
-            passFlag ||
-            inputType === "email" ||
-            inputType === "number" ||
-            inputType === "url"
+            passFlag || type === "email" || type === "number" || type === "url"
               ? "text"
-              : inputType
+              : type
           }
           className={classnames(
             styles.input_class,
             passStyle && styles.input_pass
           )}
-          name={inputType}
+          name={name}
           placeholder={placeholderVal}
           ref={inputRef}
           onKeyDown={handleKeyDown}
@@ -239,7 +149,7 @@ export function InputForm({
           onBlur={handleBlur}
         />
 
-        {inputType === "password" && (
+        {type === "password" && (
           <i
             style={{ fontSize: "15px", color: "#c4c4c4" }}
             className={classnames(
@@ -253,9 +163,9 @@ export function InputForm({
           />
         )}
       </div>
-      {error && (
+      {(error || errorMessage) && (
         <p style={{ textTransform: "capitalize" }} className={styles.valError}>
-          {error}
+          {errorMessage ? errorMessage : error}
         </p>
       )}
     </div>

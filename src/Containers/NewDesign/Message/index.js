@@ -6,7 +6,6 @@ import React from "react";
 import { Button } from "Components/UI_Kits";
 import notata from "../../../assets/images/auth_logo.png";
 import styles from "../style.module.css";
-import FloatingLoginButtons from "Components/floatingLoginButtons/floatingLoginButtons";
 
 export function Message({ history, heading, subHead1, subHead2, path, image }) {
   const redirectlogin = () => {
@@ -63,7 +62,6 @@ export function Message({ history, heading, subHead1, subHead2, path, image }) {
         <div className={styles.auth_structure_right}>
           <img src={image} alt="man_standing" />
         </div>
-        <FloatingLoginButtons />
       </div>
     </>
   );
