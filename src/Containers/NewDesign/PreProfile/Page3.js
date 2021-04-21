@@ -20,12 +20,13 @@ export default function Page3({ extraInputs, history }) {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
+
   const onSubmit = async (data, event) => {
     event.preventDefault();
 
     let input = {
       ...extraInputs,
-      /* investor: data.input.investor, */
+      investor: "software devloper",
     };
 
     try {

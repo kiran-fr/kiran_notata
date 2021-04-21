@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { Button, CheckBoxes, Tags } from "Components/UI_Kits";
 import styles from "./Profile.module.css";
 
-export default function Page2({ setPage, extraInputs, setExtraInputs }) {
+export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
 
@@ -32,9 +32,9 @@ export default function Page2({ setPage, extraInputs, setExtraInputs }) {
     }
   }
 
-  const onSubmit = (data, event) => {
-    event.preventDefault();
-  };
+  // const onSubmit = (data, event) => {
+  //   event.preventDefault();
+  // };
 
   return (
     <div>
@@ -42,7 +42,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs }) {
       <h4>Investment opportunities</h4>
       <form
         className="notata_form"
-        onSubmit={handleSubmit(onSubmit)}
+        // onSubmit={handleSubmit(onSubmit)}
         style={{ marginBottom: "20px" }}
       >
         <Tags
@@ -70,6 +70,29 @@ export default function Page2({ setPage, extraInputs, setExtraInputs }) {
             { id: 3, value: "Series A+", label: "Series A+" },
           ]}
         />
+        {page > 1 && (
+          <Button
+            size="medium"
+            buttonStyle="white"
+            type="left_arrow"
+            onClick={() => setPage(() => page - 1)}
+          >
+            BACK
+          </Button>
+        )}
+
+        <Button
+          size="medium"
+          buttonStyle="green"
+          type="right_arrow"
+          onClick={() => {
+            if (page > 2) return;
+            setPage(() => page + 1);
+          }}
+        >
+          NEXT
+          <p> </p>
+        </Button>
       </form>
       <div className={styles.bottom_box}>
         <div

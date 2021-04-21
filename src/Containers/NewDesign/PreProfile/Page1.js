@@ -28,19 +28,27 @@ export default function Page1({ setPage }) {
     Auth.currentAuthenticatedUser().then(cognitoUser => {
       setCognitoUser(cognitoUser);
       Auth.userAttributes(cognitoUser).then(userAttributes => {
+        console.log("userAttributes", userAttributes);
         let ua = {};
         for (let attrib of userAttributes) {
           ua[attrib.Name] = attrib.Value;
         }
         for (let a in ua) {
-          setValue(`input.${a}`, ua[a]);
+          setValue(`${a}`, ua[a]);
         }
       });
     });
   }, [setValue]);
 
   const onSubmit = async data => {
-    let { input } = data;
+    // dummy data
+
+    const input = {
+      family_name: "siva",
+      given_name: "givenName",
+      email: data.email,
+      company: data.company,
+    };
 
     try {
       await Auth.updateUserAttributes(
@@ -77,31 +85,47 @@ export default function Page1({ setPage }) {
       <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: "20px" }}>
         <InputForm
           label="First Name"
-          inputType="text"
+          type="text"
+          name="given_name"
           placeholder="First Name"
           // position = {listForm[position]}
           // setNextFlag = {setNextFlag}
           // validate = {validate}
-          // reference = {register({ required: true })}
+          required
+          reference={register({ required: true })}
         />
         <InputForm
           label="Second Name"
-          inputType="text"
+          type="text"
+          name="family_name"
           placeholder="Second Name"
+          required
+          reference={register({ required: true })}
           // position = {listForm[position]}
           // setNextFlag = {setNextFlag}
-          // validate = {validate}
-          // reference = {register({ required: true })}
         />
         <InputForm
+          name="company"
           label="Company"
-          inputType="text"
+          type="text"
           placeholder="Company"
+          required
+          reference={register({ required: true })}
           // position = {listForm[position]}
           // setNextFlag = {setNextFlag}
-          // validate = {validate}
-          // reference = {register({ required: true })}
         />
+        <div style={{ visibility: "hidden", display: "none" }}>
+          <InputForm
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="email"
+            required
+            reference={register({ required: true })}
+            // position = {listForm[position]}
+            // setNextFlag = {setNextFlag}
+          />
+        </div>
         <h4 style={{ margin: "0", padding: "0", marginTop: "8px" }}>
           What is your domain expertise?
         </h4>
@@ -155,6 +179,10 @@ export default function Page1({ setPage }) {
             }}
           ></div>
         </div>
+        <Button size="medium" buttonStyle="green" type="right_arrow">
+          NEXT
+          <p> </p>
+        </Button>
       </form>
     </div>
   );

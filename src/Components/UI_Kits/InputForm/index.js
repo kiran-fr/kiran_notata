@@ -31,7 +31,6 @@ export function InputForm({
   const inputRef = reference;
 
   useEffect(() => {
-    console.log("use");
     if (position && position === type) {
       setFocus();
     }

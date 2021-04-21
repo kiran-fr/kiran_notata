@@ -57,10 +57,14 @@ export default function PreProfile({ history }) {
             onClick={() => setPage(3)}
           ></div>
         </div>
-        {page === 1 && <Page1 history={history} setPage={setPage} />}
+        {page === 1 && (
+          <Page1 history={history} page={page} setPage={setPage} />
+        )}
 
         {page === 2 && (
           <Page2
+            page={page}
+            history={history}
             extraInputs={extraInputs}
             setExtraInputs={setExtraInputs}
             setPage={setPage}
@@ -69,6 +73,8 @@ export default function PreProfile({ history }) {
 
         {page === 3 && (
           <Page3
+            page={page}
+            history={history}
             extraInputs={extraInputs}
             setExtraInputs={setExtraInputs}
             setPage={setPage}
@@ -80,7 +86,7 @@ export default function PreProfile({ history }) {
             page > 1 ? styles.button_container_justify : styles.button_container
           }
         >
-          {page > 1 && (
+          {/* {page > 1 && (
             <Button
               size="medium"
               buttonStyle="white"
@@ -102,7 +108,7 @@ export default function PreProfile({ history }) {
           >
             NEXT
             <p> </p>
-          </Button>
+          </Button> */}
         </div>
       </Content>
     </div>

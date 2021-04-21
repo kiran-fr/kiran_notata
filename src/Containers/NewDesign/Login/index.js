@@ -147,15 +147,13 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               position={listForm[position]}
               setNextFlag={setNextFlag}
               validate={validate}
+              required
               reference={register({ required: true })}
             />
             <Button
               buttonStyle="gray"
               size="large"
               style={{ marginBottom: "15px" }}
-              onClick={() => {
-                setValidate(true);
-              }}
               loading={isSubmitting}
             >
               {!isSubmitting && "LOGIN"}
