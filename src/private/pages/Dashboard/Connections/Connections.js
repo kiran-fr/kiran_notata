@@ -11,6 +11,7 @@ import SelectTagsForStartup from "./SelectTagsForStartup";
 // import SetSubjectiveScore from "./SetSubjectiveScore";
 
 // import CreateNewStartup from "./CreateStartup";
+import CreateStartupModal from "../../../../Components/CreateStartupModal/CreateStartupModal";
 
 // FUNCTIONS
 import applyFilters from "./applyFilters";
@@ -19,7 +20,7 @@ import applyFilters from "./applyFilters";
 import defaultFilters from "./defaultFilters";
 
 // Components
-import { Table, Card, GhostLoader } from "Components/elements";
+import { Table, Card, GhostLoader, Button } from "Components/elements";
 import Paginator from "./Paginator";
 
 import tableColumns from "./TableColumns";
@@ -122,6 +123,8 @@ export default function Connections({ history }) {
   // States
   const [filters, setFilterState] = useState(defaultFilters);
   const [currentPage, setCurrentPage] = useState(undefined);
+  const [showNewStartupModal, setShowNewStartupModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   // Load filters from local store
   useEffect(() => {
@@ -140,6 +143,35 @@ export default function Connections({ history }) {
 
   return (
     <>
+      {!showModal && (
+        <div
+          style={{
+            position: "relative",
+            marginBottom: "10px",
+            top: "-20px",
+          }}
+        >
+          <Button
+            onClick={() => setShowModal(true)}
+            type="right_arrow"
+            size="large"
+          >
+            ADD NEW STARTUP
+          </Button>
+        </div>
+      )}
+      {showModal && (
+        <CreateStartupModal
+          history={history}
+          open={showNewStartupModal}
+          close={() => setShowNewStartupModal(false)}
+        />
+      )}
+      <CreateStartupModal
+        history={history}
+        open={showNewStartupModal}
+        close={() => setShowNewStartupModal(false)}
+      />
       <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
       <Filters setFilters={setFilters} filters={filters} fullFilter={true} />
