@@ -11,7 +11,7 @@ import SelectTagsForStartup from "./SelectTagsForStartup";
 // import SetSubjectiveScore from "./SetSubjectiveScore";
 
 // import CreateNewStartup from "./CreateStartup";
-import CreateStartupModal from "../../../../Components/CreateStartupModal/CreateStartupModal";
+import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 
 // FUNCTIONS
 import applyFilters from "./applyFilters";
@@ -143,35 +143,28 @@ export default function Connections({ history }) {
 
   return (
     <>
-      {!showModal && (
-        <div
-          style={{
-            position: "relative",
-            marginBottom: "10px",
-            top: "-20px",
-          }}
+      <div
+        style={{
+          position: "relative",
+          marginBottom: "10px",
+          top: "-20px",
+        }}
+      >
+        <Button
+          onClick={() => setShowNewStartupModal(true)}
+          type="right_arrow"
+          size="large"
         >
-          <Button
-            onClick={() => setShowModal(true)}
-            type="right_arrow"
-            size="large"
-          >
-            ADD NEW STARTUP
-          </Button>
-        </div>
-      )}
-      {showModal && (
-        <CreateStartupModal
-          history={history}
-          open={showNewStartupModal}
-          close={() => setShowNewStartupModal(false)}
-        />
-      )}
+          ADD NEW STARTUP
+        </Button>
+      </div>
+
       <CreateStartupModal
         history={history}
         open={showNewStartupModal}
         close={() => setShowNewStartupModal(false)}
       />
+
       <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
       <Filters setFilters={setFilters} filters={filters} fullFilter={true} />
