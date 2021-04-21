@@ -11,9 +11,10 @@
 .group {
   margin-bottom: 40px;
 }
-i {
+/* all icon white color issue fix  */
+/* i {
   color: #fff;
-}
+} */
 
 .group_top {
   display: flex;
