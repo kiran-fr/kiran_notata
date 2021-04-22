@@ -179,7 +179,7 @@ export type EvaluationSummary = {
 
 export type EvaluationSummarySection = {
   id: string;
-  name: string;
+  sectionName: string;
   scoreTotal: number;
   scorePossible: number;
 };

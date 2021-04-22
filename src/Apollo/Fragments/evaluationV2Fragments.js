@@ -25,8 +25,8 @@ export default gql`
       templateName
       sections {
         sectionId
-        name
-        score
+        sectionName
+        scoreTotal
         scorePossible
         scorePerAnswer {
           score
