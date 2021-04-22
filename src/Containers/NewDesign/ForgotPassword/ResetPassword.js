@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { login } from "definitions.js";
 import { InputForm, Button } from "Components/UI_Kits";
 import FloatingLoginButtons from "Components/floatingLoginButtons/floatingLoginButtons";
-import { Message } from "../Message/index";
+import { Message } from "../Message/Message";
 import man_standing from "../../../assets/images/man_standing.svg";
 import notata from "../../../assets/images/auth_logo.png";
 import styles from "../style.module.css";

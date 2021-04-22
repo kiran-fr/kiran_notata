@@ -2,7 +2,14 @@ import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
 //links
-import { dashboard, group, settings, charts, signOut } from "definitions.js";
+import {
+  dashboard,
+  group,
+  settings,
+  charts,
+  signOut,
+  pre_profile,
+} from "definitions.js";
 
 // Styles
 import styles from "./Sidebar.module.css";
@@ -135,7 +142,7 @@ export function SideBarMenu() {
           <div className={styles.menu_list + " " + styles.menu_listSettings}>
             <NavLink
               exact={true}
-              to="/settings"
+              to={settings}
               activeClassName={classnames(
                 !listOpen ? styles.active_open : styles.active_close
               )}
@@ -153,7 +160,7 @@ export function SideBarMenu() {
           >
             <NavLink
               exact={true}
-              to={"/profile"}
+              to={pre_profile}
               activeClassName={classnames(
                 !listOpen ? styles.active_open : styles.active_close
               )}

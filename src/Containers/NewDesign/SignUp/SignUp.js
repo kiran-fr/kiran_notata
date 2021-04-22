@@ -14,7 +14,7 @@ import { InputForm, Button } from "Components/UI_Kits";
 
 import { userLoggedIn } from "actions/user";
 import { getUserIsLoggedIn } from "reducers/selectors/user";
-import { Message } from "../Message/index";
+import { Message } from "../Message/Message";
 import { dashboard, awaiting, login } from "definitions.js";
 import man_standing from "../../../assets/images/man_standing.svg";
 import notata from "../../../assets/images/auth_logo.png";

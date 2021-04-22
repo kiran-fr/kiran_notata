@@ -1,14 +1,26 @@
 // Date : 17/04/2020
 // Created By : siva
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { login } from "definitions.js";
-import { Message } from "../Message/index";
+import { Auth } from "aws-amplify";
+import { Message } from "../Message/Message";
 import man_standing from "../../../assets/images/man_standing.svg";
 
 export function SignOut({ history }) {
   useEffect(() => {
-    localStorage.clear();
+    Auth.signOut()
+      .then(() => {
+        console.log("yes");
+        // setSignOut(true);
+        localStorage.clear();
+      })
+      .catch(() => {
+        localStorage.clear();
+        console.log("error");
+
+        // setSignOutError(true);
+      });
   }, []);
 
   return (

@@ -9,9 +9,9 @@ import { FrontPage } from "Containers/FrontPage/FrontPage";
 
 // USER
 import { Signup } from "Containers/NewDesign/SignUp/SignUp";
-import { Login } from "Containers/NewDesign/Login/index";
-import { ForgotPassword } from "Containers/NewDesign/ForgotPassword/index";
-import { SignOut } from "Containers/NewDesign/SignOut/index";
+import { Login } from "Containers/NewDesign/Login/Login";
+import { ForgotPassword } from "Containers/NewDesign/ForgotPassword/ForgotPassword";
+import { SignOut } from "Containers/NewDesign/SignOut/SignOut";
 import PreProfile from "Containers/NewDesign/PreProfile/Profile";
 
 // import { Signup } from "Containers/Auth/Signup/Signup";
