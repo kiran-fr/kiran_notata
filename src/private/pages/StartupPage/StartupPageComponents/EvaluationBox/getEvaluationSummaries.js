@@ -19,7 +19,7 @@ export function getDataForEvaluationsSharedInGroup({
     let evaluations = evaluationsByTemplate[templateId] || [];
 
     // Get possible score
-    let possibleScore = evaluations[0]?.summary?.possibleScore;
+    let scorePossible = evaluations[0]?.summary?.scorePossible;
 
     // Get template name
     let templateName = evaluations[0]?.summary?.templateName;
@@ -28,7 +28,7 @@ export function getDataForEvaluationsSharedInGroup({
     let templateSections = evaluations[0]?.summary?.sections;
 
     // Get total score
-    let totalScore = 0;
+    let scoreTotal = 0;
     let count = 0;
 
     let averagePerTemplateSection = {};
@@ -39,16 +39,16 @@ export function getDataForEvaluationsSharedInGroup({
           averagePerTemplateSection[section.name] = averagePerTemplateSection[
             section.name
           ] || {
-            totalScore: 0,
+            scoreTotal: 0,
             count: 0,
-            possibleScore: 0,
+            scorePossible: 0,
             scorePerAnswer: {},
           };
-          averagePerTemplateSection[section.name].totalScore += section.score;
+          averagePerTemplateSection[section.name].scoreTotal += section.score;
           averagePerTemplateSection[section.name].count += 1;
 
-          averagePerTemplateSection[section.name].possibleScore =
-            section.possibleScore;
+          averagePerTemplateSection[section.name].scorePossible =
+            section.scorePossible;
 
           // Get average single answers for section
           for (let answer of section.scorePerAnswer) {
@@ -57,23 +57,23 @@ export function getDataForEvaluationsSharedInGroup({
             ] = averagePerTemplateSection[section.name].scorePerAnswer[
               answer.question
             ] || {
-              totalScore: 0,
+              scoreTotal: 0,
               count: 0,
-              possibleScore: 0,
+              scorePossible: 0,
             };
             averagePerTemplateSection[section.name].scorePerAnswer[
               answer.question
             ].count += 1;
             averagePerTemplateSection[section.name].scorePerAnswer[
               answer.question
-            ].possibleScore = answer.possibleScore;
+            ].scorePossible = answer.possibleScore;
             averagePerTemplateSection[section.name].scorePerAnswer[
               answer.question
-            ].totalScore += answer.score;
+            ].scoreTotal += answer.score;
           }
         }
 
-        totalScore += evaluation.summary?.totalScore || 0;
+        scoreTotal += evaluation.summary?.scoreTotal || 0;
         count += 1;
       }
     }
@@ -81,11 +81,11 @@ export function getDataForEvaluationsSharedInGroup({
     // console.log('averagePerTemplateSection', averagePerTemplateSection)
 
     // Get average score
-    let averageScore = parseFloat((totalScore / count).toFixed(1));
+    let averageScore = parseFloat((scoreTotal / count).toFixed(1));
 
     // Get average percentage score
     let averagePercentageScore =
-      Math.round((averageScore / possibleScore) * 100) || 0;
+      Math.round((averageScore / scorePossible) * 100) || 0;
 
     // Put it all together
     data.push({
@@ -95,7 +95,7 @@ export function getDataForEvaluationsSharedInGroup({
       templateName: templateName,
       submissions: evaluations.length,
       averageScore: averageScore,
-      possibleScore: possibleScore,
+      scorePossible: scorePossible,
       averagePercentageScore: averagePercentageScore,
       templateSections: templateSections,
       evaluations: evaluations,

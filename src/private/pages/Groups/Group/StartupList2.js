@@ -63,7 +63,7 @@ const getSummaries = (startups, hide, group) => {
         summaries.evaluations[templateId] = summaries.evaluations[
           templateId
         ] || {
-          totalScore: 0,
+          scoreTotal: 0,
           averageScore: 0,
           percentageScore: 0,
           count: 0,
@@ -71,34 +71,34 @@ const getSummaries = (startups, hide, group) => {
         };
         summaries.evaluations[templateId].templateName =
           evaluation.summary.templateName;
-        summaries.evaluations[templateId].totalScore +=
-          evaluation.summary.totalScore;
+        summaries.evaluations[templateId].scoreTotal +=
+          evaluation.summary.scoreTotal;
         summaries.evaluations[templateId].count += 1;
-        summaries.evaluations[templateId].possibleScore =
-          evaluation.summary.possibleScore;
+        summaries.evaluations[templateId].scorePossible =
+          evaluation.summary.scorePossible;
 
         summaries.evaluations[templateId].averageScore =
-          summaries.evaluations[templateId].totalScore /
+          summaries.evaluations[templateId].scoreTotal /
           summaries.evaluations[templateId].count;
 
         summaries.evaluations[templateId].percentageScore = Math.round(
           (summaries.evaluations[templateId].averageScore /
-            summaries.evaluations[templateId].possibleScore) *
+            summaries.evaluations[templateId].scorePossible) *
             100
         );
 
         for (let section of evaluation.summary.sections) {
           summaries.evaluations[templateId].sections[section.id] = summaries
             .evaluations[templateId].sections[section.id] || {
-            totalScore: 0,
+            scoreTotal: 0,
             count: 0,
           };
           summaries.evaluations[templateId].sections[section.id].sectionName =
             section.name;
-          summaries.evaluations[templateId].sections[section.id].totalScore +=
+          summaries.evaluations[templateId].sections[section.id].scoreTotal +=
             section.score || 0;
-          summaries.evaluations[templateId].sections[section.id].possibleScore =
-            section.possibleScore;
+          summaries.evaluations[templateId].sections[section.id].scorePossible =
+            section.scorePossible;
           summaries.evaluations[templateId].sections[section.id].count += 1;
         }
       }

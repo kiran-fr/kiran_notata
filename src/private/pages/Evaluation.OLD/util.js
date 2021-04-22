@@ -1,4 +1,4 @@
-export function getPossibleScore(questions) {
+export function getscorePossible(questions) {
   if (!questions || !questions.length) return {};
 
   return questions.reduce((acc, { inputType, options }) => {

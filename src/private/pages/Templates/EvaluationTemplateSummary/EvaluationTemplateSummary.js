@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { evaluationTemplateGet } from "private/Apollo/Queries";
 
-import { getPossibleScore } from "../../EvaluationV2/Summary/util";
+import { getscorePossible } from "../../EvaluationV2/Summary/util";
 import { Card, GhostLoader, Content } from "Components/elements";
 
 import {
@@ -44,7 +44,7 @@ export default function Summary({ match, history }) {
 
         {template.sections.map(({ name, questions, id }) => {
           // const sectionScore = getScore(questions, evaluation.answers);
-          const sectionPossibleScore = getPossibleScore(questions);
+          const sectionscorePossible = getscorePossible(questions);
           return (
             <Card
               key={id}
@@ -63,7 +63,7 @@ export default function Summary({ match, history }) {
                   <div className={header_details_regular}>
                     maximum score:{" "}
                     <span className={question_each_score}>
-                      {sectionPossibleScore}
+                      {sectionscorePossible}
                     </span>
                   </div>
                 </div>
@@ -76,7 +76,7 @@ export default function Summary({ match, history }) {
                   <div key={id} className={question_each}>
                     <div className={question_each_name}>{name}</div>
                     <div className={question_each_score}>
-                      {getPossibleScore([question])}
+                      {getscorePossible([question])}
                     </div>
                   </div>
                 );

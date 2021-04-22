@@ -171,8 +171,8 @@ export type EvaluationAnswer = {
 };
 
 export type EvaluationSummary = {
-  totalScore: number;
-  possibleScore: number;
+  scoreTotal: number;
+  scorePossible: number;
   templateName: string;
   sections: EvaluationSummarySection[];
 };
@@ -180,8 +180,8 @@ export type EvaluationSummary = {
 export type EvaluationSummarySection = {
   id: string;
   name: string;
-  score: number;
-  possibleScore: number;
+  scoreTotal: number;
+  scorePossible: number;
 };
 
 export type KeyVal = {

@@ -61,7 +61,7 @@ function getEvaluationSummaries({ connection, groups, hide }) {
       let evaluations = evaluationsByTemplate[templateId] || [];
 
       // Get possible score
-      let possibleScore = evaluations[0]?.summary?.possibleScore;
+      let scorePossible = evaluations[0]?.summary?.scorePossible;
 
       // Get template name
       let templateName = evaluations[0]?.summary?.templateName;
@@ -70,21 +70,21 @@ function getEvaluationSummaries({ connection, groups, hide }) {
       let templateSections = evaluations[0]?.summary?.sections;
 
       // Get total score
-      let totalScore = 0;
+      let scoreTotal = 0;
       let count = 0;
       for (let evaluation of evaluations) {
         if (!hide[evaluation.id]) {
-          totalScore += evaluation.summary?.totalScore || 0;
+          scoreTotal += evaluation.summary?.scoreTotal || 0;
           count += 1;
         }
       }
 
       // Get average score
-      let averageScore = parseFloat((totalScore / count).toFixed(1));
+      let averageScore = parseFloat((scoreTotal / count).toFixed(1));
 
       // Get average percentage score
       let averagePercentageScore =
-        Math.round((averageScore / possibleScore) * 100) || 0;
+        Math.round((averageScore / scorePossible) * 100) || 0;
 
       // Put it all together
       data2.push({
@@ -94,7 +94,7 @@ function getEvaluationSummaries({ connection, groups, hide }) {
         templateName: templateName,
         submissions: evaluations.length,
         averageScore: averageScore,
-        possibleScore: possibleScore,
+        scorePossible: scorePossible,
         averagePercentageScore: averagePercentageScore,
         templateSections: templateSections,
         evaluations: evaluations,
@@ -118,7 +118,7 @@ function EvaluationsByTemplate({
 }) {
   let list = (data.templateSections || []).map(item => ({
     name: item.name,
-    percentageScore: Math.round((item.score / item.possibleScore) * 100),
+    percentageScore: Math.round((item.score / item.scorePossible) * 100),
   }));
 
   return (
@@ -139,14 +139,14 @@ function EvaluationsByTemplate({
           let { given_name, family_name, email } =
             evaluation.createdByUser || {};
           let percentageScore = Math.round(
-            (evaluation.summary.totalScore / evaluation.summary.possibleScore) *
+            (evaluation.summary.scoreTotal / evaluation.summary.scorePossible) *
               100
           );
 
           let list = (evaluation.summary?.sections || []).map(item => ({
             name: item.name,
             percentageScore: Math.round(
-              (item.score / item.possibleScore) * 100
+              (item.score / item.scorePossible) * 100
             ),
           }));
 
@@ -199,13 +199,13 @@ function PublicEvaluations({ publicEvaluations, history }) {
         let { given_name, family_name, email } = evaluation;
 
         let percentageScore = Math.round(
-          (evaluation.summary.totalScore / evaluation.summary.possibleScore) *
+          (evaluation.summary.scoreTotal / evaluation.summary.scorePossible) *
             100
         );
 
         let list = (evaluation.summary?.sections || []).map(item => ({
           name: item.name,
-          percentageScore: Math.round((item.score / item.possibleScore) * 100),
+          percentageScore: Math.round((item.score / item.scorePossible) * 100),
         }));
 
         return (
