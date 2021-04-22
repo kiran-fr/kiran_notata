@@ -9,7 +9,11 @@ import styles from "../style.module.css";
 
 export function Message({ history, heading, subHead1, subHead2, path, image }) {
   const redirectlogin = () => {
-    history.push(path);
+    if (path === "/login") {
+      window.location.href = path;
+    } else {
+      history.push(path);
+    }
   };
 
   return (

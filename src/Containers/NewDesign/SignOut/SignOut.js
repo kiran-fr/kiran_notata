@@ -11,15 +11,10 @@ export function SignOut({ history }) {
   useEffect(() => {
     Auth.signOut()
       .then(() => {
-        console.log("yes");
-        // setSignOut(true);
-        localStorage.clear();
+        console.log("logout");
       })
       .catch(() => {
-        localStorage.clear();
         console.log("error");
-
-        // setSignOutError(true);
       });
   }, []);
 
