@@ -190,7 +190,14 @@ const WrapperComponent = ({ ...props }) => {
   }
 
   return (
-    <div className="page_container" style={{ display: "flex" }}>
+    <div
+      className="page_container"
+      style={
+        props.location.pathname === dashboard
+          ? { display: "flex", justifyContent: "center" }
+          : {}
+      }
+    >
       <DashboardHeader history={props.history} />
       <Navigation />
       {/* <SideBarTreeMenu {...props} /> */}
