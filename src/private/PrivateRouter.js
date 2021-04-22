@@ -188,7 +188,7 @@ const WrapperComponent = ({ ...props }) => {
   }
 
   return (
-    <>
+    <div className="page_container" style={{ display: "flex" }}>
       <DashboardHeader history={props.history} />
       <Navigation />
       {/* <SideBarTreeMenu {...props} /> */}
@@ -207,7 +207,7 @@ const WrapperComponent = ({ ...props }) => {
           <RouterComponent {...props} />
         </ErrorBoundary>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -234,16 +234,16 @@ h1 {
   font-size: 32px;
 }
 
-.logged_in_page_content {
-  padding-top: 50px;
-  left: 140px;
-  padding-left: 190px;
+.logged_in_page_content{
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 50px 40px 20px 40px;
   /*padding-right: 340px;*/
   position: relative;
-  margin-right: 155px;
   background: var(--color-gray-pale);
   /*min-height: calc(100vh + 50px);*/
   min-height: 100vh;
+  overflow: hidden;
 }
 
 /* Old logged_in_page_content
@@ -271,7 +271,6 @@ h1 {
   }
 
   .logged_in_page_content {
-    left: 0;
     padding-left: 10px;
     padding-right: 0;
     margin-right: 10px;

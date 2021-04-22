@@ -1,12 +1,11 @@
-/* Date : 4/04/2020 */
-/* Created By : Vikrant */
-
 .group button {
   width: 60px;
   color: #fff;
   padding-left: 10px;
   box-sizing: border-box;
   text-align: center;
+  display: flex;
+  align-items: center;
 }
 .group {
   margin-bottom: 40px;

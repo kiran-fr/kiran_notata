@@ -8,43 +8,46 @@ import { CheckBoxes } from "Components/UI_Kits";
 export default function Navigation() {
   return (
     <div>
-      <TopMenu />
       <SideBarMenu />
+      <div>
+        <TopMenu />
 
-      <div className="container">
-        <form>
-          <CheckBoxes
-            name="name"
-            data={[
-              {
-                id: "1",
-                value: "option1",
-                label: "option1",
-              },
-              {
-                id: "2",
-                value: "option2",
-                label: "option2",
-              },
-            ]}
-          />
-          <RadioButtons
-            name="name"
-            preselected="option1"
-            data={[
-              {
-                id: "1",
-                value: "option1",
-                label: "option1",
-              },
-              {
-                id: "2",
-                value: "option2",
-                label: "option2",
-              },
-            ]}
-          />
-        </form>
+        <div className="container">
+          {/* <form>
+            <CheckBoxes
+              name="name"
+              data={[
+                {
+                  id: "1",
+                  value: "option1",
+                  label: "option1",
+                },
+                {
+                  id: "2",
+                  value: "option2",
+                  label: "option2",
+                },
+              ]}
+            />
+            <RadioButtons
+              name="name"
+              preselected="option1"
+              data={[
+                {
+                  id: "1",
+                  value: "option1",
+                  label: "option1",
+                },
+                {
+                  id: "2",
+                  value: "option2",
+                  label: "option2",
+                },
+              ]}
+            />
+          </form>
+         */}
+        </div>
       </div>
     </div>
   );

@@ -1,23 +1,17 @@
-/* Date : 15/04/2020 */
-/* Created By : Vikrant */
-
-.error {
-  font-weight: 500;
-  font-size: 11px;
-  color: var(--ui-color-red);
-  line-height: 13px;
-  width: 340px;
-  display: grid;
-  padding: 0 10px 10px;
+error .error {
+  color: var(--color-primary);
+  font-size: 12px;
+  text-align: right;
+  position: relative;
+  top: -6px;
+  right: 4px;
 }
 
-.error i {
-  color: var(--ui-color-red) !important;
-}
+/* error  */
 
-.instructorEmail {
-  color: var(--ui-color-primary-green-dark2) !important;
-}
+/* SignUP */
+
+/* SignUP end */
 
 .logo {
   width: 25px;
@@ -157,7 +151,9 @@
   top: 0;
   left: 0;
 }
-
+.auth_structure_left input {
+  max-width: 100%;
+}
 @media screen and (max-width: 940px) {
   .auth_structure {
     flex-direction: column;
@@ -179,11 +175,6 @@
   }
 }
 
-@media screen and (max-width: 320px) {
-  .error {
-    width: 270px;
-  }
-}
 @media screen and (max-width: 500px) {
   .mainContent {
     align-items: center;
@@ -202,7 +193,6 @@
   }
   .auth_structure button {
     width: 100% !important;
-    height: 30px !important;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -217,4 +207,4 @@
     margin: auto;
     height: 18px;
   }
-}
+} ;

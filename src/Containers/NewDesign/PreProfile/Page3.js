@@ -71,30 +71,24 @@ export default function Page3({ extraInputs, history }) {
   } */
 
   return (
-    <form
-      className="notata_form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ marginBottom: "20px" }}
-    >
-      <div className={styles.profile3}>
-        <h1
-          style={{
-            marginBottom: "50px",
-          }}
-        >
-          Do you want to be a part of these groups?
-        </h1>
+    <div className={styles.profile3}>
+      <h1
+        style={{
+          marginBottom: "50px",
+        }}
+      >
+        Do you want to be a part of these groups?
+      </h1>
 
-        {data.map((item, i) => (
-          <Group key={i} title={item.title} admin={item.admin} />
-        ))}
-        <Button
-          type="input"
-          // value={isDirty ? "SAVE" : "SKIP"}
-          value={"NEXT"}
-          loading={loading}
-        />
-      </div>
-    </form>
+      {data.map((item, i) => (
+        <Group key={i} title={item.title} admin={item.admin} />
+      ))}
+      <Button
+        type="input"
+        // value={isDirty ? "SAVE" : "SKIP"}
+        value={"NEXT"}
+        loading={loading}
+      />
+    </div>
   );
 }

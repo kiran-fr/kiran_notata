@@ -18,6 +18,7 @@
 
 .input_label input {
   color: #6a6a6a !important;
+  max-width: 100%;
 }
 
 input::placeholder {
@@ -51,13 +52,7 @@ input::placeholder {
   padding: 10px 22px !important;
   width: 340px;
   margin-top: 0px;
-}
-
-@media (max-width: 425px) {
-  .input_container {
-    width: 100%;
-    padding: 5px 22px !important;
-  }
+  max-width: 100%;
 }
 
 .redStyle {
@@ -105,7 +100,7 @@ input::placeholder {
 }
 
 .inputError {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 11px;
   color: var(--ui-color-red);
   line-height: 13px;
@@ -142,7 +137,7 @@ input::placeholder {
   padding: 0 10px;
 }
 
-span {
+.container span {
   margin-top: 5px !important;
 }
 .input_pass {

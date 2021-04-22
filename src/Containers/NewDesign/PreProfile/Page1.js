@@ -28,7 +28,6 @@ export default function Page1({ setPage }) {
     Auth.currentAuthenticatedUser().then(cognitoUser => {
       setCognitoUser(cognitoUser);
       Auth.userAttributes(cognitoUser).then(userAttributes => {
-        console.log("userAttributes", userAttributes);
         let ua = {};
         for (let attrib of userAttributes) {
           ua[attrib.Name] = attrib.Value;
@@ -155,8 +154,8 @@ export default function Page1({ setPage }) {
           style={{
             margin: "0",
             padding: "0",
-            marginTop: "20px",
-            marginBottom: "10px",
+            marginTop: "25px",
+            marginBottom: "20px",
           }}
         >
           Who are you?
