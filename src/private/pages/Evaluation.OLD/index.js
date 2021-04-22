@@ -64,10 +64,10 @@ export default function Evaluation({ match, history }) {
           (evaluationTemplate.sections || []).find(s => s.id === id) || {};
         let questions = section.questions || [];
 
-        let possibleScore = 0;
+        let scorePossible = 0;
         for (let q of questions) {
           if (q.inputType === "TRAFFIC_LIGHTS") {
-            possibleScore += 2;
+            scorePossible += 2;
           }
 
           if (q.inputType === "RADIO") {
@@ -75,12 +75,12 @@ export default function Evaluation({ match, history }) {
               Math,
               q.options.map(o => o.score || 0)
             );
-            possibleScore += max;
+            scorePossible += max;
           }
 
           if (q.inputType === "CHECK") {
             for (let o of q.options) {
-              possibleScore += o.score;
+              scorePossible += o.score;
             }
           }
         }
@@ -89,7 +89,7 @@ export default function Evaluation({ match, history }) {
           <div>
             <div>{section.name}</div>
             <div style={{ opacity: 0.5, fontSize: "12px" }}>
-              {questions.length} questions - {possibleScore} points
+              {questions.length} questions - {scorePossible} points
             </div>
           </div>
         );

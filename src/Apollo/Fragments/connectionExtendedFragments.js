@@ -52,7 +52,7 @@ export default gql`
         sections {
           name
           score
-          possibleScore
+          scorePossible
           scorePerAnswer {
             score
             possibleScore
@@ -62,8 +62,8 @@ export default gql`
             sectionName
           }
         }
-        totalScore
-        possibleScore
+        scoreTotal
+        scorePossible
       }
     }
 
@@ -116,18 +116,18 @@ export default gql`
             sections {
               name
               score
-              possibleScore
+              scorePossible
               scorePerAnswer {
                 score
-                possibleScore
+                scorePossible
                 questionId
                 questionName
                 sectionId
                 sectionName
               }
             }
-            totalScore
-            possibleScore
+            scoreTotal
+            scorePossible
           }
         }
       }
@@ -211,7 +211,7 @@ export default gql`
           sectionId
           name
           score
-          possibleScore
+          scorePossible
           scorePerAnswer {
             score
             possibleScore
@@ -221,8 +221,8 @@ export default gql`
             sectionName
           }
         }
-        totalScore
-        possibleScore
+        scoreTotal
+        scorePossible
       }
     }
   }

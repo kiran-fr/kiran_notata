@@ -400,6 +400,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
                 level={0}
                 expandedState={expandedState}
                 selectedNodes={selectedNodes}
+
                 changeExpanded={changeExpanded}
                 setVisibleMobile={setVisibleMobile}
               />

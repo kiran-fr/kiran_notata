@@ -92,7 +92,7 @@ export default gql`
                 sectionId
                 name
                 score
-                possibleScore
+                scorePossible
                 scorePerAnswer {
                   score
                   possibleScore
@@ -100,8 +100,8 @@ export default gql`
                   question
                 }
               }
-              totalScore
-              possibleScore
+              scoreTotal
+              scorePossible
             }
           }
         }

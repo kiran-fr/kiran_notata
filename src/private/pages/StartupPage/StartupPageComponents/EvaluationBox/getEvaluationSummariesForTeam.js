@@ -15,7 +15,7 @@ export default function getEvaluationSummariesForTeam({ evaluations, hide }) {
     let evaluations = evaluationsByTemplate[templateId] || [];
 
     // Get possible score
-    let possibleScore = evaluations[0]?.summary?.possibleScore;
+    let scorePossible = evaluations[0]?.summary?.scorePossible;
 
     // Get template name
     let templateName = evaluations[0]?.summary?.templateName;
@@ -24,21 +24,21 @@ export default function getEvaluationSummariesForTeam({ evaluations, hide }) {
     let templateSections = evaluations[0]?.summary?.sections;
 
     // Get total score
-    let totalScore = 0;
+    let scoreTotal = 0;
     let count = 0;
     for (let evaluation of evaluations) {
       if (!hide[evaluation.id]) {
-        totalScore += evaluation.summary?.totalScore || 0;
+        scoreTotal += evaluation.summary?.scoreTotal || 0;
         count += 1;
       }
     }
 
     // Get average score
-    let averageScore = parseFloat((totalScore / count).toFixed(1));
+    let averageScore = parseFloat((scoreTotal / count).toFixed(1));
 
     // Get average percentage score
     let averagePercentageScore =
-      Math.round((averageScore / possibleScore) * 100) || 0;
+      Math.round((averageScore / scorePossible) * 100) || 0;
 
     // Put it all together
 
@@ -49,7 +49,7 @@ export default function getEvaluationSummariesForTeam({ evaluations, hide }) {
       templateName: templateName,
       submissions: evaluations.length,
       averageScore: averageScore,
-      possibleScore: possibleScore,
+      scorePossible: scorePossible,
       averagePercentageScore: averagePercentageScore,
       templateSections: templateSections,
       evaluations: evaluations,
