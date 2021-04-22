@@ -121,7 +121,7 @@ export default function SummaryLine({
 //   name,
 //   percentageScore,
 //   score,
-//   possibleScore,
+//   scorePossible,
 //   className,
 //   list,
 //   hide,
@@ -216,7 +216,7 @@ export default function SummaryLine({
 //               className={styles.score_style}
 //               onClick={() => setViewPercentage(true)}
 //             >
-//               {score}/{possibleScore}
+//               {score}/{scorePossible}
 //             </div>
 //           )}
 //         </div>
@@ -239,10 +239,10 @@ export default function SummaryLine({
 //                 let res = {
 //                   name: it.question,
 //                   percentageScore: Math.round(
-//                     (it.score / it.possibleScore) * 100
+//                     (it.score / it.scorePossible) * 100
 //                   ),
 //                   score: it.score,
-//                   possibleScore: it.possibleScore,
+//                   scorePossible: it.scorePossible,
 //                   numberScore: true,
 //                 };
 //                 return res;
@@ -258,7 +258,7 @@ export default function SummaryLine({
 //                     name={item.name}
 //                     percentageScore={item.percentageScore}
 //                     score={item.score}
-//                     possibleScore={item.possibleScore}
+//                     scorePossible={item.scorePossible}
 //                     className={classnames(className, styles.sub_list)}
 //                     list={!!innerList.length && innerList}
 //                     numberScore={item.numberScore}

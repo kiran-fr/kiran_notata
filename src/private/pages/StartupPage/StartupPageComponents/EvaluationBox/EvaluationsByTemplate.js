@@ -22,23 +22,24 @@ export default function EvaluationsByTemplate({
     // Averages for each answer
     let scorePerAnswer = Object.keys(item.scorePerAnswer).map(questionName => {
       let it = item.scorePerAnswer[questionName];
-      let averageScore = it.totalScore / it.count;
+      // let averageScore = it.scoreTotal / it.count;
+      let averageScore = it.score / it.count;
       let percentageScore = Math.round((averageScore / it.possibleScore) * 100);
       let res = {
         question: questionName,
         score: averageScore.toFixed(1),
-        possibleScore: it.possibleScore,
+        scorePossible: it.possibleScore,
         percentageScore: percentageScore,
       };
       return res;
     });
 
     // Averages for each section
-    let averageScore = item.totalScore / item.count;
+    let averageScore = item.scoreTotal / item.count;
     let res = {
       name: sectionName,
-      possibleScore: item.possibleScore,
-      percentageScore: Math.round((averageScore / item.possibleScore) * 100),
+      scorePossible: item.scorePossible,
+      percentageScore: Math.round((averageScore / item.scorePossible) * 100),
       score: averageScore.toFixed(1),
       scorePerAnswer,
     };
@@ -53,7 +54,7 @@ export default function EvaluationsByTemplate({
           name={data.templateName}
           percentageScore={data.averagePercentageScore}
           score={data.averageScore}
-          possibleScore={data.possibleScore}
+          scorePossible={data.scorePossible}
           className={classnames(styles.template_summary_line)}
           timeStamp={`${data?.evaluations?.length || 0} submissions`}
           list={!!list.length && list}
@@ -67,7 +68,7 @@ export default function EvaluationsByTemplate({
           let { given_name, family_name, email } =
             evaluation.createdByUser || {};
           let percentageScore = Math.round(
-            (evaluation.summary.totalScore / evaluation.summary.possibleScore) *
+            (evaluation.summary.scoreTotal / evaluation.summary.scorePossible) *
               100
           );
 
@@ -75,11 +76,11 @@ export default function EvaluationsByTemplate({
             let sa = {
               name: item.name,
               percentageScore: Math.round(
-                (item.score / item.possibleScore) * 100
+                (item.score / item.scorePossible) * 100
               ),
               scorePerAnswer: item.scorePerAnswer,
               score: item.score,
-              possibleScore: item.possibleScore,
+              scorePossible: item.scorePossible,
               numberScore: true,
             };
             return sa;
@@ -103,8 +104,8 @@ export default function EvaluationsByTemplate({
               isYou={user.email === email}
               editLink={editLink}
               percentageScore={percentageScore}
-              score={evaluation.summary.totalScore}
-              possibleScore={evaluation.summary.possibleScore}
+              score={evaluation.summary.scoreTotal}
+              scorePossible={evaluation.summary.scorePossible}
               className={classnames(styles.each_evaluation_line)}
               list={list}
               history={history}

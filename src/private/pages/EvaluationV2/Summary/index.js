@@ -9,7 +9,7 @@ import {
   evaluationTemplateGet,
 } from "private/Apollo/Queries";
 import { startup_page } from "definitions.js";
-import { getPossibleScore, getScore } from "./util";
+import { getscorePossible, getScore } from "./util";
 import classnames from "classnames";
 
 import { Card, BreadCrumbs, GhostLoader, Content } from "Components/elements";
@@ -130,7 +130,7 @@ export default function Index({ match, history }) {
                   <label>{name}</label>
                   <label className={row_score}>
                     {getScore(questions, evaluation.answers)}/
-                    {getPossibleScore(questions)}
+                    {getscorePossible(questions)}
                   </label>
                 </div>
               )
@@ -145,7 +145,7 @@ export default function Index({ match, history }) {
                 )}
                 /
                 {evaluationTemplateGetData.evaluationTemplateGet.sections.reduce(
-                  (acc, { questions }) => acc + getPossibleScore(questions),
+                  (acc, { questions }) => acc + getscorePossible(questions),
                   0
                 )}
               </label>
@@ -155,7 +155,7 @@ export default function Index({ match, history }) {
         {evaluationTemplateGetData.evaluationTemplateGet.sections.map(
           ({ name, questions, id }) => {
             const sectionScore = getScore(questions, evaluation.answers);
-            const sectionPossibleScore = getPossibleScore(questions);
+            const sectionscorePossible = getscorePossible(questions);
             return (
               <Card key={id}>
                 <div className={header}>
@@ -187,7 +187,7 @@ export default function Index({ match, history }) {
                       of {questions.length} questions answered
                     </div>
                     <div className={header_details_regular}>
-                      {sectionScore} out of {sectionPossibleScore} points
+                      {sectionScore} out of {sectionscorePossible} points
                     </div>
                   </div>
                 </div>

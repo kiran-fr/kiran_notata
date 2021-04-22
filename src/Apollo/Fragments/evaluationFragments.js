@@ -29,9 +29,9 @@ export default gql`
       templateName
       sections {
         sectionId
-        name
-        score
-        possibleScore
+        sectionName
+        scoreTotal
+        scorePossible
         scorePerAnswer {
           score
           possibleScore
@@ -41,8 +41,8 @@ export default gql`
           sectionName
         }
       }
-      totalScore
-      possibleScore
+      scoreTotal
+      scorePossible
     }
   }
 `;

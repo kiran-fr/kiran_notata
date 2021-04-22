@@ -37,9 +37,9 @@ export default gql`
         summary {
           templateName
           sections {
-            name
-            score
-            possibleScore
+            sectionName
+            scoreTotal
+            scorePossible
             scorePerAnswer {
               score
               possibleScore
@@ -49,8 +49,8 @@ export default gql`
               sectionName
             }
           }
-          totalScore
-          possibleScore
+          scoreTotal
+          scorePossible
         }
       }
 
@@ -100,9 +100,9 @@ export default gql`
             summary {
               templateName
               sections {
-                name
-                score
-                possibleScore
+                sectionName
+                scoreTotal
+                scorePossible
                 scorePerAnswer {
                   score
                   possibleScore
@@ -112,8 +112,8 @@ export default gql`
                   sectionName
                 }
               }
-              totalScore
-              possibleScore
+              scoreTotal
+              scorePossible
             }
           }
         }
