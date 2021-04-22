@@ -50,8 +50,8 @@ export default gql`
       summary {
         templateName
         sections {
-          name
-          score
+          sectionName
+          scoreTotal
           scorePossible
           scorePerAnswer {
             score
@@ -114,12 +114,12 @@ export default gql`
           summary {
             templateName
             sections {
-              name
-              score
+              sectionName
+              scoreTotal
               scorePossible
               scorePerAnswer {
                 score
-                scorePossible
+                possibleScore
                 questionId
                 questionName
                 sectionId
@@ -209,8 +209,8 @@ export default gql`
         templateName
         sections {
           sectionId
-          name
-          score
+          sectionName
+          scoreTotal
           scorePossible
           scorePerAnswer {
             score
