@@ -1,0 +1,20 @@
+.container {
+  user-select: none;
+  text-align: right;
+}
+
+.paginatorInput {
+  width: 46px;
+  height: 32px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.leftArrow {
+  padding-right: 8px;
+}
+
+.rightArrow,
+.leftArrow {
+  padding-left: 8px;
+}

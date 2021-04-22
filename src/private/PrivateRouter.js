@@ -31,7 +31,9 @@ import {
 } from "../definitions";
 
 // Landing page / list
-import Dashboard from "./pages/Dashboard/DashboardPage";
+import Dashboard from "./NewDesign/Dashboard/DashboardPage";
+
+// import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";
 import Profile from "./pages/Profile/Profile";
 import Tags from "./pages/Tags";
