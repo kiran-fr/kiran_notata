@@ -7,6 +7,7 @@ import { dashboard, group, settings, charts, signOut } from "definitions.js";
 // Styles
 import styles from "./Sidebar.module.css";
 import classnames from "classnames";
+import authLogo from "../../../assets/images/auth_logo.png";
 
 // * MAIN FUNCTION *
 
@@ -65,9 +66,12 @@ export function SideBarMenu() {
         )}
       >
         <div className={styles.logo_container}>
-          <div className={styles.logo}>
-            <span className={styles.n}>n</span>
-          </div>
+          <img
+            style={{ width: "40px", height: "40px" }}
+            src={authLogo}
+            alt="logo"
+            className={styles.logo}
+          />
           <div className={styles.brand}>notata</div>
           <div
             className={styles.mobile_togglerInSidebar}
