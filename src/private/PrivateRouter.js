@@ -192,12 +192,7 @@ const WrapperComponent = ({ ...props }) => {
   return (
     <div
       className="page_container"
-      style={
-        props.location.pathname === dashboard ||
-        props.location.pathname === `${startup_page}/:id`
-          ? { display: "flex", justifyContent: "center" }
-          : {}
-      }
+      style={{ display: "flex", justifyContent: "center" }}
     >
       <DashboardHeader history={props.history} />
       <Navigation />
