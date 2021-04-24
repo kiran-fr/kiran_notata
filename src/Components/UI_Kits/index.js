@@ -13,4 +13,5 @@ export { TextField } from "./TextField/index";
 export { DropMenu } from "./DropMenu/index";
 export { Toggle } from "./Toggle/index";
 export { Tabsection } from "./Tabs/index";
-// export { Card } from ".Card/index";
+export { Tables as Table } from "./Table/Table";
+// export { Card } from "./Card/index";

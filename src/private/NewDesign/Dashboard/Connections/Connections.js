@@ -18,8 +18,10 @@ import applyFilters from "./applyFilters";
 import defaultFilters from "./defaultFilters";
 
 // Components
-import { Table, Card, Button } from "Components/elements";
+import { Card, Button } from "Components/elements";
 import Paginator from "./Paginator";
+
+import { Table } from "Components/UI_Kits";
 
 import tableColumns from "./TableColumns";
 import { tableScroll } from "./Connections.module.css";
@@ -28,6 +30,7 @@ function ListOfStartups({ filters, currentPage, history }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
+  const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
 
   // Queries
   const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
@@ -62,9 +65,9 @@ function ListOfStartups({ filters, currentPage, history }) {
     setStarMutation,
     setShowTagGroupForId,
     setShowSubjectiveScoreForId,
+    setShowFunnelScoreForId,
   });
 
-  console.log("filteredConnections", filteredConnections, "columns", columns);
   return (
     <Card maxWidth={1200} className={tableScroll} noMargin={true}>
       <Table
@@ -76,7 +79,6 @@ function ListOfStartups({ filters, currentPage, history }) {
         loading={loading}
         emptyLabel={"No results."}
       />
-
       {showTagGroupForId && (
         <SelectTagsForStartup
           connection={connections.find(({ id }) => id === showTagGroupForId)}

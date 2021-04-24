@@ -83,6 +83,8 @@ export default ({
       title: "Funnels",
       // dataIndex: "funnelTags",
       key: "tags",
+      numeric: true,
+      disablePadding: false,
       responsive: "sm",
       valueExpr: connection => highestFunnelTagIndex(connection.funnelTags),
       render: connection => {
@@ -138,6 +140,8 @@ export default ({
     {
       title: "Tags",
       key: "tags",
+      numeric: true,
+      disablePadding: false,
       responsive: "md",
       valueExpr: connection => tagCount(connection.tags),
       render: connection => (
