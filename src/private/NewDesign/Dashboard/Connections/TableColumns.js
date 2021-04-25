@@ -58,7 +58,7 @@ export default ({
     },
 
     {
-      title: "Company name",
+      title: "COMPANY NAME",
       className: styles.max_width_200,
       type: "string",
       render: connection => {
@@ -80,9 +80,33 @@ export default ({
     },
 
     {
-      title: "Funnels",
+      title: "GROUP",
+      className: styles.max_width_200,
+      type: "string",
+      render: connection => {
+        return (
+          <div className={styles.company_name}>
+            <div
+              onClick={() => {
+                history.push(`${startup_page}/${connection.id}`, {
+                  rightMenu: true,
+                });
+              }}
+              className={styles.actual_content}
+            >
+              {connection.creative.name}
+            </div>
+          </div>
+        );
+      },
+    },
+
+    {
+      title: "FUNNEL STAGE",
       // dataIndex: "funnelTags",
       key: "tags",
+      numeric: true,
+      disablePadding: false,
       responsive: "sm",
       valueExpr: connection => highestFunnelTagIndex(connection.funnelTags),
       render: connection => {
@@ -136,8 +160,10 @@ export default ({
     },
 
     {
-      title: "Tags",
+      title: "TAGS",
       key: "tags",
+      numeric: true,
+      disablePadding: false,
       responsive: "md",
       valueExpr: connection => tagCount(connection.tags),
       render: connection => (
@@ -175,7 +201,7 @@ export default ({
     },
 
     {
-      title: "Subjective score",
+      title: "SUBJECTIVE SCORE",
       key: "subjectiveScores",
       responsive: "sm",
       type: "number",
@@ -221,7 +247,7 @@ export default ({
     },
 
     {
-      title: "Updated",
+      title: "UPDATED",
       key: "updatedAt",
       responsive: "lg",
       className: styles.pre_space,

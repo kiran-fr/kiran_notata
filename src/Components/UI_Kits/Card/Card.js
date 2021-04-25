@@ -1,5 +1,6 @@
 import React from "react";
-import "./style.css";
+import classnames from "classnames";
+import styles from "./style.css";
 
 export function Card({
   maxWidth,

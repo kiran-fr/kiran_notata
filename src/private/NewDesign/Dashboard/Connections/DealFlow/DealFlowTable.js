@@ -1,29 +1,15 @@
-import React, { useState, useEffect } from "react";
-
+import { Table, Modal } from "Components/UI_Kits";
+import tableColumns from "./TableColumns";
+import SelectTagsForStartup from "./SelectTagsForStartup";
 // API
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
-
-// COMPONENTS
-import Filters from "../Filters";
-import SelectTagsForStartup from "./SelectTagsForStartup";
-
-import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
-
 // FUNCTIONS
 import applyFilters from "./applyFilters";
-
-// Definitions
-import defaultFilters from "./defaultFilters";
-
-// Components
-import { Card, Button } from "Components/elements";
-import Paginator from "./Paginator";
-
-import { Table } from "Components/UI_Kits";
-
+import { Table, Modal } from "Components/UI_Kits";
 import tableColumns from "./TableColumns";
+import { Card } from "Components/elements";
 import { tableScroll } from "./Connections.module.css";
 
 function ListOfStartups({ filters, currentPage, history }) {
@@ -69,7 +55,7 @@ function ListOfStartups({ filters, currentPage, history }) {
   });
 
   return (
-    <Card maxWidth={1200} className={tableScroll} noMargin={true}>
+    <Card maxWidth={1000} className={tableScroll} noMargin={true}>
       <Table
         dataSource={filteredConnections}
         columns={columns}
@@ -86,63 +72,5 @@ function ListOfStartups({ filters, currentPage, history }) {
         />
       )}
     </Card>
-  );
-}
-
-export default function Connections({ history }) {
-  // States
-  const [filters, setFilterState] = useState(defaultFilters);
-  const [currentPage, setCurrentPage] = useState(undefined);
-  const [showNewStartupModal, setShowNewStartupModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-
-  // Load filters from local store
-  useEffect(() => {
-    let f;
-    try {
-      f = JSON.parse(localStorage.getItem("filters"));
-    } catch (error) {}
-    if (f) setFilterState(f);
-  }, []);
-
-  // Setting filters: save to local store
-  function setFilters(filterData) {
-    localStorage.setItem("filters", JSON.stringify(filterData));
-    setFilterState(filterData);
-  }
-
-  return (
-    <>
-      <div
-        style={{
-          position: "relative",
-          marginBottom: "10px",
-          top: "-20px",
-        }}
-      >
-        <Button
-          onClick={() => setShowNewStartupModal(true)}
-          type="right_arrow"
-          size="large"
-        >
-          ADD NEW STARTUP
-        </Button>
-      </div>
-
-      <CreateStartupModal
-        history={history}
-        open={showNewStartupModal}
-        close={() => setShowNewStartupModal(false)}
-      />
-
-      <Filters setFilters={setFilters} filters={filters} fullFilter={true} />
-
-      <ListOfStartups
-        history={history}
-        filters={filters}
-        currentPage={currentPage}
-      />
-      <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} />
-    </>
   );
 }
