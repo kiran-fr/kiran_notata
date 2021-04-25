@@ -235,9 +235,10 @@ h1 {
 }
 
 .logged_in_page_content{
+  width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 50px 40px 20px 40px;
+  padding: 50px 20px 20px 20px;
   /*padding-right: 340px;*/
   position: relative;
   background: var(--color-gray-pale);

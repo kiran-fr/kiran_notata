@@ -25,6 +25,7 @@ import { Table } from "Components/UI_Kits";
 
 import tableColumns from "./TableColumns";
 import { tableScroll } from "./Connections.module.css";
+import Tablee from "../../../../Components/table/table.component";
 
 function ListOfStartups({ filters, currentPage, history }) {
   // States (for modal)
@@ -69,8 +70,10 @@ function ListOfStartups({ filters, currentPage, history }) {
   });
 
   return (
-    <Card maxWidth={1200} className={tableScroll} noMargin={true}>
-      <Table
+    // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
+    <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+      <Tablee></Tablee>
+      {/* <Table
         dataSource={filteredConnections}
         columns={columns}
         disableHead={false}
@@ -78,14 +81,14 @@ function ListOfStartups({ filters, currentPage, history }) {
         allowSorting={true}
         loading={loading}
         emptyLabel={"No results."}
-      />
+      /> */}
       {showTagGroupForId && (
         <SelectTagsForStartup
           connection={connections.find(({ id }) => id === showTagGroupForId)}
           close={() => setShowTagGroupForId(undefined)}
         />
       )}
-    </Card>
+    </div>
   );
 }
 
