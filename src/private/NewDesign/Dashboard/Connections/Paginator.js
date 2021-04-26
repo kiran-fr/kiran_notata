@@ -21,7 +21,7 @@ export default function Paginator({ currentPage, setCurrentPage }) {
 
   return (
     <div className={styles.container}>
-      <span>Page</span>
+      <span>PAGE</span>
       <i
         className={`fa fa-chevron-left ${styles.leftArrow}`}
         onClick={() => {
@@ -48,7 +48,7 @@ export default function Paginator({ currentPage, setCurrentPage }) {
       />
 
       <span> of </span>
-      {/* <span>{pages.length + 1}</span> */}
+      <span style={{ marginLeft: "10px" }}>{pages.length + 1}</span>
       <i
         className={`fa fa-chevron-right ${styles.rightArrow}`}
         onClick={() => {

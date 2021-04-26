@@ -7,6 +7,9 @@ import { funnelGroupGet, tagGroupsGet } from "private/Apollo/Queries";
 import { useQuery } from "@apollo/client";
 import { cloneDeep } from "lodash";
 import classnames from "classnames";
+import styles from "./filter.module.css";
+import Filterr from "../../../assets/images/filter.png";
+import Column from "../../../assets/images/column.png";
 
 import moment from "moment";
 
@@ -84,11 +87,17 @@ const Funnels = ({ filters, setFilters }) => {
   };
 
   return (
-    <div className={filter_icon_container}>
-      <div className={filter_icon} onClick={() => setShow(!show)}>
-        <i
-          className={`${filters.funnelTags?.length ? "fas" : "fal"} fa-filter`}
-        />
+    <div>
+      <div onClick={() => setShow(!show)} className={styles.filterContainer}>
+        <button
+          className={styles.filterButton}
+          style={{ width: "180px", marginRight: "10px" }}
+        >
+          <img src={Column} /> Manage Columns
+        </button>
+        <button className={styles.filterButton}>
+          <img src={Filterr} /> Filter
+        </button>
       </div>
 
       {show && (
@@ -208,7 +217,7 @@ export default function Filters({ filters, setFilters, fullFilter }) {
         <div className={footer}>
           <div className={filter_container}>
             {/*STAR*/}
-            {fullFilter && (
+            {/* {fullFilter && (
               <div className={filter_content}>
                 <div
                   className={filter_star}
@@ -232,51 +241,69 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                   )}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/*SEARCH*/}
-            {fullFilter && (
-              <div className={filter_content} style={{ width: "100%" }}>
-                <div className="notata_form" style={{ width: "100%" }}>
-                  <input
-                    style={{
-                      marginBottom: "6px",
-                      width: "100%",
-                    }}
-                    type="text"
-                    value={filters.search}
-                    onChange={e =>
-                      setFilters({ ...filters, search: e.target.value })
-                    }
-                    placeholder="Filter list..."
-                  />
+            <div className={styles.table_headerChild}>
+              {fullFilter && (
+                <div
+                  className={styles.table_headerInner}
+                  style={{ width: "100%" }}
+                >
+                  <button className={styles.addButton}>
+                    <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
+                  </button>
+                  <div className={styles.tableSearch}>
+                    <input
+                      type="text"
+                      value={filters.search}
+                      onChange={e =>
+                        setFilters({ ...filters, search: e.target.value })
+                      }
+                    />
+                    <button>Search</button>
+                    <i class="far fa-search"></i>
+                  </div>
                 </div>
+              )}
+            </div>
+            <div
+              className={
+                styles.table_headerChild + " " + styles.table_headerChildMiddle
+              }
+            >
+              <button>KANBAN</button>
+              <button className={styles.active}>
+                {" "}
+                <img src={Column} /> SPREADSHEET
+              </button>
+            </div>
+            <div className={styles.table_headerChild}>
+              <div>
+                <Funnels
+                  filters={filters}
+                  setFilters={funnelTags =>
+                    setFilters({ ...filters, funnelTags })
+                  }
+                />
               </div>
-            )}
-
-            {/*FUNNEL*/}
-            <div className={filter_content}>
-              <Funnels
-                filters={filters}
-                setFilters={funnelTags =>
-                  setFilters({ ...filters, funnelTags })
-                }
-              />
             </div>
 
+            {/*FUNNEL*/}
+
             {/*TAG*/}
-            <div className={filter_content}>
+            {/* <div className={filter_content}>
               <Tags
                 setFilters={setFilters}
                 tagGroups={tagGroups}
                 filters={filters}
               />
-            </div>
+            </div> */}
 
             {/*CALENDAR*/}
-            <div className={filter_content}>
+            {/* <div className={filter_content}>
               <DateSelector setFilters={setFilters} filters={filters} />
-            </div>
+            </div> */}
           </div>
         </div>
 

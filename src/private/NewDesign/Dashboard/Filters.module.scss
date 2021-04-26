@@ -1,6 +1,5 @@
 .container {
   /*border-bottom: 1px solid var(--color-gray-pale);*/
-  border: 1px solid var(--color-gray-light);
   border-radius: 7px;
   overflow: hidden;
 
@@ -13,7 +12,6 @@
 
 .content {
   padding: 10px;
-  background: white;
   /*margin: 2px;*/
   padding-bottom: 15px;
   border-top: 1px solid var(--color-gray-light);
@@ -57,13 +55,14 @@
 
 .filter_container {
   display: flex;
-  justify-content: flex-end;
+  width: 100%;
+}
+.table_headerChild{
+  width: 50%;
 }
 
 .filter_content {
-  background: white;
   /*margin: 2px;*/
-  padding: 5px 17px;
   display: flex;
   justify-content: center;
   align-items: center;

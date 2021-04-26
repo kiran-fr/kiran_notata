@@ -116,7 +116,7 @@ export default function Connections({ history }) {
 
   return (
     <>
-      <div
+      {/* <div
         style={{
           position: "relative",
           marginBottom: "10px",
@@ -130,7 +130,7 @@ export default function Connections({ history }) {
         >
           ADD NEW STARTUP
         </Button>
-      </div>
+      </div> */}
 
       <CreateStartupModal
         history={history}
