@@ -45,23 +45,27 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
         // onSubmit={handleSubmit(onSubmit)}
         style={{ marginBottom: "20px" }}
       >
-        <Tags
-          optionalTxt="write or choose up to 3 tags"
-          title="xxx"
-          suggested={true}
-          heading={false}
-          title="domain"
-          items={[]}
-        />
+        <div className={styles.tagContainer}>
+          <Tags
+            optionalTxt="write or choose up to 3 tags"
+            title="xxx"
+            suggested={true}
+            heading={false}
+            title="domain"
+            items={[]}
+          />
+        </div>
         <h4>Main geography</h4>
-        <Tags
-          optionalTxt="write or choose up to 3 tags"
-          title="xxx"
-          suggested={true}
-          heading={false}
-          title="domain"
-          items={[]}
-        />
+        <div className={styles.tagContainer}>
+          <Tags
+            optionalTxt="write or choose up to 3 tags"
+            title="xxx"
+            suggested={true}
+            heading={false}
+            title="domain"
+            items={[]}
+          />
+        </div>
         <h4>Stage</h4>
         <CheckBoxes
           data={[

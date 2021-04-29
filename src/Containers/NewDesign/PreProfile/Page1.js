@@ -131,6 +131,7 @@ export default function Page1({ setPage }) {
         <div
           style={{
             marginTop: "10px",
+            maxWidth: "340px",
           }}
         >
           <Tags

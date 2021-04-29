@@ -2,7 +2,7 @@
   font-style: normal;
   font-weight: normal;
   user-select: none;
-  max-width: 340px;
+  /* max-width: 340px; */
 }
 @media screen and (max-width: 500px) {
   .tag_wrapper {
@@ -74,7 +74,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 40px;
-  width: 378px;
+  width: 100%;
   padding: 0 10px;
   background: var(--ui-color-white);
   border: 1px solid #b5b5b5;
@@ -116,7 +116,7 @@
   border-radius: 12px;
   margin: 0 8px 7px 0;
   padding: 4px 15px;
-  padding-top: 5px;
+  padding-top: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,6 +168,7 @@
 .tag_smallClose_icon i,
 .tag_bigClose_icon i {
   font-weight: 500;
+  color: #e2e2e4;
 }
 
 /* small close icon*/
@@ -210,7 +211,7 @@
   letter-spacing: 0.03em;
   color: var(--ui-color-gray-dark6);
   padding: 4px 15px;
-  padding-bottom: 6px;
+  padding-bottom: 4.5px;
   margin: 6px 3px;
   border: 0px;
   text-align: center;

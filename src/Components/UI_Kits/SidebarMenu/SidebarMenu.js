@@ -72,108 +72,112 @@ export function SideBarMenu() {
           !listOpen ? styles.sidebar_container : styles.sidebar_container1
         )}
       >
-        <div className={styles.logo_container}>
-          <img
-            style={{ width: "40px", height: "40px" }}
-            src={authLogo}
-            alt="logo"
-            className={styles.logo}
-          />
-          <div className={styles.brand}>notata</div>
-          <div
-            className={styles.mobile_togglerInSidebar}
-            onClick={closeSidebar}
-          >
-            {" "}
-            <i className={`fal fa-chevron-left`} />
+        <div className={styles.sidebar_containerInner}>
+          <div className={styles.logo_container}>
+            <img
+              style={{ width: "40px", height: "40px" }}
+              src={authLogo}
+              alt="logo"
+              className={styles.logo}
+            />
+            <div className={styles.brand}>notata</div>
+            <div
+              className={styles.mobile_togglerInSidebar}
+              onClick={closeSidebar}
+            >
+              {" "}
+              <i className={`fal fa-chevron-left`} />
+            </div>
           </div>
-        </div>
 
-        {/* Toggle open/close */}
-        <div
-          role="button"
-          onClick={() => {
-            setListOpen(!listOpen);
-          }}
-          className={styles.desktop_sidebarCollapser}
-        >
-          <span
-            className={classnames(
-              listOpen ? styles.right_icon : styles.left_icon
-            )}
-          >
-            <i className={`fal fa-chevron-${listOpen ? "left" : "right"}`} />
-          </span>
-        </div>
-        <div>
+          {/* Toggle open/close */}
           <div
-            className={styles.mobile_toggler}
-            ref={floatingButonn}
-            onClick={openSidebar}
+            role="button"
+            onClick={() => {
+              setListOpen(!listOpen);
+            }}
+            className={styles.desktop_sidebarCollapser}
           >
-            {" "}
-            <i className={`fal fa-chevron-${listOpen ? "left" : "right"}`} />
-          </div>
-        </div>
-        {/* Main navigation icons */}
-        <div className={styles.menu_lists}>
-          {menuList.map((item, i) => (
-            <React.Fragment>
-              <div key={i} className={styles.menu_list}>
-                <NavLink
-                  exact={true}
-                  to={item.link}
-                  activeClassName={classnames(
-                    !listOpen ? styles.active_open : styles.active_close
-                  )}
-                >
-                  <div className={styles.icons} style={item.iconStyle}>
-                    <i
-                      className={item.iconClass}
-                      style={{ marginLeft: item.label === "Groups" && "-3px" }}
-                    />
-                  </div>
-                  <p className={styles.list}>{item.label}</p>
-                </NavLink>
-              </div>
-            </React.Fragment>
-          ))}
-
-          <div className={styles.menu_list + " " + styles.menu_listSettings}>
-            <NavLink
-              exact={true}
-              to={settings}
-              activeClassName={classnames(
-                !listOpen ? styles.active_open : styles.active_close
+            <span
+              className={classnames(
+                listOpen ? styles.right_icon : styles.left_icon
               )}
             >
-              <div className={styles.icons}>
-                <i className="fas fa-cog" />
-              </div>
-              <p className={styles.list}>settings</p>
-            </NavLink>
+              <i className={`fal fa-chevron-${listOpen ? "left" : "right"}`} />
+            </span>
           </div>
-          <div
-            className={styles.menu_list}
-            className={styles.profile_item}
-            style={{ paddingTop: "30px", borderTop: "1px solid #BFBFBF" }}
-          >
-            <NavLink
-              exact={true}
-              to={pre_profile}
-              activeClassName={classnames(
-                !listOpen ? styles.active_open : styles.active_close
-              )}
-              style={{ display: "flex" }}
+          <div>
+            <div
+              className={styles.mobile_toggler}
+              ref={floatingButonn}
+              onClick={openSidebar}
             >
-              <div className={styles.icons} style={{ marginTop: "5px" }}>
-                <img
-                  src="https://www.clipartmax.com/png/small/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png"
-                  alt="img"
-                />
-              </div>
-              <p className={styles.list}>Profile Name</p>
-            </NavLink>
+              {" "}
+              <i className={`fal fa-chevron-${listOpen ? "left" : "right"}`} />
+            </div>
+          </div>
+          {/* Main navigation icons */}
+          <div className={styles.menu_lists}>
+            {menuList.map((item, i) => (
+              <React.Fragment>
+                <div key={i} className={styles.menu_list}>
+                  <NavLink
+                    exact={true}
+                    to={item.link}
+                    activeClassName={classnames(
+                      !listOpen ? styles.active_open : styles.active_close
+                    )}
+                  >
+                    <div className={styles.icons} style={item.iconStyle}>
+                      <i
+                        className={item.iconClass}
+                        style={{
+                          marginLeft: item.label === "Groups" && "-3px",
+                        }}
+                      />
+                    </div>
+                    <p className={styles.list}>{item.label}</p>
+                  </NavLink>
+                </div>
+              </React.Fragment>
+            ))}
+
+            <div className={styles.menu_list + " " + styles.menu_listSettings}>
+              <NavLink
+                exact={true}
+                to={settings}
+                activeClassName={classnames(
+                  !listOpen ? styles.active_open : styles.active_close
+                )}
+              >
+                <div className={styles.icons}>
+                  <i className="fas fa-cog" />
+                </div>
+                <p className={styles.list}>settings</p>
+              </NavLink>
+            </div>
+            <div
+              className={styles.menu_list}
+              className={styles.profile_item}
+              style={{ paddingTop: "30px", borderTop: "1px solid #BFBFBF" }}
+            >
+              <NavLink
+                exact={true}
+                to={pre_profile}
+                activeClassName={classnames(
+                  !listOpen ? styles.active_open : styles.active_close
+                )}
+                style={{ display: "flex" }}
+              >
+                <div className={styles.icons} style={{ marginTop: "5px" }}>
+                  <img
+                    src="https://www.clipartmax.com/png/small/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png"
+                    alt="img"
+                  />
+                </div>
+                <p className={styles.list}>Profile Name</p>
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>

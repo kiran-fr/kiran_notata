@@ -57,6 +57,11 @@
   display: flex;
   width: 100%;
 }
+@media screen and (max-width:1000px){
+  .filter_container{
+    flex-wrap: wrap;
+  }
+}
 .table_headerChild{
   width: 50%;
 }

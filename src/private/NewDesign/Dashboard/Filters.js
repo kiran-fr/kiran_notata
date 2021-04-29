@@ -90,13 +90,13 @@ const Funnels = ({ filters, setFilters }) => {
     <div>
       <div onClick={() => setShow(!show)} className={styles.filterContainer}>
         <button
-          className={styles.filterButton}
-          style={{ width: "180px", marginRight: "10px" }}
+          className={styles.filterButton + " " + styles.manageButton}
+          style={{ marginRight: "10px" }}
         >
           <img src={Column} /> Manage Columns
         </button>
         <button className={styles.filterButton}>
-          <img src={Filterr} /> Filter
+          <img src={Filterr} /> <span>Filter</span>
         </button>
       </div>
 
@@ -244,7 +244,11 @@ export default function Filters({ filters, setFilters, fullFilter }) {
             )} */}
 
             {/*SEARCH*/}
-            <div className={styles.table_headerChild}>
+            <div
+              className={
+                styles.table_headerChild + " " + styles.table_headerChildFirst
+              }
+            >
               {fullFilter && (
                 <div
                   className={styles.table_headerInner}
@@ -272,13 +276,23 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                 styles.table_headerChild + " " + styles.table_headerChildMiddle
               }
             >
-              <button>KANBAN</button>
+              <button>
+                KANBAN{" "}
+                <i
+                  style={{ marginLeft: "5px" }}
+                  className="fas fa-chevron-down"
+                ></i>
+              </button>
               <button className={styles.active}>
                 {" "}
                 <img src={Column} /> SPREADSHEET
               </button>
             </div>
-            <div className={styles.table_headerChild}>
+            <div
+              className={
+                styles.table_headerChild + " " + styles.table_headerChildLast
+              }
+            >
               <div>
                 <Funnels
                   filters={filters}
