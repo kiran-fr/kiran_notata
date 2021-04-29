@@ -1,22 +1,14 @@
 import React from 'react';
 import styles from './table.module.css';
-import moment from "moment";
-import {
-    highestFunnelTagIndex,
-    subjectiveScore,
-    tagCount,
-  } from "private/pages/Dashboard/Connections/types";
+import Imag from '../../assets/images/struplog.png';
 
-export default function Table(props) {
-
-    const { data } = props
+export default function Table() {
 
     const ButtonGreen = () => (
         <button className={styles.buttongreen} >
             <i className="fas fa-plus-circle"></i>
         </button>
     )
-
     return (
         <div className={styles.tableWrapper}>
             <table className={styles.startupTable}>
@@ -25,7 +17,7 @@ export default function Table(props) {
                         <td>
                             <label className={styles.customCheck} style={{top:'-8px'}}>
                                 <input  type="checkbox" />
-                                <span className={styles.checkmark}></span>
+                                <span class={styles.checkmark}></span>
                             </label> 
                         </td>
                         <td>COMPANY NAME <i className="fal fa-exchange" /></td>
@@ -39,64 +31,51 @@ export default function Table(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.map((item, index) => {
-                        
-                        let { funnelTags } = item;
-
-                        let tagSet;
-                        if (funnelTags.length) {
-                          let highest = funnelTags.reduce(
-                            (max, tag) => (tag.index > max ? tag.index : max),
-                            funnelTags[0].index
-                          );
-                          tagSet = funnelTags.find(({ index }) => index === highest);
-                        }
-
-                        return (
-                            <>
-                                <tr>
-                                    <td> 
-                                        <label className={styles.customCheck}>
-                                            <input  type="checkbox" />
-                                            <span className={styles.checkmark}></span>
-                                        </label> 
-                                        <div className={styles.favStartup}> <i className="fas fa-star"></i></div>
-                                    </td>
-                                    <td> 
-                                        <div className={styles.user_profile_Img}>
-                                            {item.creative.name.charAt(0).toUpperCase()}
-                                        </div>
-                                        {item.creative.name} 
-                                    </td>
-                                    <td>Group1, Big Group 2 <ButtonGreen /> </td>
-                                    <td>
-                                        {tagSet && tagSet.name} {!tagSet && <ButtonGreen />}
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            {(item.tags || []).slice(0, 3).map(({ name, id, group }) => 
-                                                (
-                                                    <li><span>{group.name}: {name}</span></li>
-                                                )
-                                            )}
-                                            <li><ButtonGreen/></li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        {subjectiveScore(item)}
-                                        {!subjectiveScore(item) && <ButtonGreen/> }
-                                    </td>
-                                    <td>
-                                        <span className={styles.olderThan}>
-                                            {moment(item.updatedAt).format("ll")}
-                                        </span>
-                                    </td>
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
-                                </tr>
-                            </>
-                        )
-                    })}
+                    <tr>
+                        <td> 
+                            <label className={styles.customCheck}>
+                                <input  type="checkbox" />
+                                <span class={styles.checkmark}></span>
+                            </label> 
+                            <div className={styles.favStartup}> <i class="fas fa-star"></i></div>
+                        </td>
+                        <td> <img src={Imag} /> Great Startup Inc</td>
+                        <td>Group1, Big Group 2 <ButtonGreen /> </td>
+                        <td>kjkjk</td>
+                        <td>
+                            <ul>
+                                <li><span>MedTech</span></li>
+                                <li><span>OceanTech</span> ...</li>
+                                <li><ButtonGreen/></li>
+                            </ul>
+                        </td>
+                        <td><ButtonGreen/></td>
+                        <td><span className={styles.olderThan}>Older than 2 month</span></td>
+                        <td>65% <span> <i className="fas fa-pen"></i></span></td>
+                        <td>65% <span> <i className="fas fa-pen"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label className={styles.customCheck}>
+                                <input  type="checkbox" />
+                                <span class={styles.checkmark}></span>
+                            </label> 
+                            <div className={styles.favStartup}> <i class="fas fa-star"></i></div>
+                        </td>
+                        <td> <img src={Imag} /> Great Startup Inc</td>
+                        <td>Group1, Big Group 2 <ButtonGreen /> </td>
+                        <td>kjkjk</td>
+                        <td>
+                            <ul>
+                                <li><span>MedTech</span> <span>MedTech</span> ...</li>
+                                <li><ButtonGreen/></li>
+                            </ul>
+                        </td>
+                        <td>8,5 <span> <i className="fas fa-pen"></i></span></td>
+                        <td>Jan 25, 2020</td>
+                        <td><ButtonGreen/></td>
+                        <td>65% <span> <i className="fas fa-pen"></i></span></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

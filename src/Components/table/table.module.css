@@ -2,7 +2,6 @@
   max-width: 100%;
   box-shadow: 0px 3px 12px rgba(41, 70, 103, 0.2);
   font-family: Proxima Nova;
-  overflow-y: auto;
 }
 .buttongreen {
   background-color: transparent;
@@ -214,16 +213,4 @@
   font-size: 9.5px;
   font-family: Roboto;
   font-style: normal;
-}
-
-.user_profile_Img {
-  padding-top: 2px;
-  text-align: center;
-  top: 16px;
-  width: 27px;
-  height: 27px;
-  color: white;
-  margin-right: 12px;
-  border-radius: 50%;
-  background: #b7b7b7;
 }

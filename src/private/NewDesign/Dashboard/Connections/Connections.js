@@ -69,12 +69,10 @@ function ListOfStartups({ filters, currentPage, history }) {
     setShowFunnelScoreForId,
   });
 
-  console.log("connections", connections);
-
   return (
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
-      <Tablee data={connections}></Tablee>
+      <Tablee></Tablee>
       {/* <Table
         dataSource={filteredConnections}
         columns={columns}
