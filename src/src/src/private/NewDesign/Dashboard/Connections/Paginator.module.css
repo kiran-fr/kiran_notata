@@ -1,0 +1,32 @@
+.container {
+  user-select: none;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #b4b9c4;
+}
+
+.paginatorInput {
+  background: #ffffff;
+  border: 1px solid #cecece;
+  box-sizing: border-box;
+  border-radius: 20px;
+  height: 32px;
+  width: 46px;
+  outline: none;
+  text-align: center;
+  color: #b4b9c4;
+  margin-right: 10px;
+}
+
+.leftArrow {
+  padding-right: 10px;
+}
+
+.rightArrow,
+.leftArrow {
+  padding-left: 10px;
+  color: #c1c1c1;
+  font-weight: 400 !important;
+}
