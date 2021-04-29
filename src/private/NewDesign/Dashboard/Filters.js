@@ -255,7 +255,7 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                   style={{ width: "100%" }}
                 >
                   <button className={styles.addButton}>
-                    <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
+                    <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
                   <div className={styles.tableSearch}>
                     <input
@@ -266,7 +266,7 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                       }
                     />
                     <button>Search</button>
-                    <i class="far fa-search"></i>
+                    <i className="far fa-search"></i>
                   </div>
                 </div>
               )}

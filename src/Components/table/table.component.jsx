@@ -27,7 +27,6 @@ export default function Table(props) {
 
 
     const showPreview = (no) => {
-        console.log(no)
         setPreview(no)
     }
     const hidePreview = ({no}) => {
@@ -48,7 +47,7 @@ export default function Table(props) {
                             <td>
                                 <label className={styles.customCheck} style={{ top: '-8px' }}>
                                     <input type="checkbox" />
-                                    <span class={styles.checkmark}></span>
+                                    <span className={styles.checkmark}></span>
                                 </label>
                             </td>
                             <td>COMPANY NAME <i className="fal fa-exchange" /></td>
@@ -76,13 +75,13 @@ export default function Table(props) {
                         }
 
                         return (
-                                <tr>
+                                <tr key = {index}>
                                     <td>
                                         <label className={styles.customCheck}>
                                             <input type="checkbox" />
-                                            <span class={styles.checkmark}></span>
+                                            <span className={styles.checkmark}></span>
                                         </label>
-                                        <div className={styles.favStartup}> <i class="fas fa-star"></i></div>
+                                        <div className={styles.favStartup}> <i className="fas fa-star"></i></div>
                                     </td>
                                     <td onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview}> 
                                         <div className={styles.user_profile_Img}>
@@ -97,7 +96,7 @@ export default function Table(props) {
                                     <td>
                                         <div className={styles.startupStatus}>
                                             {/* {tagSet && tagSet.name} {!tagSet && <ButtonGreen />} */}
-                                            <img src={Red} /> Reviewed <span><i class="fas fa-chevron-down"></i></span>
+                                            <img src={Red} /> Reviewed <span><i className="fas fa-chevron-down"></i></span>
                                         </div>
                                     </td>
                                     <td>
@@ -105,7 +104,7 @@ export default function Table(props) {
                                             {(item.tags || []).slice(0, 3).map(({ name, id, group }) => 
                                                 (
                                                     // <li><span>{group.name}: {name}</span></li>
-                                                    <li><span>{name}</span></li>
+                                                    <li key = {id}><span>{name}</span></li>
                                                 )
                                             )}
                                             <li><ButtonGreen/></li>
