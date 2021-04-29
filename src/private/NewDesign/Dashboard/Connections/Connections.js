@@ -76,6 +76,7 @@ function ListOfStartups({ filters, currentPage, history }) {
         data={connections}
         loading={loading}
         emptyLabel={"No results."}
+        history={history}
       ></Tablee>
       {/* <Table
         dataSource={filteredConnections}

@@ -86,7 +86,7 @@ export function SideBarMenu() {
               onClick={closeSidebar}
             >
               {" "}
-              <i className={`fal fa-chevron-left`} />
+              <i className={`fal fa-chevron-right`} />
             </div>
           </div>
 
@@ -103,7 +103,7 @@ export function SideBarMenu() {
                 listOpen ? styles.right_icon : styles.left_icon
               )}
             >
-              <i className={`fal fa-chevron-${listOpen ? "left" : "right"}`} />
+              <i className={`fal fa-chevron-${listOpen ? "right" : "left"}`} />
             </span>
           </div>
           <div>
@@ -113,7 +113,7 @@ export function SideBarMenu() {
               onClick={openSidebar}
             >
               {" "}
-              <i className={`fal fa-chevron-${listOpen ? "left" : "right"}`} />
+              <i className={`fal fa-chevron-${listOpen ? "right" : "left"}`} />
             </div>
           </div>
           {/* Main navigation icons */}

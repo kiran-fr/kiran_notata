@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styles from './table.module.css';
+import { startup_page } from "definitions";
 import TagSelect from '../../private/NewDesign/Dashboard/Connections/DealFlow/modal';
 import Red from '../../assets/images/red.png';
 // import Green from '../../assets/images/green.png';
@@ -13,7 +14,7 @@ export default function Table(props) {
     const [preview, setPreview] = useState()
 
     const StartupPreview = ({no}) => (
-        <div className={styles.startupPreview} style={{top:`${95 + ( 56 * no)}px`}}>
+        <div className={styles.startupPreview}>
             <h1>Great Startup Inc</h1>
             <h3>Company One-liner</h3>
             <p>Great Startup is a simple tool for investors to evaluate startups and engage their network
@@ -23,7 +24,7 @@ export default function Table(props) {
         </div>
     )
 
-    const { data, loading, emptyLabel } = props
+    const { data, loading, emptyLabel, history } = props
 
 
     const showPreview = (no) => {
@@ -37,6 +38,11 @@ export default function Table(props) {
             <i className="fas fa-plus-circle"></i>
         </button>
     )
+
+    const handleCompany = (connection) => {
+        history.push(`${startup_page}/${connection.id}`)
+    }
+
 
     return (
         <div className={styles.tableOuterWrapper}>
@@ -83,11 +89,11 @@ export default function Table(props) {
                                         </label>
                                         <div className={styles.favStartup}> <i className="fas fa-star"></i></div>
                                     </td>
-                                    <td onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview}> 
-                                        <div className={styles.user_profile_Img}>
+                                    <td> 
+                                        <div onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview} className={styles.user_profile_Img}>
                                             {item.creative.name.charAt(0).toUpperCase()}
                                         </div>
-                                        {item.creative.name} 
+                                        <span onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview} className={styles.company_name} onClick = {()=>handleCompany(item)}>{item.creative.name}</span>
                                         {
                                             preview === 0 && <StartupPreview no={0} />
                                         }
@@ -103,8 +109,7 @@ export default function Table(props) {
                                         <ul>
                                             {(item.tags || []).slice(0, 3).map(({ name, id, group }) => 
                                                 (
-                                                    // <li><span>{group.name}: {name}</span></li>
-                                                    <li key = {id}><span>{name}</span></li>
+                                                    <li><span>{group.name}: {name}</span></li>
                                                 )
                                             )}
                                             <li><ButtonGreen/></li>
@@ -139,7 +144,7 @@ export default function Table(props) {
                     </div>
                 )}
             </div>
-            <TagSelect title="Add Tags" value={true} ></TagSelect>
+            <TagSelect title="Add Tags" value={false} ></TagSelect>
         </div>
     )
 }

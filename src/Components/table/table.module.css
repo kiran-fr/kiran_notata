@@ -298,6 +298,7 @@
 }
 
 .user_profile_Img {
+  cursor: pointer;
   padding-top: 4px;
   text-align: center;
   top: 16px;
@@ -341,4 +342,9 @@
 
 .loader i {
   color: var(--color-gray-medium);
+}
+
+.company_name {
+  color: var(--color-secondary);
+  cursor: pointer;
 }
