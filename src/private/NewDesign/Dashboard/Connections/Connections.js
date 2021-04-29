@@ -74,7 +74,11 @@ function ListOfStartups({ filters, currentPage, history }) {
   return (
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
-      <Tablee data={connections}></Tablee>
+      <Tablee
+        data={connections}
+        loading={loading}
+        emptyLabel={"No results."}
+      ></Tablee>
       {/* <Table
         dataSource={filteredConnections}
         columns={columns}
