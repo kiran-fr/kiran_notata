@@ -71,6 +71,8 @@ const Funnels = ({ filters, setFilters }) => {
 
   const [show, setShow] = useState(false);
 
+  const [funnelShow, setFunnelShow] = useState(false);
+
   let funnelGroups = [];
   if (data && !error && !loading) {
     funnelGroups = data.accountGet.funnelGroups;
@@ -100,7 +102,7 @@ const Funnels = ({ filters, setFilters }) => {
         </button>
       </div>
 
-      {show && (
+      {show && funnelShow && (
         <Modal title="FUNNEL" close={() => setShow(false)}>
           {funnelGroups.map(funnelGroup => {
             let funnelTags = cloneDeep(funnelGroup.funnelTags);
