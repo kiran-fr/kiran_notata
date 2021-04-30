@@ -3,8 +3,8 @@ import styles from './table.module.css';
 import { startup_page } from "definitions";
 import TagSelect from '../../private/NewDesign/Dashboard/Connections/DealFlow/modal';
 import Red from '../../assets/images/red.png';
-// import Green from '../../assets/images/green.png';
-// import Imag from '../../assets/images/struplog.png';
+import Green from '../../assets/images/green.png';
+import Imag from '../../assets/images/struplog.png';
 import moment from "moment";
 import {
     subjectiveScore,
@@ -107,17 +107,30 @@ export default function Table(props) {
                                     <td>Group1, Big Group 2 <ButtonGreen /> </td>
                                     <td>
                                         <div className={styles.startupStatus}>
-                                            {/* {tagSet && tagSet.name} {!tagSet && <ButtonGreen />} */}
-                                            <img src={Red} /> Reviewed <span><i className="fas fa-chevron-down"></i></span>
+                                            {tagSet
+                                                ?
+                                                    <>
+                                                        <img src={
+                                                            `${(tagSet.name).toUpperCase()}` === "ANALYZED" ?
+                                                            Red : Green
+                                                            } 
+                                                        />
+                                                        {tagSet.name} 
+                                                        <span>
+                                                            <i className="fas fa-chevron-down"></i>
+                                                        </span>
+                                                    </>
+                                                : 
+                                                    <ButtonGreen />
+                                            }
+                                            
                                         </div>
                                     </td>
                                     <td>
                                         <ul>
                                             {(item.tags || []).slice(0, 3).map(({ name, id, group }) => 
                                                 (
-                                                    // <li><span>{group.name}: {name}</span></li>
-                                                    <li><span> Entrepeneurs</span></li>
-
+                                                    <li><span>{group.name}: {name}</span></li>
                                                 )
                                             )}
                                             <li><ButtonGreen/></li>
