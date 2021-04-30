@@ -27,7 +27,8 @@ export function SideBarMenu() {
       label: "Dashboard",
       iconClass: "fas fa-signal-alt-3",
       iconStyle: {},
-      link: dashboard,
+      link: "dummy",
+      // highlight the text using dummy url (changed by siva)
     },
     {
       label: "My Startups",
@@ -47,12 +48,13 @@ export function SideBarMenu() {
       iconStyle: { paddingTop: "7px" },
       link: charts,
     },
-    {
-      label: "News",
-      iconClass: "fas fa-globe",
-      iconStyle: { paddingTop: "2px" },
-      link: "",
-    },
+    //  hide for now  (commented by siva)
+    // {
+    //   label: "News",
+    //   iconClass: "fas fa-globe",
+    //   iconStyle: { paddingTop: "2px" },
+    //   link: "",
+    // },
   ];
 
   const openSidebar = () => {
@@ -153,7 +155,7 @@ export function SideBarMenu() {
                 <div className={styles.icons}>
                   <i className="fas fa-cog" />
                 </div>
-                <p className={styles.list}>settings</p>
+                <p className={styles.list}>Settings</p>
               </NavLink>
             </div>
             <div
