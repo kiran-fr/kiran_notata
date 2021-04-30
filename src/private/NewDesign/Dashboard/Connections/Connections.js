@@ -143,7 +143,12 @@ export default function Connections({ history }) {
         close={() => setShowNewStartupModal(false)}
       />
 
-      <Filters setFilters={setFilters} filters={filters} fullFilter={true} />
+      <Filters
+        setShowNewStartupModal={setShowNewStartupModal}
+        setFilters={setFilters}
+        filters={filters}
+        fullFilter={true}
+      />
 
       <ListOfStartups
         history={history}

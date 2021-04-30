@@ -178,7 +178,12 @@ function getHasFilters(filters) {
   return hasFilters;
 }
 
-export default function Filters({ filters, setFilters, fullFilter }) {
+export default function Filters({
+  filters,
+  setFilters,
+  fullFilter,
+  setShowNewStartupModal,
+}) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
 
@@ -256,7 +261,10 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                   className={styles.table_headerInner}
                   style={{ width: "100%" }}
                 >
-                  <button className={styles.addButton}>
+                  <button
+                    onClick={() => setShowNewStartupModal(true)}
+                    className={styles.addButton}
+                  >
                     <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
                   <div className={styles.tableSearch}>
