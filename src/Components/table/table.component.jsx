@@ -14,7 +14,7 @@ export default function Table(props) {
     const [preview, setPreview] = useState()
 
     const StartupPreview = ({no}) => (
-        <div className={styles.startupPreview}>
+        <div className={styles.startupPreview} style={{top: `${100 + (56 * no)}px`}}>
             <h1>Great Startup Inc</h1>
             <h3>Company One-liner</h3>
             <p>Great Startup is a simple tool for investors to evaluate startups and engage their network
@@ -90,14 +90,14 @@ export default function Table(props) {
                                         <div className={styles.favStartup}> <i className="fas fa-star"></i></div>
                                     </td>
                                     <td> 
-                                        <div onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview} className={styles.user_profile_Img}>
+                                        <div onMouseOver={()=> showPreview(index)} onMouseLeave={hidePreview} className={styles.user_profile_Img}>
                                             {item.creative.name.charAt(0).toUpperCase()}
                                         </div>
-                                        <span onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview} className={styles.company_name} onClick = {()=>handleCompany(item)}>
+                                        <span onMouseOver={()=> showPreview(index)} onMouseLeave={hidePreview} className={styles.company_name} onClick = {()=>handleCompany(item)}>
                                             {item.creative.name}
                                             {
-                                            preview === 0 &&
-                                             <StartupPreview no={0} />
+                                            preview === index &&
+                                             <StartupPreview no={index} />
                                             }
                                         </span>
                                         
