@@ -93,11 +93,17 @@ export default function Table(props) {
                                         <div onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview} className={styles.user_profile_Img}>
                                             {item.creative.name.charAt(0).toUpperCase()}
                                         </div>
-                                        <span onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview} className={styles.company_name} onClick = {()=>handleCompany(item)}>{item.creative.name}</span>
-                                        {
-                                            preview === 0 && <StartupPreview no={0} />
-                                        }
+                                        <span onMouseOver={()=> showPreview(0)} onMouseLeave={hidePreview} className={styles.company_name} onClick = {()=>handleCompany(item)}>
+                                            {item.creative.name}
+                                            {
+                                            preview === 0 &&
+                                             <StartupPreview no={0} />
+                                            }
+                                        </span>
+                                        
+                                        
                                     </td>
+                                    
                                     <td>Group1, Big Group 2 <ButtonGreen /> </td>
                                     <td>
                                         <div className={styles.startupStatus}>
@@ -109,7 +115,9 @@ export default function Table(props) {
                                         <ul>
                                             {(item.tags || []).slice(0, 3).map(({ name, id, group }) => 
                                                 (
-                                                    <li><span>{group.name}: {name}</span></li>
+                                                    // <li><span>{group.name}: {name}</span></li>
+                                                    <li><span> Entrepeneurs</span></li>
+
                                                 )
                                             )}
                                             <li><ButtonGreen/></li>
