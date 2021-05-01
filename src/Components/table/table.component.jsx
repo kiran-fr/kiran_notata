@@ -6,6 +6,7 @@ import Red from '../../assets/images/red.png';
 import Green from '../../assets/images/green.png';
 import Imag from '../../assets/images/struplog.png';
 import moment from "moment";
+import InvisiblePlus from "../../assets/images/InvisiblePlus.svg"
 import {
 
     Button
@@ -83,7 +84,7 @@ export default function Table(props) {
                             <td>SUBJECTIVE SCORE <i className="fal fa-exchange" /></td>
                             <td>UPDATED <i className="fal fa-exchange" /></td>
                             <td>LAST EVALUATION (AVERAGE) <i className="fal fa-exchange" /></td>
-                            <td>AFTER <br /> PITCHING <i className="fal fa-exchange" /></td>
+                            <td>AFTER <br />First Meeting <i className="fal fa-exchange" /></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,13 +145,15 @@ export default function Table(props) {
                                 
                                         <ul>
                                            
-                                         {groupSharingInfo.length && groupSharingInfo.map((itemVal, index) => {
-                                             return(
-                                                 (!itemVal.group.name === "" ) ?<li><span>{itemVal.group.name}</span></li> : ""
-                                             )
-                                        
-                                        
-                                       })} 
+                                        {(groupSharingInfo || []).slice(0, 3).map(({ group }) => 
+                                                (
+                                                    <li >
+                                                        
+                                                            {group.name}
+                                                        
+                                                    </li>
+                                                )
+                                            )}
 
                                  {/*    // {( groupSharingInfo.group|| []).slice(0, 3).map((itemvalue) => 
                                                 
@@ -160,11 +163,11 @@ export default function Table(props) {
                                                
                                     //     )} */}
                                             
-                                            <li><ButtonGreen/></li>
+                                            <li><img src={InvisiblePlus}/></li>
                                         </ul>
                                         
                                     </td>
-                                    <td>
+                                     <td>
                                         <div className={styles.startupStatus}>
                                             {tagSet
                                                 ?
@@ -180,7 +183,7 @@ export default function Table(props) {
                                                         </span>
                                                     </>
                                                 : 
-                                                <span onClick = {() =>setShowFunnelScoreForId(item.id)}><ButtonGreen /></span>    
+                                                <span onClick = {() =>setShowFunnelScoreForId(item.id)}><ButtonGreen/></span>    
                                             }
                                             
                                         </div>
@@ -208,13 +211,14 @@ export default function Table(props) {
                                             </span>
                                         }
                                     </td>
+                                    {console.log("eval", item)}
                                     <td>
                                         <span className={styles.olderThan}>
                                             {moment(item.updatedAt).format("ll")}
                                         </span>
                                     </td>
                                     <td>65% <span> <i className="fas fa-pen"></i></span></td>
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
+                                    <td>65% <span> <i className="fas fa-pen"></i></span></td> 
                                 </tr>
                             )
                         })}

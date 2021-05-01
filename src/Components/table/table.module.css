@@ -32,9 +32,9 @@
   border: none;
 }
 .buttongreen i {
-  color: #53cab2;
+  color: #53cab2 !important;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 14px !important;
 }
 .startupTable {
   width: 100%;
