@@ -27,7 +27,11 @@ export default function Table(props) {
     const StartupPreview = ({no, companyName, oneLiner, problem}) => (
         <div className={styles.startupPreview} style={{top: `${100 + (56 * no)}px`}}>
 
-            <h1>{companyName}</h1>
+         
+            <h1>
+                
+                {companyName}</h1>
+
             {oneLiner &&
             <>
                 <h3>{oneLiner.questionName}</h3>
@@ -42,6 +46,7 @@ export default function Table(props) {
                     <p>{problem.val}</p>
                 </>
             }
+            
         </div>
     )
 
@@ -212,7 +217,7 @@ export default function Table(props) {
                                     </td>
                                     <td>
                                         <ul>
-                                            {(item.tags || []).slice(0, 3).map(({ name, id, group }) => 
+                                            {(item.tags || []).slice(0, 2).map(({ name, id, group }) => 
                                                 (
                                                     <li key ={id}>
                                                         <span>
@@ -239,7 +244,7 @@ export default function Table(props) {
                                         </span>
                                     </td>
                                     {uniqEvaluationHeader && uniqEvaluationHeader.map((headerData, index) => 
-                                        <td style = {evaluationSummaries.length ? {background :"red" } : {background: "green"}} key = {headerData} >
+                                        <td key = {headerData} >
                                             {evaluationSummaries.length 
                                                 ? 
                                                     evaluationSummaries.map(summaries => 
@@ -250,13 +255,22 @@ export default function Table(props) {
                                                                     {summaries.averagePercentageScore}
                                                                     <i className="fas fa-pen"></i>
                                                                 </> 
-                                                            : 
-                                                                "+"
+
+                                                            :  <img src={InvisiblePlus}/>
+                                                            //  {uniqEvaluationHeader && uniqEvaluationHeader.map((headerData, index) => 
+                                                                
+                                                            //         <img src={InvisiblePlus}/>
+                                                            
+                                                                
+                                                            //    )}
+                                                            
+                                                            
                                                             }
+
                                                         </span>
                                                     ) 
                                                 : 
-                                                    <span style ={{color:"pink"}} > + </span>
+                                                    <span > <img src={InvisiblePlus}/> </span>
                                             }
                                         </td>
                                     )}
