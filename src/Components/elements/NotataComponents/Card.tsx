@@ -16,7 +16,7 @@ export const Card = ({ maxWidth, noMargin, label, style, className, ...children 
   return (
     <div
       className={classnames(
-        styles.container,
+        
         noMargin && styles.no_margin,
         className && className
       )}

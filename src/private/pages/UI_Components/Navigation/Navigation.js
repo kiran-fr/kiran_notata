@@ -11,7 +11,7 @@ export default function Navigation() {
       <SideBarMenu />
       <div>
         <TopMenu />
-        <div className="container">
+        <div className="navigation-container">
           {/* <form>
             <CheckBoxes
               name="name"

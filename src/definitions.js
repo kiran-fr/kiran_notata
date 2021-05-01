@@ -44,3 +44,6 @@ export const oia_demo_page = `${public_pages}/oia`;
 export const public_presentation = `${public_pages}/presentation`;
 export const public_evaluation = `${public_pages}/evaluation`;
 export const product_demo = `${public_pages}/product_demo`;
+
+// SHUBHAM ROUTES
+export const startup_index = `${dashboard}/startup`;

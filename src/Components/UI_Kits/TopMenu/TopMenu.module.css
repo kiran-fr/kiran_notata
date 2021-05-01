@@ -1,4 +1,4 @@
-.container {
+.top_menu_container {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -14,11 +14,11 @@
   /* border-bottom: 1px solid var(--color-gray-light); */
 }
 @media screen and (max-width: 768px) {
-  .container {
+  .top_menu_container {
     display: none;
   }
 }
-.container > span i {
+.top_menu_container > span i {
   margin-left: 36px;
   color: #b7b7b7;
   font-size: 21px;

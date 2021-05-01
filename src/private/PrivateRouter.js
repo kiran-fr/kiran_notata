@@ -28,6 +28,7 @@ import {
   facts_templates,
   facts_template,
   navigation,
+  startup_index,
 } from "../definitions";
 
 // Landing page / list
@@ -68,6 +69,9 @@ import { ErrorBoundary } from "Components/ErrorBoundary";
 import { DashboardHeader } from "Components/Header/DashboardHeader";
 import ExternalForm from "./pages/ExternalForm/ExternalForm";
 import Navigation from "./pages/UI_Components/Navigation/Navigation";
+
+// Shubham Imports
+import { Startup } from "./shubham-new-designs/pages/startup/index";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -159,6 +163,8 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={ui_components} component={UI_Components} />
 
       <Route exact path={navigation} component={Navigation} />
+
+      <Route exact path={startup_index} component={Startup} />
 
       <Route render={() => <div>404</div>} />
     </Switch>

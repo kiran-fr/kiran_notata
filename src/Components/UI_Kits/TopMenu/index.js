@@ -12,7 +12,7 @@ const classnames = require("classnames");
 export function TopMenu() {
   const [listOpen, setListOpen] = useState(false);
   return (
-    <div className={styles.container}>
+    <div className={styles.top_menu_container}>
       <span>
         <i className="fas fa-question-circle"></i>
       </span>

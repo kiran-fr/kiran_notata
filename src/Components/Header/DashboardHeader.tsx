@@ -10,7 +10,7 @@ const classnames = require("classnames");
 
 export const DashboardHeader = ({ history }: { history: History }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.dashboard_header_container}>
       <div className={classnames(styles.header_block_logo, "desktop_only")}>
         <div className={styles.logo} onClick={() => history.push(frontpage)}>
           NOTATA
