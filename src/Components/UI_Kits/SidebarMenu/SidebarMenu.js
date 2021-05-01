@@ -24,13 +24,13 @@ export function SideBarMenu() {
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
   let menuList = [
-    // {
-    //   label: "Dashboard",
-    //   iconClass: "fas fa-signal-alt-3",
-    //   iconStyle: {},
-    //   link: dashboard,
-    //   // highlight the text using dummy url (changed by siva)
-    // },
+    {
+      label: "Dashboard",
+      iconClass: "fas fa-signal-alt-3",
+      iconStyle: {},
+      link: "",
+      // highlight the text using dummy url (changed by siva)
+    },
     {
       label: "My Startups",
       iconClass: "fas fa-briefcase",

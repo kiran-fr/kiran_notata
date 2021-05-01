@@ -15,14 +15,24 @@ export default function Table(props) {
     const [openTag, setOpenTag] = useState(false)
 
 
-    const StartupPreview = ({no}) => (
+    const StartupPreview = ({no, companyName, oneLiner, problem}) => (
         <div className={styles.startupPreview} style={{top: `${100 + (56 * no)}px`}}>
-            <h1>Great Startup Inc</h1>
-            <h3>Company One-liner</h3>
-            <p>Great Startup is a simple tool for investors to evaluate startups and engage their network
-            </p>
-            <h3>Problem</h3>
-            <p>It's hard to avoid unconscious bias when investing in early stage startups. A systematic approach to evaluate companies has proven to increase the return of investment. Most online platforms are focused on startups, while tools for investors are often complicated, expensive and lack sharing capabilites. Entering the market as a new investor is difficult without open access to a network. Notata is the only tool which offers deal flow management, collaboration and sharing between investors.</p>
+
+            <h1>{companyName}</h1>
+            {oneLiner &&
+            <>
+                <h3>{oneLiner.questionName}</h3>
+                <p>
+                    {oneLiner.val}
+                </p>
+            </>
+            }
+            {problem &&
+                <>
+                    <h3>{problem.questionName}</h3>
+                    <p>{problem.val}</p>
+                </>
+            }
         </div>
     )
 
@@ -74,7 +84,12 @@ export default function Table(props) {
                     <tbody>
                         {data && data.map((item, index) => {
                         
-                        let { funnelTags } = item;
+                        let { funnelTags, creative } = item;
+                         //  Company one-liner
+                         let oneLiner  = ""
+                         // Problem
+                         let problem = ""
+
 
                         let tagSet;
                         if (funnelTags.length) {
@@ -85,6 +100,11 @@ export default function Table(props) {
                           tagSet = funnelTags.find(({ index }) => index === highest);
                         }
 
+                            if(creative.answers) {
+                                oneLiner = creative.answers.find(question => question.questionId === 'q01_section_info');
+                                problem = creative.answers.find((question) => question.questionId === 'q02_section_info')
+                            }
+                       
                         return (
                                 <tr key = {index}>
                                     <td>
@@ -102,7 +122,7 @@ export default function Table(props) {
                                             {item.creative.name}
                                             {
                                             preview === index &&
-                                             <StartupPreview no={index} />
+                                             <StartupPreview companyName = {item.creative.name} oneLiner = {oneLiner}  problem = {problem} no={index} />
                                             }
                                         </span>
                                         
