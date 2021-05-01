@@ -17,6 +17,7 @@ import {
 import {
     subjectiveScore,
   } from "private/pages/Dashboard/Connections/types";
+import { upperCase } from 'lodash';
 
 export default function Table(props) {
     const [preview, setPreview] = useState()
@@ -111,7 +112,7 @@ export default function Table(props) {
                     <tbody>
                         {data && data.map((item, index) => {
                         
-                        let { funnelTags, creative, subjectiveScores,groupSharingInfo } = item;
+                        let { funnelTags, creative, subjectiveScores,groupSharingInfo, evaluationSummaries } = item;
                          //  Company one-liner
                          let oneLiner  = ""
                          // Problem
@@ -232,17 +233,34 @@ export default function Table(props) {
                                             </span>
                                         }
                                     </td>
-                                    {console.log("eval", item)}
                                     <td>
                                         <span className={styles.olderThan}>
                                             {moment(item.updatedAt).format("ll")}
                                         </span>
                                     </td>
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td> 
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td> 
-                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
+                                    {uniqEvaluationHeader && uniqEvaluationHeader.map((headerData, index) => 
+                                        <td style = {evaluationSummaries.length ? {background :"red" } : {background: "green"}} key = {headerData} >
+                                            {evaluationSummaries.length 
+                                                ? 
+                                                    evaluationSummaries.map(summaries => 
+                                                        <span> 
+                                                            {summaries.templateName === headerData   
+                                                            ? 
+                                                                <>
+                                                                    {summaries.averagePercentageScore}
+                                                                    <i className="fas fa-pen"></i>
+                                                                </> 
+                                                            : 
+                                                                "+"
+                                                            }
+                                                        </span>
+                                                    ) 
+                                                : 
+                                                    <span style ={{color:"pink"}} > + </span>
+                                            }
+                                        </td>
+                                    )}
+
                                 </tr>
                             )
                         })}
