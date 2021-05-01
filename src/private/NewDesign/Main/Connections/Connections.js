@@ -9,6 +9,7 @@ import { connectionSetStar } from "private/Apollo/Mutations";
 import Filters from "../Filters";
 import SelectTagsForStartup from "./SelectTagsForStartup";
 
+import { Kanban } from "../../Kanban/Kanban";
 import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 
 // FUNCTIONS
@@ -33,7 +34,6 @@ function ListOfStartups({ filters, currentPage, history }) {
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
-
   const [subScoreModal, setSubScoreModal] = useState("");
 
   // Queries
@@ -118,6 +118,7 @@ export default function Connections({ history }) {
   const [currentPage, setCurrentPage] = useState(undefined);
   const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [tabValue, setTabValue] = useState("2");
 
   // Load filters from local store
   useEffect(() => {
@@ -163,14 +164,25 @@ export default function Connections({ history }) {
         setFilters={setFilters}
         filters={filters}
         fullFilter={true}
+        tabValue={tabValue}
+        setTabValue={setTabValue}
       />
 
-      <ListOfStartups
-        history={history}
-        filters={filters}
-        currentPage={currentPage}
-      />
-      <Paginator currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      {tabValue === "2" ? (
+        <>
+          <ListOfStartups
+            history={history}
+            filters={filters}
+            currentPage={currentPage}
+          />
+          <Paginator
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      ) : (
+        <Kanban />
+      )}
     </>
   );
 }

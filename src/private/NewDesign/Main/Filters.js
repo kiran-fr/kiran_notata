@@ -182,6 +182,8 @@ export default function Filters({
   filters,
   setFilters,
   fullFilter,
+  setTabValue,
+  tabValue,
   setShowNewStartupModal,
 }) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
@@ -286,14 +288,20 @@ export default function Filters({
                 styles.table_headerChild + " " + styles.table_headerChildMiddle
               }
             >
-              <button>
+              <button
+                onClick={() => setTabValue("1")}
+                className={tabValue === "1" ? styles.active : ""}
+              >
                 KANBAN{" "}
                 <i
                   style={{ marginLeft: "5px" }}
                   className="fas fa-chevron-down"
                 ></i>
               </button>
-              <button className={styles.active}>
+              <button
+                onClick={() => setTabValue("2")}
+                className={tabValue === "2" ? styles.active : ""}
+              >
                 {" "}
                 <img src={Column} /> SPREADSHEET
               </button>
