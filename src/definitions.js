@@ -18,6 +18,9 @@ export const link_bridge = `/link`;
 export const dashboard = "/dashboard";
 export const charts = `${dashboard}/charts`;
 
+// KANBAN VIEW
+export const kanban = "/kanban";
+
 export const startup_page = `${dashboard}/startup_page`;
 
 export const profile = `${dashboard}/profile`;

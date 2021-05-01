@@ -22,6 +22,9 @@ import PreProfile from "Containers/NewDesign/PreProfile/Profile";
 
 import { Awaiting } from "Containers/Auth/Awaiting/Awaiting";
 
+// Import Kanban View
+import { KanbanPage } from "./private/NewDesign/Kanban/KanbanPage";
+
 // SHARING
 import { LinkBridge } from "Components/Shared/LinkBridge/LinkBridge";
 
@@ -39,6 +42,7 @@ import {
   link_bridge,
   dashboard,
   public_pages,
+  kanban,
 } from "./definitions";
 
 import "./routes.css";
@@ -60,6 +64,8 @@ export const Routes = () => (
         <Route path={link_bridge} component={LinkBridge} />
 
         <Route path={dashboard} component={LoggedInRouter} />
+
+        <Route path={kanban} component={KanbanPage} />
 
         <Route path={public_pages} component={PublicRouter} />
 
