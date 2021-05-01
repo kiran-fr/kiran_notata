@@ -15,28 +15,48 @@ export const pre_profile = "/profile";
 export const link_bridge = `/link`;
 // LOGGED IN PAGES
 
+// export const dashboard = "/dashboard";
+// export const charts = `${dashboard}/charts`;
+
+// export const startup_page = `${dashboard}/startup_page`;
+
+// export const profile = `${dashboard}/profile`;
+// export const tags = `${dashboard}/tags`;
+// export const funnels = `${dashboard}/funnels`;
+// export const settings = `${dashboard}/settings`;
+// export const team = `${dashboard}/team`;
+// export const evaluation_templates = `${dashboard}/templates`;
+// export const evaluation_template = `${evaluation_templates}/edit`;
+// export const evaluation_template_summary = `${evaluation_templates}/summary`;
+// export const facts_templates = `${dashboard}/facts_templates`;
+// export const facts_template = `${facts_templates}/edit`;
+// export const group = `${dashboard}/group`;
+// export const external_form = `${dashboard}/external_form`;
+// export const ui_components = `${dashboard}/components/ui`;
+// export const navigation = `${dashboard}/components/ui/navigation`;
+
 export const dashboard = "/dashboard";
-export const charts = `${dashboard}/charts`;
+export const startup_page = "/startup_page";
+
+export const charts = `${startup_page}/charts`;
 
 // KANBAN VIEW
 export const kanban = "/kanban";
 
-export const startup_page = `${dashboard}/startup_page`;
-
-export const profile = `${dashboard}/profile`;
-export const tags = `${dashboard}/tags`;
-export const funnels = `${dashboard}/funnels`;
-export const settings = `${dashboard}/settings`;
-export const team = `${dashboard}/team`;
-export const evaluation_templates = `${dashboard}/templates`;
+export const profile = `${startup_page}/profile`;
+export const tags = `${startup_page}/tags`;
+export const funnels = `${startup_page}/funnels`;
+export const settings = `${startup_page}/settings`;
+export const team = `${startup_page}/team`;
+export const evaluation_templates = `${startup_page}/templates`;
 export const evaluation_template = `${evaluation_templates}/edit`;
 export const evaluation_template_summary = `${evaluation_templates}/summary`;
-export const facts_templates = `${dashboard}/facts_templates`;
+export const facts_templates = `${startup_page}/facts_templates`;
 export const facts_template = `${facts_templates}/edit`;
-export const group = `${dashboard}/group`;
-export const external_form = `${dashboard}/external_form`;
-export const ui_components = `${dashboard}/components/ui`;
-export const navigation = `${dashboard}/components/ui/navigation`;
+export const group = `${startup_page}/group`;
+export const external_form = `${startup_page}/external_form`;
+export const ui_components = `${startup_page}/components/ui`;
+export const navigation = `${startup_page}/components/ui/navigation`;
 
 // PUBLIC ROUTES
 export const public_pages = `/public`;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './table.module.css';
 import { startup_page } from "definitions";
-import TagSelect from '../../private/NewDesign/Dashboard/Connections/DealFlow/modal';
+import TagSelect from '../../private/NewDesign/Main/Connections/DealFlow/modal';
 import Red from '../../assets/images/red.png';
 import Green from '../../assets/images/green.png';
 import Imag from '../../assets/images/struplog.png';

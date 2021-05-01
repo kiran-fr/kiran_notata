@@ -31,9 +31,8 @@ import {
 } from "../definitions";
 
 // Landing page / list
-import Dashboard from "./NewDesign/Dashboard/DashboardPage";
+import StartupSection from "./NewDesign/Main/StartupPage";
 
-// import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";
 import Profile from "./pages/Profile/Profile";
 import Tags from "./pages/Tags";
@@ -65,7 +64,7 @@ import { GhostLoader } from "Components/elements";
 import { ErrorBoundary } from "Components/ErrorBoundary";
 
 // Styles
-import { DashboardHeader } from "Components/Header/DashboardHeader";
+import { Header } from "Components/Header/Header";
 import ExternalForm from "./pages/ExternalForm/ExternalForm";
 import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
@@ -74,7 +73,7 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
-      <Route exact path={startup_page} component={Dashboard} />
+      <Route exact path={startup_page} component={StartupSection} />
 
       <Route exact path={profile} component={Profile} />
 
@@ -191,7 +190,7 @@ const WrapperComponent = ({ ...props }) => {
 
   return (
     <div className="page_container" style={{ display: "flex" }}>
-      <DashboardHeader history={props.history} />
+      <Header history={props.history} />
       <Navigation />
       {/* <SideBarTreeMenu {...props} /> */}
       <div

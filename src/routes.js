@@ -40,7 +40,7 @@ import {
   awaiting,
   pre_profile,
   link_bridge,
-  dashboard,
+  startup_page,
   public_pages,
   kanban,
 } from "./definitions";
@@ -63,7 +63,7 @@ export const Routes = () => (
 
         <Route path={link_bridge} component={LinkBridge} />
 
-        <Route path={dashboard} component={LoggedInRouter} />
+        <Route path={startup_page} component={LoggedInRouter} />
 
         <Route path={kanban} component={KanbanPage} />
 

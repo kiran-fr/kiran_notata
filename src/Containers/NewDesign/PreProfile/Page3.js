@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 // API STUFF
 import { useMutation } from "@apollo/client";
 import { userUpdate } from "private/Apollo/Mutations";
-import { dashboard } from "definitions.js";
+import { dashboard, startup_page } from "definitions.js";
 
 import styles from "./Profile.module.css";
 import Group from "./group/group";
@@ -37,7 +37,8 @@ export default function Page3({ extraInputs, history }) {
     }
     setLoading(false);
 
-    history.push(dashboard);
+    // history.push(dashboard);
+    history.push(startup_page);
   };
 
   const data = [
