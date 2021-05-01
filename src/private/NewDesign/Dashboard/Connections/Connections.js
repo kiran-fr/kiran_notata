@@ -70,11 +70,15 @@ function ListOfStartups({ filters, currentPage, history }) {
   });
 
   console.log("connections", connections);
-
   return (
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
-      <Tablee data={connections}></Tablee>
+      <Tablee
+        data={connections}
+        loading={loading}
+        emptyLabel={"No results."}
+        history={history}
+      ></Tablee>
       {/* <Table
         dataSource={filteredConnections}
         columns={columns}
@@ -140,7 +144,12 @@ export default function Connections({ history }) {
         close={() => setShowNewStartupModal(false)}
       />
 
-      <Filters setFilters={setFilters} filters={filters} fullFilter={true} />
+      <Filters
+        setShowNewStartupModal={setShowNewStartupModal}
+        setFilters={setFilters}
+        filters={filters}
+        fullFilter={true}
+      />
 
       <ListOfStartups
         history={history}

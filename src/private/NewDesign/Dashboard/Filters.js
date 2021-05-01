@@ -71,6 +71,8 @@ const Funnels = ({ filters, setFilters }) => {
 
   const [show, setShow] = useState(false);
 
+  const [funnelShow, setFunnelShow] = useState(false);
+
   let funnelGroups = [];
   if (data && !error && !loading) {
     funnelGroups = data.accountGet.funnelGroups;
@@ -90,17 +92,17 @@ const Funnels = ({ filters, setFilters }) => {
     <div>
       <div onClick={() => setShow(!show)} className={styles.filterContainer}>
         <button
-          className={styles.filterButton}
-          style={{ width: "180px", marginRight: "10px" }}
+          className={styles.filterButton + " " + styles.manageButton}
+          style={{ marginRight: "10px" }}
         >
           <img src={Column} /> Manage Columns
         </button>
         <button className={styles.filterButton}>
-          <img src={Filterr} /> Filter
+          <img src={Filterr} /> <span>Filter</span>
         </button>
       </div>
 
-      {show && (
+      {show && funnelShow && (
         <Modal title="FUNNEL" close={() => setShow(false)}>
           {funnelGroups.map(funnelGroup => {
             let funnelTags = cloneDeep(funnelGroup.funnelTags);
@@ -176,7 +178,12 @@ function getHasFilters(filters) {
   return hasFilters;
 }
 
-export default function Filters({ filters, setFilters, fullFilter }) {
+export default function Filters({
+  filters,
+  setFilters,
+  fullFilter,
+  setShowNewStartupModal,
+}) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
 
@@ -244,14 +251,21 @@ export default function Filters({ filters, setFilters, fullFilter }) {
             )} */}
 
             {/*SEARCH*/}
-            <div className={styles.table_headerChild}>
+            <div
+              className={
+                styles.table_headerChild + " " + styles.table_headerChildFirst
+              }
+            >
               {fullFilter && (
                 <div
                   className={styles.table_headerInner}
                   style={{ width: "100%" }}
                 >
-                  <button className={styles.addButton}>
-                    <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
+                  <button
+                    onClick={() => setShowNewStartupModal(true)}
+                    className={styles.addButton}
+                  >
+                    <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
                   <div className={styles.tableSearch}>
                     <input
@@ -262,7 +276,7 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                       }
                     />
                     <button>Search</button>
-                    <i class="far fa-search"></i>
+                    <i className="far fa-search"></i>
                   </div>
                 </div>
               )}
@@ -272,13 +286,23 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                 styles.table_headerChild + " " + styles.table_headerChildMiddle
               }
             >
-              <button>KANBAN</button>
+              <button>
+                KANBAN{" "}
+                <i
+                  style={{ marginLeft: "5px" }}
+                  className="fas fa-chevron-down"
+                ></i>
+              </button>
               <button className={styles.active}>
                 {" "}
                 <img src={Column} /> SPREADSHEET
               </button>
             </div>
-            <div className={styles.table_headerChild}>
+            <div
+              className={
+                styles.table_headerChild + " " + styles.table_headerChildLast
+              }
+            >
               <div>
                 <Funnels
                   filters={filters}

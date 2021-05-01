@@ -19,6 +19,11 @@ export default gql`
       creative {
         id
         name
+        answers {
+          questionName
+          questionId
+          val
+        }
       }
 
       tags {
@@ -36,6 +41,17 @@ export default gql`
         funnelGroupId
         name
         index
+      }
+      evaluationSummaries {
+        templateId
+        templateName
+        averagePercentageScore
+      }
+      groupSharingInfo {
+        group {
+          id
+          name
+        }
       }
     }
   }

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Modal } from "Components/UI_Kits";
 
-export default function DealFLowTag(props) {
-  const [open, setOpen] = useState(false);
+export default function DealFLowTag({ value }) {
+  const [open, setOpen] = useState(value || false);
 
   const handleModal = val => {
     setOpen(!open);

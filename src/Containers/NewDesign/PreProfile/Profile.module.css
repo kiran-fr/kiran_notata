@@ -15,7 +15,9 @@
 .dot_active {
   background: var(--color-gray-medium);
 }
-
+.tagContainer {
+  max-width: 340px;
+}
 .cards_container {
   /*min-height: 500px;*/
   /*position: relative;*/
