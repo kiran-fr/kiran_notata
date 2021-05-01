@@ -36,7 +36,7 @@ export default function Table(props) {
         </div>
     )
 
-    const { data, loading, emptyLabel, history } = props
+    const { data, loading, emptyLabel, history, setShowTagGroupForId } = props
 
     const handleTagModal = () => {
         setOpenTag(!openTag)
@@ -84,7 +84,7 @@ export default function Table(props) {
                     <tbody>
                         {data && data.map((item, index) => {
                         
-                        let { funnelTags, creative } = item;
+                        let { funnelTags, creative, subjectiveScores } = item;
                          //  Company one-liner
                          let oneLiner  = ""
                          // Problem
@@ -100,11 +100,19 @@ export default function Table(props) {
                           tagSet = funnelTags.find(({ index }) => index === highest);
                         }
 
-                            if(creative.answers) {
-                                oneLiner = creative.answers.find(question => question.questionId === 'q01_section_info');
-                                problem = creative.answers.find((question) => question.questionId === 'q02_section_info')
-                            }
+                        // subjective score (took the last index of array)
+
+                        let subjectiveScoreVal =  subjectiveScores && subjectiveScores.length ? (subjectiveScores[subjectiveScores.length - 1]).score : ""
+
+
+                        // popover oneLiner
+                        if(creative.answers) {
+                            oneLiner = creative.answers.find(question => question.questionId === 'q01_section_info');
+                            problem = creative.answers.find((question) => question.questionId === 'q02_section_info')
+                        }
                        
+                        // popover problem
+
                         return (
                                 <tr key = {index}>
                                     <td>
@@ -125,11 +133,17 @@ export default function Table(props) {
                                              <StartupPreview companyName = {item.creative.name} oneLiner = {oneLiner}  problem = {problem} no={index} />
                                             }
                                         </span>
-                                        
-                                        
                                     </td>
-                                    
-                                    <td>Group1, Big Group 2 <ButtonGreen /> </td>
+                                    <td>
+                                        <ul>
+                                            {(item.groupSharingInfo || []).slice(0, 3).map(({ name, id }) => 
+                                                (
+                                                    <li><span>{name},</span></li>
+                                                )
+                                            )}
+                                            <li><ButtonGreen/></li>
+                                        </ul>
+                                    </td>
                                     <td>
                                         <div className={styles.startupStatus}>
                                             {tagSet
@@ -155,16 +169,20 @@ export default function Table(props) {
                                         <ul>
                                             {(item.tags || []).slice(0, 3).map(({ name, id, group }) => 
                                                 (
-                                                    <li><span>{group.name}: {name}</span></li>
+                                                    <li key ={id}>
+                                                        <span>
+                                                            {group.name}: {name}
+                                                        </span>
+                                                    </li>
                                                 )
                                             )}
-                                            <li><ButtonGreen/></li>
+                                            <li onClick = {()=>setShowTagGroupForId(item.id)} ><ButtonGreen/></li>
                                         </ul>
                                     </td>
                                     <td>
-                                        {subjectiveScore(item)}
-                                        {!subjectiveScore(item) && <ButtonGreen/> }
-                                        {subjectiveScore(item) && <span> <i className="fas fa-pen"></i></span>}
+                                        {subjectiveScoreVal}
+                                        {!subjectiveScoreVal && <ButtonGreen/> }
+                                        {subjectiveScoreVal && <span> <i className="fas fa-pen"></i></span>}
                                     </td>
                                     <td>
                                         <span className={styles.olderThan}>

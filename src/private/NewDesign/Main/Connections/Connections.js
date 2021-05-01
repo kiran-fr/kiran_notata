@@ -69,7 +69,6 @@ function ListOfStartups({ filters, currentPage, history }) {
     setShowFunnelScoreForId,
   });
 
-  console.log("connections", connections);
   return (
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
@@ -78,6 +77,7 @@ function ListOfStartups({ filters, currentPage, history }) {
         loading={loading}
         emptyLabel={"No results."}
         history={history}
+        setShowTagGroupForId={setShowTagGroupForId}
       ></Tablee>
       {/* <Table
         dataSource={filteredConnections}
