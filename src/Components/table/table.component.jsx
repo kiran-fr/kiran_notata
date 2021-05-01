@@ -6,6 +6,8 @@ import Red from '../../assets/images/red.png';
 import Green from '../../assets/images/green.png';
 import Imag from '../../assets/images/struplog.png';
 import moment from "moment";
+//Helper
+import uniqBy from "lodash/uniqBy";
 import InvisiblePlus from "../../assets/images/InvisiblePlus.svg"
 import {
 
@@ -64,6 +66,18 @@ export default function Table(props) {
         history.push(`${startup_page}/${connection.id}`)
     }
 
+    let dynamicHeader = []
+
+    {data && data.map((item, index) => {
+        
+        {item.evaluationSummaries && item.evaluationSummaries.map((item1, index) => {
+            dynamicHeader.push(item1.templateName);
+        })}
+    })}
+
+
+    let uniqEvaluationHeader = uniqBy(dynamicHeader)
+
     
     return (
         <div className={styles.tableOuterWrapper}>
@@ -83,8 +97,15 @@ export default function Table(props) {
                             <td>TAGS <i className="fal fa-exchange" /></td>
                             <td>SUBJECTIVE SCORE <i className="fal fa-exchange" /></td>
                             <td>UPDATED <i className="fal fa-exchange" /></td>
-                            <td>LAST EVALUATION (AVERAGE) <i className="fal fa-exchange" /></td>
-                            <td>AFTER <br />First Meeting <i className="fal fa-exchange" /></td>
+                            {uniqEvaluationHeader.length && 
+                                (
+                                    uniqEvaluationHeader.map((header) => 
+                                        (
+                                            <td>{header} <i className="fal fa-exchange" /></td>
+                                        )
+                                    )
+                                )          
+                             }
                         </tr>
                     </thead>
                     <tbody>
@@ -219,6 +240,9 @@ export default function Table(props) {
                                     </td>
                                     <td>65% <span> <i className="fas fa-pen"></i></span></td>
                                     <td>65% <span> <i className="fas fa-pen"></i></span></td> 
+                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
+                                    <td>65% <span> <i className="fas fa-pen"></i></span></td> 
+                                    <td>65% <span> <i className="fas fa-pen"></i></span></td>
                                 </tr>
                             )
                         })}
