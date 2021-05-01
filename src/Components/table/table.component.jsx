@@ -36,7 +36,7 @@ export default function Table(props) {
         </div>
     )
 
-    const { data, loading, emptyLabel, history, setShowTagGroupForId } = props
+    const { data, loading, emptyLabel, history, setShowTagGroupForId, subScoreModal } = props
 
     const handleTagModal = () => {
         setOpenTag(!openTag)
@@ -181,8 +181,12 @@ export default function Table(props) {
                                     </td>
                                     <td>
                                         {subjectiveScoreVal}
-                                        {!subjectiveScoreVal && <ButtonGreen/> }
-                                        {subjectiveScoreVal && <span> <i className="fas fa-pen"></i></span>}
+                                        {!subjectiveScoreVal && <ButtonGreen /> }
+                                        {subjectiveScoreVal && 
+                                            <span onClick = {() =>subScoreModal(item)}> 
+                                                <i className="fas fa-pen" />
+                                            </span>
+                                        }
                                     </td>
                                     <td>
                                         <span className={styles.olderThan}>

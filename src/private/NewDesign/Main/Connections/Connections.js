@@ -23,6 +23,7 @@ import Paginator from "./Paginator";
 
 import { Table } from "Components/UI_Kits";
 
+import SubjectiveScoreModal from "./SubjectiveScoreModal";
 import tableColumns from "./TableColumns";
 import { tableScroll } from "./Connections.module.css";
 import Tablee from "../../../../Components/table/table.component";
@@ -32,6 +33,8 @@ function ListOfStartups({ filters, currentPage, history }) {
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
+
+  const [subScoreModal, setSubScoreModal] = useState("");
 
   // Queries
   const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
@@ -69,6 +72,7 @@ function ListOfStartups({ filters, currentPage, history }) {
     setShowFunnelScoreForId,
   });
 
+  console.log("subScoreModal", subScoreModal);
   return (
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
@@ -77,8 +81,15 @@ function ListOfStartups({ filters, currentPage, history }) {
         loading={loading}
         emptyLabel={"No results."}
         history={history}
+        subScoreModal={setSubScoreModal}
         setShowTagGroupForId={setShowTagGroupForId}
       ></Tablee>
+      {subScoreModal && (
+        <SubjectiveScoreModal
+          onclose={() => setSubScoreModal("")}
+          connection={subScoreModal}
+        />
+      )}
       {/* <Table
         dataSource={filteredConnections}
         columns={columns}
