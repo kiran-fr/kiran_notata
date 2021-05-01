@@ -8,6 +8,7 @@ import {
   settings,
   charts,
   signOut,
+  startup_page,
   pre_profile,
 } from "definitions.js";
 
@@ -27,14 +28,14 @@ export function SideBarMenu() {
       label: "Dashboard",
       iconClass: "fas fa-signal-alt-3",
       iconStyle: {},
-      link: "dummy",
+      link: dashboard,
       // highlight the text using dummy url (changed by siva)
     },
     {
       label: "My Startups",
       iconClass: "fas fa-briefcase",
       iconStyle: { paddingTop: "2px" },
-      link: dashboard,
+      link: startup_page,
     },
     {
       label: "Groups",

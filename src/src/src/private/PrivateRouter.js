@@ -31,7 +31,7 @@ import {
 } from "../definitions";
 
 // Landing page / list
-import Dashboard from "./NewDesign/Dashboard/DashboardPage";
+import DealFlow from "./NewDesign/Dashboard/DashboardPage";
 
 // import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";
@@ -74,7 +74,7 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
-      <Route exact path={dashboard} component={Dashboard} />
+      <Route exact path={startup_page} component={DealFlow} />
 
       <Route exact path={profile} component={Profile} />
 

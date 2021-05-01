@@ -12,6 +12,8 @@ import {
 
 export default function Table(props) {
     const [preview, setPreview] = useState()
+    const [openTag, setOpenTag] = useState(false)
+
 
     const StartupPreview = ({no}) => (
         <div className={styles.startupPreview} style={{top: `${100 + (56 * no)}px`}}>
@@ -26,6 +28,9 @@ export default function Table(props) {
 
     const { data, loading, emptyLabel, history } = props
 
+    const handleTagModal = () => {
+        setOpenTag(!openTag)
+    }
 
     const showPreview = (no) => {
         setPreview(no)
@@ -165,7 +170,7 @@ export default function Table(props) {
                     </div>
                 )}
             </div>
-            <TagSelect title="Add Tags" value={false} ></TagSelect>
+            <TagSelect title="Add Tags" value={openTag} ></TagSelect>
         </div>
     )
 }
