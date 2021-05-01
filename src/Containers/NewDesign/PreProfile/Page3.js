@@ -9,13 +9,13 @@ import { useForm } from "react-hook-form";
 // API STUFF
 import { useMutation } from "@apollo/client";
 import { userUpdate } from "private/Apollo/Mutations";
-import { dashboard, startup_page } from "definitions.js";
+import { startup_page } from "definitions.js";
 
 import styles from "./Profile.module.css";
 import Group from "./group/group";
 import { Button } from "Components/UI_Kits";
 
-export default function Page3({ extraInputs, history }) {
+export default function Page3({ setPage, extraInputs, history }) {
   const [mutate] = useMutation(userUpdate);
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState } = useForm();
@@ -29,15 +29,15 @@ export default function Page3({ extraInputs, history }) {
       investor: "software devloper",
     };
 
-    try {
+    /* try {
       setLoading(true);
       await mutate({ variables: { input } });
     } catch (error) {
       console.log("error", error);
-    }
-    setLoading(false);
+    } */
+    setLoading(true);
 
-    // history.push(dashboard);
+    //  history.push(dashboard);
     history.push(startup_page);
   };
 
@@ -72,24 +72,44 @@ export default function Page3({ extraInputs, history }) {
   } */
 
   return (
-    <div className={styles.profile3}>
-      <h1
-        style={{
-          marginBottom: "50px",
-        }}
-      >
-        Do you want to be a part of these groups?
-      </h1>
+    <form
+      className="notata_form"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ marginBottom: "20px" }}
+    >
+      <div className={styles.profile3}>
+        <h1
+          style={{
+            marginBottom: "50px",
+          }}
+        >
+          Do you want to be a part of these groups?
+        </h1>
 
-      {data.map((item, i) => (
-        <Group key={i} title={item.title} admin={item.admin} />
-      ))}
-      {/* <Button
-        type="input"
-        // value={isDirty ? "SAVE" : "SKIP"}
-        value={"NEXT"}
-        loading={loading}
-      /> */}
-    </div>
+        {data.map((item, i) => (
+          <Group key={i} title={item.title} admin={item.admin} />
+        ))}
+        <div className={styles.button_container_justify}>
+          <Button
+            size="medium"
+            buttonStyle="white"
+            type="left_arrow"
+            onClick={() => setPage(2)}
+          >
+            Back
+          </Button>
+
+          <Button
+            size="medium"
+            buttonStyle="green"
+            /* type="right_arrow" */
+            type="input"
+            loading={loading}
+          >
+            NEXT
+          </Button>
+        </div>
+      </div>
+    </form>
   );
 }

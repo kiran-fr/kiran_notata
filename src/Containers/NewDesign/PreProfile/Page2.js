@@ -74,8 +74,8 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
             { id: 3, value: "Series A+", label: "Series A+" },
           ]}
         />
-        {page > 1 && (
-          <Button
+
+        {/* <Button
             size="medium"
             buttonStyle="white"
             type="left_arrow"
@@ -83,7 +83,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
           >
             BACK
           </Button>
-        )}
+       
 
         <Button
           size="medium"
@@ -96,17 +96,37 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
         >
           NEXT
           <p> </p>
-        </Button>
+        </Button>  */}
+        <div className={styles.button_container_justify}>
+          <Button
+            size="medium"
+            buttonStyle="white"
+            type="left_arrow"
+            onClick={() => setPage(1)}
+          >
+            back
+          </Button>
+
+          <Button
+            size="medium"
+            buttonStyle="green"
+            type="right_arrow"
+            loading={isSubmitting}
+            onClick={() => setPage(3)}
+          >
+            NEXT
+          </Button>
+        </div>
       </form>
-      <div className={styles.bottom_box}>
+      {/* <div className={styles.bottom_box}>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             marginBottom: "20px",
           }}
-        ></div>
-      </div>
+        ></div> 
+      </div>*/}
     </div>
   );
 }

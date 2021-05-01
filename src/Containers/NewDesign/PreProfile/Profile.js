@@ -63,23 +63,6 @@ export default function PreProfile({ history }) {
             onClick={() => setPage(3)}
           ></div>
         </div>
-        {/* {page === 1 && <Page1 history={history} setPage={setPage} />}
-
-        {page === 2 && (
-          <Page2
-            extraInputs={extraInputs}
-            setExtraInputs={setExtraInputs}
-            setPage={setPage}
-          />
-        )}
-
-        {page === 3 && (
-          <Page3
-            extraInputs={extraInputs}
-            setExtraInputs={setExtraInputs}
-            setPage={setPage}
-          />
-        )} */}
         <div className="container">
           {transition((style, item) =>
             item === 1 ? (
@@ -101,41 +84,12 @@ export default function PreProfile({ history }) {
                     extraInputs={extraInputs}
                     setExtraInputs={setExtraInputs}
                     setPage={setPage}
+                    history={history}
                   />
                 </animated.div>
               )
             )
           )}
-        </div>
-        <div
-          style={{ marginTop: "30px" }}
-          className={
-            page > 1 ? styles.button_container_justify : styles.button_container
-          }
-        >
-          {page > 1 && (
-            <Button
-              size="medium"
-              buttonStyle="white"
-              type="left_arrow"
-              onClick={() => setPage(() => page - 1)}
-            >
-              PREV
-            </Button>
-          )}
-
-          <Button
-            size="medium"
-            buttonStyle="green"
-            type="right_arrow"
-            onClick={() => {
-              if (page > 2) return;
-              setPage(() => page + 1);
-            }}
-          >
-            NEXT
-            <p> </p>
-          </Button>
         </div>
       </Content>
     </div>
