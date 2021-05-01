@@ -7,6 +7,11 @@ import Green from '../../assets/images/green.png';
 import Imag from '../../assets/images/struplog.png';
 import moment from "moment";
 import {
+
+    Button
+
+  } from "Components/UI_Kits";
+import {
     subjectiveScore,
   } from "private/pages/Dashboard/Connections/types";
 
@@ -36,7 +41,7 @@ export default function Table(props) {
         </div>
     )
 
-    const { data, loading, emptyLabel, history, setShowTagGroupForId, subScoreModal } = props
+    const { data, loading, emptyLabel, history, setShowTagGroupForId, setShowFunnelScoreForId, setShowSubjectiveScoreForId} = props
 
     const handleTagModal = () => {
         setOpenTag(!openTag)
@@ -149,18 +154,18 @@ export default function Table(props) {
                                             {tagSet
                                                 ?
                                                     <>
-                                                        <img src={
+                                                        <img  onClick = {() =>setShowFunnelScoreForId(item.id)} src={
                                                             `${(tagSet.name).toUpperCase()}` === "ANALYZED" ?
                                                             Red : Green
                                                             } 
                                                         />
                                                         {tagSet.name} 
-                                                        <span>
+                                                        <span  onClick = {() =>setShowFunnelScoreForId(item.id)}>
                                                             <i className="fas fa-chevron-down"></i>
                                                         </span>
                                                     </>
                                                 : 
-                                                    <ButtonGreen />
+                                                <span onClick = {() =>setShowFunnelScoreForId(item.id)}><ButtonGreen /></span>    
                                             }
                                             
                                         </div>
@@ -181,9 +186,9 @@ export default function Table(props) {
                                     </td>
                                     <td>
                                         {subjectiveScoreVal}
-                                        {!subjectiveScoreVal && <ButtonGreen /> }
+                                        {!subjectiveScoreVal && <span onClick = {() =>setShowSubjectiveScoreForId(item.id)}><ButtonGreen /> </span>}
                                         {subjectiveScoreVal && 
-                                            <span onClick = {() =>subScoreModal(item)}> 
+                                            <span onClick = {() =>setShowSubjectiveScoreForId(item.id)}> 
                                                 <i className="fas fa-pen" />
                                             </span>
                                         }

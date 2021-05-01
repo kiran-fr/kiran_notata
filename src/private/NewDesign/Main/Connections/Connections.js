@@ -18,15 +18,15 @@ import applyFilters from "./applyFilters";
 import defaultFilters from "./defaultFilters";
 
 // Components
-import { Card, Button } from "Components/elements";
+import { Card, Button } from "Components/UI_Kits";
 import Paginator from "./Paginator";
 
-import { Table } from "Components/UI_Kits";
-
+//import { Table } from "Components/UI_Kits";
+import SetFunnelScore from "./setFunnelScore";
 import SubjectiveScoreModal from "./SubjectiveScoreModal";
 import tableColumns from "./TableColumns";
 import { tableScroll } from "./Connections.module.css";
-import Tablee from "../../../../Components/table/table.component";
+import Table from "../../../../Components/table/table.component";
 
 function ListOfStartups({ filters, currentPage, history }) {
   // States (for modal)
@@ -76,33 +76,36 @@ function ListOfStartups({ filters, currentPage, history }) {
   return (
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
-      <Tablee
+      <Table
         data={connections}
         loading={loading}
         emptyLabel={"No results."}
         history={history}
-        subScoreModal={setSubScoreModal}
+        setShowFunnelScoreForId={setShowFunnelScoreForId}
         setShowTagGroupForId={setShowTagGroupForId}
-      ></Tablee>
-      {subScoreModal && (
-        <SubjectiveScoreModal
-          onclose={() => setSubScoreModal("")}
-          connection={subScoreModal}
+        setShowSubjectiveScoreForId={setShowSubjectiveScoreForId}
+      ></Table>
+
+      {showFunnelScoreForId && (
+        <SetFunnelScore
+          connection={connections.find(({ id }) => id === showFunnelScoreForId)}
+          close={() => setShowFunnelScoreForId(undefined)}
         />
       )}
-      {/* <Table
-        dataSource={filteredConnections}
-        columns={columns}
-        disableHead={false}
-        pagination={false}
-        allowSorting={true}
-        loading={loading}
-        emptyLabel={"No results."}
-      /> */}
+
       {showTagGroupForId && (
         <SelectTagsForStartup
           connection={connections.find(({ id }) => id === showTagGroupForId)}
           close={() => setShowTagGroupForId(undefined)}
+        />
+      )}
+
+      {showSubjectiveScoreForId && (
+        <SubjectiveScoreModal
+          connection={connections.find(
+            ({ id }) => id === showSubjectiveScoreForId
+          )}
+          close={() => setShowSubjectiveScoreForId(undefined)}
         />
       )}
     </div>

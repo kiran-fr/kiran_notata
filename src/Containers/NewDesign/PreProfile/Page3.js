@@ -84,12 +84,12 @@ export default function Page3({ extraInputs, history }) {
       {data.map((item, i) => (
         <Group key={i} title={item.title} admin={item.admin} />
       ))}
-      <Button
+      {/* <Button
         type="input"
         // value={isDirty ? "SAVE" : "SKIP"}
         value={"NEXT"}
         loading={loading}
-      />
+      /> */}
     </div>
   );
 }
