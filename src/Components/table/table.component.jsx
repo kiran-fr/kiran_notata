@@ -63,7 +63,7 @@ export default function Table(props) {
         history.push(`${startup_page}/${connection.id}`)
     }
 
-
+    
     return (
         <div className={styles.tableOuterWrapper}>
             <div className={styles.tableWrapper}>
@@ -89,7 +89,7 @@ export default function Table(props) {
                     <tbody>
                         {data && data.map((item, index) => {
                         
-                        let { funnelTags, creative, subjectiveScores } = item;
+                        let { funnelTags, creative, subjectiveScores,groupSharingInfo } = item;
                          //  Company one-liner
                          let oneLiner  = ""
                          // Problem
@@ -116,6 +116,7 @@ export default function Table(props) {
                             problem = creative.answers.find((question) => question.questionId === 'q02_section_info')
                         }
                        
+                        
                         // popover problem
 
                         return (
@@ -140,14 +141,28 @@ export default function Table(props) {
                                         </span>
                                     </td>
                                     <td>
+                                
                                         <ul>
-                                            {(item.groupSharingInfo || []).slice(0, 3).map(({ name, id }) => 
-                                                (
-                                                    <li><span>{name},</span></li>
-                                                )
-                                            )}
+                                           
+                                         {groupSharingInfo.length && groupSharingInfo.map((itemVal, index) => {
+                                             return(
+                                                 (!itemVal.group.name === "" ) ?<li><span>{itemVal.group.name}</span></li> : ""
+                                             )
+                                        
+                                        
+                                       })} 
+
+                                 {/*    // {( groupSharingInfo.group|| []).slice(0, 3).map((itemvalue) => 
+                                                
+                                    //             {console.log("itemvalue", itemvalue)},
+                                            
+                                    //             <li><span>{itemvalue.name}</span></li> 
+                                               
+                                    //     )} */}
+                                            
                                             <li><ButtonGreen/></li>
                                         </ul>
+                                        
                                     </td>
                                     <td>
                                         <div className={styles.startupStatus}>
