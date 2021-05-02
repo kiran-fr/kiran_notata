@@ -135,7 +135,8 @@ export default function Table(props) {
 
                         // subjective score (took the last index of array)
 
-                        let subjectiveScoreVal =  subjectiveScores && subjectiveScores.length ? (subjectiveScores[subjectiveScores.length - 1]).score : ""
+                        let subjectiveScoreValAvg = subjectiveScore(item);
+                        console.log("subjectiveScoreValAvg", subjectiveScoreValAvg)
 
 
                         // popover oneLiner
@@ -230,9 +231,9 @@ export default function Table(props) {
                                         </ul>
                                     </td>
                                     <td>
-                                        {subjectiveScoreVal}
-                                        {!subjectiveScoreVal && <span onClick = {() =>setShowSubjectiveScoreForId(item.id)}><ButtonGreen /> </span>}
-                                        {subjectiveScoreVal && 
+                                        {subjectiveScoreValAvg}
+                                        {!subjectiveScoreValAvg && <span onClick = {() =>setShowSubjectiveScoreForId(item.id)}><ButtonGreen /> </span>}
+                                        {subjectiveScoreValAvg && 
                                             <span onClick = {() =>setShowSubjectiveScoreForId(item.id)}> 
                                                 <i className="fas fa-pen" />
                                             </span>
