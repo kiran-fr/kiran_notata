@@ -102,9 +102,9 @@ export default function Page3({ setPage, extraInputs, history }) {
           <Button
             size="medium"
             buttonStyle="green"
-            /* type="right_arrow" */
+            type="right_arrow"
             type="input"
-            loading={loading}
+            loading={isSubmitting}
           >
             NEXT
           </Button>
