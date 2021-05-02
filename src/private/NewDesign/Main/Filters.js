@@ -93,11 +93,11 @@ const Funnels = ({ filters, setFilters }) => {
       <div onClick={() => setShow(!show)} className={styles.filterContainer}>
         <button
           className={styles.filterButton + " " + styles.manageButton}
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "10px", opacity: "0.4" }}
         >
           <img src={Column} /> Manage Columns
         </button>
-        <button className={styles.filterButton}>
+        <button className={styles.filterButton} style={{ opacity: "0.4" }}>
           <img src={Filterr} /> <span>Filter</span>
         </button>
       </div>
@@ -269,7 +269,10 @@ export default function Filters({
                   >
                     <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
-                  <div className={styles.tableSearch}>
+                  <div
+                    className={styles.tableSearch}
+                    style={{ opacity: "0.4" }}
+                  >
                     <input
                       type="text"
                       value={filters.search}

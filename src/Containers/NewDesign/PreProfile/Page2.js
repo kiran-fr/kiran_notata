@@ -14,14 +14,19 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
   const { isSubmitting } = formState;
 
   function handleKeyDown(e) {
+    // if (e.key === "Enter" || e.keyCode === 188) {
+    //   let val = e.target.value;
+    //   if (val === "") return;
+    setExtraInputs({
+      ...extraInputs,
+      interests: [...extraInputs.interests, e.target.value],
+    });
+    e.target.value = "";
+  }
+
+  function handleBack(e) {
     if (e.key === "Enter" || e.keyCode === 188) {
-      let val = e.target.value;
-      if (val === "") return;
-      setExtraInputs({
-        ...extraInputs,
-        interests: [...extraInputs.interests, e.target.value],
-      });
-      e.target.value = "";
+      setPage(1);
     }
   }
 
@@ -32,9 +37,9 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
     }
   }
 
-  // const onSubmit = (data, event) => {
-  //   event.preventDefault();
-  // };
+  const onSubmit = (data, event) => {
+    event.preventDefault();
+  };
 
   return (
     <div>
@@ -42,7 +47,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
       <h4>Investment opportunities</h4>
       <form
         className="notata_form"
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         style={{ marginBottom: "20px" }}
       >
         <div className={styles.tagContainer}>
@@ -53,6 +58,8 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
             heading={false}
             title="domain"
             items={[]}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
           />
         </div>
         <h4>Main geography</h4>
@@ -64,6 +71,8 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
             heading={false}
             title="domain"
             items={[]}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
           />
         </div>
         <h4>Stage</h4>

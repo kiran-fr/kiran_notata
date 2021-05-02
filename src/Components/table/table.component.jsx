@@ -155,7 +155,20 @@ export default function Table(props) {
                                             <input type="checkbox" />
                                             <span className={styles.checkmark}></span>
                                         </label>
-                                        <div className={styles.favStartup}> <i className="fas fa-star"></i></div>
+                                        <div className={styles.favStartup}
+                                         /* onClick={() => {
+                                            setStarMutation({
+                                              variables: { id },
+                              
+                                              optimisticResponse: {
+                                                __typename: "Mutation",
+                                                connectionSetStar: {
+                                                  ...connection,
+                                                  starred: !starred,
+                                                },
+                                              },
+                                            });
+                                          }} */> <i className="fas fa-star"></i></div>
                                     </td>
                                     <td> 
                                         <div onMouseOver={()=> showPreview(index)} onMouseLeave={hidePreview} className={styles.user_profile_Img}>
@@ -253,8 +266,8 @@ export default function Table(props) {
                                                             {summaries.templateName === headerData   
                                                             ? 
                                                                 <>
-                                                                    {summaries.averagePercentageScore}
-                                                                    <i className="fas fa-pen"></i>
+                                                                    {summaries.averagePercentageScore}%
+                                                                    
                                                                 </> 
 
                                                             :  <img src={InvisiblePlus}/>
