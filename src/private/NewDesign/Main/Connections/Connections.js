@@ -22,12 +22,21 @@ import defaultFilters from "./defaultFilters";
 import { Card, Button } from "Components/UI_Kits";
 import Paginator from "./Paginator";
 
-//import { Table } from "Components/UI_Kits";
 import SetFunnelScore from "./setFunnelScore";
 import SubjectiveScoreModal from "./SubjectiveScoreModal";
 import tableColumns from "./TableColumns";
-import { tableScroll } from "./Connections.module.css";
 import Table from "../../../../Components/table/table.component";
+// import Table from "../../../../Components/NewDesignTable/table.component";
+
+const allFields = {
+  group: true,
+  funnel: true,
+  tag: true,
+  score: true,
+  updated: true,
+  evaluation: true,
+  pitching: true,
+};
 
 function ListOfStartups({ filters, currentPage, history }) {
   // States (for modal)
@@ -82,6 +91,7 @@ function ListOfStartups({ filters, currentPage, history }) {
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
+        fields={allFields}
         data={connections}
         evaluationTemplates={evaluationTemplates}
         loading={loading || evaluationTemplatesQuery.loading}
