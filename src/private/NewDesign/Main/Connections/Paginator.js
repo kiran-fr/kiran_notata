@@ -11,7 +11,7 @@ export default function Paginator({ currentPage, setCurrentPage }) {
 
   // Loader
   if (loading) {
-    return <div>loading</div>;
+    return <span />;
   }
 
   const currentPageNo = (currentPage && currentPage.pageNo) || 1;
