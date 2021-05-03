@@ -151,7 +151,13 @@ function getHasFilters(filters) {
   return hasFilters;
 }
 
-export default function Filters({ filters, setFilters, fullFilter }) {
+export default function Filters({
+  filters,
+  setFilters,
+  fullFilter,
+  setTabValue,
+  setShowNewStartupModal,
+}) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
   const [modal, setModal] = useState(false);
@@ -159,6 +165,7 @@ export default function Filters({ filters, setFilters, fullFilter }) {
   const [filterType, setFilterType] = useState();
 
   useEffect(() => {
+    setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
   }, []);
 
@@ -179,6 +186,16 @@ export default function Filters({ filters, setFilters, fullFilter }) {
   };
 
   let hasFilters = getHasFilters(filters);
+
+  const handleTab = () => {
+    if (activeTab === "kanban") {
+      setTabValue("spreadsheet");
+      setActiveTab("spreadsheet");
+    } else {
+      setTabValue("kanban");
+      setActiveTab("kanban");
+    }
+  };
 
   return (
     <div>
@@ -215,11 +232,15 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                 >
                   <button
                     className={styles.addButton}
-                    onClick={() => setModal("startup")}
+                    // onClick={() => setModal("startup")}
+                    onClick={() => setShowNewStartupModal(true)}
                   >
                     <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
-                  <div className={styles.tableSearch}>
+                  <div
+                    className={styles.tableSearch}
+                    style={{ opacity: "0.4" }}
+                  >
                     <input
                       type="text"
                       value={filters.search}
@@ -243,9 +264,9 @@ export default function Filters({ filters, setFilters, fullFilter }) {
               }
             >
               <Tabsection
+                tabFuc={handleTab}
                 tabArr={tabArr}
                 tabValue={activeTab || tabArr[1]?.value}
-                tabFuc={setActiveTab}
               />
             </div>
             <div

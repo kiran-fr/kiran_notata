@@ -317,7 +317,7 @@ export default function Table(props) {
           </div>
         )}
       </div>
-      <TagSelect title="Add Tags" value={openTag} ></TagSelect>
+      {/* <TagSelect title="Add Tags" value={openTag} ></TagSelect> */}
     </div>
   )
 }

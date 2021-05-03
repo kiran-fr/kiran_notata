@@ -135,7 +135,7 @@ export default function Connections({ history }) {
   const [currentPage, setCurrentPage] = useState(undefined);
   const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [tabValue, setTabValue] = useState("2");
+  const [tabValue, setTabValue] = useState("spreadsheet");
 
   // Load filters from local store
   useEffect(() => {
@@ -185,7 +185,7 @@ export default function Connections({ history }) {
         setTabValue={setTabValue}
       />
 
-      {tabValue === "2" ? (
+      {tabValue === "spreadsheet" ? (
         <>
           <ListOfStartups
             history={history}
