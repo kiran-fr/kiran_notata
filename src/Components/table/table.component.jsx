@@ -230,8 +230,8 @@ export default function Table(props) {
                         />
                         {tagSet.name}
                         <span  onClick = {() =>setShowFunnelScoreForId(item.id)}>
-                                                            <i className="fas fa-chevron-down"></i>
-                                                        </span>
+                          <i className="fas fa-chevron-down"></i>
+                        </span>
                       </>
                       :
                       <span onClick = {() =>setShowFunnelScoreForId(item.id)}><ButtonGreen/></span>
@@ -244,13 +244,22 @@ export default function Table(props) {
                     {(item.tags || []).slice(0, 2).map(({ name, id, group }) =>
                       (
                         <li key ={id}>
-                                                        <span>
-                                                            {group.name}: {name}
-                                                        </span>
+                          <span>
+                            {group.name}: {name}
+                          </span>
                         </li>
                       )
                     )}
-                    <li onClick = {()=>setShowTagGroupForId(item.id)} ><ButtonGreen/></li>
+
+                    {
+                      // !item.tags?.length && (
+                      <li onClick = {()=>setShowTagGroupForId(item.id)} >
+                        <ButtonGreen/>
+                      </li>
+                    // )
+                    }
+
+
                   </ul>
                 </td>
                 <td>
