@@ -29,12 +29,15 @@ export default function Page3({ setPage, extraInputs, history }) {
       investor: "software devloper",
     };
 
-    /* try {
-      setLoading(true);
-      await mutate({ variables: { input } });
-    } catch (error) {
-      console.log("error", error);
-    } */
+    /*
+      try {
+        setLoading(true);
+        await mutate({ variables: { input } });
+      } catch (error) {
+        console.log("error", error);
+      }
+    */
+
     setLoading(true);
 
     //  history.push(dashboard);
@@ -45,7 +48,17 @@ export default function Page3({ setPage, extraInputs, history }) {
     { title: "business angels 1", admin: "Stephanie Wykoff" },
     { title: "business angels 2", admin: "Stephanie Wykoff" },
     { title: "business angels 3", admin: "Stephanie Wykoff" },
-    { title: "business angels 4", admin: "Stephanie Wykoff" },
+
+    {
+      groupId: "123",
+      groupName: "Group Name",
+      groupDescription: "Group description",
+      createdByUser: {
+        family_name: "Ekvoll",
+        given_name: "Jørgen",
+        email: "jorgen@notata.io",
+      },
+    },
   ];
 
   // const onSubmit = (data, event) => {
@@ -69,6 +82,7 @@ export default function Page3({ setPage, extraInputs, history }) {
     if (val === ",") {
       e.target.value = "";
     }
+
   } */
 
   return (

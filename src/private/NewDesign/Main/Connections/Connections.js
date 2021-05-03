@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // API
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
-import { connectionsGet } from "private/Apollo/Queries";
+import { connectionsGet, evaluationTemplatesGet } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
 // COMPONENTS
@@ -36,7 +36,10 @@ function ListOfStartups({ filters, currentPage, history }) {
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
   const [subScoreModal, setSubScoreModal] = useState("");
 
-  // Queries
+  // Query: Account
+  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
+
+  // Query: Connections
   const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
@@ -58,6 +61,9 @@ function ListOfStartups({ filters, currentPage, history }) {
   // Define data
   const connections = data?.connectionsGet || [];
 
+  const evaluationTemplates =
+    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
+
   // Filter data
   const filteredConnections = applyFilters({ connections, filters });
 
@@ -72,13 +78,13 @@ function ListOfStartups({ filters, currentPage, history }) {
     setShowFunnelScoreForId,
   });
 
-  console.log("subScoreModal", subScoreModal);
   return (
     // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
         data={connections}
-        loading={loading}
+        evaluationTemplates={evaluationTemplates}
+        loading={loading || evaluationTemplatesQuery.loading}
         emptyLabel={"No results."}
         history={history}
         setShowFunnelScoreForId={setShowFunnelScoreForId}
