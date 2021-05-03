@@ -44,6 +44,7 @@ function ListOfStartups({ filters, currentPage, history }) {
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
   const [subScoreModal, setSubScoreModal] = useState("");
+  const [tableFields, setTableFields] = useState();
 
   // Query: Account
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
