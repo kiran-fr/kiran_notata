@@ -19,7 +19,6 @@ import applyFilters from "./applyFilters";
 import defaultFilters from "./defaultFilters";
 
 // Components
-import { Card, Button } from "Components/UI_Kits";
 import Paginator from "./Paginator";
 
 import SetFunnelScore from "./setFunnelScore";
@@ -89,7 +88,6 @@ function ListOfStartups({ filters, currentPage, history }) {
   });
 
   return (
-    // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
         fields={allFields}
@@ -154,28 +152,11 @@ export default function Connections({ history }) {
 
   return (
     <>
-      {/* <div
-        style={{
-          position: "relative",
-          marginBottom: "10px",
-          top: "-20px",
-        }}
-      >
-        <Button
-          onClick={() => setShowNewStartupModal(true)}
-          type="right_arrow"
-          size="large"
-        >
-          ADD NEW STARTUP
-        </Button>
-      </div> */}
-
       <CreateStartupModal
         history={history}
         open={showNewStartupModal}
         close={() => setShowNewStartupModal(false)}
       />
-
       <Filters
         setShowNewStartupModal={setShowNewStartupModal}
         setFilters={setFilters}
@@ -184,7 +165,6 @@ export default function Connections({ history }) {
         tabValue={tabValue}
         setTabValue={setTabValue}
       />
-
       {tabValue === "spreadsheet" ? (
         <>
           <ListOfStartups
