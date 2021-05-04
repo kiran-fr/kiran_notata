@@ -20,8 +20,28 @@ export default function TableCellData(props) {
     ButtonGreen,
     handleCompany,
     preview,
-    StartupPreview,
   } = props;
+
+  const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
+    <div
+      className={styles.startupPreview}
+      style={{ top: `${100 + 56 * no}px` }}
+    >
+      <h1>{companyName}</h1>
+      {oneLiner && (
+        <>
+          <h3>{oneLiner.questionName}</h3>
+          <p>{oneLiner.val}</p>
+        </>
+      )}
+      {problem && (
+        <>
+          <h3>{problem.questionName}</h3>
+          <p>{problem.val}</p>
+        </>
+      )}
+    </div>
+  );
 
   return (
     <tbody>
