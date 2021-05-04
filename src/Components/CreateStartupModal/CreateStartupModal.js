@@ -37,7 +37,7 @@ export const CreateStartupModal = ({ history, open, close }) => {
   function lookForDuplicateNames(e) {
     // Populate array if empty
     if (companyNameArr.length === 0) {
-      companyNameArr = connections.map(sub => sub.creative.name);
+      companyNameArr = connections.map(sub => sub.creative?.name);
     }
 
     // Filter array to see if we have a match

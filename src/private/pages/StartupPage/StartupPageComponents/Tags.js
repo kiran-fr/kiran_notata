@@ -16,8 +16,10 @@ import TagSelector from "Components/TagSelector/TagSelector";
 export function Tags({ connection, user, match }) {
   const [show, setShow] = useState(false);
   const { data, error, loading } = useQuery(tagGroupsGet);
-  const [mutate] = useMutation(connectionTagAdd);
+  const [mutate, mRes] = useMutation(connectionTagAdd);
   const [mutateDelete] = useMutation(connectionTagRemove);
+
+  console.log("mRes", mRes);
 
   if (error) {
     console.log(error);
@@ -38,6 +40,7 @@ export function Tags({ connection, user, match }) {
       optimisticResponse: {
         __typename: "Mutation",
         connectionTagAdd: {
+          ...connection,
           tags: [
             ...connection.tags,
             {
@@ -55,22 +58,22 @@ export function Tags({ connection, user, match }) {
         },
       },
 
-      update: (proxy, { data: { connectionTagAdd } }) => {
-        const data = proxy.readQuery({
-          query: connectionGet,
-          variables: { id: connection.id },
-        });
-        proxy.writeQuery({
-          query: connectionGet,
-          variables: { id: connection.id },
-          data: {
-            connectionGet: {
-              ...data.connectionGet,
-              tags: [...connectionTagAdd.tags],
-            },
-          },
-        });
-      },
+      // update: (proxy, { data: { connectionTagAdd } }) => {
+      //   const data = proxy.readQuery({
+      //     query: connectionGet,
+      //     variables: { id: connection.id },
+      //   });
+      //   proxy.writeQuery({
+      //     query: connectionGet,
+      //     variables: { id: connection.id },
+      //     data: {
+      //       connectionGet: {
+      //         ...data.connectionGet,
+      //         tags: [...connectionTagAdd.tags],
+      //       },
+      //     },
+      //   });
+      // },
     });
   }
 
@@ -94,12 +97,13 @@ export function Tags({ connection, user, match }) {
           query: connectionGet,
           variables: { id: connection.id },
         });
+
         proxy.writeQuery({
           query: connectionGet,
           variables: { id: connection.id },
           data: {
             connectionGet: {
-              ...data.connectionGet,
+              ...data?.connectionGet,
               tags: [...connection.tags.filter(({ id }) => id !== tag.id)],
             },
           },

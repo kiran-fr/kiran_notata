@@ -147,15 +147,35 @@
   box-sizing: border-box;
   padding-top: 3px;
 }
+
+.startupTable td ul li {
+  margin: 1px;
+}
+
 .startupTable td ul li span {
+  /*background-color: #6a6a6a;*/
+  /*padding: 4px 9px;*/
+  /*color: #fff;*/
+  /*border-radius: 15px;*/
+  /*font-size: 10px;*/
+
   background-color: #6a6a6a;
-  padding: 4px 9px;
+  padding: 2px 9px;
   color: #fff;
   border-radius: 15px;
   font-size: 10px;
+  text-overflow: ellipsis;
+  max-width: 230px;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+
+  position: relative;
+  /*top: -4px;*/
 }
+
 .startupTable td ul li:not(:first-child) {
-  margin-left: 8px;
+  /*margin-left: 8px;*/
 }
 .startupTable td span i {
   font-size: 12px;
@@ -304,8 +324,8 @@
   padding-top: 4px;
   text-align: center;
   top: 16px;
-  width: 27px;
-  height: 27px;
+  min-width: 27px;
+  min-height: 27px;
   color: white;
   margin-right: 12px;
   border-radius: 50%;

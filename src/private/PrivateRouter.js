@@ -80,6 +80,12 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={tags} component={Tags} />
 
+      <Route exact path={team} component={Team} />
+
+      <Route exact path={external_form} component={ExternalForm} />
+
+      <Route exact path={charts} component={Charts} />
+
       <Route exact path={funnels} component={Funnels} />
 
       <Route exact path={settings} component={Settings} />
@@ -149,12 +155,6 @@ export const RouterComponent = ({ history }) => {
         path={`${startup_page}/:connectionId/evaluation_summary/:evaluationId`}
         component={EvaluationSummary}
       />
-
-      <Route exact path={team} component={Team} />
-
-      <Route exact path={external_form} component={ExternalForm} />
-
-      <Route exact path={charts} component={Charts} />
 
       <Route exact path={ui_components} component={UI_Components} />
 
