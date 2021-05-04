@@ -1,3 +1,8 @@
+.container {
+  z-index: 10001;
+  position: relative;
+}
+
 .content {
   position: fixed;
   top: 0;
@@ -29,7 +34,7 @@
 
 .modal_title {
   font-size: 18px;
-  font-weight: var(--font-weight-medium);
+  /*font-weight: var(--font-weight-medium);*/
   color: var(--color-gray-medium);
   position: relative;
   top: -7px;

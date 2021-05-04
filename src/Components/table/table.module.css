@@ -92,7 +92,7 @@
 }
 .startupTable td:nth-child(2) {
   min-width: 185px;
-  /* position: static !important; */
+  position: static !important;
 }
 .startupTable tbody td:nth-child(2) {
   font-size: 13.8px;

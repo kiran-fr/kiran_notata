@@ -32,12 +32,11 @@ export default function Table(props) {
 
 
   const StartupPreview = ({no, companyName, oneLiner, problem}) => (
+
     <div className={styles.startupPreview} style={{top: `${100 + (56 * no)}px`}}>
 
 
-      <h1>
-
-        {companyName}</h1>
+      <h1>{companyName}</h1>
 
       {oneLiner &&
       <>
@@ -126,10 +125,7 @@ export default function Table(props) {
           {data && data.map((item, index) => {
 
             let { funnelTags, creative, subjectiveScores,groupSharingInfo, evaluationSummaries } = item;
-            //  Company one-liner
-            let oneLiner  = ""
-            // Problem
-            let problem = ""
+
 
 
             let tagSet;
@@ -147,12 +143,19 @@ export default function Table(props) {
             // console.log("subjectiveScoreValAvg", subjectiveScoreValAvg)
 
 
+            //  Company one-liner
+            let oneLiner  = ""
+            // Problem
+            let problem = ""
+
             // popover oneLiner
-            if(creative.answers) {
-              oneLiner = creative.answers.find(question => question.questionId === 'q01_section_info');
-              problem = creative.answers.find((question) => question.questionId === 'q02_section_info')
+            if (creative.answers) {
+              oneLiner = creative.answers.find(({ questionId }) => questionId === 'q01_section_info');
+              problem = creative.answers.find(({ questionId }) => questionId === 'q02_section_info')
             }
 
+            console.log('oneLiner', oneLiner)
+            console.log('problem', problem)
 
 
 
@@ -185,12 +188,19 @@ export default function Table(props) {
                     {item.creative.name.charAt(0).toUpperCase()}
                   </div>
                   <span onMouseOver={()=> showPreview(index)} onMouseLeave={hidePreview} className={styles.company_name} onClick = {()=>handleCompany(item)}>
-                                            {item.creative.name}
+                    {item.creative.name}
                     {
                       preview === index &&
-                      <StartupPreview companyName = {item.creative.name} oneLiner = {oneLiner}  problem = {problem} no={index} />
+                        <StartupPreview
+                          companyName={item.creative.name}
+                          oneLiner={oneLiner}
+                          problem={problem}
+                          no={index}
+                        />
                     }
-                                        </span>
+
+                  </span>
+
                 </td>
                 <td>
 

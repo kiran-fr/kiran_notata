@@ -2,7 +2,9 @@
 .main_sidebar {
   max-width: 206px;
   position: relative;
+  z-index: 2000;
 }
+
 .sidebar_container {
   position: relative;
   user-select: none;
