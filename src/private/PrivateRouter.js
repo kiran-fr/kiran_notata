@@ -33,6 +33,7 @@ import {
 // Landing page / list
 import StartupSection from "./NewDesign/Main/StartupPage";
 
+// import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";
 import Profile from "./pages/Profile/Profile";
 import Tags from "./pages/Tags";

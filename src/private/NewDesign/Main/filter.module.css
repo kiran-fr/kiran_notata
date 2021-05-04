@@ -85,6 +85,7 @@ button {
 .table_headerChildMiddle {
   display: flex;
   justify-content: center;
+  margin-top: -10px;
 }
 .table_headerChildMiddle button {
   background-color: transparent;
@@ -95,15 +96,10 @@ button {
   line-height: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #c9ccd1;
   border: none;
   outline: none;
   padding: 0 17px;
   margin-left: 16px;
-}
-.table_headerChildMiddle .active {
-  border-bottom: 4px solid #969ba3;
-  color: #969ba3;
 }
 .table_headerChildMiddle button img {
   height: 8.3px;
@@ -120,8 +116,36 @@ button {
   display: flex;
   align-items: center;
 }
-@media screen and (max-width: 1380px) {
+@media screen and (max-width: 1450px) {
+  .manageButton span {
+    display: none;
+  }
   .manageButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+  }
+  .manageButton img {
+    margin-right: 0;
+    padding-top: 5px;
+    width: 13px;
+    margin-right: 0px;
+    padding: 0 !important;
+    margin-top: 3px;
+  }
+  .filterButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+  }
+  .filterButton img {
+    margin-right: 0;
+    padding-top: 5px;
+    width: 13px;
+  }
+  .filterButton span {
     display: none;
   }
 }
@@ -154,23 +178,6 @@ button {
   .table_headerChildFirst {
     margin-bottom: 15px;
   }
-  .manageButton {
-    display: none !important;
-  }
-  .filterButton {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    text-align: center;
-  }
-  .filterButton img {
-    margin-right: 0;
-    padding-top: 5px;
-    width: 13px;
-  }
-  .filterButton span {
-    display: none;
-  }
 }
 @media screen and (max-width: 450px) {
   .tableSearch button {
@@ -183,13 +190,10 @@ button {
   .table_headerChildLast {
     width: 60px !important;
   }
-  .table_headerChildMiddle button {
-    width: 50%;
-    margin-right: 0 !important;
-    display: flex;
-    align-items: center;
-  }
   .addButton {
     width: 50% !important;
+  }
+  .manageButton {
+    display: none;
   }
 }

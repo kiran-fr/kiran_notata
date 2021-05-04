@@ -98,10 +98,11 @@
   background: var(--ui-color-gray-dark1);
   border-radius: 10px;
   font-weight: 500;
-  font-size: 9px;
-  line-height: 4px;
-  margin: 0 8px 7px 0;
-  padding: 0px 8px;
+  line-height: 30px;
+  font-size: 7px;
+  margin: 0 8px 0px 0;
+  padding: 10px 8px;
+  margin-top: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,12 +115,13 @@
   height: 24px;
   background: var(--ui-color-gray-dark1);
   border-radius: 12px;
-  margin: 0 8px 7px 0;
+  margin: 0 8px 0px 0;
   padding: 4px 15px;
-  padding-top: 6px;
+  padding-top: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 8px;
 }
 
 .smallTagUL {
@@ -132,7 +134,13 @@
   display: flex;
   flex-wrap: wrap;
   padding: 0;
-  margin: 7.5px 0 0 0;
+  align-items: center;
+}
+.bigInput .bigTagUL {
+  padding-bottom: 8px;
+}
+.bigInput .bigTagUL input {
+  margin-top: 10px !important;
 }
 
 /* small tag name*/
@@ -232,7 +240,9 @@
 .smallInput input {
   border: none;
   min-width: 10px;
-  top: 7px;
+}
+.smallInput .bigTagUL {
+  padding-bottom: 4px;
 }
 
 .bigInput input:focus,
