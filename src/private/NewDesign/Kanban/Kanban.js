@@ -3,11 +3,11 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 import styles from "./Kanban.module.css";
 
-import BarIcon1 from "./Assets/Bar_Icon_01.svg";
-import BarIcon2 from "./Assets/Bar_Icon_02.svg";
-import BarIcon3 from "./Assets/Bar_Icon_03.svg";
-import BarIcon4 from "./Assets/Bar_Icon_04.svg";
-import BarIcon5 from "./Assets/Bar_Icon_05.svg";
+import BarIcon1 from "./../../../assets/images/Bar_Icon_01.svg";
+import BarIcon2 from "./../../../assets/images/Bar_Icon_02.svg";
+import BarIcon3 from "./../../../assets/images/Bar_Icon_03.svg";
+import BarIcon4 from "./../../../assets/images/Bar_Icon_04.svg";
+import BarIcon5 from "./../../../assets/images/Bar_Icon_05.svg";
 
 // Components
 import BoardHeader from "./Components/BoardHeader";
