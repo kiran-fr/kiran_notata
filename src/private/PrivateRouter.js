@@ -78,7 +78,7 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={profile} component={Profile} />
 
       <Route exact path={tags} component={Tags} />
-      {/*<Route exact path={tags} component={() => <div>tags</div>} />*/}
+
       <Route exact path={team} component={Team} />
 
       <Route exact path={external_form} component={ExternalForm} />

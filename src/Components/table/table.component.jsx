@@ -122,10 +122,13 @@ export default function Table(props) {
           </tr>
           </thead>
           <tbody>
-          {data && data.map((item, index) => {
+          {
+            data &&
+            data
+              .filter(({creative}) => creative)
+              .map((item, index) => {
 
             let { funnelTags, creative, subjectiveScores,groupSharingInfo, evaluationSummaries } = item;
-
 
 
             let tagSet;
@@ -153,10 +156,6 @@ export default function Table(props) {
               oneLiner = creative.answers.find(({ questionId }) => questionId === 'q01_section_info');
               problem = creative.answers.find(({ questionId }) => questionId === 'q02_section_info')
             }
-
-            console.log('oneLiner', oneLiner)
-            console.log('problem', problem)
-
 
 
             // popover problem

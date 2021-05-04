@@ -22,25 +22,23 @@ export default function EvaluationsByTemplate({
     // Averages for each answer
     let scorePerAnswer = Object.keys(item.scorePerAnswer).map(questionName => {
       let it = item.scorePerAnswer[questionName];
-      // let averageScore = it.scoreTotal / it.count;
-      let averageScore = it.score / it.count;
-      let percentageScore = Math.round((averageScore / it.possibleScore) * 100);
+
       let res = {
         question: questionName,
-        score: averageScore.toFixed(1),
-        scorePossible: it.possibleScore,
-        percentageScore: percentageScore,
+        score: it.scoreTotal,
+        scorePossible: it.scorePossible,
+        percentageScore: it.scorePercentage,
       };
       return res;
     });
 
     // Averages for each section
-    let averageScore = item.scoreTotal / item.count;
+
     let res = {
       name: sectionName,
       scorePossible: item.scorePossible,
-      percentageScore: Math.round((averageScore / item.scorePossible) * 100),
-      score: averageScore.toFixed(1),
+      percentageScore: item.scorePercentage,
+      score: item.scoreTotal,
       scorePerAnswer,
     };
     return res;
