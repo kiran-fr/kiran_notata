@@ -2,12 +2,12 @@ import React from "react";
 
 import styles from "../Kanban.module.css";
 
-import handleIcon from "../Assets/handle.svg";
-import companyLogo from "../Assets/company_logo.png";
-import star from "../Assets/star.svg";
-import moreIcon from "../Assets/more.svg";
-import addIcon from "../Assets/add.svg";
-import editIcon from "../Assets/edit.svg";
+import handleIcon from "../../../../assets/images/handle.svg";
+import companyLogo from "../../../../assets/images/company_logo.png";
+import star from "../../../../assets/images/star.svg";
+import moreIcon from "../../../../assets/images/more.svg";
+import addIcon from "../../../../assets/images/add.svg";
+import editIcon from "../../../../assets/images/edit.svg";
 
 export default function BoardItem({ children }) {
   return (

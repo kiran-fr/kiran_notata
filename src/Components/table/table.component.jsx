@@ -1,18 +1,7 @@
 import React, {useState} from 'react';
 import styles from './table.module.css';
 import { startup_page } from "definitions";
-import TagSelect from '../../private/NewDesign/Main/Connections/DealFlow/modal';
-import Red from '../../assets/images/red.png';
-import Green from '../../assets/images/green.png';
-import moment from "moment";
-//Helper
-import uniqBy from "lodash/uniqBy";
-import InvisiblePlus from "../../assets/images/InvisiblePlus.svg"
-
-import {
-  subjectiveScore,
-} from "private/pages/Dashboard/Connections/types";
-
+import TableCellData from "./tableCellData"
 
 export default function Table(props) {
 
@@ -29,16 +18,12 @@ export default function Table(props) {
   } = props;
 
   const [preview, setPreview] = useState()
-  const [openTag, setOpenTag] = useState(false)
-
 
   const StartupPreview = ({no, companyName, oneLiner, problem}) => (
-
     <div className={styles.startupPreview} style={{top: `${100 + (56 * no)}px`}}>
-
-
-      <h1>{companyName}</h1>
-
+      <h1>
+        {companyName}
+      </h1>
       {oneLiner &&
       <>
         <h3>{oneLiner.questionName}</h3>
@@ -53,15 +38,9 @@ export default function Table(props) {
         <p>{problem.val}</p>
       </>
       }
-
     </div>
   )
 
-
-
-  const handleTagModal = () => {
-    setOpenTag(!openTag)
-  }
 
   const showPreview = (no) => {
     setPreview(no)
@@ -78,19 +57,6 @@ export default function Table(props) {
   const handleCompany = (connection) => {
     history.push(`${startup_page}/${connection.id}`)
   }
-
-  // let dynamicHeader = []
-  //
-  // // TODO: this cannot be based on the connection query. Look at account.evaluationTemplate query.
-  // {data && data.map((item, index) => {
-  //   {item.evaluationSummaries && item.evaluationSummaries.map((item1, index) => {
-  //     dynamicHeader.push(item1.templateName);
-  //   })}
-  // })}
-
-  // let uniqEvaluationHeader = uniqBy(dynamicHeader)
-
-
 
 
   return (
@@ -118,19 +84,18 @@ export default function Table(props) {
             <td>SUBJECTIVE SCORE <i className="fal fa-exchange" /></td>
             <td>UPDATED <i className="fal fa-exchange" /></td>
             {evaluationTemplates.length &&
-            (
-              evaluationTemplates
-                .filter(({id}) =>
-                  (columnSettings.evaluationTemplates || []).some(etID => etID === id)
-                )
-                .map(({ name }) =>
-                (
-                  <td>{name} <i className="fal fa-exchange" /></td>
-                )
+                evaluationTemplates
+                  .filter(({id}) =>
+                    (columnSettings.evaluationTemplates || []).some(etID => etID === id)
+                  )
+                  .map(({ name }) =>
+                  (
+                    <td>{name} <i className="fal fa-exchange" /></td>
+                  )
               )
-            )
             }
-          </tr>
+
+            </tr>
           </thead>
           <tbody>
           {
@@ -344,20 +309,26 @@ export default function Table(props) {
             )
           })}
           </tbody>
+          <TableCellData {...props} 
+            handleCompany = {handleCompany}
+            ButtonGreen = {ButtonGreen}
+            showPreview = {showPreview}
+            preview = {preview}
+            setPreview = {setPreview}
+            StartupPreview = {StartupPreview}
+          />
         </table>
         {loading && (
           <div className={styles.loader}>
             <i className={"fa fa-spinner fa-spin"} />
           </div>
         )}
-
         {!data.length && (
           <div className={styles.empty_list}>
             {emptyLabel || "This list is empty"}
           </div>
         )}
       </div>
-      <TagSelect title="Add Tags" value={openTag} ></TagSelect>
     </div>
   )
 }

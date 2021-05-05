@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "../Kanban.module.css";
 
-import DropDown from "../Assets/DropDown.svg";
+import DropDown from "../../../../assets/images/DropDown.svg";
 
 export default function BoardHeader({ children, icon }) {
   return (

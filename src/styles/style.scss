@@ -238,7 +238,7 @@ h1 {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 50px 20px 20px 20px;
+  padding: 50px 30px 20px 30px;
   /*padding-right: 340px;*/
   position: relative;
   background: var(--color-gray-pale);
@@ -337,9 +337,6 @@ input[type="submit"] {
 .notata_form input[type="password"]::placeholder,
 .notata_form textarea::placeholder {
   color: var(--color-gray-medium);
-}
-
-.focus_form {
 }
 
 .focus_form input[type="text"],
@@ -468,6 +465,7 @@ input[type="submit"] {
 }
 
 .scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   background-color: #f5f5f5;
@@ -480,6 +478,7 @@ input[type="submit"] {
 
 .scrollbar::-webkit-scrollbar-thumb {
   border-radius: 5px;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
   background-color: var(--color-primary);
 }
@@ -612,3 +611,47 @@ span.recharts-legend-item-text {
 }
 
 /* Recharts Legend Style */
+.PrivateTabIndicator-root-1{
+  background-color: #969BA3;
+  height: 4px !important;
+}
+.PrivateTabIndicator-root-5{
+  background-color: #969BA3;
+  height: 4px !important;
+}
+.table_headerChildMiddle .MuiTabs-flexContainer button{
+  position: relative;
+  background-repeat: no-repeat;
+  padding-left: 26px;
+}
+.table_headerChildMiddle .MuiTabs-flexContainer button:first-child::after{
+  content: "";
+  position: absolute;
+  width: 15px;
+  left: 32px;
+  top: 16px;
+  height: 20px;
+  background-image: url("/kanban.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.table_headerChildMiddle .MuiTabs-flexContainer button:last-child::after{
+  content: "";
+  position: absolute;
+  width: 13px;
+  left: 16px;
+  top: 14px;
+  height: 20px;
+  background-image: url("/column.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: rotate(90deg);
+}
+@media screen and (max-width:600px) {
+  .table_headerChildMiddle .MuiTabs-flexContainer button:first-child::after{
+    left: 5px;
+  }
+  .table_headerChildMiddle .MuiTabs-flexContainer button:last-child::after{
+    left: 5px;
+  }
+}

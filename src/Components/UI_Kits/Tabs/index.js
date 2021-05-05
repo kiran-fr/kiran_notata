@@ -20,8 +20,8 @@ export function Tabsection({ tabValue, tabArr, tabFuc, active }) {
   return (
     <Tabs
       value={value}
-      indicatorColor="primary"
-      textColor="primary"
+      indicatorColor="gray"
+      textColor="gray"
       onChange={handleTabChange}
       aria-label="disabled tabs example"
     >
@@ -33,6 +33,7 @@ export function Tabsection({ tabValue, tabArr, tabFuc, active }) {
             value={item.value}
             label={item.text}
             activeTab={index === active ? "active" : null}
+            style={{ color: item.value === tabValue ? "#969BA3" : "#C9CCD1" }}
           />
         ))}
     </Tabs>

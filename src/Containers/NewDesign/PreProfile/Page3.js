@@ -55,7 +55,7 @@ export default function Page3({ setPage, extraInputs, history }) {
       groupDescription: "Group description",
       createdByUser: {
         family_name: "Ekvoll",
-        given_name: "Jørgen",
+        given_name: "J�rgen",
         email: "jorgen@notata.io",
       },
     },

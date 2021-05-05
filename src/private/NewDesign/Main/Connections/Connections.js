@@ -19,15 +19,23 @@ import applyFilters from "./applyFilters";
 import defaultFilters from "./defaultFilters";
 
 // Components
-import { Card, Button } from "Components/UI_Kits";
 import Paginator from "./Paginator";
 
-//import { Table } from "Components/UI_Kits";
 import SetFunnelScore from "./setFunnelScore";
 import SubjectiveScoreModal from "./SubjectiveScoreModal";
 import tableColumns from "./TableColumns";
-import { tableScroll } from "./Connections.module.css";
 import Table from "../../../../Components/table/table.component";
+// import Table from "../../../../Components/NewDesignTable/table.component";
+
+const allFields = {
+  group: true,
+  funnel: true,
+  tag: true,
+  score: true,
+  updated: true,
+  evaluation: true,
+  pitching: true,
+};
 
 function ListOfStartups({ filters, currentPage, history }) {
   // States (for modal)
@@ -35,6 +43,7 @@ function ListOfStartups({ filters, currentPage, history }) {
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
   const [subScoreModal, setSubScoreModal] = useState("");
+  const [tableFields, setTableFields] = useState();
 
   // Query: Account
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
@@ -92,10 +101,10 @@ function ListOfStartups({ filters, currentPage, history }) {
   });
 
   return (
-    // <Card maxWidth={1200} className={tableScroll} noMargin={true}>
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
         columnSettings={columnSettings}
+        fields={allFields}
         data={connections}
         evaluationTemplates={evaluationTemplates}
         loading={loading || evaluationTemplatesQuery.loading}
@@ -138,7 +147,7 @@ export default function Connections({ history }) {
   const [currentPage, setCurrentPage] = useState(undefined);
   const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [tabValue, setTabValue] = useState("2");
+  const [tabValue, setTabValue] = useState("spreadsheet");
 
   // Load filters from local store
   useEffect(() => {
@@ -157,28 +166,11 @@ export default function Connections({ history }) {
 
   return (
     <>
-      {/* <div
-        style={{
-          position: "relative",
-          marginBottom: "10px",
-          top: "-20px",
-        }}
-      >
-        <Button
-          onClick={() => setShowNewStartupModal(true)}
-          type="right_arrow"
-          size="large"
-        >
-          ADD NEW STARTUP
-        </Button>
-      </div> */}
-
       <CreateStartupModal
         history={history}
         open={showNewStartupModal}
         close={() => setShowNewStartupModal(false)}
       />
-
       <Filters
         setShowNewStartupModal={setShowNewStartupModal}
         setFilters={setFilters}
@@ -187,8 +179,7 @@ export default function Connections({ history }) {
         tabValue={tabValue}
         setTabValue={setTabValue}
       />
-
-      {tabValue === "2" ? (
+      {tabValue === "spreadsheet" ? (
         <>
           <ListOfStartups
             history={history}
