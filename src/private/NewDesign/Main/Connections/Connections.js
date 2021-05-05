@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 
 // API
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
-import { connectionsGet, evaluationTemplatesGet } from "private/Apollo/Queries";
+import {
+  connectionsGet,
+  evaluationTemplatesGet,
+  userGet,
+} from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
 // COMPONENTS
@@ -45,6 +49,9 @@ function ListOfStartups({ filters, currentPage, history }) {
   const [subScoreModal, setSubScoreModal] = useState("");
   const [tableFields, setTableFields] = useState();
 
+  //Query: User
+  const userQuery = useQuery(userGet);
+
   // Query: Account
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
 
@@ -68,6 +75,9 @@ function ListOfStartups({ filters, currentPage, history }) {
   }, [currentPage]);
 
   // Define data
+  const user = userQuery.data?.userGet || {};
+  console.log("user", user);
+
   const connections = data?.connectionsGet || [];
 
   const evaluationTemplates =
