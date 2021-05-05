@@ -24,7 +24,8 @@ export default function Table(props) {
     history,
     setShowTagGroupForId,
     setShowFunnelScoreForId,
-    setShowSubjectiveScoreForId
+    setShowSubjectiveScoreForId,
+    columnSettings
   } = props;
 
   const [preview, setPreview] = useState()
@@ -105,14 +106,24 @@ export default function Table(props) {
               </label>
             </td>
             <td>COMPANY NAME <i className="fal fa-exchange" /></td>
-            <td>Groups <i className="fal fa-exchange" /></td>
+
+            {
+              columnSettings.groups && (
+                <td>Groups <i className="fal fa-exchange" /></td>
+              )
+            }
+
             <td>FUNNEL STAGE <i className="fal fa-exchange" /></td>
             <td>TAGS <i className="fal fa-exchange" /></td>
             <td>SUBJECTIVE SCORE <i className="fal fa-exchange" /></td>
             <td>UPDATED <i className="fal fa-exchange" /></td>
             {evaluationTemplates.length &&
             (
-              evaluationTemplates.map(({ name }) =>
+              evaluationTemplates
+                .filter(({id}) =>
+                  (columnSettings.evaluationTemplates || []).some(etID => etID === id)
+                )
+                .map(({ name }) =>
                 (
                   <td>{name} <i className="fal fa-exchange" /></td>
                 )
@@ -201,32 +212,39 @@ export default function Table(props) {
                   </span>
 
                 </td>
-                <td>
 
-                  <ul>
+                {
+                  columnSettings.groups && (
+                    <td>
 
-                    {(groupSharingInfo || []).slice(0, 3).map(({ group }) =>
-                      (
-                        <li >
+                      <ul>
 
-                          {group.name}
+                        {(groupSharingInfo || []).slice(0, 3).map(({ group }) =>
+                          (
+                            <li >
 
-                        </li>
-                      )
-                    )}
+                              {group.name}
 
-                    {/*    // {( groupSharingInfo.group|| []).slice(0, 3).map((itemvalue) =>
-                                                
+                            </li>
+                          )
+                        )}
+
+                        {/*    // {( groupSharingInfo.group|| []).slice(0, 3).map((itemvalue) =>
+
                                     //             {console.log("itemvalue", itemvalue)},
-                                            
-                                    //             <li><span>{itemvalue.name}</span></li> 
-                                               
+
+                                    //             <li><span>{itemvalue.name}</span></li>
+
                                     //     )} */}
 
-                    <li><img src={InvisiblePlus}/></li>
-                  </ul>
+                        <li><img src={InvisiblePlus}/></li>
+                      </ul>
 
-                </td>
+                    </td>
+                  )
+                }
+
+
                 <td>
                   <div className={styles.startupStatus}>
                     {tagSet
@@ -295,7 +313,11 @@ export default function Table(props) {
 
                 {
 
-                  evaluationTemplates.map(evaluationTemplate => {
+                  evaluationTemplates
+                    .filter(({id}) =>
+                      (columnSettings.evaluationTemplates || []).some(etID => etID === id)
+                    )
+                    .map(evaluationTemplate => {
 
                   // Find evaluation summary matching header
                   let summary;
