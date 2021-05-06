@@ -2,8 +2,35 @@ import React, {useState} from 'react';
 import styles from './table.module.css';
 import { startup_page } from "definitions";
 import TableCellData from "./tableCellData"
+import Red from "../../assets/images/red.png";
+import Green from "../../assets/images/green.png";
+import moment from "moment";
+//Helper
+import InvisiblePlus from "../../assets/images/InvisiblePlus.svg";
+import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
 
 export default function Table(props) {
+
+  const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
+    <div
+      className={styles.startupPreview}
+      style={{ top: `${100 + 56 * no}px` }}
+    >
+      <h1>{companyName}</h1>
+      {oneLiner && (
+        <>
+          <h3>{oneLiner.questionName}</h3>
+          <p>{oneLiner.val}</p>
+        </>
+      )}
+      {problem && (
+        <>
+          <h3>{problem.questionName}</h3>
+          <p>{problem.val}</p>
+        </>
+      )}
+    </div>
+  );
 
   const {
     data,
@@ -19,6 +46,8 @@ export default function Table(props) {
     columnSettings
   } = props;
 
+
+  console.log('datavalue', props.data)
   const [preview, setPreview] = useState()
 
 
@@ -84,7 +113,7 @@ export default function Table(props) {
                     <td>{name} <i className="fal fa-exchange" /></td>
                   )
               )
-            }
+              )}
 
             </tr>
           </thead>
@@ -300,13 +329,13 @@ export default function Table(props) {
             )
           })}
           </tbody>
-          <TableCellData {...props} 
+          {/* <TableCellData {...props} 
             handleCompany = {handleCompany}
             ButtonGreen = {ButtonGreen}
             showPreview = {showPreview}
             preview = {preview}
             hidePreview = {hidePreview}
-          />
+          /> */}
         </table>
         {loading && (
           <div className={styles.loader}>
