@@ -141,14 +141,14 @@ const Funnels = ({ filters, setFilters, setFilterType }) => {
 };
 
 function getHasFilters(filters) {
-  const hasFilters =
+  /*  const hasFilters =
     filters.tags.length ||
     filters.funnelTags.length ||
     filters.search ||
     filters.starred ||
     (filters.dateRange.length &&
-      (filters.dateRange[0] || filters.dateRange[1]));
-  return hasFilters;
+      (filters.dateRange[0] || filters.dateRange[1]));*/
+  return false;
 }
 
 export default function Filters({
@@ -208,7 +208,7 @@ export default function Filters({
                 search: "",
                 tags: [],
                 funnelTags: [],
-                dateRange: [null, null],
+                // dateRange: [null, null],
               });
             }}
           >
@@ -287,10 +287,9 @@ export default function Filters({
           </div>
         </div>
 
-        {(!!filters.tags.length ||
-          !!filters.funnelTags.length ||
-          filters.dateRange[0] ||
-          filters.dateRange[1]) && (
+        {(!!filters.tags.length || !!filters.funnelTags.length) && (
+          // filters.dateRange[0] ||
+          // filters.dateRange[1]) &&
           <div className={content}>
             <div>
               {filters.funnelTags.map(funnelTag => {
@@ -343,27 +342,27 @@ export default function Filters({
                 );
               })}
 
-              {(filters.dateRange[0] || filters.dateRange[1]) && (
-                <Tag key="dateFilterTag">
-                  <div className={tag_each}>
-                    <div>
-                      <i className="fal fa-calendar" /> Date:{" "}
-                      {formatDateTag(filters.dateRange)}
-                    </div>
-                    <div
-                      className={tag_kill}
-                      onClick={() => {
-                        setFilters({
-                          ...filters,
-                          dateRange: [null, null],
-                        });
-                      }}
-                    >
-                      <i className="fal fa-times" />
-                    </div>
-                  </div>
-                </Tag>
-              )}
+              {/*{(filters.dateRange[0] || filters.dateRange[1]) && (*/}
+              {/*  <Tag key="dateFilterTag">*/}
+              {/*    <div className={tag_each}>*/}
+              {/*      <div>*/}
+              {/*        <i className="fal fa-calendar" /> Date:{" "}*/}
+              {/*        {formatDateTag(filters.dateRange)}*/}
+              {/*      </div>*/}
+              {/*      <div*/}
+              {/*        className={tag_kill}*/}
+              {/*        onClick={() => {*/}
+              {/*          setFilters({*/}
+              {/*            ...filters,*/}
+              {/*            dateRange: [null, null],*/}
+              {/*          });*/}
+              {/*        }}*/}
+              {/*      >*/}
+              {/*        <i className="fal fa-times" />*/}
+              {/*      </div>*/}
+              {/*    </div>*/}
+              {/*  </Tag>*/}
+              {/*)}*/}
             </div>
           </div>
         )}
@@ -373,7 +372,13 @@ export default function Filters({
       {filterType === "column" ? (
         <ColumnSidebar close={setFilterType} />
       ) : (
-        filterType === "filter" && <FilterSidebar close={setFilterType} />
+        filterType === "filter" && (
+          <FilterSidebar
+            close={setFilterType}
+            filters={filters}
+            setFilters={setFilters}
+          />
+        )
       )}
     </div>
   );

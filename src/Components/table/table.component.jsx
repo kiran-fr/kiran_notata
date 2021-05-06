@@ -11,6 +11,8 @@ export default function Table(props) {
     loading,
     emptyLabel,
     history,
+    filters,
+    setFilters
   } = props;
 
   const [preview, setPreview] = useState()
@@ -47,7 +49,24 @@ export default function Table(props) {
                   <span className={styles.checkmark}></span>
                 </label>
               </td>
-              <td>COMPANY NAME <i className="fal fa-exchange" /></td>
+              <td>
+                COMPANY NAME{" "}
+                <i
+                  className="fal fa-exchange"
+                  onClick={() => {
+
+                    let sortBy = "ALPHA";
+                    let sortDirection = filters.sortBy === "ALPHA" ? "DESC" : "ASC"
+
+                    setFilters({
+                      ...filters,
+                      sortBy,
+                      sortDirection
+                    })
+
+                  }}
+                />
+              </td>
               <td>Groups <i className="fal fa-exchange" /></td>
               <td>FUNNEL STAGE <i className="fal fa-exchange" /></td>
               <td>TAGS <i className="fal fa-exchange" /></td>
