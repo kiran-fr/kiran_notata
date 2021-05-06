@@ -3,7 +3,7 @@ import moment from "moment";
 export default function applyFilters({ connections, filters }) {
   // Check if we have all the vals:
   filters = filters || {};
-  filters.dateRange = filters.dateRange || [null, null];
+  // filters.dateRange = filters.dateRange || [null, null];
 
   if (!filters) return connections;
 
@@ -85,17 +85,17 @@ export default function applyFilters({ connections, filters }) {
     });
   }
 
-  if (filters.dateRange[0] || filters.dateRange[1]) {
-    const [start, end] = [
-      filters.dateRange[0] ? moment(filters.dateRange[0]).valueOf() : null,
-      filters.dateRange[1] ? moment(filters.dateRange[1]).valueOf() : null,
-    ];
-    connections = connections.filter(
-      connection =>
-        (start ? start <= connection.updatedAt : true) &&
-        (end ? end >= connection.updatedAt : true)
-    );
-  }
+  // if (filters.dateRange[0] || filters.dateRange[1]) {
+  //   const [start, end] = [
+  //     filters.dateRange[0] ? moment(filters.dateRange[0]).valueOf() : null,
+  //     filters.dateRange[1] ? moment(filters.dateRange[1]).valueOf() : null,
+  //   ];
+  //   connections = connections.filter(
+  //     connection =>
+  //       (start ? start <= connection.updatedAt : true) &&
+  //       (end ? end >= connection.updatedAt : true)
+  //   );
+  // }
 
   return connections;
 }

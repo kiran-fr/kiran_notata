@@ -8,7 +8,7 @@ import VioletBar from "../../assets/images/violetBar.png";
 import YellowBar from "../../assets/images/yellowBar.png";
 import GrassBar from "../../assets/images/grassBar.png";
 
-export default function FilterBar({ close }) {
+export default function FilterBar({ close, filters, setFilters }) {
   const funnels = [
     { name: "Reviewed", img: RedBar },
     { name: "Met", img: GreenBar },
@@ -55,7 +55,13 @@ export default function FilterBar({ close }) {
     <Sidebar title="FILTERS" icon="fas fa-filter" close={close}>
       <div className={styles.filter}>
         <div className={styles.search}>
-          <input type="text" />
+          <input
+            type="text"
+            value={filters.search}
+            onChange={e => {
+              setFilters({ ...filters, search: e.target.value });
+            }}
+          />
           <button>Search</button>
         </div>
         <div className={styles.funnelStage}>

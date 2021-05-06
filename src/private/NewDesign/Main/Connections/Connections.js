@@ -20,7 +20,7 @@ import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal
 import applyFilters from "./applyFilters";
 
 // Definitions
-import defaultFilters from "./defaultFilters";
+// import defaultFilters from "./defaultFilters";
 
 // Components
 import Paginator from "./Paginator";
@@ -41,7 +41,20 @@ const allFields = {
   pitching: true,
 };
 
-function ListOfStartups({ filters, currentPage, history }) {
+function getCleanFilterData(filters) {
+  let clean = {};
+  for (let key in filters) {
+    if (filters[key] && filters[key].length) {
+      clean[key] = filters[key];
+    }
+  }
+  return clean;
+}
+
+function ListOfStartups({ filters, setFilters, currentPage, history }) {
+  console.log("****************");
+  console.log("filters", filters);
+
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
@@ -60,6 +73,7 @@ function ListOfStartups({ filters, currentPage, history }) {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
     variables: {
+      filters: getCleanFilterData(filters),
       LastEvaluatedId: undefined,
     },
   });
@@ -87,7 +101,7 @@ function ListOfStartups({ filters, currentPage, history }) {
 
   // Define data
   const user = userQuery.data?.userGet || {};
-  console.log("user", user);
+  // console.log("user", user);
 
   const connections = data?.connectionsGet || [];
 
@@ -116,6 +130,8 @@ function ListOfStartups({ filters, currentPage, history }) {
         columnSettings={columnSettings}
         fields={allFields}
         data={connections}
+        filters={filters}
+        setFilters={setFilters}
         evaluationTemplates={evaluationTemplates}
         loading={loading || evaluationTemplatesQuery.loading}
         emptyLabel={"No results."}
@@ -152,8 +168,35 @@ function ListOfStartups({ filters, currentPage, history }) {
 }
 
 export default function Connections({ history }) {
+  const defaultFilters = {
+    // FILTERS
+
+    search: "all",
+    tags: [],
+    funnelTags: [],
+    // fromDate: new Date().getTime() - 40000,
+    // toDate: new Date().getTime(),
+    // limit: 25
+
+    // SORTING
+    // sortBy: 'GROUP',
+    //   // STARRED
+    //   // ALPHA
+    //   // EVALUATION
+    //   // SUBJECTIVE_SCORE
+    //   // TAGS
+    //   // FUNNEL
+    //   // GROUP
+    //   // CREATED_AT
+    //   // UPDATED_AT
+
+    // sortByVal: "groupId",
+    // sortDirection: 'ASC'
+  };
+
   // States
   const [filters, setFilterState] = useState(defaultFilters);
+
   const [currentPage, setCurrentPage] = useState(undefined);
   const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -165,7 +208,10 @@ export default function Connections({ history }) {
     try {
       f = JSON.parse(localStorage.getItem("filters"));
     } catch (error) {}
-    if (f) setFilterState(f);
+
+    if (f) {
+      setFilterState(f.dateRange ? defaultFilters : f);
+    }
   }, []);
 
   // Setting filters: save to local store
@@ -194,6 +240,7 @@ export default function Connections({ history }) {
           <ListOfStartups
             history={history}
             filters={filters}
+            setFilters={setFilters}
             currentPage={currentPage}
           />
           <Paginator

@@ -3,7 +3,7 @@ const defaultFilters = {
   funnelTags: [],
   search: "",
   starred: false,
-  dateRange: [null, null],
+  // dateRange: [null, null],
 };
 
 export default defaultFilters;

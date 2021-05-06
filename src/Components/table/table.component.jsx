@@ -11,6 +11,8 @@ export default function Table(props) {
     loading,
     emptyLabel,
     history,
+    filters,
+    setFilters,
     setShowTagGroupForId,
     setShowFunnelScoreForId,
     setShowSubjectiveScoreForId,
@@ -44,31 +46,40 @@ export default function Table(props) {
       <div className={styles.tableWrapper}>
         <table className={styles.startupTable}>
           <thead>
-          <tr>
-            <td>
-              <label className={styles.customCheck} style={{ top: '-8px' }}>
-                <input type="checkbox" />
-                <span className={styles.checkmark}></span>
-              </label>
-            </td>
-            <td>COMPANY NAME <i className="fal fa-exchange" /></td>
 
-            {
-              columnSettings.groups && (
-                <td>Groups <i className="fal fa-exchange" /></td>
-              )
-            }
+            <tr>
+              <td>
+                <label className={styles.customCheck} style={{ top: '-8px' }}>
+                  <input type="checkbox" />
+                  <span className={styles.checkmark}></span>
+                </label>
+              </td>
+              <td>
+                COMPANY NAME{" "}
+                <i
+                  className="fal fa-exchange"
+                  onClick={() => {
 
-            <td>FUNNEL STAGE <i className="fal fa-exchange" /></td>
-            <td>TAGS <i className="fal fa-exchange" /></td>
-            <td>SUBJECTIVE SCORE <i className="fal fa-exchange" /></td>
-            <td>UPDATED <i className="fal fa-exchange" /></td>
-            {evaluationTemplates.length &&
-                evaluationTemplates
-                  .filter(({id}) =>
-                    (columnSettings.evaluationTemplates || []).some(etID => etID === id)
-                  )
-                  .map(({ name }) =>
+                    let sortBy = "ALPHA";
+                    let sortDirection = filters.sortBy === "ALPHA" ? "DESC" : "ASC"
+
+                    setFilters({
+                      ...filters,
+                      sortBy,
+                      sortDirection
+                    })
+
+                  }}
+                />
+              </td>
+              <td>Groups <i className="fal fa-exchange" /></td>
+              <td>FUNNEL STAGE <i className="fal fa-exchange" /></td>
+              <td>TAGS <i className="fal fa-exchange" /></td>
+              <td>SUBJECTIVE SCORE <i className="fal fa-exchange" /></td>
+              <td>UPDATED <i className="fal fa-exchange" /></td>
+              {evaluationTemplates.length &&
+              (
+                evaluationTemplates.map(({ name }) =>
                   (
                     <td>{name} <i className="fal fa-exchange" /></td>
                   )
