@@ -88,6 +88,17 @@ function ListOfStartups({ filters, setFilters, currentPage, history }) {
     });
   }, [currentPage]);
 
+  // TODO: Column settings
+  // This is saved on user.columnSettings
+  let columnSettings = {
+    groups: false,
+
+    evaluationTemplates: [
+      "275c9718-61d4-c04b-ef00-3da8770b4442",
+      "e166a3f7-fbf8-6f5c-fa1d-43509844a8d3",
+    ],
+  };
+
   // Define data
   const user = userQuery.data?.userGet || {};
   // console.log("user", user);
@@ -96,6 +107,8 @@ function ListOfStartups({ filters, setFilters, currentPage, history }) {
 
   const evaluationTemplates =
     evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
+
+  console.log("evaluationTemplates", evaluationTemplates);
 
   // Filter data
   const filteredConnections = applyFilters({ connections, filters });
@@ -114,6 +127,7 @@ function ListOfStartups({ filters, setFilters, currentPage, history }) {
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
+        columnSettings={columnSettings}
         fields={allFields}
         data={connections}
         filters={filters}
