@@ -32,7 +32,7 @@ import {
 } from "../definitions";
 
 // Landing page / list
-import Dashboard from "./NewDesign/Dashboard/DashboardPage";
+import StartupSection from "./NewDesign/Main/StartupPage";
 
 // import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";
@@ -66,7 +66,7 @@ import { GhostLoader } from "Components/elements";
 import { ErrorBoundary } from "Components/ErrorBoundary";
 
 // Styles
-import { DashboardHeader } from "Components/Header/DashboardHeader";
+import { Header } from "Components/Header/Header";
 import ExternalForm from "./pages/ExternalForm/ExternalForm";
 import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
@@ -78,11 +78,17 @@ import { Startup } from "./shubham-new-designs/pages/startup/index";
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
-      <Route exact path={dashboard} component={Dashboard} />
+      <Route exact path={startup_page} component={StartupSection} />
 
       <Route exact path={profile} component={Profile} />
 
       <Route exact path={tags} component={Tags} />
+
+      <Route exact path={team} component={Team} />
+
+      <Route exact path={external_form} component={ExternalForm} />
+
+      <Route exact path={charts} component={Charts} />
 
       <Route exact path={funnels} component={Funnels} />
 
@@ -154,12 +160,6 @@ export const RouterComponent = ({ history }) => {
         component={EvaluationSummary}
       />
 
-      <Route exact path={team} component={Team} />
-
-      <Route exact path={external_form} component={ExternalForm} />
-
-      <Route exact path={charts} component={Charts} />
-
       <Route exact path={ui_components} component={UI_Components} />
 
       <Route exact path={navigation} component={Navigation} />
@@ -197,7 +197,7 @@ const WrapperComponent = ({ ...props }) => {
 
   return (
     <div className="page_container" style={{ display: "flex" }}>
-      <DashboardHeader history={props.history} />
+      <Header history={props.history} />
       <Navigation />
       {/* <SideBarTreeMenu {...props} /> */}
       <div

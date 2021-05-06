@@ -26,6 +26,7 @@ export default gql`
       sections {
         sectionId
         sectionName
+        scorePercent
         scoreTotal
         scorePossible
         scorePerAnswer {

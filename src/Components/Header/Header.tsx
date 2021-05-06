@@ -8,7 +8,7 @@ import styles from "./Header.module.css";
 
 const classnames = require("classnames");
 
-export const DashboardHeader = ({ history }: { history: History }) => {
+export const Header = ({ history }: { history: History }) => {
   return (
     <div className={styles.dashboard_header_container}>
       <div className={classnames(styles.header_block_logo, "desktop_only")}>

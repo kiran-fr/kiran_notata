@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TagSelector from "Components/TagSelector/TagSelector";
 import { Tag, Modal } from "Components/elements/";
 import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
@@ -10,9 +10,12 @@ import classnames from "classnames";
 import styles from "./filter.module.css";
 import Filterr from "../../../assets/images/filter.png";
 import Column from "../../../assets/images/column.png";
+import AddStartup from "./Connections/DealFlow/addStartup";
+import { Tabsection } from "Components/UI_Kits/Tabs/index";
+import FilterSidebar from "Components/secondarySidebar/filter";
+import ColumnSidebar from "Components/secondarySidebar/manage";
 
 import moment from "moment";
-
 import {
   container,
   container_mini,
@@ -66,7 +69,7 @@ const Tags = ({ filters, tagGroups, setFilters }) => {
   );
 };
 
-const Funnels = ({ filters, setFilters }) => {
+const Funnels = ({ filters, setFilters, setFilterType }) => {
   const { data, error, loading } = useQuery(funnelGroupGet);
 
   const [show, setShow] = useState(false);
@@ -88,15 +91,19 @@ const Funnels = ({ filters, setFilters }) => {
 
   return (
     <div>
-      <div onClick={() => setShow(!show)} className={styles.filterContainer}>
+      <div className={styles.filterContainer}>
+        <button
+          className={styles.filterButton + " " + styles.manageButton}
+          style={{ marginRight: "10px" }}
+          onClick={() => setFilterType("column")}
+        >
+          <img src={Column} /> <span>Manage Columns</span>
+        </button>
         <button
           className={styles.filterButton}
-          style={{ width: "180px", marginRight: "10px" }}
+          onClick={() => setFilterType("filter")}
         >
-          <img src={Column} /> Manage Columns
-        </button>
-        <button className={styles.filterButton}>
-          <img src={Filterr} /> Filter
+          <img src={Filterr} /> <span>Filter</span>
         </button>
       </div>
 
@@ -133,52 +140,39 @@ const Funnels = ({ filters, setFilters }) => {
   );
 };
 
-const DateSelector = ({ filters, setFilters }) => {
-  const [show, setShow] = useState(false);
-
-  const setDateFilter = dateRange => {
-    setFilters({
-      ...filters,
-      dateRange: dateRange,
-    });
-  };
-
-  return (
-    <div className={filter_icon_container}>
-      <div className={filter_icon}>
-        <i
-          className={`${
-            filters.dateRange[0] || filters.dateRange[1] ? "fas" : "fal"
-          } fa-calendar`}
-          onClick={() => setShow(!show)}
-        />
-        {show && (
-          <Modal title="DATE" close={() => setShow(false)}>
-            <DateRangeSelector
-              value={filters.dateRange}
-              onValueChange={setDateFilter}
-            />
-          </Modal>
-        )}
-      </div>
-    </div>
-  );
-};
-
 function getHasFilters(filters) {
-  const hasFilters =
+  /*  const hasFilters =
     filters.tags.length ||
     filters.funnelTags.length ||
     filters.search ||
     filters.starred ||
     (filters.dateRange.length &&
-      (filters.dateRange[0] || filters.dateRange[1]));
-  return hasFilters;
+      (filters.dateRange[0] || filters.dateRange[1]));*/
+  return false;
 }
 
-export default function Filters({ filters, setFilters, fullFilter }) {
+export default function Filters({
+  filters,
+  setFilters,
+  fullFilter,
+  setTabValue,
+  setShowNewStartupModal,
+}) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
+  const [modal, setModal] = useState(false);
+  const [activeTab, setActiveTab] = useState();
+  const [filterType, setFilterType] = useState();
+
+  useEffect(() => {
+    setTabValue(tabArr[1].value);
+    setActiveTab(tabArr[1].value);
+  }, []);
+
+  const tabArr = [
+    { value: "kanban", text: "KANBAN" },
+    { value: "spreadsheet", text: "SPREADSHEET" },
+  ];
 
   const formatDateTag = range => {
     let result = "";
@@ -193,6 +187,16 @@ export default function Filters({ filters, setFilters, fullFilter }) {
 
   let hasFilters = getHasFilters(filters);
 
+  const handleTab = () => {
+    if (activeTab === "kanban") {
+      setTabValue("spreadsheet");
+      setActiveTab("spreadsheet");
+    } else {
+      setTabValue("kanban");
+      setActiveTab("kanban");
+    }
+  };
+
   return (
     <div>
       <div className={small_text_flex}>
@@ -204,7 +208,7 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                 search: "",
                 tags: [],
                 funnelTags: [],
-                dateRange: [null, null],
+                // dateRange: [null, null],
               });
             }}
           >
@@ -216,44 +220,27 @@ export default function Filters({ filters, setFilters, fullFilter }) {
       <div className={fullFilter ? container : container_mini}>
         <div className={footer}>
           <div className={filter_container}>
-            {/*STAR*/}
-            {/* {fullFilter && (
-              <div className={filter_content}>
-                <div
-                  className={filter_star}
-                  onClick={() => {
-                    setFilters({
-                      ...filters,
-                      starred: !filters.starred,
-                    });
-                  }}
-                >
-                  {(filters.starred && (
-                    <i
-                      className="fas fa-star"
-                      style={{ color: "var(--color-orange)" }}
-                    />
-                  )) || (
-                    <i
-                      className="fal fa-star"
-                      style={{ color: "var(--color-gray-light)" }}
-                    />
-                  )}
-                </div>
-              </div>
-            )} */}
-
-            {/*SEARCH*/}
-            <div className={styles.table_headerChild}>
+            <div
+              className={
+                styles.table_headerChild + " " + styles.table_headerChildFirst
+              }
+            >
               {fullFilter && (
                 <div
                   className={styles.table_headerInner}
                   style={{ width: "100%" }}
                 >
-                  <button className={styles.addButton}>
+                  <button
+                    className={styles.addButton}
+                    // onClick={() => setModal("startup")}
+                    onClick={() => setShowNewStartupModal(true)}
+                  >
                     <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
-                  <div className={styles.tableSearch}>
+                  <div
+                    className={styles.tableSearch}
+                    style={{ opacity: "0.4" }}
+                  >
                     <input
                       type="text"
                       value={filters.search}
@@ -269,48 +256,40 @@ export default function Filters({ filters, setFilters, fullFilter }) {
             </div>
             <div
               className={
-                styles.table_headerChild + " " + styles.table_headerChildMiddle
+                styles.table_headerChild +
+                " " +
+                styles.table_headerChildMiddle +
+                " " +
+                "table_headerChildMiddle"
               }
             >
-              <button>KANBAN</button>
-              <button className={styles.active}>
-                {" "}
-                <img src={Column} /> SPREADSHEET
-              </button>
+              <Tabsection
+                tabFuc={handleTab}
+                tabArr={tabArr}
+                tabValue={activeTab || tabArr[1]?.value}
+              />
             </div>
-            <div className={styles.table_headerChild}>
+            <div
+              className={
+                styles.table_headerChild + " " + styles.table_headerChildLast
+              }
+            >
               <div>
                 <Funnels
                   filters={filters}
                   setFilters={funnelTags =>
                     setFilters({ ...filters, funnelTags })
                   }
+                  setFilterType={setFilterType}
                 />
               </div>
             </div>
-
-            {/*FUNNEL*/}
-
-            {/*TAG*/}
-            {/* <div className={filter_content}>
-              <Tags
-                setFilters={setFilters}
-                tagGroups={tagGroups}
-                filters={filters}
-              />
-            </div> */}
-
-            {/*CALENDAR*/}
-            {/* <div className={filter_content}>
-              <DateSelector setFilters={setFilters} filters={filters} />
-            </div> */}
           </div>
         </div>
 
-        {(!!filters.tags.length ||
-          !!filters.funnelTags.length ||
-          filters.dateRange[0] ||
-          filters.dateRange[1]) && (
+        {(!!filters.tags.length || !!filters.funnelTags.length) && (
+          // filters.dateRange[0] ||
+          // filters.dateRange[1]) &&
           <div className={content}>
             <div>
               {filters.funnelTags.map(funnelTag => {
@@ -363,31 +342,44 @@ export default function Filters({ filters, setFilters, fullFilter }) {
                 );
               })}
 
-              {(filters.dateRange[0] || filters.dateRange[1]) && (
-                <Tag key="dateFilterTag">
-                  <div className={tag_each}>
-                    <div>
-                      <i className="fal fa-calendar" /> Date:{" "}
-                      {formatDateTag(filters.dateRange)}
-                    </div>
-                    <div
-                      className={tag_kill}
-                      onClick={() => {
-                        setFilters({
-                          ...filters,
-                          dateRange: [null, null],
-                        });
-                      }}
-                    >
-                      <i className="fal fa-times" />
-                    </div>
-                  </div>
-                </Tag>
-              )}
+              {/*{(filters.dateRange[0] || filters.dateRange[1]) && (*/}
+              {/*  <Tag key="dateFilterTag">*/}
+              {/*    <div className={tag_each}>*/}
+              {/*      <div>*/}
+              {/*        <i className="fal fa-calendar" /> Date:{" "}*/}
+              {/*        {formatDateTag(filters.dateRange)}*/}
+              {/*      </div>*/}
+              {/*      <div*/}
+              {/*        className={tag_kill}*/}
+              {/*        onClick={() => {*/}
+              {/*          setFilters({*/}
+              {/*            ...filters,*/}
+              {/*            dateRange: [null, null],*/}
+              {/*          });*/}
+              {/*        }}*/}
+              {/*      >*/}
+              {/*        <i className="fal fa-times" />*/}
+              {/*      </div>*/}
+              {/*    </div>*/}
+              {/*  </Tag>*/}
+              {/*)}*/}
             </div>
           </div>
         )}
       </div>
+
+      {modal === "startup" && <AddStartup closeModal={setModal} />}
+      {filterType === "column" ? (
+        <ColumnSidebar close={setFilterType} />
+      ) : (
+        filterType === "filter" && (
+          <FilterSidebar
+            close={setFilterType}
+            filters={filters}
+            setFilters={setFilters}
+          />
+        )
+      )}
     </div>
   );
 }

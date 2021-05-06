@@ -17,7 +17,12 @@ import { InputForm, Button } from "Components/UI_Kits";
 import { userLoggedIn } from "actions/user";
 import { getUserIsLoggedIn } from "reducers/selectors/user";
 
-import { dashboard, forgotPassword, signup } from "definitions.js";
+import {
+  dashboard,
+  startup_page,
+  forgotPassword,
+  signup,
+} from "definitions.js";
 import loginImg from "../../../assets/images/login.svg";
 import authLogo from "../../../assets/images/auth_logo.png";
 
@@ -102,7 +107,9 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   };
 
   if (userIsLoggedIn) {
-    history.push(location.state || dashboard);
+    // redirect to startup
+    // history.push(location.state || dashboard);
+    history.push(startup_page);
   }
 
   return (

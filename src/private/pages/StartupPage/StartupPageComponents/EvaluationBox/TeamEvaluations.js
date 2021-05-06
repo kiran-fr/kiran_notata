@@ -70,6 +70,12 @@ export default function TeamEvaluations({ connection, user, history }) {
 
   let data = getEvaluationSummaries({ evaluations, hide });
 
+  console.log("*****************************");
+  console.log("*****************************");
+
+  console.log("connection", connection);
+  console.log("data", data);
+
   function toggleHide(evaluationId) {
     setHide({
       ...hide,
@@ -96,8 +102,8 @@ export default function TeamEvaluations({ connection, user, history }) {
         } = templateData;
 
         let list = templateSections.map(item => ({
-          name: item.name,
-          percentageScore: Math.round((item.score / item.scorePossible) * 100),
+          name: item.sectionName,
+          percentageScore: item.scorePercent,
         }));
 
         return (
@@ -123,13 +129,9 @@ export default function TeamEvaluations({ connection, user, history }) {
               );
 
               let list = (evaluation.summary?.sections || []).map(item => {
-                let scoreTotal = item.score || 0;
-                let scorePossible = item.scorePossible || 0;
                 return {
-                  name: item.name,
-                  percentageScore: Math.round(
-                    (scoreTotal / scorePossible) * 100
-                  ),
+                  name: item.sectionName,
+                  percentageScore: item.scorePercent,
                 };
               });
 

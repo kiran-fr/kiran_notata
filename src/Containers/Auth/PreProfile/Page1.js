@@ -113,19 +113,19 @@ export default function Page1({ setPage }) {
             />
           </div>
 
-          <div className={styles.bottom_box}>
-            <hr />
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <span />
-              <Button type="input" value="SAVE" loading={isSubmitting} />
-            </div>
+          <div
+            style={{ marginTop: "30px" }}
+            className={styles.button_container}
+          >
+            <span />
+            <Button
+              type="input"
+              value="SAVE"
+              loading={isSubmitting}
+              className={styles.bottom_box}
+            />
           </div>
+          {/* </div> */}
         </form>
       </Card>
     </div>

@@ -85,27 +85,115 @@ button {
 .table_headerChildMiddle {
   display: flex;
   justify-content: center;
+  margin-top: -10px;
 }
 .table_headerChildMiddle button {
   background-color: transparent;
   font-family: Proxima Nova;
   font-style: normal;
   font-weight: bold;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #969ba3;
   border: none;
   outline: none;
   padding: 0 17px;
   margin-left: 16px;
 }
-.table_headerChildMiddle .active {
-  border-bottom: 4px solid #969ba3;
-}
 .table_headerChildMiddle button img {
   height: 8.3px;
   transform: rotate(90deg);
   margin-right: 5px;
+}
+.manageButton {
+  width: 200px;
+}
+.manageButton img {
+  transform: rotate(90deg) !important;
+}
+.table_headerChildMiddle button {
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 1450px) {
+  .manageButton span {
+    display: none;
+  }
+  .manageButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+  }
+  .manageButton img {
+    margin-right: 0;
+    padding-top: 5px;
+    width: 13px;
+    margin-right: 0px;
+    padding: 0 !important;
+    margin-top: 3px;
+  }
+  .filterButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+  }
+  .filterButton img {
+    margin-right: 0;
+    padding-top: 5px;
+    width: 13px;
+  }
+  .filterButton span {
+    display: none;
+  }
+}
+@media screen and (max-width: 1178px) {
+  .addButton {
+    width: 200px !important;
+  }
+  .tableSearch {
+    width: 50% !important;
+  }
+  .tableSearch button {
+    display: none;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .table_headerChild {
+    width: 100% !important;
+  }
+  .table_headerInner {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .table_headerChildLast {
+    width: 30% !important;
+  }
+  .table_headerChildMiddle {
+    width: 70% !important;
+    justify-content: flex-start;
+  }
+  .table_headerChildFirst {
+    margin-bottom: 15px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .tableSearch button {
+    display: none;
+  }
+  .table_headerChildMiddle {
+    width: calc(100% - 70px) !important;
+    justify-content: space-between;
+  }
+  .table_headerChildLast {
+    width: 60px !important;
+  }
+  .addButton {
+    width: 50% !important;
+  }
+  .manageButton {
+    display: none;
+  }
 }

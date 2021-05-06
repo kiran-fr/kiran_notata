@@ -89,6 +89,7 @@ export default function Evaluation({ match, history, location }) {
         let res = localStorage.getItem(
           `evaluation:${connectionId}/${templateId}`
         );
+
         res && setAnswersState(JSON.parse(res));
       } catch (error) {
         localStorage.removeItem(`evaluation:${connectionId}/${templateId}`);
@@ -115,7 +116,7 @@ export default function Evaluation({ match, history, location }) {
   const [createEvaluation] = useMutation(evaluationCreate);
   const [updateEvaluation] = useMutation(evaluationUpdate);
 
-  async function save() {
+  async function save(newAnswers) {
     if (loading) return;
     setLoading(true);
 
@@ -124,8 +125,11 @@ export default function Evaluation({ match, history, location }) {
       let variables = {
         connectionId,
         templateId,
-        answers,
+        answers: newAnswers || answers,
       };
+
+      console.log("create evaluation", variables);
+
       try {
         let res = await createEvaluation({ variables });
         let { id } = res?.data?.evaluationCreate;
@@ -141,8 +145,9 @@ export default function Evaluation({ match, history, location }) {
     if (evaluationId) {
       let variables = {
         id: evaluationId,
-        answers,
+        answers: newAnswers || answers,
       };
+
       try {
         await updateEvaluation({ variables });
         localStorage.removeItem(`evaluation:${connectionId}/${templateId}`);
@@ -165,7 +170,13 @@ export default function Evaluation({ match, history, location }) {
   }
 
   return (
-    <ContentCard>
+    <ContentCard
+      style={{
+        position: "relative",
+        top: "20px",
+        marginBottom: "75px",
+      }}
+    >
       <div
       // style={{
       //   position: "relative",
@@ -203,13 +214,11 @@ export default function Evaluation({ match, history, location }) {
               sections: evaluationTemplate.sections,
             }}
             location={location}
+            loading={loading}
+            content={answers}
             submit={answers => {
-              console.log("answers", answers);
-              // let variables = {
-              //   id: creative.id,
-              //   input: { answers },
-              // };
-              // mutate({ variables });
+              setAnswers(answers);
+              save(answers);
             }}
           />
         </div>

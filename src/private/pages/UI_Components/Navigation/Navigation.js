@@ -7,12 +7,13 @@ import { CheckBoxes } from "Components/UI_Kits";
 
 export default function Navigation() {
   return (
-    <div>
+    <React.Fragment>
       <SideBarMenu />
       <div>
         <TopMenu />
-        <div className="navigation-container">
-          {/* <form>
+
+        {/* <div className="container">
+          <form>
             <CheckBoxes
               name="name"
               data={[
@@ -45,9 +46,9 @@ export default function Navigation() {
               ]}
             />
           </form>
-         */}
-        </div>
+        
+        </div> */}
       </div>
-    </div>
+    </React.Fragment>
   );
 }

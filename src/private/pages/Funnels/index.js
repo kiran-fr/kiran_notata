@@ -9,6 +9,7 @@ import { Content, GhostLoader, BreadCrumbs } from "Components/elements";
 import CreateFunnelGroup from "./CreateFunnelGroup/index";
 import FunnelGroup from "./FunnelGroup/index";
 
+//routes
 import { settings, funnels } from "definitions.js";
 
 //Main function

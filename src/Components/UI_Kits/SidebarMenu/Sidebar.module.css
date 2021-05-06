@@ -1,11 +1,12 @@
 /* sidebar container*/
 .main_sidebar {
-  width: 206px;
+  max-width: 206px;
   position: relative;
-  min-width: 206px;
+  z-index: 2000;
 }
+
 .sidebar_container {
-  position: fixed;
+  position: relative;
   user-select: none;
   background: white;
   overflow-y: scroll;
@@ -18,9 +19,17 @@
   height: 100vh;
   z-index: 100773;
   transition: all 450ms;
+  height: 100%;
   /* animation: 1s fadeIn;
   animation-fill-mode: forwards;
   animation-fill-mode: backwards; */
+}
+.sidebar_containerInner {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .mobile_toggler {
   position: fixed;
@@ -67,6 +76,7 @@
     display: none;
   }
   .sidebar_container {
+    position: fixed;
     left: -290px;
     width: 260px;
     transition: all;
@@ -249,7 +259,6 @@
   position: relative;
   user-select: none;
   background: #fafafa;
-  position: fixed;
   overflow-y: scroll;
   width: 79px;
   left: 0;

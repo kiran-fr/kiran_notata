@@ -43,8 +43,8 @@ export default function Page1({ setPage }) {
     // dummy data
 
     const input = {
-      family_name: "siva",
-      given_name: "givenName",
+      family_name: "",
+      given_name: "",
       email: data.email,
       company: data.company,
     };
@@ -52,7 +52,7 @@ export default function Page1({ setPage }) {
     try {
       await Auth.updateUserAttributes(
         cognitoUser,
-        omit(input, ["email", "company"])
+        omit(input, ["family_name", "given_name", "email", "company"])
       );
     } catch (error) {
       console.log("error", error);
@@ -131,6 +131,7 @@ export default function Page1({ setPage }) {
         <div
           style={{
             marginTop: "10px",
+            maxWidth: "340px",
           }}
         >
           <Tags
@@ -170,18 +171,19 @@ export default function Page1({ setPage }) {
             { id: 5, value: "other", label: "other" },
           ]}
         />
-        <div className={styles.bottom_box}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          ></div>
+
+        <div className={styles.button_container}>
+          <Button
+            type="input"
+            value="SAVE"
+            size="medium"
+            buttonStyle="green"
+            type="right_arrow"
+            loading={isSubmitting}
+          >
+            NEXT
+          </Button>
         </div>
-        <Button size="medium" buttonStyle="green" type="right_arrow">
-          NEXT
-          <p> </p>
-        </Button>
       </form>
     </div>
   );

@@ -32,6 +32,7 @@ export default gql`
         sectionName
         scoreTotal
         scorePossible
+        scorePercent
         scorePerAnswer {
           score
           possibleScore
