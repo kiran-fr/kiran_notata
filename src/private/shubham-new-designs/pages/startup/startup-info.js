@@ -2,10 +2,13 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import "./startup-info.scss";
-
+import ShareStartup from "./share-startup";
 export default function StartupInfo() {
   return (
-    <div className="row tab-panel-container startup-info-container">
+    <>
+      <ShareStartup></ShareStartup>
+
+      {/* <div className="row tab-panel-container startup-info-container">
       <div className="col-sm-7">
         <div className="card">
           <div className="row">
@@ -173,6 +176,7 @@ export default function StartupInfo() {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
+    </>
   );
 }
