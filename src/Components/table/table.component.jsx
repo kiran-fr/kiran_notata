@@ -101,16 +101,99 @@ export default function Table(props) {
                   }}
                 />
               </td>
-              <td>Groups <i className="fal fa-exchange" /></td>
-              <td>FUNNEL STAGE <i className="fal fa-exchange" /></td>
-              <td>TAGS <i className="fal fa-exchange" /></td>
-              <td>SUBJECTIVE SCORE <i className="fal fa-exchange" /></td>
-              <td>UPDATED <i className="fal fa-exchange" /></td>
+              <td>Groups <i 
+              onClick={() => {
+
+                let sortBy = "GROUP";
+                let sortDirection = filters.sortBy === "GROUP" ? "DESC" : "ASC"
+
+                setFilters({
+                  ...filters,
+                  sortBy,
+                  sortDirection
+                })
+
+              }}
+              className="fal fa-exchange" /></td>
+              <td>FUNNEL STAGE <i 
+               onClick={() => {
+
+                let sortBy = "FUNNEL";
+                let sortDirection = filters.sortBy === "FUNNEL" ? "DESC" : "ASC"
+
+                setFilters({
+                  ...filters,
+                  sortBy,
+                  sortDirection
+                })
+
+              }}
+              
+              className="fal fa-exchange" /></td>
+              <td>TAGS <i 
+              onClick={() => {
+
+                let sortBy = "TAGS";
+                let sortDirection = filters.sortBy === "TAGS" ? "DESC" : "ASC"
+
+                setFilters({
+                  ...filters,
+                  sortBy,
+                  sortDirection
+                })
+
+              }}
+              
+              className="fal fa-exchange" /></td>
+              <td>SUBJECTIVE SCORE <i 
+              onClick={() => {
+
+                let sortBy = "SUBJECTIVE_SCORE";
+                let sortDirection = filters.sortBy === "SUBJECTIVE_SCORE" ? "DESC" : "ASC"
+
+                setFilters({
+                  ...filters,
+                  sortBy,
+                  sortDirection
+                })
+
+              }}
+              
+              className="fal fa-exchange" /></td>
+              <td>UPDATED <i 
+              onClick={() => {
+
+                let sortBy = "UPDATED_AT";
+                let sortDirection = filters.sortBy === "UPDATED_AT" ? "DESC" : "ASC"
+
+                setFilters({
+                  ...filters,
+                  sortBy,
+                  sortDirection
+                })
+
+              }}
+              
+              className="fal fa-exchange" /></td>
               {evaluationTemplates.length &&
               (
                 evaluationTemplates.map(({ name }) =>
                   (
-                    <td>{name} <i className="fal fa-exchange" /></td>
+                    <td>{name} <i 
+                    onClick={() => {
+
+                      let sortBy = "EVALUATION";
+                      let sortDirection = filters.sortBy === "EVALUATION" ? "DESC" : "ASC"
+      
+                      setFilters({
+                        ...filters,
+                        sortBy,
+                        sortDirection
+                      })
+      
+                    }}
+                    
+                    className="fal fa-exchange" /></td>
                   )
               )
               )}

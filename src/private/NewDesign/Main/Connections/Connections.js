@@ -16,9 +16,6 @@ import SelectTagsForStartup from "./SelectTagsForStartup";
 import { Kanban } from "../../Kanban/Kanban";
 import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 
-// FUNCTIONS
-import applyFilters from "./applyFilters";
-
 // Definitions
 // import defaultFilters from "./defaultFilters";
 
@@ -52,8 +49,7 @@ function getCleanFilterData(filters) {
 }
 
 function ListOfStartups({ filters, setFilters, currentPage, history }) {
-  console.log("****************");
-  console.log("filters", filters);
+  console.log("siva", filters);
 
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
@@ -107,11 +103,6 @@ function ListOfStartups({ filters, setFilters, currentPage, history }) {
 
   const evaluationTemplates =
     evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
-
-  console.log("evaluationTemplates", evaluationTemplates);
-
-  // Filter data
-  const filteredConnections = applyFilters({ connections, filters });
 
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
@@ -171,7 +162,7 @@ export default function Connections({ history }) {
   const defaultFilters = {
     // FILTERS
 
-    search: "all",
+    search: "",
     tags: [],
     funnelTags: [],
     // fromDate: new Date().getTime() - 40000,

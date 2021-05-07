@@ -163,6 +163,7 @@ export default function Filters({
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState();
   const [filterType, setFilterType] = useState();
+  const [filterValue, setFilterValue] = useState();
 
   useEffect(() => {
     setTabValue(tabArr[1].value);
@@ -195,6 +196,10 @@ export default function Filters({
       setTabValue("kanban");
       setActiveTab("kanban");
     }
+  };
+
+  const handleFilter = e => {
+    setFilterValue(e.target.value);
   };
 
   return (
@@ -237,18 +242,19 @@ export default function Filters({
                   >
                     <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
-                  <div
-                    className={styles.tableSearch}
-                    style={{ opacity: "0.4" }}
-                  >
+                  <div className={styles.tableSearch}>
                     <input
                       type="text"
-                      value={filters.search}
-                      onChange={e =>
-                        setFilters({ ...filters, search: e.target.value })
-                      }
+                      value={filterValue}
+                      onChange={e => handleFilter(e)}
                     />
-                    <button>Search</button>
+                    <button
+                      onClick={() =>
+                        setFilters({ ...filters, search: filterValue })
+                      }
+                    >
+                      Search
+                    </button>
                     <i class="far fa-search"></i>
                   </div>
                 </div>

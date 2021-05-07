@@ -22,7 +22,12 @@ export default function FilterBar({ close, filters, setFilters }) {
         <li>
           <div className="myCheckbox">
             <label className={styles.customCheck}>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onClick={e => {
+                  setFilters({ ...filters, funnelTags: ["Reviewed"] });
+                }}
+              />
               <span class={styles.checkmark}></span>
             </label>
           </div>
