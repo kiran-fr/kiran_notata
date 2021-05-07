@@ -93,6 +93,15 @@ export default function TagsInput({
     e.target.value = "";
   }
 
+  function handleUserEnter(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTags(e);
+    } else {
+      return null;
+    }
+  }
+
   console.log("selectedtag", selectedTags);
   return (
     <Tag
@@ -117,7 +126,7 @@ export default function TagsInput({
               marginTop: selectedTags.length > 0 ? "3px" : "2px",
               width: "100px",
             }}
-            onKeyUp={event => (event.key === "Enter" ? addTags(event) : null)}
+            onKeyPress={handleUserEnter}
           />
         </div>
       </ul>
