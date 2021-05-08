@@ -157,6 +157,10 @@ export default function Filters({
   fullFilter,
   setTabValue,
   setShowNewStartupModal,
+  setManageColValue,
+  manageColValue,
+  evaluationTemplates,
+  allEvaluation,
 }) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
@@ -205,21 +209,21 @@ export default function Filters({
   return (
     <div>
       <div className={small_text_flex}>
-        {!!hasFilters && (
-          <div
-            className={clear_filters}
-            onClick={() => {
-              setFilters({
-                search: "",
-                tags: [],
-                funnelTags: [],
-                // dateRange: [null, null],
-              });
-            }}
-          >
-            clear all filters
-          </div>
-        )}
+        {/* {!!hasFilters && ( */}
+        <div
+          className={clear_filters}
+          onClick={() => {
+            setFilters({
+              search: "",
+              tags: [],
+              funnelTags: [],
+              // dateRange: [null, null],
+            });
+          }}
+        >
+          clear all filters
+        </div>
+        {/* )} */}
       </div>
 
       <div className={fullFilter ? container : container_mini}>
@@ -376,7 +380,13 @@ export default function Filters({
 
       {modal === "startup" && <AddStartup closeModal={setModal} />}
       {filterType === "column" ? (
-        <ColumnSidebar close={setFilterType} />
+        <ColumnSidebar
+          allEvaluation={allEvaluation}
+          evaluationTemplates={evaluationTemplates}
+          close={setFilterType}
+          manageColValue={manageColValue}
+          setManageColValue={setManageColValue}
+        />
       ) : (
         filterType === "filter" && (
           <FilterSidebar

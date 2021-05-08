@@ -48,9 +48,16 @@ function getCleanFilterData(filters) {
   return clean;
 }
 
-function ListOfStartups({ filters, setFilters, currentPage, history }) {
-  console.log("siva", filters);
-
+function ListOfStartups({
+  manageColValue,
+  filters,
+  setFilters,
+  currentPage,
+  history,
+  columnSettings,
+  evaluationTemplates,
+  evaluationTemplatesQuery,
+}) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
@@ -60,9 +67,6 @@ function ListOfStartups({ filters, setFilters, currentPage, history }) {
 
   //Query: User
   const userQuery = useQuery(userGet);
-
-  // Query: Account
-  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
 
   // Query: Connections
   const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
@@ -86,23 +90,12 @@ function ListOfStartups({ filters, setFilters, currentPage, history }) {
 
   // TODO: Column settings
   // This is saved on user.columnSettings
-  let columnSettings = {
-    groups: false,
-
-    evaluationTemplates: [
-      "275c9718-61d4-c04b-ef00-3da8770b4442",
-      "e166a3f7-fbf8-6f5c-fa1d-43509844a8d3",
-    ],
-  };
 
   // Define data
   const user = userQuery.data?.userGet || {};
   // console.log("user", user);
 
   const connections = data?.connectionsGet || [];
-
-  const evaluationTemplates =
-    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
 
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
@@ -118,6 +111,7 @@ function ListOfStartups({ filters, setFilters, currentPage, history }) {
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
+        manageColValue={manageColValue}
         columnSettings={columnSettings}
         fields={allFields}
         data={connections}
@@ -185,13 +179,40 @@ export default function Connections({ history }) {
     // sortDirection: 'ASC'
   };
 
+  // Query: Account
+  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
+
+  const evaluationTemplates =
+    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
+
   // States
   const [filters, setFilterState] = useState(defaultFilters);
 
   const [currentPage, setCurrentPage] = useState(undefined);
   const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [render, setRender] = useState(false);
   const [tabValue, setTabValue] = useState("spreadsheet");
+  const [manageColValue, setManageColValue] = useState({
+    showAll: true,
+    groups: true,
+    funnels: true,
+    tags: true,
+    subjectiveScore: true,
+    evaluationTemplates: [],
+  });
+
+  useEffect(() => {
+    evaluationTemplates.forEach(summary => {
+      setManageColValue(manageColValue => ({
+        ...manageColValue,
+        ["evaluationTemplates"]: [
+          ...manageColValue.evaluationTemplates,
+          summary.id,
+        ],
+      }));
+    });
+  }, [evaluationTemplates && evaluationTemplates.data]);
 
   // Load filters from local store
   useEffect(() => {
@@ -211,6 +232,9 @@ export default function Connections({ history }) {
     setFilterState(filterData);
   }
 
+  const allEvaluation =
+    evaluationTemplates.length === manageColValue.evaluationTemplates.length;
+
   return (
     <>
       <CreateStartupModal
@@ -220,19 +244,26 @@ export default function Connections({ history }) {
       />
       <Filters
         setShowNewStartupModal={setShowNewStartupModal}
+        manageColValue={manageColValue}
         setFilters={setFilters}
+        allEvaluation={allEvaluation}
         filters={filters}
         fullFilter={true}
         tabValue={tabValue}
         setTabValue={setTabValue}
+        evaluationTemplates={evaluationTemplates}
+        setManageColValue={setManageColValue}
       />
       {tabValue === "spreadsheet" ? (
         <>
           <ListOfStartups
             history={history}
             filters={filters}
+            columnSettings={manageColValue}
+            evaluationTemplatesQuery={evaluationTemplatesQuery}
             setFilters={setFilters}
             currentPage={currentPage}
+            evaluationTemplates={evaluationTemplates}
           />
           <Paginator
             currentPage={currentPage}
