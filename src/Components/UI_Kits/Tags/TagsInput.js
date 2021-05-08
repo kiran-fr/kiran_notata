@@ -75,7 +75,6 @@ export default function TagsInput({
   function removeTagByIndex(index) {
     let newTags = selectedTags.filter(i => i.id !== index);
     selectTags(newTags);
-    console.log("selectTag", newTags);
   }
 
   //Add tag
@@ -102,7 +101,6 @@ export default function TagsInput({
     }
   }
 
-  console.log("selectedtag", selectedTags);
   return (
     <Tag
       className={classnames(getInputSize(size))}

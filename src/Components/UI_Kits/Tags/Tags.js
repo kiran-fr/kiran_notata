@@ -48,7 +48,6 @@ export const Tags = ({
           id: Math.floor(Math.random() * 1000).toString(),
         });
       });
-      console.log(tags);
       setSelectedTags(tags);
     }
   }, [setTags]);
@@ -56,7 +55,6 @@ export const Tags = ({
   // Select tags
   function selectTags(tags) {
     setSelectedTags(tags);
-    console.log(tags);
     if (getSelectedTag) {
       getSelectedTag(tags);
     }

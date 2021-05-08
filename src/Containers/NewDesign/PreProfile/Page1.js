@@ -21,8 +21,6 @@ import { InputForm, Button, RadioButtons, Tags } from "Components/UI_Kits";
 export default function Page1({ setPage }) {
   const [mutate] = useMutation(userUpdate);
 
-  // const { loading, error, data } = useQuery(userGet);
-
   const userQuery = useQuery(userGet);
 
   const [cognitoUser, setCognitoUser] = useState();
@@ -30,6 +28,7 @@ export default function Page1({ setPage }) {
 
   // Tags
   const [domain, setDomain] = useState([]);
+  const [role, setRole] = useState("investor");
 
   const { isSubmitting } = formState;
 
@@ -50,27 +49,39 @@ export default function Page1({ setPage }) {
     });
 
     setValue("company", user?.company);
-    setDomain(user?.q1_expertise);
+
+    if (user && user.q1_expertise) {
+      user.q1_expertise.forEach(el => {
+        setDomain([
+          {
+            id: Math.floor(Math.random() * 1000).toString(),
+            name: el,
+          },
+          ...domain,
+        ]);
+      });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue, userQuery.loading]);
 
   const onSubmit = async data => {
+    let whoareyou = role;
     let expertise = [];
-
     domain.forEach(el => {
       expertise.push(el.name);
     });
 
+    console.log("DOMAIN: ", domain);
+    console.log("HELLO WORLD: ", expertise);
     const input = {
       family_name: data.family_name,
       given_name: data.given_name,
       email: data.email,
       company: data.company,
       q1_expertise: [...expertise],
-      q2_whoAreYou: "investor",
+      q2_whoAreYou: whoareyou,
     };
-
-    // console.log(cognitoUser);
 
     try {
       await Auth.updateUserAttributes(
@@ -120,8 +131,6 @@ export default function Page1({ setPage }) {
           placeholder="Second Name"
           required
           reference={register({ required: true })}
-          // position = {listForm[position]}
-          // setNextFlag = {setNextFlag}
         />
         <InputForm
           name="company"
@@ -130,8 +139,6 @@ export default function Page1({ setPage }) {
           placeholder="Company"
           required
           reference={register({ required: true })}
-          // position = {listForm[position]}
-          // setNextFlag = {setNextFlag}
         />
         <div style={{ visibility: "hidden", display: "none" }}>
           <InputForm
@@ -141,8 +148,6 @@ export default function Page1({ setPage }) {
             placeholder="email"
             required
             reference={register({ required: true })}
-            // position = {listForm[position]}
-            // setNextFlag = {setNextFlag}
           />
         </div>
         <h4 style={{ margin: "0", padding: "0", marginTop: "8px" }}>
@@ -185,6 +190,8 @@ export default function Page1({ setPage }) {
         </h4>
         <RadioButtons
           name="whoare"
+          getValue={setRole}
+          setValue={user?.q2_whoAreYou ? user?.q2_whoAreYou : null}
           data={[
             { id: 1, value: "investor", label: "Investor" },
             { id: 2, value: "incubator", label: "Incubator" },
