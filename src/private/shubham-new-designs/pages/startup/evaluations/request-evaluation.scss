@@ -1,0 +1,53 @@
+.modal_header,
+.modal_footer{
+    border:none!important;
+    .close_modal{
+        color:#B7B7B7;
+    }
+}
+.request-modal{
+    &__heading{
+        font-family: 'Proxima Nova';
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        text-transform: capitalize;
+        color: #969BA3;
+        margin-top:10px;        
+    }        
+    .fa-times{
+        @media only screen and(max-width:768px) {
+            margin-left: 5px!important;
+        }
+        margin-left: 25px;
+        background-color: #FF937C;
+        border-radius: 50%;
+        height: 18px;
+        width: 18px;
+        text-align: center;
+        font-size: 10px;
+        margin-top: 15px;
+        position: absolute;
+        padding-top: 4px;
+        color: #FFFFFF;            
+    }
+    .fa-plus{
+        @media only screen and(max-width:768px) {
+            margin-left: 5px!important;
+        }
+        margin-left: 25px;
+        background-color: #53CAB2;
+        border-radius: 50%;
+        height: 18px;
+        width: 18px;
+        text-align: center;
+        font-size: 10px;
+        margin-top: 15px;
+        position: absolute;
+        padding-top: 4px;
+        color: #FFFFFF;            
+    }
+    .radio-button-section{
+        margin-top:15px;
+    }
+}

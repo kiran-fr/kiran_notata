@@ -16,12 +16,7 @@ export default function ShareStartup() {
         <div className="card share-startup-container">
           <div className="row">
             <div className="col-sm-12">
-              <span
-                class="material-icons back-icon"
-                //onClick={() => setPageState(OVERVIEWPAGESTATE.OVERVIEW)}
-              >
-                arrow_back_ios
-              </span>
+              <span class="material-icons back-icon">arrow_back_ios</span>
               <span className="page-heading">Great Startup Inc</span>
             </div>
           </div>

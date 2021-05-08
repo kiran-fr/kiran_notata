@@ -64,7 +64,7 @@ export function Modal({
 
           {(close || submit) && !disableFoot && (
             <div className={"modal_footer"}>
-              {close && (
+              {close && closeTxt && (
                 <Button
                   onClick={close}
                   style={{ display: "inline" }}
