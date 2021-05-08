@@ -10,33 +10,20 @@ import {
 import { connectionSetStar } from "private/Apollo/Mutations";
 
 // COMPONENTS
-import Filters from "../Filters";
-import SelectTagsForStartup from "./SelectTagsForStartup";
+import Filters from "./Filters";
+import SelectTagsForStartup from "./Modal/SelectTagsForStartup";
 
-import { Kanban } from "../../Kanban/Kanban";
+import { Kanban } from "../Kanban/Kanban";
 import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
-
-// Definitions
-// import defaultFilters from "./defaultFilters";
 
 // Components
 import Paginator from "./Paginator";
 
-import SetFunnelScore from "./setFunnelScore";
-import SubjectiveScoreModal from "./SubjectiveScoreModal";
-import tableColumns from "./TableColumns";
-import Table from "../../../../Components/table/table.component";
-// import Table from "../../../../Components/NewDesignTable/table.component";
+import SetFunnelScore from "./Modal/setFunnelScore";
+import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
+import Table from "./DealFlow/table/DealflowTable";
 
-const allFields = {
-  group: true,
-  funnel: true,
-  tag: true,
-  score: true,
-  updated: true,
-  evaluation: true,
-  pitching: true,
-};
+// import Table from "./../../../Components/NewDesignTable/table.component";
 
 function getCleanFilterData(filters) {
   let clean = {};
@@ -99,20 +86,22 @@ function ListOfStartups({
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
 
-  const columns = tableColumns({
-    history,
-    setStarMutation,
-    setShowTagGroupForId,
-    setShowSubjectiveScoreForId,
-    setShowFunnelScoreForId,
-  });
+  const allFields = {
+    group: true,
+    funnel: true,
+    tag: true,
+    score: true,
+    updated: true,
+    evaluation: true,
+    pitching: true,
+  };
 
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
+        fields={allFields}
         manageColValue={manageColValue}
         columnSettings={columnSettings}
-        fields={allFields}
         data={connections}
         filters={filters}
         setFilters={setFilters}

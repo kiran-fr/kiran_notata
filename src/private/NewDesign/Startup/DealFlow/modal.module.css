@@ -1,0 +1,343 @@
+.tableModalOutter * {
+  box-sizing: border-box;
+}
+.tableModalOutter {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.87);
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  overflow-y: auto;
+}
+.tableModalInner {
+  position: fixed;
+  background: #ffffff;
+  box-shadow: 0px 3px 12px rgba(41, 70, 103, 0.2);
+  border-radius: 6px;
+  width: 550px;
+  max-height: 98vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 17px;
+  overflow-y: auto;
+}
+.tableModalInner i {
+  cursor: pointer;
+}
+.tableModalInner .top h1 {
+  font-family: Proxima Nova;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  color: #969ba3;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 17px;
+  margin-bottom: 23px;
+}
+.tableModalInner .footer {
+  padding: 15px 0 0 0;
+  margin-top: 20px;
+}
+.tableModalInner .footer .buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+.tableModalInner .footer button {
+  outline: none;
+  padding-top: 2px;
+  box-sizing: border-box;
+}
+.tableModalInner .footer button:first-child {
+  width: 102px;
+  height: 40px;
+  border: 1px solid #969ba3;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: transparent;
+  margin-right: 10px;
+  color: #969ba3;
+}
+.tableModalInner .footer button:last-child {
+  width: 102px;
+  height: 40px;
+  background: #53cab2;
+  border-radius: 20px;
+  color: #fff;
+  border: none;
+}
+.tableModalInner .footer button:last-child i {
+  color: #fff;
+}
+.tableModalInner .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+.tableModalInner .close i {
+  color: #b7b7b7;
+}
+
+/* GROUP MODAL CSS STARTS HERE */
+.group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.groupChild {
+  width: 50%;
+  padding: 10px 0;
+}
+.groupChild h2 {
+  text-transform: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 17px;
+  letter-spacing: 0.03em;
+  color: #969ba3;
+  margin-bottom: 15px;
+}
+.groupChild ul li {
+  font-family: Proxima Nova;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13.5px;
+  line-height: 17px;
+  color: #6a6a6a;
+  margin-top: 16px;
+}
+.groupChild i {
+  color: #ff937c;
+  margin-left: 5px;
+}
+.groupChild select {
+  width: 190px;
+  height: 40px;
+  border: 1px solid #b5b5b5;
+  border-radius: 20px;
+  padding: 0 20px;
+  appearance: none;
+  outline: none;
+  width: 100%;
+  color: #6a6a6a;
+  cursor: pointer;
+  position: relative;
+  display: grid;
+}
+.groupChild select::after {
+  content: "";
+  width: 0.8em;
+  height: 0.5em;
+  background-color: #777;
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
+.groupChild select::-ms-expand {
+  display: none;
+}
+.groupChild .groupDropContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.groupDropContainer .fa-plus-circle {
+  color: #53cab2;
+  opacity: 0.3;
+}
+.groupDropContainer i {
+  color: #adadad;
+}
+.funnelImage {
+  width: 70%;
+}
+.groupFunnelChild {
+  text-align: left;
+  padding-left: 10px;
+}
+
+/* SCORE CSS STARTS HERE */
+.score {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+.score .child {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+.score .child p {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #969ba3;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 20px;
+  color: #969ba3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.score .activeChild p {
+  height: 40px;
+  width: 40px;
+  background: #c4a9fc;
+  border-radius: 20px;
+  color: #fff;
+  border: none;
+}
+
+/* STARTUP CSS STARTS HERE */
+.startup {
+  margin-top: -17px;
+  margin-bottom: -15px;
+}
+
+.startup .expand {
+  display: flex;
+  margin-top: 15px;
+}
+.startup .expandLeft {
+  width: 65%;
+}
+.startup .expandRight img {
+  width: 60%;
+}
+.inputContainer {
+  margin-top: 15px;
+}
+.inputContainer p {
+  font-weight: 500;
+  font-size: 13.5px;
+  line-height: 15px;
+  display: flex;
+  letter-spacing: normal !important;
+  align-items: center;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ui-color-gray-medium);
+  margin-bottom: 7px;
+  text-transform: none !important;
+}
+.startupGroupContainer {
+  display: flex;
+  margin-top: 15px;
+}
+.startupGroupContainer div {
+  width: 50%;
+}
+.startupGroupContainer ul {
+  padding: 10px;
+  display: flex;
+}
+.startupGroupContainer ul li {
+  font-size: 12px;
+  margin-right: 10px;
+}
+.startupGroupContainer i {
+  color: #ff937c;
+}
+.groupDropContainer {
+  display: flex !important;
+}
+.groupDropContainer i {
+  margin-left: 6px;
+}
+.startup .expandRight {
+  width: 35%;
+  text-align: center;
+  padding-left: 25px;
+}
+.startupFunnel {
+  margin: auto;
+  margin-bottom: 25px;
+  width: 75%;
+  justify-content: center;
+}
+.startupFunnel p {
+  width: 45%;
+}
+.startupFunnel p i {
+  margin-left: 7px;
+  color: #ff937c;
+}
+.mobileFunnelImage {
+  display: none;
+}
+@media screen and (max-width: 832px) {
+  .expand {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .expandLeft {
+    width: 100% !important;
+  }
+  .expandRight {
+    width: 100% !important;
+    padding: 0 !important;
+    text-align: center;
+  }
+  .mobileFunnelImage {
+    display: block;
+  }
+  .desktopFunnelImage {
+    display: none;
+  }
+  .expandRight img {
+    width: 100% !important;
+  }
+  .tableModalInner {
+    width: 95% !important;
+    padding: 20px 13px;
+  }
+  .startupGroupContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .startupGroupContainer div {
+    width: 100% !important;
+  }
+  .groupDropContainer {
+    width: 100% !important;
+  }
+}
+@media screen and (max-width: 609px) {
+  .score .child {
+    width: 20%;
+    margin-bottom: 20px;
+  }
+  .groupChild {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  .funnelImage {
+    width: 99% !important;
+  }
+  .startupFunnel {
+    width: 100% !important;
+    flex-direction: column;
+  }
+}
+
+.startup .short .doyoumean {
+  font-family: Proxima Nova;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+  letter-spacing: 0.03em;
+
+  color: #969ba3;
+}
+.startup .doyoumean span {
+  font-weight: 500;
+  text-decoration: underline;
+}
