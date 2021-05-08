@@ -25,8 +25,8 @@ import Paginator from "./Paginator";
 import SetFunnelScore from "./setFunnelScore";
 import SubjectiveScoreModal from "./SubjectiveScoreModal";
 import tableColumns from "./TableColumns";
-import Table from "../../../../Components/table/table.component";
-// import Table from "../../../../Components/NewDesignTable/table.component";
+// import Table from "../../../../Components/table/table.component";
+import Table from "../../../../Components/NewDesignTable/table.component";
 
 const allFields = {
   group: true,
@@ -93,7 +93,6 @@ function ListOfStartups({
 
   // Define data
   const user = userQuery.data?.userGet || {};
-  // console.log("user", user);
 
   const connections = data?.connectionsGet || [];
 
@@ -187,14 +186,16 @@ export default function Connections({ history }) {
 
   // States
   const [filters, setFilterState] = useState(defaultFilters);
+  const [length, setLength] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(undefined);
   const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [render, setRender] = useState(false);
   const [tabValue, setTabValue] = useState("spreadsheet");
+  const [summaryIdData, setSummaryIdData] = useState([]);
+
   const [manageColValue, setManageColValue] = useState({
-    showAll: true,
     groups: true,
     funnels: true,
     tags: true,
@@ -204,6 +205,7 @@ export default function Connections({ history }) {
 
   useEffect(() => {
     evaluationTemplates.forEach(summary => {
+      setSummaryIdData([...summaryIdData, summary.id]);
       setManageColValue(manageColValue => ({
         ...manageColValue,
         ["evaluationTemplates"]: [
@@ -212,7 +214,13 @@ export default function Connections({ history }) {
         ],
       }));
     });
-  }, [evaluationTemplates && evaluationTemplates.data]);
+  }, [evaluationTemplates]);
+
+  useEffect(() => {
+    if (manageColValue) {
+      setRender(render);
+    }
+  }, [manageColValue]);
 
   // Load filters from local store
   useEffect(() => {
@@ -235,6 +243,8 @@ export default function Connections({ history }) {
   const allEvaluation =
     evaluationTemplates.length === manageColValue.evaluationTemplates.length;
 
+  // manage Column
+
   return (
     <>
       <CreateStartupModal
@@ -250,6 +260,7 @@ export default function Connections({ history }) {
         filters={filters}
         fullFilter={true}
         tabValue={tabValue}
+        summaryIdData={summaryIdData}
         setTabValue={setTabValue}
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}

@@ -161,6 +161,7 @@ export default function Filters({
   manageColValue,
   evaluationTemplates,
   allEvaluation,
+  summaryIdData,
 }) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
@@ -386,6 +387,7 @@ export default function Filters({
           close={setFilterType}
           manageColValue={manageColValue}
           setManageColValue={setManageColValue}
+          summaryIdData={summaryIdData}
         />
       ) : (
         filterType === "filter" && (

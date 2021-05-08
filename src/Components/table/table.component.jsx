@@ -186,8 +186,11 @@ export default function Table(props) {
               className="fal fa-exchange" /></td>
               {evaluationTemplates.length &&
               (
-                evaluationTemplates.map(({ name }) =>
+                evaluationTemplates.map(({ name, id }) =>
                   (
+                    columnSettings.evaluationTemplates.includes(
+                      id
+                    ) ?
                     <td>{name} <i 
                     onClick={() => {
 
@@ -202,7 +205,7 @@ export default function Table(props) {
       
                     }}
                     
-                    className="fal fa-exchange" /></td>
+                    className="fal fa-exchange" /></td> : ""
                   )
               )
               )}

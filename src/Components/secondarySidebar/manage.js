@@ -15,22 +15,24 @@ export default function ManageSidebar({
   manageColValue,
   evaluationTemplates,
   allEvaluation,
+  summaryIdData,
 }) {
   const options = [
     { value: "Groups", name: "groups" },
     { value: "Funnel Stage", name: "funnels" },
     { value: "Tags", name: "tags" },
     { value: "Subjective Score", name: "subjectiveScore" },
-    { value: "Updated", name: "updated" },
   ];
+
+  const [render, setRender] = useState(false);
 
   const [mutate] = useMutation(userUpdate);
 
-  // useEffect(() => {
-  //   const input = manageColValue
-  //   mutate({ variables: { input } });
-
-  // }, [manageColValue]);
+  // update
+  useEffect(() => {
+    const input = { columnSettings: manageColValue };
+    mutate({ variables: { input } });
+  }, [manageColValue.groups]);
 
   const handleManageSection = (e, option) => {
     if (option) {
@@ -50,17 +52,57 @@ export default function ManageSidebar({
           ["evaluationTemplates"]: [],
         });
       } else if (e.target.name === "evaluation" && e.target.checked === true) {
-        console.log("triggeralla");
-      } else {
-        setManageColValue({
-          ...manageColValue,
-          [e.target.name]: e.target.checked,
+        evaluationTemplates.forEach(summary => {
+          setManageColValue(manageColValue => ({
+            ...manageColValue,
+            ["evaluationTemplates"]: [
+              ...manageColValue.evaluationTemplates,
+              summary.id,
+            ],
+          }));
         });
+      } else {
+        if (e.target.name === "showAll") {
+          if (e.target.checked === false) {
+            console.log("amhere");
+            setManageColValue({
+              ...manageColValue,
+              groups: false,
+              funnels: false,
+              tags: false,
+              subjectiveScore: false,
+              evaluationTemplates: [],
+            });
+          } else {
+            setManageColValue({
+              ...manageColValue,
+              groups: true,
+              funnels: true,
+              tags: true,
+              subjectiveScore: true,
+              evaluationTemplates: [...summaryIdData],
+            });
+          }
+        } else {
+          setManageColValue({
+            ...manageColValue,
+            [e.target.name]: e.target.checked,
+          });
+        }
       }
     }
+    setRender(render);
   };
 
-  const { showAll } = manageColValue;
+  const showAll =
+    manageColValue.evaluationTemplates.length === evaluationTemplates.length &&
+    manageColValue.groups &&
+    manageColValue.funnels &&
+    manageColValue.tags &&
+    manageColValue.subjectiveScore;
+
+  console.log("sivawas", showAll);
+
   return (
     <Sidebar title="Manage Columns" icon="fas fa-cog" close={close}>
       <div className={styles.manage}>
@@ -69,9 +111,9 @@ export default function ManageSidebar({
             <label className={styles.customCheck}>
               <input
                 type="checkbox"
-                defultChecked={showAll}
+                defaultChecked={showAll}
                 name="showAll"
-                onClick={handleManageSection}
+                onChange={handleManageSection}
               />
               <span class={styles.checkmark}></span>
             </label>
@@ -84,8 +126,8 @@ export default function ManageSidebar({
               <label className={styles.customCheck}>
                 <input
                   name={item.name}
-                  defaultChecked={manageColValue[item.name]}
-                  onClick={handleManageSection}
+                  checked={manageColValue[item.name]}
+                  onChange={handleManageSection}
                   type="checkbox"
                 />
                 <span class={styles.checkmark}></span>
@@ -94,13 +136,13 @@ export default function ManageSidebar({
             </li>
           ))}
 
-          {evaluationTemplates.length && (
+          {evaluationTemplates.length ? (
             <li>
               <label className={styles.customCheck}>
                 <input
-                  defaultChecked={allEvaluation}
+                  checked={allEvaluation}
                   name={"evaluation"}
-                  onClick={handleManageSection}
+                  onChange={handleManageSection}
                   type="checkbox"
                 />
                 <span class={styles.checkmark}></span>
@@ -113,12 +155,13 @@ export default function ManageSidebar({
                     <label className={styles.customCheck}>
                       <input
                         type="checkbox"
-                        onClick={handleManageSection(summary.id, "evaluation")}
-                        defaultChecked={manageColValue.evaluationTemplates.includes(
+                        onChange={() =>
+                          handleManageSection(summary.id, "evaluation")
+                        }
+                        checked={manageColValue.evaluationTemplates.includes(
                           summary.id
                         )}
                         name={summary.id}
-                        onClick={handleManageSection}
                       />
                       <span class={styles.checkmark}></span>
                     </label>
@@ -127,6 +170,8 @@ export default function ManageSidebar({
                 ))}
               </ul>
             </li>
+          ) : (
+            ""
           )}
         </ul>
       </div>
