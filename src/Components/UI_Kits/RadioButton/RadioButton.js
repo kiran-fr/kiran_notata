@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./RadioButton.module.css";
 
 function RadioButton({ id, value, label, isSelected, handleChange, name }) {
@@ -18,11 +18,23 @@ function RadioButton({ id, value, label, isSelected, handleChange, name }) {
   );
 }
 
-export function RadioButtons({ name, data }) {
+export function RadioButtons({ name, data, getValue, setValue }) {
   const [checked, setChecked] = useState(data.length ? data[0].value : "");
+
+  useEffect(() => {
+    if (setValue) {
+      setChecked(setValue.toLowerCase());
+      if (getValue) {
+        getValue(setValue.toLowerCase());
+      }
+    }
+  }, [setValue]);
 
   function handleChange({ target }) {
     const { value } = target;
+    if (getValue) {
+      getValue(value);
+    }
     setChecked(value);
   }
 

@@ -1,10 +1,24 @@
-error .error {
+.error {
   color: var(--color-primary);
   font-size: 12px;
-  text-align: right;
+  text-align: left;
   position: relative;
+  font-family: "Roboto";
+  font-weight: 400;
   top: -6px;
+  margin: 10px 0 10px 0;
   right: 4px;
+}
+
+@media only screen and (max-width: 768px) {
+  .error {
+    text-align: center;
+    width: 90%;
+  }
+
+  .error i {
+    display: none;
+  }
 }
 
 /* error  */

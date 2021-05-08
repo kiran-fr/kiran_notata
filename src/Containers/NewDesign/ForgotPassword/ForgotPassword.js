@@ -73,12 +73,12 @@ export function ForgotPassword({ history }) {
                       color: "#969BA3",
                     }}
                   >
-                    please enter your email and we'll find your account and then
+                    Please enter your email and we'll find your account and then
                     you will receive instructions on your email to rest your
                     password
                   </p>
                 </div>
-                <div style={{ marginTop: "20px" }}>
+                <div style={{ marginTop: "20px", width: "100%" }}>
                   <InputForm
                     label="Email"
                     type="email"
@@ -98,7 +98,6 @@ export function ForgotPassword({ history }) {
                     style={{ marginBottom: "15px" }}
                     loading={isSubmitting}
                   >
-                    {" "}
                     {!isSubmitting && "SEND INSTRUCTIONS"}
                   </Button>
                 </div>
