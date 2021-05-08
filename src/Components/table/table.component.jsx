@@ -101,6 +101,8 @@ export default function Table(props) {
                   }}
                 />
               </td>
+              {
+                columnSettings.groups && (
               <td>Groups <i 
               onClick={() => {
 
@@ -112,9 +114,11 @@ export default function Table(props) {
                   sortBy,
                   sortDirection
                 })
-
               }}
               className="fal fa-exchange" /></td>
+                )}
+                {columnSettings.funnels && (
+
               <td>FUNNEL STAGE <i 
                onClick={() => {
 
@@ -129,22 +133,27 @@ export default function Table(props) {
 
               }}
               
-              className="fal fa-exchange" /></td>
-              <td>TAGS <i 
-              onClick={() => {
+              className="fal fa-exchange" /></td>)}
+                {columnSettings.tags && (
 
-                let sortBy = "TAGS";
-                let sortDirection = filters.sortBy === "TAGS" ? "DESC" : "ASC"
+                <td>TAGS <i 
+                onClick={() => {
 
-                setFilters({
-                  ...filters,
-                  sortBy,
-                  sortDirection
-                })
+                  let sortBy = "TAGS";
+                  let sortDirection = filters.sortBy === "TAGS" ? "DESC" : "ASC"
 
-              }}
-              
-              className="fal fa-exchange" /></td>
+                  setFilters({
+                    ...filters,
+                    sortBy,
+                    sortDirection
+                  })
+
+                }}
+                
+                className="fal fa-exchange" /></td>
+              )}
+                {columnSettings.subjectiveScore && (
+
               <td>SUBJECTIVE SCORE <i 
               onClick={() => {
 
@@ -159,7 +168,7 @@ export default function Table(props) {
 
               }}
               
-              className="fal fa-exchange" /></td>
+              className="fal fa-exchange" /></td>)}
               <td>UPDATED <i 
               onClick={() => {
 
@@ -295,15 +304,9 @@ export default function Table(props) {
 
                             </li>
                           )
-                        )}
+                        )
+                        }
 
-                        {/*    // {( groupSharingInfo.group|| []).slice(0, 3).map((itemvalue) =>
-
-                                    //             {console.log("itemvalue", itemvalue)},
-
-                                    //             <li><span>{itemvalue.name}</span></li>
-
-                                    //     )} */}
 
                         <li><img src={InvisiblePlus}/></li>
                       </ul>
@@ -312,7 +315,8 @@ export default function Table(props) {
                   )
                 }
 
-
+                {
+                  columnSettings.funnels && (
                 <td>
                   <div className={styles.startupStatus}>
                     {tagSet
@@ -333,7 +337,9 @@ export default function Table(props) {
                     }
 
                   </div>
-                </td>
+                </td>)}
+                {
+                  columnSettings.tags && (
                 <td>
                   <ul>
                     {(item.tags || []).slice(0, 2).map(({ name, id, group }) =>
@@ -356,7 +362,9 @@ export default function Table(props) {
 
 
                   </ul>
-                </td>
+                </td>)}
+                {
+                  columnSettings.subjectiveScore && (
                 <td>
                   {subjectiveScoreValAvg}
                   {!subjectiveScoreValAvg && <span onClick = {() =>setShowSubjectiveScoreForId(item.id)}><ButtonGreen /> </span>}
@@ -366,6 +374,7 @@ export default function Table(props) {
                                             </span>
                   }
                 </td>
+                  )}
                 <td>
                   <span className={styles.olderThan}>
                     {moment(item.updatedAt).format("ll")}
