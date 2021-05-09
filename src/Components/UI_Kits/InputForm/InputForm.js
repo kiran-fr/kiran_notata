@@ -5,6 +5,7 @@ import { getErrorMessage, storngPwd } from "./validation";
 
 // Main function
 export function InputForm({
+  fullWidth,
   type,
   label,
   placeholder,
@@ -123,6 +124,7 @@ export function InputForm({
       {label && <label className={styles.input_label}>{label}</label>}
       <div
         className={classnames(
+          fullWidth ? styles.input_container : styles.inputDefaultWidth,
           styles.input_container,
           error && styles.redStyle,
           !passFlag && passStyle && styles.input_pass_div

@@ -10,7 +10,7 @@ import classnames from "classnames";
 import styles from "./filter.module.css";
 import Filterr from "../../../assets/images/filter.png";
 import Column from "../../../assets/images/column.png";
-import AddStartup from "./DealFlow/addStartup";
+import AddStartup from "./Modal/addStartup";
 import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
@@ -242,8 +242,8 @@ export default function Filters({
                 >
                   <button
                     className={styles.addButton}
-                    // onClick={() => setModal("startup")}
-                    onClick={() => setShowNewStartupModal(true)}
+                    onClick={() => setModal("startup")}
+                    // onClick={() => setShowNewStartupModal(true)}
                   >
                     <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>

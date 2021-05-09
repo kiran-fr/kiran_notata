@@ -1,8 +1,5 @@
 import React, { Children, useState } from "react";
 import styles from "./modal.module.css";
-import AddTag from "./addTag";
-import AddGroup from "./addGroup";
-import AddFunnel from "./addFunnel";
 
 export default function DealFLowTag({
   saveModal,
