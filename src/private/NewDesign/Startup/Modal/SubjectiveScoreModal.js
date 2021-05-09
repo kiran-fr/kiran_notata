@@ -10,18 +10,16 @@ import { userGet } from "private/Apollo/Queries";
 import { useMutation } from "@apollo/client";
 import { connectionSubjectiveScorePut } from "private/Apollo/Mutations";
 
-import classnames from "classnames";
-import styles from "./modal.module.css";
-
 export default function SubjectiveScoreModal({ connection, close }) {
   // Query user data
   let userQuery = useQuery(userGet);
   let user = userQuery?.data?.userGet;
 
+  const [subScore, setSubScore] = useState("");
+
   // Define data
   const subjectiveScores = connection?.subjectiveScores || [];
 
-  const [subScore, setSubScore] = useState("");
   // Get your score
   let { score: yourScore } =
     subjectiveScores.find(ss => ss.createdBy === user.cognitoIdentityId) || {};
@@ -29,6 +27,7 @@ export default function SubjectiveScoreModal({ connection, close }) {
   // Mutation
   const [mutate] = useMutation(connectionSubjectiveScorePut);
 
+  // score given by this user or not
   useEffect(() => {
     let { score: yourScore } =
       subjectiveScores.find(ss => ss.createdBy === user.cognitoIdentityId) ||
@@ -36,10 +35,13 @@ export default function SubjectiveScoreModal({ connection, close }) {
     setSubScore(yourScore ? yourScore : "");
   }, [connection]);
 
-  const handleScoreVal = sc => {
+  // store the value in state
+
+  const handleScore = sc => {
     setSubScore(sc);
   };
 
+  // save score func
   const saveModal = () => {
     let variables = {
       id: connection.id,
@@ -95,23 +97,15 @@ export default function SubjectiveScoreModal({ connection, close }) {
     });
     close(false);
   };
+
   return (
-    <Modal title="Set subjective score" saveModal={saveModal} close={close}>
+    <Modal
+      title="Set subjective score"
+      saveModal={saveModal}
+      closeModal={close}
+    >
       {(!user && <GhostLoader />) || (
-        <div className={styles.score}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(sc => (
-            <div
-              key={`sc-${sc}`}
-              className={classnames(
-                styles.child,
-                subScore === sc ? styles.activeChild : ""
-              )}
-              onClick={() => handleScoreVal(sc)}
-            >
-              <p>{sc}</p>
-            </div>
-          ))}
-        </div>
+        <AddScore subScore={subScore} handleScore={handleScore} />
       )}
     </Modal>
   );
