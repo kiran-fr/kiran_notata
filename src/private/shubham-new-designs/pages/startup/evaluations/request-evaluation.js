@@ -18,7 +18,7 @@ export default function RequestEvaluation() {
             name="eval-types"
             label="First Impression"
             id="first-impression"
-            checked
+            checked={false}
           ></RadioButton>
         </div>
         <div>
@@ -26,7 +26,7 @@ export default function RequestEvaluation() {
             name="eval-types"
             label="Before Pitching"
             id="before-pitching"
-            checked
+            checked={false}
           ></RadioButton>
         </div>
         <div>
@@ -34,7 +34,7 @@ export default function RequestEvaluation() {
             name="eval-types"
             label="After Pitching"
             id="after-pitching"
-            checked
+            checked={false}
           ></RadioButton>
         </div>
       </div>
