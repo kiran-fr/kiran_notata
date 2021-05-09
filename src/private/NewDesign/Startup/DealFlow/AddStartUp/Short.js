@@ -14,7 +14,7 @@ import { startup_page } from "definitions";
 // * MAIN FUNCTION *
 // *****************
 
-export const CreateStartupModal = ({ history, close, styles }) => {
+export const Short = ({ history, close, styles }) => {
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
 
@@ -99,4 +99,4 @@ export const CreateStartupModal = ({ history, close, styles }) => {
   );
 };
 
-export default CreateStartupModal;
+export default Short;
