@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tags } from "Components/UI_Kits/Tags/Tags";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
-import { AddScore } from "../AddScore";
+import { AddScore } from "../addScore";
 import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
 
