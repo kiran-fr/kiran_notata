@@ -38,8 +38,11 @@ export const Short = ({ history, close, styles }) => {
       companyNameArr = connections.map(sub => sub.creative?.name);
     }
 
+    let userInput = value ? value.toLowerCase() : "s";
     // Filter array to see if we have a match
-    let match = companyNameArr.find(name => name === value);
+    let match = companyNameArr.find(
+      name => name && name.toLowerCase() === userInput
+    );
 
     // If duplicate, set state
     setExistedFlag(match);
