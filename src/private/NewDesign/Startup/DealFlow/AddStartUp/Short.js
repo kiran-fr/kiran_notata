@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 
 // API STUFF
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import { connectionCreate, creativePut } from "private/Apollo/Mutations";
+import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
+
+// COMPONENTS
+import { Button, Modal } from "Components/elements";
 
 // DEFINITIONS
 import { startup_page } from "definitions";
@@ -14,7 +17,7 @@ import { startup_page } from "definitions";
 // * MAIN FUNCTION *
 // *****************
 
-export const Short = ({ history, close, styles }) => {
+export const Short = ({ history, closeModal, styles }) => {
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
 
@@ -38,10 +41,11 @@ export const Short = ({ history, close, styles }) => {
       companyNameArr = connections.map(sub => sub.creative?.name);
     }
 
-    let userInput = value ? value.toLowerCase() : "s";
+    let userInput = value ? value.toUpperCase() : "";
+
     // Filter array to see if we have a match
     let match = companyNameArr.find(
-      name => name && name.toLowerCase() === userInput
+      name => name && name.toUpperCase() === userInput
     );
 
     // If duplicate, set state
@@ -52,7 +56,7 @@ export const Short = ({ history, close, styles }) => {
   const onSubmit = async data => {
     // Stop if startup with same name exists
     if (existedFlag) {
-      close();
+      closeModal();
       setExistedFlag(undefined);
       return;
     }
@@ -68,11 +72,13 @@ export const Short = ({ history, close, styles }) => {
       let connection = res_connection?.data?.connectionCreate;
 
       // Go to startup page
-      let path = `${startup_page}/${connection.id}`;
+      // let path = `${startup_page}/${connection.id}`;
+      let path = `${startup_page}/components/ui/navigation1`;
+
       history.push(path);
 
-      // Close modal
-      close();
+      // closeModal modal
+      closeModal();
     } catch (error) {
       console.log("ERROR CREATING STARTUP", error);
     }
@@ -80,23 +86,34 @@ export const Short = ({ history, close, styles }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.short}>
-        <div className={styles.inputContainer} style={{ marginTop: "20px" }}>
-          <p>Name</p>
-          <InputForm
-            type="text"
-            fullWidth={true}
-            name="companyName"
-            placeholder="I.e. Money Press Inc."
-            handleInputChange={value => lookForDuplicateNames(value)}
-            reference={register({ required: true })}
-          />
+      <div>
+        <div className={styles.short}>
+          <div className={styles.inputContainer} style={{ marginTop: "20px" }}>
+            <p>Name</p>
+            <InputForm
+              type="text"
+              fullWidth={true}
+              name="variables.input.name"
+              placeholder="I.e. Money Press Inc."
+              handleInputChange={value => lookForDuplicateNames(value)}
+              reference={register({ required: true })}
+            />
+          </div>
+          {existedFlag && (
+            <p className={styles.doyoumean}>
+              Do you mean <span>{existedFlag}</span> It`s already Exists
+            </p>
+          )}
         </div>
-        {existedFlag && (
-          <p className={styles.doyoumean}>
-            Do you mean <span>{existedFlag}</span> It`s already Exists
-          </p>
-        )}
+      </div>
+      <div className={styles.footer}>
+        <div className={(styles.buttonContainer, styles.btnSpace)}>
+          <button onClick={() => closeModal()}>CANCEL</button>
+          <button type="submit">
+            {" "}
+            <i className="far fa-check"></i> SAVE
+          </button>
+        </div>
       </div>
     </form>
   );

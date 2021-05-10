@@ -247,6 +247,7 @@ export default function Connections({ history }) {
         setFilters={setFilters}
         allEvaluation={allEvaluation}
         filters={filters}
+        history={history}
         fullFilter={true}
         tabValue={tabValue}
         summaryIdData={summaryIdData}

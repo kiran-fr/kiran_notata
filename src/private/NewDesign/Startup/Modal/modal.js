@@ -7,6 +7,7 @@ export default function DealFLowTag({
   title,
   children,
   width,
+  disabledBtn,
 }) {
   const handleModal = () => {
     closeModal(false);
@@ -25,15 +26,19 @@ export default function DealFLowTag({
             <h1>{title}</h1>
           </div>
           <div className={styles.main}>{children}</div>
-          <div className={styles.footer}>
-            <div className={styles.buttonContainer}>
-              <button onClick={() => handleModal()}>CANCEL</button>
-              <button onClick={() => handleSave()}>
-                {" "}
-                <i className="far fa-check"></i> SAVE
-              </button>
+          {!disabledBtn ? (
+            <div className={styles.footer}>
+              <div className={styles.buttonContainer}>
+                <button onClick={() => handleModal()}>CANCEL</button>
+                <button onClick={() => handleSave()}>
+                  {" "}
+                  <i className="far fa-check"></i> SAVE
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

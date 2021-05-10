@@ -152,6 +152,7 @@ function getHasFilters(filters) {
 }
 
 export default function Filters({
+  history,
   filters,
   setFilters,
   fullFilter,
@@ -379,7 +380,9 @@ export default function Filters({
         )}
       </div>
 
-      {modal === "startup" && <AddStartup closeModal={setModal} />}
+      {modal === "startup" && (
+        <AddStartup history={history} closeModal={setModal} />
+      )}
       {filterType === "column" ? (
         <ColumnSidebar
           allEvaluation={allEvaluation}

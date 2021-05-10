@@ -20,13 +20,14 @@ export default function FilterBar({ close, filters, setFilters }) {
     <ul className={styles.funnelUl}>
       {funnels.map(item => (
         <li>
-          <div className="myCheckbox">
-            <label className={styles.customCheck}>
+          <div>
+            <label>
               <input
-                type="checkbox"
-                // onClick={e => {
-                //   setFilters({ ...filters, funnelTag: [{id: "0"}] });
-                // }}
+                type="radio"
+                name={item.name}
+                onClick={e => {
+                  setFilters({ ...filters, funnelTag: item.name });
+                }}
               />
               <span class={styles.checkmark}></span>
             </label>
