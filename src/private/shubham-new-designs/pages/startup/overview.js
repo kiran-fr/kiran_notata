@@ -41,14 +41,11 @@ export default function Overview() {
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-1 col-xs-1"></div>
-                <div className="col-11  col-sm-10 col-xs-10">
-                  <p className="overview-container__startup-overview">
-                    Great Startup is a simple tool for investors to evaluate
-                    startups and engage their network.
-                  </p>
-                </div>
+              <div className="col-sm-12 col-xs-12">
+                <p className="overview-container__startup-overview">
+                  Great Startup is a simple tool for investors to evaluate
+                  startups and engage their network.
+                </p>
               </div>
               <div className="row overview-notata-info">
                 <div className="col-sm-6 col-xs-6 overview-notata-info__slidedeck">

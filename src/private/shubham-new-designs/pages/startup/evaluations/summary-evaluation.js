@@ -31,10 +31,14 @@ export default function SummaryEvaluation({
             currentClassName="is-current"
           >
             <li>
-              <a href="#problem">Problem</a>
+              <a href="#problem" onClick={() => setProblemCollapse("")}>
+                Problem
+              </a>
             </li>
             <li>
-              <a href="#concept">Concept</a>
+              <a href="#concept" onClick={() => setConceptCollapse("")}>
+                Concept
+              </a>
             </li>
             <li>
               <a href="#market">Market</a>

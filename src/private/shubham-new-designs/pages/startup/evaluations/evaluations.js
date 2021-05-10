@@ -166,16 +166,33 @@ export default function Evaluations() {
                     currentClassName="is-current"
                   >
                     <li>
-                      <a href="#my-eval">My evaluations</a>
+                      <a href="#my-eval" onClick={() => setMyEvalState("")}>
+                        My evaluations
+                      </a>
                     </li>
                     <li>
-                      <a href="#my-team-eval">My team evaluations</a>
+                      <a
+                        href="#my-team-eval"
+                        onClick={() => setMyTeamEvalState("")}
+                      >
+                        My team evaluations
+                      </a>
                     </li>
                     <li>
-                      <a href="#external-eval">External experts evaluations</a>
+                      <a
+                        href="#external-eval"
+                        onClick={() => setExpertEvalState("")}
+                      >
+                        External experts evaluations
+                      </a>
                     </li>
                     <li>
-                      <a href="#group-eval">Groups evaluations</a>
+                      <a
+                        href="#group-eval"
+                        onClick={() => setGroupEvalState("")}
+                      >
+                        Groups evaluations
+                      </a>
                     </li>
                   </Scrollspy>
                 </div>
