@@ -8,7 +8,7 @@ import StartupInfo from "./startup-info";
 import Overview from "./overview";
 import GroupsIndividuals from "./groups-individuals";
 import Materials from "./materials";
-import Evaluations from "./evaluations";
+import Evaluations from "./evaluations/evaluations";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
