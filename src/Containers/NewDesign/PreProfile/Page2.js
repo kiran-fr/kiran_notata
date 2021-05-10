@@ -1,25 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 // REACT STUFF
 import { useForm } from "react-hook-form";
 import { Button, CheckBoxes, Tags } from "Components/UI_Kits";
+
+import { useMutation, useQuery } from "@apollo/client";
+import { userUpdate } from "private/Apollo/Mutations";
+import { userGet } from "private/Apollo/Queries";
+
 import styles from "./Profile.module.css";
 export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
-  const { register, handleSubmit, formState } = useForm();
+  const [mutate] = useMutation(userUpdate);
+  const userQuery = useQuery(userGet);
+
+  const user = userQuery.data?.userGet || {};
+
+  const { handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
   function handleKeyDown(e) {
-    // if (e.key === "Enter" || e.keyCode === 188) {
-    //   let val = e.target.value;
-    //   if (val === "") return;
     setExtraInputs({
       ...extraInputs,
       interests: [...extraInputs.interests, e.target.value],
     });
     e.target.value = "";
   }
+
+  // Tags
+  const [investment, setInvestment] = useState([]);
+  const [geography, setGerography] = useState([]);
+
   function handleBack(e) {
-    if (e.key === "Enter" || e.keyCode === 188) {
-      setPage(1);
-    }
+    // if (e.key === "Enter" || e.keyCode === 188) {
+    setPage(1);
+    // }
   }
   function handleKeyUp(e) {
     let val = e.target.value;
@@ -27,9 +39,28 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
       e.target.value = "";
     }
   }
-  const onSubmit = (data, event) => {
+  const onSubmit = async (data, event) => {
+    let q3 = [];
+    let q4 = [];
+
+    investment.forEach(el => {
+      q3.push(el.name);
+    });
+
+    geography.forEach(el => {
+      q4.push(el.name);
+    });
+
+    const input = { q3_investment: q3, q4_geography: q4 };
+
     event.preventDefault();
-    setPage(3);
+    console.log(q3);
+    try {
+      await mutate({ variables: { input } });
+    } catch (error) {
+      console.log("error", error);
+    }
+    // setPage(3);
   };
   return (
     <div>
@@ -43,11 +74,12 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
         <div className={styles.tagContainer}>
           <Tags
             optionalTxt="write or choose up to 3 tags"
-            title="xxx"
             suggested={true}
             heading={false}
             title="domain"
             items={[]}
+            getSelectedTag={setInvestment}
+            setTags={user?.q3_investment ? user?.q3_investment : null}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
           />
@@ -56,11 +88,12 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
         <div className={styles.tagContainer}>
           <Tags
             optionalTxt="write or choose up to 3 tags"
-            title="xxx"
             suggested={true}
             heading={false}
             title="domain"
             items={[]}
+            getSelectedTag={setGerography}
+            setTags={user?.q4_geography ? user?.q4_geography : null}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
           />
