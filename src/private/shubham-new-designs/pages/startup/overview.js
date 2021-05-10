@@ -42,7 +42,8 @@ export default function Overview() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-12">
+                <div className="col-1 col-xs-1"></div>
+                <div className="col-11  col-sm-10 col-xs-10">
                   <p className="overview-container__startup-overview">
                     Great Startup is a simple tool for investors to evaluate
                     startups and engage their network.

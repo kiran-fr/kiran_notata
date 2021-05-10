@@ -7,9 +7,9 @@ import ShareStartup from "./share-startup";
 export default function StartupInfo() {
   return (
     <>
-      {/* <ShareStartup></ShareStartup> */}
+      <ShareStartup></ShareStartup>
 
-      <div className="row tab-panel-container startup-info-container">
+      {/* <div className="row tab-panel-container startup-info-container">
         <div className="col-sm-7">
           <div className="card">
             <div className="row">
@@ -180,7 +180,7 @@ export default function StartupInfo() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

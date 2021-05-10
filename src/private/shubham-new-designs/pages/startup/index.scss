@@ -29,6 +29,32 @@
     @media only screen and (max-width: 768px) {
         margin-top: 20px;
     }
+    .card-notification-bar{
+        background: #53CAB2;
+        border-radius: 8px 8px 0px 0px;        
+        .text{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-size: 18px;
+            line-height: 22px;
+            color: #FFFFFF;
+            padding: 11px 25px 11px 20px;
+            .btn{
+                font-weight: bold;
+                font-size: 10px;
+                line-height: 12px;
+                letter-spacing: 0.03em;
+                text-transform: uppercase;
+                padding: 3px 15px 3px 15px;
+                border:1px solid #FFFFFF;
+                border-radius: 12px;
+                margin-left:25px;
+                @media only screen and(max-width:490px) {
+                    margin-left:5px;
+                }
+            }
+        }
+    }
 }
 .tab-panel-container{
     margin-top: 30px;
@@ -55,4 +81,7 @@
     line-height: 24px;
     color: #969BA3;
     margin-left: 25px;
+}
+.padding-left-0{
+    padding-left: 0px;
 }
