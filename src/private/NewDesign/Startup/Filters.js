@@ -176,6 +176,10 @@ export default function Filters({
     setActiveTab(tabArr[1].value);
   }, []);
 
+  useEffect(() => {
+    setFilterValue(filters.search);
+  }, [filters]);
+
   const tabArr = [
     { value: "kanban", text: "KANBAN" },
     { value: "spreadsheet", text: "SPREADSHEET" },
@@ -207,6 +211,12 @@ export default function Filters({
   const handleFilter = e => {
     setFilterValue(e.target.value);
   };
+
+  useEffect(() => {
+    if (filterValue === "") {
+      setFilters({ ...filters, search: filterValue });
+    }
+  }, [filterValue]);
 
   return (
     <div>
@@ -397,6 +407,8 @@ export default function Filters({
           <FilterSidebar
             close={setFilterType}
             filters={filters}
+            handleFilter={handleFilter}
+            filterValue={filterValue}
             setFilters={setFilters}
           />
         )
