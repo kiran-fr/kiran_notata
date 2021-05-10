@@ -4,6 +4,12 @@ import Icon from "@material-ui/core/Icon";
 import "./startup-info.scss";
 import ShareStartup from "./share-startup";
 
+import Faceook from "../../../../assets/images/Faceook.svg";
+import Google from "../../../../assets/images/Google.svg";
+import Linked from "../../../../assets/images/Linked.svg";
+import Twitter from "../../../../assets/images/Twitter.svg";
+import Insta from "../../../../assets/images/Insta.svg";
+
 export default function StartupInfo() {
   return (
     <>
@@ -26,6 +32,11 @@ export default function StartupInfo() {
                     <span className="material-icons">place</span>
                     <span className="name">Norway</span>
                   </div>
+                  <img src={Faceook} />
+                  <img src={Google} />
+                  <img src={Linked} />
+                  <img src={Twitter} />
+                  <img src={Insta} />
                 </div>
               </div>
             </div>
