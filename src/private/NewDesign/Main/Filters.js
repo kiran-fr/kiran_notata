@@ -141,14 +141,14 @@ const Funnels = ({ filters, setFilters, setFilterType }) => {
 };
 
 function getHasFilters(filters) {
-  const hasFilters =
+  /*  const hasFilters =
     filters.tags.length ||
     filters.funnelTags.length ||
     filters.search ||
     filters.starred ||
     (filters.dateRange.length &&
-      (filters.dateRange[0] || filters.dateRange[1]));
-  return hasFilters;
+      (filters.dateRange[0] || filters.dateRange[1]));*/
+  return false;
 }
 
 export default function Filters({
@@ -157,12 +157,18 @@ export default function Filters({
   fullFilter,
   setTabValue,
   setShowNewStartupModal,
+  setManageColValue,
+  manageColValue,
+  evaluationTemplates,
+  allEvaluation,
+  summaryIdData,
 }) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState();
   const [filterType, setFilterType] = useState();
+  const [filterValue, setFilterValue] = useState();
 
   useEffect(() => {
     setTabValue(tabArr[1].value);
@@ -197,24 +203,28 @@ export default function Filters({
     }
   };
 
+  const handleFilter = e => {
+    setFilterValue(e.target.value);
+  };
+
   return (
     <div>
       <div className={small_text_flex}>
-        {!!hasFilters && (
-          <div
-            className={clear_filters}
-            onClick={() => {
-              setFilters({
-                search: "",
-                tags: [],
-                funnelTags: [],
-                dateRange: [null, null],
-              });
-            }}
-          >
-            clear all filters
-          </div>
-        )}
+        {/* {!!hasFilters && ( */}
+        <div
+          className={clear_filters}
+          onClick={() => {
+            setFilters({
+              search: "",
+              tags: [],
+              funnelTags: [],
+              // dateRange: [null, null],
+            });
+          }}
+        >
+          clear all filters
+        </div>
+        {/* )} */}
       </div>
 
       <div className={fullFilter ? container : container_mini}>
@@ -237,18 +247,19 @@ export default function Filters({
                   >
                     <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
-                  <div
-                    className={styles.tableSearch}
-                    style={{ opacity: "0.4" }}
-                  >
+                  <div className={styles.tableSearch}>
                     <input
                       type="text"
-                      value={filters.search}
-                      onChange={e =>
-                        setFilters({ ...filters, search: e.target.value })
-                      }
+                      value={filterValue}
+                      onChange={e => handleFilter(e)}
                     />
-                    <button>Search</button>
+                    <button
+                      onClick={() =>
+                        setFilters({ ...filters, search: filterValue })
+                      }
+                    >
+                      Search
+                    </button>
                     <i class="far fa-search"></i>
                   </div>
                 </div>
@@ -287,10 +298,9 @@ export default function Filters({
           </div>
         </div>
 
-        {(!!filters.tags.length ||
-          !!filters.funnelTags.length ||
-          filters.dateRange[0] ||
-          filters.dateRange[1]) && (
+        {(!!filters.tags.length || !!filters.funnelTags.length) && (
+          // filters.dateRange[0] ||
+          // filters.dateRange[1]) &&
           <div className={content}>
             <div>
               {filters.funnelTags.map(funnelTag => {
@@ -343,27 +353,27 @@ export default function Filters({
                 );
               })}
 
-              {(filters.dateRange[0] || filters.dateRange[1]) && (
-                <Tag key="dateFilterTag">
-                  <div className={tag_each}>
-                    <div>
-                      <i className="fal fa-calendar" /> Date:{" "}
-                      {formatDateTag(filters.dateRange)}
-                    </div>
-                    <div
-                      className={tag_kill}
-                      onClick={() => {
-                        setFilters({
-                          ...filters,
-                          dateRange: [null, null],
-                        });
-                      }}
-                    >
-                      <i className="fal fa-times" />
-                    </div>
-                  </div>
-                </Tag>
-              )}
+              {/*{(filters.dateRange[0] || filters.dateRange[1]) && (*/}
+              {/*  <Tag key="dateFilterTag">*/}
+              {/*    <div className={tag_each}>*/}
+              {/*      <div>*/}
+              {/*        <i className="fal fa-calendar" /> Date:{" "}*/}
+              {/*        {formatDateTag(filters.dateRange)}*/}
+              {/*      </div>*/}
+              {/*      <div*/}
+              {/*        className={tag_kill}*/}
+              {/*        onClick={() => {*/}
+              {/*          setFilters({*/}
+              {/*            ...filters,*/}
+              {/*            dateRange: [null, null],*/}
+              {/*          });*/}
+              {/*        }}*/}
+              {/*      >*/}
+              {/*        <i className="fal fa-times" />*/}
+              {/*      </div>*/}
+              {/*    </div>*/}
+              {/*  </Tag>*/}
+              {/*)}*/}
             </div>
           </div>
         )}
@@ -371,9 +381,22 @@ export default function Filters({
 
       {modal === "startup" && <AddStartup closeModal={setModal} />}
       {filterType === "column" ? (
-        <ColumnSidebar close={setFilterType} />
+        <ColumnSidebar
+          allEvaluation={allEvaluation}
+          evaluationTemplates={evaluationTemplates}
+          close={setFilterType}
+          manageColValue={manageColValue}
+          setManageColValue={setManageColValue}
+          summaryIdData={summaryIdData}
+        />
       ) : (
-        filterType === "filter" && <FilterSidebar close={setFilterType} />
+        filterType === "filter" && (
+          <FilterSidebar
+            close={setFilterType}
+            filters={filters}
+            setFilters={setFilters}
+          />
+        )
       )}
     </div>
   );

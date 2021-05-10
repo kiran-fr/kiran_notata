@@ -32,7 +32,7 @@ import {
 } from "../definitions";
 
 // Landing page / list
-import StartupSection from "./NewDesign/Main/StartupPage";
+import StartupSection from "./NewDesign/Startup/StartupPage";
 
 // import Dashboard from "./pages/Dashboard/DashboardPage";
 import Charts from "./pages/Dashboard/Charts/ChartsPage";

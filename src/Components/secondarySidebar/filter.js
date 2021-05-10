@@ -8,7 +8,13 @@ import VioletBar from "../../assets/images/violetBar.png";
 import YellowBar from "../../assets/images/yellowBar.png";
 import GrassBar from "../../assets/images/grassBar.png";
 
-export default function FilterBar({ close }) {
+export default function FilterBar({
+  close,
+  filters,
+  setFilters,
+  filterValue,
+  handleFilter,
+}) {
   const funnels = [
     { name: "Reviewed", img: RedBar },
     { name: "Met", img: GreenBar },
@@ -20,9 +26,15 @@ export default function FilterBar({ close }) {
     <ul className={styles.funnelUl}>
       {funnels.map(item => (
         <li>
-          <div className="myCheckbox">
-            <label className={styles.customCheck}>
-              <input type="checkbox" />
+          <div>
+            <label>
+              <input
+                type="radio"
+                name={item.name}
+                onClick={e => {
+                  setFilters({ ...filters, funnelTag: item.name });
+                }}
+              />
               <span class={styles.checkmark}></span>
             </label>
           </div>
@@ -51,12 +63,27 @@ export default function FilterBar({ close }) {
       </div>
     </div>
   );
+  const handleSearch = value => {
+    handleFilter(value);
+  };
   return (
     <Sidebar title="FILTERS" icon="fas fa-filter" close={close}>
       <div className={styles.filter}>
         <div className={styles.search}>
-          <input type="text" />
-          <button>Search</button>
+          <input
+            type="text"
+            value={filterValue}
+            onChange={e => {
+              handleSearch(e);
+            }}
+          />
+          <button
+            onClick={() => {
+              setFilters({ ...filters, search: filterValue });
+            }}
+          >
+            Search
+          </button>
         </div>
         <div className={styles.funnelStage}>
           <h2>FUNNEL STAGE</h2>

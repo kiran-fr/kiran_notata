@@ -75,7 +75,6 @@ export default function TagsInput({
   function removeTagByIndex(index) {
     let newTags = selectedTags.filter(i => i.id !== index);
     selectTags(newTags);
-    console.log("selectTag", newTags);
   }
 
   //Add tag
@@ -93,7 +92,15 @@ export default function TagsInput({
     e.target.value = "";
   }
 
-  console.log("selectedtag", selectedTags);
+  function handleUserEnter(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTags(e);
+    } else {
+      return null;
+    }
+  }
+
   return (
     <Tag
       className={classnames(getInputSize(size))}
@@ -117,7 +124,7 @@ export default function TagsInput({
               marginTop: selectedTags.length > 0 ? "3px" : "2px",
               width: "100px",
             }}
-            onKeyUp={event => (event.key === "Enter" ? addTags(event) : null)}
+            onKeyPress={handleUserEnter}
           />
         </div>
       </ul>

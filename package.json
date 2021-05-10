@@ -105,6 +105,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-beautiful-dnd": "^13.1.0",
     "react-hook-form": "^6.11.5",
+    "react-scrollspy": "^3.4.3",
     "react-select": "^3.1.1",
     "react-spring": "^9.1.1",
     "recharts": "^1.8.5",

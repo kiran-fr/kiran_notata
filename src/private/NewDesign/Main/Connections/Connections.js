@@ -16,11 +16,8 @@ import SelectTagsForStartup from "./SelectTagsForStartup";
 import { Kanban } from "../../Kanban/Kanban";
 import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 
-// FUNCTIONS
-import applyFilters from "./applyFilters";
-
 // Definitions
-import defaultFilters from "./defaultFilters";
+// import defaultFilters from "./defaultFilters";
 
 // Components
 import Paginator from "./Paginator";
@@ -41,7 +38,26 @@ const allFields = {
   pitching: true,
 };
 
-function ListOfStartups({ filters, currentPage, history }) {
+function getCleanFilterData(filters) {
+  let clean = {};
+  for (let key in filters) {
+    if (filters[key] && filters[key].length) {
+      clean[key] = filters[key];
+    }
+  }
+  return clean;
+}
+
+function ListOfStartups({
+  manageColValue,
+  filters,
+  setFilters,
+  currentPage,
+  history,
+  columnSettings,
+  evaluationTemplates,
+  evaluationTemplatesQuery,
+}) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
@@ -52,14 +68,12 @@ function ListOfStartups({ filters, currentPage, history }) {
   //Query: User
   const userQuery = useQuery(userGet);
 
-  // Query: Account
-  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
-
   // Query: Connections
   const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
     variables: {
+      filters: getCleanFilterData(filters),
       LastEvaluatedId: undefined,
     },
   });
@@ -74,17 +88,13 @@ function ListOfStartups({ filters, currentPage, history }) {
     });
   }, [currentPage]);
 
+  // TODO: Column settings
+  // This is saved on user.columnSettings
+
   // Define data
   const user = userQuery.data?.userGet || {};
-  console.log("user", user);
 
   const connections = data?.connectionsGet || [];
-
-  const evaluationTemplates =
-    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
-
-  // Filter data
-  const filteredConnections = applyFilters({ connections, filters });
 
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
@@ -100,8 +110,12 @@ function ListOfStartups({ filters, currentPage, history }) {
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
+        manageColValue={manageColValue}
+        columnSettings={columnSettings}
         fields={allFields}
         data={connections}
+        filters={filters}
+        setFilters={setFilters}
         evaluationTemplates={evaluationTemplates}
         loading={loading || evaluationTemplatesQuery.loading}
         emptyLabel={"No results."}
@@ -138,12 +152,75 @@ function ListOfStartups({ filters, currentPage, history }) {
 }
 
 export default function Connections({ history }) {
+  const defaultFilters = {
+    // FILTERS
+
+    search: "",
+    tags: [],
+    funnelTags: [],
+    // fromDate: new Date().getTime() - 40000,
+    // toDate: new Date().getTime(),
+    // limit: 25
+
+    // SORTING
+    // sortBy: 'GROUP',
+    //   // STARRED
+    //   // ALPHA
+    //   // EVALUATION
+    //   // SUBJECTIVE_SCORE
+    //   // TAGS
+    //   // FUNNEL
+    //   // GROUP
+    //   // CREATED_AT
+    //   // UPDATED_AT
+
+    // sortByVal: "groupId",
+    // sortDirection: 'ASC'
+  };
+
+  // Query: Account
+  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
+
+  const evaluationTemplates =
+    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
+
   // States
   const [filters, setFilterState] = useState(defaultFilters);
+  const [length, setLength] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(undefined);
   const [showNewStartupModal, setShowNewStartupModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [render, setRender] = useState(false);
   const [tabValue, setTabValue] = useState("spreadsheet");
+  const [summaryIdData, setSummaryIdData] = useState([]);
+
+  const [manageColValue, setManageColValue] = useState({
+    groups: true,
+    funnels: true,
+    tags: true,
+    subjectiveScore: true,
+    evaluationTemplates: [],
+  });
+
+  useEffect(() => {
+    evaluationTemplates.forEach(summary => {
+      setSummaryIdData([...summaryIdData, summary.id]);
+      setManageColValue(manageColValue => ({
+        ...manageColValue,
+        ["evaluationTemplates"]: [
+          ...manageColValue.evaluationTemplates,
+          summary.id,
+        ],
+      }));
+    });
+  }, [evaluationTemplates]);
+
+  useEffect(() => {
+    if (manageColValue) {
+      setRender(render);
+    }
+  }, [manageColValue]);
 
   // Load filters from local store
   useEffect(() => {
@@ -151,7 +228,10 @@ export default function Connections({ history }) {
     try {
       f = JSON.parse(localStorage.getItem("filters"));
     } catch (error) {}
-    if (f) setFilterState(f);
+
+    if (f) {
+      setFilterState(f.dateRange ? defaultFilters : f);
+    }
   }, []);
 
   // Setting filters: save to local store
@@ -159,6 +239,11 @@ export default function Connections({ history }) {
     localStorage.setItem("filters", JSON.stringify(filterData));
     setFilterState(filterData);
   }
+
+  const allEvaluation =
+    evaluationTemplates.length === manageColValue.evaluationTemplates.length;
+
+  // manage Column
 
   return (
     <>
@@ -169,18 +254,27 @@ export default function Connections({ history }) {
       />
       <Filters
         setShowNewStartupModal={setShowNewStartupModal}
+        manageColValue={manageColValue}
         setFilters={setFilters}
+        allEvaluation={allEvaluation}
         filters={filters}
         fullFilter={true}
         tabValue={tabValue}
+        summaryIdData={summaryIdData}
         setTabValue={setTabValue}
+        evaluationTemplates={evaluationTemplates}
+        setManageColValue={setManageColValue}
       />
       {tabValue === "spreadsheet" ? (
         <>
           <ListOfStartups
             history={history}
             filters={filters}
+            columnSettings={manageColValue}
+            evaluationTemplatesQuery={evaluationTemplatesQuery}
+            setFilters={setFilters}
             currentPage={currentPage}
+            evaluationTemplates={evaluationTemplates}
           />
           <Paginator
             currentPage={currentPage}

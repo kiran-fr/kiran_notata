@@ -36,3 +36,23 @@
         margin-top: 0px;
     }
 }
+.separator {
+    padding-top: 25px;
+    border-bottom: 1px solid #F0F0F0;
+    ;
+    width: 90%;
+    margin-left: 5%;
+}
+.back-icon{
+    color: #71D0BD;
+    cursor: pointer;
+    position: absolute;
+}
+.page-heading{
+    font-family: 'Proxima Nova';
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    color: #969BA3;
+    margin-left: 25px;
+}
