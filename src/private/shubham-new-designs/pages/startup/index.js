@@ -1,4 +1,5 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 import "./index.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -9,6 +10,8 @@ import Overview from "./overview";
 import GroupsIndividuals from "./groups-individuals";
 import Materials from "./materials";
 import Evaluations from "./evaluations/evaluations";
+import { connectionNew } from "private/Apollo/Queries";
+import { GhostLoader } from "Components/elements";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,11 +35,24 @@ function a11yProps(index) {
   };
 }
 
-export const Startup = () => {
+export const Startup = props => {
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+  const { data: connectionGetData, loading, error } = useQuery(connectionNew, {
+    variables: { id },
+  });
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  if (!connectionGetData) {
+    return <GhostLoader />;
+  }
+  let creativity = connectionGetData?.connectionGet;
   return (
     <>
       <div className="col-12 startup-container">
@@ -52,7 +68,7 @@ export const Startup = () => {
         <StartupInfo />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Overview />
+        <Overview creativity={creativity} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Evaluations />

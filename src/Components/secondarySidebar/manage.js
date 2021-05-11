@@ -34,12 +34,21 @@ export default function ManageSidebar({
     mutate({ variables: { input } });
   }, [manageColValue.groups]);
 
-  const handleManageSection = (e, option) => {
-    if (option) {
-      var array = manageColValue.evaluationTemplates; //  array
-      var index = array.indexOf(e); //e is id
-      if (index !== -1) {
-        array.splice(index, 1); // remove the arr value
+  const handleManageSection = (e, evaltionId) => {
+    if (evaltionId) {
+      if (e.target.checked === false) {
+        var array = manageColValue.evaluationTemplates; //  array
+        var index = array.indexOf(evaltionId); //e is id
+        if (index !== -1) {
+          array.splice(index, 1); // remove the arr value
+          setManageColValue({
+            ...manageColValue,
+            ["evaluationTemplates"]: array,
+          });
+        }
+      } else {
+        var array = manageColValue.evaluationTemplates;
+        array.push(evaltionId);
         setManageColValue({
           ...manageColValue,
           ["evaluationTemplates"]: array,
@@ -64,7 +73,6 @@ export default function ManageSidebar({
       } else {
         if (e.target.name === "showAll") {
           if (e.target.checked === false) {
-            console.log("amhere");
             setManageColValue({
               ...manageColValue,
               groups: false,
@@ -111,7 +119,7 @@ export default function ManageSidebar({
             <label className={styles.customCheck}>
               <input
                 type="checkbox"
-                defaultChecked={showAll}
+                checked={showAll}
                 name="showAll"
                 onChange={handleManageSection}
               />
@@ -155,9 +163,7 @@ export default function ManageSidebar({
                     <label className={styles.customCheck}>
                       <input
                         type="checkbox"
-                        onChange={() =>
-                          handleManageSection(summary.id, "evaluation")
-                        }
+                        onChange={e => handleManageSection(e, summary.id)}
                         checked={manageColValue.evaluationTemplates.includes(
                           summary.id
                         )}
