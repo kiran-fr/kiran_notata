@@ -6,6 +6,7 @@ import {
   connectionsGet,
   evaluationTemplatesGet,
   userGet,
+  connectionAutoCompleteName,
 } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
