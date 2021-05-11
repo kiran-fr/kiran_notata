@@ -20,6 +20,7 @@ export default function TableBody(props) {
     columnSettings,
     handleCompany,
     preview,
+    setStarMutation,
   } = props;
 
   const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
@@ -54,6 +55,8 @@ export default function TableBody(props) {
               creative,
               groupSharingInfo,
               evaluationSummaries,
+              starred,
+              id,
             } = item;
 
             let tagSet;
@@ -87,19 +90,19 @@ export default function TableBody(props) {
                   </label>
                   <div
                     className={styles.favStartup}
-                    /* onClick={() => {
-                  setStarMutation({
-                    variables: { id },
+                    onClick={() => {
+                      setStarMutation({
+                        variables: { id },
 
-                    optimisticResponse: {
-                      __typename: "Mutation",
-                      connectionSetStar: {
-                        ...connection,
-                        starred: !starred,
-                      },
-                    },
-                  });
-                }} */
+                        optimisticResponse: {
+                          __typename: "Mutation",
+                          connectionSetStar: {
+                            ...item,
+                            starred: !starred,
+                          },
+                        },
+                      });
+                    }}
                   >
                     <i className="fas fa-star"></i>
                   </div>
