@@ -27,14 +27,15 @@ export default function Page3({ setPage, extraInputs, history }) {
       title: "business angels 1",
       admin: "Stephanie Wykoff",
       group: {
-        groupId: "123",
-        groupName: "Group Name",
+        id: "123",
+        name: "Group Name",
         groupDescription: "Group description",
         createdByUser: {
           family_name: "Tushar",
           given_name: "Kumar",
           email: "jorgen@notata.io",
         },
+        members: [],
       },
     },
     {
