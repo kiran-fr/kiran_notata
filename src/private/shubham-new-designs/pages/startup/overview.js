@@ -7,13 +7,19 @@ import { ICONPOSITION, OVERVIEWPAGESTATE } from "../constants";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
 import ShareTemplate from "./share-template";
 import Tags from "../ui-kits/tags";
+import Funels from "./funels";
+import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
+import ArchiveList from "./archive-list";
 
 export default function Overview() {
-  const [pageState, setPageState] = useState(OVERVIEWPAGESTATE.OVERVIEW);
+  const [pageState, setPageState] = useState(OVERVIEWPAGESTATE.Overview);
+  const [archiveModal, setArchiveModal] = useState(false);
   return (
     <>
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
         <ShareTemplate setPageState={setPageState}></ShareTemplate>
+      ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
+        <ArchiveList></ArchiveList>
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">
@@ -142,6 +148,12 @@ export default function Overview() {
                 </div>
                 <Tags />
               </div>
+              <div className="row funnel-summary-container">
+                <div className="overview-container__scores__heading">
+                  Evaluation summaries
+                </div>
+                <Funels></Funels>
+              </div>
               <div className="row impact-goals-container">
                 <div className="impact-goals-container__heading">
                   Impact Goals
@@ -184,7 +196,7 @@ export default function Overview() {
                           <span className="name">Great Startup Inc</span>
                         </td>
                         <td>
-                          <div className="tags-container__placeholder">
+                          <div className="tags-container__tags">
                             <div className="tag">Hardware</div>
                             <div className="tag">Hardware</div>
                           </div>
@@ -210,7 +222,7 @@ export default function Overview() {
                           <span className="name">Great Startup Inc</span>
                         </td>
                         <td>
-                          <div className="tags-container__placeholder">
+                          <div className="tags-container__tags">
                             <div className="tag">Hardware</div>
                             <div className="tag">Hardware</div>
                           </div>
@@ -246,7 +258,7 @@ export default function Overview() {
                   Do you want to share info about startup with a network outside
                   Notata?
                 </div>
-                <div className="col-sm-12 similar-startups-contianer__table-container">
+                <div className="col-sm-12 similar-startups-contianer__table-container sharing-template-container">
                   <table>
                     <thead>
                       <tr className="grid-header">
@@ -343,7 +355,9 @@ export default function Overview() {
                   className="text-center archive-btn"
                   text="ARCHIEVE STARTUP"
                   iconPosition={ICONPOSITION.NONE}
+                  onClick={() => setArchiveModal(true)}
                 ></ButtonWithIcon>
+                <div className="open-archive">Open Archive</div>
               </div>
               <div className="col-xs-6 col-sm-6">
                 <ButtonWithIcon
@@ -412,6 +426,21 @@ export default function Overview() {
             </div>
           </div>
         </div>
+      )}
+      {archiveModal && (
+        <Modal
+          title="Archive startup"
+          submit={() => setArchiveModal(false)}
+          close={() => setArchiveModal(false)}
+          submitTxt="Archive"
+          closeTxt="CANCEL"
+          children={
+            <div className="archive-modal-description">
+              After archiving startup still will be available in reports
+              section.
+            </div>
+          }
+        ></Modal>
       )}
     </>
   );

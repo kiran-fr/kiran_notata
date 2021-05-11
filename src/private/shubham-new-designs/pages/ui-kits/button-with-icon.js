@@ -9,6 +9,7 @@ export default function ButtonWithIcon({
   className,
   text,
   iconPosition,
+  onClick,
 }) {
   return (
     <Button
@@ -19,6 +20,7 @@ export default function ButtonWithIcon({
         ICONPOSITION.END === iconPosition ? <Icon> {iconName} </Icon> : null
       }
       className={`${className} button-container`}
+      onClick={onClick}
     >
       {" "}
       {text}{" "}
