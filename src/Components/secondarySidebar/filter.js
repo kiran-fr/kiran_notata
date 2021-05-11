@@ -63,7 +63,7 @@ export default function FilterBar({
           </>
         ))
       ) : loading ? (
-        <p>loading...</p>
+        <i className={"fa fa-spinner fa-spin"} />
       ) : (
         ""
       )}

@@ -181,8 +181,24 @@ export default function Filters({
   }, [filters]);
 
   const tabArr = [
-    { value: "kanban", text: "KANBAN" },
-    { value: "spreadsheet", text: "SPREADSHEET" },
+    {
+      value: "kanban",
+      text: (
+        <div>
+          <span>KANBAN</span>
+          <i style={{ marginLeft: "5px" }} className="fas fa-chevron-down"></i>
+        </div>
+      ),
+    },
+    {
+      value: "spreadsheet",
+      text: (
+        <div>
+          <img src={Column} />
+          <span>SPREADSHEET</span>
+        </div>
+      ),
+    },
   ];
 
   const formatDateTag = range => {
