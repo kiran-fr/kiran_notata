@@ -90,14 +90,7 @@ const onDragEnd = (result, columns, setColumns) => {
 export const Kanban = () => {
   const [columns, setColumns] = useState(boards);
   return (
-    <div
-      style={{
-        display: "flex",
-        marginTop: "40px",
-        justifyContent: "center",
-        height: "100%",
-      }}
-    >
+    <div className={styles.boardHolder}>
       <DragDropContext
         onDragEnd={result => onDragEnd(result, columns, setColumns)}
       >
@@ -105,7 +98,7 @@ export const Kanban = () => {
           return (
             <div className={styles.board} key={columnId}>
               <BoardHeader icon={column.icon}>{column.name}</BoardHeader>
-              <div style={{ margin: 8 }}>
+              <div className={styles.droppable}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
                     return (
