@@ -5,7 +5,7 @@ import Modal from "./modal";
 import Short from "../DealFlow/AddStartUp/Short";
 import Expand from "../DealFlow/AddStartUp/Expand";
 
-export default function AddStartup({ closeModal, history }) {
+export default function AddStartup({ closeModal, history, connections }) {
   const [activeTab, setActiveTab] = useState();
 
   useEffect(() => {
@@ -35,7 +35,12 @@ export default function AddStartup({ closeModal, history }) {
         />
         {activeTab === "expand" && <Expand styles={styles} />}
         {activeTab === "short" && (
-          <Short history={history} closeModal={closeModal} styles={styles} />
+          <Short
+            history={history}
+            closeModal={closeModal}
+            connections={connections}
+            styles={styles}
+          />
         )}
       </div>
     </Modal>

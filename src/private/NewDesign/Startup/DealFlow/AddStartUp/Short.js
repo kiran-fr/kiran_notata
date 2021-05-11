@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 // API STUFF
-import { useQuery, useMutation } from "@apollo/client";
-import { connectionsGet } from "private/Apollo/Queries";
+import { useMutation } from "@apollo/client";
 import { connectionCreate, creativePut } from "private/Apollo/Mutations";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 
@@ -17,7 +16,7 @@ import { startup_page } from "definitions";
 // * MAIN FUNCTION *
 // *****************
 
-export const Short = ({ history, closeModal, styles }) => {
+export const Short = ({ history, closeModal, styles, connections }) => {
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
 
@@ -29,16 +28,14 @@ export const Short = ({ history, closeModal, styles }) => {
   const [mutateCreative] = useMutation(creativePut);
   const [mutateConnectionCreate] = useMutation(connectionCreate);
 
-  // Queries
-  const connectionsQuery = useQuery(connectionsGet);
-  const connections = connectionsQuery?.data?.connectionsGet || [];
-
   // Look for duplicate names
   let companyNameArr = [];
   function lookForDuplicateNames(value) {
     // Populate array if empty
     if (companyNameArr.length === 0) {
-      companyNameArr = connections.map(sub => sub.creative?.name);
+      companyNameArr = connections.length
+        ? connections.map(sub => sub.creative?.name)
+        : [];
     }
 
     let userInput = value ? value.toUpperCase() : "";
@@ -73,9 +70,9 @@ export const Short = ({ history, closeModal, styles }) => {
 
       // Go to startup page
       // let path = `${startup_page}/${connection.id}`;
-      let path = `${startup_page}/components/ui/navigation1`;
+      // let path = `${startup_page}/components/ui/navigation1`;
 
-      history.push(path);
+      // history.push(path);
 
       // closeModal modal
       closeModal();
@@ -111,7 +108,7 @@ export const Short = ({ history, closeModal, styles }) => {
           <button onClick={() => closeModal()}>CANCEL</button>
           <button type="submit">
             {" "}
-            <i className="far fa-check"></i> SAVE
+            {isSubmitting ? <i className={"fa fa-spinner fa-spin"} /> : "SAVE"}
           </button>
         </div>
       </div>

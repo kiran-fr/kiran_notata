@@ -106,9 +106,11 @@
                 }
             }
         }     
-        .score-submisisons{
+        .score-submisisons{            
             @media only screen and(max-width:768px){
-                margin-top: 10px!important;;
+                margin-top: 10px!important;
+                padding-left: 0px;
+                padding-right: 0px;
             }
             margin-top: 10px!important;
         }    
@@ -162,6 +164,11 @@
                     padding:5px 10px 5px 10px;
                     width: 143px;;
                     letter-spacing: 0.03em;
+                    &:hover {
+                        background-color: #FFFFFF;
+                        color: #808691;
+                        border:1px solid #808691;
+                    }
                 }
             }
         }
@@ -176,6 +183,28 @@
             line-height: 22px;
             color: #969BA3;
             margin-bottom:20px;
+        }
+        .evaluation-templates-btn{
+            width: 225px;
+            height: 40px;
+            background: #53CAB2;
+            border-radius: 20px;
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 17px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            border:none;
+            margin-top:50px;
+            margin-bottom:30px;
+            &:hover {
+                background-color: #FFFFFF;
+                color: #808691;
+                border:1px solid #808691;
+            }
         }
     }
 }
