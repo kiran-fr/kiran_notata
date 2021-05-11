@@ -157,7 +157,6 @@ export default function Filters({
   setFilters,
   fullFilter,
   setTabValue,
-  setShowNewStartupModal,
   setManageColValue,
   manageColValue,
   evaluationTemplates,
@@ -237,24 +236,6 @@ export default function Filters({
 
   return (
     <div>
-      <div className={small_text_flex}>
-        {/* {!!hasFilters && ( */}
-        <div
-          className={clear_filters}
-          onClick={() => {
-            setFilters({
-              search: "",
-              tags: [],
-              funnelTags: [],
-              // dateRange: [null, null],
-            });
-          }}
-        >
-          clear all filters
-        </div>
-        {/* )} */}
-      </div>
-
       <div className={fullFilter ? container : container_mini}>
         <div className={footer}>
           <div className={filter_container}>
@@ -271,7 +252,6 @@ export default function Filters({
                   <button
                     className={styles.addButton}
                     onClick={() => setModal("startup")}
-                    // onClick={() => setShowNewStartupModal(true)}
                   >
                     <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>

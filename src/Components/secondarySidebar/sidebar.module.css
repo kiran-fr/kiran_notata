@@ -28,6 +28,11 @@
   color: #969ba3;
   margin-top: 15px;
 }
+
+.sidebar .title:hover {
+  color: #53cab2;
+  cursor: pointer;
+}
 .sidebar .title i {
   margin-right: 5px;
   color: #969ba3;

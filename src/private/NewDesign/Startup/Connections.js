@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // API
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   connectionsGet,
   evaluationTemplatesGet,
@@ -14,7 +14,6 @@ import Filters from "./Filters";
 import SelectTagsForStartup from "./Modal/SelectTagsForStartup";
 
 import { Kanban } from "../Kanban/Kanban";
-import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 
 // Components
 import Paginator from "./Paginator";
@@ -158,6 +157,27 @@ export default function Connections({ history }) {
     // sortDirection: 'ASC'
   };
 
+  // Query: Account
+  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
+
+  const evaluationTemplates =
+    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
+
+  // States
+  const [filters, setFilterState] = useState(defaultFilters);
+  const [currentPage, setCurrentPage] = useState(undefined);
+  const [render, setRender] = useState(false);
+  const [tabValue, setTabValue] = useState("spreadsheet");
+  const [summaryIdData, setSummaryIdData] = useState([]);
+
+  const [manageColValue, setManageColValue] = useState({
+    groups: true,
+    funnels: true,
+    tags: true,
+    subjectiveScore: true,
+    evaluationTemplates: [],
+  });
+
   // Query: Connections
   const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
     fetchPolicy: "network-only",
@@ -170,31 +190,6 @@ export default function Connections({ history }) {
 
   // define data
   const connections = data?.connectionsGet || [];
-
-  // Query: Account
-  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
-
-  const evaluationTemplates =
-    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
-
-  // States
-  const [filters, setFilterState] = useState(defaultFilters);
-  const [length, setLength] = useState(false);
-
-  const [currentPage, setCurrentPage] = useState(undefined);
-  const [showNewStartupModal, setShowNewStartupModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [render, setRender] = useState(false);
-  const [tabValue, setTabValue] = useState("spreadsheet");
-  const [summaryIdData, setSummaryIdData] = useState([]);
-
-  const [manageColValue, setManageColValue] = useState({
-    groups: true,
-    funnels: true,
-    tags: true,
-    subjectiveScore: true,
-    evaluationTemplates: [],
-  });
 
   useEffect(() => {
     evaluationTemplates.forEach(summary => {
@@ -241,7 +236,6 @@ export default function Connections({ history }) {
   return (
     <>
       <Filters
-        setShowNewStartupModal={setShowNewStartupModal}
         manageColValue={manageColValue}
         setFilters={setFilters}
         allEvaluation={allEvaluation}

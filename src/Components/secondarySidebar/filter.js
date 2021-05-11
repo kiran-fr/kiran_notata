@@ -11,6 +11,7 @@ import img5 from "../../assets/images/grassBar.png";
 import { useQuery } from "@apollo/client";
 
 import { funnelGroupGet } from "private/Apollo/Queries";
+import SavingsPlans from "aws-sdk/clients/savingsplans";
 
 export default function FilterBar({
   close,
@@ -37,9 +38,9 @@ export default function FilterBar({
                     <input
                       type="radio"
                       name={data.name}
-                      onChange={e => {
-                        setFilters({ ...filters, funnelTag: data.id });
-                      }}
+                      onChange={() =>
+                        setFilters({ ...filters, funnelTag: data.id })
+                      }
                     />
                   </label>
                   <p>{data.name}</p>
@@ -90,7 +91,24 @@ export default function FilterBar({
     handleFilter(value);
   };
   return (
-    <Sidebar title="FILTERS" icon="fas fa-filter" close={close}>
+    <Sidebar
+      title={
+        <span
+          onClick={() => {
+            setFilters({
+              search: "",
+              tags: [],
+              funnelTags: [],
+              // dateRange: [null, null],
+            });
+          }}
+        >
+          clear all filters
+        </span>
+      }
+      icon="fas fa-filter"
+      close={close}
+    >
       <div className={styles.filter}>
         <div className={styles.search}>
           <input

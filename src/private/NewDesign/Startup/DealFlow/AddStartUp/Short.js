@@ -33,7 +33,9 @@ export const Short = ({ history, closeModal, styles, connections }) => {
   function lookForDuplicateNames(value) {
     // Populate array if empty
     if (companyNameArr.length === 0) {
-      companyNameArr = connections.map(sub => sub.creative?.name);
+      companyNameArr = connections.length
+        ? connections.map(sub => sub.creative?.name)
+        : [];
     }
 
     let userInput = value ? value.toUpperCase() : "";
@@ -68,9 +70,9 @@ export const Short = ({ history, closeModal, styles, connections }) => {
 
       // Go to startup page
       // let path = `${startup_page}/${connection.id}`;
-      let path = `${startup_page}/components/ui/navigation1`;
+      // let path = `${startup_page}/components/ui/navigation1`;
 
-      history.push(path);
+      // history.push(path);
 
       // closeModal modal
       closeModal();
