@@ -44,7 +44,7 @@ export default function Evaluations() {
   const [evaluateModal, setEvaluateModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [fullListModal, setFullListModal] = useState(false);
-  const [manageTemplateModal, setManageTemplateModal] = useState(true);
+  const [manageTemplateModal, setManageTemplateModal] = useState(false);
   // pass a value to full list from this state variable
   const [fullListModalObj, setFullListModalObj] = useState({
     evalType: "First Impression",
