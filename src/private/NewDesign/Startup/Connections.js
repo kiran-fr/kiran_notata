@@ -44,6 +44,9 @@ function ListOfStartups({
   columnSettings,
   evaluationTemplates,
   evaluationTemplatesQuery,
+  connections,
+  fetchMore,
+  loading,
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
@@ -54,16 +57,6 @@ function ListOfStartups({
 
   //Query: User
   const userQuery = useQuery(userGet);
-
-  // Query: Connections
-  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      filters: getCleanFilterData(filters),
-      LastEvaluatedId: undefined,
-    },
-  });
 
   // Fetch more
   useEffect(() => {
@@ -80,8 +73,6 @@ function ListOfStartups({
 
   // Define data
   const user = userQuery.data?.userGet || {};
-
-  const connections = data?.connectionsGet || [];
 
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
@@ -167,6 +158,19 @@ export default function Connections({ history }) {
     // sortDirection: 'ASC'
   };
 
+  // Query: Connections
+  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      filters: getCleanFilterData(filters),
+      LastEvaluatedId: undefined,
+    },
+  });
+
+  // define data
+  const connections = data?.connectionsGet || [];
+
   // Query: Account
   const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
 
@@ -236,11 +240,6 @@ export default function Connections({ history }) {
 
   return (
     <>
-      <CreateStartupModal
-        history={history}
-        open={showNewStartupModal}
-        close={() => setShowNewStartupModal(false)}
-      />
       <Filters
         setShowNewStartupModal={setShowNewStartupModal}
         manageColValue={manageColValue}
@@ -252,6 +251,7 @@ export default function Connections({ history }) {
         tabValue={tabValue}
         summaryIdData={summaryIdData}
         setTabValue={setTabValue}
+        connections={connections}
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
@@ -259,7 +259,10 @@ export default function Connections({ history }) {
         <>
           <ListOfStartups
             history={history}
+            fetchMore={fetchMore}
+            loading={loading}
             filters={filters}
+            connections={connections}
             columnSettings={manageColValue}
             evaluationTemplatesQuery={evaluationTemplatesQuery}
             setFilters={setFilters}

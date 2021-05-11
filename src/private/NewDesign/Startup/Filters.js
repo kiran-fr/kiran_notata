@@ -163,6 +163,7 @@ export default function Filters({
   evaluationTemplates,
   allEvaluation,
   summaryIdData,
+  connections,
 }) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
@@ -407,7 +408,11 @@ export default function Filters({
       </div>
 
       {modal === "startup" && (
-        <AddStartup history={history} closeModal={setModal} />
+        <AddStartup
+          history={history}
+          connections={connections}
+          closeModal={setModal}
+        />
       )}
       {filterType === "column" ? (
         <ColumnSidebar

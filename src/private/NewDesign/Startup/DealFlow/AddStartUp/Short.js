@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 // API STUFF
-import { useQuery, useMutation } from "@apollo/client";
-import { connectionsGet } from "private/Apollo/Queries";
+import { useMutation } from "@apollo/client";
 import { connectionCreate, creativePut } from "private/Apollo/Mutations";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 
@@ -17,7 +16,7 @@ import { startup_page } from "definitions";
 // * MAIN FUNCTION *
 // *****************
 
-export const Short = ({ history, closeModal, styles }) => {
+export const Short = ({ history, closeModal, styles, connections }) => {
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
 
@@ -28,10 +27,6 @@ export const Short = ({ history, closeModal, styles }) => {
   // Mutations
   const [mutateCreative] = useMutation(creativePut);
   const [mutateConnectionCreate] = useMutation(connectionCreate);
-
-  // Queries
-  const connectionsQuery = useQuery(connectionsGet);
-  const connections = connectionsQuery?.data?.connectionsGet || [];
 
   // Look for duplicate names
   let companyNameArr = [];
@@ -111,7 +106,7 @@ export const Short = ({ history, closeModal, styles }) => {
           <button onClick={() => closeModal()}>CANCEL</button>
           <button type="submit">
             {" "}
-            <i className="far fa-check"></i> SAVE
+            {isSubmitting ? <i className={"fa fa-spinner fa-spin"} /> : "SAVE"}
           </button>
         </div>
       </div>

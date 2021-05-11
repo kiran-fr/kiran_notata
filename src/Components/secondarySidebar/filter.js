@@ -8,7 +8,7 @@ import img3 from "../../assets/images/violetBar.png";
 import img4 from "../../assets/images/yellowBar.png";
 import img5 from "../../assets/images/grassBar.png";
 // API
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 import { funnelGroupGet } from "private/Apollo/Queries";
 
