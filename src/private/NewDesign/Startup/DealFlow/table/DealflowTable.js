@@ -36,7 +36,7 @@ export default function Table(props) {
   );
 
   const handleCompany = connection => {
-    history.push(`${startup_page}/components/ui/navigation1`);
+    history.push(`${startup_page}/components/ui/navigation1/${connection.id}`);
     // `${startup_page}/${connection.id}`);
   };
 
