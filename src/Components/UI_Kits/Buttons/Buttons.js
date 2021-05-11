@@ -116,8 +116,6 @@ export function Button({
       style={style || {}}
       onClick={onClick}
     >
-      <div {...children} />
-
       {/* check-icon */}
       {type === "check" && !loading && (
         <span className={styles.check_icon}>
@@ -166,6 +164,7 @@ export function Button({
           <i className="fa fa-spinner fa-spin" />
         </span>
       )}
+      <span {...children} />
     </button>
   );
 }

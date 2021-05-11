@@ -30,16 +30,24 @@ export default function EditEvaluation({
             currentClassName="is-current"
           >
             <li>
-              <a href="#problem">Problem</a>
+              <a href="#problem" onClick={() => setProblemCollapse("")}>
+                Problem
+              </a>
             </li>
             <li>
-              <a href="#concept">Concept</a>
+              <a href="#concept" onClick={() => setConceptCollapse("")}>
+                Concept
+              </a>
             </li>
             <li>
-              <a href="#market">Market</a>
+              <a href="#market" onClick={() => setMarketCollapse("")}>
+                Market
+              </a>
             </li>
             <li>
-              <a href="#team">Team</a>
+              <a href="#team" onClick={() => setTeamCollapse("")}>
+                Team
+              </a>
             </li>
           </Scrollspy>
         </div>
@@ -340,14 +348,14 @@ export default function EditEvaluation({
                 <input type="text" className="add-comment-txt" />
               </div>
             </div>
-            <div className="col-sm-12 text-right">
-              <button
-                className="save-btn delete"
-                onClick={() => setSaveEvaluation(true)}
-              >
-                SAVE
-              </button>
-            </div>
+          </div>
+          <div className="col-sm-12 text-right">
+            <button
+              className="save-btn delete"
+              onClick={() => setSaveEvaluation(true)}
+            >
+              SAVE
+            </button>
           </div>
         </div>
       </div>
