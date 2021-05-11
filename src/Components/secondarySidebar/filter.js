@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./sidebar.module.css";
 import Sidebar from "./index";
 import { Tags } from "Components/UI_Kits/Tags/Tags";
-import RedBar from "../../assets/images/redBar.png";
-import GreenBar from "../../assets/images/greenBar.png";
-import VioletBar from "../../assets/images/violetBar.png";
-import YellowBar from "../../assets/images/yellowBar.png";
-import GrassBar from "../../assets/images/grassBar.png";
+import img1 from "../../assets/images/redBar.png";
+import img2 from "../../assets/images/greenBar.png";
+import img3 from "../../assets/images/violetBar.png";
+import img4 from "../../assets/images/yellowBar.png";
+import img5 from "../../assets/images/grassBar.png";
+// API
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+
+import { funnelGroupGet } from "private/Apollo/Queries";
 
 export default function FilterBar({
   close,
@@ -15,35 +19,54 @@ export default function FilterBar({
   filterValue,
   handleFilter,
 }) {
-  const funnels = [
-    { name: "Reviewed", img: RedBar },
-    { name: "Met", img: GreenBar },
-    { name: "Analyzed", img: VioletBar },
-    { name: "IC", img: YellowBar },
-    { name: "Invested", img: GrassBar },
-  ];
+  // Query: Connections
+  const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
+
+  const funnelGroupArray = data ? data.accountGet.funnelGroups : [];
+
   const FunnelStage = () => (
     <ul className={styles.funnelUl}>
-      {funnels.map(item => (
-        <li>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name={item.name}
-                onClick={e => {
-                  setFilters({ ...filters, funnelTag: item.name });
-                }}
-              />
-              <span class={styles.checkmark}></span>
-            </label>
-          </div>
-          <p>{item.name}</p>
-          <div className={styles.image}>
-            <img src={item.img} />
-          </div>
-        </li>
-      ))}
+      {funnelGroupArray.length ? (
+        funnelGroupArray.map(item => (
+          <>
+            <h6>{item.name}</h6>
+            {item.funnelTags.length &&
+              item.funnelTags.map((data, index) => (
+                <li>
+                  <label>
+                    <input
+                      type="radio"
+                      name={data.name}
+                      onChange={e => {
+                        setFilters({ ...filters, funnelTag: data.id });
+                      }}
+                    />
+                  </label>
+                  <p>{data.name}</p>
+                  <div className={styles.image}>
+                    <img
+                      src={
+                        index === 0
+                          ? img1
+                          : index === 1
+                          ? img2
+                          : index === 2
+                          ? img3
+                          : index === 3
+                          ? img4
+                          : img5
+                      }
+                    />
+                  </div>
+                </li>
+              ))}
+          </>
+        ))
+      ) : loading ? (
+        <p>loading...</p>
+      ) : (
+        ""
+      )}
     </ul>
   );
   const DatePicker = () => (
