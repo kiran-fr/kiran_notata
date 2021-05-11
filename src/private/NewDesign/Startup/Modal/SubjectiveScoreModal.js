@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GhostLoader } from "Components/elements";
 import Modal from "../DealFlow/modal";
-import { AddScore } from "../DealFlow/AddScore";
+import { AddScore } from "../DealFlow/addScore";
 
 import { useQuery } from "@apollo/client";
 import { userGet } from "private/Apollo/Queries";

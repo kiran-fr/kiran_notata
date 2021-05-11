@@ -341,3 +341,8 @@
   font-weight: 500;
   text-decoration: underline;
 }
+
+.btnSpace {
+  margin-bottom: 25px !important;
+  float: right;
+}

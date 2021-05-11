@@ -5,7 +5,7 @@ import Modal from "./modal";
 import Short from "../DealFlow/AddStartUp/Short";
 import Expand from "../DealFlow/AddStartUp/Expand";
 
-export default function AddStartup({ closeModal }) {
+export default function AddStartup({ closeModal, history }) {
   const [activeTab, setActiveTab] = useState();
 
   useEffect(() => {
@@ -20,7 +20,13 @@ export default function AddStartup({ closeModal }) {
   if (!activeTab) return null;
 
   return (
-    <Modal title="Add startup" closeModal={closeModal} width={"810px"}>
+    <Modal
+      title="Add startup"
+      disabledBtn={activeTab === "short" ? true : false}
+      saveModal={closeModal}
+      closeModal={closeModal}
+      width={"810px"}
+    >
       <div className={styles.startup + " " + "startupModal"}>
         <Tabsection
           tabArr={tabArr}
@@ -28,7 +34,9 @@ export default function AddStartup({ closeModal }) {
           tabFuc={setActiveTab}
         />
         {activeTab === "expand" && <Expand styles={styles} />}
-        {activeTab === "short" && <Short styles={styles} />}
+        {activeTab === "short" && (
+          <Short history={history} closeModal={closeModal} styles={styles} />
+        )}
       </div>
     </Modal>
   );

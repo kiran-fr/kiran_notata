@@ -8,7 +8,13 @@ import VioletBar from "../../assets/images/violetBar.png";
 import YellowBar from "../../assets/images/yellowBar.png";
 import GrassBar from "../../assets/images/grassBar.png";
 
-export default function FilterBar({ close, filters, setFilters }) {
+export default function FilterBar({
+  close,
+  filters,
+  setFilters,
+  filterValue,
+  handleFilter,
+}) {
   const funnels = [
     { name: "Reviewed", img: RedBar },
     { name: "Met", img: GreenBar },
@@ -20,13 +26,14 @@ export default function FilterBar({ close, filters, setFilters }) {
     <ul className={styles.funnelUl}>
       {funnels.map(item => (
         <li>
-          <div className="myCheckbox">
-            <label className={styles.customCheck}>
+          <div>
+            <label>
               <input
-                type="checkbox"
-                // onClick={e => {
-                //   setFilters({ ...filters, funnelTag: [{id: "0"}] });
-                // }}
+                type="radio"
+                name={item.name}
+                onClick={e => {
+                  setFilters({ ...filters, funnelTag: item.name });
+                }}
               />
               <span class={styles.checkmark}></span>
             </label>
@@ -56,18 +63,27 @@ export default function FilterBar({ close, filters, setFilters }) {
       </div>
     </div>
   );
+  const handleSearch = value => {
+    handleFilter(value);
+  };
   return (
     <Sidebar title="FILTERS" icon="fas fa-filter" close={close}>
       <div className={styles.filter}>
         <div className={styles.search}>
           <input
             type="text"
-            value={filters.search}
+            value={filterValue}
             onChange={e => {
-              setFilters({ ...filters, search: e.target.value });
+              handleSearch(e);
             }}
           />
-          <button>Search</button>
+          <button
+            onClick={() => {
+              setFilters({ ...filters, search: filterValue });
+            }}
+          >
+            Search
+          </button>
         </div>
         <div className={styles.funnelStage}>
           <h2>FUNNEL STAGE</h2>
