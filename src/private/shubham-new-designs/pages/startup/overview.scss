@@ -126,7 +126,7 @@
                 font-family: 'Proxima Nova';
                 font-style: normal;
                 font-weight: 300;
-                font-size: 62px;
+                font-size: 50px;
                 line-height: 76px;
                 color: #6A6A6A;
             }
@@ -224,6 +224,12 @@
             img:hover,
             img:focus,
             img:active {
+                -webkit-filter: none;
+                filter: none;
+            }
+        }
+        .active-img-col {
+            img{
                 -webkit-filter: none;
                 filter: none;
             }
