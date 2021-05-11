@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import "../evaluations/request-evaluation.scss";
 import TextBox from "../../ui-kits/text-box";
 import RadioButton from "../../ui-kits/radio-button";
 
 export default function RequestEvaluation() {
+  const [shareEmailCount, setShareEmailCount] = useState(1);
+
   return (
     <div className="request-modal">
       <div className="request-modal__heading">Email</div>
       <TextBox placeholder="ana@leverageUX.com"></TextBox>
       <i class="fa fa-times" aria-hidden="true"></i>
-      <TextBox></TextBox>
-      <i class="fa fa-plus" aria-hidden="true"></i>
+      {[...Array(shareEmailCount)].map((item, index) => {
+        return (
+          <div>
+            <TextBox></TextBox>
+            {index === shareEmailCount - 1 && (
+              <i
+                class="fa fa-plus"
+                aria-hidden="true"
+                onClick={() => setShareEmailCount(shareEmailCount + 1)}
+              ></i>
+            )}
+          </div>
+        );
+      })}
+
       <div className="request-modal__heading">Evaluation</div>
       <div className="radio-button-section">
         <div>

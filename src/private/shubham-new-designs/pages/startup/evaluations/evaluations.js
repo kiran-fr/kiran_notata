@@ -7,6 +7,7 @@ import SubmissionFullList from "./submission-full-list";
 import EvaluateStartup from "./evaluate-startup";
 import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
+import ManageTemplates from "./manage-templates";
 
 export default function Evaluations() {
   const [myEvalState, setMyEvalState] = useState("");
@@ -43,6 +44,7 @@ export default function Evaluations() {
   const [evaluateModal, setEvaluateModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [fullListModal, setFullListModal] = useState(false);
+  const [manageTemplateModal, setManageTemplateModal] = useState(true);
   // pass a value to full list from this state variable
   const [fullListModalObj, setFullListModalObj] = useState({
     evalType: "First Impression",
@@ -829,6 +831,14 @@ export default function Evaluations() {
                     </div>
                   </div>
                 </div>
+                <div className="col-sm-12 text-right">
+                  <button
+                    className="evaluation-templates-btn"
+                    onClick={() => setManageTemplateModal(true)}
+                  >
+                    Evaluations templates
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -875,6 +885,20 @@ export default function Evaluations() {
               }}
             />
           }
+        ></Modal>
+      )}
+      {manageTemplateModal && (
+        <Modal
+          title="Manage templates"
+          submit={() => {
+            setManageTemplateModal(false);
+          }}
+          close={() => {
+            setManageTemplateModal(false);
+          }}
+          submitTxt="Save"
+          closeTxt="Cancel"
+          children={<ManageTemplates></ManageTemplates>}
         ></Modal>
       )}
     </div>

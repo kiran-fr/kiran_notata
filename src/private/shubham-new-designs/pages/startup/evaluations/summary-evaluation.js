@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Scrollspy from "react-scrollspy";
 import "./edit-evaluation.scss";
 import "./summary-evaluation.scss";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 
 export default function SummaryEvaluation({
   setEditEvaluation,
@@ -10,6 +11,7 @@ export default function SummaryEvaluation({
 }) {
   const [problemcollapse, setProblemCollapse] = useState("");
   const [conceptcollapse, setConceptCollapse] = useState("");
+  const [deleteMoal, setDeleteMoal] = useState(false);
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
@@ -149,9 +151,32 @@ export default function SummaryEvaluation({
           </div>
         </div>
         <div className="col-sm-12 text-right">
-          <button className="delete-btn">DELETE EVALUATION</button>
+          <button className="delete-btn" onClick={() => setDeleteMoal(true)}>
+            DELETE EVALUATION
+          </button>
         </div>
       </div>
+      {deleteMoal && (
+        <Modal
+          title="Delete evaluation template"
+          submit={() => {
+            setEditEvaluation(false);
+            setSaveEvaluation(false);
+            setDeleteMoal(false);
+          }}
+          close={() => {
+            setDeleteMoal(false);
+          }}
+          submitTxt="Delete"
+          closeTxt="Cancel"
+          submitButtonStyle="secondary"
+          children={
+            <div className="modal-content-description">
+              Are you sure you want to delete the evaluation template?
+            </div>
+          }
+        ></Modal>
+      )}
     </div>
   );
 }
