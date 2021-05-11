@@ -72,8 +72,6 @@ export default function Page1({ setPage }) {
       expertise.push(el.name);
     });
 
-    console.log("DOMAIN: ", domain);
-    console.log("HELLO WORLD: ", expertise);
     const input = {
       family_name: data.family_name,
       given_name: data.given_name,

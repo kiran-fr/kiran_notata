@@ -37,3 +37,5 @@ export { default as externalResourcesGet } from "./externalResourcesGet";
 export { default as impactGoalsGet } from "./impactGoalsGet";
 
 export { default as evaluationGet } from "./evaluationGet";
+
+export { default as connectionAutoCompleteName } from "./connectionAutoCompleteName";

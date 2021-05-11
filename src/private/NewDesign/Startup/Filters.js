@@ -157,12 +157,12 @@ export default function Filters({
   setFilters,
   fullFilter,
   setTabValue,
-  setShowNewStartupModal,
   setManageColValue,
   manageColValue,
   evaluationTemplates,
   allEvaluation,
   summaryIdData,
+  connections,
 }) {
   const tagGroupsQuery = useQuery(tagGroupsGet);
   const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
@@ -181,8 +181,24 @@ export default function Filters({
   }, [filters]);
 
   const tabArr = [
-    { value: "kanban", text: "KANBAN" },
-    { value: "spreadsheet", text: "SPREADSHEET" },
+    {
+      value: "kanban",
+      text: (
+        <div>
+          <span>KANBAN</span>
+          <i style={{ marginLeft: "5px" }} className="fas fa-chevron-down"></i>
+        </div>
+      ),
+    },
+    {
+      value: "spreadsheet",
+      text: (
+        <div>
+          <img src={Column} />
+          <span>SPREADSHEET</span>
+        </div>
+      ),
+    },
   ];
 
   const formatDateTag = range => {
@@ -220,24 +236,6 @@ export default function Filters({
 
   return (
     <div>
-      <div className={small_text_flex}>
-        {/* {!!hasFilters && ( */}
-        <div
-          className={clear_filters}
-          onClick={() => {
-            setFilters({
-              search: "",
-              tags: [],
-              funnelTags: [],
-              // dateRange: [null, null],
-            });
-          }}
-        >
-          clear all filters
-        </div>
-        {/* )} */}
-      </div>
-
       <div className={fullFilter ? container : container_mini}>
         <div className={footer}>
           <div className={filter_container}>
@@ -254,7 +252,6 @@ export default function Filters({
                   <button
                     className={styles.addButton}
                     onClick={() => setModal("startup")}
-                    // onClick={() => setShowNewStartupModal(true)}
                   >
                     <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
@@ -391,7 +388,11 @@ export default function Filters({
       </div>
 
       {modal === "startup" && (
-        <AddStartup history={history} closeModal={setModal} />
+        <AddStartup
+          history={history}
+          connections={connections}
+          closeModal={setModal}
+        />
       )}
       {filterType === "column" ? (
         <ColumnSidebar

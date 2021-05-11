@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 // API
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   connectionsGet,
   evaluationTemplatesGet,
   userGet,
+  connectionAutoCompleteName,
 } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
@@ -14,7 +15,6 @@ import Filters from "./Filters";
 import SelectTagsForStartup from "./Modal/SelectTagsForStartup";
 
 import { Kanban } from "../Kanban/Kanban";
-import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 
 // Components
 import Paginator from "./Paginator";
@@ -44,6 +44,9 @@ function ListOfStartups({
   columnSettings,
   evaluationTemplates,
   evaluationTemplatesQuery,
+  connections,
+  fetchMore,
+  loading,
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
@@ -54,16 +57,6 @@ function ListOfStartups({
 
   //Query: User
   const userQuery = useQuery(userGet);
-
-  // Query: Connections
-  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      filters: getCleanFilterData(filters),
-      LastEvaluatedId: undefined,
-    },
-  });
 
   // Fetch more
   useEffect(() => {
@@ -80,8 +73,6 @@ function ListOfStartups({
 
   // Define data
   const user = userQuery.data?.userGet || {};
-
-  const connections = data?.connectionsGet || [];
 
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
@@ -175,11 +166,7 @@ export default function Connections({ history }) {
 
   // States
   const [filters, setFilterState] = useState(defaultFilters);
-  const [length, setLength] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(undefined);
-  const [showNewStartupModal, setShowNewStartupModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [render, setRender] = useState(false);
   const [tabValue, setTabValue] = useState("spreadsheet");
   const [summaryIdData, setSummaryIdData] = useState([]);
@@ -191,6 +178,19 @@ export default function Connections({ history }) {
     subjectiveScore: true,
     evaluationTemplates: [],
   });
+
+  // Query: Connections
+  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      filters: getCleanFilterData(filters),
+      LastEvaluatedId: undefined,
+    },
+  });
+
+  // define data
+  const connections = data?.connectionsGet || [];
 
   useEffect(() => {
     evaluationTemplates.forEach(summary => {
@@ -236,13 +236,7 @@ export default function Connections({ history }) {
 
   return (
     <>
-      <CreateStartupModal
-        history={history}
-        open={showNewStartupModal}
-        close={() => setShowNewStartupModal(false)}
-      />
       <Filters
-        setShowNewStartupModal={setShowNewStartupModal}
         manageColValue={manageColValue}
         setFilters={setFilters}
         allEvaluation={allEvaluation}
@@ -252,6 +246,7 @@ export default function Connections({ history }) {
         tabValue={tabValue}
         summaryIdData={summaryIdData}
         setTabValue={setTabValue}
+        connections={connections}
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
@@ -259,7 +254,10 @@ export default function Connections({ history }) {
         <>
           <ListOfStartups
             history={history}
+            fetchMore={fetchMore}
+            loading={loading}
             filters={filters}
+            connections={connections}
             columnSettings={manageColValue}
             evaluationTemplatesQuery={evaluationTemplatesQuery}
             setFilters={setFilters}

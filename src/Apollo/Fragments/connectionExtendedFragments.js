@@ -58,8 +58,6 @@ export default gql`
             possibleScore
             questionId
             questionName
-            sectionId
-            sectionName
           }
         }
         scoreTotal
@@ -122,8 +120,6 @@ export default gql`
                 possibleScore
                 questionId
                 questionName
-                sectionId
-                sectionName
               }
             }
             scoreTotal
@@ -217,8 +213,6 @@ export default gql`
             possibleScore
             questionId
             questionName
-            sectionId
-            sectionName
           }
         }
         scoreTotal
