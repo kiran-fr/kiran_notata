@@ -34,7 +34,6 @@ function getCleanFilterData(filters) {
 }
 
 function ListOfStartups({
-  manageColValue,
   filters,
   setFilters,
   currentPage,
@@ -68,7 +67,6 @@ function ListOfStartups({
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
         setStarMutation={setStarMutation}
-        manageColValue={manageColValue}
         columnSettings={columnSettings}
         data={connections}
         filters={filters}
