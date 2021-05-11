@@ -58,7 +58,7 @@ export default function Overview(props) {
   );
 
   const [pageState, setPageState] = useState(OVERVIEWPAGESTATE.OVERVIEW);
-  const [activeImage, setActiveImage] = useState(null);
+  const [activeImage, setActiveImage] = useState([]);
   return (
     <>
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
@@ -199,9 +199,9 @@ export default function Overview(props) {
                   return (
                     <div
                       key={item.key}
-                      onClick={() => setActiveImage(item.key)}
+                      onClick={() => setActiveImage([...activeImage, item.key])}
                       className={`col-sm-4 col-md-3 col-lg-2 col-xs-4 img-col ${
-                        activeImage === item.key ? "active-img-col" : ""
+                        activeImage.includes(item.key) ? "active-img-col" : ""
                       }`}
                     >
                       <img src={item.src}></img>

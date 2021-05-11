@@ -219,12 +219,6 @@
                 /* Safari 6.0 - 9.0 */
                 filter: grayscale(100%);
             }
-            img:hover,
-            img:focus,
-            img:active {
-                -webkit-filter: none;
-                filter: none;
-            }
         }
         .active-img-col {
             img{
