@@ -6,6 +6,7 @@ import {
   connectionsGet,
   evaluationTemplatesGet,
   userGet,
+  connectionAutoCompleteName,
 } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
@@ -193,7 +194,7 @@ export default function Connections({ history }) {
 
   useEffect(() => {
     evaluationTemplates.forEach(summary => {
-      setSummaryIdData([...summaryIdData, summary.id]);
+      setSummaryIdData(summaryIdData => [...summaryIdData, summary.id]);
       setManageColValue(manageColValue => ({
         ...manageColValue,
         ["evaluationTemplates"]: [

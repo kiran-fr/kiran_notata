@@ -64,7 +64,6 @@ export default function ManageSidebar({
       } else {
         if (e.target.name === "showAll") {
           if (e.target.checked === false) {
-            console.log("amhere");
             setManageColValue({
               ...manageColValue,
               groups: false,
@@ -111,7 +110,7 @@ export default function ManageSidebar({
             <label className={styles.customCheck}>
               <input
                 type="checkbox"
-                defaultChecked={showAll}
+                checked={showAll}
                 name="showAll"
                 onChange={handleManageSection}
               />
