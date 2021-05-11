@@ -32,7 +32,7 @@ export default function ManageSidebar({
   useEffect(() => {
     const input = { columnSettings: manageColValue };
     mutate({ variables: { input } });
-  }, [manageColValue.groups]);
+  }, [manageColValue && render]);
 
   const handleManageSection = (e, evaltionId) => {
     if (evaltionId) {
@@ -99,7 +99,7 @@ export default function ManageSidebar({
         }
       }
     }
-    setRender(render);
+    setRender(true);
   };
 
   const showAll =

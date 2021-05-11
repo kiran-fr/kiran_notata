@@ -23,8 +23,6 @@ import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
 
-// import Table from "./../../../Components/NewDesignTable/table.component";
-
 function getCleanFilterData(filters) {
   let clean = {};
   for (let key in filters) {
@@ -52,11 +50,6 @@ function ListOfStartups({
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
-  const [subScoreModal, setSubScoreModal] = useState("");
-  const [tableFields, setTableFields] = useState();
-
-  //Query: User
-  const userQuery = useQuery(userGet);
 
   // Fetch more
   useEffect(() => {
@@ -68,29 +61,13 @@ function ListOfStartups({
     });
   }, [currentPage]);
 
-  // TODO: Column settings
-  // This is saved on user.columnSettings
-
-  // Define data
-  const user = userQuery.data?.userGet || {};
-
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
-
-  const allFields = {
-    group: true,
-    funnel: true,
-    tag: true,
-    score: true,
-    updated: true,
-    evaluation: true,
-    pitching: true,
-  };
 
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
-        fields={allFields}
+        setStarMutation={setStarMutation}
         manageColValue={manageColValue}
         columnSettings={columnSettings}
         data={connections}
@@ -164,6 +141,15 @@ export default function Connections({ history }) {
   const evaluationTemplates =
     evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
 
+  //Query: User
+  const userQuery = useQuery(userGet);
+
+  // TODO: Column settings
+  // This is saved on user.columnSettings
+
+  // Define data
+  const user = userQuery.data?.userGet || {};
+
   // States
   const [filters, setFilterState] = useState(defaultFilters);
   const [currentPage, setCurrentPage] = useState(undefined);
@@ -193,15 +179,31 @@ export default function Connections({ history }) {
   const connections = data?.connectionsGet || [];
 
   useEffect(() => {
+    if (user.columnSettings) {
+      setManageColValue({
+        ...manageColValue,
+        groups: user.columnSettings[0].groups,
+        funnels: user.columnSettings[0].funnels,
+        tags: user.columnSettings[0].tags,
+        subjectiveScore: user.columnSettings[0].subjectiveScore,
+        evaluationTemplates: user.columnSettings[0].evaluationTemplates || [],
+      });
+    } else {
+      evaluationTemplates.forEach(summary => {
+        setManageColValue(manageColValue => ({
+          ...manageColValue,
+          ["evaluationTemplates"]: [
+            ...manageColValue.evaluationTemplates,
+            summary.id,
+          ],
+        }));
+      });
+    }
+  }, [evaluationTemplates && user]);
+
+  useEffect(() => {
     evaluationTemplates.forEach(summary => {
       setSummaryIdData(summaryIdData => [...summaryIdData, summary.id]);
-      setManageColValue(manageColValue => ({
-        ...manageColValue,
-        ["evaluationTemplates"]: [
-          ...manageColValue.evaluationTemplates,
-          summary.id,
-        ],
-      }));
     });
   }, [evaluationTemplates]);
 
