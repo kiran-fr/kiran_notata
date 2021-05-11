@@ -27,18 +27,19 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
   // Tags
   const [investment, setInvestment] = useState([]);
   const [geography, setGerography] = useState([]);
+  const [stages, setStages] = useState([]);
 
   function handleBack(e) {
-    // if (e.key === "Enter" || e.keyCode === 188) {
     setPage(1);
-    // }
   }
+
   function handleKeyUp(e) {
     let val = e.target.value;
     if (val === ",") {
       e.target.value = "";
     }
   }
+
   const onSubmit = async (data, event) => {
     let q3 = [];
     let q4 = [];
@@ -51,16 +52,19 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
       q4.push(el.name);
     });
 
-    const input = { q3_investment: q3, q4_geography: q4 };
+    const input = {
+      q3_investment: q3,
+      q4_geography: q4,
+      q5_stage: stages,
+    };
 
     event.preventDefault();
-    console.log(q3);
     try {
       await mutate({ variables: { input } });
     } catch (error) {
       console.log("error", error);
     }
-    // setPage(3);
+    setPage(3);
   };
   return (
     <div>
@@ -100,6 +104,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
         </div>
         <h4>Stage</h4>
         <CheckBoxes
+          getSelectedBox={setStages}
           data={[
             { id: 1, value: "Pre seed", label: "Pre seed" },
             { id: 2, value: "Seed", label: "Seed" },

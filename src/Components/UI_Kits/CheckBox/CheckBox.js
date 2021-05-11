@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./CheckBox.module.css";
 
-function CheckBox({ id, value, label }) {
+function CheckBox({ id, value, label, onSelect }) {
   return (
     <label className={styles.container}>
       <p>{label}</p>
@@ -9,15 +9,36 @@ function CheckBox({ id, value, label }) {
         id={id}
         type="checkbox"
         value={value}
-        /* checked={isSelected}
-        onChange={handleChange} */
+        // checked={isSelected}
+        onChange={onSelect}
       />
       <span className={styles.checkmark} />
     </label>
   );
 }
 
-export function CheckBoxes({ data }) {
+export function CheckBoxes({ data, getSelectedBox }) {
+  const [selected, setSelected] = useState([]);
+
+  const handleChange = e => {
+    const isSelected = selected.includes(e.target.value);
+    if (isSelected) {
+      setSelected(
+        selected.filter(value => {
+          return value !== e.target.value;
+        })
+      );
+      getSelectedBox(
+        selected.filter(value => {
+          return value !== e.target.value;
+        })
+      );
+    } else {
+      setSelected([e.target.value, ...selected]);
+      getSelectedBox([e.target.value, ...selected]);
+    }
+  };
+
   return (
     <>
       {data.map((d, i) => (
@@ -26,6 +47,7 @@ export function CheckBoxes({ data }) {
           id={`${d.id}`}
           label={d.label}
           value={d.value}
+          onSelect={handleChange}
         />
       ))}
     </>
