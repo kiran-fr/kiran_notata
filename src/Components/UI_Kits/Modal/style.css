@@ -26,7 +26,7 @@
 }
 
 .modal_footer {
-  border-top: 1px solid var(--color-gray-light);
+  /* border-top: 1px solid var(--color-gray-light); */
   margin-left: -2px;
   margin-right: -2px;
   padding-top: 20px;
@@ -41,6 +41,7 @@
   font-size: 16px;
   line-height: 19px;
   color: #6a6a6a;
+  padding-bottom: 15px;
 }
 
 .inner {

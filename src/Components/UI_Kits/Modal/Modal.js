@@ -15,6 +15,8 @@ export function Modal({
   showScrollBar,
   submitTxt,
   closeTxt,
+  submitButtonStyle,
+  submitButtonIcon,
   ...children
 }) {
   useEffect(() => {
@@ -77,10 +79,10 @@ export function Modal({
               {submit && (
                 <Button
                   onClick={!loading && submit}
-                  buttonStyle="primary"
+                  buttonStyle={submitButtonStyle || "primary"}
                   size="small1"
                   style={{ display: "inline" }}
-                  type="right_arrow"
+                  type={submitButtonIcon || ""}
                   loading={loading}
                 >
                   {submitTxt}
