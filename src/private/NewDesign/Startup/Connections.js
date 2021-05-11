@@ -194,7 +194,7 @@ export default function Connections({ history }) {
 
   useEffect(() => {
     evaluationTemplates.forEach(summary => {
-      setSummaryIdData([...summaryIdData, summary.id]);
+      setSummaryIdData(summaryIdData => [...summaryIdData, summary.id]);
       setManageColValue(manageColValue => ({
         ...manageColValue,
         ["evaluationTemplates"]: [
@@ -204,6 +204,8 @@ export default function Connections({ history }) {
       }));
     });
   }, [evaluationTemplates]);
+
+  console.log("manageColValue", summaryIdData, manageColValue);
 
   useEffect(() => {
     if (manageColValue) {
