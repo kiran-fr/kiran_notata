@@ -1,0 +1,51 @@
+.submission-details{
+    .row{
+        margin:0px;        
+    }
+    .summary{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 18px;
+        color: #969BA3;
+        padding-left: 0px!important;
+    }
+    .detail{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 20px;
+        letter-spacing: 0.03em;
+        color: #969BA3;
+        padding-left:30px;
+    }
+    .detail-score{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        color: #6A6A6A;
+    }
+    .detail-list{
+        margin-top:15px;
+    }
+    .detail-type{
+        margin-top:25px;
+    }
+    .detail-heading{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: 0.03em;
+        color: #6A6A6A;   
+        i{
+            color: #71D0BD;
+            margin-right:15px;
+        }     
+    }
+}

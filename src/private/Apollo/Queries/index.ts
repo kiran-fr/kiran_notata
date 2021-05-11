@@ -7,7 +7,6 @@ export { default as connectionPagesGet } from "./connectionPagesGet";
 
 export { default as connectionGet } from "./connectionGet";
 export { default as connectionsGet } from "./connectionsGet";
-export { default as connectionNew } from "./connectionNew";
 
 export { default as accountInvitationsGet } from "./accountInvitationsGet";
 export { default as userInvitationsGet } from "./userInvitationsGet";
@@ -37,5 +36,3 @@ export { default as externalResourcesGet } from "./externalResourcesGet";
 export { default as impactGoalsGet } from "./impactGoalsGet";
 
 export { default as evaluationGet } from "./evaluationGet";
-
-export { default as connectionAutoCompleteName } from "./connectionAutoCompleteName";

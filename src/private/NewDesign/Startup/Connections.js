@@ -6,7 +6,6 @@ import {
   connectionsGet,
   evaluationTemplatesGet,
   userGet,
-  connectionAutoCompleteName,
 } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
@@ -194,7 +193,7 @@ export default function Connections({ history }) {
 
   useEffect(() => {
     evaluationTemplates.forEach(summary => {
-      setSummaryIdData(summaryIdData => [...summaryIdData, summary.id]);
+      setSummaryIdData([...summaryIdData, summary.id]);
       setManageColValue(manageColValue => ({
         ...manageColValue,
         ["evaluationTemplates"]: [
@@ -204,8 +203,6 @@ export default function Connections({ history }) {
       }));
     });
   }, [evaluationTemplates]);
-
-  console.log("manageColValue", summaryIdData, manageColValue);
 
   useEffect(() => {
     if (manageColValue) {

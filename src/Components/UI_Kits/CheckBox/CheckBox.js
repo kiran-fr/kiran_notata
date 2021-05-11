@@ -28,14 +28,19 @@ export function CheckBoxes({ data, getSelectedBox }) {
           return value !== e.target.value;
         })
       );
-      getSelectedBox(
-        selected.filter(value => {
-          return value !== e.target.value;
-        })
-      );
+      if (getSelectedBox) {
+        getSelectedBox(
+          selected.filter(value => {
+            return value !== e.target.value;
+          })
+        );
+      }
     } else {
       setSelected([e.target.value, ...selected]);
-      getSelectedBox([e.target.value, ...selected]);
+
+      if (getSelectedBox) {
+        getSelectedBox([e.target.value, ...selected]);
+      }
     }
   };
 
