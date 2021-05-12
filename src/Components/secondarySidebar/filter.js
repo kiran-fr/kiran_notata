@@ -34,16 +34,18 @@ export default function FilterBar({
             {item.funnelTags.length &&
               item.funnelTags.map((data, index) => (
                 <li>
-                  <label>
-                    <input
-                      type="radio"
-                      name={data.name}
-                      onChange={() =>
-                        setFilters({ ...filters, funnelTag: data.id })
-                      }
-                    />
-                  </label>
-                  <p>{data.name}</p>
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name={data.name}
+                        onChange={() =>
+                          setFilters({ ...filters, funnelTag: data.id })
+                        }
+                      />
+                    </label>
+                    <p>{data.name}</p>
+                  </div>
                   <div className={styles.image}>
                     <img
                       src={
