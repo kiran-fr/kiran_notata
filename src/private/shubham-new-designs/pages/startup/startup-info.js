@@ -16,7 +16,9 @@ export default function StartupInfo() {
   return (
     <>
       {shareStartup ? (
-        <ShareStartup></ShareStartup>
+        <ShareStartup
+          setshareStartup={() => setshareStartup(false)}
+        ></ShareStartup>
       ) : (
         <div className="row tab-panel-container startup-info-container">
           <div className="col-sm-7">
@@ -25,9 +27,13 @@ export default function StartupInfo() {
                 <div className="col-1 col-xs-1">
                   <div className="name-icon">G</div>
                 </div>
-                {/* <div className="col-sm-12">
-                  <Button><img src={share}></img>Share Template</Button>
-                </div> */}
+                <div
+                  className="share-btn"
+                  onClick={() => setshareStartup(true)}
+                >
+                  <img src={share}></img>
+                  <span>Share Template</span>
+                </div>
                 <div className="col-11 col-sm-10 col-xs-10">
                   <div className="startup-info-container__details">
                     <div className="startup-info-container__heading">

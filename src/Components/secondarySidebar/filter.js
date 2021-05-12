@@ -9,16 +9,14 @@ import img4 from "../../assets/images/yellowBar.png";
 import img5 from "../../assets/images/grassBar.png";
 // API
 import { useQuery } from "@apollo/client";
-
 import { funnelGroupGet } from "private/Apollo/Queries";
-import SavingsPlans from "aws-sdk/clients/savingsplans";
 
 export default function FilterBar({
   close,
   filters,
   setFilters,
   filterValue,
-  handleFilter,
+  handleSearch,
 }) {
   // Query: Connections
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
@@ -90,8 +88,8 @@ export default function FilterBar({
       </div>
     </div>
   );
-  const handleSearch = value => {
-    handleFilter(value);
+  const filterSearch = value => {
+    handleSearch(value);
   };
   return (
     <Sidebar
@@ -117,7 +115,7 @@ export default function FilterBar({
             type="text"
             value={filterValue}
             onChange={e => {
-              handleSearch(e);
+              filterSearch(e);
             }}
           />
           <button

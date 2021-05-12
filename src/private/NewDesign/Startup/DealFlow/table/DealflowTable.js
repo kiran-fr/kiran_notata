@@ -5,19 +5,7 @@ import TableBody from "./tableBody";
 import TableHeader from "./tableHeader";
 
 export default function Table(props) {
-  const {
-    data,
-    evaluationTemplates,
-    loading,
-    emptyLabel,
-    history,
-    filters,
-    setFilters,
-    setShowTagGroupForId,
-    setShowFunnelScoreForId,
-    setShowSubjectiveScoreForId,
-    columnSettings,
-  } = props;
+  const { data, loading, emptyLabel, history } = props;
 
   const [preview, setPreview] = useState();
 
@@ -36,7 +24,7 @@ export default function Table(props) {
   );
 
   const handleCompany = connection => {
-    history.push(`${startup_page}/components/ui/navigation1/${connection.id}`);
+    history.push(`${startup_page}/company/${connection.id}`);
     // `${startup_page}/${connection.id}`);
   };
 

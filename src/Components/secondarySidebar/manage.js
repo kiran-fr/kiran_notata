@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./sidebar.module.css";
 
 // API STUFF
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import { userUpdate } from "private/Apollo/Mutations";
 
@@ -14,25 +14,15 @@ export default function ManageSidebar({
   setManageColValue,
   manageColValue,
   evaluationTemplates,
-  allEvaluation,
-  summaryIdData,
 }) {
-  const options = [
-    { value: "Groups", name: "groups" },
-    { value: "Funnel Stage", name: "funnels" },
-    { value: "Tags", name: "tags" },
-    { value: "Subjective Score", name: "subjectiveScore" },
-  ];
-
   const [render, setRender] = useState(false);
-
   const [mutate] = useMutation(userUpdate);
 
   // update
   useEffect(() => {
     const input = { columnSettings: manageColValue };
     mutate({ variables: { input } });
-  }, [manageColValue.groups]);
+  }, [manageColValue]);
 
   const handleManageSection = (e, evaltionId) => {
     if (evaltionId) {
@@ -82,13 +72,17 @@ export default function ManageSidebar({
               evaluationTemplates: [],
             });
           } else {
+            let newArr = [];
+            evaluationTemplates.forEach(summary => {
+              newArr.push(summary.id);
+            });
             setManageColValue({
               ...manageColValue,
               groups: true,
               funnels: true,
               tags: true,
               subjectiveScore: true,
-              evaluationTemplates: [...summaryIdData],
+              evaluationTemplates: newArr,
             });
           }
         } else {
@@ -102,14 +96,22 @@ export default function ManageSidebar({
     setRender(render);
   };
 
+  const allEvaluation =
+    evaluationTemplates.length === manageColValue.evaluationTemplates.length;
+
+  const options = [
+    { value: "Groups", name: "groups" },
+    { value: "Funnel Stage", name: "funnels" },
+    { value: "Tags", name: "tags" },
+    { value: "Subjective Score", name: "subjectiveScore" },
+  ];
+
   const showAll =
     manageColValue.evaluationTemplates.length === evaluationTemplates.length &&
     manageColValue.groups &&
     manageColValue.funnels &&
     manageColValue.tags &&
     manageColValue.subjectiveScore;
-
-  console.log("sivawas", showAll);
 
   return (
     <Sidebar title="Manage Columns" close={close}>

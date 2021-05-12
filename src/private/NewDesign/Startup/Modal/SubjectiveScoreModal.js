@@ -16,6 +16,7 @@ export default function SubjectiveScoreModal({ connection, close }) {
   let user = userQuery?.data?.userGet;
 
   const [subScore, setSubScore] = useState("");
+  const [load, setLoad] = useState(false);
 
   // Define data
   const subjectiveScores = connection?.subjectiveScores || [];
@@ -42,7 +43,8 @@ export default function SubjectiveScoreModal({ connection, close }) {
   };
 
   // save score func
-  const saveModal = () => {
+  const saveModal = async () => {
+    setLoad(true);
     let variables = {
       id: connection.id,
       score: subScore,
@@ -91,7 +93,7 @@ export default function SubjectiveScoreModal({ connection, close }) {
       },
     };
 
-    mutate({
+    await mutate({
       variables,
       optimisticResponse,
     });
@@ -103,6 +105,7 @@ export default function SubjectiveScoreModal({ connection, close }) {
       title="Set subjective score"
       saveModal={saveModal}
       closeModal={close}
+      load={load}
     >
       {(!user && <GhostLoader />) || (
         <AddScore subScore={subScore} handleScore={handleScore} />
