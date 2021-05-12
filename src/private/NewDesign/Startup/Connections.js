@@ -41,9 +41,6 @@ function ListOfStartups({
   columnSettings,
   evaluationTemplates,
   evaluationTemplatesQuery,
-  connections,
-  fetchMore,
-  loading,
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
@@ -62,6 +59,19 @@ function ListOfStartups({
 
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
+
+  // Query: Connections
+  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      filters: getCleanFilterData(filters),
+      LastEvaluatedId: undefined,
+    },
+  });
+
+  // define data
+  const connections = data?.connectionsGet || [];
 
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
@@ -153,7 +163,7 @@ export default function Connections({ history }) {
   const [currentPage, setCurrentPage] = useState(undefined);
   const [render, setRender] = useState(false);
   const [tabValue, setTabValue] = useState("spreadsheet");
-  const [summaryIdData, setSummaryIdData] = useState([]);
+  // const [summaryIdData, setSummaryIdData] = useState([]);
 
   const [manageColValue, setManageColValue] = useState({
     groups: true,
@@ -163,18 +173,29 @@ export default function Connections({ history }) {
     evaluationTemplates: [],
   });
 
-  // Query: Connections
-  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      filters: getCleanFilterData(filters),
-      LastEvaluatedId: undefined,
-    },
-  });
+  // Load filters from local store
+  useEffect(() => {
+    let f;
+    try {
+      f = JSON.parse(localStorage.getItem("filters"));
+    } catch (error) {}
 
-  // define data
-  const connections = data?.connectionsGet || [];
+    if (f) {
+      setFilterState(f.dateRange ? defaultFilters : f);
+    }
+  }, []);
+
+  // Setting filters: save to local store
+  function setFilters(filterData) {
+    localStorage.setItem("filters", JSON.stringify(filterData));
+    setFilterState(filterData);
+  }
+
+  // useEffect(() => {
+  //   evaluationTemplates.forEach(summary => {
+  //     setSummaryIdData(summaryIdData => [...summaryIdData, summary.id]);
+  //   });
+  // }, [evaluationTemplates]);
 
   useEffect(() => {
     if (user.columnSettings) {
@@ -199,39 +220,6 @@ export default function Connections({ history }) {
     }
   }, [evaluationTemplates && user]);
 
-  useEffect(() => {
-    evaluationTemplates.forEach(summary => {
-      setSummaryIdData(summaryIdData => [...summaryIdData, summary.id]);
-    });
-  }, [evaluationTemplates]);
-
-  useEffect(() => {
-    if (manageColValue) {
-      setRender(render);
-    }
-  }, [manageColValue]);
-
-  // Load filters from local store
-  useEffect(() => {
-    let f;
-    try {
-      f = JSON.parse(localStorage.getItem("filters"));
-    } catch (error) {}
-
-    if (f) {
-      setFilterState(f.dateRange ? defaultFilters : f);
-    }
-  }, []);
-
-  // Setting filters: save to local store
-  function setFilters(filterData) {
-    localStorage.setItem("filters", JSON.stringify(filterData));
-    setFilterState(filterData);
-  }
-
-  const allEvaluation =
-    evaluationTemplates.length === manageColValue.evaluationTemplates.length;
-
   // manage Column
 
   return (
@@ -239,14 +227,12 @@ export default function Connections({ history }) {
       <Filters
         manageColValue={manageColValue}
         setFilters={setFilters}
-        allEvaluation={allEvaluation}
         filters={filters}
         history={history}
         fullFilter={true}
         tabValue={tabValue}
-        summaryIdData={summaryIdData}
+        // summaryIdData={summaryIdData}
         setTabValue={setTabValue}
-        connections={connections}
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
@@ -254,10 +240,7 @@ export default function Connections({ history }) {
         <>
           <ListOfStartups
             history={history}
-            fetchMore={fetchMore}
-            loading={loading}
             filters={filters}
-            connections={connections}
             columnSettings={manageColValue}
             evaluationTemplatesQuery={evaluationTemplatesQuery}
             setFilters={setFilters}
