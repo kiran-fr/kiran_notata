@@ -64,6 +64,14 @@ export const materialTheme = createMuiTheme({
   },
 });
 
+export const datePickerTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#43a047",
+    },
+  },
+});
+
 Auth.currentAuthenticatedUser()
   .then(user => {
     store.dispatch(userLoggedIn(user));

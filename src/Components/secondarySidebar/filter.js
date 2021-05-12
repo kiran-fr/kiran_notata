@@ -12,6 +12,28 @@ import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
 import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 import SavingsPlans from "aws-sdk/clients/savingsplans";
+import moment from "moment";
+
+const DatePicker = ({ filters, setFilters }) => {
+  const setDateFilter = dateRange => {
+    let from = moment(dateRange[0]);
+    let to = moment(dateRange[1]);
+
+    if (from.isValid() && to.isValid()) {
+      let fromDate = from?.format("x");
+      let toDate = to?.format("x");
+      console.log(fromDate, toDate);
+      setFilters({ ...filters, fromDate, toDate });
+    }
+  };
+
+  return (
+    <DateRangeSelector
+      value={[filters?.fromDate, filters?.toDate]}
+      onValueChange={setDateFilter}
+    />
+  );
+};
 
 export default function FilterBar({
   close,
@@ -20,10 +42,6 @@ export default function FilterBar({
   filterValue,
   handleSearch,
 }) {
-  const [selectedDate, setSelectedDate] = useState("2014-08-18");
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
   // Query: Connections
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
 
@@ -75,18 +93,6 @@ export default function FilterBar({
       )}
     </ul>
   );
-  const DatePicker = () => {
-    const [show, setShow] = useState(false);
-    const [dateRanges, setDateRanges] = useState([null, null]);
-
-    const setDateFilter = dateRange => {
-      setDateRanges(dateRange);
-    };
-
-    return (
-      <DateRangeSelector value={dateRanges} onValueChange={setDateFilter} />
-    );
-  };
   const filterSearch = value => {
     handleSearch(value);
   };
@@ -154,24 +160,7 @@ export default function FilterBar({
         </div>
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
-          <DatePicker />
-          <div className={styles.shortDates}>
-            <div>
-              <p>last 7 days</p>
-            </div>
-            <div>
-              <p>last 14 days</p>
-            </div>
-            <div>
-              <p>last 30 days</p>
-            </div>
-            <div>
-              <p>last 90 days</p>
-            </div>
-            <div>
-              <p>last year</p>
-            </div>
-          </div>
+          <DatePicker filters={filters} setFilters={setFilters} />
         </div>
       </div>
     </Sidebar>
