@@ -161,9 +161,7 @@ export default function Connections({ history }) {
   // States
   const [filters, setFilterState] = useState(defaultFilters);
   const [currentPage, setCurrentPage] = useState(undefined);
-  const [render, setRender] = useState(false);
   const [tabValue, setTabValue] = useState("spreadsheet");
-  // const [summaryIdData, setSummaryIdData] = useState([]);
 
   const [manageColValue, setManageColValue] = useState({
     groups: true,
@@ -190,12 +188,6 @@ export default function Connections({ history }) {
     localStorage.setItem("filters", JSON.stringify(filterData));
     setFilterState(filterData);
   }
-
-  // useEffect(() => {
-  //   evaluationTemplates.forEach(summary => {
-  //     setSummaryIdData(summaryIdData => [...summaryIdData, summary.id]);
-  //   });
-  // }, [evaluationTemplates]);
 
   useEffect(() => {
     if (user.columnSettings) {
@@ -231,7 +223,6 @@ export default function Connections({ history }) {
         history={history}
         fullFilter={true}
         tabValue={tabValue}
-        // summaryIdData={summaryIdData}
         setTabValue={setTabValue}
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}

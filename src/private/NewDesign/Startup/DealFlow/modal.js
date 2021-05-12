@@ -10,6 +10,7 @@ export default function DealFLowTag({
   title,
   children,
   width,
+  load,
 }) {
   const handleModal = () => {
     closeModal(false);
@@ -33,7 +34,8 @@ export default function DealFLowTag({
               <button onClick={() => handleModal()}>CANCEL</button>
               <button onClick={() => handleSave()}>
                 {" "}
-                <i className="far fa-check"></i> SAVE
+                <i className="far fa-check"></i>
+                {load ? "loading..." : "SAVE"}
               </button>
             </div>
           </div>
