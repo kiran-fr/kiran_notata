@@ -1,0 +1,90 @@
+.funels-contianer{
+    margin-top:15px;
+    .funel-name{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 17px;
+        letter-spacing: 0.03em;
+        color: #969BA3;
+        margin-top: 5px;
+    }
+    .met{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        color: #6A6A6A;
+        margin-top:10px;
+    }
+    .fa-times{
+        background-color: #FF937C;
+        border-radius: 50%;
+        height: 18px;
+        width: 18px;
+        text-align: center;
+        font-size: 10px;
+        margin-top: 10px;
+        padding-top: 4px;
+        color: #FFFFFF;  
+        cursor: pointer;          
+    }
+    .add-new-funel{
+        max-width:190px;
+        margin-left: 100px;
+        @media only screen and(max-width:990px) {
+            margin-top:15px;
+            margin-left:5px;
+            max-width:300px;
+        }  
+    }
+    .dropdown{
+        margin-top:10px;
+    }
+    .bar{
+        height:10px;
+        width:120px;
+        background-color: rgba(239, 241, 250, 1);
+        border-radius: 6px; 
+        margin-top:5px;
+        .highligh1{
+            background: #FF937C;
+            height:inherit;
+            width:inherit;
+            border-radius: inherit;
+        }
+        .highligh2-90{
+            background: #53CAB2;
+            height:inherit;
+            width:92px;
+            margin-left: 14px;
+            border-radius: inherit;
+        }
+        .highligh2-76{
+            background: #53CAB2;
+            height:inherit;
+            width:76px;
+            margin-left: 22px;
+            border-radius: inherit;
+            background: #D2D2D2;
+        }
+        .highligh2-58{
+            background: #53CAB2;
+            height:inherit;
+            width:58px;
+            margin-left: 31px;
+            border-radius: inherit;
+            background: #D2D2D2;
+        }
+        .highligh2-30{
+            background: #53CAB2;
+            height:inherit;
+            width:30px;
+            margin-left: 45px;
+            border-radius: inherit;
+            background: #D2D2D2;
+        }
+    }
+}
