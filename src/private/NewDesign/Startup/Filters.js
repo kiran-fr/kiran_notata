@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./filter.module.css";
 import Filterr from "../../../assets/images/filter.png";
 import Column from "../../../assets/images/column.png";
+import KanbanIcon from "../../../assets/images/KanbanIcon.svg";
 import AddStartup from "./Modal/addStartup";
 import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
@@ -22,13 +23,13 @@ const OptionalFilterSidebar = ({ setOptionalFilter }) => {
           style={{ marginRight: "10px" }}
           onClick={() => setOptionalFilter("column")}
         >
-          <img src={Column} /> <span>Manage Columns</span>
+          <img src={Column} alt="" /> <span>Manage Columns</span>
         </button>
         <button
           className={styles.filterButton}
           onClick={() => setOptionalFilter("filter")}
         >
-          <img src={Filterr} /> <span>Filter</span>
+          <img src={Filterr} alt="" /> <span>Filter</span>
         </button>
       </div>
     </div>
@@ -71,6 +72,8 @@ export default function Filters({
   const [optionalFilter, setOptionalFilter] = useState();
   const [filterValue, setFilterValue] = useState();
 
+  const [kanbanPopup, setKanbanPopup] = useState(false);
+
   useEffect(() => {
     setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
@@ -101,7 +104,7 @@ export default function Filters({
   };
 
   return (
-    <div>
+    <div className={styles.override}>
       <div className={fullFilter ? container : container_mini}>
         <div className={footer}>
           <div className={filter_container}>

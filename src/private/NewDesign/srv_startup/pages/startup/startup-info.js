@@ -5,6 +5,8 @@ import "./startup-info.scss";
 import ShareStartup from "./share-startup";
 import share from "../../../../../assets/images/share.png";
 
+import { useQuery } from "@apollo/client";
+import { connectionsGet } from "../../../../Apollo/Queries";
 // import Faceook from "../../../../assets/images/Faceook.svg";
 // import Google from "../../../../assets/images/Google.svg";
 // import Linked from "../../../../assets/images/Linked.svg";
@@ -13,6 +15,17 @@ import share from "../../../../../assets/images/share.png";
 
 export default function StartupInfo() {
   const [shareStartup, setshareStartup] = useState(false);
+
+  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      LastEvaluatedId: undefined,
+    },
+  });
+
+  console.log(data);
+
   return (
     <>
       {shareStartup ? (

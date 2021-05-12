@@ -80,6 +80,7 @@ export default function FilterBar({
                           ? img4
                           : img5
                       }
+                      alt=""
                     />
                   </div>
                 </li>
@@ -110,10 +111,9 @@ export default function FilterBar({
             });
           }}
         >
-          clear all filters
+          Clear all filters
         </span>
       }
-      icon="fas fa-filter"
       close={close}
     >
       <div className={styles.filter}>

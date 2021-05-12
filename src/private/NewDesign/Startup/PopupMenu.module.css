@@ -1,0 +1,49 @@
+.popup {
+  background-color: #fff;
+  min-width: 120px;
+  border-radius: 8px;
+  box-shadow: 0px 3px 20px 5px rgba(30, 30, 30, 0.1);
+  padding: 15px;
+  position: absolute;
+  z-index: 90000 !important;
+  height: auto;
+  top: 10px;
+  left: 0;
+  transform: translateX(18%);
+  overflow: hidden;
+  transition: all 0.1s ease-in;
+  transform-origin: 0 0;
+  animation: open 0.1s;
+}
+
+@keyframes open {
+  0% {
+    transform: translateX(18%) scaleY(0.2);
+  }
+
+  100% {
+    transform: translateX(18%) scaleY(1);
+  }
+}
+
+.popup_title {
+  color: #969ba3;
+  text-transform: uppercase;
+}
+
+.menu_items {
+  margin: 20px 0 5px 0;
+  text-align: left;
+}
+
+.menu_items div {
+  color: #969ba3;
+  margin-top: 15px;
+  text-transform: capitalize;
+  font-size: 13px;
+}
+
+.menu_items div:hover,
+.menu_items div:focus {
+  color: #4d5053;
+}

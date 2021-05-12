@@ -114,7 +114,7 @@ export default function ManageSidebar({
     manageColValue.subjectiveScore;
 
   return (
-    <Sidebar title="Manage Columns" icon="fas fa-cog" close={close}>
+    <Sidebar title="Manage Columns" close={close}>
       <div className={styles.manage}>
         <ul>
           <li>

@@ -81,11 +81,15 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
             suggested={true}
             heading={false}
             title="domain"
-            items={[]}
             getSelectedTag={setInvestment}
             setTags={user?.q3_investment ? user?.q3_investment : null}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
+            items={[
+              { name: "MedTech", id: "4" },
+              { name: "Female Founders", id: "23" },
+              { name: "B2B", id: "34" },
+            ]}
           />
         </div>
         <h4>Main geography</h4>
@@ -95,11 +99,15 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
             suggested={true}
             heading={false}
             title="domain"
-            items={[]}
             getSelectedTag={setGerography}
             setTags={user?.q4_geography ? user?.q4_geography : null}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
+            items={[
+              { name: "Norway", id: "4" },
+              { name: "Sweden", id: "23" },
+              { name: "Oslo", id: "34" },
+            ]}
           />
         </div>
         <h4>Stage</h4>

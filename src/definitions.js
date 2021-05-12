@@ -41,7 +41,7 @@ export const startup_page = "/startup_page";
 export const charts = `${startup_page}/charts`;
 
 // SRV RoUtEs😅
-export const startup_info = "/srv/startup";
+export const startup_info = `${startup_page}/srv/startup`;
 
 // KANBAN VIEW
 export const kanban = "/kanban";
