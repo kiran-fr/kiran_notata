@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TagsInput from "./TagsInput";
 import { Tag } from "Components/elements";
 
@@ -30,17 +30,34 @@ export const Tags = ({
   optionalTxt,
   suggested,
   heading,
+  getSelectedTag,
+  setTags,
 }) => {
   // States
   const [selectedTags, setSelectedTags] = useState([]);
 
-  console.log("items", items);
-  console.log("selectedTags", selectedTags);
+  // console.log("items", items);
+  // console.log("selectedTags", selectedTags);
+
+  useEffect(() => {
+    if (setTags) {
+      let tags = [];
+      setTags.forEach(el => {
+        tags.push({
+          name: el,
+          id: Math.floor(Math.random() * 1000).toString(),
+        });
+      });
+      setSelectedTags(tags);
+    }
+  }, [setTags]);
 
   // Select tags
   function selectTags(tags) {
-    // TODO: mutation
     setSelectedTags(tags);
+    if (getSelectedTag) {
+      getSelectedTag(tags);
+    }
   }
 
   return (

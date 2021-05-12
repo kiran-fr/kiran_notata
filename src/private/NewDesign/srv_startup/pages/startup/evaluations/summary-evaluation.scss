@@ -1,0 +1,128 @@
+.edit-evaluation-container{  
+    .summary-details{
+        margin-top:35px;
+    }  
+    .edit-details{
+        .summary-heading{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 29px;
+            letter-spacing: 0.03em;
+            color: #6A6A6A;        
+            padding-right:0px;
+        }
+        .last-updated{
+            padding-top:5px!important;
+        }
+        .last-updated,
+        .created-on{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 15px;
+            text-align: right;
+            color: #969BA3;
+            padding:0px;
+        }
+        .total-answers{
+            margin-top:30px;
+            .type-heading,
+            .attempts{
+                margin-top:5px;
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+                text-transform: capitalize;
+                color: #6A6A6A;
+            }
+            .attempts,
+            .total-attempts
+            {
+                text-align: right;
+                padding-right: 0px;
+            }
+            .total-heading,
+            .total-attempts{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 19px;
+                text-transform: capitalize;
+                color: #6A6A6A;
+                margin-top:15px;
+            }            
+        }
+        .section{
+            margin-top:43px;
+            border-bottom: 1px solid #F1F1F1;
+            padding-bottom:20px;
+            .section-heading{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 18px;
+                line-height: 22px;
+                letter-spacing: 0.03em;            
+                color: #6A6A6A;  
+                i{
+                    color: #71D0BD;
+                    margin-right:15px;
+                    cursor: pointer;
+                }  
+                .fa-pencil{
+                    margin-left: 20px;
+                    color: #969BA3;
+                }             
+            }
+            .question-answers{
+                margin-top:15px;
+                .question{
+                    margin-top: 20px;
+                }
+                .question,
+                .answer{
+                    padding-left:30px;
+                }
+                .answer{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 15px;
+                    color: #FF937C;
+                    margin-top:5px;
+                }
+            }
+        }
+        .delete-btn{
+            margin-top: 35px;            
+            height: 30px;
+            width: 208px;
+            background: #FF937C;
+            border-radius: 20px;
+            border: none;
+            font-family: 'Proxima Nova';
+            letter-spacing: 0.03em;
+            color: #FFFFFF;
+            padding: 4px;
+            font-size: 12px;
+            line-height: 15px;
+        }        
+    }
+    .modal-content-description{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        padding:50px 0px;
+        color: #969BA3;
+        max-width:300px;
+    }    
+}

@@ -18,7 +18,7 @@ export interface User {
   // q3_investment: [String];
   // q4_geography: [String];
   // q5_stage:[String];
-  }
+}
 export default gql`
   query userGet {
     userGet {

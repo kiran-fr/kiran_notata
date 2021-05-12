@@ -3,7 +3,7 @@
   display: block;
   position: relative;
   padding-left: 30px;
-  margin-bottom: 12px;
+  margin-bottom: 17px;
   cursor: pointer;
   font-size: 22px;
   -webkit-user-select: none;
@@ -16,8 +16,6 @@
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
-  line-height: 15px;
-  padding: 6px 0;
   color: var(--ui-color-gray-medium);
 }
 

@@ -8,9 +8,10 @@ import { Auth } from "aws-amplify";
 import { useForm } from "react-hook-form";
 
 // API STUFF
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { userUpdate } from "private/Apollo/Mutations";
+import { userGet } from "private/Apollo/Queries";
 
 import { omit } from "lodash";
 import styles from "./Profile.module.css";
@@ -19,10 +20,19 @@ import { InputForm, Button, RadioButtons, Tags } from "Components/UI_Kits";
 
 export default function Page1({ setPage }) {
   const [mutate] = useMutation(userUpdate);
+
+  const userQuery = useQuery(userGet);
+
   const [cognitoUser, setCognitoUser] = useState();
   const { register, handleSubmit, formState, setValue } = useForm();
 
+  // Tags
+  const [domain, setDomain] = useState([]);
+  const [role, setRole] = useState("investor");
+
   const { isSubmitting } = formState;
+
+  const user = userQuery.data?.userGet || {};
 
   useEffect(() => {
     Auth.currentAuthenticatedUser().then(cognitoUser => {
@@ -37,22 +47,44 @@ export default function Page1({ setPage }) {
         }
       });
     });
-  }, [setValue]);
+
+    setValue("company", user?.company);
+
+    if (user && user.q1_expertise) {
+      user.q1_expertise.forEach(el => {
+        setDomain([
+          {
+            id: Math.floor(Math.random() * 1000).toString(),
+            name: el,
+          },
+          ...domain,
+        ]);
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setValue, userQuery.loading]);
 
   const onSubmit = async data => {
-    // dummy data
+    let whoareyou = role;
+    let expertise = [];
+    domain.forEach(el => {
+      expertise.push(el.name);
+    });
 
     const input = {
-      family_name: "",
-      given_name: "",
+      family_name: data.family_name,
+      given_name: data.given_name,
       email: data.email,
       company: data.company,
+      q1_expertise: [...expertise],
+      q2_whoAreYou: whoareyou,
     };
 
     try {
       await Auth.updateUserAttributes(
         cognitoUser,
-        omit(input, ["family_name", "given_name", "email", "company"])
+        omit(input, ["email", "company", "q1_expertise", "q2_whoAreYou"])
       );
     } catch (error) {
       console.log("error", error);
@@ -87,9 +119,6 @@ export default function Page1({ setPage }) {
           type="text"
           name="given_name"
           placeholder="First Name"
-          // position = {listForm[position]}
-          // setNextFlag = {setNextFlag}
-          // validate = {validate}
           required
           reference={register({ required: true })}
         />
@@ -100,8 +129,6 @@ export default function Page1({ setPage }) {
           placeholder="Second Name"
           required
           reference={register({ required: true })}
-          // position = {listForm[position]}
-          // setNextFlag = {setNextFlag}
         />
         <InputForm
           name="company"
@@ -110,8 +137,6 @@ export default function Page1({ setPage }) {
           placeholder="Company"
           required
           reference={register({ required: true })}
-          // position = {listForm[position]}
-          // setNextFlag = {setNextFlag}
         />
         <div style={{ visibility: "hidden", display: "none" }}>
           <InputForm
@@ -121,8 +146,6 @@ export default function Page1({ setPage }) {
             placeholder="email"
             required
             reference={register({ required: true })}
-            // position = {listForm[position]}
-            // setNextFlag = {setNextFlag}
           />
         </div>
         <h4 style={{ margin: "0", padding: "0", marginTop: "8px" }}>
@@ -136,18 +159,20 @@ export default function Page1({ setPage }) {
         >
           <Tags
             optionalTxt="write or choose up to 3 tags"
-            title="xxx"
             suggested={true}
             heading={false}
+            reference={register({ required: true })}
             title="domain"
+            getSelectedTag={setDomain}
+            setTags={user?.q1_expertise ? user?.q1_expertise : null}
             items={[
-              { name: "yyy", id: "4" },
-              { name: "xxx", id: "23" },
-              { name: "yyy", id: "34" },
-              { name: "xxx", id: "17" },
-              { name: "yyy", id: "47" },
-              { name: "xxx", id: "233" },
-              { name: "yyy", id: "347" },
+              { name: "Tech", id: "4" },
+              { name: "Lifestyle", id: "23" },
+              { name: "Medicine", id: "34" },
+              { name: "Agro", id: "17" },
+              { name: "Fashion", id: "47" },
+              { name: "Food", id: "233" },
+              { name: "Science", id: "347" },
             ]}
           />
         </div>
@@ -163,18 +188,19 @@ export default function Page1({ setPage }) {
         </h4>
         <RadioButtons
           name="whoare"
+          getValue={setRole}
+          setValue={user?.q2_whoAreYou ? user?.q2_whoAreYou : null}
           data={[
-            { id: 1, value: "inverstor", label: "inverstor" },
-            { id: 2, value: "incubator", label: "incubator" },
-            { id: 3, value: "accelerator", label: "accelerator" },
-            { id: 4, value: "hub", label: "hub" },
-            { id: 5, value: "other", label: "other" },
+            { id: 1, value: "investor", label: "Investor" },
+            { id: 2, value: "incubator", label: "Incubator" },
+            { id: 3, value: "accelerator", label: "Accelerator" },
+            { id: 4, value: "hub", label: "Hub" },
+            { id: 5, value: "other", label: "Other" },
           ]}
         />
 
         <div className={styles.button_container}>
           <Button
-            type="input"
             value="SAVE"
             size="medium"
             buttonStyle="green"

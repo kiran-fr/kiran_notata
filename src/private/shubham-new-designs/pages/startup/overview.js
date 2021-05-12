@@ -10,10 +10,58 @@ import Tags from "../ui-kits/tags";
 import Funels from "./funels";
 import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
 import ArchiveList from "./archive-list";
+import moment from "moment";
 
-export default function Overview() {
+export default function Overview(props) {
+  const {
+    creativity: { creative, subjectiveScores, updatedAt, evaluationSummaries },
+  } = props;
+  const { answers, name } = creative;
   const [pageState, setPageState] = useState(OVERVIEWPAGESTATE.Overview);
   const [archiveModal, setArchiveModal] = useState(false);
+
+  const updatedMonth = moment(new Date())
+    .diff(updatedAt, "months", true)
+    .toFixed(0);
+
+  let section = answers?.find(i => i.questionId === "q01_section_info");
+  let website = answers?.find(i => i.questionId === "q06_section_info");
+  let slideDeck = answers.find(i => i.questionId === "q01_section_materials");
+
+  const getFilteredArray = (scores, isMe) => {
+    return scores?.filter(i => i.isMe === isMe) || [];
+  };
+
+  const getScore = (scores, getMax) => {
+    if (Array.isArray(scores) && scores.length > 0) {
+      return getMax
+        ? Math.max(...scores?.map(i => i.score || 0))
+        : Math.min(...scores?.map(i => i.score || 0));
+    }
+    return 0;
+  };
+
+  const getTotalScore = arr => {
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr?.reduce((acc, obj) => {
+        return acc + (obj.score || 0);
+      }, 0);
+    }
+    return 0;
+  };
+
+  let teamScoreArr = getFilteredArray(subjectiveScores, false);
+  let teamMaxScore = getScore(teamScoreArr, true);
+  let teamMinScore = getScore(teamScoreArr, false);
+  let teamAvg = (
+    getTotalScore(teamScoreArr) / teamScoreArr.length || 0
+  ).toFixed(1);
+
+  let myScoreArr = getFilteredArray(subjectiveScores, true);
+  let myAvgScore = (getTotalScore(myScoreArr) / myScoreArr.length || 0).toFixed(
+    1
+  );
+  const [activeImage, setActiveImage] = useState([]);
   return (
     <>
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
@@ -26,14 +74,15 @@ export default function Overview() {
             <div className="card">
               <div className="row">
                 <div className="col-1 col-xs-1">
-                  <div className="name-icon">G</div>
+                  <div className="name-icon">
+                    {name?.substr(0, 1)?.toUpperCase()}
+                  </div>
                 </div>
                 <div className="col-11 col-sm-10 col-xs-10">
                   <div className="row overview-container__details">
                     <div className="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                       <div className="overview-container__heading">
-                        Great Startup Inc{" "}
-                        <span className="material-icons">star</span>
+                        {name} <span className="material-icons">star</span>
                       </div>
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 col-xs-12">
@@ -41,26 +90,31 @@ export default function Overview() {
                         Last updated:
                       </span>
                       <span className="overview-container__last-updated__date">
-                        More than 3 months ago
+                        More than {updatedMonth || 0} months ago
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="col-sm-12 col-xs-12">
-                <p className="overview-container__startup-overview">
-                  Great Startup is a simple tool for investors to evaluate
-                  startups and engage their network.
-                </p>
+              <div className="row">
+                <div className="col-12">
+                  <p className="overview-container__startup-overview">
+                    {section?.val}
+                  </p>
+                </div>
               </div>
               <div className="row overview-notata-info">
                 <div className="col-sm-6 col-xs-6 overview-notata-info__slidedeck">
-                  <Button endIcon={<Icon>arrow_forward_ios</Icon>}>
-                    SLIDE DECK
-                  </Button>
+                  {slideDeck && (
+                    <Button endIcon={<Icon>arrow_forward_ios</Icon>}>
+                      SLIDE DECK
+                    </Button>
+                  )}
                 </div>
                 <div className="col-sm-6 col-xs-6 overview-notata-info__web">
-                  WWW.NOTATA.IO
+                  <a href={website?.val} target="_blank">
+                    {website?.val}
+                  </a>
                 </div>
               </div>
             </div>
@@ -71,16 +125,16 @@ export default function Overview() {
                 </div>
                 <div className="col-sm-6 col-md-3 col-xs-12 overview-container__scores__label">
                   <div>You</div>
-                  <div className="score selected you">8.5</div>
+                  <div className="score selected you">{myAvgScore}</div>
                 </div>
                 <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
                   <div>Your Team</div>
-                  <div className="score">8.5</div>
+                  <div className="score">{teamAvg}</div>
                   <div className="highest-score">
-                    10 <span className="highest">HIGHEST</span>
+                    {teamMaxScore} <span className="highest">HIGHEST</span>
                   </div>
                   <div className="lowest-score">
-                    5.5 <span className="lowest">LOWEST</span>
+                    {teamMinScore} <span className="lowest">LOWEST</span>
                   </div>
                 </div>
                 <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
@@ -109,36 +163,27 @@ export default function Overview() {
                 <div className="overview-container__scores__heading">
                   Evaluation summaries
                 </div>
-                <div className="col-sm-6 col-md-6 col-xs-6 overview-container__scores__label">
-                  <div>First Impression</div>
-                  <div className="score">65%</div>
-                  <div className="highest-score">
-                    35% <span className="highest">HIGHEST</span>
-                  </div>
-                  <div className="lowest-score">
-                    80% <span className="lowest">LOWEST</span>
-                  </div>
-                </div>
-                <div className="col-sm-6 col-md-6 col-xs-6 overview-container__scores__label">
-                  <div>Before Pitching</div>
-                  <div className="score">65%</div>
-                  <div className="highest-score">
-                    35% <span className="highest">HIGHEST</span>
-                  </div>
-                  <div className="lowest-score">
-                    80% <span className="lowest">LOWEST</span>
-                  </div>
-                </div>
-                <div className="col-sm-6 col-md-6 col-xs-6 overview-container__scores__label">
-                  <div>After Pitching</div>
-                  <div className="score">65%</div>
-                  <div className="highest-score">
-                    35% <span className="highest">HIGHEST</span>
-                  </div>
-                  <div className="lowest-score">
-                    80% <span className="lowest">LOWEST</span>
-                  </div>
-                </div>
+                {evaluationSummaries.map(evalution => {
+                  return (
+                    <div
+                      className="col-sm-6 col-md-6 col-xs-6 overview-container__scores__label"
+                      key={evalution.templateId}
+                    >
+                      <div>{evalution.templateName}</div>
+                      <div className="score">{`${
+                        evalution.averagePercentageScore || 0
+                      }%`}</div>
+                      <div className="highest-score">
+                        {`${evalution.highestScore || 0}%`}{" "}
+                        <span className="highest">HIGHEST</span>
+                      </div>
+                      <div className="lowest-score">
+                        {`${evalution.lowestScore || 0}%`}{" "}
+                        <span className="lowest">LOWEST</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
               <div className="separator"></div>
               <div className="row tags-container">
@@ -165,7 +210,10 @@ export default function Overview() {
                   return (
                     <div
                       key={item.key}
-                      className="col-sm-4 col-md-3 col-lg-2 col-xs-4 img-col"
+                      onClick={() => setActiveImage([...activeImage, item.key])}
+                      className={`col-sm-4 col-md-3 col-lg-2 col-xs-4 img-col ${
+                        activeImage.includes(item.key) ? "active-img-col" : ""
+                      }`}
                     >
                       <img src={item.src}></img>
                     </div>

@@ -50,9 +50,12 @@ input::placeholder {
   font-size: 14px;
   line-height: 17px;
   padding: 10px 22px !important;
-  width: 340px;
   margin-top: 0px;
   max-width: 100%;
+}
+
+.inputDefaultWidth {
+  width: 340px;
 }
 
 .redStyle {

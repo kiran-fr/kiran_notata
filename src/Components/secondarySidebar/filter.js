@@ -1,37 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./sidebar.module.css";
 import Sidebar from "./index";
 import { Tags } from "Components/UI_Kits/Tags/Tags";
-import RedBar from "../../assets/images/redBar.png";
-import GreenBar from "../../assets/images/greenBar.png";
-import VioletBar from "../../assets/images/violetBar.png";
-import YellowBar from "../../assets/images/yellowBar.png";
-import GrassBar from "../../assets/images/grassBar.png";
+import img1 from "../../assets/images/redBar.png";
+import img2 from "../../assets/images/greenBar.png";
+import img3 from "../../assets/images/violetBar.png";
+import img4 from "../../assets/images/yellowBar.png";
+import img5 from "../../assets/images/grassBar.png";
+// API
+import { useQuery } from "@apollo/client";
+import { funnelGroupGet } from "private/Apollo/Queries";
 
-export default function FilterBar({ close, filters, setFilters }) {
-  const funnels = [
-    { name: "Reviewed", img: RedBar },
-    { name: "Met", img: GreenBar },
-    { name: "Analyzed", img: VioletBar },
-    { name: "IC", img: YellowBar },
-    { name: "Invested", img: GrassBar },
-  ];
+export default function FilterBar({
+  close,
+  filters,
+  setFilters,
+  filterValue,
+  handleSearch,
+}) {
+  // Query: Connections
+  const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
+
+  const funnelGroupArray = data ? data.accountGet.funnelGroups : [];
+
   const FunnelStage = () => (
     <ul className={styles.funnelUl}>
-      {funnels.map(item => (
-        <li>
-          <div className="myCheckbox">
-            <label className={styles.customCheck}>
-              <input type="checkbox" />
-              <span class={styles.checkmark}></span>
-            </label>
-          </div>
-          <p>{item.name}</p>
-          <div className={styles.image}>
-            <img src={item.img} />
-          </div>
-        </li>
-      ))}
+      {funnelGroupArray.length ? (
+        funnelGroupArray.map(item => (
+          <>
+            <h6>{item.name}</h6>
+            {item.funnelTags.length &&
+              item.funnelTags.map((data, index) => (
+                <li>
+                  <label>
+                    <input
+                      type="radio"
+                      name={data.name}
+                      onChange={() =>
+                        setFilters({ ...filters, funnelTag: data.id })
+                      }
+                    />
+                  </label>
+                  <p>{data.name}</p>
+                  <div className={styles.image}>
+                    <img
+                      src={
+                        index === 0
+                          ? img1
+                          : index === 1
+                          ? img2
+                          : index === 2
+                          ? img3
+                          : index === 3
+                          ? img4
+                          : img5
+                      }
+                    />
+                  </div>
+                </li>
+              ))}
+          </>
+        ))
+      ) : loading ? (
+        <i className={"fa fa-spinner fa-spin"} />
+      ) : (
+        ""
+      )}
     </ul>
   );
   const DatePicker = () => (
@@ -51,18 +85,44 @@ export default function FilterBar({ close, filters, setFilters }) {
       </div>
     </div>
   );
+  const filterSearch = value => {
+    handleSearch(value);
+  };
   return (
-    <Sidebar title="FILTERS" icon="fas fa-filter" close={close}>
+    <Sidebar
+      title={
+        <span
+          onClick={() => {
+            setFilters({
+              search: "",
+              tags: [],
+              funnelTags: [],
+              // dateRange: [null, null],
+            });
+          }}
+        >
+          clear all filters
+        </span>
+      }
+      icon="fas fa-filter"
+      close={close}
+    >
       <div className={styles.filter}>
         <div className={styles.search}>
           <input
             type="text"
-            value={filters.search}
+            value={filterValue}
             onChange={e => {
-              setFilters({ ...filters, search: e.target.value });
+              filterSearch(e);
             }}
           />
-          <button>Search</button>
+          <button
+            onClick={() => {
+              setFilters({ ...filters, search: filterValue });
+            }}
+          >
+            Search
+          </button>
         </div>
         <div className={styles.funnelStage}>
           <h2>FUNNEL STAGE</h2>

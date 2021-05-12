@@ -1,6 +1,3 @@
-// Date : 7/04/2020
-// Created By : siva
-
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import SocialLogin from "Components/socialLogin/socialLogin";
@@ -100,7 +97,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
       } catch (error) {
         // setErrorMessage(getErrorMessage({ error }));
         setErrorMessage(
-          "we couldn't find an account mactching the email and password you entered.Please check your email and password and try again."
+          "We couldn't find an account mactching the email and password you entered. Please check your email and password and try again."
         );
       }
     }
@@ -128,7 +125,10 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
             </div>
             {errorMessage && (
               <p className={styles.error}>
-                <i className="fa fa-exclamation-circle"></i>
+                <span>
+                  <i className="fa fa-exclamation-circle"></i>
+                </span>
+                <br></br>
                 <span>{errorMessage}</span>
               </p>
             )}
