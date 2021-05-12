@@ -29,10 +29,6 @@
   margin-top: 15px;
 }
 
-.sidebar .title:hover {
-  color: #53cab2;
-  cursor: pointer;
-}
 .sidebar .title i {
   margin-right: 5px;
   color: #969ba3;
@@ -256,5 +252,14 @@
   font-size: 13px;
   border-bottom: 1px solid #53cab2;
   display: inline;
+  cursor: pointer;
+}
+
+.padLeft {
+  padding-left: 10px;
+}
+
+.padLeft:hover {
+  color: #53cab2;
   cursor: pointer;
 }

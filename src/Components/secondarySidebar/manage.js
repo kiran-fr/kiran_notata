@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./sidebar.module.css";
 
 // API STUFF
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import { userUpdate } from "private/Apollo/Mutations";
 
@@ -14,32 +14,31 @@ export default function ManageSidebar({
   setManageColValue,
   manageColValue,
   evaluationTemplates,
-  allEvaluation,
-  summaryIdData,
 }) {
-  const options = [
-    { value: "Groups", name: "groups" },
-    { value: "Funnel Stage", name: "funnels" },
-    { value: "Tags", name: "tags" },
-    { value: "Subjective Score", name: "subjectiveScore" },
-  ];
-
   const [render, setRender] = useState(false);
-
   const [mutate] = useMutation(userUpdate);
 
   // update
   useEffect(() => {
     const input = { columnSettings: manageColValue };
     mutate({ variables: { input } });
-  }, [manageColValue.groups]);
+  }, [manageColValue]);
 
-  const handleManageSection = (e, option) => {
-    if (option) {
-      var array = manageColValue.evaluationTemplates; //  array
-      var index = array.indexOf(e); //e is id
-      if (index !== -1) {
-        array.splice(index, 1); // remove the arr value
+  const handleManageSection = (e, evaltionId) => {
+    if (evaltionId) {
+      if (e.target.checked === false) {
+        var array = manageColValue.evaluationTemplates; //  array
+        var index = array.indexOf(evaltionId); //e is id
+        if (index !== -1) {
+          array.splice(index, 1); // remove the arr value
+          setManageColValue({
+            ...manageColValue,
+            ["evaluationTemplates"]: array,
+          });
+        }
+      } else {
+        var array = manageColValue.evaluationTemplates;
+        array.push(evaltionId);
         setManageColValue({
           ...manageColValue,
           ["evaluationTemplates"]: array,
@@ -64,7 +63,6 @@ export default function ManageSidebar({
       } else {
         if (e.target.name === "showAll") {
           if (e.target.checked === false) {
-            console.log("amhere");
             setManageColValue({
               ...manageColValue,
               groups: false,
@@ -74,13 +72,17 @@ export default function ManageSidebar({
               evaluationTemplates: [],
             });
           } else {
+            let newArr = [];
+            evaluationTemplates.forEach(summary => {
+              newArr.push(summary.id);
+            });
             setManageColValue({
               ...manageColValue,
               groups: true,
               funnels: true,
               tags: true,
               subjectiveScore: true,
-              evaluationTemplates: [...summaryIdData],
+              evaluationTemplates: newArr,
             });
           }
         } else {
@@ -94,14 +96,22 @@ export default function ManageSidebar({
     setRender(render);
   };
 
+  const allEvaluation =
+    evaluationTemplates.length === manageColValue.evaluationTemplates.length;
+
+  const options = [
+    { value: "Groups", name: "groups" },
+    { value: "Funnel Stage", name: "funnels" },
+    { value: "Tags", name: "tags" },
+    { value: "Subjective Score", name: "subjectiveScore" },
+  ];
+
   const showAll =
     manageColValue.evaluationTemplates.length === evaluationTemplates.length &&
     manageColValue.groups &&
     manageColValue.funnels &&
     manageColValue.tags &&
     manageColValue.subjectiveScore;
-
-  console.log("sivawas", showAll);
 
   return (
     <Sidebar title="Manage Columns" icon="fas fa-cog" close={close}>
@@ -111,7 +121,7 @@ export default function ManageSidebar({
             <label className={styles.customCheck}>
               <input
                 type="checkbox"
-                defaultChecked={showAll}
+                checked={showAll}
                 name="showAll"
                 onChange={handleManageSection}
               />
@@ -155,9 +165,7 @@ export default function ManageSidebar({
                     <label className={styles.customCheck}>
                       <input
                         type="checkbox"
-                        onChange={() =>
-                          handleManageSection(summary.id, "evaluation")
-                        }
+                        onChange={e => handleManageSection(e, summary.id)}
                         checked={manageColValue.evaluationTemplates.includes(
                           summary.id
                         )}

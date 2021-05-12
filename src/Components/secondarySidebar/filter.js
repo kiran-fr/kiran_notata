@@ -9,7 +9,6 @@ import img4 from "../../assets/images/yellowBar.png";
 import img5 from "../../assets/images/grassBar.png";
 // API
 import { useQuery } from "@apollo/client";
-
 import { funnelGroupGet } from "private/Apollo/Queries";
 import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 import SavingsPlans from "aws-sdk/clients/savingsplans";
@@ -19,7 +18,7 @@ export default function FilterBar({
   filters,
   setFilters,
   filterValue,
-  handleFilter,
+  handleSearch,
 }) {
   const [selectedDate, setSelectedDate] = useState("2014-08-18");
   const handleDateChange = date => {
@@ -88,8 +87,8 @@ export default function FilterBar({
       <DateRangeSelector value={dateRanges} onValueChange={setDateFilter} />
     );
   };
-  const handleSearch = value => {
-    handleFilter(value);
+  const filterSearch = value => {
+    handleSearch(value);
   };
   return (
     <Sidebar
@@ -117,7 +116,7 @@ export default function FilterBar({
             type="text"
             value={filterValue}
             onChange={e => {
-              handleSearch(e);
+              filterSearch(e);
             }}
           />
           <button

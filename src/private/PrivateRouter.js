@@ -29,6 +29,7 @@ import {
   facts_template,
   navigation,
   startup_index,
+  startup_info,
 } from "../definitions";
 
 // Landing page / list
@@ -72,6 +73,9 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
 import { Startup } from "./shubham-new-designs/pages/startup/index";
+
+// New Startup Info
+import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -165,6 +169,8 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={navigation} component={Navigation} />
 
       <Route exact path={startup_index} component={Startup} />
+
+      <Route exact path={startup_info} component={StartupInfo} />
 
       <Route render={() => <div>404</div>} />
     </Switch>

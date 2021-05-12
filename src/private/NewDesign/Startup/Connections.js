@@ -23,8 +23,6 @@ import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
 
-// import Table from "./../../../Components/NewDesignTable/table.component";
-
 function getCleanFilterData(filters) {
   let clean = {};
   for (let key in filters) {
@@ -36,7 +34,6 @@ function getCleanFilterData(filters) {
 }
 
 function ListOfStartups({
-  manageColValue,
   filters,
   setFilters,
   currentPage,
@@ -44,19 +41,11 @@ function ListOfStartups({
   columnSettings,
   evaluationTemplates,
   evaluationTemplatesQuery,
-  connections,
-  fetchMore,
-  loading,
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
-  const [subScoreModal, setSubScoreModal] = useState("");
-  const [tableFields, setTableFields] = useState();
-
-  //Query: User
-  const userQuery = useQuery(userGet);
 
   // Fetch more
   useEffect(() => {
@@ -68,30 +57,26 @@ function ListOfStartups({
     });
   }, [currentPage]);
 
-  // TODO: Column settings
-  // This is saved on user.columnSettings
-
-  // Define data
-  const user = userQuery.data?.userGet || {};
-
   // Mutations
   const [setStarMutation] = useMutation(connectionSetStar);
 
-  const allFields = {
-    group: true,
-    funnel: true,
-    tag: true,
-    score: true,
-    updated: true,
-    evaluation: true,
-    pitching: true,
-  };
+  // Query: Connections
+  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      filters: getCleanFilterData(filters),
+      LastEvaluatedId: undefined,
+    },
+  });
+
+  // define data
+  const connections = data?.connectionsGet || [];
 
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
       <Table
-        fields={allFields}
-        manageColValue={manageColValue}
+        setStarMutation={setStarMutation}
         columnSettings={columnSettings}
         data={connections}
         filters={filters}
@@ -164,12 +149,19 @@ export default function Connections({ history }) {
   const evaluationTemplates =
     evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
 
+  //Query: User
+  const userQuery = useQuery(userGet);
+
+  // TODO: Column settings
+  // This is saved on user.columnSettings
+
+  // Define data
+  const user = userQuery.data?.userGet || {};
+
   // States
   const [filters, setFilterState] = useState(defaultFilters);
   const [currentPage, setCurrentPage] = useState(undefined);
-  const [render, setRender] = useState(false);
   const [tabValue, setTabValue] = useState("spreadsheet");
-  const [summaryIdData, setSummaryIdData] = useState([]);
 
   const [manageColValue, setManageColValue] = useState({
     groups: true,
@@ -178,38 +170,6 @@ export default function Connections({ history }) {
     subjectiveScore: true,
     evaluationTemplates: [],
   });
-
-  // Query: Connections
-  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      filters: getCleanFilterData(filters),
-      LastEvaluatedId: undefined,
-    },
-  });
-
-  // define data
-  const connections = data?.connectionsGet || [];
-
-  useEffect(() => {
-    evaluationTemplates.forEach(summary => {
-      setSummaryIdData([...summaryIdData, summary.id]);
-      setManageColValue(manageColValue => ({
-        ...manageColValue,
-        ["evaluationTemplates"]: [
-          ...manageColValue.evaluationTemplates,
-          summary.id,
-        ],
-      }));
-    });
-  }, [evaluationTemplates]);
-
-  useEffect(() => {
-    if (manageColValue) {
-      setRender(render);
-    }
-  }, [manageColValue]);
 
   // Load filters from local store
   useEffect(() => {
@@ -229,8 +189,28 @@ export default function Connections({ history }) {
     setFilterState(filterData);
   }
 
-  const allEvaluation =
-    evaluationTemplates.length === manageColValue.evaluationTemplates.length;
+  useEffect(() => {
+    if (user.columnSettings) {
+      setManageColValue({
+        ...manageColValue,
+        groups: user.columnSettings[0].groups,
+        funnels: user.columnSettings[0].funnels,
+        tags: user.columnSettings[0].tags,
+        subjectiveScore: user.columnSettings[0].subjectiveScore,
+        evaluationTemplates: user.columnSettings[0].evaluationTemplates || [],
+      });
+    } else {
+      evaluationTemplates.forEach(summary => {
+        setManageColValue(manageColValue => ({
+          ...manageColValue,
+          ["evaluationTemplates"]: [
+            ...manageColValue.evaluationTemplates,
+            summary.id,
+          ],
+        }));
+      });
+    }
+  }, [evaluationTemplates && user]);
 
   // manage Column
 
@@ -239,14 +219,11 @@ export default function Connections({ history }) {
       <Filters
         manageColValue={manageColValue}
         setFilters={setFilters}
-        allEvaluation={allEvaluation}
         filters={filters}
         history={history}
         fullFilter={true}
         tabValue={tabValue}
-        summaryIdData={summaryIdData}
         setTabValue={setTabValue}
-        connections={connections}
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
@@ -254,10 +231,7 @@ export default function Connections({ history }) {
         <>
           <ListOfStartups
             history={history}
-            fetchMore={fetchMore}
-            loading={loading}
             filters={filters}
-            connections={connections}
             columnSettings={manageColValue}
             evaluationTemplatesQuery={evaluationTemplatesQuery}
             setFilters={setFilters}
