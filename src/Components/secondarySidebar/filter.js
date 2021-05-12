@@ -11,6 +11,7 @@ import img5 from "../../assets/images/grassBar.png";
 import { useQuery } from "@apollo/client";
 
 import { funnelGroupGet } from "private/Apollo/Queries";
+import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 import SavingsPlans from "aws-sdk/clients/savingsplans";
 
 export default function FilterBar({
@@ -20,6 +21,10 @@ export default function FilterBar({
   filterValue,
   handleFilter,
 }) {
+  const [selectedDate, setSelectedDate] = useState("2014-08-18");
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
   // Query: Connections
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
 
@@ -41,6 +46,7 @@ export default function FilterBar({
                       onChange={() =>
                         setFilters({ ...filters, funnelTag: data.id })
                       }
+                      checked={data.id === filters?.funnelTag}
                     />
                   </label>
                   <p>{data.name}</p>
@@ -70,23 +76,18 @@ export default function FilterBar({
       )}
     </ul>
   );
-  const DatePicker = () => (
-    <div className={styles.dateStage}>
-      <div className={styles.dateFrom}>
-        <label>From</label>
-        <input type="date" id="birthday" name="birthday" />
-      </div>
-      <div className={styles.dateTo}>
-        <label>To</label>
-        <input
-          type="date"
-          id="birthday"
-          name="birthday"
-          placeholder="mm/dd/yyyy"
-        />
-      </div>
-    </div>
-  );
+  const DatePicker = () => {
+    const [show, setShow] = useState(false);
+    const [dateRanges, setDateRanges] = useState([null, null]);
+
+    const setDateFilter = dateRange => {
+      setDateRanges(dateRange);
+    };
+
+    return (
+      <DateRangeSelector value={dateRanges} onValueChange={setDateFilter} />
+    );
+  };
   const handleSearch = value => {
     handleFilter(value);
   };
@@ -99,7 +100,8 @@ export default function FilterBar({
               search: "",
               tags: [],
               funnelTags: [],
-              // dateRange: [null, null],
+              fromDate: new Date().getTime() - 40000,
+              toDate: new Date().getTime(),
             });
           }}
         >
@@ -139,9 +141,16 @@ export default function FilterBar({
               { name: "saas", id: "23" },
               { name: "finance", id: "34" },
               { name: "automotive", id: "17" },
-              { name: "software", id: "47" },
             ]}
             tagSize="smallTagSize"
+            setTags={filters.tags}
+            getSelectedTag={tags => {
+              setFilters({
+                ...filters,
+                tags: [...tags],
+              });
+            }}
+            closeIcon="smallCloseIcon"
           />
         </div>
         <div className={styles.funnelStage}>

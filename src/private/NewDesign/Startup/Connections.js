@@ -138,8 +138,8 @@ export default function Connections({ history }) {
     search: "",
     tags: [],
     funnelTags: [],
-    // fromDate: new Date().getTime() - 40000,
-    // toDate: new Date().getTime(),
+    fromDate: new Date().getTime() - 40000,
+    toDate: new Date().getTime(),
     // limit: 25
 
     // SORTING
