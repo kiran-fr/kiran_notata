@@ -10,10 +10,14 @@ import classnames from "classnames";
 import styles from "./filter.module.css";
 import Filterr from "../../../assets/images/filter.png";
 import Column from "../../../assets/images/column.png";
+import KanbanIcon from "../../../assets/images/KanbanIcon.svg";
 import AddStartup from "./Modal/addStartup";
 import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
+
+import { DropMenu } from "Components/UI_Kits/DropMenu/index";
+import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 
 import moment from "moment";
 import {
@@ -185,8 +189,30 @@ export default function Filters({
       value: "kanban",
       text: (
         <div>
+          <img
+            style={{
+              width: 15,
+              height: 15,
+              marginRight: "4px",
+              transform: "rotateZ(360deg)",
+            }}
+            src={KanbanIcon}
+            alt=""
+          />
           <span>KANBAN</span>
-          <i style={{ marginLeft: "5px" }} className="fas fa-chevron-down"></i>
+          <i
+            onClick={() => console.log("Open Popup")}
+            style={{ marginLeft: "5px" }}
+            className="fas fa-chevron-down"
+          ></i>
+
+          {/* <DropMenu
+            dropMenuArr={[
+              { iconName: "", title: "Funnel 1" },
+              { iconName: "", title: "Funnel 2" },
+              { iconName: "", title: "Funnel 3" },
+            ]}
+          ></DropMenu> */}
         </div>
       ),
     },
@@ -194,7 +220,11 @@ export default function Filters({
       value: "spreadsheet",
       text: (
         <div>
-          <img src={Column} />
+          <img
+            style={{ width: 15, height: 15, marginRight: "4px" }}
+            src={Column}
+            alt=""
+          />
           <span>SPREADSHEET</span>
         </div>
       ),

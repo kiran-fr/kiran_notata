@@ -13,8 +13,18 @@ import { connectionsGet } from "../../../../Apollo/Queries";
 // import Twitter from "../../../../assets/images/Twitter.svg";
 // import Insta from "../../../../assets/images/Insta.svg";
 
-export default async function StartupInfo() {
+export default function StartupInfo() {
   const [shareStartup, setshareStartup] = useState(false);
+
+  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      LastEvaluatedId: undefined,
+    },
+  });
+
+  console.log(data);
 
   return (
     <>

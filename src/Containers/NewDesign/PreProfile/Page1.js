@@ -166,13 +166,10 @@ export default function Page1({ setPage }) {
             getSelectedTag={setDomain}
             setTags={user?.q1_expertise ? user?.q1_expertise : null}
             items={[
-              { name: "Tech", id: "4" },
-              { name: "Lifestyle", id: "23" },
-              { name: "Medicine", id: "34" },
-              { name: "Agro", id: "17" },
-              { name: "Fashion", id: "47" },
-              { name: "Food", id: "233" },
-              { name: "Science", id: "347" },
+              { name: "Software", id: "4" },
+              { name: "Finance", id: "23" },
+              { name: "B2B", id: "34" },
+              { name: "Growth", id: "17" },
             ]}
           />
         </div>
