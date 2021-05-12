@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TagSelector from "Components/TagSelector/TagSelector";
 import { Tag, Modal } from "Components/elements/";
-import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
+// import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 
 import { funnelGroupGet, tagGroupsGet } from "private/Apollo/Queries";
 import { useQuery } from "@apollo/client";
@@ -16,8 +16,7 @@ import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
 
-import { DropMenu } from "Components/UI_Kits/DropMenu/index";
-import { Dropdown } from "Components/UI_Kits/Dropdown/index";
+import PopupMenu from "./PopupMenu";
 
 import moment from "moment";
 import {
@@ -25,22 +24,22 @@ import {
   container_mini,
   content,
   footer,
-  filter_star,
+  // filter_star,
   filter_icon_container,
   filter_icon,
   tag_each,
   tag_kill,
   filter_container,
-  filter_content,
+  // filter_content,
   funnel_tag_container,
   funnel_tag,
   funnel_tag_active,
 } from "./Filters.module.scss";
-import {
-  clear_filters,
-  counter,
-  small_text_flex,
-} from "./Connections.module.css";
+// import {
+//   // clear_filters,
+//   // counter,
+//   // small_text_flex,
+// } from "./Connections.module.css";
 
 const Tags = ({ filters, tagGroups, setFilters }) => {
   const [show, setShow] = useState(false);
@@ -101,13 +100,13 @@ const Funnels = ({ filters, setFilters, setFilterType }) => {
           style={{ marginRight: "10px" }}
           onClick={() => setFilterType("column")}
         >
-          <img src={Column} /> <span>Manage Columns</span>
+          <img src={Column} alt="" /> <span>Manage Columns</span>
         </button>
         <button
           className={styles.filterButton}
           onClick={() => setFilterType("filter")}
         >
-          <img src={Filterr} /> <span>Filter</span>
+          <img src={Filterr} alt="" /> <span>Filter</span>
         </button>
       </div>
 
@@ -145,13 +144,6 @@ const Funnels = ({ filters, setFilters, setFilterType }) => {
 };
 
 function getHasFilters(filters) {
-  /*  const hasFilters =
-    filters.tags.length ||
-    filters.funnelTags.length ||
-    filters.search ||
-    filters.starred ||
-    (filters.dateRange.length &&
-      (filters.dateRange[0] || filters.dateRange[1]));*/
   return false;
 }
 
@@ -174,6 +166,8 @@ export default function Filters({
   const [activeTab, setActiveTab] = useState();
   const [filterType, setFilterType] = useState();
   const [filterValue, setFilterValue] = useState();
+
+  const [kanbanPopup, setKanbanPopup] = useState(false);
 
   useEffect(() => {
     setTabValue(tabArr[1].value);
@@ -201,15 +195,23 @@ export default function Filters({
           />
           <span>KANBAN</span>
           <i
-            onClick={() => console.log("Open Popup")}
+            onClick={() => setKanbanPopup(!kanbanPopup)}
             style={{ marginLeft: "5px" }}
             className="fas fa-chevron-down"
           ></i>
-
+          <PopupMenu
+            title="Kanban"
+            items={["All Startups", "Funnel 1", "Funnel 2", "Funnel 3"]}
+            isOpen={kanbanPopup}
+            setIsOpen={setKanbanPopup}
+          ></PopupMenu>
           {/* <DropMenu
             dropMenuArr={[
               { iconName: "", title: "Funnel 1" },
               { iconName: "", title: "Funnel 2" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
               { iconName: "", title: "Funnel 3" },
             ]}
           ></DropMenu> */}
@@ -265,7 +267,7 @@ export default function Filters({
   }, [filterValue]);
 
   return (
-    <div>
+    <div className={styles.override}>
       <div className={fullFilter ? container : container_mini}>
         <div className={footer}>
           <div className={filter_container}>

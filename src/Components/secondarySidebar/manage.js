@@ -112,7 +112,7 @@ export default function ManageSidebar({
   console.log("sivawas", showAll);
 
   return (
-    <Sidebar title="Manage Columns" icon="fas fa-cog" close={close}>
+    <Sidebar title="Manage Columns" close={close}>
       <div className={styles.manage}>
         <ul>
           <li>
