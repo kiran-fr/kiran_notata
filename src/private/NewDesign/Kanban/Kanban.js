@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 import styles from "./Kanban.module.css";
+import { useQuery } from "@apollo/client";
+import {
+  accountGet as accountGetData,
+  connectionsGet,
+} from "private/Apollo/Queries";
+import { GhostLoader } from "Components/elements";
 
 import BarIcon1 from "./../../../assets/images/Bar_Icon_01.svg";
 import BarIcon2 from "./../../../assets/images/Bar_Icon_02.svg";
@@ -9,51 +15,16 @@ import BarIcon3 from "./../../../assets/images/Bar_Icon_03.svg";
 import BarIcon4 from "./../../../assets/images/Bar_Icon_04.svg";
 import BarIcon5 from "./../../../assets/images/Bar_Icon_05.svg";
 
+import { appsyncClient } from "../../../awsconfig";
+
 // Components
 import BoardHeader from "./Components/BoardHeader";
 import BoardItem from "./Components/BoardItem";
 
-// Temporary Items, will be fetched from the backend in the future
-const items = [
-  { id: "i1", content: "Great Startup" },
-  { id: "i2", content: "Greatest Startup" },
-  { id: "i3", content: "Even Greater Startup" },
-  { id: "i4", content: "Too Great A Startup" },
-  { id: "i5", content: "No Words Startup" },
-];
-
-const boards = {
-  c1: {
-    name: "Reviewed",
-    items: items,
-    icon: BarIcon1,
-  },
-  c2: {
-    name: "Met",
-    items: [],
-    icon: BarIcon2,
-  },
-  c3: {
-    name: "Analyzed",
-    items: [],
-    icon: BarIcon3,
-  },
-  c4: {
-    name: "IC",
-    items: [],
-    icon: BarIcon4,
-  },
-  c5: {
-    name: "Invested",
-    items: [],
-    icon: BarIcon5,
-  },
-};
-
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
-
+  console.log("result", result);
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -88,16 +59,59 @@ const onDragEnd = (result, columns, setColumns) => {
 };
 
 export const Kanban = () => {
-  const [columns, setColumns] = useState(boards);
+  const [columns, setColumns] = useState({});
+  const [getConnections, setGetConnections] = useState(false);
+  const [loadingAPI, setLoadingAPI] = useState(true);
+  const { data: accountGet, loading, error } = useQuery(accountGetData);
+  let response = accountGet?.accountGet?.funnelGroups?.[0].funnelTags;
+
+  useEffect(() => {
+    if (getConnections) {
+      let columnsCopy = [];
+
+      let apiPromise = Object.keys(columns).map((key, ind) => {
+        return appsyncClient
+          .query({
+            query: connectionsGet,
+            variables: {
+              filters: { funnelTag: columns[key].id },
+            },
+          })
+          .then(result => {
+            let columnUpdatedObj = Object.assign({}, columns[key], {
+              items: result?.data?.connectionsGet || [],
+            });
+            columnsCopy.push(columnUpdatedObj);
+          });
+      });
+
+      Promise.all(apiPromise).then(response => {
+        setLoadingAPI(false);
+        setColumns({ ...columnsCopy });
+      });
+    }
+  }, [getConnections]);
+
+  useEffect(() => {
+    if (loading === false && accountGet) {
+      setColumns({ ...response });
+      setGetConnections(true);
+    }
+  }, [loading, accountGet]);
+
+  if (!accountGet) {
+    return <GhostLoader />;
+  }
+
   return (
     <div className={styles.boardHolder}>
       <DragDropContext
         onDragEnd={result => onDragEnd(result, columns, setColumns)}
       >
-        {Object.entries(columns).map(([columnId, column], index) => {
+        {Object.entries(columns)?.map(([columnId, column], index) => {
           return (
             <div className={styles.board} key={columnId}>
-              <BoardHeader icon={column.icon}>{column.name}</BoardHeader>
+              <BoardHeader icon={BarIcon1}>{column.name}</BoardHeader>
               <div className={styles.droppable}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
@@ -114,30 +128,32 @@ export const Kanban = () => {
                             : "transparent",
                         }}
                       >
-                        {column.items.map((item, index) => {
-                          return (
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id}
-                              index={index}
-                            >
-                              {(provided, snapshot) => {
-                                return (
-                                  <div
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    style={{
-                                      ...provided.draggableProps.style,
-                                    }}
-                                  >
-                                    <BoardItem>{item.content}</BoardItem>
-                                  </div>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
+                        {loadingAPI
+                          ? "Loading..."
+                          : column?.items?.map((item, index) => {
+                              return (
+                                <Draggable
+                                  key={item.id}
+                                  draggableId={item.id}
+                                  index={index}
+                                >
+                                  {(provided, snapshot) => {
+                                    return (
+                                      <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        style={{
+                                          ...provided.draggableProps.style,
+                                        }}
+                                      >
+                                        <BoardItem>{item.content}</BoardItem>
+                                      </div>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            })}
                         {provided.placeholder}
                       </div>
                     );
