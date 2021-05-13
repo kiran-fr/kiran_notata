@@ -7,7 +7,6 @@ export { default as connectionPagesGet } from "./connectionPagesGet";
 
 export { default as connectionGet } from "./connectionGet";
 export { default as connectionsGet } from "./connectionsGet";
-export { default as connectionNew } from "./connectionNew";
 
 export { default as accountInvitationsGet } from "./accountInvitationsGet";
 export { default as userInvitationsGet } from "./userInvitationsGet";

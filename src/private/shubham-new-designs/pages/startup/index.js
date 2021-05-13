@@ -10,7 +10,7 @@ import Overview from "./overview";
 import GroupsIndividuals from "./groups-individuals";
 import Materials from "./materials";
 import Evaluations from "./evaluations/evaluations";
-import { connectionNew } from "private/Apollo/Queries";
+import { connectionGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 
 function TabPanel(props) {
@@ -41,7 +41,7 @@ export const Startup = props => {
       params: { id },
     },
   } = props;
-  const { data: connectionGetData, loading, error } = useQuery(connectionNew, {
+  const { data: connectionGetData, loading, error } = useQuery(connectionGet, {
     variables: { id },
   });
   const [value, setValue] = React.useState(0);
