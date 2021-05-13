@@ -4,10 +4,10 @@ import styles from "./modal.module.css";
 import Funnel from "assets/images/funnel.png";
 import Modal from "./modal";
 
-export default function AddFunnel({ closeModal }) {
+export default function AddFunnel({ close }) {
   const list = [{ id: "3344", title: "group 1" }];
   return (
-    <Modal title="Set Funnel Stage" closeModal={closeModal}>
+    <Modal title="Set Funnel Stage" closeModal={close}>
       <div className={styles.group}>
         <div className={styles.groupChild + " " + styles.groupFunnelChild}>
           <div style={{ marginBottom: "30px" }}>

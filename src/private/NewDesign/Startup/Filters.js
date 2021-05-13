@@ -7,6 +7,9 @@ import AddStartup from "./Modal/addStartup";
 import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
+
+import PopupMenu from "./PopupMenu";
+
 import {
   container,
   container_mini,
@@ -36,27 +39,6 @@ const OptionalFilterSidebar = ({ setOptionalFilter }) => {
   );
 };
 
-const tabArr = [
-  {
-    value: "kanban",
-    text: (
-      <div>
-        <span>KANBAN</span>
-        <i style={{ marginLeft: "5px" }} className="fas fa-chevron-down"></i>
-      </div>
-    ),
-  },
-  {
-    value: "spreadsheet",
-    text: (
-      <div>
-        <img src={Column} />
-        <span>SPREADSHEET</span>
-      </div>
-    ),
-  },
-];
-
 export default function Filters({
   history,
   filters,
@@ -83,11 +65,60 @@ export default function Filters({
     setFilterValue(filters.search);
   }, [filters]);
 
-  useEffect(() => {
-    if (filterValue === "") {
-      setFilters({ ...filters, search: filterValue });
-    }
-  }, [filterValue]);
+  const tabArr = [
+    {
+      value: "kanban",
+      text: (
+        <div>
+          <img
+            style={{
+              width: 15,
+              height: 15,
+              marginRight: "4px",
+              transform: "rotateZ(360deg)",
+            }}
+            src={KanbanIcon}
+            alt=""
+          />
+          <span>KANBAN</span>
+          <i
+            onClick={() => setKanbanPopup(!kanbanPopup)}
+            style={{ marginLeft: "5px" }}
+            className="fas fa-chevron-down"
+          ></i>
+          <PopupMenu
+            title="Kanban"
+            items={["All Startups", "Funnel 1", "Funnel 2", "Funnel 3"]}
+            isOpen={kanbanPopup}
+            setIsOpen={setKanbanPopup}
+          ></PopupMenu>
+          {/* <DropMenu
+            dropMenuArr={[
+              { iconName: "", title: "Funnel 1" },
+              { iconName: "", title: "Funnel 2" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
+            ]}
+          ></DropMenu> */}
+        </div>
+      ),
+    },
+    {
+      value: "spreadsheet",
+      text: (
+        <div>
+          <img
+            style={{ width: 15, height: 15, marginRight: "4px" }}
+            src={Column}
+            alt=""
+          />
+          <span>SPREADSHEET</span>
+        </div>
+      ),
+    },
+  ];
 
   const handleSearch = e => {
     setFilterValue(e.target.value);
