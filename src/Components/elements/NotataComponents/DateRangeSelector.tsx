@@ -11,7 +11,7 @@ import { Button } from "Components/elements";
 import moment from "moment";
 import { useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { materialTheme } from "index";
+import { datePickerTheme } from "index";
 
 interface DateRangeIntervals {
   label: string;
@@ -82,7 +82,7 @@ export default function DateRangeSelector(props: Props) {
   };
 
   return (
-    <ThemeProvider theme={materialTheme}>
+    <ThemeProvider theme={datePickerTheme}>
       <LocalizationProvider dateAdapter={DateFnsUtils}>
         <DateRangePicker
           startText="From"
