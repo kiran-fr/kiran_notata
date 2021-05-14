@@ -19,7 +19,7 @@ export default function Page3({ setPage, extraInputs, history }) {
   const onSubmit = async (data, event) => {
     event.preventDefault();
 
-    // history.push(startup_page);
+    history.push(startup_page);
   };
 
   const data = [

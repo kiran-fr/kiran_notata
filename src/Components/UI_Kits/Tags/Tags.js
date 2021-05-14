@@ -44,8 +44,8 @@ export const Tags = ({
       let tags = [];
       setTags.forEach(el => {
         tags.push({
-          name: el.name,
-          id: el.id,
+          name: el,
+          id: Math.floor(Math.random() * 100000).toString(),
         });
       });
       setSelectedTags(tags);

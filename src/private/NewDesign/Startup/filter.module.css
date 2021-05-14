@@ -198,6 +198,6 @@ button {
 }
 
 /* scrolling needed */
-/* .override * {
+.override * {
   overflow: visible !important;
-} */
+}

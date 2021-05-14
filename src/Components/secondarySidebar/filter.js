@@ -56,17 +56,19 @@ export default function FilterBar({
             {item.funnelTags.length &&
               item.funnelTags.map((data, index) => (
                 <li>
-                  <label>
-                    <input
-                      type="radio"
-                      name={data.name}
-                      onChange={() =>
-                        setFilters({ ...filters, funnelTag: data.id })
-                      }
-                      checked={data.id === filters?.funnelTag}
-                    />
-                  </label>
-                  <p>{data.name}</p>
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name={data.name}
+                        onChange={() =>
+                          setFilters({ ...filters, funnelTag: data.id })
+                        }
+                        checked={data.id === filters?.funnelTag}
+                      />
+                    </label>
+                    <p>{data.name}</p>
+                  </div>
                   <div className={styles.image}>
                     <img
                       src={
@@ -100,7 +102,9 @@ export default function FilterBar({
   return (
     <Sidebar
       title={
-        <span
+        <button
+          className={styles.clearAllButton}
+          type="button"
           onClick={() => {
             setFilters({
               search: "",
@@ -111,8 +115,8 @@ export default function FilterBar({
             });
           }}
         >
-          Clear all filters
-        </span>
+          Clear All Filters
+        </button>
       }
       close={close}
     >
