@@ -21,6 +21,19 @@ export default function BoardItem(props) {
       groupSharingInfo,
     },
   } = props;
+
+  const getTotalScore = arr => {
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr?.reduce((acc, obj) => {
+        return acc + (obj.score || 0);
+      }, 0);
+    }
+    return 0;
+  };
+
+  let subjectiveAvgScore = (
+    getTotalScore(subjectiveScores) / subjectiveScores?.length || 0
+  ).toFixed(1);
   return (
     <div className={styles.b_item}>
       <div style={{ width: "100%", textAlign: "center", marginTop: 5 }}>
@@ -81,7 +94,7 @@ export default function BoardItem(props) {
           })}
         </div>
         <div className={styles.b_item_column} style={{ marginTop: 5 }}>
-          {subjectiveScores?.score && (
+          {subjectiveAvgScore && (
             <div
               style={{
                 fontFamily: "Proxima Nova",
@@ -90,7 +103,7 @@ export default function BoardItem(props) {
                 fontSize: 14,
               }}
             >
-              {subjectiveScores?.score} <img src={editIcon} alt="Edit" />
+              {subjectiveAvgScore} <img src={editIcon} alt="Edit" />
             </div>
           )}
           <p
