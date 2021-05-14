@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 import styles from "./Kanban.module.css";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   accountGet as accountGetData,
   connectionsGet,
@@ -15,19 +15,21 @@ import BarIcon3 from "./../../../assets/images/Bar_Icon_03.svg";
 import BarIcon4 from "./../../../assets/images/Bar_Icon_04.svg";
 import BarIcon5 from "./../../../assets/images/Bar_Icon_05.svg";
 
+import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
 import { appsyncClient } from "../../../awsconfig";
 
 // Components
 import BoardHeader from "./Components/BoardHeader";
 import BoardItem from "./Components/BoardItem";
 
-const onDragEnd = (result, columns, setColumns) => {
+const onDragEnd = (result, columns, setColumns, updateFunnelTag) => {
   if (!result.destination) return;
   const { source, destination } = result;
   console.log("result", result);
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
+    updateFunnelTag(destColumn.id, result.draggableId);
     const sourceItems = [...sourceColumn.items];
     const destItems = [...destColumn.items];
     const [removed] = sourceItems.splice(source.index, 1);
@@ -65,6 +67,9 @@ export const Kanban = () => {
   const { data: accountGet, loading, error } = useQuery(accountGetData);
   let response = accountGet?.accountGet?.funnelGroups?.[0].funnelTags;
 
+  // Mutation updating funnel tag for connection
+  const [mutate] = useMutation(connectionFunnelTagAdd);
+
   useEffect(() => {
     if (getConnections) {
       let columnsCopy = [];
@@ -99,6 +104,16 @@ export const Kanban = () => {
     }
   }, [loading, accountGet]);
 
+  const updateFunnelTag = (funnelTagId, connectionId) => {
+    const variables = {
+      connectionId,
+      funnelTagId,
+    };
+    mutate({
+      variables,
+    });
+  };
+
   if (!accountGet) {
     return <GhostLoader />;
   }
@@ -106,7 +121,9 @@ export const Kanban = () => {
   return (
     <div className={styles.boardHolder}>
       <DragDropContext
-        onDragEnd={result => onDragEnd(result, columns, setColumns)}
+        onDragEnd={result =>
+          onDragEnd(result, columns, setColumns, updateFunnelTag)
+        }
       >
         {Object.entries(columns)?.map(([columnId, column], index) => {
           return (
@@ -147,7 +164,9 @@ export const Kanban = () => {
                                           ...provided.draggableProps.style,
                                         }}
                                       >
-                                        <BoardItem>{item.content}</BoardItem>
+                                        <BoardItem connection={item}>
+                                          {item.content}
+                                        </BoardItem>
                                       </div>
                                     );
                                   }}
