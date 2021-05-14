@@ -10,7 +10,7 @@ import Overview from "./overview";
 import GroupsIndividuals from "./groups-individuals/groups-individuals";
 import Materials from "./materials";
 import Evaluations from "./evaluations/evaluations";
-import { connectionNew } from "private/Apollo/Queries";
+import { connectionGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 
 function TabPanel(props) {
@@ -36,23 +36,11 @@ function a11yProps(index) {
 }
 
 export const Startup = props => {
-  // const {
-  //   match: {
-  //     params: { id },
-  //   },
-  // } = props;
-  // const { data: connectionGetData, loading, error } = useQuery(connectionNew, {
-  //   variables: { id },
-  // });
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // if (!connectionGetData) {
-  //   return <GhostLoader />;
-  // }
-  // let creativity = connectionGetData?.connectionGet;
   return (
     <>
       <div className="col-12 startup-container">

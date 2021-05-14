@@ -10,6 +10,30 @@ import img5 from "../../assets/images/grassBar.png";
 // API
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
+import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
+import SavingsPlans from "aws-sdk/clients/savingsplans";
+import moment from "moment";
+
+const DatePicker = ({ filters, setFilters }) => {
+  const setDateFilter = dateRange => {
+    let from = moment(dateRange[0]);
+    let to = moment(dateRange[1]);
+
+    if (from.isValid() && to.isValid()) {
+      let fromDate = from?.format("x");
+      let toDate = to?.format("x");
+      console.log(fromDate, toDate);
+      setFilters({ ...filters, fromDate, toDate });
+    }
+  };
+
+  return (
+    <DateRangeSelector
+      value={[filters?.fromDate, filters?.toDate]}
+      onValueChange={setDateFilter}
+    />
+  );
+};
 
 export default function FilterBar({
   close,
@@ -32,16 +56,19 @@ export default function FilterBar({
             {item.funnelTags.length &&
               item.funnelTags.map((data, index) => (
                 <li>
-                  <label>
-                    <input
-                      type="radio"
-                      name={data.name}
-                      onChange={() =>
-                        setFilters({ ...filters, funnelTag: data.id })
-                      }
-                    />
-                  </label>
-                  <p>{data.name}</p>
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name={data.name}
+                        onChange={() =>
+                          setFilters({ ...filters, funnelTag: data.id })
+                        }
+                        checked={data.id === filters?.funnelTag}
+                      />
+                    </label>
+                    <p>{data.name}</p>
+                  </div>
                   <div className={styles.image}>
                     <img
                       src={
@@ -55,6 +82,7 @@ export default function FilterBar({
                           ? img4
                           : img5
                       }
+                      alt=""
                     />
                   </div>
                 </li>
@@ -68,43 +96,28 @@ export default function FilterBar({
       )}
     </ul>
   );
-  const DatePicker = () => (
-    <div className={styles.dateStage}>
-      <div className={styles.dateFrom}>
-        <label>From</label>
-        <input type="date" id="birthday" name="birthday" />
-      </div>
-      <div className={styles.dateTo}>
-        <label>To</label>
-        <input
-          type="date"
-          id="birthday"
-          name="birthday"
-          placeholder="mm/dd/yyyy"
-        />
-      </div>
-    </div>
-  );
   const filterSearch = value => {
     handleSearch(value);
   };
   return (
     <Sidebar
       title={
-        <span
+        <button
+          className={styles.clearAllButton}
+          type="button"
           onClick={() => {
             setFilters({
               search: "",
               tags: [],
               funnelTags: [],
-              // dateRange: [null, null],
+              fromDate: new Date().getTime() - 40000,
+              toDate: new Date().getTime(),
             });
           }}
         >
-          clear all filters
-        </span>
+          Clear All Filters
+        </button>
       }
-      icon="fas fa-filter"
       close={close}
     >
       <div className={styles.filter}>
@@ -137,31 +150,21 @@ export default function FilterBar({
               { name: "saas", id: "23" },
               { name: "finance", id: "34" },
               { name: "automotive", id: "17" },
-              { name: "software", id: "47" },
             ]}
             tagSize="smallTagSize"
+            setTags={filters.tags}
+            getSelectedTag={tags => {
+              setFilters({
+                ...filters,
+                tags: [...tags],
+              });
+            }}
+            closeIcon="smallCloseIcon"
           />
         </div>
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
-          <DatePicker />
-          <div className={styles.shortDates}>
-            <div>
-              <p>last 7 days</p>
-            </div>
-            <div>
-              <p>last 14 days</p>
-            </div>
-            <div>
-              <p>last 30 days</p>
-            </div>
-            <div>
-              <p>last 90 days</p>
-            </div>
-            <div>
-              <p>last year</p>
-            </div>
-          </div>
+          <DatePicker filters={filters} setFilters={setFilters} />
         </div>
       </div>
     </Sidebar>

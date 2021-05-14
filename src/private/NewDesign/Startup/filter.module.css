@@ -76,6 +76,7 @@ button {
 .filterButton img {
   width: 11px;
   margin-right: 6px;
+  margin-top: -3px;
 }
 .filterContainer {
   display: flex;
@@ -110,7 +111,7 @@ button {
   width: 200px;
 }
 .manageButton img {
-  transform: rotate(90deg) !important;
+  /* transform: rotate(90deg) !important; */
 }
 .table_headerChildMiddle button {
   display: flex;
@@ -128,11 +129,10 @@ button {
   }
   .manageButton img {
     margin-right: 0;
-    padding-top: 5px;
     width: 13px;
     margin-right: 0px;
     padding: 0 !important;
-    margin-top: 3px;
+    margin-top: 0px;
   }
   .filterButton {
     width: 40px;
@@ -142,7 +142,6 @@ button {
   }
   .filterButton img {
     margin-right: 0;
-    padding-top: 5px;
     width: 13px;
   }
   .filterButton span {
@@ -196,4 +195,9 @@ button {
   .manageButton {
     display: none;
   }
+}
+
+/* scrolling needed */
+.override * {
+  overflow: visible !important;
 }

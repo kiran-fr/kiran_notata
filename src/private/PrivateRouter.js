@@ -29,6 +29,7 @@ import {
   facts_template,
   navigation,
   startup_index,
+  startup_company_profile,
   startup_info,
 } from "../definitions";
 
@@ -168,9 +169,9 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={navigation} component={Navigation} />
 
-      <Route exact path={startup_index} component={Startup} />
+      <Route exact path={startup_company_profile} component={StartupInfo} />
 
-      <Route exact path={startup_info} component={StartupInfo} />
+      <Route exact path={startup_index} component={Startup} />
 
       <Route render={() => <div>404</div>} />
     </Switch>

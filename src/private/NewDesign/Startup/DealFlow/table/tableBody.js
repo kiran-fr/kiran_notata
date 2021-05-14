@@ -83,12 +83,13 @@ export default function TableBody(props) {
 
             return (
               <tr key={index}>
-                <td>
+                <td style={{ paddingTop: "-10px" }}>
                   <label className={styles.customCheck}>
                     <input type="checkbox" />
                     <span className={styles.checkmark}></span>
                   </label>
                   <div
+                    style={{ marginTop: "-5px" }}
                     className={styles.favStartup}
                     onClick={() => {
                       setStarMutation({
@@ -104,7 +105,12 @@ export default function TableBody(props) {
                       });
                     }}
                   >
-                    <i className="fas fa-star"></i>
+                    <i
+                      style={{
+                        color: starred ? "orange" : "lightgray",
+                      }}
+                      className="fas fa-star"
+                    ></i>
                   </div>
                 </td>
                 <td>
@@ -213,7 +219,7 @@ export default function TableBody(props) {
                 )}
                 <td>
                   <span className={styles.olderThan}>
-                    {moment(item.updatedAt).format("ll")}
+                    {item.updatedAt ? moment(item.updatedAt).format("ll") : ""}
                   </span>
                 </td>
                 {/* Iterate over the headers */}

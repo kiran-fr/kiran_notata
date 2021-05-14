@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "./filter.module.css";
 import Filterr from "../../../assets/images/filter.png";
 import Column from "../../../assets/images/column.png";
+import KanbanIcon from "../../../assets/images/KanbanIcon.svg";
 import AddStartup from "./Modal/addStartup";
 import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
+
+import PopupMenu from "./PopupMenu";
+
 import {
   container,
   container_mini,
@@ -22,39 +26,18 @@ const OptionalFilterSidebar = ({ setOptionalFilter }) => {
           style={{ marginRight: "10px" }}
           onClick={() => setOptionalFilter("column")}
         >
-          <img src={Column} /> <span>Manage Columns</span>
+          <img src={Column} alt="" /> <span>Manage Columns</span>
         </button>
         <button
           className={styles.filterButton}
           onClick={() => setOptionalFilter("filter")}
         >
-          <img src={Filterr} /> <span>Filter</span>
+          <img src={Filterr} alt="" /> <span>Filter</span>
         </button>
       </div>
     </div>
   );
 };
-
-const tabArr = [
-  {
-    value: "kanban",
-    text: (
-      <div>
-        <span>KANBAN</span>
-        <i style={{ marginLeft: "5px" }} className="fas fa-chevron-down"></i>
-      </div>
-    ),
-  },
-  {
-    value: "spreadsheet",
-    text: (
-      <div>
-        <img src={Column} />
-        <span>SPREADSHEET</span>
-      </div>
-    ),
-  },
-];
 
 export default function Filters({
   history,
@@ -71,6 +54,8 @@ export default function Filters({
   const [optionalFilter, setOptionalFilter] = useState();
   const [filterValue, setFilterValue] = useState();
 
+  const [kanbanPopup, setKanbanPopup] = useState(false);
+
   useEffect(() => {
     setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
@@ -80,11 +65,60 @@ export default function Filters({
     setFilterValue(filters.search);
   }, [filters]);
 
-  useEffect(() => {
-    if (filterValue === "") {
-      setFilters({ ...filters, search: filterValue });
-    }
-  }, [filterValue]);
+  const tabArr = [
+    {
+      value: "kanban",
+      text: (
+        <div>
+          <img
+            style={{
+              width: 15,
+              height: 15,
+              marginRight: "4px",
+              transform: "rotateZ(360deg)",
+            }}
+            src={KanbanIcon}
+            alt=""
+          />
+          <span>KANBAN</span>
+          <i
+            onClick={() => setKanbanPopup(!kanbanPopup)}
+            style={{ marginLeft: "5px" }}
+            className="fas fa-chevron-down"
+          ></i>
+          <PopupMenu
+            title="Kanban"
+            items={["All Startups", "Funnel 1", "Funnel 2", "Funnel 3"]}
+            isOpen={kanbanPopup}
+            setIsOpen={setKanbanPopup}
+          ></PopupMenu>
+          {/* <DropMenu
+            dropMenuArr={[
+              { iconName: "", title: "Funnel 1" },
+              { iconName: "", title: "Funnel 2" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
+              { iconName: "", title: "Funnel 3" },
+            ]}
+          ></DropMenu> */}
+        </div>
+      ),
+    },
+    {
+      value: "spreadsheet",
+      text: (
+        <div>
+          <img
+            style={{ width: 15, height: 15, marginRight: "4px" }}
+            src={Column}
+            alt=""
+          />
+          <span>SPREADSHEET</span>
+        </div>
+      ),
+    },
+  ];
 
   const handleSearch = e => {
     setFilterValue(e.target.value);
@@ -101,7 +135,7 @@ export default function Filters({
   };
 
   return (
-    <div>
+    <div className={styles.override}>
       <div className={fullFilter ? container : container_mini}>
         <div className={footer}>
           <div className={filter_container}>

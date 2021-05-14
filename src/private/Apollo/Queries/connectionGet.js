@@ -1,148 +1,61 @@
 import gql from "graphql-tag";
 
-import {
-  tagFragments,
-  funnelTagFragments,
-  creativeFragments,
-  connectionFragments,
-  evaluationFragments,
-  evaluationTemplateFragments,
-} from "Apollo/Fragments";
-
 export default gql`
   query connectionGet($id: ID!) {
     connectionGet(id: $id) {
-      ...connectionFields
+      id
+      name
+      createdAt
+      updatedAt
+      starred
+      creativeId
 
-      publicEvaluations {
-        id
-        name
-        email
-        family_name
-        given_name
-        description
+      subjectiveScores {
+        createdBy
         createdAt
-        updatedAt
-        templateId
-        answers {
-          id
-          inputType
-          sectionId
-          sectionName
-          questionId
-          questionName
-          sid
-          val
-        }
-        summary {
-          templateName
-          sections {
-            sectionName
-            scoreTotal
-            scorePossible
-            scorePerAnswer {
-              score
-              possibleScore
-              questionId
-              questionName
-              sectionId
-              sectionName
-            }
-          }
-          scoreTotal
-          scorePossible
-        }
-      }
-
-      sharedWithMe {
-        sharedBy
-        createdAt
-        groupName
-        groupId
-
-        comments
-        evaluations
-        subjective_score
-        tags
-
-        connection {
-          subjectiveScores {
-            score
-            createdByUser {
-              email
-              family_name
-              given_name
-            }
-          }
-
-          evaluations {
-            id
-            name
-            description
-            createdAt
-            updatedAt
-            createdBy
-            templateId
-            answers {
-              inputType
-              sectionId
-              sectionName
-              questionId
-              questionName
-              sid
-              val
-            }
-            createdByUser {
-              email
-              given_name
-              family_name
-            }
-            summary {
-              templateName
-              sections {
-                sectionName
-                scoreTotal
-                scorePossible
-                scorePerAnswer {
-                  score
-                  possibleScore
-                  questionId
-                  questionName
-                  sectionId
-                  sectionName
-                }
-              }
-              scoreTotal
-              scorePossible
-            }
-          }
-        }
+        score
+        isMe
       }
 
       creative {
-        ...creativeFields
+        id
+        name
+        answers {
+          questionName
+          questionId
+          val
+        }
       }
 
       tags {
-        ...tagFields
+        tagGroupId
+        id
+        name
+        group {
+          id
+          name
+        }
       }
 
       funnelTags {
-        ...funnelTagFields
+        id
+        funnelGroupId
+        name
+        index
       }
-
-      evaluations {
-        ...evaluationFields
-        template {
-          ...evaluationTemplateFields
+      evaluationSummaries {
+        templateId
+        templateName
+        averagePercentageScore
+        highestScore
+        lowestScore
+      }
+      groupSharingInfo {
+        group {
+          id
+          name
         }
       }
     }
   }
-  ${tagFragments}
-  ${funnelTagFragments}
-  ${creativeFragments}
-  ${connectionFragments}
-  ${evaluationFragments}
-  ${evaluationTemplateFragments}
 `;

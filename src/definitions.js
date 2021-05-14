@@ -40,9 +40,6 @@ export const startup_page = "/startup_page";
 
 export const charts = `${startup_page}/charts`;
 
-// SRV RoUtEs😅
-export const startup_info = "/srv/startup";
-
 // KANBAN VIEW
 export const kanban = "/kanban";
 
@@ -61,6 +58,7 @@ export const external_form = `${startup_page}/external_form`;
 export const ui_components = `${startup_page}/components/ui`;
 export const navigation = `${startup_page}/components/ui/navigation`;
 
+export const startup_company_profile = `${startup_page}/company/:id`;
 // PUBLIC ROUTES
 export const public_pages = `/public`;
 export const public_creative = `${public_pages}/creative`;
