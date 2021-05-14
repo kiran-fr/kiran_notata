@@ -65,6 +65,12 @@ export default function Filters({
     setFilterValue(filters.search);
   }, [filters]);
 
+  useEffect(() => {
+    if (filterValue === "") {
+      setFilters({ ...filters, search: filterValue });
+    }
+  }, [filterValue]);
+
   const tabArr = [
     {
       value: "kanban",
