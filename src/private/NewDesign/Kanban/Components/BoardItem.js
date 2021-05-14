@@ -8,8 +8,32 @@ import star from "../../../../assets/images/star.svg";
 import moreIcon from "../../../../assets/images/more.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import editIcon from "../../../../assets/images/edit.svg";
+import moment from "moment";
 
-export default function BoardItem({ children }) {
+export default function BoardItem(props) {
+  const {
+    connection: {
+      creative,
+      subjectiveScores,
+      updatedAt,
+      evaluationSummaries,
+      tags,
+      groupSharingInfo,
+    },
+  } = props;
+
+  const getTotalScore = arr => {
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr?.reduce((acc, obj) => {
+        return acc + (obj.score || 0);
+      }, 0);
+    }
+    return 0;
+  };
+
+  let subjectiveAvgScore = (
+    getTotalScore(subjectiveScores) / subjectiveScores?.length || 0
+  ).toFixed(1);
   return (
     <div className={styles.b_item}>
       <div style={{ width: "100%", textAlign: "center", marginTop: 5 }}>
@@ -22,7 +46,7 @@ export default function BoardItem({ children }) {
         >
           <h3>
             <img src={companyLogo} alt="Brand Logo" />
-            <p>{children}</p>
+            <p>{creative?.name}</p>
           </h3>
 
           <img
@@ -33,8 +57,9 @@ export default function BoardItem({ children }) {
         </div>
         <div className={styles.b_item_column}>
           <div className={styles.b_item_tags}>
-            <div className={styles.b_item_tag}>Tech</div>
-            <div className={styles.b_item_tag}>Education</div>
+            {tags?.map(tag => (
+              <div className={styles.b_item_tag}>{tag.name}</div>
+            ))}
           </div>
           <div style={{ marginLeft: 8 }}>
             <img src={moreIcon} alt="More" />
@@ -46,9 +71,11 @@ export default function BoardItem({ children }) {
           </div>
         </div>
         <div className={styles.b_item_column}>
-          <div className={styles.b_item_groups}>
-            <p>Group A, Group B</p>
-          </div>
+          {groupSharingInfo && (
+            <div className={styles.b_item_groups}>
+              <p>{groupSharingInfo.map(i => i.group?.name).join(", ")}</p>
+            </div>
+          )}
           <div style={{ marginLeft: "auto" }}>
             <button className={styles.add_btn}>
               <img src={addIcon} alt="Add" />
@@ -57,36 +84,28 @@ export default function BoardItem({ children }) {
         </div>
         <div className={styles.b_item_hr}></div>
         <div className={styles.b_item_stats}>
-          <div>
-            <p>
-              BEFORE<br></br>PITCHING
-            </p>
-            <p>60%</p>
-          </div>
-          <div>
-            <p>
-              FIRST<br></br>IMPRESSION
-            </p>
-            <p>72%</p>
-          </div>
-          <div>
-            <p>
-              AFTER<br></br>PITCHING
-            </p>
-            <p>85%</p>
-          </div>
+          {evaluationSummaries.map(evalution => {
+            return (
+              <div key={evalution.templateId}>
+                <p>{evalution.templateName}</p>
+                <p>{`${evalution.averagePercentageScore || 0}%`}</p>
+              </div>
+            );
+          })}
         </div>
         <div className={styles.b_item_column} style={{ marginTop: 5 }}>
-          <div
-            style={{
-              fontFamily: "Proxima Nova",
-              fontWeight: 700,
-              color: "#53CAB2",
-              fontSize: 14,
-            }}
-          >
-            8, 5 <img src={editIcon} alt="Edit" />
-          </div>
+          {subjectiveAvgScore && (
+            <div
+              style={{
+                fontFamily: "Proxima Nova",
+                fontWeight: 700,
+                color: "#53CAB2",
+                fontSize: 14,
+              }}
+            >
+              {subjectiveAvgScore} <img src={editIcon} alt="Edit" />
+            </div>
+          )}
           <p
             style={{
               marginLeft: "auto",
@@ -95,7 +114,7 @@ export default function BoardItem({ children }) {
               color: "#969BA3",
             }}
           >
-            May 1, 2021
+            {updatedAt && moment(updatedAt).format("ll")}
           </p>
         </div>
       </div>
