@@ -3,7 +3,7 @@
   margin-top: 40px;
   justify-content: "center";
   height: 100%;
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
 }
 
 .board {
@@ -15,7 +15,7 @@
   padding: 10px;
   height: calc(100vh - 200px);
   overflow-y: hidden;
-  width: 252px;
+  /* width: 252px; */
   min-width: 220px;
   margin-right: 15px;
 }

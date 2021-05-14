@@ -57,7 +57,7 @@ export default function BoardItem(props) {
         </div>
         <div className={styles.b_item_column}>
           <div className={styles.b_item_tags}>
-            {tags?.map(tag => (
+            {(tags || []).slice(0, 2).map(tag => (
               <div className={styles.b_item_tag}>{tag.name}</div>
             ))}
           </div>

@@ -29,58 +29,9 @@ export default function TableHeader(props) {
             }}
           />
         </td>
-        {columnSettings.groups && (
-          <td>
-            Groups
-            <i
-              className="fal fa-exchange"
-              onClick={() => {
-                let sortBy = "GROUP";
-                let sortDirection = filters.sortBy === "GROUP" ? "DESC" : "ASC";
-                setFilters({
-                  ...filters,
-                  sortBy,
-                  sortDirection,
-                });
-              }}
-            />
-          </td>
-        )}
-        {columnSettings.funnels && (
-          <td>
-            FUNNEL STAGE
-            <i
-              className="fal fa-exchange"
-              onClick={() => {
-                let sortBy = "FUNNEL";
-                let sortDirection =
-                  filters.sortBy === "FUNNEL" ? "DESC" : "ASC";
-                setFilters({
-                  ...filters,
-                  sortBy,
-                  sortDirection,
-                });
-              }}
-            />
-          </td>
-        )}
-        {columnSettings.tags && (
-          <td>
-            TAGS
-            <i
-              onClick={() => {
-                let sortBy = "TAGS";
-                let sortDirection = filters.sortBy === "TAGS" ? "DESC" : "ASC";
-                setFilters({
-                  ...filters,
-                  sortBy,
-                  sortDirection,
-                });
-              }}
-              className="fal fa-exchange"
-            />
-          </td>
-        )}
+        {columnSettings.groups && <td>Groups</td>}
+        {columnSettings.funnels && <td>FUNNEL STAGE</td>}
+        {columnSettings.tags && <td>TAGS</td>}
         {columnSettings.subjectiveScore && (
           <td>
             SUBJECTIVE SCORE

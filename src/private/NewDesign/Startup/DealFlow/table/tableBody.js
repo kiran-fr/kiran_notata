@@ -213,7 +213,7 @@ export default function TableBody(props) {
                 )}
                 <td>
                   <span className={styles.olderThan}>
-                    {moment(item.updatedAt).format("ll")}
+                    {item.updatedAt ? moment(item.updatedAt).format("ll") : ""}
                   </span>
                 </td>
                 {/* Iterate over the headers */}

@@ -5,6 +5,11 @@ import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import { AddScore } from "../addScore";
 import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
+import img1 from "assets/images/redBar.png";
+import img2 from "assets/images/greenBar.png";
+import img3 from "assets/images/violetBar.png";
+import img4 from "assets/images/yellowBar.png";
+import img5 from "assets/images/grassBar.png";
 
 export default function Expand({ closeModal, styles }) {
   const [subScore, setSubScore] = useState();

@@ -118,6 +118,19 @@ export const Kanban = () => {
     return <GhostLoader />;
   }
 
+  const icons = index => {
+    const position = index + 1;
+    return position === 1
+      ? BarIcon1
+      : position === 2
+      ? BarIcon2
+      : position === 3
+      ? BarIcon3
+      : position === 4
+      ? BarIcon4
+      : BarIcon5;
+  };
+
   return (
     <div className={styles.boardHolder}>
       <DragDropContext
@@ -128,7 +141,7 @@ export const Kanban = () => {
         {Object.entries(columns)?.map(([columnId, column], index) => {
           return (
             <div className={styles.board} key={columnId}>
-              <BoardHeader icon={BarIcon1}>{column.name}</BoardHeader>
+              <BoardHeader icon={icons(index)}>{column.name}</BoardHeader>
               <div className={styles.droppable}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
