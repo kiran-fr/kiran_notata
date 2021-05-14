@@ -173,8 +173,6 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={startup_index} component={Startup} />
 
-      <Route exact path={startup_info} component={StartupInfo} />
-
       <Route render={() => <div>404</div>} />
     </Switch>
   );

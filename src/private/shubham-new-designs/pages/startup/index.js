@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 
 import StartupInfo from "./startup-info";
 import Overview from "./overview";
-import GroupsIndividuals from "./groups-individuals";
+import GroupsIndividuals from "./groups-individuals/groups-individuals";
 import Materials from "./materials";
 import Evaluations from "./evaluations/evaluations";
 import { connectionGet } from "private/Apollo/Queries";
@@ -36,23 +36,11 @@ function a11yProps(index) {
 }
 
 export const Startup = props => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-  const { data: connectionGetData, loading, error } = useQuery(connectionGet, {
-    variables: { id },
-  });
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  if (!connectionGetData) {
-    return <GhostLoader />;
-  }
-  let creativity = connectionGetData?.connectionGet;
   return (
     <>
       <div className="col-12 startup-container">
@@ -68,7 +56,7 @@ export const Startup = props => {
         <StartupInfo />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Overview creativity={creativity} />
+        <Overview />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Evaluations />

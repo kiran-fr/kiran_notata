@@ -2,7 +2,7 @@
     &__details{
         margin: 25px 40px;
         @media only screen and(max-width:905px) {
-            margin-top:50px;
+            margin-top:50px!important;
         }
     }
     .share-btn{
@@ -50,7 +50,7 @@
         color: #fff;
         margin-left: 15px;
         @media only screen and(max-width:905px) {
-            margin-top:50px;
+            margin-top:50px!important;
         }
     }
     &__heading{

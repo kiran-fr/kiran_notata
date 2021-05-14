@@ -29,6 +29,16 @@
     @media only screen and (max-width: 768px) {
         margin-top: 20px;
     }
+    .card-heading{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+        letter-spacing: 0.02em;
+        padding: 25px 25px 0px 25px;
+        color: #6A6A6A;
+    }
     .card-notification-bar{
         background: #53CAB2;
         border-radius: 8px 8px 0px 0px;        
@@ -84,4 +94,8 @@
 }
 .padding-left-0{
     padding-left: 0px;
+}
+.asterik{
+    color:#FF937C;
+    margin-left: 2px;
 }

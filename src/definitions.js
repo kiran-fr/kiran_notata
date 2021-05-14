@@ -40,9 +40,6 @@ export const startup_page = "/startup_page";
 
 export const charts = `${startup_page}/charts`;
 
-// SRV RoUtEs😅
-export const startup_info = `${startup_page}/srv/startup`;
-
 // KANBAN VIEW
 export const kanban = "/kanban";
 
@@ -73,4 +70,4 @@ export const public_evaluation = `${public_pages}/evaluation`;
 export const product_demo = `${public_pages}/product_demo`;
 
 // SHUBHAM ROUTES
-export const startup_index = `${startup_page}/components/ui/navigation1/:id`;
+export const startup_index = `${startup_page}/components/ui/navigation1`;
