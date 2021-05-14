@@ -20,7 +20,7 @@ export default function TableHeader(props) {
             onClick={() => {
               let sortBy = "ALPHA";
               let sortDirection =
-                filters.sortBy === "ALPHA" && filters.sortDirection === "DESC"
+                filters.sortBy === "ALPHA" && filters.sortDirection !== "DESC"
                   ? "DESC"
                   : "ASC";
 
@@ -43,7 +43,7 @@ export default function TableHeader(props) {
                 let sortBy = "SUBJECTIVE_SCORE";
                 let sortDirection =
                   filters.sortBy === "SUBJECTIVE_SCORE" &&
-                  filters.sortDirection === "DESC"
+                  filters.sortDirection !== "DESC"
                     ? "DESC"
                     : "ASC";
                 setFilters({
@@ -63,7 +63,7 @@ export default function TableHeader(props) {
               let sortBy = "UPDATED_AT";
               let sortDirection =
                 filters.sortBy === "UPDATED_AT" &&
-                filters.sortDirection === "DESC"
+                filters.sortDirection !== "DESC"
                   ? "DESC"
                   : "ASC";
               setFilters({
@@ -85,7 +85,7 @@ export default function TableHeader(props) {
                     let sortBy = "EVALUATION";
                     let sortDirection =
                       filters.sortBy === "EVALUATION" &&
-                      filters.sortDirection === "DESC"
+                      filters.sortDirection !== "DESC"
                         ? //&& filters.sortByVal === id
                           "DESC"
                         : "ASC";
