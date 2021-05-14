@@ -58,9 +58,11 @@ export default function BoardItem(props) {
           </div>
         </div>
         <div className={styles.b_item_column}>
-          <div className={styles.b_item_groups}>
-            <p>Group A, Group B</p>
-          </div>
+          {groupSharingInfo && (
+            <div className={styles.b_item_groups}>
+              <p>{groupSharingInfo.map(i => i.group?.name).join(", ")}</p>
+            </div>
+          )}
           <div style={{ marginLeft: "auto" }}>
             <button className={styles.add_btn}>
               <img src={addIcon} alt="Add" />
