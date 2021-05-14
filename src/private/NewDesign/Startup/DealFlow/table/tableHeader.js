@@ -19,7 +19,10 @@ export default function TableHeader(props) {
             className="fal fa-exchange"
             onClick={() => {
               let sortBy = "ALPHA";
-              let sortDirection = filters.sortBy === "ALPHA" ? "DESC" : "ASC";
+              let sortDirection =
+                filters.sortBy === "ALPHA" && filters.sortDirection === "DESC"
+                  ? "DESC"
+                  : "ASC";
 
               setFilters({
                 ...filters,
@@ -39,7 +42,10 @@ export default function TableHeader(props) {
               onClick={() => {
                 let sortBy = "SUBJECTIVE_SCORE";
                 let sortDirection =
-                  filters.sortBy === "SUBJECTIVE_SCORE" ? "DESC" : "ASC";
+                  filters.sortBy === "SUBJECTIVE_SCORE" &&
+                  filters.sortDirection === "DESC"
+                    ? "DESC"
+                    : "ASC";
                 setFilters({
                   ...filters,
                   sortBy,
@@ -56,7 +62,10 @@ export default function TableHeader(props) {
             onClick={() => {
               let sortBy = "UPDATED_AT";
               let sortDirection =
-                filters.sortBy === "UPDATED_AT" ? "DESC" : "ASC";
+                filters.sortBy === "UPDATED_AT" &&
+                filters.sortDirection === "DESC"
+                  ? "DESC"
+                  : "ASC";
               setFilters({
                 ...filters,
                 sortBy,
@@ -75,12 +84,17 @@ export default function TableHeader(props) {
                   onClick={() => {
                     let sortBy = "EVALUATION";
                     let sortDirection =
-                      filters.sortBy === "EVALUATION" ? "DESC" : "ASC";
+                      filters.sortBy === "EVALUATION" &&
+                      filters.sortDirection === "DESC"
+                        ? //&& filters.sortByVal === id
+                          "DESC"
+                        : "ASC";
 
                     setFilters({
                       ...filters,
                       sortBy,
                       sortDirection,
+                      // sortByVal: id
                     });
                   }}
                   className="fal fa-exchange"
