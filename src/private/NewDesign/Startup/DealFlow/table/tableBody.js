@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./table.module.css";
 import Red from "../../../../../assets/images/red.png";
 import Green from "../../../../../assets/images/green.png";
@@ -23,11 +23,32 @@ export default function TableBody(props) {
     setStarMutation,
   } = props;
 
+  const [funnel, setFunnel] = useState();
+
+  const FunnelPopup = ({ no }) => (
+    <div className={styles.funnelPopup} style={{ top: `${100 + 56 * no}px` }}>
+      <div className={styles.floatingArrow}>
+        <i className="fas fa-chevron-down"></i>
+      </div>
+      <ul onClick={() => setFunnel(false)}>
+        <li>
+          {" "}
+          <img src={Red} /> Reviewed
+        </li>
+        <li>
+          {" "}
+          <img src={Red} /> Analyzed
+        </li>
+        <li>
+          {" "}
+          <img src={Green} /> Met
+        </li>
+      </ul>
+    </div>
+  );
+
   const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
-    <div
-      className={styles.startupPreview}
-      style={{ top: `${100 + 56 * no}px` }}
-    >
+    <div className={styles.startupPreview} style={{ top: `${20 * no}px` }}>
       <h1>{companyName}</h1>
       {oneLiner && (
         <>
@@ -156,7 +177,6 @@ export default function TableBody(props) {
                       {tagSet ? (
                         <>
                           <img
-                            onClick={() => setShowFunnelScoreForId(item.id)}
                             src={
                               `${tagSet.name.toUpperCase()}` === "ANALYZED"
                                 ? Red
@@ -164,11 +184,10 @@ export default function TableBody(props) {
                             }
                           />
                           {tagSet.name}
-                          <span
-                            onClick={() => setShowFunnelScoreForId(item.id)}
-                          >
+                          <span onClick={() => setFunnel(index)}>
                             <i className="fas fa-chevron-down"></i>
                           </span>
+                          {funnel === index && <FunnelPopup no={index} />}
                         </>
                       ) : (
                         <span onClick={() => setShowFunnelScoreForId(item.id)}>

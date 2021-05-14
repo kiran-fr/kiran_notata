@@ -370,3 +370,33 @@
   color: var(--color-secondary);
   cursor: pointer;
 }
+
+.funnelPopup {
+  position: absolute;
+  background-color: #fff;
+  z-index: 99;
+  top: 10px;
+  left: 0;
+  box-shadow: 0px 6px 10px rgba(41, 70, 103, 0.2);
+  border-radius: 6px;
+  width: 100%;
+}
+.funnelPopup ul {
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  width: calc(100% - 30px);
+}
+.funnelPopup ul li {
+  margin: 0 !important;
+  padding: 0;
+  padding: 5px 6px;
+  cursor: pointer;
+}
+.funnelPopup .floatingArrow {
+  position: absolute;
+  right: 15px;
+  top: 7px;
+  z-index: 100;
+}
