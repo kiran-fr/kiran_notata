@@ -26,7 +26,7 @@ export default function TableBody(props) {
   const [funnel, setFunnel] = useState();
 
   const FunnelPopup = ({ no }) => (
-    <div className={styles.funnelPopup} style={{ top: `${100 + 56 * no}px` }}>
+    <div className={styles.funnelPopup} style={{ top: `${50 * no}px` }}>
       <div className={styles.floatingArrow}>
         <i className="fas fa-chevron-down"></i>
       </div>
@@ -48,7 +48,10 @@ export default function TableBody(props) {
   );
 
   const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
-    <div className={styles.startupPreview} style={{ top: `${20 * no}px` }}>
+    <div
+      className={styles.startupPreview}
+      style={{ top: `${100 + 56 * no}px` }}
+    >
       <h1>{companyName}</h1>
       {oneLiner && (
         <>
