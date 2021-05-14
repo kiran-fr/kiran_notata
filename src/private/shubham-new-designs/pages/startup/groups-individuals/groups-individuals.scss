@@ -1,12 +1,23 @@
 .group-individual-container{
+    .card{
+        @media only screen and (max-width:768px){
+            height: calc(100vh - 195px);   
+        }
+        @media only screen and (min-width:768px){
+            height: calc(100vh - 215px);   
+        }
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
     .group-container{
         margin-left: 55px;
         width:90%;
         padding-bottom:39px;
         border-bottom: 1px solid #DFDFDF;
+        margin-top: 35px;
         @media only screen and(max-width:768px) {
             margin-left: 20px;
-        }
+        }        
         .evaluations{
             @media only screen and(min-width:768px) {
                 border-left: 1px solid #DFDFDF;
@@ -84,6 +95,39 @@
             @media only screen and(min-width:768px) {
                 text-align: left;
             }
+        }
+    }
+    .see-full-list{
+        margin-top: 15px;
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding-right:55px;
+        color: #60CEB8;
+        i{
+            padding-left:10px;
+        }
+    }
+    .create-new-group{
+        text-align: center;
+        @media only screen and(min-width:768px) {
+            margin-top: 16px;    
+        }        
+        button{
+            background: #53CAB2;
+            height: 30px;
+            .MuiButton-label,
+            .material-icons{
+                font-size: 12px!important;
+                line-height: 15px;
+            }
+            @media only screen and(max-width:768px) {
+                margin-top:25px;
+            }                
         }
     }
 }
