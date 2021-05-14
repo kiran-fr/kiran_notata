@@ -25,7 +25,6 @@ import BoardItem from "./Components/BoardItem";
 const onDragEnd = (result, columns, setColumns, updateFunnelTag) => {
   if (!result.destination) return;
   const { source, destination } = result;
-  console.log("result", result);
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -114,7 +113,7 @@ export const Kanban = () => {
     });
   };
 
-  if (!accountGet) {
+  if (!accountGet || loadingAPI) {
     return <GhostLoader />;
   }
 
