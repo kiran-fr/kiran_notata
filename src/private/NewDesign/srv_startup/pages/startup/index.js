@@ -9,7 +9,7 @@ import StartupInfo from "./startup-info";
 import Overview from "./overview";
 import GroupsIndividuals from "./groups-individuals";
 import Materials from "./materials";
-import Evaluations from "./evaluations/evaluations";
+// import Evaluations from "./evaluations /evaluations";
 import { connectionGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 
@@ -70,9 +70,9 @@ export const Startup = props => {
       <TabPanel value={value} index={1}>
         <Overview creativity={creativity} />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      {/* <TabPanel value={value} index={2}>
         <Evaluations />
-      </TabPanel>
+      </TabPanel> */}
       <TabPanel value={value} index={3}>
         <GroupsIndividuals />
       </TabPanel>
