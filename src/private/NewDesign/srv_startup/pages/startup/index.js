@@ -9,7 +9,7 @@ import StartupInfo from "./startup-info";
 import Overview from "./overview";
 import GroupsIndividuals from "./groups-individuals";
 import Materials from "./materials";
-import Evaluations from "./evaluations/evaluations";
+import Evaluations from "./evaluations /evaluations";
 import { connectionGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 

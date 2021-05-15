@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../evaluations/request-evaluation.scss";
+import "./request-evaluation.scss";
 import TextBox from "../../ui-kits/text-box";
 import RadioButton from "../../ui-kits/radio-button";
 
