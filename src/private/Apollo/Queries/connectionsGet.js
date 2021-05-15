@@ -41,6 +41,14 @@ export default gql`
         funnelGroupId
         name
         index
+        group {
+          id
+          name
+          funnelTags {
+            id
+            name
+          }
+        }
       }
       evaluationSummaries {
         templateId
