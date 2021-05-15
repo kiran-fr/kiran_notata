@@ -173,12 +173,12 @@ export default function FilterBar({
             ]}
             tagSize="smallTagSize"
             setTags={filters.tags}
-            getSelectedTag={tags => {
-              setFilters({
-                ...filters,
-                tags: [...tags],
-              });
-            }}
+            // getSelectedTag={tags => {
+            //   setFilters({
+            //     ...filters,
+            //     tags: [...tags],
+            //   });
+            // }}
             closeIcon="smallCloseIcon"
           />
         </div>
