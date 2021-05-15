@@ -32,7 +32,7 @@
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #fff;
+  background-color: #53cab2;
   box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.03);
   border-radius: 4px;
 }
@@ -162,7 +162,7 @@
 .filter .search {
   width: 100%;
   position: relative;
-  margin: 14px 0 20px 0;
+  margin: 50px 0 20px 0;
 }
 .filter .search input {
   width: 100%;

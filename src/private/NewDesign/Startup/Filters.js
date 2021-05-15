@@ -65,6 +65,12 @@ export default function Filters({
     setFilterValue(filters.search);
   }, [filters]);
 
+  useEffect(() => {
+    if (filterValue === "") {
+      setFilters({ ...filters, search: filterValue });
+    }
+  }, [filterValue]);
+
   const tabArr = [
     {
       value: "kanban",
@@ -124,14 +130,9 @@ export default function Filters({
     setFilterValue(e.target.value);
   };
 
-  const handleTab = () => {
-    if (activeTab === "kanban") {
-      setTabValue("spreadsheet");
-      setActiveTab("spreadsheet");
-    } else {
-      setTabValue("kanban");
-      setActiveTab("kanban");
-    }
+  const handleTab = val => {
+    setTabValue(val);
+    setActiveTab(val);
   };
 
   return (
@@ -183,7 +184,7 @@ export default function Filters({
               }
             >
               <Tabsection
-                tabFuc={handleTab}
+                tabFuc={val => handleTab(val)}
                 tabArr={tabArr}
                 tabValue={activeTab || tabArr[1]?.value}
               />

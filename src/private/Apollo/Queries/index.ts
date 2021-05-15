@@ -18,6 +18,7 @@ export { default as groupsGet } from "./groupsGet";
 
 export type { Groups as GroupsType } from "./groupsGet";
 export { default as groupGet } from "./groupGet";
+export { default as groupGetV2 } from "./groupGetV2";
 
 export type { LogItem } from "./groupLogGet";
 export { default as groupLogGet } from "./groupLogGet";
