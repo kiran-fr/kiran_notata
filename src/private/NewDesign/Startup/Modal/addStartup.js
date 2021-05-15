@@ -22,7 +22,7 @@ export default function AddStartup({ closeModal, history, connections }) {
   return (
     <Modal
       title="Add startup"
-      disabledBtn={activeTab === "short" ? true : false}
+      disabledBtn={true}
       saveModal={closeModal}
       closeModal={closeModal}
       width={"810px"}
