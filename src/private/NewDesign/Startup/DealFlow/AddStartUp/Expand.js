@@ -14,6 +14,7 @@ import {
   creativePut,
   connectionFunnelTagAdd,
   connectionSubjectiveScorePut,
+  groupStartupAdd,
 } from "private/Apollo/Mutations";
 
 // DEFINITIONS
@@ -22,19 +23,16 @@ import { startup_page } from "definitions";
 export default function Expand({ closeModal, styles, connections, history }) {
   const [subScore, setSubScore] = useState();
   const [funnelId, setFunnelId] = useState(null);
-  const [selectedGroup, setSelectedGroup] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState(null);
 
   const { data: groupsGetV2Data, loading, error } = useQuery(groupsGetV2);
-  console.log(groupsGetV2Data);
+
+  let groups = groupsGetV2Data?.groupsGetV2 || [];
 
   const handleScore = score => {
     setSubScore(score);
   };
 
-  let groups = [
-    { id: 1, name: "test grp 1" },
-    { id: 2, name: "test grp 2" },
-  ];
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
 
@@ -48,6 +46,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
   // Mutation updating funnel tag for connection
   const [mutateFunnelTag] = useMutation(connectionFunnelTagAdd);
   const [mutateConnectionScore] = useMutation(connectionSubjectiveScorePut);
+  const [mutateGroupStartupAdd] = useMutation(groupStartupAdd);
 
   // Look for duplicate names
   let companyNameArr = [];
@@ -114,6 +113,15 @@ export default function Expand({ closeModal, styles, connections, history }) {
           variables: funnelVariables,
         });
       }
+      if (selectedGroup) {
+        const groupVariables = {
+          groupId: selectedGroup.id,
+          creativeId: creative.id,
+        };
+        let groupUpdated = await mutateGroupStartupAdd({
+          variables: groupVariables,
+        });
+      }
       // Go to startup page
       let path = `${startup_page}/company/${connection.id}`;
       history.push(path);
@@ -126,15 +134,13 @@ export default function Expand({ closeModal, styles, connections, history }) {
   };
 
   const getSelectedGroup = group => {
-    let isItemExist = selectedGroup.find(grp => grp.id === group.id);
-    if (!isItemExist) {
-      setSelectedGroup([...selectedGroup, group]);
+    if (group) {
+      setSelectedGroup(group);
     }
   };
 
-  const removeGroupItem = id => {
-    let filteredGroups = selectedGroup.filter(grp => grp.id !== id);
-    setSelectedGroup(filteredGroups);
+  const removeGroupItem = () => {
+    setSelectedGroup(null);
   };
   const list = [{ id: "3344", name: "group 1" }];
 
@@ -165,23 +171,19 @@ export default function Expand({ closeModal, styles, connections, history }) {
             <div>
               <p>Add Startup to a Group</p>
               <ul>
-                {selectedGroup?.map(grp => (
+                {selectedGroup && (
                   <li>
-                    {grp.name}{" "}
+                    {selectedGroup.name}{" "}
                     <i
                       className="fas fa-minus-circle"
-                      onClick={() => removeGroupItem(grp.id)}
+                      onClick={removeGroupItem}
                     ></i>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
             <div className={styles.groupDropContainer}>
               <Dropdown items={groups} setSelectedItem={getSelectedGroup} />
-              <i
-                style={{ color: "#53CAB2", marginTop: "12px" }}
-                className="fas fa-plus-circle"
-              ></i>
             </div>
           </div>
           <div className={styles.inputContainer} style={{ marginTop: "20px" }}>
