@@ -7,24 +7,34 @@ import AddFunnel from "../addFunnel";
 import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import { groupsGetV2 } from "private/Apollo/Queries";
 import {
   connectionCreate,
   creativePut,
   connectionFunnelTagAdd,
   connectionSubjectiveScorePut,
 } from "private/Apollo/Mutations";
+
 // DEFINITIONS
 import { startup_page } from "definitions";
 
 export default function Expand({ closeModal, styles, connections, history }) {
   const [subScore, setSubScore] = useState();
   const [funnelId, setFunnelId] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState([]);
+
+  const { data: groupsGetV2Data, loading, error } = useQuery(groupsGetV2);
+  console.log(groupsGetV2Data);
 
   const handleScore = score => {
     setSubScore(score);
   };
 
+  let groups = [
+    { id: 1, name: "test grp 1" },
+    { id: 2, name: "test grp 2" },
+  ];
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
 
@@ -115,6 +125,17 @@ export default function Expand({ closeModal, styles, connections, history }) {
     }
   };
 
+  const getSelectedGroup = group => {
+    let isItemExist = selectedGroup.find(grp => grp.id === group.id);
+    if (!isItemExist) {
+      setSelectedGroup([...selectedGroup, group]);
+    }
+  };
+
+  const removeGroupItem = id => {
+    let filteredGroups = selectedGroup.filter(grp => grp.id !== id);
+    setSelectedGroup(filteredGroups);
+  };
   const list = [{ id: "3344", name: "group 1" }];
 
   return (
@@ -144,16 +165,19 @@ export default function Expand({ closeModal, styles, connections, history }) {
             <div>
               <p>Add Startup to a Group</p>
               <ul>
-                <li>
-                  Group 1 <i className="fas fa-minus-circle"></i>
-                </li>
-                <li>
-                  Big Group 1 <i className="fas fa-minus-circle"></i>
-                </li>
+                {selectedGroup?.map(grp => (
+                  <li>
+                    {grp.name}{" "}
+                    <i
+                      className="fas fa-minus-circle"
+                      onClick={() => removeGroupItem(grp.id)}
+                    ></i>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className={styles.groupDropContainer}>
-              <Dropdown items={list} />
+              <Dropdown items={groups} setSelectedItem={getSelectedGroup} />
               <i
                 style={{ color: "#53CAB2", marginTop: "12px" }}
                 className="fas fa-plus-circle"

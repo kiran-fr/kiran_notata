@@ -106,7 +106,7 @@ import classnames from "classnames";
  */
 
 // Main function
-export function Dropdown({ title, items = [], setSelected }) {
+export function Dropdown({ title, items = [], setSelected, setSelectedItem }) {
   // States
   const [isListOpen, setListOpen] = useState(false);
   const [name, setName] = useState("");
@@ -115,6 +115,9 @@ export function Dropdown({ title, items = [], setSelected }) {
     if (setSelected) {
       setSelected(item.id);
       setName(item.name);
+    }
+    if (setSelectedItem) {
+      setSelectedItem(item);
     }
     setListOpen(!isListOpen);
   };
