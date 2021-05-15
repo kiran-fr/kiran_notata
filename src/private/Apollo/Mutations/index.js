@@ -49,3 +49,5 @@ export { default as externalResourcePut } from "./externalResourcePut";
 export { default as externalResourceDelete } from "./externalResourceDelete";
 
 export { default as impactGoalsPut } from "./impactGoalsPut";
+
+export { default as groupStartupAdd } from "./groupStartupAdd";
