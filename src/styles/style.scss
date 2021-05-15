@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i");
 /*@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i");*/
 @import url("https://use.typekit.net/bxv8dza.css");
-@import 'modules/all';
+@import "modules/all";
 
 * {
   box-sizing: border-box;
@@ -225,7 +225,7 @@ textarea {
   --font-weight-regular: 300;
   --font-weight-normal: 400;
   --font-weight-bold: 500;
-  --proxima: 'Proxima Nova', Georgia, sans-serif;
+  --proxima: "Proxima Nova", Georgia, sans-serif;
 }
 
 h1 {
@@ -234,7 +234,7 @@ h1 {
   font-size: 32px;
 }
 
-.logged_in_page_content{
+.logged_in_page_content {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -611,20 +611,20 @@ span.recharts-legend-item-text {
 }
 
 /* Recharts Legend Style */
-.PrivateTabIndicator-root-1{
-  background-color: #969BA3;
+.PrivateTabIndicator-root-1 {
+  background-color: #969ba3;
   height: 4px !important;
 }
-.PrivateTabIndicator-root-5{
-  background-color: #969BA3;
+.PrivateTabIndicator-root-5 {
+  background-color: #969ba3;
   height: 4px !important;
 }
-.table_headerChildMiddle .MuiTabs-flexContainer button{
+.table_headerChildMiddle .MuiTabs-flexContainer button {
   position: relative;
   background-repeat: no-repeat;
   padding-left: 26px;
 }
-.table_headerChildMiddle .MuiTabs-flexContainer button:first-child::after{
+.table_headerChildMiddle .MuiTabs-flexContainer button:first-child::after {
   content: "";
   position: absolute;
   width: 15px;
@@ -635,7 +635,7 @@ span.recharts-legend-item-text {
   background-repeat: no-repeat;
   background-size: contain;
 }
-.table_headerChildMiddle .MuiTabs-flexContainer button:last-child::after{
+.table_headerChildMiddle .MuiTabs-flexContainer button:last-child::after {
   content: "";
   position: absolute;
   width: 13px;
@@ -647,11 +647,11 @@ span.recharts-legend-item-text {
   background-size: contain;
   transform: rotate(90deg);
 }
-@media screen and (max-width:600px) {
-  .table_headerChildMiddle .MuiTabs-flexContainer button:first-child::after{
+@media screen and (max-width: 600px) {
+  .table_headerChildMiddle .MuiTabs-flexContainer button:first-child::after {
     left: 5px;
   }
-  .table_headerChildMiddle .MuiTabs-flexContainer button:last-child::after{
+  .table_headerChildMiddle .MuiTabs-flexContainer button:last-child::after {
     left: 5px;
   }
 }
