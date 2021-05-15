@@ -4,7 +4,7 @@ import styles from "./modal.module.css";
 import Modal from "./modal";
 
 export default function AddGroup({ closeModal }) {
-  const list = [{ id: "3344", title: "group 1" }];
+  const list = [{ id: "3344", name: "group 1" }];
   return (
     <Modal title="Add Startup to Group" closeModal={closeModal}>
       <div className={styles.group}>

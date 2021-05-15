@@ -341,3 +341,73 @@
   font-weight: 500;
   text-decoration: underline;
 }
+
+.funnelUl li {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.funnelUl li div {
+  display: flex;
+}
+.funnelUl li .image {
+  padding-left: 10px;
+}
+.funnelUl li img {
+  margin-left: 12px;
+  margin-top: 5px;
+  width: 130px;
+}
+.funnelUl .customCheck span {
+  margin-top: 1px;
+}
+.funnelUl p {
+  padding-left: 10px;
+  font-size: 13px;
+}
+
+/* Radio Button for Filter */
+.funnelUl input[type="radio"] {
+  /* display: none; */
+  appearance: none;
+  outline: none;
+  position: relative;
+}
+
+.funnelUl input[type="radio"]::before {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #fff;
+  content: "";
+  display: inline-block;
+  z-index: 0;
+  visibility: visible;
+  border: 1px solid #777;
+}
+
+.funnelUl input[type="radio"]::after {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  top: 1.2px;
+  left: 2px;
+  position: absolute;
+  background-color: #fff;
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  z-index: 1;
+}
+
+.funnelUl input[type="radio"]:checked:after {
+  background-color: #53cab2;
+  content: "";
+  display: inline-block;
+  position: absolute;
+  visibility: visible;
+}

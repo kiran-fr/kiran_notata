@@ -9,14 +9,12 @@ import {
 } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 
-import BarIcon1 from "./../../../assets/images/Bar_Icon_01.svg";
-import BarIcon2 from "./../../../assets/images/Bar_Icon_02.svg";
-import BarIcon3 from "./../../../assets/images/Bar_Icon_03.svg";
-import BarIcon4 from "./../../../assets/images/Bar_Icon_04.svg";
-import BarIcon5 from "./../../../assets/images/Bar_Icon_05.svg";
-
 import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
 import { appsyncClient } from "../../../awsconfig";
+
+// common dynamic funnel img function
+
+import { DynamicIcons } from "../CommonFunctions";
 
 // Components
 import BoardHeader from "./Components/BoardHeader";
@@ -117,19 +115,6 @@ export const Kanban = () => {
     return <GhostLoader />;
   }
 
-  const icons = index => {
-    const position = index + 1;
-    return position === 1
-      ? BarIcon1
-      : position === 2
-      ? BarIcon2
-      : position === 3
-      ? BarIcon3
-      : position === 4
-      ? BarIcon4
-      : BarIcon5;
-  };
-
   return (
     <div className={styles.boardHolder}>
       <DragDropContext
@@ -140,7 +125,9 @@ export const Kanban = () => {
         {Object.entries(columns)?.map(([columnId, column], index) => {
           return (
             <div className={styles.board} key={columnId}>
-              <BoardHeader icon={icons(index)}>{column.name}</BoardHeader>
+              <BoardHeader icon={DynamicIcons(index)}>
+                {column.name}
+              </BoardHeader>
               <div className={styles.droppable}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {

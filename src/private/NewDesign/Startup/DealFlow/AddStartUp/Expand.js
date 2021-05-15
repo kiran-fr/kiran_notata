@@ -3,13 +3,9 @@ import { Tags } from "Components/UI_Kits/Tags/Tags";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import { AddScore } from "../addScore";
+import AddFunnel from "../addFunnel";
 import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
-import img1 from "assets/images/redBar.png";
-import img2 from "assets/images/greenBar.png";
-import img3 from "assets/images/violetBar.png";
-import img4 from "assets/images/yellowBar.png";
-import img5 from "assets/images/grassBar.png";
 
 export default function Expand({ closeModal, styles }) {
   const [subScore, setSubScore] = useState();
@@ -18,7 +14,7 @@ export default function Expand({ closeModal, styles }) {
     setSubScore(score);
   };
 
-  const list = [{ id: "3344", title: "group 1" }];
+  const list = [{ id: "3344", name: "group 1" }];
 
   return (
     <div className={styles.expand}>
@@ -71,13 +67,10 @@ export default function Expand({ closeModal, styles }) {
       <div className={styles.expandRight}>
         <div className={styles.inputContainer}>
           <div className={styles.startupFunnel}>
-            <p>
-              Funnel 1 <i className="fas fa-minus-circle"></i>
-            </p>
-            <Dropdown items={list} />
+            <AddFunnel />
           </div>
-          <img className={styles.desktopFunnelImage} src={Funnel} />
-          <img className={styles.mobileFunnelImage} src={FunnelMobile} />
+          {/* <img className={styles.desktopFunnelImage} src={Funnel} />
+          <img className={styles.mobileFunnelImage} src={FunnelMobile} /> */}
         </div>
       </div>
     </div>

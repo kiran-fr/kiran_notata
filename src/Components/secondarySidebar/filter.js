@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./sidebar.module.css";
 import Sidebar from "./index";
 import { Tags } from "Components/UI_Kits/Tags/Tags";
-import img1 from "../../assets/images/redBar.png";
-import img2 from "../../assets/images/greenBar.png";
-import img3 from "../../assets/images/violetBar.png";
-import img4 from "../../assets/images/yellowBar.png";
-import img5 from "../../assets/images/grassBar.png";
+
+// common dynamic funnel img function
+import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
+
 // API
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
 import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
-import SavingsPlans from "aws-sdk/clients/savingsplans";
 import moment from "moment";
 
 const DatePicker = ({ filters, setFilters }) => {
@@ -42,7 +40,7 @@ export default function FilterBar({
   filterValue,
   handleSearch,
 }) {
-  // Query: Connections
+  // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
 
   const funnelGroupArray = data ? data.accountGet.funnelGroups : [];
@@ -55,7 +53,7 @@ export default function FilterBar({
             <h6>{item.name}</h6>
             {item.funnelTags.length &&
               item.funnelTags.map((data, index) => (
-                <li>
+                <li key={index}>
                   <div>
                     <label>
                       <input
@@ -70,20 +68,7 @@ export default function FilterBar({
                     <p>{data.name}</p>
                   </div>
                   <div className={styles.image}>
-                    <img
-                      src={
-                        index === 0
-                          ? img1
-                          : index === 1
-                          ? img2
-                          : index === 2
-                          ? img3
-                          : index === 3
-                          ? img4
-                          : img5
-                      }
-                      alt=""
-                    />
+                    <img src={DynamicIcons(index, "filter")} alt="" />
                   </div>
                 </li>
               ))}
@@ -96,9 +81,11 @@ export default function FilterBar({
       )}
     </ul>
   );
+
   const filterSearch = value => {
     handleSearch(value);
   };
+
   return (
     <Sidebar
       title={
