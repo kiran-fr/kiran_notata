@@ -41,17 +41,9 @@ export default function TableBody(props) {
               onClick={() => updateFunnelTagForConnection(tag.id)}
             >
               {" "}
-              <img src={Red} /> {tag.name}
+              <img src={Green} /> {tag.name}
             </li>
           ))}
-          {/* <li>
-          {" "}
-          <img src={Red} /> Analyzed
-        </li>
-        <li>
-          {" "}
-          <img src={Green} /> Met
-        </li> */}
         </ul>
       </div>
     );
