@@ -9,7 +9,7 @@ import { DynamicIcons } from "../../../NewDesign/CommonFunctions";
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
 
-export default function AddFunnel() {
+export default function AddFunnel(props) {
   const [selectedGroupId, setSelectedGroupId] = useState("");
   const [funnelGroupArray, setFunnelGroupArray] = useState([]);
   const [funnelName, setFunnelName] = useState("");
@@ -27,6 +27,9 @@ export default function AddFunnel() {
   const handleFunnel = value => {
     setFunnelName(value.name);
     setFunnelID(value.id);
+    if (props.setFunnelId) {
+      props.setFunnelId(value.id);
+    }
   };
 
   const FunnelStage = () => {
