@@ -22,6 +22,7 @@ import Paginator from "./Paginator";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
+// import Table from "./DealFlow/table/newdesignTable/table";
 
 function getCleanFilterData(filters) {
   let clean = {};

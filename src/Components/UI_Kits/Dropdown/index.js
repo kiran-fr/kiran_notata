@@ -144,7 +144,7 @@ export function Dropdown({ title, items = [] }) {
                 setListOpen(!isListOpen);
               }}
             >
-              {item.title}
+              {item.name}
               {/* {item.selected && <FontAwesome name="check" />} */}
             </button>
           ))}

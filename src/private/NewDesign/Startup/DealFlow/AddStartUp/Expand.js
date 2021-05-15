@@ -18,7 +18,7 @@ export default function Expand({ closeModal, styles }) {
     setSubScore(score);
   };
 
-  const list = [{ id: "3344", title: "group 1" }];
+  const list = [{ id: "3344", name: "group 1" }];
 
   return (
     <div className={styles.expand}>

@@ -115,10 +115,10 @@ export default function UI_Components() {
           }}
         >
           <Dropdown
-            title="xxx"
+            name="xxx"
             items={[
-              { title: "xxx", id: "123" },
-              { title: "yyy", id: "134" },
+              { name: "xxx", id: "123" },
+              { name: "yyy", id: "134" },
             ]}
           />
         </div>

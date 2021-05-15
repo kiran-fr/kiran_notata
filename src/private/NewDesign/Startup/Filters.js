@@ -154,7 +154,7 @@ export default function Filters({
                     className={styles.addButton}
                     onClick={() => setModal("startup")}
                   >
-                    <i class="far fa-plus"></i>&nbsp; &nbsp; Add new startup
+                    <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
                   <div className={styles.tableSearch}>
                     <input
@@ -169,7 +169,7 @@ export default function Filters({
                     >
                       Search
                     </button>
-                    <i class="far fa-search"></i>
+                    <i className="far fa-search"></i>
                   </div>
                 </div>
               )}
