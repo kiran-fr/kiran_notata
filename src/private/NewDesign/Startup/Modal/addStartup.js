@@ -33,7 +33,14 @@ export default function AddStartup({ closeModal, history, connections }) {
           tabValue={activeTab}
           tabFuc={setActiveTab}
         />
-        {activeTab === "expand" && <Expand styles={styles} />}
+        {activeTab === "expand" && (
+          <Expand
+            styles={styles}
+            history={history}
+            connections={connections}
+            closeModal={closeModal}
+          />
+        )}
         {activeTab === "short" && (
           <Short
             history={history}

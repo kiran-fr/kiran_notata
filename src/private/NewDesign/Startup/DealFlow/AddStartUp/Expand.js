@@ -8,9 +8,16 @@ import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
-import { connectionCreate, creativePut } from "private/Apollo/Mutations";
+import {
+  connectionCreate,
+  creativePut,
+  connectionFunnelTagAdd,
+  connectionSubjectiveScorePut,
+} from "private/Apollo/Mutations";
+// DEFINITIONS
+import { startup_page } from "definitions";
 
-export default function Expand({ closeModal, styles, connections }) {
+export default function Expand({ closeModal, styles, connections, history }) {
   const [subScore, setSubScore] = useState();
   const [funnelId, setFunnelId] = useState(null);
 
@@ -28,6 +35,9 @@ export default function Expand({ closeModal, styles, connections }) {
   // Mutations
   const [mutateCreative] = useMutation(creativePut);
   const [mutateConnectionCreate] = useMutation(connectionCreate);
+  // Mutation updating funnel tag for connection
+  const [mutateFunnelTag] = useMutation(connectionFunnelTagAdd);
+  const [mutateConnectionScore] = useMutation(connectionSubjectiveScorePut);
 
   // Look for duplicate names
   let companyNameArr = [];
@@ -67,26 +77,36 @@ export default function Expand({ closeModal, styles, connections }) {
       let creative = creative_res?.data?.creativePut;
 
       // Create connection
-
-      // let = subjectiveScores {
-      //   score
-      //   createdAt
-      //   createdBy
-      //   createdByUser {
-      //     email
-      //     given_name
-      //     family_name
-      //   }
-      // }
       let variables = { creativeId: creative.id };
       let res_connection = await mutateConnectionCreate({ variables });
       let connection = res_connection?.data?.connectionCreate;
 
-      // Go to startup page
-      // let path = `${startup_page}/${connection.id}`;
-      // let path = `${startup_page}/components/ui/navigation1`;
+      //Mutate subjective score for connection
+      if (subScore) {
+        let scoreVariables = {
+          id: connection.id,
+          score: subScore,
+        };
 
-      // history.push(path);
+        let scoreUpdated = await mutateConnectionScore({
+          variables: scoreVariables,
+        });
+      }
+
+      //Mutate funnel tag for connection
+      if (funnelId) {
+        const funnelVariables = {
+          connectionId: connection.id,
+          funnelTagId: funnelId,
+        };
+
+        let funnelUpdated = await mutateFunnelTag({
+          variables: funnelVariables,
+        });
+      }
+      // Go to startup page
+      let path = `${startup_page}/company/${connection.id}`;
+      history.push(path);
 
       // closeModal modal
       closeModal();
@@ -107,6 +127,7 @@ export default function Expand({ closeModal, styles, connections }) {
               type="text"
               name="variables.input.name"
               fullWidth={true}
+              handleInputChange={value => lookForDuplicateNames(value)}
               reference={register({ required: true })}
             />
           </div>
