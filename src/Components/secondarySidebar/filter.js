@@ -33,6 +33,25 @@ const DatePicker = ({ filters, setFilters }) => {
   );
 };
 
+const DatePickerNewdesign = () => (
+  <div className={styles.dateStage}>
+    <div className={styles.dateFrom}>
+      <label>From</label>
+      <input type="date" id="birthday" name="birthday" />
+    </div>
+    <div className={styles.dateTo}>
+      <label>To</label>
+      <input
+        type="date"
+        id="birthday"
+        name="birthday"
+        placeholder="mm/dd/yyyy"
+      />
+    </div>
+  </div>
+);
+
+
 export default function FilterBar({
   close,
   filters,
@@ -152,6 +171,7 @@ export default function FilterBar({
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
           <DatePicker filters={filters} setFilters={setFilters} />
+          <DatePickerNewdesign />
         </div>
       </div>
     </Sidebar>
