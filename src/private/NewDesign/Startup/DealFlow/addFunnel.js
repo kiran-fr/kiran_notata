@@ -45,6 +45,9 @@ export default function AddFunnel(props) {
               {item.funnelTags.length &&
                 item.funnelTags.map((data, index) => (
                   <li key={index} onClick={() => handleFunnel(data)}>
+                    <div>
+                      <p>{data.name}</p>
+                    </div>
                     <div className={styles.image}>
                       <img src={DynamicIcons(index, "filter")} alt="" />
                     </div>
