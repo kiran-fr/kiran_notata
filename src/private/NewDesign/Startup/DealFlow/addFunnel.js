@@ -11,8 +11,9 @@ import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
 
 export default function AddFunnel({ close }) {
-  const [selectedGroup, setSelectedGroup] = useState();
+  const [selectedGroupId, setSelectedGroupId] = useState("");
   const [funnelGroupArray, setFunnelGroupArray] = useState([]);
+  const [funnelName, setFunnelName] = useState("");
 
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
@@ -23,14 +24,14 @@ export default function AddFunnel({ close }) {
     setFunnelGroupArray(funnelGroup);
   }, [funnelGroup.length]);
 
-  const FunnelStage = funnelGroupName => {
+  const FunnelStage = () => {
     let filterData = funnelGroupArray.filter(
-      data => data.name === funnelGroupName
+      data => data.id === selectedGroupId
     );
     return (
       <ul className={styles.funnelUl}>
-        {funnelGroupArray.length ? (
-          funnelGroupArray.map(item => (
+        {filterData.length ? (
+          filterData.map(item => (
             <>
               {item.funnelTags.length &&
                 item.funnelTags.map((data, index) => (
@@ -56,24 +57,30 @@ export default function AddFunnel({ close }) {
       <div className={styles.group}>
         <div className={styles.groupChild + " " + styles.groupFunnelChild}>
           <div style={{ marginBottom: "30px" }}>
-            {selectedGroup ? (
-              <h2 className="mb-5">
-                {selectedGroup}
-                <i
-                  style={{ cursor: "pointer" }}
-                  className="fas fa-times-circle"
-                ></i>{" "}
-                <FunnelStage funnelGroupName={selectedGroup} />
-              </h2>
-            ) : (
-              ""
-            )}
+            <h2 className="mb-5">
+              {funnelName ? (
+                <>
+                  funnelName
+                  <i
+                    onClick={() => setFunnelName("")}
+                    style={{ cursor: "pointer" }}
+                    className="fas fa-times-circle"
+                  ></i>
+                </>
+              ) : (
+                ""
+              )}
+              {selectedGroupId ? <FunnelStage /> : ""}
+            </h2>
           </div>
         </div>
         <div className={styles.groupChild}>
           <h2>Add new funnel</h2>
           <div className={styles.groupDropContainer}>
-            <Dropdown items={funnelGroupArray} />
+            <Dropdown
+              items={funnelGroupArray}
+              setSelected={setSelectedGroupId}
+            />
           </div>
         </div>
       </div>
