@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import styles from "./modal.module.css";
 // import Funnel from "assets/images/funnel.png";
-import Modal from "./modal";
 
 // common dynamic funnel img function
 import { DynamicIcons } from "../../../NewDesign/CommonFunctions";
@@ -10,7 +9,7 @@ import { DynamicIcons } from "../../../NewDesign/CommonFunctions";
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
 
-export default function AddFunnel({ close }) {
+export default function AddFunnel() {
   const [selectedGroupId, setSelectedGroupId] = useState("");
   const [funnelGroupArray, setFunnelGroupArray] = useState([]);
   const [funnelName, setFunnelName] = useState("");
@@ -53,37 +52,32 @@ export default function AddFunnel({ close }) {
   };
 
   return (
-    <Modal title="Set Funnel Stage" closeModal={close}>
-      <div className={styles.group}>
-        <div className={styles.groupChild + " " + styles.groupFunnelChild}>
-          <div style={{ marginBottom: "30px" }}>
-            <h2 className="mb-5">
-              {funnelName ? (
-                <>
-                  funnelName
-                  <i
-                    onClick={() => setFunnelName("")}
-                    style={{ cursor: "pointer" }}
-                    className="fas fa-times-circle"
-                  ></i>
-                </>
-              ) : (
-                ""
-              )}
-              {selectedGroupId ? <FunnelStage /> : ""}
-            </h2>
-          </div>
-        </div>
-        <div className={styles.groupChild}>
-          <h2>Add new funnel</h2>
-          <div className={styles.groupDropContainer}>
-            <Dropdown
-              items={funnelGroupArray}
-              setSelected={setSelectedGroupId}
-            />
-          </div>
+    <div className={styles.group}>
+      <div className={styles.groupChild + " " + styles.groupFunnelChild}>
+        <div style={{ marginBottom: "30px" }}>
+          <h2 className="mb-5">
+            {funnelName ? (
+              <>
+                funnelName
+                <i
+                  onClick={() => setFunnelName("")}
+                  style={{ cursor: "pointer" }}
+                  className="fas fa-times-circle"
+                ></i>
+              </>
+            ) : (
+              ""
+            )}
+            {selectedGroupId ? <FunnelStage /> : ""}
+          </h2>
         </div>
       </div>
-    </Modal>
+      <div className={styles.groupChild}>
+        <h2>Add new funnel</h2>
+        <div className={styles.groupDropContainer}>
+          <Dropdown items={funnelGroupArray} setSelected={setSelectedGroupId} />
+        </div>
+      </div>
+    </div>
   );
 }
