@@ -13,6 +13,7 @@ export default function AddFunnel() {
   const [selectedGroupId, setSelectedGroupId] = useState("");
   const [funnelGroupArray, setFunnelGroupArray] = useState([]);
   const [funnelName, setFunnelName] = useState("");
+  const [funnelID, setFunnelID] = useState("");
 
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
@@ -23,10 +24,16 @@ export default function AddFunnel() {
     setFunnelGroupArray(funnelGroup);
   }, [funnelGroup.length]);
 
+  const handleFunnel = value => {
+    setFunnelName(value.name);
+    setFunnelID(value.id);
+  };
+
   const FunnelStage = () => {
     let filterData = funnelGroupArray.filter(
       data => data.id === selectedGroupId
     );
+
     return (
       <ul className={styles.funnelUl}>
         {filterData.length ? (
@@ -34,7 +41,7 @@ export default function AddFunnel() {
             <>
               {item.funnelTags.length &&
                 item.funnelTags.map((data, index) => (
-                  <li key={index}>
+                  <li key={index} onClick={() => handleFunnel(data)}>
                     <div className={styles.image}>
                       <img src={DynamicIcons(index, "filter")} alt="" />
                     </div>
@@ -58,7 +65,7 @@ export default function AddFunnel() {
           <h2 className="mb-5">
             {funnelName ? (
               <>
-                funnelName
+                {funnelName}
                 <i
                   onClick={() => setFunnelName("")}
                   style={{ cursor: "pointer" }}
