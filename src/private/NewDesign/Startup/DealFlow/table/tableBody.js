@@ -21,31 +21,33 @@ export default function TableBody(props) {
     handleCompany,
     preview,
     setStarMutation,
+    updateFunnelTag,
   } = props;
 
   const [funnel, setFunnel] = useState();
 
-  const FunnelPopup = ({ no }) => (
-    <div className={styles.funnelPopup} style={{ top: `${50 * no}px` }}>
-      <div className={styles.floatingArrow}>
-        <i className="fas fa-chevron-down"></i>
+  const FunnelPopup = ({ tags, id }) => {
+    const updateFunnelTagForConnection = funnelTagId => {
+      updateFunnelTag(funnelTagId, id);
+      setFunnel(false);
+    };
+
+    return (
+      <div className={styles.funnelPopup} style={{ top: `50px` }}>
+        <ul>
+          {tags?.map(tag => (
+            <li
+              key={tag.id}
+              onClick={() => updateFunnelTagForConnection(tag.id)}
+            >
+              {" "}
+              <img src={Green} /> {tag.name}
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul onClick={() => setFunnel(false)}>
-        <li>
-          {" "}
-          <img src={Red} /> Reviewed
-        </li>
-        <li>
-          {" "}
-          <img src={Red} /> Analyzed
-        </li>
-        <li>
-          {" "}
-          <img src={Green} /> Met
-        </li>
-      </ul>
-    </div>
-  );
+    );
+  };
 
   const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
     <div
@@ -190,7 +192,12 @@ export default function TableBody(props) {
                           <span onClick={() => setFunnel(index)}>
                             <i className="fas fa-chevron-down"></i>
                           </span>
-                          {funnel === index && <FunnelPopup no={index} />}
+                          {funnel === index && (
+                            <FunnelPopup
+                              tags={funnelTags?.[0]?.group?.funnelTags || []}
+                              id={id}
+                            />
+                          )}
                         </>
                       ) : (
                         <span onClick={() => setShowFunnelScoreForId(item.id)}>
