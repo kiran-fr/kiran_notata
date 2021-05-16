@@ -17,6 +17,9 @@ export function Modal({
   closeTxt,
   submitButtonStyle,
   submitButtonIcon,
+  intermidate,
+  intermidateTxt,
+  intermidateStyle,
   ...children
 }) {
   useEffect(() => {
@@ -74,6 +77,16 @@ export function Modal({
                   buttonStyle="white"
                 >
                   {closeTxt}
+                </Button>
+              )}
+              {intermidate && intermidateTxt && (
+                <Button
+                  onClick={intermidate}
+                  style={{ display: "inline" }}
+                  size="small1"
+                  buttonStyle={intermidateStyle || "primary"}
+                >
+                  {intermidateTxt}
                 </Button>
               )}
               {submit && (

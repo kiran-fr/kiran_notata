@@ -11,9 +11,9 @@ export default function Funels() {
   return (
     <div className="funels-contianer">
       <div className="row">
-        <div className="col-sm-12 col-md-4 col-xs-12">
+        <div className="col-sm-12 col-md-7 col-xs-12">
           <div className="row">
-            <div className="col-sm-6 col-xs-3">
+            <div className="col-sm-3 col-xs-3">
               <div className="funel-name">Funel 1</div>
               <div className="met">Met</div>
               <div>
@@ -39,7 +39,7 @@ export default function Funels() {
             </div>
           </div>
         </div>
-        <div className="col-sm-12 col-md-8 col-xs-12">
+        <div className="col-sm-12 col-md-5 col-xs-12 add-funel-container">
           <div className="funel-name add-new-funel">Add new funnel</div>
           <div className="add-new-funel dropdown">
             <Dropdown title="" items={items}></Dropdown>

@@ -270,7 +270,7 @@
                         letter-spacing: 0.08em;
                         text-transform: uppercase;
                         color: #C9CCD1;
-                        padding: 14px 0px 13px 25px;
+                        padding: 14px 10px 13px 25px;
                         min-width: 100px;
                         text-align: left;
                     }
@@ -298,7 +298,10 @@
                             font-size: 20px;
                             color: #fff;
                             position: absolute;
-                        }
+                        }                       
+                    }
+                    .tag-placeholder{
+                        display: flex;                        
                     }
                     .subjective-score {
                         font-family: 'Proxima Nova';
@@ -378,25 +381,25 @@
                             &__tags {
                                 border: 0px;
                                 max-width:150px;
-                                display: flex;
-                                .tag{
-                                    font-family: 'Roboto';
-                                    font-weight: 500;
-                                    font-size: 9px;
-                                    line-height: 11px;
-                                    letter-spacing: 0.03em;
-                                    color: #DADADA;
-                                    background: #6A6A6A;
-                                    border-radius: 12px;
-                                    padding: 4px 10px 4px 6px;
-                                    margin:5px;
-                                    cursor: pointer;
-                                }
+                                display: flex;                               
                             }                            
                         }
                     }
                 }
             }
+        }
+        .tag{
+            font-family: 'Roboto';
+            font-weight: 500;
+            font-size: 9px;
+            line-height: 11px;
+            letter-spacing: 0.03em;
+            color: #DADADA;
+            background: #6A6A6A;
+            border-radius: 12px;
+            padding: 4px 10px 4px 6px;
+            margin:5px;
+            cursor: pointer;
         }
         .sharing-template-container{
             tr{
@@ -412,7 +415,14 @@
         background-color: #53CAB2;
         margin:25px 0px 0px 10px;
         height: 40px;
-        max-width:250px;
+        max-width:250px;        
+        &:hover{
+            background-color: #fff;
+            border: 1px solid #6A6A6A;
+            .MuiButton-label{
+                color:#6A6A6A;
+            }
+        }
     }
     .delete-btn{
         background-color: #FF937C;
@@ -421,6 +431,13 @@
         max-width:250px;
         @media only screen and(max-width:768px) {
             max-width:160px;
+        }
+        &:hover{
+            background-color: #fff;
+            border: 1px solid #6A6A6A;
+            .MuiButton-label{
+                color:#6A6A6A;
+            }
         }
     }
     .open-archive{
@@ -433,7 +450,10 @@
         text-transform: uppercase;
         color: #60CEB8;
         margin-top:25px;
-        margin-left:40px;
+        margin-left:80px;
+        @media only screen and(max-width:768px) {
+            margin-left:40px;
+        }
     }
     .similar-startup-card{
         padding-bottom:0px!important;
@@ -525,6 +545,52 @@
     .funnel-summary-container{
         margin:35px 0px 0px 35px;
     }
+    .groups-container{
+        margin:35px 0px 0px 35px;
+        .group-name{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 19px;
+            color: #6A6A6A;
+            margin-top: 10px;
+            padding-left: 0px;
+        }
+        .add-startup-container{
+            display:inline-flex;
+            @media only screen and(max-width:768px) {
+                display: initial;
+                padding-left:0px;
+                margin-top:10px;
+            }
+            .add-text{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 17px;
+                letter-spacing: 0.03em;
+                color: #969BA3;
+                margin-top: 10px;
+                margin-right: 10px;
+                @media only screen and(min-width:768px) {                     
+                    position: absolute;
+                    right: 210px;
+                }
+            }
+            .add-startup-to-group{            
+                width:100%;
+                @media only screen and(min-width:768px) {
+                    width: 190px;    
+                    position: absolute;
+                    right: 20px;
+                }
+                
+            }
+        }
+        
+    }
 }
 .archive-modal-description{
     font-family: 'Roboto';
@@ -535,4 +601,27 @@
     letter-spacing: 0.03em;
     color: #969BA3;
     margin-top:25px;
+}
+.delete-group-modal-container{
+    padding: 25px 25px;
+    font-family: 'Proxima Nova';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+    color: #6A6A6A;
+    .remember{
+        font-weight:bold;
+        margin-top: 20px;
+    }
+    .delete-traces{
+        margin-top: 25px;
+    }
+    .leave-modal-options{
+        margin-top: 15px;
+        margin-left: 20px;
+    }
+    .archive-startup{
+        margin-top:10px;
+    }
 }
