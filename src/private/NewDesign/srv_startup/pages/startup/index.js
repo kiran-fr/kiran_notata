@@ -10,7 +10,7 @@ import Overview from "./overview";
 import GroupsIndividuals from "./groups-individuals";
 import Materials from "./materials";
 import Evaluations from "./evaluations/evaluations";
-import { connectionGet } from "private/Apollo/Queries";
+import { connectionGet, accountGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 
 function TabPanel(props) {
@@ -44,6 +44,7 @@ export const Startup = props => {
   const { data: connectionGetData, loading, error } = useQuery(connectionGet, {
     variables: { id },
   });
+  const { data: accountGetData } = useQuery(accountGet);
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -73,7 +74,10 @@ export const Startup = props => {
         <Overview creativity={connection} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Evaluations connection={connection} />
+        <Evaluations
+          connection={connection}
+          accountData={accountGetData.accountGet}
+        />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <GroupsIndividuals />
