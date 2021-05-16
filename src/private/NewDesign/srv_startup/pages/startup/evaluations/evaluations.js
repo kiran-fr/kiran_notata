@@ -9,7 +9,14 @@ import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
 import ManageTemplates from "./manage-templates";
 
-export default function Evaluations() {
+export default function Evaluations(props) {
+  const {
+    connection: {
+      evaluationSummaries,
+      creative: { name },
+    },
+  } = props;
+
   const [myEvalState, setMyEvalState] = useState("");
   const [myTeamEvalState, setMyTeamEvalState] = useState("");
   const [expertEvalState, setExpertEvalState] = useState("");
@@ -201,9 +208,11 @@ export default function Evaluations() {
               </div>
               <div className="col-lg-6 col-md-8 col-sm-12 col-xs-12 evalations-container">
                 <div className="row heading-icon">
-                  <div className="col-sm-1 col-xs-1 name-icon">G</div>
+                  <div className="col-sm-1 col-xs-1 name-icon">
+                    {name?.substr(0, 1)?.toUpperCase()}
+                  </div>
                   <div className="col-sm-9 col-xs-8 evalations-container__heading">
-                    Great Startup Inc
+                    {name}
                     <span className="material-icons">star</span>
                   </div>
                 </div>
@@ -221,16 +230,20 @@ export default function Evaluations() {
                     Average evaluations
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-5 col-xs-9 eval-score-heading">
-                    First Impression
+                {evaluationSummaries.map(evaluation => (
+                  <div className="row">
+                    <div className="col-sm-5 col-xs-9 eval-score-heading">
+                      {evaluation.templateName}
+                    </div>
+                    <div className="col-sm-4 col-xs-9 submitions">
+                      {evaluation.submissions} Submitions
+                    </div>
+                    <div className="col-sm-3 col-xs-3 score">
+                      {evaluation.averagePercentageScore || 0}
+                    </div>
                   </div>
-                  <div className="col-sm-4 col-xs-9 submitions">
-                    20 Submitions
-                  </div>
-                  <div className="col-sm-3 col-xs-3 score">8,5</div>
-                </div>
-                <div className="row">
+                ))}
+                {/* <div className="row">
                   <div className="col-sm-5 col-xs-9 eval-score-heading">
                     Before Pitching
                   </div>
@@ -238,8 +251,8 @@ export default function Evaluations() {
                     20 Submitions
                   </div>
                   <div className="col-sm-3 col-xs-3 score">8,5</div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                   <div className="col-sm-5 col-xs-9 eval-score-heading">
                     After Pitching
                   </div>
@@ -247,7 +260,7 @@ export default function Evaluations() {
                     20 Submitions
                   </div>
                   <div className="col-sm-3 col-xs-3 score">8,5</div>
-                </div>
+                </div> */}
                 <div className="col-sm-12" id="my-eval">
                   <div className="separator"></div>
                 </div>
