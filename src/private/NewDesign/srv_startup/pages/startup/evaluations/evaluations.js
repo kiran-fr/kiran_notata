@@ -75,7 +75,7 @@ export default function Evaluations(props) {
   const [editEvaluation, setEditEvaluation] = useState(false);
   const [saveEvaluation, setSaveEvaluation] = useState(false);
   const [updateEvaluation, setUpdateEvaluation] = useState("");
-  const [selectedSectionToEvaluate, setSelectedSectionToEvaluate] = useState(
+  const [selectedSectionsToEvaluate, setSelectedSectionsToEvaluate] = useState(
     []
   );
   return (
@@ -97,7 +97,7 @@ export default function Evaluations(props) {
                 setEditEvaluation={setEditEvaluation}
                 setSaveEvaluation={setSaveEvaluation}
                 updateEvaluation={updateEvaluation}
-                selectedSectionToEvaluate={selectedSectionToEvaluate}
+                selectedSectionsToEvaluate={selectedSectionsToEvaluate}
               />
             )
           ) : (
@@ -675,7 +675,7 @@ export default function Evaluations(props) {
           children={
             <EvaluateStartup
               accountData={accountData}
-              setSelectedSectionToEvaluate={setSelectedSectionToEvaluate}
+              setSelectedSectionsToEvaluate={setSelectedSectionsToEvaluate}
               setEditEvaluation={() => {
                 setEvaluateModal(false);
                 setEditEvaluation(true);
