@@ -82,6 +82,12 @@ export default gql`
           id
           name
         }
+        evaluationSummaries {
+          templateId
+          templateName
+          submissions
+          averagePercentageScore
+        }
       }
     }
   }

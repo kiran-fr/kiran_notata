@@ -15,6 +15,7 @@ export default function Evaluations(props) {
       evaluationSummaries,
       creative: { name },
       evaluations,
+      groupSharingInfo,
     },
   } = props;
 
@@ -657,43 +658,33 @@ export default function Evaluations(props) {
                     Groups evaluations
                   </div>
                   <div className={groupEvalState}>
-                    <div className="row evalations-container__details">
-                      <div className="col-sm-12 group-heading">Big Group 1</div>
-                      <div className="evalations-container__heading">
-                        Average subjective score
+                    {groupSharingInfo?.map(group => (
+                      <div
+                        key={group.group?.id}
+                        className="row evalations-container__details"
+                      >
+                        <div className="col-sm-12 group-heading">
+                          {group.group?.name}
+                        </div>
+                        <div className="col-sm-12 eval-section-heading">
+                          Average evaluations
+                        </div>
+                        {group.evaluationSummaries.map(evaluation => (
+                          <div key={evaluation.templateId}>
+                            <div className="col-sm-5 col-xs-9 eval-score-heading">
+                              {" "}
+                              {evaluation.templateName}
+                            </div>
+                            <div className="col-sm-4 col-xs-9 submitions">
+                              {evaluation.submissions || 0} Submitions
+                            </div>
+                            <div className="col-sm-3 col-xs-3 score">
+                              {evaluation.averagePercentageScore || 0}
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="col-sm-12 eval-section-heading">
-                        Average evaluations
-                      </div>
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        {" "}
-                        First Impression
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        {" "}
-                        Before Pitching
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        {" "}
-                        After Pitching
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
+                    ))}
                   </div>
                 </div>
                 <div className="col-sm-12 text-right">
