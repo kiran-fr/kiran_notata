@@ -56,18 +56,7 @@
     &__dropdown{
         position: relative;
         z-index: 999;
-        @media only screen and(max-width:500px) {
-            width:300px;
-        } 
-        @media only screen and (min-width:500px) and (max-width:768px) {
-            width:450px
-        }
-        @media only screen and (min-width:768px) and (max-width:1115px) {
-            width:300px
-        }
-        @media only screen and (min-width:1115px) {
-            width:450px
-        }       
+        width:100%;
         margin-top: 10px;       
         padding-bottom: 15px;
         .section-heading{
