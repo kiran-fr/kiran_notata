@@ -386,7 +386,12 @@ export default function Overview() {
                   iconPosition={ICONPOSITION.NONE}
                   onClick={() => setArchiveModal(true)}
                 ></ButtonWithIcon>
-                <div className="open-archive">Open Archive</div>
+                <div
+                  className="open-archive"
+                  onClick={() => setPageState(OVERVIEWPAGESTATE.ARCHIVElIST)}
+                >
+                  Open Archive
+                </div>
               </div>
               <div className="col-xs-6 col-sm-6">
                 <ButtonWithIcon
