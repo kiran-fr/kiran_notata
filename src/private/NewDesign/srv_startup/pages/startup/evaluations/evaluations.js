@@ -16,8 +16,21 @@ export default function Evaluations(props) {
       creative: { name },
       evaluations,
       groupSharingInfo,
+      subjectiveScores,
     },
   } = props;
+
+  const getTotalScore = arr => {
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr?.reduce((acc, obj) => {
+        return acc + (obj.score || 0);
+      }, 0);
+    }
+    return 0;
+  };
+  let totalAvgScore = (
+    getTotalScore(subjectiveScores) / subjectiveScores?.length || 0
+  ).toFixed(1);
 
   const [myEvalState, setMyEvalState] = useState("");
   const [myTeamEvalState, setMyTeamEvalState] = useState("");
@@ -142,9 +155,9 @@ export default function Evaluations(props) {
                     Average subjective score
                   </div>
                   <div className="col-sm-4 col-xs-10 submitions">
-                    15 Submitions
+                    {subjectiveScores?.length || 0} Submitions
                   </div>
-                  <div className="col-sm-3 col-xs-2 score">8,5</div>
+                  <div className="col-sm-3 col-xs-2 score">{totalAvgScore}</div>
                 </div>
                 <div className="row">
                   <div className="col-sm-12 eval-section-heading">
