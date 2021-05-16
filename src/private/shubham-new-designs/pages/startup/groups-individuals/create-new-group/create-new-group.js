@@ -4,6 +4,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import General from "./general";
 import Settings from "./settings";
+import Startups from "./startups";
+import Members from "./members";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,6 +48,12 @@ export default function CreateNewGroup() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Settings />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <Startups />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <Members />
       </TabPanel>
     </>
   );
