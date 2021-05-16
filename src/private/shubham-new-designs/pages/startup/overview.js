@@ -137,7 +137,7 @@ export default function Overview() {
                 </div>
               </div>
               <div className="separator"></div>
-              <div className="row tags-container">
+              <div className="row tags-container overview-tags">
                 <div className="tags-container__heading">Tags</div>
                 <div className="tags-container__sub-heading">
                   Write or choose tags

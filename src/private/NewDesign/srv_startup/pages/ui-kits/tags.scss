@@ -1,5 +1,5 @@
 .tags-container {
-    margin: 35px 0px 0px 35px;
+    margin: 35px 0px 0px 0px;
     &__heading {
         font-family: 'Proxima Nova';
         font-weight: 600;
@@ -50,6 +50,7 @@
             padding-top: 4px;
             margin-left: 7px;
             color: #FFFFFF;
+            cursor: pointer;
         }
     }
     &__dropdown{
