@@ -52,7 +52,9 @@ export const Startup = props => {
   if (!connectionGetData) {
     return <GhostLoader />;
   }
-  let creativity = connectionGetData?.connectionGet;
+  let connection = connectionGetData?.connectionGet;
+
+  console.log(connectionGetData);
   return (
     <>
       <div className="col-12 startup-container">
@@ -68,10 +70,10 @@ export const Startup = props => {
         <StartupInfo />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Overview creativity={creativity} />
+        <Overview creativity={connection} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Evaluations />
+        <Evaluations connection={connection} />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <GroupsIndividuals />
