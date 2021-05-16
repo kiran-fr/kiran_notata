@@ -106,9 +106,21 @@ import classnames from "classnames";
  */
 
 // Main function
-export function Dropdown({ title, items = [] }) {
+export function Dropdown({ title, items = [], setSelected, setSelectedItem }) {
   // States
   const [isListOpen, setListOpen] = useState(false);
+  const [name, setName] = useState("");
+
+  const selectedOption = item => {
+    if (setSelected) {
+      setSelected(item.id);
+      setName(item.name);
+    }
+    if (setSelectedItem) {
+      setSelectedItem(item);
+    }
+    setListOpen(!isListOpen);
+  };
 
   return (
     <div className={styles.dd_wrapper}>
@@ -119,7 +131,7 @@ export function Dropdown({ title, items = [] }) {
           setListOpen(!isListOpen);
         }}
       >
-        <div className={styles.dd_header_title}>{title}</div>
+        <div className={styles.dd_header_title}>{name}</div>
 
         {isListOpen ? (
           <i className={classnames("fal fa-angle-up ", styles.i_icon)} />
@@ -141,10 +153,10 @@ export function Dropdown({ title, items = [] }) {
               setHovered={setHovered} */
               type="button"
               onClick={() => {
-                setListOpen(!isListOpen);
+                selectedOption(item);
               }}
             >
-              {item.title}
+              {item.name}
               {/* {item.selected && <FontAwesome name="check" />} */}
             </button>
           ))}

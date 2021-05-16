@@ -11,11 +11,11 @@ export default function ManageTemplates() {
     "First impression 2",
   ];
   const items = [
-    { id: 1, title: "First impression" },
-    { id: 2, title: "Before Pitching" },
-    { id: 3, title: "After pitching" },
-    { id: 4, title: "Before pitching 2" },
-    { id: 5, title: "After pitching 2" },
+    { id: 1, name: "First impression" },
+    { id: 2, name: "Before Pitching" },
+    { id: 3, name: "After pitching" },
+    { id: 4, name: "Before pitching 2" },
+    { id: 5, name: "After pitching 2" },
   ];
   return (
     <div className="row manage-template-container">

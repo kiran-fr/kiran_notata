@@ -16,6 +16,8 @@ export { default as evaluationTemplatesGet } from "./evaluationTemplatesGet";
 export { default as evaluationTemplateSectionGet } from "./evaluationTemplateSectionGet";
 export { default as groupsGet } from "./groupsGet";
 
+export { default as groupsGetV2 } from "./groupsGetV2";
+
 export type { Groups as GroupsType } from "./groupsGet";
 export { default as groupGet } from "./groupGet";
 

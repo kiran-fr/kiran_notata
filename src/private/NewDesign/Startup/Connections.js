@@ -8,7 +8,10 @@ import {
   userGet,
   connectionAutoCompleteName,
 } from "private/Apollo/Queries";
-import { connectionSetStar } from "private/Apollo/Mutations";
+import {
+  connectionSetStar,
+  connectionFunnelTagAdd,
+} from "private/Apollo/Mutations";
 
 // COMPONENTS
 import Filters from "./Filters";
@@ -22,6 +25,7 @@ import Paginator from "./Paginator";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
+// import Table from "./DealFlow/table/newdesignTable/table";
 
 function getCleanFilterData(filters) {
   let clean = {};
@@ -41,6 +45,7 @@ function ListOfStartups({
   columnSettings,
   evaluationTemplates,
   evaluationTemplatesQuery,
+  updateFunnelTag,
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
@@ -88,6 +93,7 @@ function ListOfStartups({
         setShowFunnelScoreForId={setShowFunnelScoreForId}
         setShowTagGroupForId={setShowTagGroupForId}
         setShowSubjectiveScoreForId={setShowSubjectiveScoreForId}
+        updateFunnelTag={updateFunnelTag}
       ></Table>
 
       {showFunnelScoreForId && (
@@ -171,6 +177,19 @@ export default function Connections({ history }) {
     evaluationTemplates: [],
   });
 
+  // Mutation updating funnel tag for connection
+  const [mutate] = useMutation(connectionFunnelTagAdd);
+
+  const updateFunnelTag = (funnelTagId, connectionId) => {
+    const variables = {
+      connectionId,
+      funnelTagId,
+    };
+    mutate({
+      variables,
+    });
+  };
+
   // Load filters from local store
   useEffect(() => {
     let f;
@@ -237,6 +256,7 @@ export default function Connections({ history }) {
             setFilters={setFilters}
             currentPage={currentPage}
             evaluationTemplates={evaluationTemplates}
+            updateFunnelTag={updateFunnelTag}
           />
           <Paginator
             currentPage={currentPage}

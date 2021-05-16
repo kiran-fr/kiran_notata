@@ -4,9 +4,9 @@ import "./funels.scss";
 
 export default function Funels() {
   const items = [
-    { id: 1, title: "First" },
-    { id: 2, title: "Before" },
-    { id: 3, title: "After" },
+    { id: 1, name: "First" },
+    { id: 2, name: "Before" },
+    { id: 3, name: "After" },
   ];
   return (
     <div className="funels-contianer">

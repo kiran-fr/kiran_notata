@@ -5,7 +5,7 @@ import TableBody from "./tableBody";
 import TableHeader from "./tableHeader";
 
 export default function Table(props) {
-  const { data, loading, emptyLabel, history } = props;
+  const { data, loading, emptyLabel, history, updateFunnelTag } = props;
 
   const [preview, setPreview] = useState();
 
@@ -47,6 +47,7 @@ export default function Table(props) {
             showPreview={showPreview}
             preview={preview}
             hidePreview={hidePreview}
+            updateFunnelTag={updateFunnelTag}
           />
         </table>
         {loading && (

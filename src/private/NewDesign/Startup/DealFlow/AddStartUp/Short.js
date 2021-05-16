@@ -33,8 +33,8 @@ export const Short = ({ history, closeModal, styles, connections }) => {
   function lookForDuplicateNames(value) {
     // Populate array if empty
     if (companyNameArr.length === 0) {
-      companyNameArr = connections.length
-        ? connections.map(sub => sub.creative?.name)
+      companyNameArr = connections?.length
+        ? connections?.map(sub => sub.creative?.name)
         : [];
     }
 
