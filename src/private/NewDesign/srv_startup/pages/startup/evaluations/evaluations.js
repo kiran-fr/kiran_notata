@@ -9,12 +9,22 @@ import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
 import ManageTemplates from "./manage-templates";
 
-export default function Evaluations() {
+export default function Evaluations(props) {
+  const {
+    connection: {
+      evaluationSummaries,
+      creative: { name },
+      evaluations,
+      groupSharingInfo,
+    },
+  } = props;
+
   const [myEvalState, setMyEvalState] = useState("");
   const [myTeamEvalState, setMyTeamEvalState] = useState("");
   const [expertEvalState, setExpertEvalState] = useState("");
   const [groupEvalState, setGroupEvalState] = useState("");
 
+  const [evaluationExpandState, setEvaluationExpandState] = useState({});
   const [
     myTeamFirstImpressionEvalState,
     setMyTeamFirstImpressionEvalState,
@@ -46,89 +56,7 @@ export default function Evaluations() {
   const [fullListModal, setFullListModal] = useState(false);
   const [manageTemplateModal, setManageTemplateModal] = useState(false);
   // pass a value to full list from this state variable
-  const [fullListModalObj, setFullListModalObj] = useState({
-    evalType: "First Impression",
-    submittedBy: "Daria Kyselova",
-    summary: "65%",
-    details: [
-      {
-        id: "concept",
-        name: "Concept",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-      {
-        id: "market",
-        name: "Market",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-      {
-        id: "problem",
-        name: "Problem",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-      {
-        id: "team",
-        name: "Team",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-    ],
-  });
+  const [fullListModalObj, setFullListModalObj] = useState({});
 
   const [editEvaluation, setEditEvaluation] = useState(false);
   const [saveEvaluation, setSaveEvaluation] = useState(false);
@@ -162,7 +90,7 @@ export default function Evaluations() {
                     items={[
                       "My evaluations",
                       "My team evaluations",
-                      "External experts evaluations",
+                      // "External experts evaluations",
                       "Groups evaluations",
                     ]}
                     currentClassName="is-current"
@@ -180,14 +108,14 @@ export default function Evaluations() {
                         My team evaluations
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <a
                         href="#external-eval"
                         onClick={() => setExpertEvalState("")}
                       >
                         External experts evaluations
                       </a>
-                    </li>
+                    </li> */}
                     <li>
                       <a
                         href="#group-eval"
@@ -201,9 +129,11 @@ export default function Evaluations() {
               </div>
               <div className="col-lg-6 col-md-8 col-sm-12 col-xs-12 evalations-container">
                 <div className="row heading-icon">
-                  <div className="col-sm-1 col-xs-1 name-icon">G</div>
+                  <div className="col-sm-1 col-xs-1 name-icon">
+                    {name?.substr(0, 1)?.toUpperCase()}
+                  </div>
                   <div className="col-sm-9 col-xs-8 evalations-container__heading">
-                    Great Startup Inc
+                    {name}
                     <span className="material-icons">star</span>
                   </div>
                 </div>
@@ -221,33 +151,19 @@ export default function Evaluations() {
                     Average evaluations
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-5 col-xs-9 eval-score-heading">
-                    First Impression
+                {evaluationSummaries.map(evaluation => (
+                  <div className="row">
+                    <div className="col-sm-5 col-xs-9 eval-score-heading">
+                      {evaluation.templateName}
+                    </div>
+                    <div className="col-sm-4 col-xs-9 submitions">
+                      {evaluation.submissions} Submitions
+                    </div>
+                    <div className="col-sm-3 col-xs-3 score">
+                      {evaluation.averagePercentageScore || 0}
+                    </div>
                   </div>
-                  <div className="col-sm-4 col-xs-9 submitions">
-                    20 Submitions
-                  </div>
-                  <div className="col-sm-3 col-xs-3 score">8,5</div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-5 col-xs-9 eval-score-heading">
-                    Before Pitching
-                  </div>
-                  <div className="col-sm-4 col-xs-9 submitions">
-                    20 Submitions
-                  </div>
-                  <div className="col-sm-3 col-xs-3 score">8,5</div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-5 col-xs-9 eval-score-heading">
-                    After Pitching
-                  </div>
-                  <div className="col-sm-4 col-xs-9 submitions">
-                    20 Submitions
-                  </div>
-                  <div className="col-sm-3 col-xs-3 score">8,5</div>
-                </div>
+                ))}
                 <div className="col-sm-12" id="my-eval">
                   <div className="separator"></div>
                 </div>
@@ -270,32 +186,29 @@ export default function Evaluations() {
                     </button>
                   </div>
                   <div className={myEvalState}>
-                    {/* <div className="row evalations-container__details">
-                          <div className="col-sm-6 col-xs-9 eval-score-heading">Avarage subjective score</div>
-                          <div className="col-sm-4 col-xs-10 submitions">15 Submitions</div>
-                          <div className="col-sm-2 col-xs-2 score">8,5</div>                    
-                        </div>
-                        <div className="row">
-                          <div className="col-sm-12 eval-section-heading">Avarage evaluations</div>
-                        </div> */}
-                    <div className="row evalations-container__details">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        First Impression
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        Before Pitching
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
+                    {evaluations?.map(
+                      (evaluation, index) =>
+                        evaluation?.isMe && (
+                          <div
+                            className={`row ${
+                              index === 0 ? "evalations-container__details" : ""
+                            }`}
+                          >
+                            <div className="col-sm-5 col-xs-9 eval-score-heading">
+                              {evaluation.template?.name}
+                            </div>
+                            <div className="col-sm-4 col-xs-9 submitions">
+                              {Array.isArray(evaluation.summary?.sections)
+                                ? evaluation?.summary?.sections.length
+                                : 0}{" "}
+                              Submitions
+                            </div>
+                            <div className="col-sm-3 col-xs-3 score">
+                              {evaluation.summary?.scorePercent || 0}
+                            </div>
+                          </div>
+                        )
+                    )}
                   </div>
                 </div>
                 <div className="col-sm-12" id="my-team-eval">
@@ -320,222 +233,96 @@ export default function Evaluations() {
                     My team evaluations
                   </div>
                   <div className={myTeamEvalState}>
-                    <div className="row evalations-container__details">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        <i
-                          className={`fa ${
-                            myTeamFirstImpressionEvalState === ""
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          }`}
-                          aria-hidden="true"
-                          onClick={() =>
-                            setMyTeamFirstImpressionEvalState(
-                              myTeamFirstImpressionEvalState === ""
-                                ? "collapse"
-                                : ""
-                            )
-                          }
-                        ></i>
-                        First Impression
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div
-                      className={`submission-section ${myTeamFirstImpressionEvalState}`}
-                    >
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Daria Kyselova <span className="you">(you)</span>
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Roman Kaykov
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Anton Konovalov
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        <i
-                          className={`fa ${
-                            myTeamBeforePitchingEvalState === ""
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          }`}
-                          aria-hidden="true"
-                          onClick={() =>
-                            setMyTeamBeforePitchingEvalState(
-                              myTeamBeforePitchingEvalState === ""
-                                ? "collapse"
-                                : ""
-                            )
-                          }
-                        ></i>
-                        Before Pitching
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div
-                      className={`submission-section ${myTeamBeforePitchingEvalState}`}
-                    >
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Daria Kyselova <span className="you">(you)</span>
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Roman Kaykov
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Anton Konovalov
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        <i
-                          className={`fa ${
-                            myTeamAfterPitchingEvalState === ""
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          }`}
-                          aria-hidden="true"
-                          onClick={() =>
-                            setMyTeamAfterPitchingEvalState(
-                              myTeamAfterPitchingEvalState === ""
-                                ? "collapse"
-                                : ""
-                            )
-                          }
-                        ></i>
-                        After Pitching
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div
-                      className={`submission-section ${myTeamAfterPitchingEvalState}`}
-                    >
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Daria Kyselova <span className="you">(you)</span>
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Roman Kaykov
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-9 col-xs-9 submitions">
-                          Anton Konovalov
-                        </div>
-                        <div className="col-sm-3 col-xs-3 score score-submisisons">
-                          75%{" "}
-                          <span
-                            className="full-list"
-                            onClick={() => setFullListModal(true)}
-                          >
-                            Full List
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                    {evaluations?.map(
+                      (evaluation, index) =>
+                        !evaluation?.isMe && (
+                          <>
+                            <div
+                              className={`row ${
+                                index === 0
+                                  ? "evalations-container__details"
+                                  : ""
+                              }`}
+                            >
+                              <div className="col-sm-5 col-xs-9 eval-score-heading">
+                                <i
+                                  className={`fa ${
+                                    evaluationExpandState[evaluation.id] === ""
+                                      ? "fa-chevron-up"
+                                      : "fa-chevron-down"
+                                  }`}
+                                  aria-hidden="true"
+                                  onClick={() => {
+                                    if (
+                                      evaluationExpandState[evaluation?.id] ===
+                                      undefined
+                                    ) {
+                                      setEvaluationExpandState({
+                                        ...evaluationExpandState,
+                                        [evaluation?.id]: "",
+                                      });
+                                      return;
+                                    }
+                                    setEvaluationExpandState({
+                                      ...evaluationExpandState,
+                                      [evaluation?.id]:
+                                        evaluationExpandState[
+                                          evaluation?.id
+                                        ] === ""
+                                          ? "collapse"
+                                          : "",
+                                    });
+                                  }}
+                                ></i>
+                                {evaluation.template?.name}
+                              </div>
+                              <div className="col-sm-4 col-xs-9 submitions">
+                                {Array.isArray(evaluation.summary?.sections)
+                                  ? evaluation?.summary?.sections.length
+                                  : 0}{" "}
+                                Submitions
+                              </div>
+                              <div className="col-sm-3 col-xs-3 score">
+                                {evaluation.summary?.scorePercent || 0}
+                              </div>
+                            </div>
+                            <div
+                              className={`submission-section ${
+                                evaluationExpandState[evaluation?.id] ===
+                                undefined
+                                  ? "collapse"
+                                  : evaluationExpandState[evaluation?.id]
+                              }`}
+                            >
+                              {
+                                <div className="row">
+                                  <div className="col-sm-9 col-xs-9 submitions">
+                                    {evaluation?.createdByUser?.given_name}
+                                  </div>
+                                  <div className="col-sm-3 col-xs-3 score score-submisisons">
+                                    {evaluation?.summary?.scorePercent || 0}%{" "}
+                                    <span
+                                      className="full-list"
+                                      onClick={() => {
+                                        setFullListModal(true);
+                                        setFullListModalObj(evaluation);
+                                      }}
+                                    >
+                                      Full List
+                                    </span>
+                                  </div>
+                                </div>
+                              }
+                            </div>
+                          </>
+                        )
+                    )}
                   </div>
                 </div>
-                <div className="col-sm-12" id="external-eval">
+                {/*<div className="col-sm-12" id="external-eval">
                   <div className="separator"></div>
                 </div>
-                <div className={`col-sm-12 details`}>
+                 <div className={`col-sm-12 details`}>
                   <div className="col-sm-8 col-xs-12 heading">
                     <i
                       class={`fa ${
@@ -769,7 +556,7 @@ export default function Evaluations() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="col-sm-12" id="group-eval">
                   <div className="separator"></div>
@@ -792,43 +579,33 @@ export default function Evaluations() {
                     Groups evaluations
                   </div>
                   <div className={groupEvalState}>
-                    <div className="row evalations-container__details">
-                      <div className="col-sm-12 group-heading">Big Group 1</div>
-                      <div className="evalations-container__heading">
-                        Average subjective score
+                    {groupSharingInfo?.map(group => (
+                      <div
+                        key={group.group?.id}
+                        className="row evalations-container__details"
+                      >
+                        <div className="col-sm-12 group-heading">
+                          {group.group?.name}
+                        </div>
+                        <div className="col-sm-12 eval-section-heading">
+                          Average evaluations
+                        </div>
+                        {group.evaluationSummaries.map(evaluation => (
+                          <div key={evaluation.templateId}>
+                            <div className="col-sm-5 col-xs-9 eval-score-heading">
+                              {" "}
+                              {evaluation.templateName}
+                            </div>
+                            <div className="col-sm-4 col-xs-9 submitions">
+                              {evaluation.submissions || 0} Submitions
+                            </div>
+                            <div className="col-sm-3 col-xs-3 score">
+                              {evaluation.averagePercentageScore || 0}
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="col-sm-12 eval-section-heading">
-                        Average evaluations
-                      </div>
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        {" "}
-                        First Impression
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        {" "}
-                        Before Pitching
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-5 col-xs-9 eval-score-heading">
-                        {" "}
-                        After Pitching
-                      </div>
-                      <div className="col-sm-4 col-xs-9 submitions">
-                        20 Submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 score">8,5</div>
-                    </div>
+                    ))}
                   </div>
                 </div>
                 <div className="col-sm-12 text-right">
@@ -860,7 +637,7 @@ export default function Evaluations() {
       )}
       {fullListModal && (
         <Modal
-          title={`${fullListModalObj.evalType} (${fullListModalObj.submittedBy})`}
+          title={`${fullListModalObj?.template?.name} (${fullListModalObj?.createdByUser?.given_name})`}
           submit={() => {
             setFullListModal(false);
           }}

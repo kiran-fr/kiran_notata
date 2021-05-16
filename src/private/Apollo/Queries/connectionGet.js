@@ -49,11 +49,44 @@ export default gql`
         averagePercentageScore
         highestScore
         lowestScore
+        submissions
+      }
+      evaluations {
+        id
+        isMe
+        template {
+          id
+          name
+        }
+        createdByUser {
+          family_name
+          given_name
+          email
+        }
+        summary {
+          scorePercent
+          sections {
+            sectionId
+            sectionName
+            scorePercent
+            scorePerAnswer {
+              questionName
+              possibleScore
+              score
+            }
+          }
+        }
       }
       groupSharingInfo {
         group {
           id
           name
+        }
+        evaluationSummaries {
+          templateId
+          templateName
+          submissions
+          averagePercentageScore
         }
       }
     }
