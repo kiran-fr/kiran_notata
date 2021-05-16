@@ -54,6 +54,7 @@ export const evaluation_template_summary = `${evaluation_templates}/summary`;
 export const facts_templates = `${startup_page}/facts_templates`;
 export const facts_template = `${facts_templates}/edit`;
 export const group = `${startup_page}/group`;
+export const group_new = `${startup_page}/group_new`;
 export const external_form = `${startup_page}/external_form`;
 export const ui_components = `${startup_page}/components/ui`;
 export const navigation = `${startup_page}/components/ui/navigation`;

@@ -31,6 +31,7 @@ import {
   startup_index,
   startup_company_profile,
   startup_info,
+  group_new,
 } from "../definitions";
 
 // Landing page / list
@@ -58,10 +59,12 @@ import EvaluationV2Page from "./pages/EvaluationV2/";
 import EvaluationSummary from "./pages/EvaluationV2/Summary";
 
 // Groups
-import Groups from "./pages/Groups/Groups";
+// import Groups from "./pages/Groups/Groups";
 import Group from "./pages/Groups/Group/Group";
 import GroupConnection from "./pages/Groups/GroupConnection";
 import GroupSettings from "./pages/Groups/GroupSettings";
+
+import Groups from "./shubham-new-designs/pages/groups/index";
 
 // Loader
 import { GhostLoader } from "Components/elements";
@@ -128,6 +131,7 @@ export const RouterComponent = ({ history }) => {
       />
 
       <Route exact path={`${group}`} component={Groups} />
+      <Route exact path={`${group_new}`} component={Groups} />
 
       <Route exact path={`${group}/:id`} component={Group} />
 
@@ -210,7 +214,7 @@ const WrapperComponent = ({ ...props }) => {
       <div
         className={`logged_in_page_content ${
           matchPath(props.location.pathname, {
-            path: [`${startup_page}/:id`, `${group}/:id`],
+            path: [`${startup_page}/:id`],
             exact: true,
             strict: false,
           })

@@ -18,7 +18,7 @@ export default function ManageTemplates() {
     { id: 5, title: "After pitching 2" },
   ];
   return (
-    <div className="manage-template-container">
+    <div className="row manage-template-container">
       <div className="col-sm-6 col-xs-12 selected-templates">
         <div className="heading">Group templates</div>
         {templates.map((item, index) => {
