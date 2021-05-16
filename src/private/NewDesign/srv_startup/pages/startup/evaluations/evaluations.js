@@ -23,6 +23,7 @@ export default function Evaluations(props) {
   const [expertEvalState, setExpertEvalState] = useState("");
   const [groupEvalState, setGroupEvalState] = useState("");
 
+  const [evaluationExpandState, setEvaluationExpandState] = useState({});
   const [
     myTeamFirstImpressionEvalState,
     setMyTeamFirstImpressionEvalState,
@@ -327,18 +328,32 @@ export default function Evaluations(props) {
                               <div className="col-sm-5 col-xs-9 eval-score-heading">
                                 <i
                                   className={`fa ${
-                                    myTeamFirstImpressionEvalState === ""
+                                    evaluationExpandState[evaluation.id] === ""
                                       ? "fa-chevron-up"
                                       : "fa-chevron-down"
                                   }`}
                                   aria-hidden="true"
-                                  onClick={() =>
-                                    setMyTeamFirstImpressionEvalState(
-                                      myTeamFirstImpressionEvalState === ""
-                                        ? "collapse"
-                                        : ""
-                                    )
-                                  }
+                                  onClick={() => {
+                                    if (
+                                      evaluationExpandState[evaluation?.id] ===
+                                      undefined
+                                    ) {
+                                      setEvaluationExpandState({
+                                        ...evaluationExpandState,
+                                        [evaluation?.id]: "",
+                                      });
+                                      return;
+                                    }
+                                    setEvaluationExpandState({
+                                      ...evaluationExpandState,
+                                      [evaluation?.id]:
+                                        evaluationExpandState[
+                                          evaluation?.id
+                                        ] === ""
+                                          ? "collapse"
+                                          : "",
+                                    });
+                                  }}
                                 ></i>
                                 {evaluation.template?.name}
                               </div>
@@ -353,7 +368,12 @@ export default function Evaluations(props) {
                               </div>
                             </div>
                             <div
-                              className={`submission-section ${myTeamFirstImpressionEvalState}`}
+                              className={`submission-section ${
+                                evaluationExpandState[evaluation?.id] ===
+                                undefined
+                                  ? "collapse"
+                                  : evaluationExpandState[evaluation?.id]
+                              }`}
                             >
                               {
                                 <div className="row">

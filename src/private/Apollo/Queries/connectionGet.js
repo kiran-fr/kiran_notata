@@ -52,6 +52,7 @@ export default gql`
         submissions
       }
       evaluations {
+        id
         isMe
         template {
           id
