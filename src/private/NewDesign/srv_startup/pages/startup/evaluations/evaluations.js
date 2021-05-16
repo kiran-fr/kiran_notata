@@ -56,89 +56,7 @@ export default function Evaluations(props) {
   const [fullListModal, setFullListModal] = useState(false);
   const [manageTemplateModal, setManageTemplateModal] = useState(false);
   // pass a value to full list from this state variable
-  const [fullListModalObj, setFullListModalObj] = useState({
-    evalType: "First Impression",
-    submittedBy: "Daria Kyselova",
-    summary: "65%",
-    details: [
-      {
-        id: "concept",
-        name: "Concept",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-      {
-        id: "market",
-        name: "Market",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-      {
-        id: "problem",
-        name: "Problem",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-      {
-        id: "team",
-        name: "Team",
-        value: "65%",
-        detail: [
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-          {
-            key: "Do you think it's easy or hard to copy the concept?",
-            value: "0/1",
-          },
-        ],
-      },
-    ],
-  });
+  const [fullListModalObj, setFullListModalObj] = useState({});
 
   const [editEvaluation, setEditEvaluation] = useState(false);
   const [saveEvaluation, setSaveEvaluation] = useState(false);
@@ -172,7 +90,7 @@ export default function Evaluations(props) {
                     items={[
                       "My evaluations",
                       "My team evaluations",
-                      "External experts evaluations",
+                      // "External experts evaluations",
                       "Groups evaluations",
                     ]}
                     currentClassName="is-current"
@@ -190,14 +108,14 @@ export default function Evaluations(props) {
                         My team evaluations
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <a
                         href="#external-eval"
                         onClick={() => setExpertEvalState("")}
                       >
                         External experts evaluations
                       </a>
-                    </li>
+                    </li> */}
                     <li>
                       <a
                         href="#group-eval"
@@ -385,7 +303,10 @@ export default function Evaluations(props) {
                                     {evaluation?.summary?.scorePercent || 0}%{" "}
                                     <span
                                       className="full-list"
-                                      onClick={() => setFullListModal(true)}
+                                      onClick={() => {
+                                        setFullListModal(true);
+                                        setFullListModalObj(evaluation);
+                                      }}
                                     >
                                       Full List
                                     </span>
@@ -716,7 +637,7 @@ export default function Evaluations(props) {
       )}
       {fullListModal && (
         <Modal
-          title={`${fullListModalObj.evalType} (${fullListModalObj.submittedBy})`}
+          title={`${fullListModalObj?.template?.name} (${fullListModalObj?.createdByUser?.given_name})`}
           submit={() => {
             setFullListModal(false);
           }}
