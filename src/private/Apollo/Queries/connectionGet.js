@@ -49,6 +49,7 @@ export default gql`
         averagePercentageScore
         highestScore
         lowestScore
+        submissions
       }
       groupSharingInfo {
         group {
