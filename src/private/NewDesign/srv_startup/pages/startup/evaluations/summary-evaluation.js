@@ -17,6 +17,18 @@ export default function SummaryEvaluation({
   const [conceptcollapse, setConceptCollapse] = useState("");
   const [deleteMoal, setDeleteMoal] = useState(false);
   console.log("allAnswers", allAnswers, selectedTemplateToEvaluate);
+  let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
+    return {
+      name: section.name,
+      id: section.id,
+    };
+  });
+  let details = {};
+  let sec = selectedTemplateToEvaluate?.sections?.map(item => {
+    details[item.id] = "";
+  });
+  const [collapseDetailList, setCollapseDetailList] = useState(details);
+
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
@@ -33,26 +45,21 @@ export default function SummaryEvaluation({
       </div>
       <div className="col-sm-3 col-md-3">
         <div className="menu-container-1">
-          <Scrollspy
-            items={["Problem", "Concept", "Market", "Team"]}
-            currentClassName="is-current"
-          >
-            <li>
-              <a href="#problem" onClick={() => setProblemCollapse("")}>
-                Problem
-              </a>
-            </li>
-            <li>
-              <a href="#concept" onClick={() => setConceptCollapse("")}>
-                Concept
-              </a>
-            </li>
-            <li>
-              <a href="#market">Market</a>
-            </li>
-            <li>
-              <a href="#team">Team</a>
-            </li>
+          <Scrollspy items={sectionNamesArr} currentClassName="is-current">
+            {sectionNamesArr.map(link => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.name}`}
+                  onClick={() => {
+                    let collapseList = { ...collapseDetailList };
+                    collapseList[link.id] = "";
+                    setCollapseDetailList(collapseList);
+                  }}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
           </Scrollspy>
         </div>
       </div>
@@ -89,15 +96,20 @@ export default function SummaryEvaluation({
           <div className="col-sm-6 col-xs-6 total-attempts">3/10</div> */}
         </div>
         {selectedTemplateToEvaluate?.sections.map(section => (
-          <div className="row section" id="problem">
+          <div className="row section" id={section.name}>
             <div className="col-sm-6 col-xs-7 section-heading">
               <i
                 class={`fa ${
-                  problemcollapse === "" ? "fa-chevron-up" : "fa-chevron-down"
+                  collapseDetailList[section.id] === ""
+                    ? "fa-chevron-up"
+                    : "fa-chevron-down"
                 }`}
                 aria-hidden="true"
                 onClick={() => {
-                  setProblemCollapse(problemcollapse === "" ? "collapse" : "");
+                  let collapseList = { ...collapseDetailList };
+                  collapseList[section.id] =
+                    collapseList[section.id] === "" ? "collapse" : "";
+                  setCollapseDetailList(collapseList);
                 }}
               ></i>
               {section.name}
@@ -111,7 +123,11 @@ export default function SummaryEvaluation({
               3 of 3 questions answered
             </div>
             <div className="col-sm-12 created-on">2 out of 1 points</div>
-            <div className={`row question-answers ${problemcollapse}`}>
+            <div
+              className={`row question-answers ${
+                collapseDetailList[section.id]
+              }`}
+            >
               {section.questions.map(question => {
                 return (
                   <>
