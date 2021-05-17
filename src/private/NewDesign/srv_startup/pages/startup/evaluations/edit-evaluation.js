@@ -64,6 +64,7 @@ export default function EditEvaluation({
   setSaveEvaluation,
   updateEvaluation,
   selectedTemplateToEvaluate,
+  setAllAnswers,
 }) {
   // const selectedTemplateToEvaluate = sections;
   console.log("selectedTemplateToEvaluate", selectedTemplateToEvaluate);
@@ -86,17 +87,17 @@ export default function EditEvaluation({
   const onRadioSelect = obj => {
     setRadioAnswers({
       ...radioAnswers,
-      [obj.questionId]: [obj],
+      [obj.questionId]: obj,
     });
   };
 
-  useEffect(() => {
-    console.log(radioAnswers);
-  }, [radioAnswers]);
-
-  useEffect(() => {
-    console.log(checkAnswers);
-  }, [checkAnswers]);
+  const collectionAllAnswers = () => {
+    // let radioButtonAns = Object.keys(radioAnswers).map(answer=>radioAnswers[answer]);
+    // let checkButtonAns = Object.keys(checkAnswers).map(answer=>checkAnswers[answer]);
+    let allAnswers = Object.assign({}, radioAnswers, checkAnswers);
+    setAllAnswers(allAnswers);
+    setSaveEvaluation(true);
+  };
 
   const onCheckboxSelect = obj => {
     let answerCopy = checkAnswers;
@@ -105,7 +106,7 @@ export default function EditEvaluation({
       setCheckAnswers(answerCopy);
       return;
     }
-    setCheckAnswers({ ...checkAnswers, [obj.questionId + obj.sid]: [obj] });
+    setCheckAnswers({ ...checkAnswers, [obj.questionId + obj.sid]: obj });
   };
 
   return (
@@ -221,10 +222,7 @@ export default function EditEvaluation({
           </div>
         ))}
         <div className="col-sm-12 text-right">
-          <button
-            className="save-btn delete"
-            onClick={() => setSaveEvaluation(true)}
-          >
+          <button className="save-btn delete" onClick={collectionAllAnswers}>
             SAVE
           </button>
         </div>

@@ -86,7 +86,7 @@
                     margin-top: 20px;
                 }
                 .question,
-                .answer{
+                .answer, .no-answer{
                     padding-left:30px;
                 }
                 .answer{
@@ -96,6 +96,15 @@
                     font-size: 12px;
                     line-height: 15px;
                     color: #FF937C;
+                    margin-top:5px;
+                }
+                .no-answer{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 15px;
+                    color: gray;
                     margin-top:5px;
                 }
             }

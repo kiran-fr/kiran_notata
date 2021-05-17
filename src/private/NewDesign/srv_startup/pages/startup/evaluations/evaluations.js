@@ -78,6 +78,7 @@ export default function Evaluations(props) {
   const [selectedTemplateToEvaluate, setSelectedTemplateToEvaluate] = useState(
     {}
   );
+  const [allAnswers, setAllAnswers] = useState({});
   return (
     <div className="row tab-panel-container">
       <div className="col-sm-12">
@@ -85,6 +86,7 @@ export default function Evaluations(props) {
           {editEvaluation ? (
             saveEvaluation ? (
               <SummaryEvaluation
+                companyName={name}
                 setEditEvaluation={setEditEvaluation}
                 setSaveEvaluation={setSaveEvaluation}
                 selectedTemplateToEvaluate={selectedTemplateToEvaluate}
@@ -92,6 +94,7 @@ export default function Evaluations(props) {
                   setSaveEvaluation(false);
                   setUpdateEvaluation(type);
                 }}
+                allAnswers={allAnswers}
               />
             ) : (
               <EditEvaluation
@@ -99,6 +102,7 @@ export default function Evaluations(props) {
                 setSaveEvaluation={setSaveEvaluation}
                 updateEvaluation={updateEvaluation}
                 selectedTemplateToEvaluate={selectedTemplateToEvaluate}
+                setAllAnswers={setAllAnswers}
               />
             )
           ) : (
