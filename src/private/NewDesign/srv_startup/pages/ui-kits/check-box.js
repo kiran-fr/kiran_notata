@@ -8,12 +8,23 @@ export default function InputCheckBox({
   onChange,
   label,
   name,
+  value,
+  defaultChecked,
   ...props
 }) {
   return (
     <FormControlLabel
-      control={<Checkbox checked={checked} name={name} onChange={onChange} />}
+      control={
+        <Checkbox
+          checked={checked}
+          defaultChecked={defaultChecked}
+          value={value}
+          name={name}
+          onChange={onChange}
+        />
+      }
       label={label}
+      {...props}
     />
     // <Checkbox checked={checked} name="checkbox" {...props}></Checkbox>
   );

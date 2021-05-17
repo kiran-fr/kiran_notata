@@ -84,27 +84,35 @@ export default function Evaluations(props) {
       <div className="col-sm-12">
         <div className="card evaluation-container">
           {editEvaluation ? (
-            saveEvaluation ? (
-              <SummaryEvaluation
-                companyName={name}
-                setEditEvaluation={setEditEvaluation}
-                setSaveEvaluation={setSaveEvaluation}
-                selectedTemplateToEvaluate={selectedTemplateToEvaluate}
-                updateEvaluation={type => {
-                  setSaveEvaluation(false);
-                  setUpdateEvaluation(type);
-                }}
-                allAnswers={allAnswers}
-              />
-            ) : (
-              <EditEvaluation
-                setEditEvaluation={setEditEvaluation}
-                setSaveEvaluation={setSaveEvaluation}
-                updateEvaluation={updateEvaluation}
-                selectedTemplateToEvaluate={selectedTemplateToEvaluate}
-                setAllAnswers={setAllAnswers}
-              />
-            )
+            <div>
+              <div
+                style={{ display: saveEvaluation === true ? "block" : "none" }}
+              >
+                <SummaryEvaluation
+                  companyName={name}
+                  setEditEvaluation={setEditEvaluation}
+                  setSaveEvaluation={setSaveEvaluation}
+                  selectedTemplateToEvaluate={selectedTemplateToEvaluate}
+                  updateEvaluation={type => {
+                    setSaveEvaluation(false);
+                    setUpdateEvaluation(type);
+                  }}
+                  allAnswers={allAnswers}
+                />
+              </div>
+              <div
+                style={{ display: saveEvaluation !== true ? "block" : "none" }}
+              >
+                <EditEvaluation
+                  setEditEvaluation={setEditEvaluation}
+                  setSaveEvaluation={setSaveEvaluation}
+                  updateEvaluation={updateEvaluation}
+                  selectedTemplateToEvaluate={selectedTemplateToEvaluate}
+                  setAllAnswers={setAllAnswers}
+                  allAnswers={allAnswers}
+                />
+              </div>
+            </div>
           ) : (
             <div className="row">
               <div className="col-lg-3 col-md-3">
