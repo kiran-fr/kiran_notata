@@ -68,27 +68,20 @@ export default function EditEvaluation({
   // const selectedSectionsToEvaluate = sections;
   console.log("selectedSectionsToEvaluate", selectedSectionsToEvaluate);
 
-  let sectionNamesArr = selectedSectionsToEvaluate?.map(
-    section => section.name
-  );
-  console.log("sections", sectionNamesArr);
+  let sectionNamesArr = selectedSectionsToEvaluate?.map(section => {
+    return {
+      name: section.name,
+      id: section.id,
+    };
+  });
 
   let details = {};
   let sec = selectedSectionsToEvaluate?.map(item => {
     details[item.id] = "collapse";
   });
   const [collapseDetailList, setCollapseDetailList] = useState(details);
-  const [problemCollapse, setProblemCollapse] = useState("");
-  const [conceptCollapse, setConceptCollapse] = useState("");
-  const [marketCollapse, setMarketCollapse] = useState("");
-  const [teamCollapse, setTeamCollapse] = useState("");
-
   const [radioAnswers, setRadioAnswers] = useState({});
   const [checkAnswers, setCheckAnswers] = useState({});
-
-  const onSubmit = async data => {
-    console.log(data);
-  };
 
   const onRadioSelect = obj => {
     setRadioAnswers({
@@ -130,9 +123,16 @@ export default function EditEvaluation({
         <div className="menu-container-1">
           <Scrollspy items={sectionNamesArr} currentClassName="is-current">
             {sectionNamesArr.map(link => (
-              <li key={link}>
-                <a href={`#${link}`} onClick={() => setConceptCollapse("")}>
-                  {link}
+              <li key={link.id}>
+                <a
+                  href={`#${link.name}`}
+                  onClick={() => {
+                    let collapseList = { ...collapseDetailList };
+                    collapseList[link.id] = "";
+                    setCollapseDetailList(collapseList);
+                  }}
+                >
+                  {link.name}
                 </a>
               </li>
             ))}
