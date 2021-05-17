@@ -12,7 +12,7 @@ export default function SubmissionFullList({ obj }) {
       <div className="row">
         <div className="col-sm-10 col-xs-10 summary">Summary</div>
         <div className="col-sm-2 col-xs-2 score">
-          {obj?.summary?.scorePercent}
+          {obj?.summary?.scorePercent || 0}%
         </div>
       </div>
       {obj?.summary?.sections?.map(section => {
@@ -37,7 +37,7 @@ export default function SubmissionFullList({ obj }) {
                 {section.sectionName}
               </div>
               <div className="col-sm-2 col-xs-2 score">
-                {section.scorePercent}
+                {section.scorePercent || 0}%
               </div>
             </div>
             <div
