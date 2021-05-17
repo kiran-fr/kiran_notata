@@ -1,17 +1,120 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Scrollspy from "react-scrollspy";
 import "./edit-evaluation.scss";
 import RadioButton from "../../ui-kits/radio-button";
+import InputCheckBox from "../../ui-kits/check-box";
+
+const sections = [
+  {
+    id: "2e4c82e4-fd55-a1d1-e8bd-0e7974b0fdda",
+    name: "Market",
+    questions: [
+      {
+        id: "96050e0f-b880-97e8-f291-e9d77bc304d0",
+        name: "Is this a new or an existing market?",
+        description: "",
+        inputType: "RADIO",
+        options: [
+          {
+            index: 1,
+            sid: "040e9c55",
+            score: 0,
+            val: "New",
+          },
+          {
+            index: 2,
+            sid: "17c94569",
+            score: null,
+            val: "Existing",
+          },
+        ],
+      },
+      {
+        id: "d34bfec0-9a2f-5a06-e3d5-c2bd039ce53e",
+        name: "Customers willingness to pay",
+        description: "",
+        inputType: "CHECK",
+        options: [
+          {
+            index: 1,
+            sid: "3501137e",
+            score: 0,
+            val: "Low",
+          },
+          {
+            index: 2,
+            sid: "80b84fce",
+            score: 1,
+            val: "High",
+          },
+          {
+            index: 3,
+            sid: "93ae5185",
+            score: 0,
+            val: "I don't know",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 export default function EditEvaluation({
   setEditEvaluation,
   setSaveEvaluation,
   updateEvaluation,
+  selectedSectionsToEvaluate,
 }) {
+  // const selectedSectionsToEvaluate = sections;
+  console.log("selectedSectionsToEvaluate", selectedSectionsToEvaluate);
+
+  let sectionNamesArr = selectedSectionsToEvaluate?.map(
+    section => section.name
+  );
+  console.log("sections", sectionNamesArr);
+
+  let details = {};
+  let sec = selectedSectionsToEvaluate?.map(item => {
+    details[item.id] = "collapse";
+  });
+  const [collapseDetailList, setCollapseDetailList] = useState(details);
   const [problemCollapse, setProblemCollapse] = useState("");
   const [conceptCollapse, setConceptCollapse] = useState("");
   const [marketCollapse, setMarketCollapse] = useState("");
   const [teamCollapse, setTeamCollapse] = useState("");
+
+  const [radioAnswers, setRadioAnswers] = useState({});
+  const [checkAnswers, setCheckAnswers] = useState({});
+
+  const onSubmit = async data => {
+    console.log(data);
+  };
+
+  const onRadioSelect = obj => {
+    setRadioAnswers({
+      ...radioAnswers,
+      [obj.questionId]: [obj],
+    });
+  };
+
+  useEffect(() => {
+    console.log(radioAnswers);
+  }, [radioAnswers]);
+
+  useEffect(() => {
+    console.log(checkAnswers);
+  }, [checkAnswers]);
+
+  const onCheckboxSelect = obj => {
+    let answerCopy = checkAnswers;
+    if (answerCopy[obj.questionId + obj.sid]) {
+      delete answerCopy[obj.questionId + obj.sid];
+      setCheckAnswers(answerCopy);
+      return;
+    }
+    setCheckAnswers({ ...checkAnswers, [obj.questionId + obj.sid]: [obj] });
+  };
+
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
@@ -25,338 +128,105 @@ export default function EditEvaluation({
       </div>
       <div className="col-sm-3 col-md-3">
         <div className="menu-container-1">
-          <Scrollspy
-            items={["Problem", "Concept", "Market", "Team"]}
-            currentClassName="is-current"
-          >
-            <li>
-              <a href="#problem" onClick={() => setProblemCollapse("")}>
-                Problem
-              </a>
-            </li>
-            <li>
-              <a href="#concept" onClick={() => setConceptCollapse("")}>
-                Concept
-              </a>
-            </li>
-            <li>
-              <a href="#market" onClick={() => setMarketCollapse("")}>
-                Market
-              </a>
-            </li>
-            <li>
-              <a href="#team" onClick={() => setTeamCollapse("")}>
-                Team
-              </a>
-            </li>
+          <Scrollspy items={sectionNamesArr} currentClassName="is-current">
+            {sectionNamesArr.map(link => (
+              <li key={link}>
+                <a href={`#${link}`} onClick={() => setConceptCollapse("")}>
+                  {link}
+                </a>
+              </li>
+            ))}
           </Scrollspy>
         </div>
       </div>
       <div className="col-sm-1 col-md-1"></div>
       <div className="col-sm-8 col-md-8 edit-details">
-        <div className="row" id="problem">
-          <div className="col-sm-12 heading">
-            <i
-              class={`fa ${
-                problemCollapse === "" ? "fa-chevron-up" : "fa-chevron-down"
-              }`}
-              aria-hidden="true"
-              onClick={() => {
-                setProblemCollapse(problemCollapse === "" ? "collapse" : "");
-              }}
-            ></i>
-            Poblem
-          </div>
-          <div className={problemCollapse}>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-              </div>
+        {selectedSectionsToEvaluate?.map(section => (
+          <div className="row" id={section.name}>
+            <div className="col-sm-12 heading">
+              <i
+                class={`fa ${
+                  collapseDetailList[section.id] === ""
+                    ? "fa-chevron-up"
+                    : "fa-chevron-down"
+                }`}
+                aria-hidden="true"
+                onClick={() => {
+                  let collapseList = { ...collapseDetailList };
+                  collapseList[section.id] =
+                    collapseList[section.id] === "" ? "collapse" : "";
+                  setCollapseDetailList(collapseList);
+                }}
+              ></i>
+              {section.name}
             </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
+            <div className={`${collapseDetailList[section.id]}`}>
+              {section?.questions.map(question => (
+                <div className="row">
+                  <div className="col-sm-12 question">{question.name}</div>
+                  <div className="options">
+                    {question.inputType === "RADIO" &&
+                      question.options.map(option => (
+                        <div>
+                          <RadioButton
+                            label={option.val}
+                            name={question.id}
+                            value={option.val}
+                            onChange={e =>
+                              onRadioSelect({
+                                inputType: question.inputType,
+                                sectionId: section.id,
+                                sectionName: section.name,
+                                questionId: question.id,
+                                questionName: question.name,
+                                val: option.val,
+                                sid: option.sid,
+                              })
+                            }
+                          ></RadioButton>
+                        </div>
+                      ))}
+                    {question.inputType === "CHECK" &&
+                      question.options.map(option => (
+                        <div>
+                          <InputCheckBox
+                            name="problem-question-1"
+                            label={option.val}
+                            name={question.id}
+                            id="problem-question-1-yes"
+                            onChange={e =>
+                              onCheckboxSelect({
+                                inputType: question.inputType,
+                                sectionId: section.id,
+                                sectionName: section.name,
+                                questionId: question.id,
+                                questionName: question.name,
+                                val: option.val,
+                                sid: option.sid,
+                              })
+                            }
+                          ></InputCheckBox>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
+              ))}
+              <div className="row">
+                <div className="col-sm-12 col-xs-12 add-comment">
+                  Add comment
+                  <input type="text" className="add-comment-txt" />
                 </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row" id="concept">
-          <div className="col-sm-12 heading">
-            <i
-              class={`fa ${
-                conceptCollapse === "" ? "fa-chevron-up" : "fa-chevron-down"
-              }`}
-              aria-hidden="true"
-              onClick={() => {
-                setConceptCollapse(conceptCollapse === "" ? "collapse" : "");
-              }}
-            ></i>
-            Concept
-          </div>
-          <div className={conceptCollapse}>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
               </div>
             </div>
           </div>
-        </div>
-        <div className="row" id="market">
-          <div className="col-sm-12 heading">
-            <i
-              class={`fa ${
-                marketCollapse === "" ? "fa-chevron-up" : "fa-chevron-down"
-              }`}
-              aria-hidden="true"
-              onClick={() => {
-                setMarketCollapse(marketCollapse === "" ? "collapse" : "");
-              }}
-            ></i>
-            Market
-          </div>
-          <div className={marketCollapse}>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row" id="team">
-          <div className="col-sm-12 heading">
-            <i
-              class={`fa ${
-                teamCollapse === "" ? "fa-chevron-up" : "fa-chevron-down"
-              }`}
-              aria-hidden="true"
-              onClick={() => {
-                setTeamCollapse(teamCollapse === "" ? "collapse" : "");
-              }}
-            ></i>
-            Team
-          </div>
-          <div className={teamCollapse}>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 question">
-                Do you understand the problem?
-              </div>
-              <div className="options">
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="yes"
-                    id="problem-question-1-yes"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-                <div>
-                  <RadioButton
-                    name="problem-question-1"
-                    label="no"
-                    id="problem-question-1-no"
-                    checked={false}
-                  ></RadioButton>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 col-xs-12 add-comment">
-                Add comment
-                <input type="text" className="add-comment-txt" />
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-12 text-right">
-            <button
-              className="save-btn delete"
-              onClick={() => setSaveEvaluation(true)}
-            >
-              SAVE
-            </button>
-          </div>
+        ))}
+        <div className="col-sm-12 text-right">
+          <button
+            className="save-btn delete"
+            onClick={() => setSaveEvaluation(true)}
+          >
+            SAVE
+          </button>
         </div>
       </div>
     </div>
