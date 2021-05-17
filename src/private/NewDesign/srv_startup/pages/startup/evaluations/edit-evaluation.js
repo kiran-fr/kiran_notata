@@ -63,12 +63,12 @@ export default function EditEvaluation({
   setEditEvaluation,
   setSaveEvaluation,
   updateEvaluation,
-  selectedSectionsToEvaluate,
+  selectedTemplateToEvaluate,
 }) {
-  // const selectedSectionsToEvaluate = sections;
-  console.log("selectedSectionsToEvaluate", selectedSectionsToEvaluate);
+  // const selectedTemplateToEvaluate = sections;
+  console.log("selectedTemplateToEvaluate", selectedTemplateToEvaluate);
 
-  let sectionNamesArr = selectedSectionsToEvaluate?.map(section => {
+  let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
     return {
       name: section.name,
       id: section.id,
@@ -76,7 +76,7 @@ export default function EditEvaluation({
   });
 
   let details = {};
-  let sec = selectedSectionsToEvaluate?.map(item => {
+  let sec = selectedTemplateToEvaluate?.sections?.map(item => {
     details[item.id] = "collapse";
   });
   const [collapseDetailList, setCollapseDetailList] = useState(details);
@@ -141,7 +141,7 @@ export default function EditEvaluation({
       </div>
       <div className="col-sm-1 col-md-1"></div>
       <div className="col-sm-8 col-md-8 edit-details">
-        {selectedSectionsToEvaluate?.map(section => (
+        {selectedTemplateToEvaluate?.sections?.map(section => (
           <div className="row" id={section.name}>
             <div className="col-sm-12 heading">
               <i

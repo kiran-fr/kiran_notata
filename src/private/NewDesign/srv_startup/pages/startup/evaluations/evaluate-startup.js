@@ -5,12 +5,12 @@ import moment from "moment";
 export default function EvaluateStartup({
   setEditEvaluation,
   accountData,
-  setSelectedSectionsToEvaluate,
+  setSelectedTemplateToEvaluate,
 }) {
   const { evaluationTemplates } = accountData;
   const callBack = data => {
     setEditEvaluation();
-    setSelectedSectionsToEvaluate(data);
+    setSelectedTemplateToEvaluate(data);
   };
   return (
     <div className="evaluate-startup-container">
@@ -25,7 +25,7 @@ export default function EvaluateStartup({
           <div className="col-sm-3 col-xs-5 evaluate-action">
             <button
               onClick={() => {
-                callBack(evaluation.sections);
+                callBack(evaluation);
               }}
             >
               Edit evaluation

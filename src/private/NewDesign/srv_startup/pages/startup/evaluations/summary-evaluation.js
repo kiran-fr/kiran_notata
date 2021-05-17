@@ -3,11 +3,14 @@ import Scrollspy from "react-scrollspy";
 import "./edit-evaluation.scss";
 import "./summary-evaluation.scss";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
+import moment from "moment";
 
 export default function SummaryEvaluation({
   setEditEvaluation,
   setSaveEvaluation,
   updateEvaluation,
+  companyName,
+  selectedTemplateToEvaluate,
 }) {
   const [problemcollapse, setProblemCollapse] = useState("");
   const [conceptcollapse, setConceptCollapse] = useState("");
@@ -24,7 +27,7 @@ export default function SummaryEvaluation({
         >
           arrow_back_ios
         </span>
-        <span className="page-heading">Great Startup Inc</span>
+        <span className="page-heading">{companyName}</span>
       </div>
       <div className="col-sm-3 col-md-3">
         <div className="menu-container-1">
@@ -56,14 +59,23 @@ export default function SummaryEvaluation({
         <div className="row">
           <div className="col-sm-5 col-xs-5 summary-heading">Summary</div>
           <div className="col-sm-7 col-xs-7 last-updated">
-            Last updated: Feb 2, 2021 11:34 PM
+            Last updated:{" "}
+            {moment(selectedTemplateToEvaluate?.createdAt).format("lll")}
           </div>
           <div className="col-sm-12 col-xs-12 created-on">
-            Created by: Daria Kyselova
+            Created by: {selectedTemplateToEvaluate?.createdBy}
           </div>
         </div>
         <div className="row total-answers">
-          <div className="col-sm-6 col-xs-6 type-heading">Concept</div>
+          {selectedTemplateToEvaluate?.sections?.map(section => (
+            <>
+              <div className="col-sm-6 col-xs-6 type-heading">
+                {section.name}
+              </div>
+              <div className="col-sm-6 col-xs-6 attempts">1/2</div>
+            </>
+          ))}
+          {/* <div className="col-sm-6 col-xs-6 type-heading">Concept</div>
           <div className="col-sm-6 col-xs-6 attempts">1/2</div>
           <div className="col-sm-6 col-xs-6 type-heading">Problem</div>
           <div className="col-sm-6 col-xs-6 attempts">0/3</div>
@@ -72,7 +84,7 @@ export default function SummaryEvaluation({
           <div className="col-sm-6 col-xs-6 type-heading">Team</div>
           <div className="col-sm-6 col-xs-6 attempts">1/4</div>
           <div className="col-sm-6 col-xs-6 total-heading">Total</div>
-          <div className="col-sm-6 col-xs-6 total-attempts">3/10</div>
+          <div className="col-sm-6 col-xs-6 total-attempts">3/10</div> */}
         </div>
         <div className="row section" id="problem">
           <div className="col-sm-6 col-xs-7 section-heading">
