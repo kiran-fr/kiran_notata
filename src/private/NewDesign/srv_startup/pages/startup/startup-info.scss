@@ -1,6 +1,39 @@
 .startup-info-container{
     &__details{
         margin: 25px 40px;
+        @media only screen and(max-width:905px) {
+            margin-top:50px!important;
+        }
+    }
+    .share-btn{
+        position: absolute;
+        right: 40px;
+        background: #FFFFFF;        
+        border-radius: 8px;
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 10px;
+        line-height: 12px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: #969BA3;
+        padding-left: 10px;
+        height: 18px;
+        padding-right: 20px;
+        border: 1px solid #969BA3;
+        top: 37px;
+        cursor: pointer;
+        width: 145px;
+        z-index: 999;
+        span{
+            margin-left:15px;
+        }
+        @media only screen and(max-width:905px) {
+            left: 34px;    
+        }
     }
     .name-icon{
         height: 50px;
@@ -15,6 +48,9 @@
         font-size: 20px;
         color: #fff;
         margin-left: 15px;
+        @media only screen and(max-width:905px) {
+            margin-top:50px!important;
+        }
     }
     &__heading{
         
