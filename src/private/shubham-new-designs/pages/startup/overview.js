@@ -8,14 +8,27 @@ import ButtonWithIcon from "../ui-kits/button-with-icon";
 import ShareTemplate from "./share-template";
 import Tags from "../ui-kits/tags";
 import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
+import Funels from "./funels";
+import { Dropdown } from "../../../../Components/UI_Kits/Dropdown";
+import DeleteStartup from "./delete-startup";
+import ArchiveList from "./archive-list";
 
 export default function Overview() {
+  const items = [
+    { id: 1, name: "First" },
+    { id: 2, name: "Before" },
+    { id: 3, name: "After" },
+  ];
   const [pageState, setPageState] = useState(OVERVIEWPAGESTATE.OVERVIEW);
   const [showTagsModal, setShowTagsModal] = useState(false);
+  const [archiveModal, setArchiveModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   return (
     <>
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
         <ShareTemplate setPageState={setPageState}></ShareTemplate>
+      ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
+        <ArchiveList setPageState={setPageState}></ArchiveList>
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">
@@ -150,6 +163,26 @@ export default function Overview() {
                   ></i>
                 </div>
               </div>
+              <div className="row funnel-summary-container">
+                <div className="overview-container__scores__heading">
+                  Evaluation summaries
+                </div>
+                <Funels></Funels>
+              </div>
+              <div className="row groups-container">
+                <div className="overview-container__scores__heading">
+                  Groups
+                </div>
+                <div className="col-sm-4 col-xs-12 group-name">
+                  Group 1, Big group 2
+                </div>
+                <div className="col-sm-8 col-xs-12 add-startup-container">
+                  <span className="add-text">Add startup to a group</span>
+                  <span className="add-startup-to-group">
+                    <Dropdown title="" items={items}></Dropdown>
+                  </span>
+                </div>
+              </div>
               <div className="row impact-goals-container">
                 <div className="impact-goals-container__heading">
                   Impact Goals
@@ -192,7 +225,7 @@ export default function Overview() {
                           <span className="name">Great Startup Inc</span>
                         </td>
                         <td>
-                          <div className="tags-container__placeholder">
+                          <div className="tag-placeholder">
                             <div className="tag">Hardware</div>
                             <div className="tag">Hardware</div>
                           </div>
@@ -218,7 +251,7 @@ export default function Overview() {
                           <span className="name">Great Startup Inc</span>
                         </td>
                         <td>
-                          <div className="tags-container__placeholder">
+                          <div className="tag-placeholder">
                             <div className="tag">Hardware</div>
                             <div className="tag">Hardware</div>
                           </div>
@@ -254,7 +287,7 @@ export default function Overview() {
                   Do you want to share info about startup with a network outside
                   Notata?
                 </div>
-                <div className="col-sm-12 similar-startups-contianer__table-container">
+                <div className="col-sm-12 similar-startups-contianer__table-container no-border-rows">
                   <table>
                     <thead>
                       <tr className="grid-header">
@@ -351,7 +384,14 @@ export default function Overview() {
                   className="text-center archive-btn"
                   text="ARCHIEVE STARTUP"
                   iconPosition={ICONPOSITION.NONE}
+                  onClick={() => setArchiveModal(true)}
                 ></ButtonWithIcon>
+                <div
+                  className="open-archive"
+                  onClick={() => setPageState(OVERVIEWPAGESTATE.ARCHIVElIST)}
+                >
+                  Open Archive
+                </div>
               </div>
               <div className="col-xs-6 col-sm-6">
                 <ButtonWithIcon
@@ -359,6 +399,7 @@ export default function Overview() {
                   className="text-center delete-btn"
                   text="DELETE STARTUP PERMANENTLY"
                   iconPosition={ICONPOSITION.NONE}
+                  onClick={() => setDeleteModal(true)}
                 ></ButtonWithIcon>
               </div>
             </div>
@@ -404,7 +445,7 @@ export default function Overview() {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-xs-12 col-sm-12 col-md-12">
+                  <div className="col-sm-6 col-xs-6">
                     <input
                       className="discussions-contianer__disucssions__text"
                       type="search"
@@ -433,6 +474,43 @@ export default function Overview() {
           submitTxt="Save"
           closeTxt="Cancel"
           children={<Tags></Tags>}
+        ></Modal>
+      )}
+      {archiveModal && (
+        <Modal
+          title="Archive startup"
+          submit={() => {
+            setArchiveModal(false);
+            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+          }}
+          close={() => setArchiveModal(false)}
+          submitTxt="Archive"
+          closeTxt="CANCEL"
+          children={
+            <div className="archive-modal-description">
+              After archiving startup still will be available in reports
+              section.
+            </div>
+          }
+        ></Modal>
+      )}
+      {deleteModal && (
+        <Modal
+          title="Archive startup"
+          submit={() => {
+            setDeleteModal(false);
+            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+          }}
+          close={() => setDeleteModal(false)}
+          submitTxt="Delete"
+          submitButtonStyle="secondary"
+          closeTxt="CANCEL"
+          intermidate={() => {
+            setDeleteModal(false);
+            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+          }}
+          intermidateTxt="Archive"
+          children={<DeleteStartup></DeleteStartup>}
         ></Modal>
       )}
     </>
