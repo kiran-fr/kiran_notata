@@ -3,49 +3,54 @@ import "./submission-full-list.scss";
 
 export default function SubmissionFullList({ obj }) {
   let details = {};
-  obj.details.map(item => {
-    details[item.id] = "collapse";
+  let sec = obj?.summary?.sections?.map(item => {
+    details[item.sectionId] = "collapse";
   });
-  console.log(",,,,,,,,,,,", details);
   const [collapseDetailList, setCollapseDetailList] = useState(details);
   return (
     <div className="submission-details">
       <div className="row">
         <div className="col-sm-10 col-xs-10 summary">Summary</div>
-        <div className="col-sm-2 col-xs-2 score">{obj.summary}</div>
+        <div className="col-sm-2 col-xs-2 score">
+          {obj?.summary?.scorePercent || 0}%
+        </div>
       </div>
-      {obj.details.map(item => {
+      {obj?.summary?.sections?.map(section => {
         return (
-          <div key={item.id}>
+          <div key={section.sectionId}>
             <div className="row detail-type">
               <div className="col-sm-10 col-xs-10 detail-heading">
                 <i
                   class={`fa ${
-                    collapseDetailList[item.id] === ""
+                    collapseDetailList[section.sectionId] === ""
                       ? "fa-chevron-up"
                       : "fa-chevron-down"
                   }`}
                   aria-hidden="true"
                   onClick={() => {
                     let collapseList = { ...collapseDetailList };
-                    collapseList[item.id] =
-                      collapseList[item.id] === "" ? "collapse" : "";
+                    collapseList[section.sectionId] =
+                      collapseList[section.sectionId] === "" ? "collapse" : "";
                     setCollapseDetailList(collapseList);
                   }}
                 ></i>
-                {item.name}
+                {section.sectionName}
               </div>
-              <div className="col-sm-2 col-xs-2 score">{item.value}</div>
+              <div className="col-sm-2 col-xs-2 score">
+                {section.scorePercent || 0}%
+              </div>
             </div>
-            <div className={`${collapseDetailList[item.id]} detail-list`}>
-              {item.detail.map((detail, index) => {
+            <div
+              className={`${collapseDetailList[section.sectionId]} detail-list`}
+            >
+              {section?.scorePerAnswer?.map((score, index) => {
                 return (
-                  <div className="row" key={`${item.id}_${index}`}>
+                  <div className="row" key={`${section.sectionId}_${index}`}>
                     <div className="col-sm-10 col-xs-10 detail">
-                      <p>{detail.key}</p>
+                      <p>{score.questionName}</p>
                     </div>
                     <div className="col-sm-2 col-xs-2 detail-score">
-                      {detail.value}
+                      {score.score + "/" + score.possibleScore}
                     </div>
                   </div>
                 );

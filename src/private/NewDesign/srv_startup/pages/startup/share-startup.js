@@ -11,7 +11,7 @@ import preview from "../../../../../assets/images/preview.png";
 import preview_check from "../../../../../assets/images/preview-done.png";
 import download_cover from "../../../../../assets/images/download-cover.png";
 
-export default function ShareStartup() {
+export default function ShareStartup({ setshareStartup }) {
   const [infoSectionState, setInfoSectionState] = useState("");
   const [businessSectionState, setBusinessSectionState] = useState("");
   const [moneySectionState, setMoneySectionState] = useState("");
@@ -34,7 +34,9 @@ export default function ShareStartup() {
         <div className="share-startup-container">
           <div className="row">
             <div className="col-sm-12">
-              <span class="material-icons back-icon">arrow_back_ios</span>
+              <span class="material-icons back-icon" onClick={setshareStartup}>
+                arrow_back_ios
+              </span>
               <span className="page-heading">Great Startup Inc</span>
             </div>
           </div>

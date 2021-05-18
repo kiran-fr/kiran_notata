@@ -12,6 +12,20 @@ import { funnelGroupGet } from "private/Apollo/Queries";
 import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 import moment from "moment";
 
+/* const DatePicker = ({ filters, setFilters }) => {
+  const setDateFilter = dateRange => {
+    let from = moment(dateRange[0]);
+    let to = moment(dateRange[1]);
+
+    if (from.isValid() && to.isValid()) {
+      let fromDate = from?.format("x");
+      let toDate = to?.format("x");
+      console.log(fromDate, toDate);
+      setFilters({ ...filters, fromDate, toDate });
+    }
+  };
+}
+ */
 const DatePicker = ({ filters, setFilters }) => {
   const setDateFilter = dateRange => {
     let from = moment(dateRange[0]);
@@ -50,7 +64,6 @@ const DatePickerNewdesign = () => (
     </div>
   </div>
 );
-
 
 export default function FilterBar({
   close,

@@ -1,5 +1,5 @@
 import React from "react";
-import "./index.scss";
+import "../public.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 
 import StartupInfo from "./startup-info";
 import Overview from "./overview";
-import GroupsIndividuals from "./groups-individuals";
+import GroupsIndividuals from "./groups-individuals/groups-individuals";
 import Materials from "./materials";
 import Evaluations from "./evaluations/evaluations";
 import { connectionGet } from "private/Apollo/Queries";
@@ -52,7 +52,9 @@ export const Startup = props => {
   if (!connectionGetData) {
     return <GhostLoader />;
   }
-  let creativity = connectionGetData?.connectionGet;
+  let connection = connectionGetData?.connectionGet;
+
+  console.log(connectionGetData);
   return (
     <>
       <div className="col-12 startup-container">
@@ -68,10 +70,10 @@ export const Startup = props => {
         <StartupInfo />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Overview creativity={creativity} />
+        <Overview creativity={connection} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Evaluations />
+        <Evaluations connection={connection} />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <GroupsIndividuals />

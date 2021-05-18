@@ -8,6 +8,7 @@ import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
+//  import styles from "../modal.module.css"
 import { groupsGetV2 } from "private/Apollo/Queries";
 import {
   connectionCreate,
