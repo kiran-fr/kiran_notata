@@ -1,0 +1,32 @@
+.sharing-opions-contianer{
+    .question{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: 0.03em;
+        margin-top:35px;
+        color: #969BA3;
+    }
+    .options-container{
+        margin-top: 35px;
+        .option{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 17px;
+            margin-top: 10px;
+            color: #969BA3;
+            i{
+                font-size: 12px;
+                padding-left: 10px;
+            }
+        }
+        .evaluation-options-container{
+            margin-left:25px;
+            margin-top:25px;
+        }
+    }
+}
