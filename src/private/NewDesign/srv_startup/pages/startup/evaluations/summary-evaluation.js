@@ -49,7 +49,7 @@ export default function SummaryEvaluation({
             {sectionNamesArr.map(link => (
               <li key={link.id}>
                 <a
-                  href={`#${link.name}`}
+                  href={`#section${link.name}`}
                   onClick={() => {
                     let collapseList = { ...collapseDetailList };
                     collapseList[link.id] = "";
@@ -96,7 +96,7 @@ export default function SummaryEvaluation({
           <div className="col-sm-6 col-xs-6 total-attempts">3/10</div> */}
         </div>
         {selectedTemplateToEvaluate?.sections.map(section => (
-          <div className="row section" id={section.name}>
+          <div className="row section" id={"section" + section.name}>
             <div className="col-sm-6 col-xs-7 section-heading">
               <i
                 class={`fa ${
