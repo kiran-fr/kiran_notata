@@ -80,7 +80,7 @@ export default function Evaluations(props) {
     {}
   );
   const [activeEvaluation, setActiveEvaluation] = useState(null);
-  const [allAnswers, setAllAnswers] = useState({});
+  const [allAnswers, setAllAnswers] = useState([]);
   const [savedAnswers, setSavedAnswers] = useState([]);
   return (
     <div className="row tab-panel-container">

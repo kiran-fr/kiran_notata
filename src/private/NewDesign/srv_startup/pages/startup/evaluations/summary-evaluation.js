@@ -29,6 +29,12 @@ export default function SummaryEvaluation({
   });
   const [collapseDetailList, setCollapseDetailList] = useState(details);
 
+  const getAttendCount = (answers, sectionId) => {
+    return answers?.filter(ans => ans.sectionId === sectionId)?.length || 0;
+  };
+  const findAns = questionId => {
+    return allAnswers?.find(ans => ans.questionId === questionId);
+  };
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
@@ -81,7 +87,10 @@ export default function SummaryEvaluation({
               <div className="col-sm-6 col-xs-6 type-heading">
                 {section.name}
               </div>
-              <div className="col-sm-6 col-xs-6 attempts">1/2</div>
+              <div className="col-sm-6 col-xs-6 attempts">{`${getAttendCount(
+                allAnswers,
+                section.id
+              )}/${section?.questions?.length || 0}`}</div>
             </>
           ))}
           {/* <div className="col-sm-6 col-xs-6 type-heading">Concept</div>
@@ -120,9 +129,11 @@ export default function SummaryEvaluation({
               ></i>
             </div>
             <div className="col-sm-6 col-xs-5 last-updated">
-              3 of 3 questions answered
+              {`${getAttendCount(allAnswers, section.id)} of ${
+                section?.questions?.length || 0
+              } questions answered`}
             </div>
-            <div className="col-sm-12 created-on">2 out of 1 points</div>
+            {/* <div className="col-sm-12 created-on">2 out of 1 points</div> */}
             <div
               className={`row question-answers ${
                 collapseDetailList[section.id]
@@ -132,16 +143,25 @@ export default function SummaryEvaluation({
                 return (
                   <>
                     <div className="col-sm-12 question">{question.name}</div>
-                    {question.inputType === "RADIO" &&
+
+                    {findAns(question.id) ? (
+                      <div className="col-sm-12 answer">
+                        {findAns(question.id)?.val}
+                      </div>
+                    ) : (
+                      <div className="col-sm-12 no-answer">Not Answered</div>
+                    )}
+
+                    {/* {question.inputType === "RADIO" &&
                       (allAnswers[question.id]?.val ? (
                         <div className="col-sm-12 answer">
                           {allAnswers[question.id]?.val}
                         </div>
                       ) : (
                         <div className="col-sm-12 no-answer">Not Answered</div>
-                      ))}
+                      ))} */}
 
-                    {question.inputType === "CHECK" &&
+                    {/* {question.inputType === "CHECK" &&
                       question.options?.map(
                         option =>
                           allAnswers[question.id + option.sid]?.val && (
@@ -149,7 +169,7 @@ export default function SummaryEvaluation({
                               {allAnswers[question.id + option.sid]?.val}
                             </div>
                           )
-                      )}
+                      )} */}
                   </>
                 );
               })}
