@@ -81,6 +81,7 @@ export default function Evaluations(props) {
   );
   const [activeEvaluation, setActiveEvaluation] = useState(null);
   const [allAnswers, setAllAnswers] = useState({});
+  const [savedAnswers, setSavedAnswers] = useState([]);
   return (
     <div className="row tab-panel-container">
       <div className="col-sm-12">
@@ -115,6 +116,7 @@ export default function Evaluations(props) {
                   allAnswers={allAnswers}
                   connectionId={id}
                   evaluation={activeEvaluation}
+                  savedAnswers={savedAnswers}
                 />
               </div>
             </div>
@@ -700,6 +702,7 @@ export default function Evaluations(props) {
                 setEditEvaluation(true);
               }}
               evaluations={evaluations}
+              setSavedAnswers={setSavedAnswers}
             />
           }
         ></Modal>

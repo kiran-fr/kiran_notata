@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./evaluate-startup.scss";
 import moment from "moment";
+import { evaluationGet } from "private/Apollo/Queries";
+import { appsyncClient } from "../../../../../../awsconfig";
+
+const transform = obj => {
+  if (obj) {
+    return {
+      inputType: obj.inputType,
+      questionId: obj.questionId,
+      sectionId: obj.sectionId,
+      sid: obj.sid,
+      val: obj.val,
+    };
+  }
+};
 
 export default function EvaluateStartup({
   setEditEvaluation,
@@ -8,12 +22,36 @@ export default function EvaluateStartup({
   evaluations,
   setSelectedTemplateToEvaluate,
   setActiveEvaluation,
+  setSavedAnswers,
 }) {
   const { evaluationTemplates } = accountData;
+  const [loader, setLoader] = useState(false);
   const callBack = (template, evaluation) => {
-    setEditEvaluation();
+    setLoader(true);
     setSelectedTemplateToEvaluate(template);
-    setActiveEvaluation(evaluation);
+    if (evaluation) {
+      appsyncClient
+        .query({
+          query: evaluationGet,
+          variables: {
+            id: evaluation.id,
+          },
+        })
+        .then(result => {
+          setLoader(false);
+          let ansArr = result?.data?.evaluationGet?.answers?.map(obj =>
+            transform(obj)
+          );
+          setSavedAnswers(ansArr || []);
+          setActiveEvaluation(evaluation);
+          setEditEvaluation();
+        });
+    } else {
+      setLoader(false);
+      setActiveEvaluation(evaluation);
+      setSavedAnswers([]);
+      setEditEvaluation();
+    }
   };
   const getEvaluations = (templateId, myEvaluations) => {
     return (
@@ -22,6 +60,9 @@ export default function EvaluateStartup({
       ) || []
     );
   };
+  if (loader) {
+    return "Please wait loading...";
+  }
   return (
     <div className="evaluate-startup-container">
       {evaluationTemplates?.map(template => (
@@ -34,7 +75,7 @@ export default function EvaluateStartup({
               {getEvaluations(template.id, true)?.map(evaluation => (
                 <div className="row">
                   <div className="col-sm-4 col-xs-5 evaluated-on">
-                    evaluated on {moment(evaluation.createdAt).format("ll")}
+                    evaluated on {moment(evaluation.createdAt).format("lll")}
                   </div>
                   <div className="col-sm-3 col-xs-5 evaluate-action">
                     <button

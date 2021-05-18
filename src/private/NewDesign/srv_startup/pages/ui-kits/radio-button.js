@@ -21,6 +21,7 @@ export default function RadioButton({
         checked={checked}
         defaultChecked={defaultChecked}
         name={name}
+        defaultValue={defaultValue}
         {...props}
       />
       <span class="checkmark"></span>
