@@ -101,13 +101,13 @@
                     }
                 }
                 color:#C4C4C4;
-            cursor: pointer;
-            &:hover{
-                color:#000;
-            }
-            .selected{
-                color:#000;
-            }
+                cursor: pointer;
+                &:hover{
+                    color:#000;
+                }
+                .selected{
+                    color:#000;
+                }
                 &__drop-dwon{
                     position: absolute;
                     background: #FFFFFF;

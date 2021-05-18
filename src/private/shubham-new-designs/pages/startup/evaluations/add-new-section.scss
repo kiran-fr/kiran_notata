@@ -1,11 +1,15 @@
+.question-option-show{
+    @media only screen and(min-width:768px) {
+        margin-top: 70px;
+    }
+}
 .add-section-conatiner{
     @media only screen and(min-width:768px) {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 700px;    
-        margin-top: 70px;
+        width: 700px;            
     }
     .text-container{
         .text-box{
@@ -28,7 +32,7 @@
         margin-top:10px;
         cursor: pointer;
     }
-    .browse{
+    .browse-card{
         position: absolute;
         right: 30px;
         top: 10px;
@@ -258,4 +262,7 @@
             }
         }
     }
+}
+.max-width{
+    max-width: 900px;
 }
