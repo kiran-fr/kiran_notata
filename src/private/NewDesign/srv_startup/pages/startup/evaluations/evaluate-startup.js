@@ -5,6 +5,7 @@ import moment from "moment";
 export default function EvaluateStartup({
   setEditEvaluation,
   accountData,
+  evaluations,
   setSelectedTemplateToEvaluate,
 }) {
   const { evaluationTemplates } = accountData;
@@ -12,25 +13,43 @@ export default function EvaluateStartup({
     setEditEvaluation();
     setSelectedTemplateToEvaluate(data);
   };
+  const getEvaluations = (templateId, myEvaluations) => {
+    return (
+      evaluations?.filter(
+        data => data.templateId === templateId && data.isMe === myEvaluations
+      ) || []
+    );
+  };
   return (
     <div className="evaluate-startup-container">
-      {evaluationTemplates?.map(evaluation => (
+      {evaluationTemplates?.map(template => (
         <div className="row">
           <div className="col-sm-4 col-xs-8 eval-type-heading">
-            {evaluation.name}
+            {template.name}
           </div>
-          <div className="col-sm-4 col-xs-5 evaluated-on">
-            evaluated on {moment(evaluation.createdAt).format("ll")}
-          </div>
-          <div className="col-sm-3 col-xs-5 evaluate-action">
-            <button
-              onClick={() => {
-                callBack(evaluation);
-              }}
-            >
-              Edit evaluation
-            </button>
-          </div>
+          {
+            <div>
+              {getEvaluations(template.id, true)?.map(evaluation => (
+                <div className="row">
+                  <div className="col-sm-4 col-xs-5 evaluated-on">
+                    evaluated on {moment(evaluation.createdAt).format("ll")}
+                  </div>
+                  <div className="col-sm-3 col-xs-5 evaluate-action">
+                    <button
+                      onClick={() => {
+                        callBack(template);
+                      }}
+                    >
+                      Edit evaluation
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {/* <div className="col-sm-3 col-xs-5 evaluate-action">
+                  <button>+ New evaluation</button>
+              </div> */}
+            </div>
+          }
         </div>
       ))}
     </div>

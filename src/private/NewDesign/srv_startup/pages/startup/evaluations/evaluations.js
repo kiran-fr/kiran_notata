@@ -695,6 +695,7 @@ export default function Evaluations(props) {
                 setEvaluateModal(false);
                 setEditEvaluation(true);
               }}
+              evaluations={evaluations}
             />
           }
         ></Modal>
