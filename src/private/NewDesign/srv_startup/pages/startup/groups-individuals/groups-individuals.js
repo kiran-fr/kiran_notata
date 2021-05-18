@@ -146,7 +146,7 @@ export default function GroupsIndividuals() {
               <ButtonWithIcon
                 iconPosition={ICONPOSITION.START}
                 iconName={"add"}
-                text="CREATE NEW sadGROUP"
+                text="CREATE NEW GROUP"
                 onClick={() => setCreateGroupModal(true)}
               />
             </div>
