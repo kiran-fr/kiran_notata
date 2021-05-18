@@ -17,6 +17,7 @@ export default function Evaluations(props) {
       evaluations,
       groupSharingInfo,
       subjectiveScores,
+      id,
     },
     accountData,
   } = props;
@@ -110,6 +111,7 @@ export default function Evaluations(props) {
                   selectedTemplateToEvaluate={selectedTemplateToEvaluate}
                   setAllAnswers={setAllAnswers}
                   allAnswers={allAnswers}
+                  connectionId={id}
                 />
               </div>
             </div>

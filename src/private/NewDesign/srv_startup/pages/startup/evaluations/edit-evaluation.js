@@ -3,61 +3,10 @@ import Scrollspy from "react-scrollspy";
 import "./edit-evaluation.scss";
 import RadioButton from "../../ui-kits/radio-button";
 import InputCheckBox from "../../ui-kits/check-box";
+import { useQuery, useMutation } from "@apollo/client";
+import { evaluationUpdate, evaluationCreate } from "private/Apollo/Mutations";
 
-const sections = [
-  {
-    id: "2e4c82e4-fd55-a1d1-e8bd-0e7974b0fdda",
-    name: "Market",
-    questions: [
-      {
-        id: "96050e0f-b880-97e8-f291-e9d77bc304d0",
-        name: "Is this a new or an existing market?",
-        description: "",
-        inputType: "RADIO",
-        options: [
-          {
-            index: 1,
-            sid: "040e9c55",
-            score: 0,
-            val: "New",
-          },
-          {
-            index: 2,
-            sid: "17c94569",
-            score: null,
-            val: "Existing",
-          },
-        ],
-      },
-      {
-        id: "d34bfec0-9a2f-5a06-e3d5-c2bd039ce53e",
-        name: "Customers willingness to pay",
-        description: "",
-        inputType: "CHECK",
-        options: [
-          {
-            index: 1,
-            sid: "3501137e",
-            score: 0,
-            val: "Low",
-          },
-          {
-            index: 2,
-            sid: "80b84fce",
-            score: 1,
-            val: "High",
-          },
-          {
-            index: 3,
-            sid: "93ae5185",
-            score: 0,
-            val: "I don't know",
-          },
-        ],
-      },
-    ],
-  },
-];
+import { evaluationGet } from "private/Apollo/Queries";
 
 export default function EditEvaluation({
   setEditEvaluation,
@@ -65,9 +14,23 @@ export default function EditEvaluation({
   updateEvaluation,
   selectedTemplateToEvaluate,
   setAllAnswers,
+  connectionId,
 }) {
+  // Mutations
+  const [mutateEvaluationUpdate] = useMutation(evaluationUpdate);
+  const [mutateEvaluationCreate] = useMutation(evaluationCreate);
   // const selectedTemplateToEvaluate = sections;
   console.log("selectedTemplateToEvaluate", selectedTemplateToEvaluate);
+
+  const { data: evaluationGetData } = useQuery(evaluationGet, {
+    variables: {
+      id:
+        // '1b8c44d3-f392-3d5c-11dc-b2164520cdd1'
+        selectedTemplateToEvaluate.id,
+    },
+  });
+
+  console.log("accountGetData", evaluationGetData);
 
   let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
     return {
@@ -91,12 +54,42 @@ export default function EditEvaluation({
     });
   };
 
-  const collectionAllAnswers = () => {
-    // let radioButtonAns = Object.keys(radioAnswers).map(answer=>radioAnswers[answer]);
-    // let checkButtonAns = Object.keys(checkAnswers).map(answer=>checkAnswers[answer]);
-    let allAnswers = Object.assign({}, radioAnswers, checkAnswers);
-    setAllAnswers(allAnswers);
-    setSaveEvaluation(true);
+  const collectionAllAnswers = async () => {
+    try {
+      let radioButtonAns = Object.keys(radioAnswers).map(
+        answer => radioAnswers[answer]
+      );
+      let checkButtonAns = Object.keys(checkAnswers).map(
+        answer => checkAnswers[answer]
+      );
+
+      let ansArr = radioButtonAns.concat(checkButtonAns);
+      console.log("answers to api call", ansArr);
+      console.log(selectedTemplateToEvaluate);
+
+      let variables = {
+        connectionId: connectionId,
+        templateId: selectedTemplateToEvaluate.id,
+        answers: ansArr,
+      };
+
+      let ansCreate = await mutateEvaluationCreate({ variables });
+
+      let evaluationCreateResp = ansCreate?.data?.evaluationCreate;
+      console.log("evaluationCreateResp", evaluationCreateResp);
+
+      // let variables = { id: selectedTemplateToEvaluate.id, answers:ansArr};
+      // let ansMutation = await mutateEvaluationUpdate({ variables });
+
+      // console.log('ansMutation', ansMutation)
+      // let connection = ansMutation?.data?.connectionCreate;
+
+      let allAnswers = Object.assign({}, radioAnswers, checkAnswers);
+      setAllAnswers(allAnswers);
+      setSaveEvaluation(true);
+    } catch (error) {
+      console.log("ERROR CREATING STARTUP", error);
+    }
   };
 
   const onCheckboxSelect = obj => {
