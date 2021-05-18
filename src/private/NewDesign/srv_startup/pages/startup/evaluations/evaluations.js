@@ -79,6 +79,7 @@ export default function Evaluations(props) {
   const [selectedTemplateToEvaluate, setSelectedTemplateToEvaluate] = useState(
     {}
   );
+  const [activeEvaluation, setActiveEvaluation] = useState(null);
   const [allAnswers, setAllAnswers] = useState({});
   return (
     <div className="row tab-panel-container">
@@ -99,6 +100,7 @@ export default function Evaluations(props) {
                     setUpdateEvaluation(type);
                   }}
                   allAnswers={allAnswers}
+                  evaluation={activeEvaluation}
                 />
               </div>
               <div
@@ -112,6 +114,7 @@ export default function Evaluations(props) {
                   setAllAnswers={setAllAnswers}
                   allAnswers={allAnswers}
                   connectionId={id}
+                  evaluation={activeEvaluation}
                 />
               </div>
             </div>
@@ -691,6 +694,7 @@ export default function Evaluations(props) {
             <EvaluateStartup
               accountData={accountData}
               setSelectedTemplateToEvaluate={setSelectedTemplateToEvaluate}
+              setActiveEvaluation={setActiveEvaluation}
               setEditEvaluation={() => {
                 setEvaluateModal(false);
                 setEditEvaluation(true);

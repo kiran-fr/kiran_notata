@@ -7,11 +7,13 @@ export default function EvaluateStartup({
   accountData,
   evaluations,
   setSelectedTemplateToEvaluate,
+  setActiveEvaluation,
 }) {
   const { evaluationTemplates } = accountData;
-  const callBack = data => {
+  const callBack = (template, evaluation) => {
     setEditEvaluation();
-    setSelectedTemplateToEvaluate(data);
+    setSelectedTemplateToEvaluate(template);
+    setActiveEvaluation(evaluation);
   };
   const getEvaluations = (templateId, myEvaluations) => {
     return (
@@ -37,7 +39,7 @@ export default function EvaluateStartup({
                   <div className="col-sm-3 col-xs-5 evaluate-action">
                     <button
                       onClick={() => {
-                        callBack(template);
+                        callBack(template, evaluation);
                       }}
                     >
                       Edit evaluation

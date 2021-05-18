@@ -6,7 +6,7 @@ import InputCheckBox from "../../ui-kits/check-box";
 import { useQuery, useMutation } from "@apollo/client";
 import { evaluationUpdate, evaluationCreate } from "private/Apollo/Mutations";
 
-import { evaluationGet } from "private/Apollo/Queries";
+import { evaluationGet, evaluationTemplateGet } from "private/Apollo/Queries";
 
 export default function EditEvaluation({
   setEditEvaluation,
@@ -15,22 +15,45 @@ export default function EditEvaluation({
   selectedTemplateToEvaluate,
   setAllAnswers,
   connectionId,
+  evaluation,
 }) {
+  console.log("evaluation", evaluation);
+  const [savedEvalution, setSavedEvalution] = useState([]);
   // Mutations
   const [mutateEvaluationUpdate] = useMutation(evaluationUpdate);
   const [mutateEvaluationCreate] = useMutation(evaluationCreate);
   // const selectedTemplateToEvaluate = sections;
   console.log("selectedTemplateToEvaluate", selectedTemplateToEvaluate);
 
-  const { data: evaluationGetData } = useQuery(evaluationGet, {
+  const { data: evaluationGetData, loading, error } = useQuery(evaluationGet, {
     variables: {
-      id:
-        // '1b8c44d3-f392-3d5c-11dc-b2164520cdd1'
-        selectedTemplateToEvaluate.id,
+      id: evaluation.id,
     },
   });
 
-  console.log("accountGetData", evaluationGetData);
+  useEffect(() => {
+    if (loading === false && evaluationGetData) {
+      setSavedEvalution(evaluationGetData?.evaluationGet?.answers);
+    }
+  }, [loading, evaluationGetData]);
+
+  const getSavedAnswer = questionId => {
+    let ans = savedEvalution?.find(ans => ans.questionId === questionId);
+    if (ans?.val) {
+      console.log("ans", ans?.val);
+    }
+
+    return ans?.val;
+  };
+
+  const getSavedCheckboxAnswer = (questionId, sid) => {
+    // console.log('questionId', questionId)
+    let ans = savedEvalution?.find(
+      ans => ans.questionId === questionId && ans.sid === sid
+    );
+    // console.log('ans', ans?.val);
+    return ans?.val;
+  };
 
   let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
     return {
@@ -62,27 +85,29 @@ export default function EditEvaluation({
       let checkButtonAns = Object.keys(checkAnswers).map(
         answer => checkAnswers[answer]
       );
-
       let ansArr = radioButtonAns.concat(checkButtonAns);
-      console.log("answers to api call", ansArr);
-      console.log(selectedTemplateToEvaluate);
+      if (evaluation?.id) {
+        let updateVariables = {
+          id: evaluation?.id,
+          answers: ansArr,
+        };
 
-      let variables = {
-        connectionId: connectionId,
-        templateId: selectedTemplateToEvaluate.id,
-        answers: ansArr,
-      };
+        let update = await mutateEvaluationUpdate({
+          variables: updateVariables,
+        });
+        console.log("updated", update);
+      } else {
+        let variables = {
+          connectionId: connectionId,
+          templateId: selectedTemplateToEvaluate.id,
+          answers: ansArr,
+        };
 
-      let ansCreate = await mutateEvaluationCreate({ variables });
+        let ansCreate = await mutateEvaluationCreate({ variables });
 
-      let evaluationCreateResp = ansCreate?.data?.evaluationCreate;
-      console.log("evaluationCreateResp", evaluationCreateResp);
-
-      // let variables = { id: selectedTemplateToEvaluate.id, answers:ansArr};
-      // let ansMutation = await mutateEvaluationUpdate({ variables });
-
-      // console.log('ansMutation', ansMutation)
-      // let connection = ansMutation?.data?.connectionCreate;
+        let evaluationCreateResp = ansCreate?.data?.evaluationCreate;
+        console.log("evaluationCreateResp", evaluationCreateResp);
+      }
 
       let allAnswers = Object.assign({}, radioAnswers, checkAnswers);
       setAllAnswers(allAnswers);
@@ -101,6 +126,10 @@ export default function EditEvaluation({
     }
     setCheckAnswers({ ...checkAnswers, [obj.questionId + obj.sid]: obj });
   };
+
+  // if (!evaluationGetData) {
+  //   return 'Loading...';
+  // }
 
   return (
     <div className="row edit-evaluation-container">
@@ -166,6 +195,10 @@ export default function EditEvaluation({
                             label={option.val}
                             name={question.id}
                             value={option.val}
+                            defaultChecked={
+                              option.val === getSavedAnswer(question.id) &&
+                              "checked"
+                            }
                             onChange={e =>
                               onRadioSelect({
                                 inputType: question.inputType,
@@ -188,6 +221,10 @@ export default function EditEvaluation({
                             label={option.val}
                             name={question.id}
                             id="problem-question-1-yes"
+                            defaultChecked={
+                              option.val ===
+                              getSavedCheckboxAnswer(question.id, option.sid)
+                            }
                             onChange={e =>
                               onCheckboxSelect({
                                 inputType: question.inputType,
@@ -205,11 +242,11 @@ export default function EditEvaluation({
                   </div>
                 </div>
               ))}
-              <div className="row">
-                <div className="col-sm-12 col-xs-12 add-comment">
-                  Add comment
-                  <input type="text" className="add-comment-txt" />
-                </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-12 col-xs-12 add-comment">
+                Add comment
+                <input type="text" className="add-comment-txt" />
               </div>
             </div>
           </div>

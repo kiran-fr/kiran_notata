@@ -7,6 +7,8 @@ export default function RadioButton({
   value,
   id,
   checked,
+  defaultChecked,
+  defaultValue,
   ...props
 }) {
   return (
@@ -17,6 +19,7 @@ export default function RadioButton({
         id={id}
         value={value}
         checked={checked}
+        defaultChecked={defaultChecked}
         name={name}
         {...props}
       />
