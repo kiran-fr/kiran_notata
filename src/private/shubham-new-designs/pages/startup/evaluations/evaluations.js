@@ -8,8 +8,9 @@ import EvaluateStartup from "./evaluate-startup";
 import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
 import ManageTemplates from "./manage-templates";
+import { evaluation_template_new } from "../../../../../definitions";
 
-export default function Evaluations() {
+export default function Evaluations({ history }) {
   const [myEvalState, setMyEvalState] = useState("");
   const [myTeamEvalState, setMyTeamEvalState] = useState("");
   const [expertEvalState, setExpertEvalState] = useState("");
@@ -834,7 +835,7 @@ export default function Evaluations() {
                 <div className="col-sm-12 text-right">
                   <button
                     className="evaluation-templates-btn"
-                    onClick={() => setManageTemplateModal(true)}
+                    onClick={() => history.push(evaluation_template_new)}
                   >
                     Evaluations templates
                   </button>

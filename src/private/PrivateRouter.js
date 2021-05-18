@@ -32,6 +32,8 @@ import {
   startup_company_profile,
   startup_info,
   group_new,
+  evaluation_template_new,
+  add_section,
 } from "../definitions";
 
 // Landing page / list
@@ -77,6 +79,8 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
 import { Startup } from "./shubham-new-designs/pages/startup/index";
+import ElevationTemplates from "./shubham-new-designs/pages/startup/evaluations/evaluation-templates";
+import AddSection from "./shubham-new-designs/pages/startup/evaluations/add-new-section";
 
 // New Startup Info
 import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
@@ -176,6 +180,14 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={startup_company_profile} component={StartupInfo} />
 
       <Route exact path={startup_index} component={Startup} />
+
+      <Route
+        exact
+        path={evaluation_template_new}
+        component={ElevationTemplates}
+      />
+
+      <Route exact path={add_section} component={AddSection} />
 
       <Route render={() => <div>404</div>} />
     </Switch>

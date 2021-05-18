@@ -65,7 +65,6 @@ const DatePickerNewdesign = () => (
   </div>
 );
 
-
 export default function FilterBar({
   close,
   filters,
