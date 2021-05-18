@@ -27,7 +27,7 @@ export default function EditEvaluation({
 
   const { data: evaluationGetData, loading, error } = useQuery(evaluationGet, {
     variables: {
-      id: evaluation.id,
+      id: evaluation?.id,
     },
   });
 

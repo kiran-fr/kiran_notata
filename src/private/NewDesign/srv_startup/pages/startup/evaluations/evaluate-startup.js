@@ -47,9 +47,16 @@ export default function EvaluateStartup({
                   </div>
                 </div>
               ))}
-              {/* <div className="col-sm-3 col-xs-5 evaluate-action">
-                  <button>+ New evaluation</button>
-              </div> */}
+              <div className="col-sm-4 col-xs-5 evaluated-on"></div>
+              <div className="col-sm-3 col-xs-5 evaluate-action">
+                <button
+                  onClick={() => {
+                    callBack(template, null);
+                  }}
+                >
+                  + New evaluation
+                </button>
+              </div>
             </div>
           }
         </div>
