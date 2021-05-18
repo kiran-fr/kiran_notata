@@ -115,7 +115,9 @@ export default function Groups() {
                         className="data__browse__drop-dwon__item"
                         onClick={() => setSettingsModal(true)}
                       >
-                        <span class="material-icons settings">settings</span>
+                        <span class="material-icons settings">
+                          content_copy
+                        </span>
                         <span className="text">SETTINGS</span>
                       </div>
                       {value === 0 ? (
