@@ -40,7 +40,6 @@ export const Startup = props => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
     <>
       <div className="col-12 startup-container">
@@ -59,7 +58,7 @@ export const Startup = props => {
         <Overview />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Evaluations />
+        <Evaluations history={props.history} />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <GroupsIndividuals />

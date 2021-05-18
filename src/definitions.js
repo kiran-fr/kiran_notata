@@ -72,3 +72,5 @@ export const product_demo = `${public_pages}/product_demo`;
 
 // SHUBHAM ROUTES
 export const startup_index = `${startup_page}/components/ui/navigation1`;
+export const evaluation_template_new = `${startup_page}/components/ui/evaluation-templates`;
+export const add_section = `${startup_page}/components/ui/evaluation-templates/add-section`;
