@@ -21,9 +21,14 @@ export default gql`
         id
         name
         answers {
+          inputType
+          sectionId
+          sectionName
+          questionId
           questionName
           questionId
           val
+          sid
         }
       }
 

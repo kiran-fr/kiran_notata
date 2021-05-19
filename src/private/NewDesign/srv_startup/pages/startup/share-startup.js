@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./share-startup.scss";
 import Scrollspy from "react-scrollspy";
 import google from "../../../../../assets/images/google.png";
@@ -23,6 +23,8 @@ export default function ShareStartup({ setshareStartup, connection }) {
   const [answers, setAnswers] = useState([]);
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
   const [inviteStartUpModal, setInviteStartUpModal] = useState(false);
+  const [email, setEmail] = useState(null);
+  const [saveLoader, setSaveLoader] = useState(false);
 
   const { data: creativeTemplateGetData, loading, error } = useQuery(
     creativeTemplateGet
@@ -37,6 +39,28 @@ export default function ShareStartup({ setshareStartup, connection }) {
     };
   });
 
+  const transformAnswers = obj => {
+    return {
+      id: obj.id,
+      inputType: obj.inputType,
+      questionId: obj.questionId,
+      questionName: obj.questionName,
+      sectionId: obj.sectionId,
+      sectionName: obj.sectionName,
+      sid: obj.sid,
+      val: obj.val,
+    };
+  };
+
+  useEffect(() => {
+    if (connection?.creative?.answers) {
+      let savedAns = connection?.creative?.answers?.map(ans =>
+        transformAnswers(ans)
+      );
+      setAnswers(savedAns);
+    }
+  }, [connection]);
+
   let details = {};
   let sec = creativeTemplate?.sections?.map(item => {
     details[item.id] = "";
@@ -48,7 +72,13 @@ export default function ShareStartup({ setshareStartup, connection }) {
     return <GhostLoader />;
   }
 
+  const handleEmailChange = e => {
+    const { name, value } = e.target;
+    setEmail(value);
+  };
+
   const updateCreativeTemplate = async () => {
+    setSaveLoader(true);
     let variables = {
       id: connection?.creative?.id,
       input: {
@@ -57,9 +87,14 @@ export default function ShareStartup({ setshareStartup, connection }) {
         answers,
       },
     };
+    if (email) {
+      variables.input.sharedWithEmail = email;
+    }
+    console.log(variables);
     let update = await mutateCreativeUpdate({
       variables,
     });
+    setSaveLoader(false);
     console.log(update?.creativePut);
     setshareStartup();
   };
@@ -75,7 +110,16 @@ export default function ShareStartup({ setshareStartup, connection }) {
           close={() => {
             setInviteStartUpModal(false);
           }}
-          children={<TextBox placeholder="email" maxWidth={true} />}
+          children={
+            <TextBox
+              placeholder="email"
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+              maxWidth={true}
+            />
+          }
           submitTxt="OK"
           closeTxt="Cancel"
         ></Modal>
@@ -201,7 +245,9 @@ export default function ShareStartup({ setshareStartup, connection }) {
                   <button
                     className="upload-logo-btn"
                     onClick={updateCreativeTemplate}
+                    disabled={saveLoader}
                   >
+                    {saveLoader && <i className="fa fa-spinner fa-spin" />}
                     SAVE CHANGES
                   </button>
                 </div>
