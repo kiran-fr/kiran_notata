@@ -14,10 +14,15 @@ import { creativeTemplateGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 import { GeneralInput } from "Components/Forms/TemplatedForm/Inputs/GeneralInput";
 import { creativeUpdate } from "private/Apollo/Mutations";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
+import TextBox from "../ui-kits/text-box";
+
+import ButtonWithIcon from "../../pages/ui-kits/button-with-icon";
 
 export default function ShareStartup({ setshareStartup, connection }) {
   const [answers, setAnswers] = useState([]);
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
+  const [inviteStartUpModal, setInviteStartUpModal] = useState(false);
 
   const { data: creativeTemplateGetData, loading, error } = useQuery(
     creativeTemplateGet
@@ -61,11 +66,34 @@ export default function ShareStartup({ setshareStartup, connection }) {
 
   return (
     <div className="row tab-panel-container">
+      {inviteStartUpModal && (
+        <Modal
+          title="Invite Startup"
+          submit={() => {
+            setInviteStartUpModal(false);
+          }}
+          close={() => {
+            setInviteStartUpModal(false);
+          }}
+          children={<TextBox placeholder="email" maxWidth={true} />}
+          submitTxt="OK"
+          closeTxt="Cancel"
+        ></Modal>
+      )}
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
           <div className="text">
-            Invite startup to fill in this information.
-            <div className="btn">Invite startup</div>
+            <div className="row">
+              <span className="col-6">
+                Invite startup to fill in this information.
+              </span>
+              <ButtonWithIcon
+                className="col-6 import-section-btn btn"
+                text="Invite startup"
+                onClick={() => null}
+                onClick={() => setInviteStartUpModal(true)}
+              ></ButtonWithIcon>
+            </div>
           </div>
         </div>
         <div className="share-startup-container">

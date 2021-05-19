@@ -27,30 +27,32 @@ export default function ManageSidebar({
   const handleManageSection = (e, evaltionId) => {
     if (evaltionId) {
       if (e.target.checked === false) {
-        var array = manageColValue.evaluationTemplates; //  array
-        var index = array.indexOf(evaltionId); //e is id
-        if (index !== -1) {
-          array.splice(index, 1); // remove the arr value
-          setManageColValue({
-            ...manageColValue,
-            ["evaluationTemplates"]: array,
-          });
-        }
-      } else {
-        var array = manageColValue.evaluationTemplates;
-        array.push(evaltionId);
+        //  remove the unchecked evaluation template
+        const filteredItems = manageColValue.evaluationTemplates.filter(
+          item => item !== evaltionId
+        );
         setManageColValue({
           ...manageColValue,
-          ["evaluationTemplates"]: array,
+          ["evaluationTemplates"]: filteredItems,
+        });
+      } else {
+        //  add the checked evaluation template
+        var checkedEvaltion = manageColValue.evaluationTemplates;
+        checkedEvaltion.push(evaltionId);
+        setManageColValue({
+          ...manageColValue,
+          ["evaluationTemplates"]: checkedEvaltion,
         });
       }
     } else {
       if (e.target.name === "evaluation" && e.target.checked === false) {
+        // evaluation checkbox is uncheck
         setManageColValue({
           ...manageColValue,
           ["evaluationTemplates"]: [],
         });
       } else if (e.target.name === "evaluation" && e.target.checked === true) {
+        // evaluation checkbox is check
         evaluationTemplates.forEach(summary => {
           setManageColValue(manageColValue => ({
             ...manageColValue,
@@ -62,6 +64,7 @@ export default function ManageSidebar({
         });
       } else {
         if (e.target.name === "showAll") {
+          // showAll is unchecked
           if (e.target.checked === false) {
             setManageColValue({
               ...manageColValue,
@@ -72,6 +75,7 @@ export default function ManageSidebar({
               evaluationTemplates: [],
             });
           } else {
+            // showAll is checked
             let newArr = [];
             evaluationTemplates.forEach(summary => {
               newArr.push(summary.id);
@@ -86,6 +90,7 @@ export default function ManageSidebar({
             });
           }
         } else {
+          // group, funnels, tags, subjective score check and uncheck logic
           setManageColValue({
             ...manageColValue,
             [e.target.name]: e.target.checked,

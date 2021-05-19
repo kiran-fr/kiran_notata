@@ -34,8 +34,14 @@ export default function DealFLowTag({
               <button onClick={() => handleModal()}>CANCEL</button>
               <button onClick={() => handleSave()}>
                 {" "}
-                <i className="far fa-check"></i>
-                {load ? "loading..." : "SAVE"}
+                {load ? (
+                  <i className={"fa fa-spinner fa-spin"} />
+                ) : (
+                  <>
+                    <i className="far fa-check"></i>
+                    SAVE
+                  </>
+                )}
               </button>
             </div>
           </div>
