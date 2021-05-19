@@ -68,7 +68,7 @@ export const Startup = props => {
         </Tabs>
       </div>
       <TabPanel value={value} index={0}>
-        <StartupInfo />
+        <StartupInfo startup={connection} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Overview creativity={connection} />
