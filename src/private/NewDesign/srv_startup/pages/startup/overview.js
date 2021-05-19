@@ -10,6 +10,7 @@ import ShareTemplate from "./share-template";
 import Tags from "../ui-kits/tags";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import Funels from "./funels";
+import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
@@ -21,7 +22,7 @@ export default function Overview(props) {
     { id: 3, name: "After" },
   ];
   const {
-    creativity: { creative, subjectiveScores, updatedAt, evaluationSummaries },
+    creativity: { creative, id, subjectiveScores, updatedAt, evaluationSummaries },
   } = props;
   const { answers, name } = creative;
   const updatedMonth = moment(new Date())
@@ -70,6 +71,17 @@ export default function Overview(props) {
   const [showTagsModal, setShowTagsModal] = useState(false);
   const [archiveModal, setArchiveModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [showSubjectiveScore, setShowSubjectiveScore] = useState();
+
+  const connectionData = {id : id, subjectiveScores : subjectiveScores}
+  if(showSubjectiveScore) {
+    return (
+      <SubjectiveScoreModal
+        connection={connectionData}
+        close={() => setShowSubjectiveScore(undefined)}
+      />
+    )
+  }
 
   return (
     <>
@@ -131,8 +143,18 @@ export default function Overview(props) {
                   Subjective Scores
                 </div>
                 <div className="col-sm-6 col-md-3 col-xs-12 overview-container__scores__label">
-                  <div>You</div>
-                  <div className="score selected you">{myAvgScore}</div>
+                  <div>
+                      You
+                    <span className="your_updated-date-tag ">
+                      {updatedAt ? moment(updatedAt).format("ll") : ""}
+                    </span>
+                  </div>
+                  
+                  <div>
+                    <span className="score selected you">{myAvgScore}</span>
+                    <i  onClick= {()=>setShowSubjectiveScore(true)} className=" editMarker fas fa-pen"></i>
+                  </div>
+                 
                 </div>
                 <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
                   <div>Your Team</div>
@@ -144,7 +166,7 @@ export default function Overview(props) {
                     {teamMinScore} <span className="lowest">LOWEST</span>
                   </div>
                 </div>
-                <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
+                {/* <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
                   <div>External Experts</div>
                   <div className="score">8.5</div>
                   <div className="highest-score">
@@ -163,7 +185,7 @@ export default function Overview(props) {
                   <div className="lowest-score">
                     5.5 <span className="lowest">LOWEST</span>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="separator"></div>
               <div className="row overview-container__scores evaluations-scores">
@@ -491,7 +513,7 @@ export default function Overview(props) {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-sm-6 col-xs-6">
+                  <div className="col-sm-12 col-xs-11">
                     <input
                       className="discussions-contianer__disucssions__text"
                       type="search"
