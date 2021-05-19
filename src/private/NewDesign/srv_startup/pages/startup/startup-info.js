@@ -15,44 +15,8 @@ import { connectionGet } from "../../../../Apollo/Queries";
 // import Twitter from "../../../../assets/images/Twitter.svg";
 // import Insta from "../../../../assets/images/Insta.svg";
 
-export default function StartupInfo() {
+export default function StartupInfo({ startup }) {
   const [shareStartup, setshareStartup] = useState(false);
-
-  const [startup, setStartup] = useState({});
-
-  const { id } = useParams();
-
-  const query = gql`
-    query connectionGet($id: ID!) {
-      connectionGet(id: $id) {
-        id
-        creative {
-          name
-          answers {
-            id
-            val
-            sectionName
-            questionId
-            questionName
-          }
-        }
-      }
-    }
-  `;
-
-  const { data, called, loading, error } = useQuery(query, {
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      id,
-    },
-  });
-
-  console.log(data);
-
-  useEffect(() => {
-    setStartup(data?.connectionGet);
-  }, [data]);
 
   function getAnswer(creative, questionId) {
     let items = creative.answers.filter(answer => {
