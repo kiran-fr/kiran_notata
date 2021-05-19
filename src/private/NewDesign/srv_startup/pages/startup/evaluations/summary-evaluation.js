@@ -16,8 +16,6 @@ export default function SummaryEvaluation({
   allAnswers,
   evaluation,
 }) {
-  const [problemcollapse, setProblemCollapse] = useState("");
-  const [conceptcollapse, setConceptCollapse] = useState("");
   const [deleteMoal, setDeleteMoal] = useState(false);
   console.log("allAnswers", allAnswers, selectedTemplateToEvaluate);
   const [mutateEvaluationDelete] = useMutation(evaluationDelete);
@@ -107,16 +105,6 @@ export default function SummaryEvaluation({
               )}/${section?.questions?.length || 0}`}</div>
             </>
           ))}
-          {/* <div className="col-sm-6 col-xs-6 type-heading">Concept</div>
-          <div className="col-sm-6 col-xs-6 attempts">1/2</div>
-          <div className="col-sm-6 col-xs-6 type-heading">Problem</div>
-          <div className="col-sm-6 col-xs-6 attempts">0/3</div>
-          <div className="col-sm-6 col-xs-6 type-heading">Market</div>
-          <div className="col-sm-6 col-xs-6 attempts">1/1</div>
-          <div className="col-sm-6 col-xs-6 type-heading">Team</div>
-          <div className="col-sm-6 col-xs-6 attempts">1/4</div>
-          <div className="col-sm-6 col-xs-6 total-heading">Total</div>
-          <div className="col-sm-6 col-xs-6 total-attempts">3/10</div> */}
         </div>
         {selectedTemplateToEvaluate?.sections.map(section => (
           <div className="row section" id={"section" + section.name}>
@@ -165,122 +153,12 @@ export default function SummaryEvaluation({
                     ) : (
                       <div className="col-sm-12 no-answer">Not Answered</div>
                     )}
-
-                    {/* {question.inputType === "RADIO" &&
-                      (allAnswers[question.id]?.val ? (
-                        <div className="col-sm-12 answer">
-                          {allAnswers[question.id]?.val}
-                        </div>
-                      ) : (
-                        <div className="col-sm-12 no-answer">Not Answered</div>
-                      ))} */}
-
-                    {/* {question.inputType === "CHECK" &&
-                      question.options?.map(
-                        option =>
-                          allAnswers[question.id + option.sid]?.val && (
-                            <div className="col-sm-12 answer">
-                              {allAnswers[question.id + option.sid]?.val}
-                            </div>
-                          )
-                      )} */}
                   </>
                 );
               })}
-              {/* <div className="col-sm-12 question">
-                    Do you understand the problem?
-                  </div>
-                  <div className="col-sm-12 answer">yes</div>
-                  <div className="col-sm-12 question">
-                    Do you believe they address a real problem?
-                  </div>
-                  <div className="col-sm-12 answer">yes</div>
-                  <div className="col-sm-12 question">
-                    Why have no one solved this problem before?
-                  </div>
-                  <div className="col-sm-12 answer">Too risky</div>
-                  <div className="col-sm-12 answer">Industry monopoly</div> */}
             </div>
           </div>
         ))}
-
-        {/* <div className="row section" id="problem">
-          <div className="col-sm-6 col-xs-7 section-heading">
-            <i
-              class={`fa ${
-                problemcollapse === "" ? "fa-chevron-up" : "fa-chevron-down"
-              }`}
-              aria-hidden="true"
-              onClick={() => {
-                setProblemCollapse(problemcollapse === "" ? "collapse" : "");
-              }}
-            ></i>
-            Poblem
-            <i
-              class="fa fa-pencil"
-              aria-hidden="true"
-              onClick={() => updateEvaluation("problem")}
-            ></i>
-          </div>
-          <div className="col-sm-6 col-xs-5 last-updated">
-            3 of 3 questions answered
-          </div>
-          <div className="col-sm-12 created-on">2 out of 1 points</div>
-          <div className={`row question-answers ${problemcollapse}`}>
-            <div className="col-sm-12 question">
-              Do you understand the problem?
-            </div>
-            <div className="col-sm-12 answer">yes</div>
-            <div className="col-sm-12 question">
-              Do you believe they address a real problem?
-            </div>
-            <div className="col-sm-12 answer">yes</div>
-            <div className="col-sm-12 question">
-              Why have no one solved this problem before?
-            </div>
-            <div className="col-sm-12 answer">Too risky</div>
-            <div className="col-sm-12 answer">Industry monopoly</div>
-          </div>
-        </div> */}
-
-        {/* <div className="row section" id="concept">
-          <div className="col-sm-6 col-xs-7 section-heading">
-            <i
-              class={`fa ${
-                conceptcollapse === "" ? "fa-chevron-up" : "fa-chevron-down"
-              }`}
-              aria-hidden="true"
-              onClick={() => {
-                setConceptCollapse(conceptcollapse === "" ? "collapse" : "");
-              }}
-            ></i>
-            Concept
-            <i
-              class="fa fa-pencil"
-              aria-hidden="true"
-              onClick={() => updateEvaluation("concept")}
-            ></i>
-          </div>
-          <div className="col-sm-6 col-xs-5 last-updated">
-            3 of 3 questions answered
-          </div>
-          <div className="col-sm-12 created-on">2 out of 1 points</div>
-          <div className={`row question-answers ${conceptcollapse}`}>
-            <div className="col-sm-12 question">
-              Do you understand the problem?
-            </div>
-            <div className="col-sm-12 answer">yes</div>
-            <div className="col-sm-12 question">
-              Do you believe they address a real problem?
-            </div>
-            <div className="col-sm-12 answer">yes</div>
-            <div className="col-sm-12 question">
-              Why have no one solved this problem before?
-            </div>
-            <div className="col-sm-12 answer">Too risky</div>
-            <div className="col-sm-12 answer">Industry monopoly</div>
-          </div>
-        </div> */}
         <div className="col-sm-12 text-right">
           <button className="delete-btn" onClick={() => setDeleteMoal(true)}>
             DELETE EVALUATION
