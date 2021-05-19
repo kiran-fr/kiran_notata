@@ -1,12 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Scrollspy from "react-scrollspy";
 import "./edit-evaluation.scss";
-import RadioButton from "../../ui-kits/radio-button";
-import InputCheckBox from "../../ui-kits/check-box";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { evaluationUpdate, evaluationCreate } from "private/Apollo/Mutations";
-
-import { evaluationGet, evaluationTemplateGet } from "private/Apollo/Queries";
+import { GeneralInput } from "Components/Forms/TemplatedForm/Inputs/GeneralInput";
 
 export default function EditEvaluation({
   setEditEvaluation,
@@ -19,27 +16,21 @@ export default function EditEvaluation({
   savedAnswers,
   setActiveEvaluation,
 }) {
-  const [savedEvalution, setSavedEvalution] = useState(savedAnswers);
+  const [answers, setAnswers] = useState([]);
 
-  const [radioAnswers, setRadioAnswers] = useState({});
-  const [checkAnswers, setCheckAnswers] = useState({});
+  useEffect(() => {
+    setAllAnswers(answers);
+  }, [answers]);
+
+  useEffect(() => {
+    if (savedAnswers) {
+      setAnswers(savedAnswers);
+    }
+  }, [savedAnswers]);
+
   // Mutations
   const [mutateEvaluationUpdate] = useMutation(evaluationUpdate);
   const [mutateEvaluationCreate] = useMutation(evaluationCreate);
-
-  const getSavedAnswer = (arr, value, questionId) => {
-    if (Array.isArray(arr)) {
-      let ans = arr?.find(ans => ans.questionId === questionId);
-      return ans?.val === value;
-    }
-  };
-
-  const getSavedCheckboxAnswer = (questionId, sid) => {
-    let ans = savedEvalution?.find(
-      ans => ans.questionId === questionId && ans.sid === sid
-    );
-    return ans?.val;
-  };
 
   let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
     return {
@@ -54,40 +45,12 @@ export default function EditEvaluation({
   });
   const [collapseDetailList, setCollapseDetailList] = useState(details);
 
-  const onRadioSelect = obj => {
-    setRadioAnswers({
-      ...radioAnswers,
-      [obj.questionId]: obj,
-    });
-  };
-
   const collectionAllAnswers = async () => {
     try {
-      let radioButtonAns = Object.keys(radioAnswers).map(
-        answer => radioAnswers[answer]
-      );
-      let checkButtonAns = Object.keys(checkAnswers).map(
-        answer => checkAnswers[answer]
-      );
-      let ansArr = radioButtonAns.concat(checkButtonAns);
       if (evaluation?.id) {
-        let comapare = savedAnswers?.map(oldAns => {
-          if (
-            oldAns.inputType === "RADIO" &&
-            radioAnswers[oldAns.questionId] === undefined
-          ) {
-            ansArr.push(oldAns);
-          }
-          if (
-            oldAns.inputType === "CHECK" &&
-            checkAnswers[oldAns.questionId + oldAns.sid] === undefined
-          ) {
-            ansArr.push(oldAns);
-          }
-        });
         let updateVariables = {
           id: evaluation?.id,
-          answers: ansArr,
+          answers,
         };
 
         let update = await mutateEvaluationUpdate({
@@ -98,7 +61,7 @@ export default function EditEvaluation({
         let variables = {
           connectionId: connectionId,
           templateId: selectedTemplateToEvaluate.id,
-          answers: ansArr,
+          answers,
         };
 
         let ansCreate = await mutateEvaluationCreate({ variables });
@@ -108,26 +71,12 @@ export default function EditEvaluation({
         setActiveEvaluation(evaluationCreateResp);
       }
 
-      setAllAnswers(ansArr);
+      // setAllAnswers(answers);
       setSaveEvaluation(true);
     } catch (error) {
       console.log("ERROR CREATING STARTUP", error);
     }
   };
-
-  const onCheckboxSelect = obj => {
-    let answerCopy = checkAnswers;
-    if (answerCopy[obj.questionId + obj.sid]) {
-      delete answerCopy[obj.questionId + obj.sid];
-      setCheckAnswers(answerCopy);
-      return;
-    }
-    setCheckAnswers({ ...checkAnswers, [obj.questionId + obj.sid]: obj });
-  };
-
-  // if (!evaluationGetData) {
-  //   return 'Loading...';
-  // }
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
@@ -186,63 +135,12 @@ export default function EditEvaluation({
                   <div className="row">
                     <div className="col-sm-12 question">{question.name}</div>
                     <div className="options">
-                      {question.inputType === "RADIO" &&
-                        question.options.map(option => (
-                          <div>
-                            <RadioButton
-                              label={option.val}
-                              name={question.id}
-                              defaultChecked={getSavedAnswer(
-                                savedEvalution,
-                                option.val,
-                                question.id
-                              )}
-                              onChange={e =>
-                                onRadioSelect({
-                                  inputType: question.inputType,
-                                  sectionId: section.id,
-                                  sectionName: section.name,
-                                  questionId: question.id,
-                                  questionName: question.name,
-                                  val: option.val,
-                                  sid: option.sid,
-                                })
-                              }
-                            ></RadioButton>
-                          </div>
-                        ))}
-                      {question.inputType === "CHECK" &&
-                        question.options.map(option => (
-                          <div>
-                            <InputCheckBox
-                              name="problem-question-1"
-                              label={option.val}
-                              name={question.id}
-                              id="problem-question-1-yes"
-                              defaultChecked={
-                                option.val ===
-                                getSavedCheckboxAnswer(question.id, option.sid)
-                              }
-                              onChange={e =>
-                                onCheckboxSelect({
-                                  inputType: question.inputType,
-                                  sectionId: section.id,
-                                  sectionName: section.name,
-                                  questionId: question.id,
-                                  questionName: question.name,
-                                  val: option.val,
-                                  sid: option.sid,
-                                })
-                              }
-                            ></InputCheckBox>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-12 col-xs-12 add-comment">
-                      Add comment
-                      <input type="text" className="add-comment-txt" />
+                      <GeneralInput
+                        question={question}
+                        section={section}
+                        answers={answers}
+                        setAnswers={setAnswers}
+                      />
                     </div>
                   </div>
                 </>
