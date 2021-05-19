@@ -39,7 +39,7 @@ export default function ShareStartup({ setshareStartup }) {
           close={() => {
             setInviteStartUpModal(false);
           }}
-          children={<TextBox />}
+          children={<TextBox placeholder = "email" maxWidth = {true} />}
           submitTxt="OK"
           closeTxt="Cancel"
         ></Modal>
