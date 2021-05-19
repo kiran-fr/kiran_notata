@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import Tags from "../../srv_startup/pages/ui-kits/tags";
+import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
 
 // API STUFF
 import { useQuery, useMutation } from "@apollo/client";
 
 import { tagGroupsGet } from "private/Apollo/Queries";
+
+import styles from "./modal.module.css";
 
 import {
   connectionTagAdd,
@@ -24,6 +28,7 @@ export default function SelectTagsForStartup({ connection, close }) {
   // Mutations
   const [addTagMutation] = useMutation(connectionTagAdd);
   const [deleteTagMutation] = useMutation(connectionTagRemove);
+  const [showTagsModal, setShowTagsModal] = useState(false);
 
   // Add tag function
   function addTag(tag) {
@@ -43,14 +48,33 @@ export default function SelectTagsForStartup({ connection, close }) {
   }
 
   return (
-    <TagSelector
-      title={connection?.creative?.name}
-      show={connection}
-      tagGroups={tagGroups}
-      checkedTags={connection?.tags}
-      addTag={addTag}
-      deleteTag={deleteTag}
-      close={close}
-    />
+    <>
+      <div className="row tags-container overview-tags">
+        <div className="tags-container__heading">Tags</div>
+        <div className="tags-container__sub-heading">Write or choose tags</div>
+        <div className={styles.tagsPlaceholder}>
+          <i
+            class="fa fa-plus"
+            aria-hidden="true"
+            onClick={() => setShowTagsModal(true)}
+          ></i>
+        </div>
+      </div>
+
+      {showTagsModal && (
+        <Modal
+          title="Add Tags"
+          submit={() => {
+            setShowTagsModal(false);
+          }}
+          close={() => {
+            setShowTagsModal(false);
+          }}
+          submitTxt="Save"
+          closeTxt="Cancel"
+          children={<Tags></Tags>}
+        ></Modal>
+      )}
+    </>
   );
 }
