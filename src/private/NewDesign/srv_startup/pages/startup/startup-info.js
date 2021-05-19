@@ -44,6 +44,7 @@ export default function StartupInfo({ startup }) {
       {shareStartup ? (
         <ShareStartup
           setshareStartup={() => setshareStartup(false)}
+          connection={startup}
         ></ShareStartup>
       ) : (
         <div className="row tab-panel-container startup-info-container">

@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query creativeTemplateGet($id: ID) {
-    creativeTemplateGet(id: $id) {
+  query creativeTemplateGet {
+    creativeTemplateGet {
       id
       name
       description
