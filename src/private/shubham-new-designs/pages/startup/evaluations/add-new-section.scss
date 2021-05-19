@@ -13,11 +13,11 @@
     }
     .text-container{
         .text-box{
-            max-width:500px!important;
+            max-width:652px !important;
             height:30px;
         }
         textarea{
-            max-width: 500px;
+            max-width: 652px !important;
             width: 100%;
             border: 1px solid #CECECE;
             box-sizing: border-box;
@@ -112,6 +112,8 @@
             right: 0px;
         }
     }
+    .new-question-btn,
+    .save-btn,
     .add-new-section-btn,
     .import-section-btn{
         background: #53CAB2;
@@ -124,11 +126,21 @@
             line-height: 15px;             
         }
     }
+    .cancel-btn{
+        color: #6A6A6A;
+        border:1px solid #6A6A6A; 
+        .MuiButton-label{
+            font-size: 12px;
+            line-height: 15px;
+            color: #6A6A6A;
+        }
+    }
+    .btn-container{
+        margin-top:30px;
+        margin-bottom: 30px;
+    }
     .import-section-btn{
         background:#FF8166;
-        @media only screen and(max-width:500px) {
-            width: 152px;
-        }
     }
     .card{
         max-width: 650px;
