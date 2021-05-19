@@ -117,6 +117,7 @@ export default function Evaluations(props) {
                   connectionId={id}
                   evaluation={activeEvaluation}
                   savedAnswers={savedAnswers}
+                  setActiveEvaluation={setActiveEvaluation}
                 />
               </div>
             </div>

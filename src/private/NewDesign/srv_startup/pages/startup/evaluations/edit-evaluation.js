@@ -17,6 +17,7 @@ export default function EditEvaluation({
   connectionId,
   evaluation,
   savedAnswers,
+  setActiveEvaluation,
 }) {
   const [savedEvalution, setSavedEvalution] = useState(savedAnswers);
 
@@ -92,7 +93,7 @@ export default function EditEvaluation({
         let update = await mutateEvaluationUpdate({
           variables: updateVariables,
         });
-        console.log("updated", update);
+        console.log("updated", update?.data?.evaluationUpdate);
       } else {
         let variables = {
           connectionId: connectionId,
@@ -104,10 +105,10 @@ export default function EditEvaluation({
 
         let evaluationCreateResp = ansCreate?.data?.evaluationCreate;
         console.log("evaluationCreateResp", evaluationCreateResp);
+        setActiveEvaluation(evaluationCreateResp);
       }
 
-      let allAnswers = Object.assign({}, radioAnswers, checkAnswers);
-      setAllAnswers(allAnswers);
+      setAllAnswers(ansArr);
       setSaveEvaluation(true);
     } catch (error) {
       console.log("ERROR CREATING STARTUP", error);
