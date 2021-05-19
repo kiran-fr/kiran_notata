@@ -47,12 +47,12 @@ export default function ShareStartup({ setshareStartup }) {
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
           <div className="text">
-            <div className="col-6">
+            <div className="row">
+              <span className = "col-6">
               Invite startup to fill in this information.
-            </div>
-            <div className="col-6">
+              </span>
               <ButtonWithIcon
-                className="import-section-btn btn"
+                className="col-6 import-section-btn btn"
                 text="Invite startup"
                 onClick={() => null}
                 onClick={() => setInviteStartUpModal(true)}
