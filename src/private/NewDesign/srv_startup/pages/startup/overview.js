@@ -143,7 +143,12 @@ export default function Overview(props) {
                   Subjective Scores
                 </div>
                 <div className="col-sm-6 col-md-3 col-xs-12 overview-container__scores__label">
-                  <div>You</div>
+                  <div>
+                      You
+                    <span className="your_updated-date-tag ">
+                      {updatedAt ? moment(updatedAt).format("ll") : ""}
+                    </span>
+                  </div>
                   
                   <div>
                     <span className="score selected you">{myAvgScore}</span>
