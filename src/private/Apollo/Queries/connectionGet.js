@@ -54,6 +54,8 @@ export default gql`
       evaluations {
         id
         isMe
+        createdAt
+        templateId
         template {
           id
           name
