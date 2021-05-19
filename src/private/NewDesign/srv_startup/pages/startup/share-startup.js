@@ -10,6 +10,8 @@ import twitter from "../../../../../assets/images/twitter.png";
 import preview from "../../../../../assets/images/preview.png";
 import preview_check from "../../../../../assets/images/preview-done.png";
 import download_cover from "../../../../../assets/images/download-cover.png";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
+import ButtonWithIcon from "../../pages/ui-kits/button-with-icon";
 
 export default function ShareStartup({ setshareStartup }) {
   const [infoSectionState, setInfoSectionState] = useState("");
@@ -21,6 +23,7 @@ export default function ShareStartup({ setshareStartup }) {
   const [termsSectionState, setTermsSectionState] = useState("");
   const [foundingMember1Count, setFoundingMember1Count] = useState(1);
   const [foundingMember2Count, setFoundingMember2Count] = useState(1);
+  const [inviteStartUpModal, setInviteStartUpModal] = useState(false);
 
   return (
     <div className="row tab-panel-container">
@@ -28,7 +31,31 @@ export default function ShareStartup({ setshareStartup }) {
         <div className="row card-notification-bar">
           <div className="text">
             Invite startup to fill in this information.
-            <div className="btn">Invite startup</div>
+            {/* <div className="btn">Invite startup</div> */}
+            <div className="col-sm-12 col-xs-6">
+              <ButtonWithIcon
+                className="import-section-btn btn"
+                text="Invite startup"
+                onClick={() => null}
+                onClick={() => setInviteStartUpModal(true)}
+              ></ButtonWithIcon>
+            </div>
+            {inviteStartUpModal && (
+              <Modal
+                title="Invite Startup"
+                innerClassName="max-width"
+                submit={() => {
+                  setInviteStartUpModal(false);
+                  setSectionDetails(true);
+                  setQuestionOption(false);
+                }}
+                close={() => {
+                  setInviteStartUpModal(false);
+                }}
+                submitTxt="OK"
+                closeTxt="Cancel"
+              ></Modal>
+            )}
           </div>
         </div>
         <div className="share-startup-container">
