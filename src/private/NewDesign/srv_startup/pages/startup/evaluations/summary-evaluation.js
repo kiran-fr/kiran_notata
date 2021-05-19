@@ -4,6 +4,8 @@ import "./edit-evaluation.scss";
 import "./summary-evaluation.scss";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import moment from "moment";
+import { useMutation } from "@apollo/client";
+import { evaluationDelete } from "private/Apollo/Mutations";
 
 export default function SummaryEvaluation({
   setEditEvaluation,
@@ -12,11 +14,13 @@ export default function SummaryEvaluation({
   companyName,
   selectedTemplateToEvaluate,
   allAnswers,
+  evaluation,
 }) {
   const [problemcollapse, setProblemCollapse] = useState("");
   const [conceptcollapse, setConceptCollapse] = useState("");
   const [deleteMoal, setDeleteMoal] = useState(false);
   console.log("allAnswers", allAnswers, selectedTemplateToEvaluate);
+  const [mutateEvaluationDelete] = useMutation(evaluationDelete);
   let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
     return {
       name: section.name,
@@ -34,6 +38,16 @@ export default function SummaryEvaluation({
   };
   const findAns = questionId => {
     return allAnswers?.find(ans => ans.questionId === questionId);
+  };
+  const deleteEvaluation = async () => {
+    let variables = {
+      id: evaluation?.id,
+    };
+    let update = await mutateEvaluationDelete({
+      variables,
+    });
+    console.log("updated", update);
+    setDeleteMoal(false);
   };
   return (
     <div className="row edit-evaluation-container">
@@ -279,7 +293,7 @@ export default function SummaryEvaluation({
           submit={() => {
             setEditEvaluation(false);
             setSaveEvaluation(false);
-            setDeleteMoal(false);
+            deleteEvaluation();
           }}
           close={() => {
             setDeleteMoal(false);
