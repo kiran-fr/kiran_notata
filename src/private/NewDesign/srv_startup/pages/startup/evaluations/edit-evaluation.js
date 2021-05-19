@@ -17,6 +17,7 @@ export default function EditEvaluation({
   setActiveEvaluation,
 }) {
   const [answers, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setAllAnswers(answers);
@@ -45,8 +46,9 @@ export default function EditEvaluation({
   });
   const [collapseDetailList, setCollapseDetailList] = useState(details);
 
-  const collectionAllAnswers = async () => {
+  const save = async () => {
     try {
+      setLoading(true);
       if (evaluation?.id) {
         let updateVariables = {
           id: evaluation?.id,
@@ -71,12 +73,18 @@ export default function EditEvaluation({
         setActiveEvaluation(evaluationCreateResp);
       }
 
-      // setAllAnswers(answers);
+      setLoading(false);
       setSaveEvaluation(true);
     } catch (error) {
+      setLoading(false);
       console.log("ERROR CREATING STARTUP", error);
     }
   };
+
+  if (loading) {
+    return "Saving...";
+  }
+
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
@@ -149,7 +157,7 @@ export default function EditEvaluation({
           </div>
         ))}
         <div className="col-sm-12 text-right">
-          <button className="save-btn delete" onClick={collectionAllAnswers}>
+          <button className="save-btn delete" onClick={save}>
             SAVE
           </button>
         </div>
