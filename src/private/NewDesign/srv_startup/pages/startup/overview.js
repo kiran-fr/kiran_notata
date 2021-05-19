@@ -14,15 +14,23 @@ import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
+import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 
 export default function Overview(props) {
+  const [createGroupModal, setCreateGroupModal] = useState(false);
   const items = [
     { id: 1, name: "First" },
     { id: 2, name: "Before" },
     { id: 3, name: "After" },
   ];
   const {
-    creativity: { creative, id, subjectiveScores, updatedAt, evaluationSummaries },
+    creativity: {
+      creative,
+      id,
+      subjectiveScores,
+      updatedAt,
+      evaluationSummaries,
+    },
   } = props;
   const { answers, name } = creative;
   const updatedMonth = moment(new Date())
@@ -73,14 +81,14 @@ export default function Overview(props) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
 
-  const connectionData = {id : id, subjectiveScores : subjectiveScores}
-  if(showSubjectiveScore) {
+  const connectionData = { id: id, subjectiveScores: subjectiveScores };
+  if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
         connection={connectionData}
         close={() => setShowSubjectiveScore(undefined)}
       />
-    )
+    );
   }
 
   return (
@@ -144,17 +152,19 @@ export default function Overview(props) {
                 </div>
                 <div className="col-sm-6 col-md-3 col-xs-12 overview-container__scores__label">
                   <div>
-                      You
+                    You
                     <span className="your_updated-date-tag ">
                       {updatedAt ? moment(updatedAt).format("ll") : ""}
                     </span>
                   </div>
-                  
+
                   <div>
                     <span className="score selected you">{myAvgScore}</span>
-                    <i  onClick= {()=>setShowSubjectiveScore(true)} className=" editMarker fas fa-pen"></i>
+                    <i
+                      onClick={() => setShowSubjectiveScore(true)}
+                      className=" editMarker fas fa-pen"
+                    ></i>
                   </div>
-                 
                 </div>
                 <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
                   <div>Your Team</div>
@@ -246,6 +256,13 @@ export default function Overview(props) {
                   <span className="add-startup-to-group">
                     <Dropdown title="" items={items}></Dropdown>
                   </span>
+                  <div className="green_plus">
+                    <i
+                      class="fa fa-plus"
+                      aria-hidden="true"
+                      onClick={() => setCreateGroupModal(true)}
+                    ></i>
+                  </div>
                 </div>
               </div>
               <div className="row impact-goals-container">
@@ -529,6 +546,20 @@ export default function Overview(props) {
             </div>
           </div>
         </div>
+      )}
+      {createGroupModal && (
+        <Modal
+          title="Create new group"
+          submit={() => {
+            setCreateGroupModal(false);
+          }}
+          close={() => {
+            setCreateGroupModal(false);
+          }}
+          submitTxt="Create"
+          closeTxt="Cancel"
+          children={<CreateNewGroup></CreateNewGroup>}
+        ></Modal>
       )}
       {showTagsModal && (
         <Modal
