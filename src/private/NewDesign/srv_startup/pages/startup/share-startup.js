@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./share-startup.scss";
 import Scrollspy from "react-scrollspy";
-import InputCheckBox from "../ui-kits/check-box";
 import google from "../../../../../assets/images/google.png";
 import facebook from "../../../../../assets/images/facebook.png";
 import instagram from "../../../../../assets/images/instagram.png";
