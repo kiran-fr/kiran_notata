@@ -30,12 +30,27 @@ export default function ShareStartup({ setshareStartup }) {
 
   return (
     <div className="row tab-panel-container">
+      {inviteStartUpModal && (
+        <Modal
+          title="Invite Startup"
+          submit={() => {
+            setInviteStartUpModal(false);
+          }}
+          close={() => {
+            setInviteStartUpModal(false);
+          }}
+          children={<TextBox />}
+          submitTxt="OK"
+          closeTxt="Cancel"
+        ></Modal>
+      )}
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
           <div className="text">
-            Invite startup to fill in this information.
-            {/* <div className="btn">Invite startup</div> */}
-            <div>
+            <div className="col-6">
+              Invite startup to fill in this information.
+            </div>
+            <div className="col-6">
               <ButtonWithIcon
                 className="import-section-btn btn"
                 text="Invite startup"
@@ -43,20 +58,6 @@ export default function ShareStartup({ setshareStartup }) {
                 onClick={() => setInviteStartUpModal(true)}
               ></ButtonWithIcon>
             </div>
-            {inviteStartUpModal && (
-              <Modal
-                title="Invite Startup"
-                submit={() => {
-                  setInviteStartUpModal(false);
-                }}
-                close={() => {
-                  setInviteStartUpModal(false);
-                }}
-                children={<TextBox />}
-                submitTxt="OK"
-                closeTxt="Cancel"
-              ></Modal>
-            )}
           </div>
         </div>
         <div className="share-startup-container">
