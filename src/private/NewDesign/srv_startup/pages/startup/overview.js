@@ -15,6 +15,7 @@ import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
+import { StylesProvider } from "@material-ui/core";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
@@ -501,9 +502,16 @@ export default function Overview(props) {
                 <div className="row discussions-contianer__disucssions">
                   <div className="discussions-contianer__disucssions__discussion">
                     <div>
-                      <i class="fa fa-comments-o" aria-hidden="true"></i>
+                      <i
+                        class=" comment fa fa-comments-o"
+                        aria-hidden="true"
+                      ></i>
                       <span className="discussions-contianer__disucssions__sender">
                         Stephanie Wykoff
+                      </span>
+                      <span className="editDelete_icons">
+                        <i className=" edit fas fa-pen"></i>
+                        <i class="fa fa-trash-o deleted"></i>
                       </span>
                     </div>
                     <div className="discussions-contianer__disucssions__message">
@@ -516,9 +524,16 @@ export default function Overview(props) {
                   <div className="separator"></div>
                   <div className="discussions-contianer__disucssions__discussion">
                     <div>
-                      <i class="fa fa-comments-o" aria-hidden="true"></i>
+                      <i
+                        class="comment fa fa-comments-o"
+                        aria-hidden="true"
+                      ></i>
                       <span className="discussions-contianer__disucssions__sender">
                         You
+                      </span>
+                      <span className="editDelete_icons">
+                        <i className=" edit fas fa-pen"></i>
+                        <i class="fa fa-trash-o deleted"></i>
                       </span>
                     </div>
                     <div className="discussions-contianer__disucssions__message">

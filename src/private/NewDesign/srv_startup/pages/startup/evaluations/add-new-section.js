@@ -102,7 +102,7 @@ export default function AddSection() {
                       className="browse-card__drop-dwon__item"
                       onClick={() => null}
                     >
-                      <span class="material-icons settings">content_copy</span>
+                      <span class="material-icons settings"></span>
                       <span className="text">DUPLICATE</span>
                     </div>
                     <div
