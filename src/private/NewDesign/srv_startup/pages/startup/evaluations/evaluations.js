@@ -17,7 +17,9 @@ export default function Evaluations(props) {
       evaluations,
       groupSharingInfo,
       subjectiveScores,
+      id,
     },
+    accountData,
   } = props;
 
   const getTotalScore = arr => {
@@ -74,27 +76,51 @@ export default function Evaluations(props) {
   const [editEvaluation, setEditEvaluation] = useState(false);
   const [saveEvaluation, setSaveEvaluation] = useState(false);
   const [updateEvaluation, setUpdateEvaluation] = useState("");
+  const [selectedTemplateToEvaluate, setSelectedTemplateToEvaluate] = useState(
+    {}
+  );
+  const [activeEvaluation, setActiveEvaluation] = useState(null);
+  const [allAnswers, setAllAnswers] = useState([]);
+  const [savedAnswers, setSavedAnswers] = useState([]);
   return (
     <div className="row tab-panel-container">
       <div className="col-sm-12">
         <div className="card evaluation-container">
           {editEvaluation ? (
-            saveEvaluation ? (
-              <SummaryEvaluation
-                setEditEvaluation={setEditEvaluation}
-                setSaveEvaluation={setSaveEvaluation}
-                updateEvaluation={type => {
-                  setSaveEvaluation(false);
-                  setUpdateEvaluation(type);
-                }}
-              />
-            ) : (
-              <EditEvaluation
-                setEditEvaluation={setEditEvaluation}
-                setSaveEvaluation={setSaveEvaluation}
-                updateEvaluation={updateEvaluation}
-              />
-            )
+            <div>
+              <div
+                style={{ display: saveEvaluation === true ? "block" : "none" }}
+              >
+                <SummaryEvaluation
+                  companyName={name}
+                  setEditEvaluation={setEditEvaluation}
+                  setSaveEvaluation={setSaveEvaluation}
+                  selectedTemplateToEvaluate={selectedTemplateToEvaluate}
+                  updateEvaluation={type => {
+                    setSaveEvaluation(false);
+                    setUpdateEvaluation(type);
+                  }}
+                  allAnswers={allAnswers}
+                  evaluation={activeEvaluation}
+                />
+              </div>
+              <div
+                style={{ display: saveEvaluation !== true ? "block" : "none" }}
+              >
+                <EditEvaluation
+                  setEditEvaluation={setEditEvaluation}
+                  setSaveEvaluation={setSaveEvaluation}
+                  updateEvaluation={updateEvaluation}
+                  selectedTemplateToEvaluate={selectedTemplateToEvaluate}
+                  setAllAnswers={setAllAnswers}
+                  allAnswers={allAnswers}
+                  connectionId={id}
+                  evaluation={activeEvaluation}
+                  savedAnswers={savedAnswers}
+                  setActiveEvaluation={setActiveEvaluation}
+                />
+              </div>
+            </div>
           ) : (
             <div className="row">
               <div className="col-lg-3 col-md-3">
@@ -669,10 +695,15 @@ export default function Evaluations(props) {
           }}
           children={
             <EvaluateStartup
+              accountData={accountData}
+              setSelectedTemplateToEvaluate={setSelectedTemplateToEvaluate}
+              setActiveEvaluation={setActiveEvaluation}
               setEditEvaluation={() => {
                 setEvaluateModal(false);
                 setEditEvaluation(true);
               }}
+              evaluations={evaluations}
+              setSavedAnswers={setSavedAnswers}
             />
           }
         ></Modal>
