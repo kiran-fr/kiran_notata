@@ -20,6 +20,7 @@ export function Modal({
   intermidate,
   intermidateTxt,
   intermidateStyle,
+  innerClassName,
   ...children
 }) {
   useEffect(() => {
@@ -45,7 +46,7 @@ export function Modal({
           }
         }}
       >
-        <div className={"inner"}>
+        <div className={`inner ${innerClassName}`}>
           {title && (
             <div className={"modal_header"}>
               {title && <div className={"modal_title"}>{title}</div>}
