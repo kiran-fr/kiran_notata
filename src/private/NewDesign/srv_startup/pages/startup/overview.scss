@@ -536,7 +536,7 @@
             background-color: transparent;
           }
         }
-        .fa {
+        .comment {
           font-family: "FontAwesome";
           font-size: 22px;
           color: rgba(83, 202, 178, 1);
@@ -659,5 +659,16 @@
   margin-left: 7px;
   color: #ffffff;
   cursor: pointer;
+}
+
+.editDelete_icons {
+  padding-left: 5%;
+}
+.editDelete_icons .edit {
+  color: #53cab2;
+  padding-right: 3%;
+}
+.editDelete_icons .deleted {
+  color: #ff8166 !important;
 }
 //
