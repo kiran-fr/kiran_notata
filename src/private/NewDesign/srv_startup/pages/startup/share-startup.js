@@ -11,6 +11,9 @@ import preview from "../../../../../assets/images/preview.png";
 import preview_check from "../../../../../assets/images/preview-done.png";
 import download_cover from "../../../../../assets/images/download-cover.png";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
+import TextBox from "../ui-kits/text-box";
+
+
 import ButtonWithIcon from "../../pages/ui-kits/button-with-icon";
 
 export default function ShareStartup({ setshareStartup }) {
@@ -32,7 +35,7 @@ export default function ShareStartup({ setshareStartup }) {
           <div className="text">
             Invite startup to fill in this information.
             {/* <div className="btn">Invite startup</div> */}
-            <div className="col-sm-12 col-xs-6">
+            <div>
               <ButtonWithIcon
                 className="import-section-btn btn"
                 text="Invite startup"
@@ -43,15 +46,13 @@ export default function ShareStartup({ setshareStartup }) {
             {inviteStartUpModal && (
               <Modal
                 title="Invite Startup"
-                innerClassName="max-width"
                 submit={() => {
                   setInviteStartUpModal(false);
-                  setSectionDetails(true);
-                  setQuestionOption(false);
                 }}
                 close={() => {
                   setInviteStartUpModal(false);
                 }}
+                children={<TextBox />}
                 submitTxt="OK"
                 closeTxt="Cancel"
               ></Modal>
