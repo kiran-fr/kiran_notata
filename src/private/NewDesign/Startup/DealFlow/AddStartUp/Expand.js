@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Tags } from "Components/UI_Kits/Tags/Tags";
+// import { Tags } from "Components/UI_Kits/Tags/Tags";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import { AddScore } from "../addScore";
 import AddFunnel from "../addFunnel";
+import Tags from "../../../srv_startup/pages/ui-kits/tags";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
-//  import styles from "../modal.module.css"
+// import styles from "../modal.module.css"
 import { groupsGetV2 } from "private/Apollo/Queries";
+/* import styles from "./Expand.module.css" */
 import {
   connectionCreate,
   creativePut,
@@ -48,7 +51,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
   const [mutateFunnelTag] = useMutation(connectionFunnelTagAdd);
   const [mutateConnectionScore] = useMutation(connectionSubjectiveScorePut);
   const [mutateGroupStartupAdd] = useMutation(groupStartupAdd);
-
+  const [showTagsModal, setShowTagsModal] = useState(false);
   // Look for duplicate names
   let companyNameArr = [];
   function lookForDuplicateNames(value) {
@@ -159,7 +162,21 @@ export default function Expand({ closeModal, styles, connections, history }) {
               reference={register({ required: true })}
             />
           </div>
-          <Tags />
+
+          <div className="row tags-container overview-tags">
+            <div className="tags-container__heading">Tags</div>
+            <div className="tags-container__sub-heading">
+              Write or choose tags
+            </div>
+            <div className={styles.tagsPlaceholder}>
+              <i
+                class="fa fa-plus"
+                aria-hidden="true"
+                onClick={() => setShowTagsModal(true)}
+              ></i>
+            </div>
+          </div>
+          {/* <Tags /> */}
           <div className={styles.inputContainer}>
             <p>Your Subjective Score</p>
             <AddScore subScore={subScore} handleScore={handleScore} />
@@ -222,6 +239,20 @@ export default function Expand({ closeModal, styles, connections, history }) {
           </button>
         </div>
       </div>
+      {showTagsModal && (
+        <Modal
+          title="Add Tags"
+          submit={() => {
+            setShowTagsModal(false);
+          }}
+          close={() => {
+            setShowTagsModal(false);
+          }}
+          submitTxt="Save"
+          closeTxt="Cancel"
+          children={<Tags></Tags>}
+        ></Modal>
+      )}
     </form>
   );
 }
