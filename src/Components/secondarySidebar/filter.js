@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./sidebar.module.css";
 import Sidebar from "./index";
-import { Tags } from "Components/UI_Kits/Tags/Tags";
+// import { Tags } from "Components/UI_Kits/Tags/Tags";
+import Tags from "../../private/NewDesign/srv_startup/pages/ui-kits/tags";
+import { Modal } from "../UI_Kits/Modal/Modal";
 
 // common dynamic funnel img function
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
@@ -74,6 +76,7 @@ export default function FilterBar({
 }) {
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
+  const [showTagsModal, setShowTagsModal] = useState(false);
 
   const funnelGroupArray = data ? data.accountGet.funnelGroups : [];
 
@@ -161,7 +164,20 @@ export default function FilterBar({
           <FunnelStage />
         </div>
         <div className="addTagMain">
-          <Tags
+          <div className="row tags-container overview-tags">
+            <div className="tags-container__heading">Tags</div>
+            <div className="tags-container__sub-heading">
+              Write or choose tags
+            </div>
+            <div className={styles.tags__placeholder}>
+              <i
+                class="fa fa-plus"
+                aria-hidden="true"
+                onClick={() => setShowTagsModal(true)}
+              ></i>
+            </div>
+          </div>
+          {/* <Tags
             suggested={true}
             size="smallInput"
             items={[
@@ -179,7 +195,7 @@ export default function FilterBar({
             //   });
             // }}
             closeIcon="smallCloseIcon"
-          />
+          /> */}
         </div>
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
@@ -187,6 +203,20 @@ export default function FilterBar({
           <DatePickerNewdesign />
         </div>
       </div>
+      {showTagsModal && (
+        <Modal
+          title="Add Tags"
+          submit={() => {
+            setShowTagsModal(false);
+          }}
+          close={() => {
+            setShowTagsModal(false);
+          }}
+          submitTxt="Save"
+          closeTxt="Cancel"
+          children={<Tags></Tags>}
+        ></Modal>
+      )}
     </Sidebar>
   );
 }

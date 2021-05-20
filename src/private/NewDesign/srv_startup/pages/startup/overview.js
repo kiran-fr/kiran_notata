@@ -14,8 +14,16 @@ import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
+import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
+import { StylesProvider } from "@material-ui/core";
+import { useQuery } from "@apollo/client";
+import { connectionsGet } from "private/Apollo/Queries";
+import TextBox from "../ui-kits/text-box";
 
 export default function Overview(props) {
+  const [createGroupModal, setCreateGroupModal] = useState(false);
+  const [editChat, setEditChat] = useState(false);
+
   const items = [
     { id: 1, name: "First" },
     { id: 2, name: "Before" },
@@ -80,6 +88,25 @@ export default function Overview(props) {
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
 
   const connectionData = { id: id, subjectiveScores: subjectiveScores };
+  const { data: connectionsGetData, loading, error } = useQuery(
+    connectionsGet,
+    {
+      variables: {
+        filters: {
+          similarTo: id,
+        },
+      },
+    }
+  );
+  let similarConnections = connectionsGetData?.connectionsGet;
+  const getCompAvg = subjectiveScores => {
+    if (subjectiveScores) {
+      return (
+        getTotalScore(subjectiveScores) / subjectiveScores.length || 0
+      ).toFixed(1);
+    }
+    return 0;
+  };
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -254,6 +281,13 @@ export default function Overview(props) {
                   <span className="add-startup-to-group">
                     <Dropdown title="" items={items}></Dropdown>
                   </span>
+                  <div className="green_plus">
+                    <i
+                      class="fa fa-plus"
+                      aria-hidden="true"
+                      onClick={() => setCreateGroupModal(true)}
+                    ></i>
+                  </div>
                 </div>
               </div>
               <div className="row impact-goals-container">
@@ -295,60 +329,66 @@ export default function Overview(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="company-name">
-                          <span className="icon">G</span>
-                          <span className="name">Great Startup Inc</span>
-                        </td>
-                        <td>
-                          <div className="tag-placeholder">
-                            <div className="tag">Hardware</div>
-                            <div className="tag">Hardware</div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="subjective-score">8,5</div>
-                        </td>
-                        <td>
-                          <span className="last-evaluation">65%</span>
-                          <span className="last-eval-description">
-                            First
-                            <br />
-                            Impression
-                          </span>
-                        </td>
-                        <td>
-                          <span className="updated-date">Jan 25, 2020</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="company-name">
-                          <span className="icon">G</span>
-                          <span className="name">Great Startup Inc</span>
-                        </td>
-                        <td>
-                          <div className="tag-placeholder">
-                            <div className="tag">Hardware</div>
-                            <div className="tag">Hardware</div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="subjective-score">8,5</div>
-                        </td>
-                        <td>
-                          <span className="last-evaluation">65%</span>
-                          <span className="last-eval-description">
-                            First
-                            <br />
-                            Impression
-                          </span>
-                        </td>
-                        <td>
-                          <div className="updated-date-tag updated-date">
-                            Older than 2 month
-                          </div>
-                        </td>
-                      </tr>
+                      {similarConnections?.map(company => (
+                        <tr
+                          className="connection-link"
+                          onClick={() =>
+                            props.redirectToCompanyPage(company.id)
+                          }
+                        >
+                          <td className="company-name">
+                            <span className="icon">
+                              {company?.creative?.name
+                                ?.substr(0, 1)
+                                ?.toUpperCase()}
+                            </span>
+                            <span className="name">
+                              {company?.creative?.name}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="tag-placeholder">
+                              {company?.tags?.map(tag => (
+                                <div className="tag">{tag.name}</div>
+                              ))}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="subjective-score">
+                              {getCompAvg(company.subjectiveScores)}
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              {company?.evaluationSummaries
+                                ?.slice(0)
+                                ?.map(summary => (
+                                  <>
+                                    <span className="last-evaluation">
+                                      {summary.averagePercentageScore || 0}%
+                                    </span>
+                                    <span className="last-eval-description">
+                                      {summary?.templateName &&
+                                        summary?.templateName
+                                          ?.split(" ")
+                                          ?.map(name => (
+                                            <>
+                                              {name}
+                                              <br />
+                                            </>
+                                          ))}
+                                    </span>
+                                  </>
+                                ))}
+                            </div>
+                          </td>
+                          <td>
+                            <span className="updated-date">
+                              {moment(company.updatedAt).format("ll")}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -492,24 +532,72 @@ export default function Overview(props) {
                 <div className="row discussions-contianer__disucssions">
                   <div className="discussions-contianer__disucssions__discussion">
                     <div>
-                      <i class="fa fa-comments-o" aria-hidden="true"></i>
+                      <i
+                        class=" comment fa fa-comments-o"
+                        aria-hidden="true"
+                      ></i>
                       <span className="discussions-contianer__disucssions__sender">
                         Stephanie Wykoff
                       </span>
+                      <span className="editDelete_icons">
+                        <i
+                          onClick={() => setEditChat(true)}
+                          className=" edit fas fa-pen"
+                        ></i>
+                        <i class="fa fa-trash-o deleted"></i>
+                      </span>
                     </div>
                     <div className="discussions-contianer__disucssions__message">
-                      This startup is really well!
+                      {!editChat ? "This startup is really well!" : ""}
+                      {editChat ? (
+                        <>
+                          <div className="row">
+                            <TextBox
+                              inputval={"This startup is really well!"}
+                            />
+                          </div>
+                          <div className="row">
+                            <ButtonWithIcon
+                              iconName="add"
+                              className="text-center archive-btn"
+                              text="Cancel"
+                              iconPosition={ICONPOSITION.NONE}
+                              onClick={() => setEditChat(false)}
+                            ></ButtonWithIcon>
+                            <ButtonWithIcon
+                              iconName="add"
+                              className="ml-2 text-center archive-btn"
+                              text="Save"
+                              iconPosition={ICONPOSITION.NONE}
+                              onClick={() => setEditChat(false)}
+                            ></ButtonWithIcon>
+                          </div>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </div>
-                    <div className="discussions-contianer__disucssions__date">
-                      Jan 28, 2021 10:53 PM
-                    </div>
+                    {!editChat ? (
+                      <div className="discussions-contianer__disucssions__date">
+                        Jan 28, 2021 10:53 PM
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="separator"></div>
                   <div className="discussions-contianer__disucssions__discussion">
                     <div>
-                      <i class="fa fa-comments-o" aria-hidden="true"></i>
+                      <i
+                        class="comment fa fa-comments-o"
+                        aria-hidden="true"
+                      ></i>
                       <span className="discussions-contianer__disucssions__sender">
                         You
+                      </span>
+                      <span className="editDelete_icons">
+                        <i className=" edit fas fa-pen"></i>
+                        <i class="fa fa-trash-o deleted"></i>
                       </span>
                     </div>
                     <div className="discussions-contianer__disucssions__message">
@@ -537,6 +625,20 @@ export default function Overview(props) {
             </div>
           </div>
         </div>
+      )}
+      {createGroupModal && (
+        <Modal
+          title="Create new group"
+          submit={() => {
+            setCreateGroupModal(false);
+          }}
+          close={() => {
+            setCreateGroupModal(false);
+          }}
+          submitTxt="Create"
+          closeTxt="Cancel"
+          children={<CreateNewGroup></CreateNewGroup>}
+        ></Modal>
       )}
       {showTagsModal && (
         <Modal

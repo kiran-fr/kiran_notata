@@ -13,11 +13,11 @@
     }
     .text-container{
         .text-box{
-            max-width:500px!important;
+            max-width:652px !important;
             height:30px;
         }
         textarea{
-            max-width: 500px;
+            max-width: 652px !important;
             width: 100%;
             border: 1px solid #CECECE;
             box-sizing: border-box;
@@ -93,6 +93,7 @@
             font-size: 20px;
             top:110px;
             right:0px;
+            cursor: pointer;
         }        
         .copy{
             position: absolute;
@@ -100,18 +101,21 @@
             font-size: 20px;
             color: #969BA3;
             right: 0px;
+            cursor: pointer;
         }
         .south{
             position: absolute;
             top: 271px;
             right: 0px;
+            cursor: pointer;
         }
         .north{
             position: absolute;
             top: 216px;
             right: 0px;
+            cursor: pointer;
         }
-    }
+    }        
     .add-new-section-btn,
     .import-section-btn{
         background: #53CAB2;
@@ -124,11 +128,52 @@
             line-height: 15px;             
         }
     }
+    .new-question-btn{
+        margin-top:15px!important;
+        background: #53CAB2;
+        height: 46px;
+        margin-top: 5px;
+        width: 187px;
+        padding: 11px 20px 11px 20px !important;
+        .MuiButton-label {
+            font-size: 12px;
+            line-height: 15px;             
+        }
+    }
+    .btn-container{
+        margin-top:30px;
+        margin-bottom: 30px;
+        display: flex;
+        text-align: end;
+        align-items: end;
+        justify-content: flex-end;
+        margin-right: 45px;
+        .cancel-btn{
+            color: #6A6A6A;
+            border:1px solid #6A6A6A; 
+            margin-right: 10px;
+            .MuiButton-label{
+                font-size: 12px;
+                line-height: 15px;
+                color: #6A6A6A;
+            }
+            height: 40px;
+        }        
+        .save-btn{
+            background: #53CAB2;
+            height: 40px;
+            margin-top: 5px;
+            width: 187px;
+            padding: 11px 20px 11px 20px !important;
+            margin-top: 0px;
+            .MuiButton-label {
+                font-size: 12px;
+                line-height: 15px;             
+            }
+        }
+    }
     .import-section-btn{
         background:#FF8166;
-        @media only screen and(max-width:500px) {
-            width: 152px;
-        }
     }
     .card{
         max-width: 650px;
