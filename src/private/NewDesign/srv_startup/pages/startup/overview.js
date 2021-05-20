@@ -18,9 +18,13 @@ import CreateNewGroup from "../startup/groups-individuals/create-new-group/creat
 import { StylesProvider } from "@material-ui/core";
 import { useQuery } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
+import TextBox from "../ui-kits/text-box";
+
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
+  const [editChat, setEditChat] = useState(false);
+
   const items = [
     { id: 1, name: "First" },
     { id: 2, name: "Before" },
@@ -537,16 +541,46 @@ export default function Overview(props) {
                         Stephanie Wykoff
                       </span>
                       <span className="editDelete_icons">
-                        <i className=" edit fas fa-pen"></i>
+                        <i  onClick ={()=> setEditChat(true) } className=" edit fas fa-pen"></i>
                         <i class="fa fa-trash-o deleted"></i>
                       </span>
                     </div>
                     <div className="discussions-contianer__disucssions__message">
-                      This startup is really well!
+                      {!editChat ? "This startup is really well!" : "" }
+                      {editChat
+                        ?
+                          <>
+                            <div className ="row">
+                              <TextBox  inputval = {"This startup is really well!"} />
+                            </div>
+                            <div className ="row">
+                              <ButtonWithIcon
+                                iconName="add"
+                                className="text-center archive-btn"
+                                text="Cancel"
+                                iconPosition={ICONPOSITION.NONE}
+                                onClick={() => setEditChat(false)}
+                              ></ButtonWithIcon>
+                              <ButtonWithIcon
+                                iconName="add"
+                                className="ml-2 text-center archive-btn"
+                                text="Save"
+                                iconPosition={ICONPOSITION.NONE}
+                                onClick={() => setEditChat(false)}
+                              ></ButtonWithIcon>
+                            </div> 
+                          </>
+                        : 
+                          ""
+                      }
                     </div>
-                    <div className="discussions-contianer__disucssions__date">
-                      Jan 28, 2021 10:53 PM
-                    </div>
+                    {!editChat ? 
+                      <div className="discussions-contianer__disucssions__date">
+                        Jan 28, 2021 10:53 PM
+                      </div>
+                    : 
+                      ""
+                    }
                   </div>
                   <div className="separator"></div>
                   <div className="discussions-contianer__disucssions__discussion">

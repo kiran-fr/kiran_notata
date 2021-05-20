@@ -60,8 +60,8 @@ export const ui_components = `${startup_page}/components/ui`;
 export const navigation = `${startup_page}/components/ui/navigation`;
 
 export const startup_company_profile = `${startup_page}/company/:id`;
-export const evaluation_template_new_dev = `${startup_page}/components/ui/evaluation-templates/dev`;
-export const add_section_dev = `${startup_page}/components/ui/evaluation-templates/add-section/dev`;
+export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-templates`;
+export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
 // PUBLIC ROUTES
 export const public_pages = `/public`;
 export const public_creative = `${public_pages}/creative`;
