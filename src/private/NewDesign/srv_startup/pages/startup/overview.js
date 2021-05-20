@@ -18,11 +18,12 @@ import CreateNewGroup from "../startup/groups-individuals/create-new-group/creat
 import { StylesProvider } from "@material-ui/core";
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
-import { logCreate } from "private/Apollo/Mutations";
+import { logCreate, logDelete } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
   const [mutationlogCreate] = useMutation(logCreate);
+  const [mutationlogDelete] = useMutation(logDelete);
   const [comments, setComments] = useState([]);
   const items = [
     { id: 1, name: "First" },
@@ -141,6 +142,16 @@ export default function Overview(props) {
     }
   };
 
+  const deleteComment = async logId => {
+    if (logId) {
+      let logConnection = await mutationlogDelete({ variables: { id: logId } });
+      let msg = logConnection?.data?.logDelete?.message;
+      if (msg) {
+        let updatedComments = comments?.filter(comment => comment.id !== logId);
+        setComments(updatedComments);
+      }
+    }
+  };
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -572,18 +583,26 @@ export default function Overview(props) {
                           aria-hidden="true"
                         ></i>
                         <span className="discussions-contianer__disucssions__sender">
-                          {comment?.createdByUser?.family_name}
+                          {comment?.isMe
+                            ? "You"
+                            : comment?.createdByUser?.family_name}
                         </span>
                         <span className="editDelete_icons">
                           <i className=" edit fas fa-pen"></i>
-                          <i class="fa fa-trash-o deleted"></i>
+                          <i
+                            onClick={() => deleteComment(comment.id)}
+                            class="fa fa-trash-o deleted"
+                          ></i>
                         </span>
                       </div>
                       <div className="discussions-contianer__disucssions__message">
-                        {/* This startup is really well! */}
                         {comment?.dataPairs?.length > 0 &&
                           comment?.dataPairs[0].val}
                       </div>
+                      {comment.createdAt !== comment.updatedAt && (
+                        <span>(edited)</span>
+                      )}
+                      <span>(edited)</span>
                       <div className="discussions-contianer__disucssions__date">
                         {moment(comment.createdAt).format("lll")}
                       </div>

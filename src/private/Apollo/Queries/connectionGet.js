@@ -93,7 +93,9 @@ export default gql`
       }
       log {
         id
+        isMe
         createdAt
+        updatedAt
         createdByUser {
           family_name
           given_name
