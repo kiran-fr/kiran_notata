@@ -4,7 +4,11 @@ import { OVERVIEWPAGESTATE } from "../constants";
 import { useQuery } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 
-export default function ArchiveList({ setPageState, archiveConnection }) {
+export default function ArchiveList({
+  setPageState,
+  archiveConnection,
+  deleteConnection,
+}) {
   const { data: connectionsGetData, loading, error } = useQuery(
     connectionsGet,
     {
@@ -57,7 +61,10 @@ export default function ArchiveList({ setPageState, archiveConnection }) {
                     </div>
                     <div
                       className="col-sm-4 col-xs-12 delete-permanently"
-                      onClick={() => setPageState(OVERVIEWPAGESTATE.OVERVIEW)}
+                      onClick={() => {
+                        setPageState(OVERVIEWPAGESTATE.OVERVIEW);
+                        deleteConnection(connection?.id);
+                      }}
                     >
                       DELETE PERMANENTLY
                     </div>

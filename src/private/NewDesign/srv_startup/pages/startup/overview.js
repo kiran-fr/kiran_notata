@@ -18,11 +18,12 @@ import CreateNewGroup from "../startup/groups-individuals/create-new-group/creat
 import { StylesProvider } from "@material-ui/core";
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
-import { connectionPut } from "private/Apollo/Mutations";
+import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
   const [mutateConnectionPut] = useMutation(connectionPut);
+  const [mutateConnectionDelete] = useMutation(connectionDelete);
   const items = [
     { id: 1, name: "First" },
     { id: 2, name: "Before" },
@@ -117,6 +118,10 @@ export default function Overview(props) {
     let res_connection = await mutateConnectionPut({ variables });
     let connection = res_connection?.data?.connectionCreate;
   };
+  const deleteConnection = async connectionId => {
+    let deleteConnection = await mutateConnectionPut({ id: connectionId });
+    let message = deleteConnection?.data?.message;
+  };
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -134,6 +139,7 @@ export default function Overview(props) {
         <ArchiveList
           setPageState={setPageState}
           archiveConnection={archiveConnection}
+          deleteConnection={deleteConnection}
         ></ArchiveList>
       ) : (
         <div className="row tab-panel-container overview-container">
@@ -658,6 +664,7 @@ export default function Overview(props) {
           submit={() => {
             setDeleteModal(false);
             setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+            // deleteConnection(id);
           }}
           close={() => setDeleteModal(false)}
           submitTxt="Delete"
