@@ -16,6 +16,8 @@ import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import { StylesProvider } from "@material-ui/core";
+import { useQuery } from "@apollo/client";
+import { connectionsGet } from "private/Apollo/Queries";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
@@ -83,6 +85,25 @@ export default function Overview(props) {
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
 
   const connectionData = { id: id, subjectiveScores: subjectiveScores };
+  const { data: connectionsGetData, loading, error } = useQuery(
+    connectionsGet,
+    {
+      variables: {
+        filters: {
+          similarTo: id,
+        },
+      },
+    }
+  );
+  let similarConnections = connectionsGetData?.connectionsGet;
+  const getCompAvg = subjectiveScores => {
+    if (subjectiveScores) {
+      return (
+        getTotalScore(subjectiveScores) / subjectiveScores.length || 0
+      ).toFixed(1);
+    }
+    return 0;
+  };
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -305,60 +326,66 @@ export default function Overview(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="company-name">
-                          <span className="icon">G</span>
-                          <span className="name">Great Startup Inc</span>
-                        </td>
-                        <td>
-                          <div className="tag-placeholder">
-                            <div className="tag">Hardware</div>
-                            <div className="tag">Hardware</div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="subjective-score">8,5</div>
-                        </td>
-                        <td>
-                          <span className="last-evaluation">65%</span>
-                          <span className="last-eval-description">
-                            First
-                            <br />
-                            Impression
-                          </span>
-                        </td>
-                        <td>
-                          <span className="updated-date">Jan 25, 2020</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="company-name">
-                          <span className="icon">G</span>
-                          <span className="name">Great Startup Inc</span>
-                        </td>
-                        <td>
-                          <div className="tag-placeholder">
-                            <div className="tag">Hardware</div>
-                            <div className="tag">Hardware</div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="subjective-score">8,5</div>
-                        </td>
-                        <td>
-                          <span className="last-evaluation">65%</span>
-                          <span className="last-eval-description">
-                            First
-                            <br />
-                            Impression
-                          </span>
-                        </td>
-                        <td>
-                          <div className="updated-date-tag updated-date">
-                            Older than 2 month
-                          </div>
-                        </td>
-                      </tr>
+                      {similarConnections?.map(company => (
+                        <tr
+                          className="connection-link"
+                          onClick={() =>
+                            props.redirectToCompanyPage(company.id)
+                          }
+                        >
+                          <td className="company-name">
+                            <span className="icon">
+                              {company?.creative?.name
+                                ?.substr(0, 1)
+                                ?.toUpperCase()}
+                            </span>
+                            <span className="name">
+                              {company?.creative?.name}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="tag-placeholder">
+                              {company?.tags?.map(tag => (
+                                <div className="tag">{tag.name}</div>
+                              ))}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="subjective-score">
+                              {getCompAvg(company.subjectiveScores)}
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              {company?.evaluationSummaries
+                                ?.slice(0)
+                                ?.map(summary => (
+                                  <>
+                                    <span className="last-evaluation">
+                                      {summary.averagePercentageScore || 0}%
+                                    </span>
+                                    <span className="last-eval-description">
+                                      {summary?.templateName &&
+                                        summary?.templateName
+                                          ?.split(" ")
+                                          ?.map(name => (
+                                            <>
+                                              {name}
+                                              <br />
+                                            </>
+                                          ))}
+                                    </span>
+                                  </>
+                                ))}
+                            </div>
+                          </td>
+                          <td>
+                            <span className="updated-date">
+                              {moment(company.updatedAt).format("ll")}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
