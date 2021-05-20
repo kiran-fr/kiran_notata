@@ -42,7 +42,7 @@ export default function AddSection() {
   };
   const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
-  const [questionOption, setQuestionOption] = useState(true);
+  const [questionOption, setQuestionOption] = useState(false);
   const [sectionDetails, setSectionDetails] = useState(false);
   const [addSectionModal, setAddSectionModal] = useState(false);
   const noOfRows = 4;
@@ -198,6 +198,7 @@ export default function AddSection() {
                 text="Save Changes"
                 onClick={() => {
                   setQuestionOption(false);
+                  setSectionDetails(true);
                 }}
               ></ButtonWithIcon>
             </div>
@@ -267,8 +268,8 @@ export default function AddSection() {
           innerClassName="max-width"
           submit={() => {
             setImportSectionModal(false);
-            setSectionDetails(true);
-            setQuestionOption(false);
+            setSectionDetails(false);
+            setQuestionOption(true);
           }}
           close={() => {
             setImportSectionModal(false);
@@ -283,8 +284,8 @@ export default function AddSection() {
           title="New Section"
           submit={() => {
             setAddSectionModal(false);
-            setQuestionOption(false);
-            setSectionDetails(true);
+            setQuestionOption(true);
+            setSectionDetails(false);
           }}
           close={() => {
             setAddSectionModal(false);

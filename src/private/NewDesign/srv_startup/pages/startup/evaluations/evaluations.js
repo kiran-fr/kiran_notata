@@ -8,6 +8,7 @@ import EvaluateStartup from "./evaluate-startup";
 import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
 import ManageTemplates from "./manage-templates";
+import { evaluation_template_new_dev } from "../../../../../../definitions";
 
 export default function Evaluations(props) {
   const {
@@ -650,7 +651,10 @@ export default function Evaluations(props) {
                 <div className="col-sm-12 text-right">
                   <button
                     className="evaluation-templates-btn"
-                    onClick={() => setManageTemplateModal(true)}
+                    // onClick={() => setManageTemplateModal(true)}
+                    onClick={() =>
+                      props.history.push(evaluation_template_new_dev)
+                    }
                   >
                     Evaluations templates
                   </button>
