@@ -618,7 +618,7 @@ export default function Overview(props) {
                         <span className="discussions-contianer__disucssions__sender">
                           {comment?.isMe
                             ? "You"
-                            : comment?.createdByUser?.family_name}
+                            : `${comment?.createdByUser?.given_name} ${comment?.createdByUser?.family_name}`}
                         </span>
                         <span className="editDelete_icons">
                           <i
