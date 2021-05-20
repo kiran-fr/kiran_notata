@@ -16,11 +16,13 @@ import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import { StylesProvider } from "@material-ui/core";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
+import { logCreate } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
+  const [mutationlogCreate] = useMutation(logCreate);
   const items = [
     { id: 1, name: "First" },
     { id: 2, name: "Before" },
@@ -33,9 +35,13 @@ export default function Overview(props) {
       subjectiveScores,
       updatedAt,
       evaluationSummaries,
+      log,
     },
   } = props;
   const { answers, name } = creative;
+
+  let comments = log?.filter(l => l.logType === "COMMENT");
+
   const updatedMonth = moment(new Date())
     .diff(updatedAt, "months", true)
     .toFixed(0);
@@ -83,6 +89,7 @@ export default function Overview(props) {
   const [archiveModal, setArchiveModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
+  const [message, setMessage] = useState(null);
 
   const connectionData = { id: id, subjectiveScores: subjectiveScores };
   const { data: connectionsGetData, loading, error } = useQuery(
@@ -104,6 +111,30 @@ export default function Overview(props) {
     }
     return 0;
   };
+
+  const handleMessageChange = e => {
+    const { value } = e.target;
+    setMessage(value);
+  };
+  const saveComment = async () => {
+    if (message) {
+      let variables = {
+        connectionId: id,
+        input: {
+          logType: "COMMENT",
+          dataPairs: {
+            val: message,
+            key: "TEXT",
+          },
+        },
+      };
+      let logConnection = await mutationlogCreate({ variables });
+      let savedLog = logConnection?.data?.logCreate;
+      setMessage(null);
+      console.log("savedLog", savedLog);
+    }
+  };
+
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -527,58 +558,47 @@ export default function Overview(props) {
                   Notes from you and your team
                 </div>
                 <div className="row discussions-contianer__disucssions">
-                  <div className="discussions-contianer__disucssions__discussion">
-                    <div>
-                      <i
-                        class=" comment fa fa-comments-o"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="discussions-contianer__disucssions__sender">
-                        Stephanie Wykoff
-                      </span>
-                      <span className="editDelete_icons">
-                        <i className=" edit fas fa-pen"></i>
-                        <i class="fa fa-trash-o deleted"></i>
-                      </span>
+                  {comments?.map(comment => (
+                    <div className="discussions-contianer__disucssions__discussion">
+                      <div>
+                        <i
+                          class=" comment fa fa-comments-o"
+                          aria-hidden="true"
+                        ></i>
+                        <span className="discussions-contianer__disucssions__sender">
+                          {comment?.createdByUser?.family_name}
+                        </span>
+                        <span className="editDelete_icons">
+                          <i className=" edit fas fa-pen"></i>
+                          <i class="fa fa-trash-o deleted"></i>
+                        </span>
+                      </div>
+                      <div className="discussions-contianer__disucssions__message">
+                        {/* This startup is really well! */}
+                        {comment?.dataPairs?.length > 0 &&
+                          comment?.dataPairs[0].val}
+                      </div>
+                      <div className="discussions-contianer__disucssions__date">
+                        {moment(comment.createdAt).format("lll")}
+                      </div>
                     </div>
-                    <div className="discussions-contianer__disucssions__message">
-                      This startup is really well!
-                    </div>
-                    <div className="discussions-contianer__disucssions__date">
-                      Jan 28, 2021 10:53 PM
-                    </div>
-                  </div>
-                  <div className="separator"></div>
-                  <div className="discussions-contianer__disucssions__discussion">
-                    <div>
-                      <i
-                        class="comment fa fa-comments-o"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="discussions-contianer__disucssions__sender">
-                        You
-                      </span>
-                      <span className="editDelete_icons">
-                        <i className=" edit fas fa-pen"></i>
-                        <i class="fa fa-trash-o deleted"></i>
-                      </span>
-                    </div>
-                    <div className="discussions-contianer__disucssions__message">
-                      This startup is really well!
-                    </div>
-                    <div className="discussions-contianer__disucssions__date">
-                      Jan 28, 2021 10:53 PM
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="row">
                   <div className="col-sm-12 col-xs-11">
                     <input
                       className="discussions-contianer__disucssions__text"
-                      type="search"
+                      type="input"
+                      name="message"
+                      value={message}
+                      onChange={handleMessageChange}
                     />
                     <span class="discussions-contianer__disucssions__send-icon">
-                      <button class="btn btn-outline-secondary" type="button">
+                      <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        onClick={saveComment}
+                      >
                         <i class="fa fa-paper-plane"></i>
                       </button>
                     </span>
