@@ -9,7 +9,7 @@ import SingleAndMultiPleAnswer from "./single-answer";
 import TrafficLights from "./traffic-lights";
 import FreeText from "./free-text";
 import TextLines from "./text-lines";
-import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
+import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import ImportSection from "./import-section-modal";
 
 function TabPanel(props) {
@@ -35,7 +35,9 @@ function a11yProps(index) {
   };
 }
 
-export default function AddSection() {
+// export default function AddSection() {
+export const AddSection = () => {
+
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);

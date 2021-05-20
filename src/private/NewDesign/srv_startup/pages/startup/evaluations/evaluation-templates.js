@@ -4,8 +4,8 @@ import ButtonWithIcon from "../../ui-kits/button-with-icon";
 import { ICONPOSITION } from "../../constants";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { add_section } from "../../../../../definitions";
-import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
+import { add_section_dev } from "../../../../../../definitions";
+import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../../ui-kits/text-box";
 
 function a11yProps(index) {
@@ -14,7 +14,9 @@ function a11yProps(index) {
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-export default function ElevationTemplates({ history }) {
+// export default function ElevationTemplates({ history }) {
+export const ElevationTemplates = ({ history }) => {
+
   const [value, setValue] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -110,7 +112,7 @@ export default function ElevationTemplates({ history }) {
           title="New Evaluation Template"
           submit={() => {
             setCreateNewTemplate(false);
-            history.push(add_section);
+            history.push(add_section_dev);
           }}
           close={() => {
             setCreateNewTemplate(false);

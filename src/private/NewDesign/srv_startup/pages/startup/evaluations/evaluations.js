@@ -8,7 +8,7 @@ import EvaluateStartup from "./evaluate-startup";
 import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
 import ManageTemplates from "./manage-templates";
-import { evaluation_template_new } from "../../../../../../definitions";
+import { evaluation_template_new_dev } from "../../../../../../definitions";
 
 
 export default function Evaluations(props) {
@@ -654,7 +654,7 @@ export default function Evaluations(props) {
                     className="evaluation-templates-btn"
                     // onClick={() => setManageTemplateModal(true)}
                     onClick={() =>
-                      props.history.push(evaluation_template_new)
+                      props.history.push(evaluation_template_new_dev)
                     }
                   >
                     Evaluations templates
