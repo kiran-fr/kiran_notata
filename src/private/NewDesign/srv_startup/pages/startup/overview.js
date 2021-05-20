@@ -18,10 +18,12 @@ import CreateNewGroup from "../startup/groups-individuals/create-new-group/creat
 import { StylesProvider } from "@material-ui/core";
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
+import TextBox from "../ui-kits/text-box";
 import { logCreate, logDelete } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
+  const [editChat, setEditChat] = useState(false);
   const [mutationlogCreate] = useMutation(logCreate);
   const [mutationlogDelete] = useMutation(logDelete);
   const [comments, setComments] = useState([]);
@@ -588,7 +590,10 @@ export default function Overview(props) {
                             : comment?.createdByUser?.family_name}
                         </span>
                         <span className="editDelete_icons">
-                          <i className=" edit fas fa-pen"></i>
+                          <i
+                            onClick={() => setEditChat(true)}
+                            className=" edit fas fa-pen"
+                          ></i>
                           <i
                             onClick={() => deleteComment(comment.id)}
                             class="fa fa-trash-o deleted"
@@ -596,16 +601,52 @@ export default function Overview(props) {
                         </span>
                       </div>
                       <div className="discussions-contianer__disucssions__message">
-                        {comment?.dataPairs?.length > 0 &&
-                          comment?.dataPairs[0].val}
+                        {!editChat
+                          ? comment?.dataPairs?.length > 0 &&
+                            comment?.dataPairs[0].val
+                          : ""}
+                        {editChat ? (
+                          <>
+                            <div className="row">
+                              <TextBox
+                                inputval={
+                                  comment?.dataPairs?.length > 0 &&
+                                  comment?.dataPairs[0].val
+                                }
+                              />
+                            </div>
+                            <div className="row">
+                              <ButtonWithIcon
+                                iconName="add"
+                                className="text-center archive-btn"
+                                text="Cancel"
+                                iconPosition={ICONPOSITION.NONE}
+                                onClick={() => setEditChat(false)}
+                              ></ButtonWithIcon>
+                              <ButtonWithIcon
+                                iconName="add"
+                                className="ml-2 text-center archive-btn"
+                                text="Save"
+                                iconPosition={ICONPOSITION.NONE}
+                                onClick={() => setEditChat(false)}
+                              ></ButtonWithIcon>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       {comment.createdAt !== comment.updatedAt && (
                         <span>(edited)</span>
                       )}
-                      <span>(edited)</span>
-                      <div className="discussions-contianer__disucssions__date">
-                        {moment(comment.createdAt).format("lll")}
-                      </div>
+
+                      {!editChat ? (
+                        <div className="discussions-contianer__disucssions__date">
+                          {moment(comment.createdAt).format("lll")}
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   ))}
                 </div>
