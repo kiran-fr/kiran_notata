@@ -27,14 +27,16 @@ export default function ManageSidebar({
   const handleManageSection = (e, evaltionId) => {
     if (evaltionId) {
       if (e.target.checked === false) {
-        //  remove the unchecked evaluation template 
-        const filteredItems = manageColValue.evaluationTemplates.filter(item => item !== evaltionId)
-          setManageColValue({
-            ...manageColValue,
-            ["evaluationTemplates"]: filteredItems,
-          });
+        //  remove the unchecked evaluation template
+        const filteredItems = manageColValue.evaluationTemplates.filter(
+          item => item !== evaltionId
+        );
+        setManageColValue({
+          ...manageColValue,
+          ["evaluationTemplates"]: filteredItems,
+        });
       } else {
-        //  add the checked evaluation template 
+        //  add the checked evaluation template
         var checkedEvaltion = manageColValue.evaluationTemplates;
         checkedEvaltion.push(evaltionId);
         setManageColValue({
@@ -62,7 +64,7 @@ export default function ManageSidebar({
         });
       } else {
         if (e.target.name === "showAll") {
-          // showAll is unchecked 
+          // showAll is unchecked
           if (e.target.checked === false) {
             setManageColValue({
               ...manageColValue,
@@ -73,7 +75,7 @@ export default function ManageSidebar({
               evaluationTemplates: [],
             });
           } else {
-          // showAll is checked 
+            // showAll is checked
             let newArr = [];
             evaluationTemplates.forEach(summary => {
               newArr.push(summary.id);

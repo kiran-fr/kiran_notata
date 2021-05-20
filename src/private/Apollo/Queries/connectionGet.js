@@ -20,10 +20,16 @@ export default gql`
       creative {
         id
         name
+        sharedWithEmail
         answers {
+          inputType
+          sectionId
+          sectionName
+          questionId
           questionName
           questionId
           val
+          sid
         }
       }
 
