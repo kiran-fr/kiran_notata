@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
@@ -23,6 +23,7 @@ import { logCreate } from "private/Apollo/Mutations";
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
   const [mutationlogCreate] = useMutation(logCreate);
+  const [comments, setComments] = useState([]);
   const items = [
     { id: 1, name: "First" },
     { id: 2, name: "Before" },
@@ -40,7 +41,10 @@ export default function Overview(props) {
   } = props;
   const { answers, name } = creative;
 
-  let comments = log?.filter(l => l.logType === "COMMENT");
+  useEffect(() => {
+    let comments = log?.filter(l => l.logType === "COMMENT");
+    setComments(comments);
+  }, [log]);
 
   const updatedMonth = moment(new Date())
     .diff(updatedAt, "months", true)
@@ -130,8 +134,10 @@ export default function Overview(props) {
       };
       let logConnection = await mutationlogCreate({ variables });
       let savedLog = logConnection?.data?.logCreate;
-      setMessage(null);
-      console.log("savedLog", savedLog);
+      setMessage("");
+      if (savedLog) {
+        setComments([...comments, savedLog]);
+      }
     }
   };
 
