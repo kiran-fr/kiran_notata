@@ -110,7 +110,11 @@ export default function ShareStartup({ setshareStartup, connection }) {
             setInviteStartUpModal(false);
           }}
           children={
-            <InviteStartup answers={answers} id={connection?.creative?.id} />
+            <InviteStartup
+              answers={answers}
+              creative={connection?.creative}
+              id={connection?.creative?.id}
+            />
           }
           submitTxt="OK"
           closeTxt="Cancel"
@@ -125,7 +129,11 @@ export default function ShareStartup({ setshareStartup, connection }) {
               </span>
               <ButtonWithIcon
                 className="col-6 import-section-btn btn"
-                text="Invite startup"
+                text={
+                  connection?.creative?.sharedWithEmail
+                    ? "Edit"
+                    : "Invite startup"
+                }
                 onClick={() => null}
                 onClick={() => setInviteStartUpModal(true)}
               ></ButtonWithIcon>

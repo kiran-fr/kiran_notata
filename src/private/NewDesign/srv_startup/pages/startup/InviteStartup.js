@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // API STUFF
@@ -6,7 +6,7 @@ import { creativeUpdate } from "private/Apollo/Mutations";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 import { useQuery, useMutation } from "@apollo/client";
 
-export const InviteStartup = ({ id, answers }) => {
+export const InviteStartup = ({ id, answers, creative }) => {
   // Form
   const { register, handleSubmit, formState } = useForm();
   const { isSubmitting } = formState;
@@ -14,6 +14,13 @@ export const InviteStartup = ({ id, answers }) => {
   const [inviteSent, setInviteSent] = useState(false);
   const [urlToShare, setUrlToShare] = useState(null);
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    if (creative?.sharedWithEmail) {
+      setUrlToShare(getPublicShareUrl(creative));
+      setInviteSent(true);
+    }
+  }, [creative]);
 
   // Mutations
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
@@ -67,6 +74,7 @@ export const InviteStartup = ({ id, answers }) => {
       variables,
     });
     console.log(update);
+    setInviteSent(false);
   };
 
   return (
