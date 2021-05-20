@@ -16,6 +16,7 @@ import { GeneralInput } from "Components/Forms/TemplatedForm/Inputs/GeneralInput
 import { creativeUpdate } from "private/Apollo/Mutations";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../ui-kits/text-box";
+import InviteStartup from "./InviteStartup";
 
 import ButtonWithIcon from "../../pages/ui-kits/button-with-icon";
 
@@ -82,8 +83,6 @@ export default function ShareStartup({ setshareStartup, connection }) {
     let variables = {
       id: connection?.creative?.id,
       input: {
-        name: creativeTemplate?.name,
-        description: creativeTemplate?.name,
         answers,
       },
     };
@@ -111,14 +110,7 @@ export default function ShareStartup({ setshareStartup, connection }) {
             setInviteStartUpModal(false);
           }}
           children={
-            <TextBox
-              placeholder="email"
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-              maxWidth={true}
-            />
+            <InviteStartup answers={answers} id={connection?.creative?.id} />
           }
           submitTxt="OK"
           closeTxt="Cancel"
