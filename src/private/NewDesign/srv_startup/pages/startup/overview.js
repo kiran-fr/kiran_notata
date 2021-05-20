@@ -16,13 +16,15 @@ import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import { StylesProvider } from "@material-ui/core";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
+import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
 import TextBox from "../ui-kits/text-box";
-
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
+  const [mutateConnectionPut] = useMutation(connectionPut);
+  const [mutateConnectionDelete] = useMutation(connectionDelete);
   const [editChat, setEditChat] = useState(false);
 
   const items = [
@@ -108,6 +110,25 @@ export default function Overview(props) {
     }
     return 0;
   };
+  const archiveConnection = async (connectionId, archive) => {
+    console.log(id, archive);
+    let variables = {
+      id: connectionId,
+      input: {
+        archived: archive,
+      },
+    };
+    let res_connection = await mutateConnectionPut({ variables });
+    let connection = res_connection?.data?.connectionCreate;
+    setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+  };
+  const deleteConnection = async connectionId => {
+    let deleteConnection = await mutateConnectionDelete({
+      variables: { id: connectionId },
+    });
+    let message = deleteConnection?.data?.message;
+    setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+  };
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -122,7 +143,11 @@ export default function Overview(props) {
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
         <ShareTemplate setPageState={setPageState}></ShareTemplate>
       ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
-        <ArchiveList setPageState={setPageState}></ArchiveList>
+        <ArchiveList
+          setPageState={setPageState}
+          archiveConnection={archiveConnection}
+          deleteConnection={deleteConnection}
+        ></ArchiveList>
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">
@@ -541,46 +566,50 @@ export default function Overview(props) {
                         Stephanie Wykoff
                       </span>
                       <span className="editDelete_icons">
-                        <i  onClick ={()=> setEditChat(true) } className=" edit fas fa-pen"></i>
+                        <i
+                          onClick={() => setEditChat(true)}
+                          className=" edit fas fa-pen"
+                        ></i>
                         <i class="fa fa-trash-o deleted"></i>
                       </span>
                     </div>
                     <div className="discussions-contianer__disucssions__message">
-                      {!editChat ? "This startup is really well!" : "" }
-                      {editChat
-                        ?
-                          <>
-                            <div className ="row">
-                              <TextBox  inputval = {"This startup is really well!"} />
-                            </div>
-                            <div className ="row">
-                              <ButtonWithIcon
-                                iconName="add"
-                                className="text-center archive-btn"
-                                text="Cancel"
-                                iconPosition={ICONPOSITION.NONE}
-                                onClick={() => setEditChat(false)}
-                              ></ButtonWithIcon>
-                              <ButtonWithIcon
-                                iconName="add"
-                                className="ml-2 text-center archive-btn"
-                                text="Save"
-                                iconPosition={ICONPOSITION.NONE}
-                                onClick={() => setEditChat(false)}
-                              ></ButtonWithIcon>
-                            </div> 
-                          </>
-                        : 
-                          ""
-                      }
+                      {!editChat ? "This startup is really well!" : ""}
+                      {editChat ? (
+                        <>
+                          <div className="row">
+                            <TextBox
+                              inputval={"This startup is really well!"}
+                            />
+                          </div>
+                          <div className="row">
+                            <ButtonWithIcon
+                              iconName="add"
+                              className="text-center archive-btn"
+                              text="Cancel"
+                              iconPosition={ICONPOSITION.NONE}
+                              onClick={() => setEditChat(false)}
+                            ></ButtonWithIcon>
+                            <ButtonWithIcon
+                              iconName="add"
+                              className="ml-2 text-center archive-btn"
+                              text="Save"
+                              iconPosition={ICONPOSITION.NONE}
+                              onClick={() => setEditChat(false)}
+                            ></ButtonWithIcon>
+                          </div>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </div>
-                    {!editChat ? 
+                    {!editChat ? (
                       <div className="discussions-contianer__disucssions__date">
                         Jan 28, 2021 10:53 PM
                       </div>
-                    : 
+                    ) : (
                       ""
-                    }
+                    )}
                   </div>
                   <div className="separator"></div>
                   <div className="discussions-contianer__disucssions__discussion">
@@ -656,7 +685,7 @@ export default function Overview(props) {
           title="Archive startup"
           submit={() => {
             setArchiveModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+            archiveConnection(id, true);
           }}
           close={() => setArchiveModal(false)}
           submitTxt="Archive"
@@ -673,8 +702,8 @@ export default function Overview(props) {
         <Modal
           title="Archive startup"
           submit={() => {
+            deleteConnection(id);
             setDeleteModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
           }}
           close={() => setDeleteModal(false)}
           submitTxt="Delete"
@@ -682,7 +711,7 @@ export default function Overview(props) {
           closeTxt="CANCEL"
           intermidate={() => {
             setDeleteModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+            archiveConnection(id, true);
           }}
           intermidateTxt="Archive"
           children={<DeleteStartup></DeleteStartup>}
