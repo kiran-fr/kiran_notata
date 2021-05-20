@@ -23,7 +23,7 @@ export const InviteStartup = ({ id, answers }) => {
       `${window.location.protocol}//` +
       `${window.location.host}/` +
       `public/creative/` +
-      `${creative.accountId || creative.id}/` +
+      `${creative.accountId}/` +
       `${creative.id}` +
       `&email=${creative.sharedWithEmail}`;
     return url;
@@ -48,28 +48,23 @@ export const InviteStartup = ({ id, answers }) => {
 
     console.log(getPublicShareUrl(update?.data?.creativePut));
 
-    setUrlToShare(
-      getPublicShareUrl(update?.data?.creativePut?.sharedWithEmail)
-    );
+    setUrlToShare(getPublicShareUrl(update?.data?.creativePut));
     setInviteSent(true);
   };
 
   // Submit function with mutations
   const revoke = async () => {
-    // Stop if startup with same name exists
-
-    console.log("revoke called");
-    let revokeVariables = {
+    let variables = {
       id: id,
-      sharedWithEmail: email,
-      removeSharing: "true",
       input: {
+        sharedWithEmail: email,
+        removeSharing: true,
         answers,
       },
     };
 
     let update = await mutateCreativeUpdate({
-      variables: revokeVariables,
+      variables,
     });
     console.log(update);
   };
@@ -79,14 +74,7 @@ export const InviteStartup = ({ id, answers }) => {
       {inviteSent ? (
         <div>
           <div>{urlToShare}</div>
-          <button onClick={revoke}>
-            {" "}
-            {isSubmitting ? (
-              <i className={"fa fa-spinner fa-spin"} />
-            ) : (
-              "Revoke"
-            )}
-          </button>
+          <button onClick={revoke}>Revoke</button>
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
