@@ -4,13 +4,22 @@ import { startup_page } from "definitions";
 import TableBody from "./tableBody";
 import TableHeader from "./tableHeader";
 
+import SelectAllPopup from "./SelectAllPopup";
+
 export default function Table(props) {
   const { data, loading, emptyLabel, history, updateFunnelTag } = props;
 
   const [preview, setPreview] = useState();
 
+  const [popup, setPopup] = useState(false);
+
   const showPreview = no => {
     setPreview(no);
+  };
+
+  const handlePopup = () => {
+    console.log("Changing Popup State: ", popup);
+    setPopup(!popup);
   };
 
   const hidePreview = ({ no }) => {
@@ -39,6 +48,7 @@ export default function Table(props) {
             showPreview={showPreview}
             preview={preview}
             hidePreview={hidePreview}
+            handlePopup={handlePopup}
           />
           <TableBody
             {...props}
@@ -50,6 +60,12 @@ export default function Table(props) {
             updateFunnelTag={updateFunnelTag}
           />
         </table>
+        <SelectAllPopup
+          title="Action"
+          items={["Delete", "Star", "Hide"]}
+          isOpen={popup}
+          setIsOpen={setPopup}
+        ></SelectAllPopup>
         {loading && (
           <div className={styles.loader}>
             <i className={"fa fa-spinner fa-spin"} />
