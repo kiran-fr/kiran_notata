@@ -12,6 +12,7 @@ import Materials from "./materials";
 import Evaluations from "./evaluations/evaluations";
 import { connectionGet, accountGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
+import { startup_page } from "definitions";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,6 +51,10 @@ export const Startup = props => {
     setValue(newValue);
   };
 
+  const redirectToCompanyPage = connectionId => {
+    let path = `${startup_page}/company/${connectionId}`;
+    props.history.push(path);
+  };
   if (!connectionGetData) {
     return <GhostLoader />;
   }
@@ -71,7 +76,10 @@ export const Startup = props => {
         <StartupInfo startup={connection} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Overview creativity={connection} />
+        <Overview
+          creativity={connection}
+          redirectToCompanyPage={redirectToCompanyPage}
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Evaluations
