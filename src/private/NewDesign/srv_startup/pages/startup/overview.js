@@ -16,11 +16,13 @@ import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import { StylesProvider } from "@material-ui/core";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
+import { connectionPut } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
+  const [mutateConnectionPut] = useMutation(connectionPut);
   const items = [
     { id: 1, name: "First" },
     { id: 2, name: "Before" },
@@ -104,6 +106,17 @@ export default function Overview(props) {
     }
     return 0;
   };
+  const archiveConnection = async (connectionId, archive) => {
+    console.log(id, archive);
+    let variables = {
+      id: connectionId,
+      input: {
+        archived: archive,
+      },
+    };
+    let res_connection = await mutateConnectionPut({ variables });
+    let connection = res_connection?.data?.connectionCreate;
+  };
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -118,7 +131,10 @@ export default function Overview(props) {
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
         <ShareTemplate setPageState={setPageState}></ShareTemplate>
       ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
-        <ArchiveList setPageState={setPageState}></ArchiveList>
+        <ArchiveList
+          setPageState={setPageState}
+          archiveConnection={archiveConnection}
+        ></ArchiveList>
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">
@@ -623,6 +639,7 @@ export default function Overview(props) {
           submit={() => {
             setArchiveModal(false);
             setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+            archiveConnection(id, true);
           }}
           close={() => setArchiveModal(false)}
           submitTxt="Archive"
