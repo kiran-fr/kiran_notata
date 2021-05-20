@@ -120,7 +120,9 @@ export default function Overview(props) {
     setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
   };
   const deleteConnection = async connectionId => {
-    let deleteConnection = await mutateConnectionPut({ id: connectionId });
+    let deleteConnection = await mutateConnectionDelete({
+      variables: { id: connectionId },
+    });
     let message = deleteConnection?.data?.message;
     setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
   };
