@@ -36,8 +36,8 @@ export const InviteStartup = ({ id, answers }) => {
     console.log(data?.variables?.input?.email);
     let variables = {
       id: id,
-      sharedWithEmail: email,
       input: {
+        sharedWithEmail: data?.variables?.input?.email,
         answers,
       },
     };
