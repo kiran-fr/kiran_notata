@@ -117,10 +117,12 @@ export default function Overview(props) {
     };
     let res_connection = await mutateConnectionPut({ variables });
     let connection = res_connection?.data?.connectionCreate;
+    setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
   };
   const deleteConnection = async connectionId => {
     let deleteConnection = await mutateConnectionPut({ id: connectionId });
     let message = deleteConnection?.data?.message;
+    setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
   };
   if (showSubjectiveScore) {
     return (
@@ -644,7 +646,6 @@ export default function Overview(props) {
           title="Archive startup"
           submit={() => {
             setArchiveModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
             archiveConnection(id, true);
           }}
           close={() => setArchiveModal(false)}
@@ -662,9 +663,8 @@ export default function Overview(props) {
         <Modal
           title="Archive startup"
           submit={() => {
+            deleteConnection(id);
             setDeleteModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
-            // deleteConnection(id);
           }}
           close={() => setDeleteModal(false)}
           submitTxt="Delete"
@@ -672,7 +672,7 @@ export default function Overview(props) {
           closeTxt="CANCEL"
           intermidate={() => {
             setDeleteModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+            archiveConnection(id, true);
           }}
           intermidateTxt="Archive"
           children={<DeleteStartup></DeleteStartup>}
