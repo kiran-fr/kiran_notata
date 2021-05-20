@@ -83,6 +83,7 @@ export const Startup = props => {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Evaluations
+          history={props.history}
           connection={connection}
           accountData={accountGetData?.accountGet}
         />

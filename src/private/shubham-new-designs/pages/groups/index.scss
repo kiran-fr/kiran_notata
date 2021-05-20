@@ -3,6 +3,12 @@
     justify-content: center;
     align-items: center;   
     height:100%; 
+    &__separator{
+        border-bottom: 1px solid #F0F0F0;
+        width: 90%;
+        margin-left: 5%;
+        padding-top:0px;
+    }
     .card{
         width:auto;        
         @media only screen and(min-width:768px) {
@@ -212,6 +218,7 @@
             line-height: 16px;
             text-decoration-line: underline;
             color: #6A6A6A;
+            cursor: pointer;
             .material-icons{
                 position: absolute;
                 color: #C4C4C4;
