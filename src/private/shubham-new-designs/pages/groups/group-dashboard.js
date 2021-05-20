@@ -18,6 +18,8 @@ export default function GroupDashboard() {
   const noOfSubmittions = 5;
   const [submittionState, setSubmittionState] = useState(false);
   const [subjectiveScoreState, setSubjectiveScoreState] = useState(false);
+  const [showCommentSection, setShowCommentSection] = useState(false);
+  const [yourEvaluation, setYourEvaluation] = useState(false);
   return (
     <div className="group-dashboard-container">
       <div className="row">
@@ -323,22 +325,94 @@ export default function GroupDashboard() {
                 </>
               )}
               <div className="row your-evaluations-container">
-                <div className="col-sm-4 col-xs-6">
+                <div className="col-md-4 col-sm-6 col-xs-7">
                   <i
-                    class={`your-evaluations-container__icon fa fa-chevron-down`}
+                    class={`your-evaluations-container__icon fa ${
+                      yourEvaluation ? "fa-chevron-up" : "fa-chevron-down"
+                    }`}
                     aria-hidden="true"
-                    onClick={() => null}
+                    onClick={() => setYourEvaluation(!yourEvaluation)}
                   ></i>
                   <div className="your-evaluations-container__heading">
                     YOUR EVALUATIONS
                   </div>
                 </div>
-                <div className="col-sm-2 col-xs-6">
+                <div className="col-md-3 col-sm-6 col-xs-5">
                   <div className="your-evaluations-container__availability">
                     6 available
                   </div>
                 </div>
-                <div className="col-sm-6 col-xs-12 your-evaluations-container__comment-section">
+                {yourEvaluation && (
+                  <>
+                    <div className="col-sm-12 your-evaluations-container__score">
+                      <span className="your-evaluations-container__subjective">
+                        Subjective Score
+                      </span>
+                      <span className="your-evaluations-container__option-container">
+                        {[...Array(10)].map((elementInArray, index) => {
+                          return (
+                            <span
+                              key={`score-option-id-${index}`}
+                              className="your-evaluations-container__score-option"
+                            >
+                              {index + 1}
+                            </span>
+                          );
+                        })}
+                      </span>
+                      <span className="your-evaluations-container__share-with-group">
+                        Share With Group
+                      </span>
+                    </div>
+                    <div className="col-sm-12 your-evaluations-container__details-heading">
+                      your evaluations
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-12 your-evaluations-container__record">
+                        <div className="col-sm-5 col-xs-7 subjective-score-evaluation-container__name">
+                          First Impression
+                        </div>
+                        <div className="col-sm-2 col-xs-6 subjective-score-evaluation-container__submitions">
+                          03.09.2021
+                        </div>
+                        <div className="col-sm-2 col-xs-5 subjective-score-evaluation-container__score">
+                          65%
+                        </div>
+                        <div className="col-md-3 col-sm-6 col-xs-6">
+                          <div className="your-evaluations-container__record__share-with-group">
+                            Share With Group
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-12 your-evaluations-container__details-heading">
+                      requested evaluations
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-12 your-evaluations-container__record">
+                        <div className="col-sm-5 col-xs-7 subjective-score-evaluation-container__name">
+                          First Impression
+                        </div>
+                        <div className="col-sm-2 col-xs-6 subjective-score-evaluation-container__submitions">
+                          03.09.2021
+                        </div>
+                        <div className="col-sm-2 col-xs-5 subjective-score-evaluation-container__score">
+                          65%
+                        </div>
+                        <div className="col-md-3 col-sm-6 col-xs-6">
+                          <div className="your-evaluations-container__record__share-with-group">
+                            Share With Group
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+                <div
+                  className={`col-md-5 col-sm-12 col-xs-12 your-evaluations-container__comment-section ${
+                    yourEvaluation ? "your-evaluation-open" : ""
+                  }`}
+                >
                   <i
                     className="your-evaluations-container__icon fa fa-comment"
                     aria-hidden="true"
@@ -349,13 +423,92 @@ export default function GroupDashboard() {
                   </div>
                   <div className="your-evaluations-container__show-comments">
                     Show unread (4) comments
+                    <i
+                      className={`fa ${
+                        showCommentSection ? "fa-chevron-up" : "fa-chevron-down"
+                      }`}
+                      aria-hidden="true"
+                      onClick={() => setShowCommentSection(!showCommentSection)}
+                    ></i>
                   </div>
-                  <i
-                    className="fa fa-chevron-down"
-                    aria-hidden="true"
-                    onClick={() => null}
-                  ></i>
                 </div>
+                {showCommentSection && (
+                  <div className="comment-container">
+                    <div className="col-sm-12 col-xs-12 comment">
+                      <div>
+                        <span className="comment__username">
+                          Ane Nordahl Carlsen
+                        </span>
+                        <span className="comment__datetime">
+                          Jan 28, 2021 10:53 PM{" "}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="comment__comment">
+                          I do not like the real potencial of this startup. It's
+                          hard to avoid unconscious bias when investing in early
+                          stage startups. A systematic approach to evaluate
+                          companies has proven to increase the return of
+                          investment. Most online platforms are focused on
+                          startups, while tools for investors are often
+                          complicated, expensive and lack sharing capabilites.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-sm-12 col-xs-12 comment">
+                      <div>
+                        <span className="comment__username">
+                          Daria Kyselova
+                        </span>
+                        <span className="comment__datetime">
+                          Jan 28, 2021 10:53 PM
+                        </span>
+                      </div>
+                      <div>
+                        <p className="comment__comment">
+                          I like their presentation a lot.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-sm-12 col-xs-12 comment">
+                      <div>
+                        <span className="comment__username">
+                          Daria Kyselova
+                        </span>
+                        <span className="comment__datetime">
+                          Jan 28, 2021 10:53 PM
+                        </span>
+                      </div>
+                      <div>
+                        <p className="comment__comment">
+                          I like their presentation a lot.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-sm-12 col-xs-12 comment">
+                      <div>
+                        <span className="comment__username">
+                          Daria Kyselova
+                        </span>
+                        <span className="comment__datetime">
+                          Jan 28, 2021 10:53 PM
+                        </span>
+                      </div>
+                      <div>
+                        <p className="comment__comment">
+                          I like their presentation a lot.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-sm-12 col-xs-12">
+                      <input type="text" className="comment__write-comment" />
+                      <i
+                        className="comment__send fa fa-paper-plane"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
