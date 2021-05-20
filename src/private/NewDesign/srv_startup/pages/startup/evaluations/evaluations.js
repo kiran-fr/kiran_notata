@@ -10,7 +10,6 @@ import SummaryEvaluation from "./summary-evaluation";
 import ManageTemplates from "./manage-templates";
 import { evaluation_template_new_dev } from "../../../../../../definitions";
 
-
 export default function Evaluations(props) {
   const {
     connection: {

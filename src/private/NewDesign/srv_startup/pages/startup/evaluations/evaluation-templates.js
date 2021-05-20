@@ -16,7 +16,6 @@ function a11yProps(index) {
 }
 // export default function ElevationTemplates({ history }) {
 export const ElevationTemplates = ({ history }) => {
-
   const [value, setValue] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -124,4 +123,4 @@ export const ElevationTemplates = ({ history }) => {
       )}
     </>
   );
-}
+};
