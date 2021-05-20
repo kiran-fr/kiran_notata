@@ -91,6 +91,19 @@ export default gql`
           averagePercentageScore
         }
       }
+      log {
+        id
+        createdAt
+        createdByUser {
+          family_name
+          given_name
+        }
+        logType
+        dataPairs {
+          val
+          key
+        }
+      }
     }
   }
 `;
