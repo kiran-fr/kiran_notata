@@ -40,7 +40,6 @@ export const InviteStartup = ({ id, answers, creative }) => {
   const onSubmit = async data => {
     // Stop if startup with same name exists
 
-    console.log(data?.variables?.input?.email);
     let variables = {
       id: id,
       input: {
@@ -52,8 +51,6 @@ export const InviteStartup = ({ id, answers, creative }) => {
     let update = await mutateCreativeUpdate({
       variables,
     });
-
-    console.log(getPublicShareUrl(update?.data?.creativePut));
 
     setUrlToShare(getPublicShareUrl(update?.data?.creativePut));
     setInviteSent(true);
@@ -94,7 +91,6 @@ export const InviteStartup = ({ id, answers, creative }) => {
             reference={register({ required: true })}
           />
           <div>
-            {/* <button onClick={() => closeModal()}>CANCEL</button> */}
             <button type="submit">
               {" "}
               {isSubmitting ? (
