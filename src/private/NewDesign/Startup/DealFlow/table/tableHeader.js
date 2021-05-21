@@ -2,7 +2,13 @@ import React from "react";
 import styles from "./table.module.css";
 
 export default function TableHeader(props) {
-  const { evaluationTemplates, filters, setFilters, columnSettings } = props;
+  const {
+    evaluationTemplates,
+    filters,
+    setFilters,
+    columnSettings,
+    handlePopup,
+  } = props;
 
   return (
     <thead>
@@ -12,6 +18,9 @@ export default function TableHeader(props) {
             <input type="checkbox" />
             <span className={styles.checkmark}></span>
           </label>
+          <span onClick={handlePopup} className={styles.selectDropdown}>
+            <i className="fas fa-chevron-down"></i>
+          </span>
         </td>
         <td>
           COMPANY NAME
