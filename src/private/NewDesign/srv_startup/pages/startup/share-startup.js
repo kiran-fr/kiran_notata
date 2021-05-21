@@ -12,7 +12,7 @@ import download_cover from "../../../../../assets/images/download-cover.png";
 import { useQuery, useMutation } from "@apollo/client";
 import { creativeTemplateGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
-import { GeneralInput } from "Components/Forms/TemplatedForm/Inputs/GeneralInput";
+import { GeneralInput } from "./Inputs/GeneralInput";
 import { creativeUpdate } from "private/Apollo/Mutations";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../ui-kits/text-box";
@@ -123,6 +123,10 @@ export default function ShareStartup({ setshareStartup, connection }) {
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
           <div className="text">
+            Invite startup to fill in this information.
+            <div className="btn">Invite startup</div>
+          </div>
+          {/* <div className="text">
             <div className="row">
               <span className="col-6">
                 Invite startup to fill in this information.
@@ -138,7 +142,7 @@ export default function ShareStartup({ setshareStartup, connection }) {
                 onClick={() => setInviteStartUpModal(true)}
               ></ButtonWithIcon>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="share-startup-container">
           <div className="row">
