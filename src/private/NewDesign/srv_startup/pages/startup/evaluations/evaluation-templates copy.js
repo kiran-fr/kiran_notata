@@ -61,59 +61,61 @@ export const ElevationTemplates = ({ history }) => {
           </Tabs>
         </div>
         <div className="evaluation-templates-container__data-container">
-          {evaluationTemplates?.map((template, index) => (
-            <div
-              className="row evaluation-templates-container__data-container__data"
-              key={`row-id-${index}`}
-            >
-              <div className="col-sm-4 col-xs-10 template-name">
-                {template.name}
-              </div>
-              <div className="col-sm-3 col-xs-10 sections">
-                {template?.sections?.length || 0} sections
-              </div>
-              {/* <div className="col-sm-3 group-name">Big group 1</div> */}
-              <div className="col-sm-2 col-xs-2 browse">
-                <span
-                  class="material-icons"
-                  onClick={() => {
-                    let states = new Array(noOfRows).fill(false);
-                    states[index] = !browseDropDownStates[index];
-                    setBrowseDropDownStates(states);
-                  }}
-                >
-                  more_horiz
-                </span>
-                {browseDropDownStates[index] && (
-                  <div className="browse__drop-dwon">
-                    {value === 1 && (
+          {[...Array(noOfRows)].map((elementInArray, index) => {
+            return (
+              <div
+                className="row evaluation-templates-container__data-container__data"
+                key={`row-id-${index}`}
+              >
+                <div className="col-sm-4 col-xs-10 template-name">
+                  First impression
+                </div>
+                <div className="col-sm-3 col-xs-10 sections">6 sections</div>
+                <div className="col-sm-3 group-name">Big group 1</div>
+                <div className="col-sm-2 col-xs-2 browse">
+                  <span
+                    class="material-icons"
+                    onClick={() => {
+                      let states = new Array(noOfRows).fill(false);
+                      states[index] = !browseDropDownStates[index];
+                      setBrowseDropDownStates(states);
+                    }}
+                  >
+                    more_horiz
+                  </span>
+                  {browseDropDownStates[index] && (
+                    <div className="browse__drop-dwon">
+                      {value === 1 && (
+                        <div
+                          className="browse__drop-dwon__item"
+                          onClick={() => null}
+                        >
+                          <span class="material-icons settings">edit</span>
+                          <span className="text">EDIT</span>
+                        </div>
+                      )}
                       <div
                         className="browse__drop-dwon__item"
                         onClick={() => null}
                       >
-                        <span class="material-icons settings">edit</span>
-                        <span className="text">EDIT</span>
+                        <span class="material-icons settings">
+                          content_copy
+                        </span>
+                        <span className="text">COPY AND EDIT</span>
                       </div>
-                    )}
-                    <div
-                      className="browse__drop-dwon__item"
-                      onClick={() => null}
-                    >
-                      <span class="material-icons settings">content_copy</span>
-                      <span className="text">COPY AND EDIT</span>
+                      <div
+                        className="browse__drop-dwon__item leave"
+                        onClick={() => null}
+                      >
+                        <span class="material-icons leave">delete</span>
+                        <span className="delete-text">DELETE GROUP</span>
+                      </div>
                     </div>
-                    <div
-                      className="browse__drop-dwon__item leave"
-                      onClick={() => null}
-                    >
-                      <span class="material-icons leave">delete</span>
-                      <span className="delete-text">DELETE GROUP</span>
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       {createNewTemplate && (
