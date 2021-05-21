@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDebouncedCallback } from "use-debounce";
+import _ from "lodash";
 import { appsyncClient } from "../../../../../awsconfig";
 // API STUFF
 import { useMutation } from "@apollo/client";
@@ -30,7 +30,7 @@ export const Short = ({ history, closeModal, styles, connections }) => {
   const [mutateCreative] = useMutation(creativePut);
   const [mutateConnectionCreate] = useMutation(connectionCreate);
 
-  const debounced = useDebouncedCallback(
+  const debounced = _.debounce(
     value => {
       appsyncClient
         .query({
