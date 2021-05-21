@@ -94,8 +94,10 @@ export default function TableHeader(props) {
                     let sortBy = "EVALUATION";
                     let sortDirection =
                       filters.sortBy === "EVALUATION" &&
-                      filters.sortDirection !== "DESC"
-                        ? //&& filters.sortByVal === id
+                      filters.sortDirection !== "DESC" &&
+                      filters.sortByValue === id
+                        ? 
+
                           "DESC"
                         : "ASC";
 
@@ -103,7 +105,7 @@ export default function TableHeader(props) {
                       ...filters,
                       sortBy,
                       sortDirection,
-                      // sortByVal: id
+                      sortByValue: id
                     });
                   }}
                   className="fal fa-exchange"
