@@ -6,6 +6,7 @@ import { ICONPOSITION } from "../../constants";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SingleAndMultiPleAnswer from "./single-answer";
+import MultiPleAnswer from "./Multiple-answers";
 import TrafficLights from "./traffic-lights";
 import FreeText from "./free-text";
 import TextLines from "./text-lines";
@@ -163,7 +164,7 @@ export const AddSection = () => {
                         <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
                       </TabPanel>
                       <TabPanel value={value} index={1}>
-                        <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
+                        <MultiPleAnswer></MultiPleAnswer>
                       </TabPanel>
                       <TabPanel value={value} index={2}>
                         <TrafficLights></TrafficLights>
