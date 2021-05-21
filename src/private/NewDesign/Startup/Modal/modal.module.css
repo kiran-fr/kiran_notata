@@ -379,3 +379,11 @@
   color: #ffffff;
   cursor: pointer;
 }
+
+.startupFunnel > div {
+  flex-direction: column-reverse;
+}
+
+.startupFunnel > div > div {
+  width: 100%;
+}

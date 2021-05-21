@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
@@ -16,12 +16,19 @@ import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import { StylesProvider } from "@material-ui/core";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
+import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
 import TextBox from "../ui-kits/text-box";
+import { logCreate, logDelete } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
+  const [mutationlogCreate] = useMutation(logCreate);
+  const [mutationlogDelete] = useMutation(logDelete);
+  const [comments, setComments] = useState([]);
+  const [mutateConnectionPut] = useMutation(connectionPut);
+  const [mutateConnectionDelete] = useMutation(connectionDelete);
   const [editChat, setEditChat] = useState(false);
 
   const items = [
@@ -36,9 +43,16 @@ export default function Overview(props) {
       subjectiveScores,
       updatedAt,
       evaluationSummaries,
+      log,
     },
   } = props;
   const { answers, name } = creative;
+
+  useEffect(() => {
+    let comments = log?.filter(l => l.logType === "COMMENT");
+    setComments(comments);
+  }, [log]);
+
   const updatedMonth = moment(new Date())
     .diff(updatedAt, "months", true)
     .toFixed(0);
@@ -86,6 +100,7 @@ export default function Overview(props) {
   const [archiveModal, setArchiveModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
+  const [message, setMessage] = useState(null);
 
   const connectionData = { id: id, subjectiveScores: subjectiveScores };
   const { data: connectionsGetData, loading, error } = useQuery(
@@ -107,6 +122,65 @@ export default function Overview(props) {
     }
     return 0;
   };
+
+  const handleMessageChange = e => {
+    const { value } = e.target;
+    setMessage(value);
+  };
+
+  const saveComment = async () => {
+    if (message) {
+      let variables = {
+        connectionId: id,
+        input: {
+          logType: "COMMENT",
+          dataPairs: {
+            val: message,
+            key: "TEXT",
+          },
+        },
+      };
+      let logConnection = await mutationlogCreate({ variables });
+      let savedLog = logConnection?.data?.logCreate;
+      setMessage("");
+      if (savedLog) {
+        setComments([...comments, savedLog]);
+      }
+    }
+  };
+
+  const archiveConnection = async (connectionId, archive) => {
+    console.log(id, archive);
+    let variables = {
+      id: connectionId,
+      input: {
+        archived: archive,
+      },
+    };
+    let res_connection = await mutateConnectionPut({ variables });
+    let connection = res_connection?.data?.connectionCreate;
+    setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+  };
+
+  const deleteConnection = async connectionId => {
+    let deleteConnection = await mutateConnectionDelete({
+      variables: { id: connectionId },
+    });
+    let message = deleteConnection?.data?.message;
+    setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+  };
+
+  const deleteComment = async logId => {
+    if (logId) {
+      let logConnection = await mutationlogDelete({ variables: { id: logId } });
+      let msg = logConnection?.data?.logDelete?.message;
+      if (msg) {
+        let updatedComments = comments?.filter(comment => comment.id !== logId);
+        setComments(updatedComments);
+      }
+    }
+  };
+
   if (showSubjectiveScore) {
     return (
       <SubjectiveScoreModal
@@ -121,7 +195,11 @@ export default function Overview(props) {
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
         <ShareTemplate setPageState={setPageState}></ShareTemplate>
       ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
-        <ArchiveList setPageState={setPageState}></ArchiveList>
+        <ArchiveList
+          setPageState={setPageState}
+          archiveConnection={archiveConnection}
+          deleteConnection={deleteConnection}
+        ></ArchiveList>
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">
@@ -530,92 +608,94 @@ export default function Overview(props) {
                   Notes from you and your team
                 </div>
                 <div className="row discussions-contianer__disucssions">
-                  <div className="discussions-contianer__disucssions__discussion">
-                    <div>
-                      <i
-                        class=" comment fa fa-comments-o"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="discussions-contianer__disucssions__sender">
-                        Stephanie Wykoff
-                      </span>
-                      <span className="editDelete_icons">
+                  {comments?.map(comment => (
+                    <div className="discussions-contianer__disucssions__discussion">
+                      <div>
                         <i
-                          onClick={() => setEditChat(true)}
-                          className=" edit fas fa-pen"
+                          class=" comment fa fa-comments-o"
+                          aria-hidden="true"
                         ></i>
-                        <i class="fa fa-trash-o deleted"></i>
-                      </span>
-                    </div>
-                    <div className="discussions-contianer__disucssions__message">
-                      {!editChat ? "This startup is really well!" : ""}
-                      {editChat ? (
-                        <>
-                          <div className="row">
-                            <TextBox
-                              inputval={"This startup is really well!"}
-                            />
-                          </div>
-                          <div className="row">
-                            <ButtonWithIcon
-                              iconName="add"
-                              className="text-center archive-btn"
-                              text="Cancel"
-                              iconPosition={ICONPOSITION.NONE}
-                              onClick={() => setEditChat(false)}
-                            ></ButtonWithIcon>
-                            <ButtonWithIcon
-                              iconName="add"
-                              className="ml-2 text-center archive-btn"
-                              text="Save"
-                              iconPosition={ICONPOSITION.NONE}
-                              onClick={() => setEditChat(false)}
-                            ></ButtonWithIcon>
-                          </div>
-                        </>
+                        <span className="discussions-contianer__disucssions__sender">
+                          {comment?.isMe
+                            ? "You"
+                            : `${comment?.createdByUser?.given_name} ${comment?.createdByUser?.family_name}`}
+                        </span>
+                        <span className="editDelete_icons">
+                          <i
+                            onClick={() => setEditChat(true)}
+                            className=" edit fas fa-pen"
+                          ></i>
+                          <i
+                            onClick={() => deleteComment(comment.id)}
+                            class="fa fa-trash-o deleted"
+                          ></i>
+                        </span>
+                      </div>
+                      <div className="discussions-contianer__disucssions__message">
+                        {!editChat
+                          ? comment?.dataPairs?.length > 0 &&
+                            comment?.dataPairs[0].val
+                          : ""}
+                        {editChat ? (
+                          <>
+                            <div className="row">
+                              <TextBox
+                                inputval={
+                                  comment?.dataPairs?.length > 0 &&
+                                  comment?.dataPairs[0].val
+                                }
+                              />
+                            </div>
+                            <div className="row">
+                              <ButtonWithIcon
+                                iconName="add"
+                                className="text-center archive-btn"
+                                text="Cancel"
+                                iconPosition={ICONPOSITION.NONE}
+                                onClick={() => setEditChat(false)}
+                              ></ButtonWithIcon>
+                              <ButtonWithIcon
+                                iconName="add"
+                                className="ml-2 text-center archive-btn"
+                                text="Save"
+                                iconPosition={ICONPOSITION.NONE}
+                                onClick={() => setEditChat(false)}
+                              ></ButtonWithIcon>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      {comment.createdAt !== comment.updatedAt && (
+                        <span>(edited)</span>
+                      )}
+
+                      {!editChat ? (
+                        <div className="discussions-contianer__disucssions__date">
+                          {moment(comment.createdAt).format("lll")}
+                        </div>
                       ) : (
                         ""
                       )}
                     </div>
-                    {!editChat ? (
-                      <div className="discussions-contianer__disucssions__date">
-                        Jan 28, 2021 10:53 PM
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div className="separator"></div>
-                  <div className="discussions-contianer__disucssions__discussion">
-                    <div>
-                      <i
-                        class="comment fa fa-comments-o"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="discussions-contianer__disucssions__sender">
-                        You
-                      </span>
-                      <span className="editDelete_icons">
-                        <i className=" edit fas fa-pen"></i>
-                        <i class="fa fa-trash-o deleted"></i>
-                      </span>
-                    </div>
-                    <div className="discussions-contianer__disucssions__message">
-                      This startup is really well!
-                    </div>
-                    <div className="discussions-contianer__disucssions__date">
-                      Jan 28, 2021 10:53 PM
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="row">
                   <div className="col-sm-12 col-xs-11">
                     <input
                       className="discussions-contianer__disucssions__text"
-                      type="search"
+                      type="input"
+                      name="message"
+                      value={message}
+                      onChange={handleMessageChange}
                     />
                     <span class="discussions-contianer__disucssions__send-icon">
-                      <button class="btn btn-outline-secondary" type="button">
+                      <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        onClick={saveComment}
+                      >
                         <i class="fa fa-paper-plane"></i>
                       </button>
                     </span>
@@ -659,7 +739,7 @@ export default function Overview(props) {
           title="Archive startup"
           submit={() => {
             setArchiveModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+            archiveConnection(id, true);
           }}
           close={() => setArchiveModal(false)}
           submitTxt="Archive"
@@ -676,8 +756,8 @@ export default function Overview(props) {
         <Modal
           title="Archive startup"
           submit={() => {
+            deleteConnection(id);
             setDeleteModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
           }}
           close={() => setDeleteModal(false)}
           submitTxt="Delete"
@@ -685,7 +765,7 @@ export default function Overview(props) {
           closeTxt="CANCEL"
           intermidate={() => {
             setDeleteModal(false);
-            setPageState(OVERVIEWPAGESTATE.ARCHIVElIST);
+            archiveConnection(id, true);
           }}
           intermidateTxt="Archive"
           children={<DeleteStartup></DeleteStartup>}

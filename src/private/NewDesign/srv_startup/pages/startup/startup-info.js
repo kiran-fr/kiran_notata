@@ -39,11 +39,16 @@ export default function StartupInfo({ startup }) {
     return <></>;
   }
 
+  const handleCompanyUrl = (data) => {
+    window.open(data);
+  }
+
   return (
     <>
       {shareStartup ? (
         <ShareStartup
           setshareStartup={() => setshareStartup(false)}
+          connection={startup}
         ></ShareStartup>
       ) : (
         <div className="row tab-panel-container startup-info-container">
@@ -124,9 +129,9 @@ export default function StartupInfo({ startup }) {
                     </div> */}
                   </div>
                   <div className="row startup-info-notata-info">
-                    <div className="col-6 col-xs-6 startup-info-notata-info__web">
+                    <div  className="col-6 col-xs-6 startup-info-notata-info__web">
                       {startup?.creative
-                        ? getAnswer(startup.creative, "q06_section_info")
+                        ?<span className="handCursor" onClick = {()=>handleCompanyUrl(getAnswer(startup.creative, "q06_section_info"))}> {getAnswer(startup.creative, "q06_section_info")} </span>
                         : "N/A"}
                     </div>
                     <div className="col-6 col-xs-6 startup-info-notata-info__slidedeck">

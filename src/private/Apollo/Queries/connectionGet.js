@@ -20,10 +20,16 @@ export default gql`
       creative {
         id
         name
+        sharedWithEmail
         answers {
+          inputType
+          sectionId
+          sectionName
+          questionId
           questionName
           questionId
           val
+          sid
         }
       }
 
@@ -89,6 +95,21 @@ export default gql`
           templateName
           submissions
           averagePercentageScore
+        }
+      }
+      log {
+        id
+        isMe
+        createdAt
+        updatedAt
+        createdByUser {
+          family_name
+          given_name
+        }
+        logType
+        dataPairs {
+          val
+          key
         }
       }
     }
