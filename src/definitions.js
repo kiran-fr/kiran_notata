@@ -61,6 +61,7 @@ export const navigation = `${startup_page}/components/ui/navigation`;
 
 export const startup_company_profile = `${startup_page}/company/:id`;
 export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-templates`;
+export const evaluation_template_profile = `${startup_page}/settings/evaluation-template`;
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
 // PUBLIC ROUTES
 export const public_pages = `/public`;

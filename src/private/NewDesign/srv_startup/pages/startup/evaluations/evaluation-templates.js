@@ -4,7 +4,7 @@ import ButtonWithIcon from "../../ui-kits/button-with-icon";
 import { ICONPOSITION } from "../../constants";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { add_section_dev } from "../../../../../../definitions";
+import { evaluation_template_profile } from "../../../../../../definitions";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../../ui-kits/text-box";
 import { useQuery, useMutation } from "@apollo/client";
@@ -52,10 +52,8 @@ export const ElevationTemplates = ({ history }) => {
     });
     let savedLog = createResponse?.data?.evaluationTemplateCreate;
     console.log(savedLog);
-
     setCreateNewTemplate(false);
-    //append savedLog.id to url to go to that evaluation
-    history.push(add_section_dev);
+    history.push(`${evaluation_template_profile}/${savedLog?.id}`);
   };
 
   if (!accountGetData) {
@@ -95,6 +93,9 @@ export const ElevationTemplates = ({ history }) => {
             <div
               className="row evaluation-templates-container__data-container__data"
               key={`row-id-${index}`}
+              onClick={() =>
+                history.push(`${evaluation_template_profile}/${template?.id}`)
+              }
             >
               <div className="col-sm-4 col-xs-10 template-name">
                 {template.name}

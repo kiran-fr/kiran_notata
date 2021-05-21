@@ -36,6 +36,7 @@ import {
   add_section,
   group_dashboard,
   evaluation_template_new_dev,
+  evaluation_template_profile,
   add_section_dev,
 } from "../definitions";
 
@@ -200,7 +201,11 @@ export const RouterComponent = ({ history }) => {
         component={ElevationTemplatesDev}
       />
 
-      <Route exact path={add_section_dev} component={AddSectionDev} />
+      <Route
+        exact
+        path={`${evaluation_template_profile}/:id`}
+        component={AddSectionDev}
+      />
 
       <Route exact path={add_section} component={AddSection} />
 
