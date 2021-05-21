@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { useDebouncedCallback } from "use-debounce";
+import { appsyncClient } from "../../../../../awsconfig";
 // API STUFF
 import { useMutation } from "@apollo/client";
 import { connectionCreate, creativePut } from "private/Apollo/Mutations";
+import { connectionAutoCompleteName } from "private/Apollo/Queries";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 
 // COMPONENTS
@@ -28,26 +30,33 @@ export const Short = ({ history, closeModal, styles, connections }) => {
   const [mutateCreative] = useMutation(creativePut);
   const [mutateConnectionCreate] = useMutation(connectionCreate);
 
+  const debounced = useDebouncedCallback(
+    value => {
+      appsyncClient
+        .query({
+          query: connectionAutoCompleteName,
+          variables: {
+            search: value,
+          },
+        })
+        .then(result => {
+          if (result?.data?.connectionAutoCompleteName) {
+            setExistedFlag(
+              result?.data?.connectionAutoCompleteName[0]?.creativeName
+            );
+          } else {
+            setExistedFlag(undefined);
+          }
+        });
+    },
+    // delay in ms
+    1000
+  );
+
   // Look for duplicate names
-  let companyNameArr = [];
-  function lookForDuplicateNames(value) {
-    // Populate array if empty
-    if (companyNameArr.length === 0) {
-      companyNameArr = connections?.length
-        ? connections?.map(sub => sub.creative?.name)
-        : [];
-    }
-
-    let userInput = value ? value.toUpperCase() : "";
-
-    // Filter array to see if we have a match
-    let match = companyNameArr.find(
-      name => name && name.toUpperCase() === userInput
-    );
-
-    // If duplicate, set state
-    setExistedFlag(match);
-  }
+  const lookForDuplicateNames = value => {
+    debounced(value);
+  };
 
   // Submit function with mutations
   const onSubmit = async data => {
