@@ -14,6 +14,7 @@ export { default as evaluationCreate } from "./evaluationCreate";
 export { default as evaluationUpdate } from "./evaluationUpdate";
 export { default as evaluationDelete } from "./evaluationDelete";
 
+export { default as evaluationTemplateCreate } from "./evaluationTemplateCreate";
 export { default as evaluationTemplatePut } from "./evaluationTemplatePut";
 export { default as evaluationTemplateDelete } from "./evaluationTemplateDelete";
 export { default as evaluationTemplateSectionPut } from "./evaluationTemplateSectionPut";

@@ -7,8 +7,9 @@ import Tab from "@material-ui/core/Tab";
 import { add_section_dev } from "../../../../../../definitions";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../../ui-kits/text-box";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { accountGet } from "private/Apollo/Queries";
+import { evaluationTemplateCreate } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 
 function a11yProps(index) {
@@ -20,6 +21,13 @@ function a11yProps(index) {
 // export default function ElevationTemplates({ history }) {
 export const ElevationTemplates = ({ history }) => {
   const [value, setValue] = React.useState(0);
+  const [name, setName] = useState(null);
+  const [saveLoader, setSaveLoader] = useState(false);
+
+  const [mutateEvaluationTemplateCreate] = useMutation(
+    evaluationTemplateCreate
+  );
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -33,9 +41,31 @@ export const ElevationTemplates = ({ history }) => {
   console.log("accountGet", accountGetData?.accountGet?.evaluationTemplates);
   let evaluationTemplates = accountGetData?.accountGet?.evaluationTemplates;
 
+  const saveTemplate = async () => {
+    setSaveLoader(true);
+    let createResponse = await mutateEvaluationTemplateCreate({
+      variables: {
+        input: {
+          name,
+        },
+      },
+    });
+    let savedLog = createResponse?.data?.evaluationTemplateCreate;
+    console.log(savedLog);
+
+    setCreateNewTemplate(false);
+    //append savedLog.id to url to go to that evaluation
+    history.push(add_section_dev);
+  };
+
   if (!accountGetData) {
     return <GhostLoader />;
   }
+
+  const handleNameChange = e => {
+    const { name, value } = e.target;
+    setName(value);
+  };
 
   return (
     <>
@@ -120,17 +150,29 @@ export const ElevationTemplates = ({ history }) => {
         <Modal
           title="New Evaluation Template"
           submit={() => {
-            setCreateNewTemplate(false);
-            history.push(add_section_dev);
+            saveTemplate();
           }}
+          loading={saveLoader}
           close={() => {
             setCreateNewTemplate(false);
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<TextBox placeholder="Evaluation Template Name"></TextBox>}
+          children={
+            <TextBox
+              name="name"
+              value={name}
+              onChange={handleNameChange}
+              placeholder="Evaluation Template Name"
+            ></TextBox>
+          }
         ></Modal>
       )}
     </>
   );
 };
+
+// const TextInput = () =>{
+//   handleChange
+// return <TextBox placeholder="Evaluation Template Name"></TextBox>
+// }
