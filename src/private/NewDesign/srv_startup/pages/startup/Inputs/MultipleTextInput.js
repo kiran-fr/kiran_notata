@@ -1,5 +1,5 @@
 import React from "react";
-import { MultipleTextInput } from "Components/Forms/FormInputs";
+import { MultipleTextInput } from "../FormInputs";
 
 export default function MultipleTextInputContainer({
   templateId,

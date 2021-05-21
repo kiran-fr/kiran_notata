@@ -1,5 +1,6 @@
 import React from "react";
 import RadioButton from "../../ui-kits/radio-button";
+import styles from "./input.module.scss";
 
 export default function SingleChoiceInput({
   style,
@@ -8,12 +9,11 @@ export default function SingleChoiceInput({
   ...props
 }) {
   return (
-    <div style={style}>
-      <form onSubmit={e => e.preventDefault()}>
-        {options.map(({ val, checked, handleOnChange }, i) => {
-          return (
-            <div className="check_container" key={`o-${i}`}>
-              {/* <label>
+    <>
+      {options.map(({ val, checked, handleOnChange }, i) => {
+        return (
+          <div className={styles.radioButton} key={`o-${i}`}>
+            {/* <label>
                 <input
                   type="radio"
                   disabled={disabled}
@@ -22,17 +22,16 @@ export default function SingleChoiceInput({
                 />
                 {val}
               </label> */}
-              <RadioButton
-                disabled={disabled}
-                checked={checked}
-                onChange={handleOnChange}
-                {...props}
-              />
-              {val}
-            </div>
-          );
-        })}
-      </form>
-    </div>
+            <RadioButton
+              disabled={disabled}
+              checked={checked}
+              onChange={handleOnChange}
+              {...props}
+            />
+            <span>{val}</span>
+          </div>
+        );
+      })}
+    </>
   );
 }

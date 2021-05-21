@@ -10,8 +10,20 @@ export default function TextInput({
   onBlur,
 }) {
   return (
-    <form onSubmit={e => e.preventDefault()}>
+    // <form onSubmit={e => e.preventDefault()}>
+    //   <textarea
+    //     rows={rows || 7}
+    //     style={style}
+    //     placeholder={placeholder}
+    //     disabled={disabled}
+    //     defaultValue={defaultValue}
+    //     onChange={onChange}
+    //     onBlur={onBlur}
+    //   />
+    // </form>
+    <div className="textbox">
       <textarea
+        placeholder="Write your answer..."
         rows={rows || 7}
         style={style}
         placeholder={placeholder}
@@ -20,6 +32,6 @@ export default function TextInput({
         onChange={onChange}
         onBlur={onBlur}
       />
-    </form>
+    </div>
   );
 }

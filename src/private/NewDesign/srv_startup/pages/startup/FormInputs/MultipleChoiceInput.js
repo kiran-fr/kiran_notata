@@ -1,5 +1,6 @@
 import React from "react";
 import InputCheckBox from "../../ui-kits/check-box";
+import styles from "./input.module.scss";
 
 export default function MultipleChoiceInput({
   style,
@@ -8,34 +9,22 @@ export default function MultipleChoiceInput({
   ...props
 }) {
   return (
-    <div style={style}>
-      <form onSubmit={e => e.preventDefault()}>
-        {options.map(({ val, key, checked, handleOnClick }) => {
-          return (
-            <div className="check_container" key={`o-${key}`}>
-              {/* <label>
-               <input
-                  type="checkbox"
-                  value={val}
-                  disabled={disabled}
-                  defaultChecked={checked}
-                  onClick={handleOnClick}
-                />
-                {val}
-              </label> */}
-
-              <InputCheckBox
-                value={val}
-                disabled={disabled}
-                defaultChecked={checked}
-                onClick={handleOnClick}
-                {...props}
-              />
-              {val}
-            </div>
-          );
-        })}
-      </form>
-    </div>
+    <>
+      {options.map(({ val, key, checked, handleOnClick }) => {
+        return (
+          <div className={styles.checkbox} key={`o-${key}`}>
+            <InputCheckBox
+              className={styles.checkbox1}
+              value={val}
+              disabled={disabled}
+              defaultChecked={checked}
+              onClick={handleOnClick}
+              {...props}
+            />
+            <span>{val}</span>
+          </div>
+        );
+      })}
+    </>
   );
 }

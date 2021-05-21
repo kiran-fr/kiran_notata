@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import classnames from "classnames";
 
-import { inputWrapper, inputIcon } from "./MultipleTextInput.module.css";
+import styles from "./input.module.scss";
 
 export default function MultipleTextInput({
   handleOnSubmit,
@@ -27,8 +28,8 @@ export default function MultipleTextInput({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {answers.map(({ id, val }, i) => (
-        <div className={inputWrapper} key={id || val}>
-          <input
+        <div className={styles.inputWrapper} key={id || val}>
+          {/* <input
             autoComplete="off"
             type="text"
             ref={register}
@@ -36,15 +37,30 @@ export default function MultipleTextInput({
             defaultValue={val}
             placeholder="Say something..."
             onBlur={handleSubmit(onSubmit)}
-          ></input>
-          <div className={inputIcon} onClick={() => onDelete(id || i)}>
-            <i className="fal fa-times" />
+          ></input> */}
+          <div className="col-sm-10">
+            <div className={classnames(styles.textbox, styles.noOfFounders)}>
+              <input
+                type="text"
+                placeholder="Write your answer..."
+                autoComplete="off"
+                type="text"
+                ref={register}
+                name={id || i}
+                defaultValue={val}
+                placeholder="Say something..."
+              />
+            </div>
           </div>
+
+          <span className={styles.inputIcon} onClick={() => onDelete(id || i)}>
+            <i className="fal fa-times" />
+          </span>
         </div>
       ))}
 
-      <div className={inputWrapper}>
-        <input
+      <div className={styles.inputWrapper}>
+        {/* <input
           autoComplete="off"
           type="text"
           ref={register}
@@ -52,10 +68,29 @@ export default function MultipleTextInput({
           placeholder="Say something..."
           onBlur={handleSubmit(onSubmit)}
           onKeyDown={handleKeyDown}
-        />
-        <div className={inputIcon} onClick={() => handleSubmit(onSubmit)}>
-          <i className="fal fa-plus" />
+        /> */}
+        <div className={classnames(styles.textbox, styles.noOfFounders)}>
+          <input
+            type="text"
+            placeholder="Write your answer..."
+            autoComplete="off"
+            type="text"
+            ref={register}
+            name="new"
+            placeholder="Say something..."
+            onBlur={handleSubmit(onSubmit)}
+            onKeyDown={handleKeyDown}
+          />
         </div>
+        <span
+          className={styles.inputIcon}
+          onClick={() => handleSubmit(onSubmit)}
+        >
+          <i className="fal fa-plus" />
+        </span>
+        {/* <div className="inputIcon" onClick={() => handleSubmit(onSubmit)}>
+          <i className="fal fa-plus" />
+        </div> */}
       </div>
     </form>
   );
