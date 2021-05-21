@@ -84,30 +84,33 @@ export default function FilterBar({
     <ul className={styles.funnelUl}>
       {funnelGroupArray.length ? (
         funnelGroupArray.map(item => (
-          <>
-            <h6>{item.name}</h6>
-            {item.funnelTags.length &&
-              item.funnelTags.map((data, index) => (
-                <li key={index}>
-                  <div>
-                    <label>
-                      <input
-                        type="radio"
-                        name={data.name}
-                        onChange={() =>
-                          setFilters({ ...filters, funnelTag: data.id })
-                        }
-                        checked={data.id === filters?.funnelTag}
-                      />
-                    </label>
-                    <p>{data.name}</p>
-                  </div>
-                  <div className={styles.image}>
-                    <img src={DynamicIcons(index, "filter")} alt="" />
-                  </div>
-                </li>
-              ))}
-          </>
+          item.funnelTags.length ?
+            <>
+              <h6>{item.name}</h6>
+              {item.funnelTags.length &&
+                item.funnelTags.map((data, index) => (
+                  <li key={index}>
+                    <div>
+                      <label>
+                        <input
+                          type="radio"
+                          name={data.name}
+                          onChange={() =>
+                            setFilters({ ...filters, funnelTag: data.id })
+                          }
+                          checked={data.id === filters?.funnelTag}
+                        />
+                      </label>
+                      <p>{data.name}</p>
+                    </div>
+                    <div className={styles.image}>
+                      <img src={DynamicIcons(index, "filter")} alt="" />
+                    </div>
+                  </li>
+                ))}
+            </>
+          :
+            ""
         ))
       ) : loading ? (
         <i className={"fa fa-spinner fa-spin"} />
