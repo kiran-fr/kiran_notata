@@ -17,20 +17,29 @@ import {
   filter_container,
 } from "./Filters.module.scss";
 
-const OptionalFilterSidebar = ({ setOptionalFilter }) => {
+
+const handleOptional = (setState, filterType, disabled) => {
+  if(disabled === "") {
+    setState(filterType)
+  } else {
+    console.log("kanban section")
+  }
+}
+
+const OptionalFilterSidebar = ({ setOptionalFilter, grayFadeOut }) => {
   return (
-    <div>
+    <div className = {grayFadeOut}>
       <div className={styles.filterContainer}>
         <button
           className={styles.filterButton + " " + styles.manageButton}
           style={{ marginRight: "10px" }}
-          onClick={() => setOptionalFilter("column")}
+          onClick={() => handleOptional(setOptionalFilter, "column", grayFadeOut)}
         >
           <img src={Column} alt="" /> <span>Manage Columns</span>
         </button>
         <button
           className={styles.filterButton}
-          onClick={() => setOptionalFilter("filter")}
+          onClick={() => handleOptional(setOptionalFilter, "filter", grayFadeOut)}
         >
           <img src={Filterr} alt="" /> <span>Filter</span>
         </button>
@@ -127,13 +136,21 @@ export default function Filters({
   ];
 
   const handleSearch = e => {
-    setFilterValue(e.target.value);
+    if(activeTab === "spreadsheet") {
+      setFilterValue(e.target.value);
+    }
   };
 
   const handleTab = val => {
     setTabValue(val);
     setActiveTab(val);
   };
+
+  const handleSearchBtn = () => {
+    if(activeTab === "spreadsheet") {
+      setFilters({ ...filters, search: filterValue })
+    }
+  }
 
   return (
     <div className={styles.override}>
@@ -156,17 +173,22 @@ export default function Filters({
                   >
                     <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
-                  <div className={styles.tableSearch}>
+                  <div className={activeTab !== "spreadsheet"
+                    ?
+                      styles.grayFadeOut +
+                      " " +
+                      styles.tableSearch
+                    :
+                      styles.tableSearch
+                    }
+                  >
                     <input
                       type="text"
                       value={filterValue}
                       onChange={e => handleSearch(e)}
                     />
                     <button
-                      onClick={() =>
-                        setFilters({ ...filters, search: filterValue })
-                      }
-                    >
+                      onClick={() => handleSearchBtn()}>
                       Search
                     </button>
                     <i className="far fa-search"></i>
@@ -195,7 +217,14 @@ export default function Filters({
               }
             >
               <div>
-                <OptionalFilterSidebar setOptionalFilter={setOptionalFilter} />
+                <OptionalFilterSidebar setOptionalFilter={setOptionalFilter}
+                  grayFadeOut = {activeTab !== "spreadsheet"
+                  ?
+                    styles.grayFadeOut
+                  :
+                    ""
+                  }
+                />
               </div>
             </div>
           </div>

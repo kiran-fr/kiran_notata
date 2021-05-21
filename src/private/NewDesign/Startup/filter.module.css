@@ -201,3 +201,7 @@ button {
 .override * {
   overflow: visible !important;
 }
+
+.grayFadeOut {
+  opacity: 0.4;
+}
