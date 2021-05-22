@@ -101,48 +101,23 @@ export default function ShareStartup({ setshareStartup, connection }) {
   return (
     <div className="row tab-panel-container">
       {inviteStartUpModal && (
-        <Modal
-          title="Invite Startup"
-          submit={() => {
-            setInviteStartUpModal(false);
-          }}
-          close={() => {
-            setInviteStartUpModal(false);
-          }}
-          children={
-            <InviteStartup
-              answers={answers}
-              creative={connection?.creative}
-              id={connection?.creative?.id}
-            />
-          }
-          submitTxt="OK"
-          closeTxt="Cancel"
-        ></Modal>
+        <InviteStartup
+          answers={answers}
+          creative={connection?.creative}
+          id={connection?.creative?.id}
+          setInviteStartUpModal={setInviteStartUpModal}
+        />
       )}
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
           <div className="text">
             Invite startup to fill in this information.
-            <div className="btn">Invite startup</div>
-          </div>
-          {/* <div className="text">
-            <div className="row">
-              <span className="col-6">
-                Invite startup to fill in this information.
-              </span>
-              <ButtonWithIcon
-                className="col-6 import-section-btn btn"
-                text={
-                  connection?.creative?.sharedWithEmail
-                    ? "Edit"
-                    : "Invite startup"
-                }
-                onClick={() => null}
-                onClick={() => setInviteStartUpModal(true)}
-              ></ButtonWithIcon>
+            <div className="btn" onClick={() => setInviteStartUpModal(true)}>
+              {connection?.creative?.sharedWithEmail
+                ? "Edit"
+                : "Invite startup"}
             </div>
-          </div> */}
+          </div>
         </div>
         <div className="share-startup-container">
           <div className="row">

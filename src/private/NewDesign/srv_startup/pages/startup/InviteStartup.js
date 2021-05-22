@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 
 // API STUFF
 import { creativeUpdate } from "private/Apollo/Mutations";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 
-export const InviteStartup = ({ id, answers, creative }) => {
-  // Form
-  const { register, handleSubmit, formState } = useForm();
-  const { isSubmitting } = formState;
+// Regex
+import { email as reg_email } from "../../../../../utils/regex";
 
+export const InviteStartup = ({
+  id,
+  answers,
+  creative,
+  setInviteStartUpModal,
+}) => {
   const [inviteSent, setInviteSent] = useState(false);
   const [urlToShare, setUrlToShare] = useState(null);
   const [email, setEmail] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+  const [validate, setValidate] = useState(true);
 
   useEffect(() => {
     if (creative?.sharedWithEmail) {
@@ -37,23 +43,22 @@ export const InviteStartup = ({ id, answers, creative }) => {
   }
 
   // Submit function with mutations
-  const onSubmit = async data => {
-    // Stop if startup with same name exists
-
+  const onSubmit = async () => {
     let variables = {
       id: id,
       input: {
-        sharedWithEmail: data?.variables?.input?.email,
+        sharedWithEmail: inputEmail?.variables?.input?.email,
         answers,
       },
     };
-    setEmail(data?.variables?.input?.email);
+    setEmail(inputEmail?.variables?.input?.email);
     let update = await mutateCreativeUpdate({
       variables,
     });
 
     setUrlToShare(getPublicShareUrl(update?.data?.creativePut));
     setInviteSent(true);
+    setValidate(true);
   };
 
   // Submit function with mutations
@@ -66,43 +71,55 @@ export const InviteStartup = ({ id, answers, creative }) => {
         answers,
       },
     };
+    setInputEmail("");
+    setValidate(true);
 
     let update = await mutateCreativeUpdate({
       variables,
     });
-    console.log(update);
     setInviteSent(false);
   };
 
+  const handleInput = val => {
+    const email = val;
+    setInputEmail({
+      variables: {
+        input: {
+          email,
+        },
+      },
+    });
+
+    let isEmailValidaion = reg_email.test(String(val).toLocaleLowerCase());
+    setValidate(isEmailValidaion ? false : true);
+  };
+
+  console.log("validate", validate);
   return (
-    <>
-      {inviteSent ? (
-        <div>
+    <Modal
+      title={inviteSent ? "Revoke Startup Link" : "Invite Startup"}
+      submit={() => (inviteSent ? revoke() : onSubmit())}
+      close={() => {
+        setInviteStartUpModal(false);
+      }}
+      disabled={inviteSent ? false : validate}
+      children={
+        inviteSent ? (
           <div>{urlToShare}</div>
-          <button onClick={revoke}>Revoke</button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        ) : (
           <InputForm
             type="email"
             fullWidth={true}
-            name="variables.input.email"
-            placeholder="I.e. Money Press Inc."
-            reference={register({ required: true })}
+            handleInputChange={value => handleInput(value)}
+            name="email"
+            placeholder="company@gmail.com"
+            required
           />
-          <div>
-            <button type="submit">
-              {" "}
-              {isSubmitting ? (
-                <i className={"fa fa-spinner fa-spin"} />
-              ) : (
-                "Invite"
-              )}
-            </button>
-          </div>
-        </form>
-      )}
-    </>
+        )
+      }
+      submitTxt={inviteSent ? "Revoke" : "Invite"}
+      closeTxt="Cancel"
+    ></Modal>
   );
 };
 

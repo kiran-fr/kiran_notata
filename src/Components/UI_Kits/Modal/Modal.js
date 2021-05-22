@@ -19,6 +19,7 @@ export function Modal({
   submitButtonIcon,
   intermidate,
   intermidateTxt,
+  disabled,
   intermidateStyle,
   innerClassName,
   ...children
@@ -95,6 +96,7 @@ export function Modal({
                   onClick={!loading && submit}
                   buttonStyle={submitButtonStyle || "primary"}
                   size="small1"
+                  disabled={disabled ? disabled : false}
                   style={{ display: "inline" }}
                   type={submitButtonIcon || ""}
                   loading={loading}
