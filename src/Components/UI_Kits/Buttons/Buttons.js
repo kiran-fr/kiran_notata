@@ -92,6 +92,7 @@ export function Button({
   onClick,
   iconClass,
   style,
+  disabled,
   ...children
 }) {
   // Default fallback with empty function
@@ -115,6 +116,7 @@ export function Button({
       )}
       style={style || {}}
       onClick={onClick}
+      disabled={disabled}
     >
       {/* check-icon */}
       {type === "check" && !loading && (
