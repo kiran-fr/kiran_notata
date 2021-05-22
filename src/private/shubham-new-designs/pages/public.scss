@@ -102,3 +102,22 @@
 .MuiTabs-indicator{
     background-color: #969BA3!important; 
 } 
+.info-window{
+    position: absolute;
+    background: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0px 3px 12px rgba(41, 70, 103, 0.2);
+    padding:40px;
+    z-index: 999;
+}
+.nopadding-left {
+    @media only screen and(min-width:991px) {
+        padding-left: 0px;  
+    }
+      
+}
+.nopadding-right{
+    @media only screen and(min-width:991px) {
+        padding-right: 0px;  
+    }
+}

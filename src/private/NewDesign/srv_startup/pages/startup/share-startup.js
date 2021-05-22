@@ -12,7 +12,7 @@ import download_cover from "../../../../../assets/images/download-cover.png";
 import { useQuery, useMutation } from "@apollo/client";
 import { creativeTemplateGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
-import { GeneralInput } from "Components/Forms/TemplatedForm/Inputs/GeneralInput";
+import { GeneralInput } from "./Inputs/GeneralInput";
 import { creativeUpdate } from "private/Apollo/Mutations";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../ui-kits/text-box";
@@ -101,24 +101,12 @@ export default function ShareStartup({ setshareStartup, connection }) {
   return (
     <div className="row tab-panel-container">
       {inviteStartUpModal && (
-        <Modal
-          title="Invite Startup"
-          submit={() => {
-            setInviteStartUpModal(false);
-          }}
-          close={() => {
-            setInviteStartUpModal(false);
-          }}
-          children={
-            <InviteStartup
-              answers={answers}
-              creative={connection?.creative}
-              id={connection?.creative?.id}
-            />
-          }
-          submitTxt="OK"
-          closeTxt="Cancel"
-        ></Modal>
+        <InviteStartup
+          answers={answers}
+          creative={connection?.creative}
+          id={connection?.creative?.id}
+          setInviteStartUpModal={setInviteStartUpModal}
+        />
       )}
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
