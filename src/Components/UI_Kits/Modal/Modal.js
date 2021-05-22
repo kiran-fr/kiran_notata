@@ -47,7 +47,7 @@ export function Modal({
           }
         }}
       >
-        <div className={`inner ${innerClassName}`}>
+        <div className={`inner ${innerClassName || ""}`}>
           {title && (
             <div className={"modal_header"}>
               {title && <div className={"modal_title"}>{title}</div>}
