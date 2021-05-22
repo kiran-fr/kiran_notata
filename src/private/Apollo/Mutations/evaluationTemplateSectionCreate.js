@@ -9,6 +9,10 @@ export default gql`
       id
       name
       description
+      questions {
+        name
+        description
+      }
     }
   }
 `;

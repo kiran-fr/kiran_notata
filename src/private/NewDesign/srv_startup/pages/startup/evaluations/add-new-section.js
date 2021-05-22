@@ -63,7 +63,7 @@ export const AddSection = props => {
       },
     }
   );
-  const evaluationTemplateData =
+  const evaluationTemplateAPIResp =
     evaluationTemplateGetData?.evaluationTemplateGet;
 
   const [mutateEvaluationTemplateUpdate] = useMutation(
@@ -90,6 +90,7 @@ export const AddSection = props => {
   const [description, setDescription] = useState(null);
   const [sectionName, setSectionName] = useState(null);
   const [saveLoader, setSaveLoader] = useState(false);
+  const [evaluationTemplateData, setEvaluationTemplateData] = useState(null);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -100,11 +101,12 @@ export const AddSection = props => {
     }
   };
   useEffect(() => {
-    if (evaluationTemplateData) {
-      setDescription(evaluationTemplateData?.description);
-      setValue("variables.input.name", evaluationTemplateData?.name);
+    if (evaluationTemplateAPIResp) {
+      setEvaluationTemplateData(evaluationTemplateAPIResp);
+      setDescription(evaluationTemplateAPIResp?.description);
+      setValue("variables.input.name", evaluationTemplateAPIResp?.name);
     }
-  }, [evaluationTemplateData]);
+  }, [evaluationTemplateAPIResp]);
 
   const onSubmit = async data => {
     const resp = await mutateEvaluationTemplateUpdate({
@@ -134,6 +136,10 @@ export const AddSection = props => {
       setSaveLoader(false);
       setAddSectionModal(false);
       setQuestionOption(true);
+      let templateData = evaluationTemplateData;
+      let sections = [...templateData.sections, savedLog];
+      templateData = { ...templateData, sections };
+      setEvaluationTemplateData(templateData);
       // setSectionDetails(true);
     }
   };
