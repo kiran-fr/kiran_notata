@@ -101,24 +101,12 @@ export default function ShareStartup({ setshareStartup, connection }) {
   return (
     <div className="row tab-panel-container">
       {inviteStartUpModal && (
-        <Modal
-          title="Invite Startup"
-          submit={() => {
-            setInviteStartUpModal(false);
-          }}
-          close={() => {
-            setInviteStartUpModal(false);
-          }}
-          children={
-            <InviteStartup
-              answers={answers}
-              creative={connection?.creative}
-              id={connection?.creative?.id}
-            />
-          }
-          submitTxt="OK"
-          closeTxt="Cancel"
-        ></Modal>
+        <InviteStartup
+          answers={answers}
+          creative={connection?.creative}
+          id={connection?.creative?.id}
+          setInviteStartUpModal={setInviteStartUpModal}
+        />
       )}
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
