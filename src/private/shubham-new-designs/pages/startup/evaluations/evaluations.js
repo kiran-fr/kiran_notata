@@ -7,7 +7,6 @@ import SubmissionFullList from "./submission-full-list";
 import EvaluateStartup from "./evaluate-startup";
 import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
-import ManageTemplates from "./manage-templates";
 import { evaluation_template_new } from "../../../../../definitions";
 
 export default function Evaluations({ history }) {
@@ -886,20 +885,6 @@ export default function Evaluations({ history }) {
               }}
             />
           }
-        ></Modal>
-      )}
-      {manageTemplateModal && (
-        <Modal
-          title="Manage templates"
-          submit={() => {
-            setManageTemplateModal(false);
-          }}
-          close={() => {
-            setManageTemplateModal(false);
-          }}
-          submitTxt="Save"
-          closeTxt="Cancel"
-          children={<ManageTemplates></ManageTemplates>}
         ></Modal>
       )}
     </div>
