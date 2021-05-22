@@ -68,9 +68,9 @@ export const ElevationTemplates = ({ history }) => {
     console.log(savedLog);
     if (savedLog) {
       setEvauationTemplates([...evaluationTemplates, savedLog]);
+      setCreateNewTemplate(false);
+      history.push(`${evaluation_template_profile}/${savedLog?.id}`);
     }
-    setCreateNewTemplate(false);
-    history.push(`${evaluation_template_profile}/${savedLog?.id}`);
   };
 
   if (!accountGetData) {

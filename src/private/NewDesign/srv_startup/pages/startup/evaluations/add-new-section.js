@@ -13,7 +13,10 @@ import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import ImportSection from "./import-section-modal";
 import { useQuery, useMutation } from "@apollo/client";
 import { evaluationTemplateGet } from "private/Apollo/Queries";
-import { evaluationTemplateUpdate } from "private/Apollo/Mutations";
+import {
+  evaluationTemplateUpdate,
+  evaluationTemplateSectionCreate,
+} from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 import { useForm } from "react-hook-form";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
@@ -65,7 +68,9 @@ export const AddSection = props => {
   const [mutateEvaluationTemplateUpdate] = useMutation(
     evaluationTemplateUpdate
   );
-
+  const [mutateEvaluationTemplateSectionCreate] = useMutation(
+    evaluationTemplateSectionCreate
+  );
   const [tabValue, setTabValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
@@ -82,10 +87,16 @@ export const AddSection = props => {
   const [noOfQuestions, setNoOfQuestions] = useState(1);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
+  const [sectionName, setSectionName] = useState(null);
+  const [saveLoader, setSaveLoader] = useState(false);
 
-  const handleDescriptionChange = e => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
-    setDescription(value);
+    if (name === "sectionName") {
+      setSectionName(value);
+    } else {
+      setDescription(value);
+    }
   };
   useEffect(() => {
     if (evaluationData) {
@@ -106,6 +117,25 @@ export const AddSection = props => {
     });
   };
 
+  const saveSection = async () => {
+    setSaveLoader(true);
+    let createResponse = await mutateEvaluationTemplateSectionCreate({
+      variables: {
+        templateId: evaluationData?.id,
+        input: {
+          name: sectionName,
+        },
+      },
+    });
+    let savedLog = createResponse?.data?.evaluationTemplateSectionCreate;
+    console.log(savedLog);
+    if (savedLog) {
+      setSaveLoader(false);
+      setAddSectionModal(false);
+      setQuestionOption(true);
+      setSectionDetails(false);
+    }
+  };
   if (!evaluationTemplateGetData) {
     return <GhostLoader />;
   }
@@ -131,7 +161,7 @@ export const AddSection = props => {
               {errors.name && <span>This field is required</span>}
               <textarea
                 name="description"
-                onChange={handleDescriptionChange}
+                onChange={handleInputChange}
                 value={description}
                 rows="4"
                 cols="50"
@@ -363,16 +393,22 @@ export const AddSection = props => {
         <Modal
           title="New Section"
           submit={() => {
-            setAddSectionModal(false);
-            setQuestionOption(true);
-            setSectionDetails(false);
+            saveSection();
           }}
+          loading={saveLoader}
           close={() => {
             setAddSectionModal(false);
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<TextBox placeholder="Evaluation Template Name"></TextBox>}
+          children={
+            <TextBox
+              name="sectionName"
+              value={sectionName}
+              onChange={handleInputChange}
+              placeholder="Evaluation Section Name"
+            ></TextBox>
+          }
         ></Modal>
       )}
     </>
