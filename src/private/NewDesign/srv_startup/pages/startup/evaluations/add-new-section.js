@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./add-new-section.scss";
 import TextBox from "../../ui-kits/text-box";
 import ButtonWithIcon from "../../ui-kits/button-with-icon";
@@ -11,6 +11,12 @@ import FreeText from "./free-text";
 import TextLines from "./text-lines";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import ImportSection from "./import-section-modal";
+import { useQuery, useMutation } from "@apollo/client";
+import { evaluationTemplateGet } from "private/Apollo/Queries";
+import { evaluationTemplateUpdate } from "private/Apollo/Mutations";
+import { GhostLoader } from "Components/elements";
+import { useForm } from "react-hook-form";
+import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,10 +42,33 @@ function a11yProps(index) {
 }
 
 // export default function AddSection() {
-export const AddSection = () => {
-  const [value, setValue] = React.useState(0);
+export const AddSection = props => {
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+  // Form
+  const { register, handleSubmit, formState, errors, setValue } = useForm();
+  const { isSubmitting } = formState;
+
+  const { data: evaluationTemplateGetData, loading, error } = useQuery(
+    evaluationTemplateGet,
+    {
+      variables: {
+        id,
+      },
+    }
+  );
+  const evaluationData = evaluationTemplateGetData?.evaluationTemplateGet;
+
+  const [mutateEvaluationTemplateUpdate] = useMutation(
+    evaluationTemplateUpdate
+  );
+
+  const [tabValue, setTabValue] = React.useState(0);
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setTabValue(newValue);
   };
   const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
@@ -51,6 +80,35 @@ export const AddSection = () => {
     new Array(noOfRows).fill(false)
   );
   const [noOfQuestions, setNoOfQuestions] = useState(1);
+  const [name, setName] = useState(null);
+  const [description, setDescription] = useState(null);
+
+  const handleDescriptionChange = e => {
+    const { name, value } = e.target;
+    setDescription(value);
+  };
+  useEffect(() => {
+    if (evaluationData) {
+      setDescription(evaluationData?.description);
+      setValue("variables.input.name", evaluationData?.name);
+    }
+  }, [evaluationData]);
+
+  const onSubmit = async data => {
+    const resp = await mutateEvaluationTemplateUpdate({
+      variables: {
+        id: evaluationData?.id,
+        input: {
+          name: data.variables?.input?.name,
+          description,
+        },
+      },
+    });
+  };
+
+  if (!evaluationTemplateGetData) {
+    return <GhostLoader />;
+  }
   return (
     <>
       <div
@@ -64,8 +122,29 @@ export const AddSection = () => {
               questionOption ? "col-sm-12" : "col-sm-8"
             } text-container`}
           >
-            <TextBox></TextBox>
-            <textarea rows="4" cols="50" />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <InputForm
+                name="variables.input.name"
+                defaultValue={name}
+                reference={register({ required: true })}
+              />
+              {errors.name && <span>This field is required</span>}
+              <textarea
+                name="description"
+                onChange={handleDescriptionChange}
+                value={description}
+                rows="4"
+                cols="50"
+              ></textarea>
+              <button type="submit">
+                {" "}
+                {isSubmitting ? (
+                  <i className={"fa fa-spinner fa-spin"} />
+                ) : (
+                  "SAVE"
+                )}
+              </button>
+            </form>
           </div>
           {!questionOption && (
             <div className="col-sm-4">
@@ -148,7 +227,7 @@ export const AddSection = () => {
                     </div>
                     <div className="col-sm-12 question-container__tabs">
                       <Tabs
-                        value={value}
+                        value={tabValue}
                         onChange={handleChange}
                         scrollButtons="on"
                         variant="scrollable"
@@ -159,19 +238,19 @@ export const AddSection = () => {
                         <Tab label="free text" {...a11yProps(3)} />
                         <Tab label="text lines" {...a11yProps(4)} />
                       </Tabs>
-                      <TabPanel value={value} index={0}>
+                      <TabPanel value={tabValue} index={0}>
                         <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
                       </TabPanel>
-                      <TabPanel value={value} index={1}>
+                      <TabPanel value={tabValue} index={1}>
                         <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
                       </TabPanel>
-                      <TabPanel value={value} index={2}>
+                      <TabPanel value={tabValue} index={2}>
                         <TrafficLights></TrafficLights>
                       </TabPanel>
-                      <TabPanel value={value} index={3}>
+                      <TabPanel value={tabValue} index={3}>
                         <FreeText></FreeText>
                       </TabPanel>
-                      <TabPanel value={value} index={4}>
+                      <TabPanel value={tabValue} index={4}>
                         <TextLines></TextLines>
                       </TabPanel>
                     </div>
