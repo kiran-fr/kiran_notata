@@ -122,8 +122,13 @@ export default function ShareStartup({ setshareStartup, connection }) {
       )}
       <div className="card col-sm-12">
         <div className="row card-notification-bar">
-          <div className="btn" onClick={() => setInviteStartUpModal(true)}>
-            {connection?.creative?.sharedWithEmail ? "Edit" : "Invite startup"}
+          <div className="text">
+            Invite startup to fill in this information.
+            <div className="btn" onClick={() => setInviteStartUpModal(true)}>
+              {connection?.creative?.sharedWithEmail
+                ? "Edit"
+                : "Invite startup"}
+            </div>
           </div>
         </div>
         <div className="share-startup-container">
