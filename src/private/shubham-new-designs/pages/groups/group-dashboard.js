@@ -7,6 +7,10 @@ import CommentsActivities from "./comments-activities";
 import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
 import AddStartup from "./add-startup";
 import ManageTemplates from "./manage-templates";
+import SubmissionFullList from "../startup/evaluations/submission-full-list";
+import InviteMembers from "./invite-members";
+import ButtonWithIcon from "../ui-kits/button-with-icon";
+import { ICONPOSITION } from "../constants";
 
 function a11yProps(index) {
   return {
@@ -28,6 +32,92 @@ export default function GroupDashboard() {
   const [starttupDescription, setStarttupDescription] = useState(false);
   const [addStartupModal, setAddStartupModal] = useState(false);
   const [manageTemplateModal, setManageTemplateModal] = useState(false);
+  const [inviteMembersModal, setInviteMembersModal] = useState(false);
+  const [fullListModal, setFullListModal] = useState(false);
+  const inMyDealFlow = true;
+  const [fullListModalObj, setFullListModalObj] = useState({
+    evalType: "First Impression",
+    submittedBy: "Daria Kyselova",
+    summary: "65%",
+    details: [
+      {
+        id: "concept",
+        name: "Concept",
+        value: "65%",
+        detail: [
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+        ],
+      },
+      {
+        id: "market",
+        name: "Market",
+        value: "65%",
+        detail: [
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+        ],
+      },
+      {
+        id: "problem",
+        name: "Problem",
+        value: "65%",
+        detail: [
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+        ],
+      },
+      {
+        id: "team",
+        name: "Team",
+        value: "65%",
+        detail: [
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+          {
+            key: "Do you think it's easy or hard to copy the concept?",
+            value: "0/1",
+          },
+        ],
+      },
+    ],
+  });
   return (
     <>
       <div className="group-dashboard-container">
@@ -117,7 +207,10 @@ export default function GroupDashboard() {
                       </div>
                       {value === 0 && (
                         <div className="users-container__user-count__action">
-                          <div className="users-container__user-count__action__btn">
+                          <div
+                            className="users-container__user-count__action__btn"
+                            onClick={() => setInviteMembersModal(true)}
+                          >
                             Invite members
                           </div>
                         </div>
@@ -155,14 +248,38 @@ export default function GroupDashboard() {
               </div>
               <div className="col-sm-12 col-xs-12 startup-container">
                 <div className="card">
-                  <div className="group-dashboard-container__card-heading startup-heading">
-                    <div className="startup-container__startup-icon">G</div>
-                    <span
-                      onMouseEnter={() => setStarttupDescription(true)}
-                      onMouseLeave={() => setStarttupDescription(false)}
-                    >
-                      Great Startup Inc
-                    </span>
+                  <div className="row">
+                    <div className="group-dashboard-container__card-heading startup-heading col-md-6 col-sm-12">
+                      <div className="startup-container__startup-icon">G</div>
+                      <span
+                        onMouseEnter={() => setStarttupDescription(true)}
+                        onMouseLeave={() => setStarttupDescription(false)}
+                      >
+                        Great Startup Inc
+                      </span>
+                    </div>
+                    <div className="col-md-5 col-sm-12 group-dashboard-container__in-my-deal-flow-container">
+                      {inMyDealFlow ? (
+                        <>
+                          <span className="group-dashboard-container__in-my-deal-flow">
+                            IN MY DEALFLOW
+                          </span>
+                          <ButtonWithIcon
+                            iconName="share"
+                            className="share-back"
+                            text="SHARE BACK"
+                            iconPosition={ICONPOSITION.START}
+                          ></ButtonWithIcon>
+                        </>
+                      ) : (
+                        <ButtonWithIcon
+                          iconName="add"
+                          className="add-to-deal-flow"
+                          text="ADD TO DEAL FLOW"
+                          iconPosition={ICONPOSITION.START}
+                        ></ButtonWithIcon>
+                      )}
+                    </div>
                   </div>
                   {starttupDescription && (
                     <div className="group-dashboard-container__info-window info-window">
@@ -197,10 +314,12 @@ export default function GroupDashboard() {
                       </p>
                     </div>
                   )}
-                  <p className="startup-container__description">
-                    Great Startup Inc helps people to find a way to change their
-                    financial perspectives
-                  </p>
+                  <div className="row">
+                    <p className="startup-container__description">
+                      Great Startup Inc helps people to find a way to change
+                      their financial perspectives
+                    </p>
+                  </div>
                   <div className="row subjective-score-container">
                     <div className="col-sm-4 col-md-3 col-xs-6 subjective-score-container__subjective-score">
                       <i
@@ -387,7 +506,12 @@ export default function GroupDashboard() {
                                 </div>
                                 <div className="col-sm-3 col-xs-3 subjective-score-evaluation-container__score">
                                   65%{" "}
-                                  <span className="full-list">Full list</span>
+                                  <span
+                                    className="full-list"
+                                    onClick={() => setFullListModal(true)}
+                                  >
+                                    Full list
+                                  </span>
                                 </div>
                               </div>
                             );
@@ -623,6 +747,34 @@ export default function GroupDashboard() {
           submitTxt="SAVE"
           closeTxt="CANCEL"
           children={<ManageTemplates></ManageTemplates>}
+        ></Modal>
+      )}
+      {fullListModal && (
+        <Modal
+          title={`${fullListModalObj.evalType} (${fullListModalObj.submittedBy})`}
+          submit={() => {
+            setFullListModal(false);
+          }}
+          close={() => {
+            setFullListModal(false);
+          }}
+          submitTxt="OK"
+          children={<SubmissionFullList obj={fullListModalObj} />}
+        ></Modal>
+      )}
+      {inviteMembersModal && (
+        <Modal
+          title="Invite Members"
+          submit={() => {
+            setInviteMembersModal(false);
+          }}
+          close={() => {
+            setInviteMembersModal(false);
+          }}
+          submitTxt="SEND INVITATIONS"
+          closeTxt="CANCEL"
+          children={<InviteMembers />}
+          innerClassName="invite-member-modal"
         ></Modal>
       )}
     </>
