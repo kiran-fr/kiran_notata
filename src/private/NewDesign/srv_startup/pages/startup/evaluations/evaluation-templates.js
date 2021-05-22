@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./evaluation-templates.scss";
 import ButtonWithIcon from "../../ui-kits/button-with-icon";
 import { ICONPOSITION } from "../../constants";
@@ -9,7 +9,10 @@ import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../../ui-kits/text-box";
 import { useQuery, useMutation } from "@apollo/client";
 import { accountGet } from "private/Apollo/Queries";
-import { evaluationTemplateCreate } from "private/Apollo/Mutations";
+import {
+  evaluationTemplateCreate,
+  evaluationTemplateDelete,
+} from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 
 function a11yProps(index) {
@@ -23,9 +26,13 @@ export const ElevationTemplates = ({ history }) => {
   const [value, setValue] = React.useState(0);
   const [name, setName] = useState(null);
   const [saveLoader, setSaveLoader] = useState(false);
+  const [evaluationTemplates, setEvauationTemplates] = useState([]);
 
   const [mutateEvaluationTemplateCreate] = useMutation(
     evaluationTemplateCreate
+  );
+  const [mutateEvaluationTemplateDelete] = useMutation(
+    evaluationTemplateDelete
   );
 
   const handleChange = (event, newValue) => {
@@ -39,7 +46,14 @@ export const ElevationTemplates = ({ history }) => {
 
   const { data: accountGetData, loading, error } = useQuery(accountGet);
   console.log("accountGet", accountGetData?.accountGet?.evaluationTemplates);
-  let evaluationTemplates = accountGetData?.accountGet?.evaluationTemplates;
+  let evaluationTemplatesFromAPI =
+    accountGetData?.accountGet?.evaluationTemplates;
+
+  useEffect(() => {
+    if (evaluationTemplatesFromAPI) {
+      setEvauationTemplates(evaluationTemplatesFromAPI);
+    }
+  }, [evaluationTemplatesFromAPI]);
 
   const saveTemplate = async () => {
     setSaveLoader(true);
@@ -52,6 +66,9 @@ export const ElevationTemplates = ({ history }) => {
     });
     let savedLog = createResponse?.data?.evaluationTemplateCreate;
     console.log(savedLog);
+    if (savedLog) {
+      setEvauationTemplates([...evaluationTemplates, savedLog]);
+    }
     setCreateNewTemplate(false);
     history.push(`${evaluation_template_profile}/${savedLog?.id}`);
   };
@@ -65,6 +82,14 @@ export const ElevationTemplates = ({ history }) => {
     setName(value);
   };
 
+  const deleteEvaluation = async id => {
+    const resp = await mutateEvaluationTemplateDelete({ variables: { id } });
+    if (resp?.data?.evaluationTemplateDelete?.message) {
+      setEvauationTemplates(
+        evaluationTemplates?.filter(evaluation => evaluation.id !== id)
+      );
+    }
+  };
   return (
     <>
       <div className="evaluation-templates-container">
@@ -93,11 +118,13 @@ export const ElevationTemplates = ({ history }) => {
             <div
               className="row evaluation-templates-container__data-container__data"
               key={`row-id-${index}`}
-              onClick={() =>
-                history.push(`${evaluation_template_profile}/${template?.id}`)
-              }
             >
-              <div className="col-sm-4 col-xs-10 template-name">
+              <div
+                className="col-sm-4 col-xs-10 template-name"
+                onClick={() =>
+                  history.push(`${evaluation_template_profile}/${template?.id}`)
+                }
+              >
                 {template.name}
               </div>
               <div className="col-sm-3 col-xs-10 sections">
@@ -135,7 +162,7 @@ export const ElevationTemplates = ({ history }) => {
                     </div>
                     <div
                       className="browse__drop-dwon__item leave"
-                      onClick={() => null}
+                      onClick={() => deleteEvaluation(template.id)}
                     >
                       <span class="material-icons leave">delete</span>
                       <span className="delete-text">DELETE GROUP</span>
