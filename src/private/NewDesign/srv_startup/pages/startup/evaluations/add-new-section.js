@@ -63,7 +63,8 @@ export const AddSection = props => {
       },
     }
   );
-  const evaluationData = evaluationTemplateGetData?.evaluationTemplateGet;
+  const evaluationTemplateData =
+    evaluationTemplateGetData?.evaluationTemplateGet;
 
   const [mutateEvaluationTemplateUpdate] = useMutation(
     evaluationTemplateUpdate
@@ -78,7 +79,7 @@ export const AddSection = props => {
   const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
   const [questionOption, setQuestionOption] = useState(false);
-  const [sectionDetails, setSectionDetails] = useState(false);
+  const [sectionDetails, setSectionDetails] = useState(true);
   const [addSectionModal, setAddSectionModal] = useState(false);
   const noOfRows = 4;
   const [browseDropDownStates, setBrowseDropDownStates] = useState(
@@ -99,16 +100,16 @@ export const AddSection = props => {
     }
   };
   useEffect(() => {
-    if (evaluationData) {
-      setDescription(evaluationData?.description);
-      setValue("variables.input.name", evaluationData?.name);
+    if (evaluationTemplateData) {
+      setDescription(evaluationTemplateData?.description);
+      setValue("variables.input.name", evaluationTemplateData?.name);
     }
-  }, [evaluationData]);
+  }, [evaluationTemplateData]);
 
   const onSubmit = async data => {
     const resp = await mutateEvaluationTemplateUpdate({
       variables: {
-        id: evaluationData?.id,
+        id: evaluationTemplateData?.id,
         input: {
           name: data.variables?.input?.name,
           description,
@@ -121,7 +122,7 @@ export const AddSection = props => {
     setSaveLoader(true);
     let createResponse = await mutateEvaluationTemplateSectionCreate({
       variables: {
-        templateId: evaluationData?.id,
+        templateId: evaluationTemplateData?.id,
         input: {
           name: sectionName,
         },
@@ -133,7 +134,7 @@ export const AddSection = props => {
       setSaveLoader(false);
       setAddSectionModal(false);
       setQuestionOption(true);
-      setSectionDetails(false);
+      // setSectionDetails(true);
     }
   };
   if (!evaluationTemplateGetData) {
@@ -316,6 +317,65 @@ export const AddSection = props => {
         )}
         {sectionDetails && (
           <div className="evaluation-templates-container__data-container">
+            {evaluationTemplateData?.sections.map((section, index) => {
+              return (
+                <div
+                  className="row evaluation-templates-container__data-container__data"
+                  key={`row-id-${index}`}
+                >
+                  <div className="col-sm-4 col-xs-10 template-name">
+                    {section.name}
+                  </div>
+                  <div className="col-sm-3 col-xs-10 sections">
+                    {section?.questions?.length || 0} questions
+                  </div>
+                  {/* <div className="col-sm-3 group-name">3 Points</div> */}
+                  <div className="col-sm-2 col-xs-2 browse">
+                    <span
+                      class="material-icons"
+                      onClick={() => {
+                        let states = new Array(noOfRows).fill(false);
+                        states[index] = !browseDropDownStates[index];
+                        setBrowseDropDownStates(states);
+                      }}
+                    >
+                      more_horiz
+                    </span>
+                    {browseDropDownStates[index] && (
+                      <div className="browse__drop-dwon">
+                        <div
+                          className="browse__drop-dwon__item"
+                          onClick={() => null}
+                        >
+                          <span class="material-icons settings">edit</span>
+                          <span className="text">EDIT</span>
+                        </div>
+                        <div
+                          className="browse__drop-dwon__item"
+                          onClick={() => null}
+                        >
+                          <span class="material-icons settings">
+                            content_copy
+                          </span>
+                          <span className="text">COPY AND EDIT</span>
+                        </div>
+                        <div
+                          className="browse__drop-dwon__item leave"
+                          onClick={() => null}
+                        >
+                          <span class="material-icons leave">delete</span>
+                          <span className="delete-text">DELETE GROUP</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {/* {sectionDetails && (
+          <div className="evaluation-templates-container__data-container">
             {[...Array(noOfRows)].map((elementInArray, index) => {
               return (
                 <div
@@ -370,7 +430,7 @@ export const AddSection = props => {
               );
             })}
           </div>
-        )}
+        )} */}
       </div>
       {importSectionModal && (
         <Modal
