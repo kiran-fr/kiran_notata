@@ -246,6 +246,11 @@ export default function GroupDashboard() {
                   </div>
                 </div>
               </div>
+              <div className="col-sm-12 startup-container">
+                <div className="card">
+                  <StartupPerformanceChart></StartupPerformanceChart>
+                </div>
+              </div>
               <div className="col-sm-12 col-xs-12 startup-container">
                 <div className="card">
                   <div className="row">
@@ -389,7 +394,7 @@ export default function GroupDashboard() {
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-3 col-md-3 col-xs-6">
+                    <div className="col-sm-4 col-md-3 col-xs-6">
                       <div className="subjective-score-container__heading subjective-score-container__evaluations-heading">
                         before pitching
                       </div>
@@ -417,7 +422,7 @@ export default function GroupDashboard() {
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-3 col-md-3 col-xs-6">
+                    <div className="col-sm-6 col-md-3 col-xs-6">
                       <div className="subjective-score-container__heading subjective-score-container__evaluations-heading">
                         after pitching
                       </div>
@@ -720,13 +725,6 @@ export default function GroupDashboard() {
           <div className="col-md-3 col-sm-12 col-xs-12 comments-activities-container">
             <CommentsActivities></CommentsActivities>
           </div>
-          {/* <div className="col-sm-10 col-xs-12">
-          <div className="col-sm-12 startup-container">
-            <div className="card">
-              <StartupPerformanceChart></StartupPerformanceChart>
-            </div>
-          </div>
-        </div> */}
         </div>
       </div>
       {addStartupModal && (
