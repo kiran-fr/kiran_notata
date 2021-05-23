@@ -11,7 +11,10 @@ import FunnelMobile from "assets/images/funnelMobile.png";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
 // import styles from "../modal.module.css"
-import { groupsGetV2 } from "private/Apollo/Queries";
+import {
+  groupsGetV2,
+  connectionAutoCompleteName,
+} from "private/Apollo/Queries";
 /* import styles from "./Expand.module.css" */
 import {
   connectionCreate,
@@ -20,6 +23,8 @@ import {
   connectionSubjectiveScorePut,
   groupStartupAdd,
 } from "private/Apollo/Mutations";
+import _ from "lodash";
+import { appsyncClient } from "../../../../../awsconfig";
 
 // DEFINITIONS
 import { startup_page } from "definitions";
@@ -52,26 +57,33 @@ export default function Expand({ closeModal, styles, connections, history }) {
   const [mutateConnectionScore] = useMutation(connectionSubjectiveScorePut);
   const [mutateGroupStartupAdd] = useMutation(groupStartupAdd);
   const [showTagsModal, setShowTagsModal] = useState(false);
+
+  const debounced = _.debounce(
+    value => {
+      appsyncClient
+        .query({
+          query: connectionAutoCompleteName,
+          variables: {
+            search: value,
+          },
+        })
+        .then(result => {
+          if (result?.data?.connectionAutoCompleteName) {
+            setExistedFlag(
+              result?.data?.connectionAutoCompleteName[0]?.creativeName
+            );
+          } else {
+            setExistedFlag(undefined);
+          }
+        });
+    },
+    // delay in ms
+    1000
+  );
+
   // Look for duplicate names
-  let companyNameArr = [];
   function lookForDuplicateNames(value) {
-    // Populate array if empty
-    if (companyNameArr.length === 0) {
-      companyNameArr = connections?.length
-        ? connections?.map(sub => sub.creative?.name)
-        : [];
-      console.log(connections);
-    }
-
-    let userInput = value ? value.toUpperCase() : "";
-
-    // Filter array to see if we have a match
-    let match = companyNameArr.find(
-      name => name && name.toUpperCase() === userInput
-    );
-
-    // If duplicate, set state
-    setExistedFlag(match);
+    debounced(value);
   }
 
   // Submit function with mutations
@@ -162,7 +174,11 @@ export default function Expand({ closeModal, styles, connections, history }) {
               reference={register({ required: true })}
             />
           </div>
-
+          {existedFlag && (
+            <p className={styles.doyoumean}>
+              Do you mean <span>{existedFlag}</span> It`s already Exists
+            </p>
+          )}
           <div className="row tags-container overview-tags">
             <div className="tags-container__heading">Tags</div>
             <div className="tags-container__sub-heading">
