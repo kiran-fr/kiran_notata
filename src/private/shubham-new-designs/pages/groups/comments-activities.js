@@ -78,26 +78,28 @@ export default function CommentsActivities() {
         <i className="comment__send fa fa-paper-plane" aria-hidden="true"></i>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div className="comment">
-          <div className="comment__username">
-            Shirisha
-            <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+        <div className="comments">
+          <div className="comment">
+            <div className="comment__username">
+              Shirisha
+              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            </div>
+            <div className="comment__activity">Added Startup</div>
           </div>
-          <div className="comment__activity">Added Startup</div>
-        </div>
-        <div className="comment">
-          <div className="comment__username">
-            Shirisha
-            <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+          <div className="comment">
+            <div className="comment__username">
+              Shirisha
+              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            </div>
+            <div className="comment__activity">Added Tag:B2G</div>
           </div>
-          <div className="comment__activity">Added Tag:B2G</div>
-        </div>
-        <div className="comment">
-          <div className="comment__username">
-            Shirisha
-            <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+          <div className="comment">
+            <div className="comment__username">
+              Shirisha
+              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            </div>
+            <div className="comment__activity">Removed Tag:B2G</div>
           </div>
-          <div className="comment__activity">Removed Tag:B2G</div>
         </div>
         <textarea className="comment__write-comment"></textarea>
         <i className="comment__send fa fa-paper-plane" aria-hidden="true"></i>
