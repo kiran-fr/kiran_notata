@@ -9,6 +9,7 @@ export default function RadioButton({
   checked,
   defaultChecked,
   defaultValue,
+  styles,
   ...props
 }) {
   return (
@@ -23,6 +24,7 @@ export default function RadioButton({
         name={name}
         defaultValue={defaultValue}
         {...props}
+        styles={styles}
       />
       <span class="checkmark"></span>
     </label>
