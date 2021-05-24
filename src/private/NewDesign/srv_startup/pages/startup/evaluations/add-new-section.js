@@ -21,6 +21,7 @@ import {
 import { GhostLoader } from "Components/elements";
 import { useForm } from "react-hook-form";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
+import { evaluation_template_profile } from "../../../../../../definitions";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,7 +80,6 @@ export const AddSection = props => {
   };
   const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
-  const [questionOption, setQuestionOption] = useState(false);
   const [sectionDetails, setSectionDetails] = useState(true);
   const [addSectionModal, setAddSectionModal] = useState(false);
   const noOfRows = 4;
@@ -92,6 +92,7 @@ export const AddSection = props => {
   const [sectionName, setSectionName] = useState(null);
   const [saveLoader, setSaveLoader] = useState(false);
   const [evaluationTemplateData, setEvaluationTemplateData] = useState(null);
+  const [questionOption, setQuestionOption] = useState(false);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -136,7 +137,6 @@ export const AddSection = props => {
     if (savedLog) {
       setSaveLoader(false);
       setAddSectionModal(false);
-      setQuestionOption(true);
       let templateData = evaluationTemplateData;
       let sections = [...templateData.sections, savedLog];
       templateData = { ...templateData, sections };
@@ -144,22 +144,16 @@ export const AddSection = props => {
       // setSectionDetails(true);
     }
   };
-  if (!evaluationTemplateGetData) {
+
+  console.log("evaluationTemplateAPIResp", evaluationTemplateGetData);
+  if (!evaluationTemplateAPIResp) {
     return <GhostLoader />;
   }
   return (
     <>
-      <div
-        className={`add-section-conatiner ${
-          questionOption ? "question-option-show" : ""
-        }`}
-      >
+      <div className={`add-section-conatiner`}>
         <div className="row">
-          <div
-            className={`${
-              questionOption ? "col-sm-12" : "col-sm-8"
-            } text-container`}
-          >
+          <div className={`col-sm-8 text-container`}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <InputForm
                 name="variables.input.name"
@@ -208,120 +202,6 @@ export const AddSection = props => {
             </div>
           )}
         </div>
-        {questionOption && (
-          <>
-            {[...Array(noOfQuestions)].map((elementInArray, index) => {
-              return (
-                <div className="card" key={`question-id-${index}`}>
-                  <div className="row">
-                    <div className="col-sm-12 text-center">
-                      <span class="material-icons drag-indicator">
-                        drag_indicator
-                      </span>
-                      <span
-                        class="material-icons browse-card"
-                        onClick={() => setDropDown(!dropDown)}
-                      >
-                        more_horiz
-                      </span>
-                      {dropDown && (
-                        <div className="browse-card__drop-dwon">
-                          <div
-                            className="browse-card__drop-dwon__item"
-                            onClick={() => null}
-                          >
-                            <span class="material-icons settings">
-                              content_copy
-                            </span>
-                            <span className="text">DUPLICATE</span>
-                          </div>
-                          <div
-                            className="browse-card__drop-dwon__item leave"
-                            onClick={() => null}
-                          >
-                            <span class="material-icons leave">delete</span>
-                            <span className="delete-text">DELETE</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div className="action-container">
-                      <span class="material-icons copy">content_copy</span>
-                      <i
-                        class="fa fa-trash-o delete"
-                        onClick={() => setNoOfQuestions(noOfQuestions - 1)}
-                        aria-hidden="true"
-                      ></i>
-                      <span class="material-icons north">north</span>
-                      <span class="material-icons south">south</span>
-                    </div>
-                  </div>
-                  <div className="question-container row">
-                    <div className="col-sm-12">
-                      <TextBox placeholder="Question"></TextBox>
-                    </div>
-                    <div className="col-sm-12">
-                      <TextBox placeholder="Tagline"></TextBox>
-                    </div>
-                    <div className="col-sm-12 question-container__tabs">
-                      <Tabs
-                        value={tabValue}
-                        onChange={handleChange}
-                        scrollButtons="on"
-                        variant="scrollable"
-                      >
-                        <Tab label="SINGLE ANSWER" {...a11yProps(0)} />
-                        <Tab label="multiply choice" {...a11yProps(1)} />
-                        <Tab label="traffic lights" {...a11yProps(2)} />
-                        <Tab label="free text" {...a11yProps(3)} />
-                        <Tab label="text lines" {...a11yProps(4)} />
-                      </Tabs>
-                      <TabPanel value={tabValue} index={0}>
-                        <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
-                      </TabPanel>
-                      <TabPanel value={tabValue} index={1}>
-                        <MultiPleAnswer></MultiPleAnswer>
-                      </TabPanel>
-                      <TabPanel value={tabValue} index={2}>
-                        <TrafficLights></TrafficLights>
-                      </TabPanel>
-                      <TabPanel value={tabValue} index={3}>
-                        <FreeText></FreeText>
-                      </TabPanel>
-                      <TabPanel value={tabValue} index={4}>
-                        <TextLines></TextLines>
-                      </TabPanel>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            <div className="row">
-              <div className="col-sm-4">
-                <ButtonWithIcon
-                  className="new-question-btn"
-                  text="New Question"
-                  onClick={() => setNoOfQuestions(noOfQuestions + 1)}
-                ></ButtonWithIcon>
-              </div>
-            </div>
-            <div className="btn-container">
-              <ButtonWithIcon
-                className="cancel-btn"
-                text="Cancel"
-                onClick={() => null}
-              ></ButtonWithIcon>
-              <ButtonWithIcon
-                className="save-btn"
-                text="Save Changes"
-                onClick={() => {
-                  setQuestionOption(false);
-                  setSectionDetails(true);
-                }}
-              ></ButtonWithIcon>
-            </div>
-          </>
-        )}
         {sectionDetails && (
           <div className="evaluation-templates-container__data-container">
             {evaluationTemplateData?.sections.map((section, index) => {
@@ -330,7 +210,14 @@ export const AddSection = props => {
                   className="row evaluation-templates-container__data-container__data"
                   key={`row-id-${index}`}
                 >
-                  <div className="col-sm-4 col-xs-10 template-name">
+                  <div
+                    className="col-sm-4 col-xs-10 template-name"
+                    onClick={() =>
+                      props.history.push(
+                        `${evaluation_template_profile}/${id}/${section.id}`
+                      )
+                    }
+                  >
                     {section.name}
                   </div>
                   <div className="col-sm-3 col-xs-10 sections">
@@ -446,7 +333,6 @@ export const AddSection = props => {
           submit={() => {
             setImportSectionModal(false);
             setSectionDetails(false);
-            setQuestionOption(true);
           }}
           close={() => {
             setImportSectionModal(false);
