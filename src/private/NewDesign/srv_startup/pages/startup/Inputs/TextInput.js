@@ -1,7 +1,7 @@
 import React from "react";
 
 // Components
-import { TextInput } from "Components/Forms/FormInputs";
+import { TextInput } from "../FormInputs";
 
 export default function TextInputContainer({
   templateId,
