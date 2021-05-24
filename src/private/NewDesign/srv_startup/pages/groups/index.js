@@ -9,6 +9,7 @@ import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
 import DeleteGroup from "./delete-group-modal";
 import LeaveGroup from "./leave-group-modal";
 import Settings from "../startup/groups-individuals/create-new-group/settings";
+import { group_dashboard } from "../../../../definitions";
 
 function a11yProps(index) {
   return {
@@ -17,7 +18,7 @@ function a11yProps(index) {
   };
 }
 
-export default function Groups() {
+export default function Groups({ history }) {
   let noOfRows = 5;
   const sortByRef = useRef();
   const [showSortByDropDown, setShowSortByDropDown] = useState(false);
@@ -87,7 +88,10 @@ export default function Groups() {
           return (
             <>
               <div className="row data" id={`row-data-${index}`}>
-                <div className="col-sm-5 col-xs-7 data__name">
+                <div
+                  className="col-sm-5 col-xs-7 data__name"
+                  onClick={() => history.push(group_dashboard)}
+                >
                   <i className="fa fa-star"></i>
                   <span class="material-icons">lock</span>
                   Group 1
@@ -142,9 +146,7 @@ export default function Groups() {
                 </div>
               </div>
               {index < noOfRows - 1 && (
-                <div className="col-sm-12">
-                  <div className="separator"></div>
-                </div>
+                <div className="groups-contianer__separator"></div>
               )}
             </>
           );
