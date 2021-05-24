@@ -43,6 +43,7 @@ export default function Groups({ history }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [leaveModal, setLeaveModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
+
   return (
     <div className="groups-contianer">
       <div className="card">
