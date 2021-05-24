@@ -250,6 +250,7 @@
 .dateStage {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 15px;
 }
 .dateStage div {
   width: 49%;
