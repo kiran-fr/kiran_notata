@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./table.module.css";
 
+import PopupDropdown from "assets/images/PopupDown.svg";
+
 export default function TableHeader(props) {
   const {
     evaluationTemplates,
@@ -19,7 +21,7 @@ export default function TableHeader(props) {
             <span className={styles.checkmark}></span>
           </label>
           <span onClick={handlePopup} className={styles.selectDropdown}>
-            <i className="fas fa-chevron-down"></i>
+            <img src={PopupDropdown} alt=""></img>
           </span>
         </td>
         <td>
@@ -96,16 +98,14 @@ export default function TableHeader(props) {
                       filters.sortBy === "EVALUATION" &&
                       filters.sortDirection !== "DESC" &&
                       filters.sortByValue === id
-                        ? 
-
-                          "DESC"
+                        ? "DESC"
                         : "ASC";
 
                     setFilters({
                       ...filters,
                       sortBy,
                       sortDirection,
-                      sortByValue: id
+                      sortByValue: id,
                     });
                   }}
                   className="fal fa-exchange"

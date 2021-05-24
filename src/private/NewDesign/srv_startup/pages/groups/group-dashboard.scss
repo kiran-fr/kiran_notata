@@ -1,0 +1,757 @@
+.group-dashboard-container{
+    &__in-my-deal-flow-container{
+        @media only screen and(min-width:993px) {
+            margin-top:30px;    
+        }        
+        @media only screen and(min-width:768px) and(max-width:992px) {
+            margin-left:75px;
+        }
+        @media only screen and(max-width:768px) {
+            margin-left:60px;
+        }
+    }
+    &__in-my-deal-flow{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #53CAB2;
+        @media only screen and(min-width:768px) {
+            margin-top: 36px;
+        }
+    }
+    .add-to-deal-flow{
+        background: #53CAB2;
+        height: 30px;
+        padding: 5px 15px!important;
+    }
+    .share-back{
+        border: 1px solid #6A6a6a;
+        height: 30px;
+        color: #6a6a6a;
+        padding: 5px 15px!important;
+        margin-lefT: 15px;
+        .MuiButton-label{
+            color: #6a6a6a;
+        }
+    }
+    &__card-heading{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 29px;
+        margin-top: 30px;
+        margin-left: 35px;
+        color: #6A6A6A;
+        display: flex;
+        border-bottom: 1px solid #F1F1F1;
+        padding-bottom: 20px;
+        .material-icons{
+            color:#C4C4C4;
+            margin-right:16px;
+            @media only screen and(max-width:768px) {
+                margin-right: 5px;
+            }
+        }
+    }
+    &__info-window{
+        @media only screen and(min-width:900px) {
+            width:485px;
+        }        
+        left:60px;
+        &__heading{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+            color: #6A6A6A;
+            margin-bottom:16px;
+        }
+        &__description{
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 13px;
+            line-height: 16px;
+            margin-bottom:20px;
+            color: #969BA3;
+        }
+    }
+    &__group-details{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.03em;
+        color: #969BA3;
+        margin-left: 60px;
+        margin-top: 45px;
+        margin-bottom: 87px;
+        @media only screen and(max-width:768px) {
+            margin-bottom: 35px;
+        }
+        margin-right: 35px;
+    }
+    &__browse-card{
+        position: absolute;
+        right:35px;
+        cursor: pointer;
+        &:hover{
+            color:#6A6A6A;
+        }
+        &__drop-dwon{
+            position: absolute;
+            background: #FFFFFF;
+            box-shadow: 0px 3px 12px rgb(0 0 0 / 20%);
+            border-radius: 5px;
+            padding: 17px 25px;
+            z-index: 999;
+            margin-top: -30px;
+            margin-right: -30px;
+            text-align: initial;
+            right: 85px;
+            min-width: 149px;
+            display: flex;
+            flex-direction: column;
+            @media only screen and(max-width:768px) {
+                margin-right: -40px;
+            }
+            &__item{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 10px;
+                line-height: 12px;
+                padding-top:8px;
+                padding-bottom:8px;
+                color: #6A6A6A;
+                cursor: pointer;
+                .settings,
+                .leave{
+                    display: inline;
+                    font-size: 12px;
+                    margin-right: 10px;
+                }
+            }
+            .leave{
+                color:#FF4853;
+            }
+        }            
+    }
+    .MuiTabs-root{
+        position: relative;   
+        margin-left: auto;
+        width:250px;
+        margin-right: 17px;
+        margin-top: 25px;
+        .MuiTab-root{
+            min-width:125px;
+        }
+
+    }
+    .MuiButtonBase-root{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-size: 10px;
+        line-height: 16px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #969BA3;
+    }
+    .Mui-selected{
+        font-weight: bolder;
+        font-family: 'proxima_nova_altbold';
+    }
+    .MuiTabs-indicator{
+        border-bottom: 4px solid #969BA3;
+        border-radius: 2px;
+        transform: matrix(-1, 0, 0, 1, 0, 0);
+    }   
+    .users-container{
+        margin-top: 22px;
+        margin-left: 28px;
+        margin-right: 29px;
+        &__user-count{
+            border-bottom: 1px solid #F1F1F1;
+            padding-bottom: 12px;
+            margin-top: 12px;
+            display: flex;
+            &__name{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 17px;
+                color: #6A6A6A;
+            }
+            &__action{
+                margin-left: auto;
+                cursor: pointer;
+                &__icon{
+                    color: #53CAB2;
+                }
+                &__btn{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 10px;
+                    line-height: 12px;
+                    display: flex;
+                    letter-spacing: 0.03em;
+                    color: #FFFFFF;
+                    background: #53CAB2;
+                    width: 127px;
+                    justify-content: center;
+                    padding: 5px;
+                    border-radius: 12px;                    
+                }
+            }
+        }
+    }
+    .startup-container{
+        .startup-heading{
+            border-bottom: 0px;
+            @media only screen and(max-width:768px) {
+                margin-left:20px;
+            }
+        }
+        &__startup-icon{
+            background: linear-gradient(152.3deg, #ffb28c 9.47%, #ff8c78 93.11%);
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            color: #FFF;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        &__description{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 13px;
+            line-height: 16px;
+            margin-left:90px;
+            color: #969BA3;
+            width:60%;
+            @media only screen and(max-width:768px) {
+                margin-left:20px;
+                width:90%;
+            }
+            margin-top:5px;
+        }
+        .subjective-score-container{
+            margin-left: 60px;      
+            &__subjective-score{
+                @media only screen and(max-width:768px) {
+                    border: none;
+                }
+                border-right: 1px solid #DFDFDF;
+            }      
+            @media only screen and(max-width:768px) {
+                margin-left:20px;
+            }
+            margin-top: 14px;
+            &__heading{
+                margin-top: 14px;
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 18px;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                color: #6A6A6A;
+                &__icon{
+                    position: absolute;
+                    left: -15px;
+                    top: 14px;
+                    color: #53CAB2;
+                    @media only screen and(max-width:768px) {
+                        left: -5px;                        
+                    }
+                }
+            }
+            &__evaluations-heading{
+                color: #969BA3;
+            }
+            &__score{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 36px;
+                line-height: 44px;
+                margin-top: 5px;
+                color: #6A6A6A;
+            }
+            &__highest-lowest-score{
+                @media only screen and(min-width:1210px) {
+                    position: absolute;
+                }                
+                top: 37px;
+                left: 85px;
+                &__record{
+                    height:18px;
+                }
+                &__score{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 15px;                    
+                }
+                .highest{
+                    color: #53CAB2;
+                }
+                .lowest{
+                    color: #FF4853;
+                }
+                .south{
+                    font-size: 12px;
+                    color: #FF4853;
+                    margin-right: 5px;
+                }
+                .north{
+                    font-size: 12px;
+                    color: #53CAB2;
+                    margin-right: 5px;
+                }
+                &__type{
+                    font-family: Proxima Nova;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 9px;
+                    line-height: 11px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #979797;
+                    margin-left:5px;
+                }
+            }
+        }
+        .subjective-score-evaluation-container{
+            margin-top: 45px;
+            margin-left:80px;
+            border-bottom:1px solid #F1F1F1;
+            padding-bottom: 10px;
+            @media only screen and(max-width:768px) {
+                margin-left:25px;
+            }
+            width:80%;
+            &__icon{
+                position: absolute;
+                color: #53CAB2;
+                margin-left: -10px;
+            }
+            &__name{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 14px;
+                line-height: 17px;
+                color: #6A6A6A;
+            }
+            &__submitions{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: #969BA3;
+            }
+            &__score{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 14px;
+                line-height: 17px;
+                color: #969BA3;
+                @media only screen and(max-width:768px) {
+                    top: -15px;
+                }
+                .full-list{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 15px;
+                    text-decoration-line: underline;
+                    color: #969BA3;
+                    margin-left: 15px;
+                    cursor: pointer;
+                    @media only screen and(max-width:768px) {
+                        position: absolute;
+                        margin-left: -25px;
+                        top: 17px;
+                    }
+                }
+            }
+            &__username{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                text-decoration-line: underline;
+                color: #6A6A6A;
+            }
+        }        
+        .evaluation-container{
+            margin-left:80px;            
+            width:80%;
+            padding:15px 0px;
+            @media only screen and(max-width:768px) {
+                margin-left:25px;
+            }
+            &__heading{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 11px;
+                line-height: 13px;
+                letter-spacing: 0.08em;
+                color: #969BA3;
+            }            
+        }
+        .evaluation-list-container{
+            margin-left:80px;            
+            width:80%;
+            padding:5px 0px;
+            @media only screen and(max-width:768px) {
+                margin-left:25px;
+            }
+        }
+        .your-evaluations-container{
+            margin-top: 45px;
+            margin-left: 45px;
+            padding-bottom:50px;
+            @media only screen and(max-width:768px) {
+                margin-left:5px;
+            }
+            &__icon{
+                position: absolute;
+                color: #53CAB2;
+                margin-left: -15px;
+                @media only screen and(max-width:768px) {
+                    margin-left: -5px;
+                }
+            }
+            &__heading{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 19px;
+                @media only screen and(max-width:768px) {
+                    font-size: 14px;
+                    line-height: 17px;
+                }
+                letter-spacing: 0.03em;
+                color: #6A6A6A;
+                margin-left:15px;
+            }
+            &__availability{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+                @media only screen and(max-width:768px) {
+                    font-size: 14px;
+                    line-height: 17px;
+                }
+                color: #969BA3;
+            }
+            &__show-comments{
+                font-family: "Proxima Nova";
+                font-style: normal;
+                font-weight: bold;
+                font-size: 11px;
+                line-height: 13px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                margin-left: 40px;
+                margin-right: 5px;
+                color: #60CEB8;
+                margin-top: 3px;
+                width: auto;
+                position: absolute;
+                i{
+                    margin-left:10px;
+                }
+            }
+            &__message-count{
+                font-family: Proxima Nova;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+                margin-left:10px;
+                color: #969BA3;
+                @media only screen and(max-width:991px) {
+                    margin-left:17px;
+                }
+            }
+            &__icon{
+                color: #53CAB2;
+                font-size: 18px;
+                cursor: pointer;
+            }
+            &__comment-section{
+                display: flex;
+                @media only screen and(min-width:992px) {
+                    position: absolute;
+                    right: 20px;
+                    width: 270px;
+                }                
+                @media only screen and(max-width:991px) {
+                    margin-top:20px;
+                }
+                right: 0px;
+            }
+            &__score{
+                margin-top:40px
+            }
+            &__subjective{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 15px;
+                line-height: 18px;
+                color: #6A6A6A;
+            }
+            &__option-container{
+                @media only screen and(min-width:1269px) {
+                    margin-left:104px;
+                }
+                display: inline-block;
+                @media only screen and(max-width:1268px) {
+                    margin-top:30px;
+                    margin-left:0px;
+                }
+            }
+            &__share-with-group{
+                font-family: Proxima Nova;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 15px;
+                color: #FFFFFF;
+                background: #53CAB2;
+                display: inline-block;
+                padding: 7px 20px;
+                border-radius: 14px;
+                margin-left: 0px;
+                @media only screen and(max-width:1268px) {
+                    margin-top:20px;
+                    margin-left: 0px;
+                }
+            }
+            &__score-option{
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                display: inline-block;
+                text-align: center;
+                font-size: 14px;
+                padding-top: 8px;
+                border: 1px solid #6A6A6A;
+                color:#6A6A6A;
+                margin-right: 20px;
+                @media only screen and(max-width:768px) {
+                    margin-bottom:10px;
+                }
+            }
+            &__details-heading{
+                font-family: "Proxima Nova";
+                font-style: normal;
+                font-weight: bold;
+                font-size: 11px;
+                line-height: 13px;
+                letter-spacing: 0.08em;
+                color: #969BA3;
+                text-transform: uppercase;
+                margin-top: 40px;
+            }
+            &__record{
+                margin-top:20px;
+                &__share-with-group{
+                    width: 140px;
+                    font-family: Proxima Nova;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 15px;
+                    color: #FFFFFF;
+                    background: #53CAB2;
+                    padding: 7px 20px;
+                    border-radius: 14px;
+                    margin-left: 20px;
+                    margin-top: -10px;
+                    @media only screen and(max-width:1268px) {
+                        margin-top:-5px;
+                        margin-bottom: 10px;
+                        margin-left: 0px;
+                    }
+                    @media only screen and(max-width:768px) {
+                        margin-top:10px;
+                    }
+                }
+            }
+            .your-evaluation-open{
+                margin-top:30px;
+            }
+        }
+        .comment-container{
+            margin-top:50px;
+        }
+        .comment{
+            margin-top:25px;
+            &__username{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 14px;
+                line-height: 16px;
+                letter-spacing: 0.03em;
+                color: #6A6A6A;
+            }
+            &__datetime{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 10px;
+                line-height: 12px;
+                letter-spacing: 0.03em;
+                color: #ABABAB;
+                margin-left:10px;
+            }
+            &__comment{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 16px;
+                letter-spacing: 0.03em;                
+                color: #6A6A6A;
+                margin-top: 10px;
+                width: 95%;                
+            }
+            &__write-comment{
+                height: 73px;
+                width: 95%;
+                border-radius: 20px;
+                border: none;
+                background: #F4F4F4;
+                margin-top: 20px;
+                padding-left: 10px;
+                &:focus-visible{
+                    outline-width: 0px;
+                }
+            }
+            &__send{
+                font-size: 22px;
+                right: calc(5% + 30px);
+                position: absolute;
+                top: 47px;
+                color: #969BA3;
+            }
+        }
+    }
+}
+.invite-member-modal{
+    max-width:800px;    
+    .invite-member-modal-container{
+        padding:20px 25px 35px 25px;
+    }
+    .member-record{
+        margin-top:15px;
+    }
+    &__name-container{
+        display: flex;
+        .name{
+            font-family: "Proxima Nova";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 17px;
+            text-decoration-line: underline;
+            color: #6A6A6A;
+            margin-left:5px;
+        }       
+        .icon{
+            color:#FF937C;
+            margin-top: 2px;
+        } 
+        .member-btn{
+            background: #FAC76F;
+            padding-left: 18px;
+            padding-right: 18px;
+            border-radius: 12px;
+            font-family: "Proxima Nova";
+            font-size: 12px;
+            line-height: 15px;
+            color: #fff;
+            margin-left: auto;
+            padding-top: 1px;
+            width:83px;
+        }
+        .invite-btn{
+            background-color: #53CAB2;
+        }
+        .pending-btn{
+            background-color: #FFF;
+            border: 1px solid #6A6A6A;
+            color: #6A6A6A;
+        }
+    }
+    .email{
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        color: #6A6A6A;
+        margin-left:25px;
+    }
+    .search{
+        .material-icons{
+            position: relative;
+            left: 19px;
+            color: #B7B7B7;
+            top: 7px;
+            @media only screen and(max-width:387px) {
+                top:69px;
+                left:0px;
+            }
+        }
+        .search-box{
+            margin-top: 35px;
+            height: 30px;
+            border: 1px solid #B5B5B5;
+            box-sizing: border-box;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 274px;
+            padding-left: 30px;
+            margin-left:-10px;
+            margin-bottom: 5px;
+        }
+    }
+    .startup-list{
+        margin-left: 15px;
+        @media only screen and(max-width:378px) {
+            margin-left: 0px;
+        }
+        .email{
+            margin-left:5px;
+        }
+    }   
+}

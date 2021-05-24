@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./sidebar.module.css";
 import Sidebar from "./index";
 // import { Tags } from "Components/UI_Kits/Tags/Tags";
@@ -49,23 +49,55 @@ const DatePicker = ({ filters, setFilters }) => {
   );
 };
 
-const DatePickerNewdesign = () => (
-  <div className={styles.dateStage}>
-    <div className={styles.dateFrom}>
-      <label>From</label>
-      <input type="date" id="birthday" name="birthday" />
+const DatePickerNewdesign = ({ filters, setFilters }) => {
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
+
+  const handleChange = e => {
+    let { name, value } = e.target;
+    value = moment(value).format("X");
+    setFilters({ ...filters, [name]: value });
+  };
+
+  useEffect(() => {
+    if (moment(filters.fromDate)?.isValid()) {
+      setFromDate(moment(filters.fromDate).format("YYYY-MM-DD"));
+    } else {
+      setFromDate(moment.unix(filters.fromDate).format("YYYY-MM-DD"));
+    }
+  }, [filters.fromDate]);
+
+  useEffect(() => {
+    if (moment(filters.toDate)?.isValid()) {
+      setToDate(moment(filters.toDate)?.format("YYYY-MM-DD"));
+    } else {
+      setToDate(moment.unix(filters.toDate)?.format("YYYY-MM-DD"));
+    }
+  }, [filters.toDate]);
+
+  return (
+    <div className={styles.dateStage}>
+      <div className={styles.dateFrom}>
+        <label>From</label>
+        <input
+          type="date"
+          name="fromDate"
+          value={fromDate}
+          onChange={handleChange}
+        />
+      </div>
+      <div className={styles.dateTo}>
+        <label>To</label>
+        <input
+          type="date"
+          name="toDate"
+          value={toDate}
+          onChange={handleChange}
+        />
+      </div>
     </div>
-    <div className={styles.dateTo}>
-      <label>To</label>
-      <input
-        type="date"
-        id="birthday"
-        name="birthday"
-        placeholder="mm/dd/yyyy"
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 export default function FilterBar({
   close,
@@ -83,8 +115,8 @@ export default function FilterBar({
   const FunnelStage = () => (
     <ul className={styles.funnelUl}>
       {funnelGroupArray.length ? (
-        funnelGroupArray.map(item => (
-          item.funnelTags.length ?
+        funnelGroupArray.map(item =>
+          item.funnelTags.length ? (
             <>
               <h6>{item.name}</h6>
               {item.funnelTags.length &&
@@ -109,9 +141,10 @@ export default function FilterBar({
                   </li>
                 ))}
             </>
-          :
+          ) : (
             ""
-        ))
+          )
+        )
       ) : loading ? (
         <i className={"fa fa-spinner fa-spin"} />
       ) : (
@@ -202,8 +235,8 @@ export default function FilterBar({
         </div>
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
+          <DatePickerNewdesign filters={filters} setFilters={setFilters} />
           <DatePicker filters={filters} setFilters={setFilters} />
-          <DatePickerNewdesign />
         </div>
       </div>
       {showTagsModal && (
