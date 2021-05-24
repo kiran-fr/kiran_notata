@@ -39,23 +39,31 @@ export default function CommentsActivities() {
       <TabPanel value={value} index={0}>
         <div className="comments">
           <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            <div className="comment__seperate-date-time">
+              <div className="comment__seperate-date-time__separator"></div>
+              <span className="comment__datetime">Jan 28, 2021 10:53 PM</span>
+              <div className="comment__seperate-date-time__separator"></div>
             </div>
+            <div className="comment__username">Shirisha</div>
             <div className="comment__msg">This startup is really well!</div>
           </div>
           <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            <div className="comment__seperate-date-time">
+              <div className="comment__seperate-date-time__separator"></div>
+              <span className="comment__datetime">Jan 28, 2021 10:53 PM</span>
+              <div className="comment__seperate-date-time__separator"></div>
             </div>
+            <div className="comment__username">Shirisha</div>
             <div className="comment__msg">This startup is really well!</div>
           </div>
           <div className="comment">
+            <div className="comment__seperate-date-time">
+              <div className="comment__seperate-date-time__separator"></div>
+              <span className="comment__datetime">Jan 28, 2021 10:53 PM</span>
+              <div className="comment__seperate-date-time__separator"></div>
+            </div>
             <div className="comment__username comment__you">
               You
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
               <div className="comment__edit-delete">
                 <i
                   class="fa fa-pencil-square-o"
@@ -66,9 +74,23 @@ export default function CommentsActivities() {
               </div>
             </div>
             {editMessage ? (
-              <div className="comment__msg-edit">
-                <input type="text" value="This startup is really well!"></input>
-              </div>
+              <>
+                <div className="comment__msg-edit">
+                  <input
+                    type="text"
+                    value="This startup is really well!"
+                  ></input>
+                </div>
+                <div className="comment__save-cancel">
+                  <span
+                    className="cancel"
+                    onClick={() => setEditMessage(false)}
+                  >
+                    CANCEL
+                  </span>
+                  <span className="save">SAVE</span>
+                </div>
+              </>
             ) : (
               <div className="comment__msg">This startup is really well!</div>
             )}
@@ -80,24 +102,30 @@ export default function CommentsActivities() {
       <TabPanel value={value} index={1}>
         <div className="comments">
           <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            <div className="comment__seperate-date-time">
+              <div className="comment__seperate-date-time__separator"></div>
+              <span className="comment__datetime">Jan 28, 2021 10:53 PM</span>
+              <div className="comment__seperate-date-time__separator"></div>
             </div>
+            <div className="comment__username">Shirisha</div>
             <div className="comment__activity">Added Startup</div>
           </div>
           <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            <div className="comment__seperate-date-time">
+              <div className="comment__seperate-date-time__separator"></div>
+              <span className="comment__datetime">Jan 28, 2021 10:53 PM</span>
+              <div className="comment__seperate-date-time__separator"></div>
             </div>
+            <div className="comment__username">Shirisha</div>
             <div className="comment__activity">Added Tag:B2G</div>
           </div>
           <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            <div className="comment__seperate-date-time">
+              <div className="comment__seperate-date-time__separator"></div>
+              <span className="comment__datetime">Jan 28, 2021 10:53 PM</span>
+              <div className="comment__seperate-date-time__separator"></div>
             </div>
+            <div className="comment__username">Shirisha</div>
             <div className="comment__activity">Removed Tag:B2G</div>
           </div>
         </div>

@@ -98,16 +98,14 @@ export default function TableHeader(props) {
                       filters.sortBy === "EVALUATION" &&
                       filters.sortDirection !== "DESC" &&
                       filters.sortByValue === id
-                        ? 
-
-                          "DESC"
+                        ? "DESC"
                         : "ASC";
 
                     setFilters({
                       ...filters,
                       sortBy,
                       sortDirection,
-                      sortByValue: id
+                      sortByValue: id,
                     });
                   }}
                   className="fal fa-exchange"

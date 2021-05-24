@@ -37,6 +37,7 @@ import {
   group_dashboard,
   evaluation_template_new_dev,
   add_section_dev,
+  reports,
 } from "../definitions";
 
 // Landing page / list
@@ -85,6 +86,7 @@ import { Startup } from "./shubham-new-designs/pages/startup/index";
 import ElevationTemplates from "./shubham-new-designs/pages/startup/evaluations/evaluation-templates";
 import AddSection from "./shubham-new-designs/pages/startup/evaluations/add-new-section";
 import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
+import Reports from "./shubham-new-designs/pages/reports/reports";
 
 // New Startup Info
 import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
@@ -203,7 +205,7 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={add_section_dev} component={AddSectionDev} />
 
       <Route exact path={add_section} component={AddSection} />
-
+      <Route eaxct path={reports} component={Reports} />
       <Route render={() => <div>404</div>} />
     </Switch>
   );
