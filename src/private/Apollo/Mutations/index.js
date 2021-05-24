@@ -23,6 +23,7 @@ export { default as evaluationTemplateSectionPut } from "./evaluationTemplateSec
 export { default as evaluationTemplateSectionDelete } from "./evaluationTemplateSectionDelete";
 export { default as evaluationTemplateQuestionPut } from "./evaluationTemplateQuestionPut";
 export { default as evaluationTemplateQuestionDelete } from "./evaluationTemplateQuestionDelete";
+export { default as evaluationTemplateSectionUpdate } from "./evaluationTemplateSectionUpdate";
 export { default as groupPut } from "./groupPut";
 export { default as groupLogPut } from "./groupLogPut";
 export { default as tagGroupPut } from "./tagGroupPut";
