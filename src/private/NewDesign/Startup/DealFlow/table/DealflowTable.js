@@ -37,6 +37,21 @@ export default function Table(props) {
     // `${startup_page}/${connection.id}`);
   };
 
+  const popupItems = [
+    {
+      title: "Delete From Dealflow",
+      nested: [],
+    },
+    {
+      title: "Add To Group",
+      nested: ["Group 1", "Group 2"],
+    },
+    {
+      title: "Add Tags",
+      nested: ["Tag 1", "Tag 2"],
+    },
+  ];
+
   return (
     <div className={styles.tableOuterWrapper}>
       <div className={styles.tableWrapper}>
@@ -61,8 +76,7 @@ export default function Table(props) {
           />
         </table>
         <SelectAllPopup
-          title="Action"
-          items={["Delete", "Star", "Hide"]}
+          items={popupItems}
           isOpen={popup}
           setIsOpen={setPopup}
         ></SelectAllPopup>

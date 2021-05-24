@@ -1,5 +1,6 @@
 import React from "react";
-import { MultipleChoiceInput } from "Components/Forms/FormInputs";
+// import { MultipleChoiceInput } from "Components/Forms/FormInputs";
+import { MultipleChoiceInput } from "../FormInputs";
 
 export default function MultipleChoiceInputContainer({
   section,
