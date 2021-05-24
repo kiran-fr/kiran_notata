@@ -217,33 +217,10 @@
 
 /* When the checkbox is checked, add a blue background */
 .customCheck input:checked ~ .checkmark {
-  background-color: #2196f3;
+  background-color: #53cab2;
   border: none;
 }
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
 
-/* Show the checkmark when checked */
-.customCheck input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark/indicator */
-.customCheck .checkmark:after {
-  left: 35%;
-  top: 10%;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
 .favStartup {
   margin-left: 38px;
   margin-top: -0.5px;
@@ -406,6 +383,9 @@
   cursor: pointer;
 }
 
-.selectDropdown i {
-  transform: rotate(0deg) !important;
+.selectDropdown img {
+  transform: rotate(180deg) !important;
+  position: absolute;
+  margin-top: 9px;
+  margin-left: 9px;
 }
