@@ -78,3 +78,4 @@ export const startup_index = `${startup_page}/components/ui/navigation1`;
 export const evaluation_template_new = `${startup_page}/components/ui/evaluation-templates`;
 export const add_section = `${startup_page}/components/ui/evaluation-templates/add-section`;
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
+export const reports = `${startup_page}/components/ui/navigation1/report`;

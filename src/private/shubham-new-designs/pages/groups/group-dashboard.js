@@ -11,6 +11,7 @@ import SubmissionFullList from "../startup/evaluations/submission-full-list";
 import InviteMembers from "./invite-members";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
 import { ICONPOSITION } from "../constants";
+import SharingOptions from "../startup/groups-individuals/sharing-options";
 
 function a11yProps(index) {
   return {
@@ -34,6 +35,7 @@ export default function GroupDashboard() {
   const [manageTemplateModal, setManageTemplateModal] = useState(false);
   const [inviteMembersModal, setInviteMembersModal] = useState(false);
   const [fullListModal, setFullListModal] = useState(false);
+  const [shareGroupModal, setShareGroupModal] = useState(false);
   const inMyDealFlow = true;
   const [fullListModalObj, setFullListModalObj] = useState({
     evalType: "First Impression",
@@ -138,22 +140,26 @@ export default function GroupDashboard() {
                   </div>
                   {dropDownState && (
                     <div className="group-dashboard-container__browse-card__drop-dwon">
-                      <div
-                        className="material-icons group-dashboard-container__browse-card__drop-dwon__item"
-                        onClick={() => null}
-                      >
-                        <span class="material-icons settings">
-                          content_copy
-                        </span>
-                        <span className="text">SETTINGS</span>
-                      </div>
-                      <div
-                        className="material-icons group-dashboard-container__browse-card__drop-dwon__item"
-                        onClick={() => null}
-                      >
-                        <span class="material-icons settings">edit</span>
-                        <span className="text">EDIT</span>
-                      </div>
+                      {value === 0 && (
+                        <>
+                          <div
+                            className="material-icons group-dashboard-container__browse-card__drop-dwon__item"
+                            onClick={() => null}
+                          >
+                            <span class="material-icons settings">
+                              content_copy
+                            </span>
+                            <span className="text">SETTINGS</span>
+                          </div>
+                          <div
+                            className="material-icons group-dashboard-container__browse-card__drop-dwon__item"
+                            onClick={() => null}
+                          >
+                            <span class="material-icons settings">edit</span>
+                            <span className="text">EDIT</span>
+                          </div>
+                        </>
+                      )}
                       <div
                         className="material-icons group-dashboard-container__browse-card__drop-dwon__item"
                         onClick={() => null}
@@ -161,13 +167,23 @@ export default function GroupDashboard() {
                         <span class="material-icons settings">groups</span>
                         <span className="text">CREATE NEW GROUP</span>
                       </div>
-                      <div
-                        className="material-icons group-dashboard-container__browse-card__drop-dwon__item leave"
-                        onClick={() => null}
-                      >
-                        <span class="material-icons leave">delete</span>
-                        <span className="text">DELETE GROUP</span>
-                      </div>
+                      {value === 0 ? (
+                        <div
+                          className="material-icons group-dashboard-container__browse-card__drop-dwon__item leave"
+                          onClick={() => null}
+                        >
+                          <span class="material-icons leave">delete</span>
+                          <span className="text">DELETE GROUP</span>
+                        </div>
+                      ) : (
+                        <div
+                          className="material-icons group-dashboard-container__browse-card__drop-dwon__item leave"
+                          onClick={() => null}
+                        >
+                          <span class="material-icons leave">delete</span>
+                          <span className="text">LEAVE GROUP</span>
+                        </div>
+                      )}
                     </div>
                   )}
                   <div>
@@ -232,16 +248,15 @@ export default function GroupDashboard() {
                       <div className="users-container__user-count__name">
                         3 startups
                       </div>
-                      {value === 0 && (
-                        <div className="users-container__user-count__action">
-                          <div
-                            className="users-container__user-count__action__btn"
-                            onClick={() => setAddStartupModal(true)}
-                          >
-                            Manage Startups
-                          </div>
+
+                      <div className="users-container__user-count__action">
+                        <div
+                          className="users-container__user-count__action__btn"
+                          onClick={() => setAddStartupModal(true)}
+                        >
+                          {value === 0 ? "Manage Startups" : "MANAGE"}
                         </div>
-                      )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -274,6 +289,7 @@ export default function GroupDashboard() {
                             className="share-back"
                             text="SHARE BACK"
                             iconPosition={ICONPOSITION.START}
+                            onClick={() => setShareGroupModal(true)}
                           ></ButtonWithIcon>
                         </>
                       ) : (
@@ -773,6 +789,20 @@ export default function GroupDashboard() {
           closeTxt="CANCEL"
           children={<InviteMembers />}
           innerClassName="invite-member-modal"
+        ></Modal>
+      )}
+      {shareGroupModal && (
+        <Modal
+          title="Sharing options"
+          submit={() => {
+            setShareGroupModal(false);
+          }}
+          close={() => {
+            setShareGroupModal(false);
+          }}
+          submitTxt="Save"
+          closeTxt="Cancel"
+          children={<SharingOptions></SharingOptions>}
         ></Modal>
       )}
     </>
