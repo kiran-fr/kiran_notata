@@ -43,12 +43,12 @@ export function SideBarMenu() {
       iconStyle: {},
       link: group,
     },
-    // {
-    //   label: "Reports and analytics",
-    //   iconClass: "fas fa-file-alt",
-    //   iconStyle: { paddingTop: "7px" },
-    //   link: charts,
-    // },
+    {
+      label: "Reports and analytics",
+      iconClass: "fas fa-file-alt",
+      iconStyle: { paddingTop: "7px" },
+      link: charts,
+    },
     //  hide for now  (commented by siva)
     // {
     //   label: "News",
