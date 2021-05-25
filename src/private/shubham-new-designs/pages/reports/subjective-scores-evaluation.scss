@@ -16,6 +16,9 @@
         margin-top: 5px;
     }
     .last-year{
+        @media only screen and(max-width:768px) {
+            margin-right: 0px;
+        }
         margin-top: 25px;
         margin-right: 30px;
         .txt{

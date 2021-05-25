@@ -49,7 +49,7 @@ export default function SubjectiveScoreEvaluation() {
         </div>
         <div className="added-startups">Added startups</div>
       </div>
-      <div className="col-sm-2 col-xs-5 last-year">
+      <div className="col-sm-2 col-xs-6 last-year">
         <div className="txt">Last Year</div>
         <div className="date">Mar 16, 2020 - Mar 16, 2020</div>
       </div>
