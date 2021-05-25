@@ -13,13 +13,19 @@ import TextLines from "./text-lines";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import ImportSection from "./import-section-modal";
 import { useQuery, useMutation } from "@apollo/client";
-import { evaluationTemplateGet } from "private/Apollo/Queries";
+import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
 import {
-  evaluationTemplateUpdate,
   evaluationTemplateSectionCreate,
+  evaluationTemplateSectionUpdate,
 } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
+import { useForm } from "react-hook-form";
+import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
+// import {Questions} from './question-comp';
+// import {NewQuestion} from "./new-question";
 import { evaluation_template_profile } from "../../../../../../definitions";
+import Question from "../../../../../pages/Templates/EvaluationTemplateSection/QuestionComp";
+import EvaluationTemplateSection from "../../../../../pages/Templates/EvaluationTemplateSection/index";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,35 +51,43 @@ function a11yProps(index) {
 }
 
 // export default function AddSection() {
-export const AddSection = props => {
+export const TemplateSection = props => {
   const {
     match: {
-      params: { id },
+      params: { id, sectionId },
     },
   } = props;
-  const { data: evaluationTemplateGetData, loading, error } = useQuery(
-    evaluationTemplateGet,
+  // Form
+  console.log("props", props);
+  const { register, handleSubmit, formState, errors, setValue } = useForm();
+  const { isSubmitting } = formState;
+
+  const { data: evaluationTemplateSectionGetData, loading, error } = useQuery(
+    evaluationTemplateSectionGet,
     {
       variables: {
-        id,
+        id: sectionId,
       },
     }
   );
-  const evaluationTemplateAPIResp =
-    evaluationTemplateGetData?.evaluationTemplateGet;
+  console.log(
+    "evaluationTemplateSectionGetData",
+    evaluationTemplateSectionGetData
+  );
+  const evaluationTemplateSectionAPIResp =
+    evaluationTemplateSectionGetData?.evaluationTemplateSectionGet;
 
-  const [mutateEvaluationTemplateUpdate] = useMutation(
-    evaluationTemplateUpdate
+  const [mutateEvaluationTemplateSectionUpdate] = useMutation(
+    evaluationTemplateSectionUpdate
   );
-  const [mutateEvaluationTemplateSectionCreate] = useMutation(
-    evaluationTemplateSectionCreate
-  );
+
   const [tabValue, setTabValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
   const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
+  const [questionOption, setQuestionOption] = useState(true);
   const [sectionDetails, setSectionDetails] = useState(true);
   const [addSectionModal, setAddSectionModal] = useState(false);
   const noOfRows = 4;
@@ -83,10 +97,9 @@ export const AddSection = props => {
   const [noOfQuestions, setNoOfQuestions] = useState(1);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
-  const [sectionName, setSectionName] = useState(null);
+  // const [sectionName, setSectionName] = useState(null);
   const [saveLoader, setSaveLoader] = useState(false);
   const [evaluationTemplateData, setEvaluationTemplateData] = useState(null);
-  const [questionOption, setQuestionOption] = useState(false);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -97,75 +110,74 @@ export const AddSection = props => {
     }
   };
   useEffect(() => {
-    if (evaluationTemplateAPIResp) {
-      setEvaluationTemplateData(evaluationTemplateAPIResp);
-      setDescription(evaluationTemplateAPIResp?.description);
-      setName(evaluationTemplateAPIResp?.name);
+    if (evaluationTemplateSectionAPIResp) {
+      setDescription(evaluationTemplateSectionAPIResp?.description);
+      setName(evaluationTemplateSectionAPIResp?.name);
     }
-  }, [evaluationTemplateAPIResp]);
+  }, [evaluationTemplateSectionAPIResp]);
 
-  const onSubmit = async data => {
-    const resp = await mutateEvaluationTemplateUpdate({
-      variables: {
-        id: evaluationTemplateData?.id,
-        input: {
-          name: data.variables?.input?.name,
-          description,
-        },
-      },
-    });
-  };
-
-  const upateTemplate = async () => {
-    const resp = await mutateEvaluationTemplateUpdate({
-      variables: {
-        id: evaluationTemplateData?.id,
-        input: {
-          name: name,
-          description,
-        },
-      },
-    });
-  };
-
-  const saveSection = async () => {
+  const save = async () => {
     setSaveLoader(true);
-    let createResponse = await mutateEvaluationTemplateSectionCreate({
+    const resp = await mutateEvaluationTemplateSectionUpdate({
       variables: {
-        templateId: evaluationTemplateData?.id,
+        id: sectionId,
         input: {
-          name: sectionName,
+          name,
+          description,
         },
       },
     });
-    let savedLog = createResponse?.data?.evaluationTemplateSectionCreate;
-    console.log(savedLog);
-    if (savedLog) {
-      setSaveLoader(false);
-      setAddSectionModal(false);
-      let templateData = evaluationTemplateData;
-      let sections = [...templateData.sections, savedLog];
-      templateData = { ...templateData, sections };
-      setEvaluationTemplateData(templateData);
-      // setSectionDetails(true);
+    if (resp?.data?.evaluationTemplateSectionUpdate) {
+      props.history.goBack();
     }
   };
 
-  // console.log("evaluationTemplateAPIResp", evaluationTemplateGetData);
-  if (!evaluationTemplateAPIResp) {
+  // const saveSection = async () => {
+  //   setSaveLoader(true);
+  //   let createResponse = await mutateEvaluationTemplateSectionCreate({
+  //     variables: {
+  //       templateId: evaluationTemplateData?.id,
+  //       input: {
+  //         name: sectionName,
+  //       },
+  //     },
+  //   });
+  //   let savedLog = createResponse?.data?.evaluationTemplateSectionCreate;
+  //   console.log(savedLog);
+  //   if (savedLog) {
+  //     setSaveLoader(false);
+  //     setAddSectionModal(false);
+  //     setQuestionOption(true);
+  //     let templateData = evaluationTemplateData;
+  //     let sections = [...templateData.sections, savedLog];
+  //     templateData = { ...templateData, sections };
+  //     setEvaluationTemplateData(templateData);
+  //     // setSectionDetails(true);
+  //   }
+  // };
+
+  if (!evaluationTemplateSectionGetData) {
     return <GhostLoader />;
   }
+
   return (
     <>
-      <div className={`add-section-conatiner`}>
+      <div
+        className={`add-section-conatiner ${
+          questionOption ? "question-option-show" : ""
+        }`}
+      >
         <div className="row">
-          <div className={`col-sm-8 text-container`}>
+          <div
+            className={`${
+              questionOption ? "col-sm-12" : "col-sm-8"
+            } text-container`}
+          >
             <form>
               <TextBox
                 name="name"
                 defaultValue={name}
                 onChange={handleInputChange}
-                onBlur={upateTemplate}
               />
               <textarea
                 name="description"
@@ -173,7 +185,6 @@ export const AddSection = props => {
                 value={description}
                 rows="4"
                 cols="50"
-                onBlur={upateTemplate}
               ></textarea>
             </form>
           </div>
@@ -201,72 +212,52 @@ export const AddSection = props => {
             </div>
           )}
         </div>
-        {sectionDetails && (
-          <div className="evaluation-templates-container__data-container">
-            {evaluationTemplateData?.sections.map((section, index) => {
-              return (
-                <div
-                  className="row evaluation-templates-container__data-container__data"
-                  key={`row-id-${index}`}
-                >
-                  <div
-                    className="col-sm-4 col-xs-10 template-name"
-                    onClick={() =>
-                      props.history.push(
-                        `${evaluation_template_profile}/${id}/${section.id}`
-                      )
-                    }
-                  >
-                    {section.name}
-                  </div>
-                  <div className="col-sm-3 col-xs-10 sections">
-                    {section?.questions?.length || 0} questions
-                  </div>
-                  {/* <div className="col-sm-3 group-name">3 Points</div> */}
-                  <div className="col-sm-2 col-xs-2 browse">
-                    <span
-                      class="material-icons"
-                      onClick={() => {
-                        let states = new Array(noOfRows).fill(false);
-                        states[index] = !browseDropDownStates[index];
-                        setBrowseDropDownStates(states);
-                      }}
-                    >
-                      more_horiz
-                    </span>
-                    {browseDropDownStates[index] && (
-                      <div className="browse__drop-dwon">
-                        <div
-                          className="browse__drop-dwon__item"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons settings">edit</span>
-                          <span className="text">EDIT</span>
-                        </div>
-                        <div
-                          className="browse__drop-dwon__item"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons settings">
-                            content_copy
-                          </span>
-                          <span className="text">COPY AND EDIT</span>
-                        </div>
-                        <div
-                          className="browse__drop-dwon__item leave"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons leave">delete</span>
-                          <span className="delete-text">DELETE GROUP</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        {questionOption && (
+          <>
+            {/* <Questions setDropDown={setDropDown}  
+            setNoOfQuestions={setNoOfQuestions}
+            dropDown={dropDown}
+            noOfQuestions={noOfQuestions}
+            tabValue={tabValue}
+            handleChange={handleChange}
+            a11yProps={a11yProps}
+            /> */}
+
+            <Question templateId={id} sectionId={sectionId} question={[]} />
+            {/* <EvaluationTemplateSection match={props.match}/> */}
+
+            <div className="row">
+              <div className="col-sm-4">
+                <ButtonWithIcon
+                  className="new-question-btn"
+                  text="New Question"
+                  onClick={() => setNoOfQuestions(noOfQuestions + 1)}
+                ></ButtonWithIcon>
+              </div>
+            </div>
+            <div className="btn-container">
+              <ButtonWithIcon
+                className="cancel-btn"
+                text="Cancel"
+                onClick={() => null}
+              ></ButtonWithIcon>
+              {saveLoader ? (
+                <i className={"fa fa-spinner fa-spin"} />
+              ) : (
+                <ButtonWithIcon
+                  className="save-btn"
+                  text="Save Changes"
+                  onClick={() => {
+                    setQuestionOption(true);
+                    setSectionDetails(true);
+                    save();
+                  }}
+                ></ButtonWithIcon>
+              )}
+            </div>
+          </>
         )}
+
         {/* {sectionDetails && (
           <div className="evaluation-templates-container__data-container">
             {[...Array(noOfRows)].map((elementInArray, index) => {
@@ -332,6 +323,7 @@ export const AddSection = props => {
           submit={() => {
             setImportSectionModal(false);
             setSectionDetails(false);
+            setQuestionOption(true);
           }}
           close={() => {
             setImportSectionModal(false);
@@ -341,7 +333,7 @@ export const AddSection = props => {
           children={<ImportSection></ImportSection>}
         ></Modal>
       )}
-      {addSectionModal && (
+      {/* {addSectionModal && (
         <Modal
           title="New Section"
           submit={() => {
@@ -362,7 +354,7 @@ export const AddSection = props => {
             ></TextBox>
           }
         ></Modal>
-      )}
+      )} */}
     </>
   );
 };
