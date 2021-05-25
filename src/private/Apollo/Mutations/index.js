@@ -57,3 +57,6 @@ export { default as externalResourceDelete } from "./externalResourceDelete";
 export { default as impactGoalsPut } from "./impactGoalsPut";
 
 export { default as groupStartupAdd } from "./groupStartupAdd";
+
+export { default as notificationsMarkAsSeen } from "./notificationsMarkAsSeen";
+export { default as notificationsMarkAllAsSeen } from "./notificationsMarkAllAsSeen";

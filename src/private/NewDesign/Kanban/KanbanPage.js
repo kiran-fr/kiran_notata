@@ -8,7 +8,7 @@ import { Kanban } from "./Kanban";
 export const KanbanPage = () => {
   return (
     <>
-      <Navigation></Navigation>
+      <Navigation />
       <Content maxWidth={1300}>
         <Kanban></Kanban>
       </Content>
