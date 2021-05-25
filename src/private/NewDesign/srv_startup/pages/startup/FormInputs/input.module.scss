@@ -22,7 +22,6 @@
 }
 
 .textbox {
-  margin-top: 25px;
   input,
   textarea {
     background: #ffffff;
@@ -30,9 +29,9 @@
     box-sizing: border-box;
     border-radius: 8px;
     height: 50px;
-    width: 100%;
-    max-width: 560px;
-    padding-left: 10px;
+    width: 280px;
+    min-width: 100%;
+    padding: 0 10px;
     font-family: "Proxima Nova" !important;
     font-size: 14px;
     line-height: 17px;
@@ -46,27 +45,18 @@
 .inputWrapper {
   position: relative;
   display: flex;
+  align-items: center;
+  margin-top: 25px;
+  width: 100%;
 }
 
-.inputIcon {
-  i {
-    position: absolute;
-    top: 28px;
-    // left: 20px;
-    color: var(--color-primary);
-    font-size: 21px;
-    cursor: pointer;
-  }
-}
-
-/* .inputPlusIcon {
-  position: absolute;
-  top: 1px;
-  right: 3px;
-  color: var(--color-primary);
-  font-size: 32px;
+.addIcon {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
   cursor: pointer;
-} */
+  justify-content: center;
+}
 
 .noOfFounders {
   input {
