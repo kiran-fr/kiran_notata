@@ -68,9 +68,14 @@ export const AddSection = props => {
   const [mutateEvaluationTemplateSectionCreate] = useMutation(
     evaluationTemplateSectionCreate
   );
-  const [tabValue, setTabValue] = React.useState(0);
+  // const [tabValue, setTabValue] = React.useState(0);
+  // const handleChange = (event, newValue) => {
+  //   setTabValue(newValue);
+  // };
+
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
-    setTabValue(newValue);
+    setValue(newValue);
   };
   const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
@@ -259,7 +264,7 @@ export const AddSection = props => {
                     </div>
                     <div className="col-sm-12 question-container__tabs">
                       <Tabs
-                        // value={value}
+                        value={value}
                         onChange={handleChange}
                         scrollButtons="on"
                         variant="scrollable"
@@ -270,34 +275,19 @@ export const AddSection = props => {
                         <Tab label="free text" {...a11yProps(3)} />
                         <Tab label="text lines" {...a11yProps(4)} />
                       </Tabs>
-                      <TabPanel
-                        // value={value}
-                        index={0}
-                      >
+                      <TabPanel value={value} index={0}>
                         <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
                       </TabPanel>
-                      <TabPanel
-                        // value={value}
-                        index={1}
-                      >
+                      <TabPanel value={value} index={1}>
                         <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
                       </TabPanel>
-                      <TabPanel
-                        // value={value}
-                        index={2}
-                      >
+                      <TabPanel value={value} index={2}>
                         <TrafficLights></TrafficLights>
                       </TabPanel>
-                      <TabPanel
-                        // value={value}
-                        index={3}
-                      >
+                      <TabPanel value={value} index={3}>
                         <FreeText></FreeText>
                       </TabPanel>
-                      <TabPanel
-                        /* value={value}  */
-                        index={4}
-                      >
+                      <TabPanel value={value} index={4}>
                         <TextLines></TextLines>
                       </TabPanel>
                     </div>
