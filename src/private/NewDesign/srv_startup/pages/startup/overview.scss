@@ -46,6 +46,7 @@
       line-height: 17px;
       letter-spacing: 0.03em;
       color: #ff937c;
+      margin-left: 10px;
     }
   }
   &__startup-overview {
@@ -547,10 +548,10 @@
     }
   }
   .funnel-summary-container {
-    margin: 35px 0px 0px 35px;
+    margin: 35px;
   }
   .groups-container {
-    margin: 35px 0px 0px 35px;
+    margin: 35px;
     .group-name {
       font-family: "Proxima Nova";
       font-style: normal;
@@ -671,7 +672,7 @@
 .editDelete_icons .deleted {
   color: #ff8166 !important;
 }
-.connection-link{
+.connection-link {
   cursor: pointer;
 }
 //
