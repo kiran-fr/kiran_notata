@@ -38,6 +38,7 @@
     .name-icon{
         height: 50px;
         width: 50px;
+        overflow: hidden;
         background: linear-gradient(
             152.3deg
             , #ffb28c 9.47%, #ff8c78 93.11%);
@@ -51,7 +52,13 @@
         @media only screen and(max-width:905px) {
             margin-top:50px!important;
         }
+
     }
+
+    .with-logo {
+      background: none;
+    }
+
     &__heading{
         
         font-family: 'proxima_nova_altbold';

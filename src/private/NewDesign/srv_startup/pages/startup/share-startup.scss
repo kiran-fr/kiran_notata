@@ -1,4 +1,31 @@
 .share-startup-container {
+
+
+  .hidden-file-input {
+
+    label {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      input {
+        display: inline-block;
+        opacity: 0;
+        position: absolute;
+        z-index: 99;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+
+    }
+
+
+  }
+
   padding: 25px;
   .menu-container {
     background: linear-gradient(115.95deg, #61bda7 50.04%, #2ba5a5 97.03%);
@@ -36,7 +63,21 @@
       text-align: center;
       padding-top: 47px;
       color: #969ba3;
+      overflow: hidden;
     }
+
+    .logo {
+      height: 110px;
+      width: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: transparent;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
     .upload-logo-btn,
     .delete-btn {
       width: 148px;
