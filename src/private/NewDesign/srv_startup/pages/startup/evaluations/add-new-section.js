@@ -59,6 +59,8 @@ export const AddSection = props => {
       },
     }
   );
+  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections.name);
+  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections[0].id);
   const evaluationTemplateAPIResp =
     evaluationTemplateGetData?.evaluationTemplateGet;
 
@@ -143,8 +145,10 @@ export const AddSection = props => {
         },
       },
     });
+    console.log("sectionName", sectionName);
     let savedLog = createResponse?.data?.evaluationTemplateSectionCreate;
     console.log(savedLog);
+
     if (savedLog) {
       setSaveLoader(false);
       setAddSectionModal(false);
@@ -279,7 +283,7 @@ export const AddSection = props => {
                         <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
                       </TabPanel>
                       <TabPanel value={value} index={1}>
-                        <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
+                        <MultiPleAnswer></MultiPleAnswer>
                       </TabPanel>
                       <TabPanel value={value} index={2}>
                         <TrafficLights></TrafficLights>
@@ -325,6 +329,8 @@ export const AddSection = props => {
         {sectionDetails && (
           <div className="evaluation-templates-container__data-container">
             {evaluationTemplateData?.sections.map((section, index) => {
+              const { name, description } = section;
+              console.log("section", section.name);
               return (
                 <div
                   className="row evaluation-templates-container__data-container__data"
@@ -343,7 +349,7 @@ export const AddSection = props => {
                   <div className="col-sm-3 col-xs-10 sections">
                     {section?.questions?.length || 0} questions
                   </div>
-                  {/* <div className="col-sm-3 group-name">3 Points</div> */}
+                  <div className="col-sm-3 group-name">3 Points</div>
                   <div className="col-sm-2 col-xs-2 browse">
                     <span
                       class="material-icons"
@@ -453,6 +459,7 @@ export const AddSection = props => {
           submit={() => {
             setImportSectionModal(false);
             setSectionDetails(false);
+            setQuestionOption(true);
           }}
           close={() => {
             setImportSectionModal(false);
