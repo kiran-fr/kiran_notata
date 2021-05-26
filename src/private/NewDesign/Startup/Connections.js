@@ -251,7 +251,7 @@ export default function Connections({ history }) {
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
-      {tabValue !== "spreadsheet" ? (
+      {tabValue === "spreadsheet" ? (
         <>
           <ListOfStartups
             history={history}
