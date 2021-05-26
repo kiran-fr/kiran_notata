@@ -199,7 +199,7 @@ export default function Overview(props) {
           setPageState={setPageState}
           archiveConnection={archiveConnection}
           deleteConnection={deleteConnection}
-        ></ArchiveList>
+        />
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">

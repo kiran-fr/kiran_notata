@@ -39,9 +39,9 @@ export default function StartupInfo({ startup }) {
     return <></>;
   }
 
-  const handleCompanyUrl = (data) => {
+  const handleCompanyUrl = data => {
     window.open(data);
-  }
+  };
 
   return (
     <>
@@ -56,8 +56,22 @@ export default function StartupInfo({ startup }) {
             <div className="card">
               <div className="row">
                 <div className="col-1 col-xs-1">
-                  <div className="name-icon">
-                    {startup?.creative?.name[0].toString()}
+                  <div
+                    className={`name-icon ${
+                      startup?.creative?.logo && "with-logo"
+                    }`}
+                  >
+                    {(!startup?.creative?.logo && (
+                      <span>{startup?.creative?.name[0].toString()}</span>
+                    )) || (
+                      <img
+                        src={startup.creative.logo}
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
                 <div
@@ -129,10 +143,22 @@ export default function StartupInfo({ startup }) {
                     </div> */}
                   </div>
                   <div className="row startup-info-notata-info">
-                    <div  className="col-6 col-xs-6 startup-info-notata-info__web">
-                      {startup?.creative
-                        ?<span className="handCursor" onClick = {()=>handleCompanyUrl(getAnswer(startup.creative, "q06_section_info"))}> {getAnswer(startup.creative, "q06_section_info")} </span>
-                        : "N/A"}
+                    <div className="col-6 col-xs-6 startup-info-notata-info__web">
+                      {startup?.creative ? (
+                        <span
+                          className="handCursor"
+                          onClick={() =>
+                            handleCompanyUrl(
+                              getAnswer(startup.creative, "q06_section_info")
+                            )
+                          }
+                        >
+                          {" "}
+                          {getAnswer(startup.creative, "q06_section_info")}{" "}
+                        </span>
+                      ) : (
+                        "N/A"
+                      )}
                     </div>
                     <div className="col-6 col-xs-6 startup-info-notata-info__slidedeck">
                       {startup?.creative ? getSlideDeck() : <></>}
