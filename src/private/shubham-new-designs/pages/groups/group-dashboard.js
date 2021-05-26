@@ -44,6 +44,7 @@ export default function GroupDashboard() {
 
   const [fullListModal, setFullListModal] = useState(false);
   const [shareGroupModal, setShareGroupModal] = useState(false);
+  const [adminDataVisible, SetAdminDataVisible] = useState(false);
   const inMyDealFlow = true;
   const [fullListModalObj, setFullListModalObj] = useState({
     evalType: "First Impression",
@@ -258,10 +259,30 @@ export default function GroupDashboard() {
                         2 admins
                       </div>
                       <div className="users-container__user-count__action">
+                        {adminDataVisible && (
+                          <div className="admins-data">
+                            <div className="admin">
+                              <div className="username">Daria Kyselova</div>
+                              <div className="email">
+                                (daria@leverageux.com)
+                              </div>
+                            </div>
+                            <div className="admin">
+                              <div className="username">Daria Kyselova</div>
+                              <div className="email">
+                                (daria@leverageux.com)
+                              </div>
+                            </div>
+                          </div>
+                        )}
                         <i
-                          class={`users-container__user-count__action__icon fa fa-chevron-down`}
+                          class={`users-container__user-count__action__icon fa ${
+                            adminDataVisible
+                              ? "fa-chevron-up"
+                              : "fa-chevron-down"
+                          }`}
                           aria-hidden="true"
-                          onClick={() => null}
+                          onClick={() => SetAdminDataVisible(!adminDataVisible)}
                         ></i>
                       </div>
                     </div>

@@ -214,6 +214,23 @@
                     justify-content: center;
                     border-radius: 12px;                    
                 }
+                .admins-data{
+                    .admin{
+                        font-family: Proxima Nova;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 14px;
+                        line-height: 17px;
+                        margin-top:10px;
+                        .username{
+                            text-decoration-line: underline;
+                            color: #6A6A6A;
+                        }
+                        .email{
+                            color: #969BA3;
+                        }
+                    }
+                }                
             }
         }
     }
