@@ -30,7 +30,10 @@ import Table from "./DealFlow/table/DealflowTable";
 function getCleanFilterData(filters) {
   let clean = {};
   for (let key in filters) {
-    if (filters[key] && filters[key].length) {
+    if (
+      (filters[key] && filters[key].length) ||
+      (typeof filters[key] === "boolean" && filters[key])
+    ) {
       clean[key] = filters[key];
     }
   }
@@ -98,6 +101,7 @@ function ListOfStartups({
 
       {showFunnelScoreForId && (
         <SetFunnelScore
+          updateFunnelTag={updateFunnelTag}
           connection={connections.find(({ id }) => id === showFunnelScoreForId)}
           close={() => setShowFunnelScoreForId(undefined)}
         />
@@ -128,9 +132,10 @@ export default function Connections({ history }) {
 
     search: "",
     tags: [],
-    funnelTags: [],
+    funnelTag: [],
     fromDate: new Date().getTime() - 40000,
     toDate: new Date().getTime(),
+    starred: false,
     // limit: 25
 
     // SORTING
@@ -246,7 +251,7 @@ export default function Connections({ history }) {
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
-      {tabValue === "spreadsheet" ? (
+      {tabValue !== "spreadsheet" ? (
         <>
           <ListOfStartups
             history={history}
@@ -264,7 +269,7 @@ export default function Connections({ history }) {
           />
         </>
       ) : (
-        <Kanban />
+        <Kanban history={history} />
       )}
     </>
   );

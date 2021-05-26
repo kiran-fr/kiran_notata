@@ -59,6 +59,8 @@ export const AddSection = props => {
       },
     }
   );
+  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections.name);
+  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections[0].id);
   const evaluationTemplateAPIResp =
     evaluationTemplateGetData?.evaluationTemplateGet;
 
@@ -68,9 +70,14 @@ export const AddSection = props => {
   const [mutateEvaluationTemplateSectionCreate] = useMutation(
     evaluationTemplateSectionCreate
   );
-  const [tabValue, setTabValue] = React.useState(0);
+  // const [tabValue, setTabValue] = React.useState(0);
+  // const handleChange = (event, newValue) => {
+  //   setTabValue(newValue);
+  // };
+
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
-    setTabValue(newValue);
+    setValue(newValue);
   };
   const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
@@ -138,8 +145,10 @@ export const AddSection = props => {
         },
       },
     });
+    console.log("sectionName", sectionName);
     let savedLog = createResponse?.data?.evaluationTemplateSectionCreate;
     console.log(savedLog);
+
     if (savedLog) {
       setSaveLoader(false);
       setAddSectionModal(false);
@@ -201,9 +210,127 @@ export const AddSection = props => {
             </div>
           )}
         </div>
+
+        {questionOption && (
+          <>
+            {[...Array(noOfQuestions)].map((elementInArray, index) => {
+              return (
+                <div className="card" key={`question-id-${index}`}>
+                  <div className="row">
+                    <div className="col-sm-12 text-center">
+                      <span class="material-icons drag-indicator">
+                        drag_indicator
+                      </span>
+                      <span
+                        class="material-icons browse-card"
+                        onClick={() => setDropDown(!dropDown)}
+                      >
+                        more_horiz
+                      </span>
+                      {dropDown && (
+                        <div className="browse-card__drop-dwon">
+                          <div
+                            className="browse-card__drop-dwon__item"
+                            onClick={() => null}
+                          >
+                            <span class="material-icons settings">
+                              content_copy
+                            </span>
+                            <span className="text">DUPLICATE</span>
+                          </div>
+                          <div
+                            className="browse-card__drop-dwon__item leave"
+                            onClick={() => null}
+                          >
+                            <span class="material-icons leave">delete</span>
+                            <span className="delete-text">DELETE</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className="action-container">
+                      <span class="material-icons copy">content_copy</span>
+                      <i
+                        class="fa fa-trash-o delete"
+                        onClick={() => setNoOfQuestions(noOfQuestions - 1)}
+                        aria-hidden="true"
+                      ></i>
+                      <span class="material-icons north">north</span>
+                      <span class="material-icons south">south</span>
+                    </div>
+                  </div>
+                  <div className="question-container row">
+                    <div className="col-sm-12">
+                      <TextBox placeholder="Question"></TextBox>
+                    </div>
+                    <div className="col-sm-12">
+                      <TextBox placeholder="Tagline"></TextBox>
+                    </div>
+                    <div className="col-sm-12 question-container__tabs">
+                      <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        scrollButtons="on"
+                        variant="scrollable"
+                      >
+                        <Tab label="SINGLE ANSWER" {...a11yProps(0)} />
+                        <Tab label="multiply choice" {...a11yProps(1)} />
+                        <Tab label="traffic lights" {...a11yProps(2)} />
+                        <Tab label="free text" {...a11yProps(3)} />
+                        <Tab label="text lines" {...a11yProps(4)} />
+                      </Tabs>
+                      <TabPanel value={value} index={0}>
+                        <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
+                      </TabPanel>
+                      <TabPanel value={value} index={1}>
+                        <MultiPleAnswer></MultiPleAnswer>
+                      </TabPanel>
+                      <TabPanel value={value} index={2}>
+                        <TrafficLights></TrafficLights>
+                      </TabPanel>
+                      <TabPanel value={value} index={3}>
+                        <FreeText></FreeText>
+                      </TabPanel>
+                      <TabPanel value={value} index={4}>
+                        <TextLines></TextLines>
+                      </TabPanel>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div className="row">
+              <div className="col-sm-4">
+                <ButtonWithIcon
+                  className="new-question-btn"
+                  text="New Question"
+                  onClick={() => setNoOfQuestions(noOfQuestions + 1)}
+                ></ButtonWithIcon>
+              </div>
+            </div>
+            <div className="btn-container">
+              <ButtonWithIcon
+                className="cancel-btn"
+                text="Cancel"
+                onClick={() => null}
+              ></ButtonWithIcon>
+              <ButtonWithIcon
+                className="save-btn"
+                text="Save Changes"
+                onClick={() => {
+                  setQuestionOption(false);
+                  setSectionDetails(true);
+                }}
+              ></ButtonWithIcon>
+            </div>
+          </>
+        )}
+
         {sectionDetails && (
           <div className="evaluation-templates-container__data-container">
             {evaluationTemplateData?.sections.map((section, index) => {
+              const { name, description } = section;
+              console.log("section", section.name);
               return (
                 <div
                   className="row evaluation-templates-container__data-container__data"
@@ -222,7 +349,7 @@ export const AddSection = props => {
                   <div className="col-sm-3 col-xs-10 sections">
                     {section?.questions?.length || 0} questions
                   </div>
-                  {/* <div className="col-sm-3 group-name">3 Points</div> */}
+                  <div className="col-sm-3 group-name">3 Points</div>
                   <div className="col-sm-2 col-xs-2 browse">
                     <span
                       class="material-icons"
@@ -323,7 +450,7 @@ export const AddSection = props => {
               );
             })}
           </div>
-        )} */}
+        )}  */}
       </div>
       {importSectionModal && (
         <Modal
@@ -332,6 +459,7 @@ export const AddSection = props => {
           submit={() => {
             setImportSectionModal(false);
             setSectionDetails(false);
+            setQuestionOption(true);
           }}
           close={() => {
             setImportSectionModal(false);
@@ -346,6 +474,9 @@ export const AddSection = props => {
           title="New Section"
           submit={() => {
             saveSection();
+            setAddSectionModal(false);
+            setQuestionOption(true);
+            setSectionDetails(false);
           }}
           loading={saveLoader}
           close={() => {

@@ -21,8 +21,17 @@ export default function AddFunnel(props) {
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
 
   useEffect(() => {
+    // const newArr = funnelGroup.map(items => items.funnelTags.length > 0)
+    // console.log('newArrdae', newArr)
     setFunnelGroupArray(funnelGroup);
   }, [funnelGroup.length]);
+
+  useEffect(() => {
+    if (props.funnelUpdate) {
+      props.updateFunnelTag(funnelID, props.companyId);
+      props.close();
+    }
+  }, [props.funnelUpdate]);
 
   const handleFunnel = value => {
     setFunnelName(value.name);
