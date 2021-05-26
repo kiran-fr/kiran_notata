@@ -142,22 +142,20 @@ export function Dropdown({ title, items = [], setSelected, setSelectedItem }) {
 
       {isListOpen && (
         <div role="list" className={styles.dd_list}>
-          {/*   <span>Selected: {selected ? selected.name : "none"}</span>  */}
           {items.map(item => (
             <button
-              className={styles.dd_list_item}
+              className={
+                item.name === name
+                  ? styles.selected_bg + " " + styles.dd_list_item
+                  : styles.dd_list_item
+              }
               key={item.id}
-              /*  active={i === cursor}
-              item={item}
-              setSelected={setSelected}
-              setHovered={setHovered} */
               type="button"
               onClick={() => {
                 selectedOption(item);
               }}
             >
               {item.name}
-              {/* {item.selected && <FontAwesome name="check" />} */}
             </button>
           ))}
         </div>

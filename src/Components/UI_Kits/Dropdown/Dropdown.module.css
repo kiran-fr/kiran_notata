@@ -97,3 +97,7 @@
   width: 100%;
   left: 0.2px;
 }
+
+.selected_bg {
+  background-color: #e5e5e5;
+}
