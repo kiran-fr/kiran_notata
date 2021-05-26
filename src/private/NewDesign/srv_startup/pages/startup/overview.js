@@ -213,9 +213,7 @@ export default function Overview(props) {
                 <div className="col-11 col-sm-10 col-xs-10">
                   <div className="row overview-container__details">
                     <div className="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                      <div className="overview-container__heading">
-                        {name} <span className="material-icons">star</span>
-                      </div>
+                      <div className="overview-container__heading">{name}</div>
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 col-xs-12">
                       <span className="overview-container__last-updated">
