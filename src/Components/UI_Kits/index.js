@@ -4,7 +4,7 @@ export { Button } from "./Buttons/Buttons";
 export { Tags } from "./Tags/Tags";
 export { SideBarMenu } from "./SidebarMenu/SidebarMenu";
 export { TopMenu } from "./TopMenu/index";
-export { CheckBoxes } from "./CheckBox/CheckBox";
+export { CheckBoxes, CheckBox } from "./CheckBox/CheckBox";
 export { RadioButtons } from "./RadioButton/RadioButton";
 export { DatePickers } from "./DatePicker/index";
 export { Blocks } from "./Blocks/Block";

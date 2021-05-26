@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./CheckBox.module.css";
 
-function CheckBox({ id, value, label, onSelect }) {
+export function CheckBox({ id, value, label, onSelect, isSelected }) {
   return (
     <label className={styles.container}>
       <p>{label}</p>
@@ -9,7 +9,7 @@ function CheckBox({ id, value, label, onSelect }) {
         id={id}
         type="checkbox"
         value={value}
-        // checked={isSelected}
+        checked={isSelected}
         onChange={onSelect}
       />
       <span className={styles.checkmark} />
