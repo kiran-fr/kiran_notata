@@ -20,6 +20,7 @@ export function InputForm({
   errorMessage,
   handleInputChange,
   primaryPwdVal,
+  disabled,
 }) {
   // States
   const [error, setError] = useState(false);

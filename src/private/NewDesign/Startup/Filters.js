@@ -17,29 +17,32 @@ import {
   filter_container,
 } from "./Filters.module.scss";
 
-
 const handleOptional = (setState, filterType, disabled) => {
-  if(disabled === "") {
-    setState(filterType)
+  if (disabled === "") {
+    setState(filterType);
   } else {
-    console.log("kanban section")
+    console.log("kanban section");
   }
-}
+};
 
 const OptionalFilterSidebar = ({ setOptionalFilter, grayFadeOut }) => {
   return (
-    <div className = {grayFadeOut}>
+    <div className={grayFadeOut}>
       <div className={styles.filterContainer}>
         <button
           className={styles.filterButton + " " + styles.manageButton}
           style={{ marginRight: "10px" }}
-          onClick={() => handleOptional(setOptionalFilter, "column", grayFadeOut)}
+          onClick={() =>
+            handleOptional(setOptionalFilter, "column", grayFadeOut)
+          }
         >
           <img src={Column} alt="" /> <span>Manage Columns</span>
         </button>
         <button
           className={styles.filterButton}
-          onClick={() => handleOptional(setOptionalFilter, "filter", grayFadeOut)}
+          onClick={() =>
+            handleOptional(setOptionalFilter, "filter", grayFadeOut)
+          }
         >
           <img src={Filterr} alt="" /> <span>Filter</span>
         </button>
@@ -47,6 +50,22 @@ const OptionalFilterSidebar = ({ setOptionalFilter, grayFadeOut }) => {
     </div>
   );
 };
+
+// function getHasFilters(filters) {
+//    const hasFilters =
+//     filters.tags && filters.tags.length ||
+//     filters.funnelTag && filters.funnelTag.length ||
+//     filters.search ||
+//     filters.starred
+//     // (filters.dateRange.length &&
+//     // (filters.dateRange[0] || filters.dateRange[1]));
+//     console.log('insidefilter',filters, hasFilters)
+//     if(hasFilters) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+// }
 
 export default function Filters({
   history,
@@ -65,12 +84,15 @@ export default function Filters({
 
   const [kanbanPopup, setKanbanPopup] = useState(false);
 
+  let hasFilters = false;
+
   useEffect(() => {
     setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
   }, []);
 
   useEffect(() => {
+    // hasFilters = getHasFilters(filters)
     setFilterValue(filters.search);
   }, [filters]);
 
@@ -136,7 +158,7 @@ export default function Filters({
   ];
 
   const handleSearch = e => {
-    if(activeTab === "spreadsheet") {
+    if (activeTab === "spreadsheet") {
       setFilterValue(e.target.value);
     }
   };
@@ -144,13 +166,16 @@ export default function Filters({
   const handleTab = val => {
     setTabValue(val);
     setActiveTab(val);
+    if (val !== "spreadsheet") {
+      setOptionalFilter("");
+    }
   };
 
   const handleSearchBtn = () => {
-    if(activeTab === "spreadsheet") {
-      setFilters({ ...filters, search: filterValue })
+    if (activeTab === "spreadsheet") {
+      setFilters({ ...filters, search: filterValue });
     }
-  }
+  };
 
   return (
     <div className={styles.override}>
@@ -173,13 +198,11 @@ export default function Filters({
                   >
                     <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
                   </button>
-                  <div className={activeTab !== "spreadsheet"
-                    ?
-                      styles.grayFadeOut +
-                      " " +
-                      styles.tableSearch
-                    :
-                      styles.tableSearch
+                  <div
+                    className={
+                      activeTab !== "spreadsheet"
+                        ? styles.grayFadeOut + " " + styles.tableSearch
+                        : styles.tableSearch
                     }
                   >
                     <input
@@ -187,10 +210,7 @@ export default function Filters({
                       value={filterValue}
                       onChange={e => handleSearch(e)}
                     />
-                    <button
-                      onClick={() => handleSearchBtn()}>
-                      Search
-                    </button>
+                    <button onClick={() => handleSearchBtn()}>Search</button>
                     <i className="far fa-search"></i>
                   </div>
                 </div>
@@ -217,18 +237,35 @@ export default function Filters({
               }
             >
               <div>
-                <OptionalFilterSidebar setOptionalFilter={setOptionalFilter}
-                  grayFadeOut = {activeTab !== "spreadsheet"
-                  ?
-                    styles.grayFadeOut
-                  :
-                    ""
+                <OptionalFilterSidebar
+                  setOptionalFilter={setOptionalFilter}
+                  grayFadeOut={
+                    activeTab !== "spreadsheet" ? styles.grayFadeOut : ""
                   }
                 />
               </div>
             </div>
           </div>
         </div>
+        {activeTab === "spreadsheet" ? (
+          <div
+            className="text-right text-danger"
+            onClick={() => {
+              setFilters({
+                search: "",
+                tags: [],
+                funnelTag: [],
+                fromDate: new Date().getTime() - 40000,
+                toDate: new Date().getTime(),
+                starred: false,
+              });
+            }}
+          >
+            Clear All Filters
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       {modal === "startup" && (
