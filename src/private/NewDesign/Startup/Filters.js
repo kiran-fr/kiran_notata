@@ -8,6 +8,10 @@ import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
 
+//API
+import { funnelGroupGet } from "private/Apollo/Queries";
+import { useQuery } from "@apollo/client";
+
 import PopupMenu from "./PopupMenu";
 
 import {
@@ -84,7 +88,14 @@ export default function Filters({
 
   const [kanbanPopup, setKanbanPopup] = useState(false);
 
-  let hasFilters = false;
+  // Query: getfunnelGroup
+  const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
+
+  const funnelGroup = data ? data.accountGet.funnelGroups : [];
+
+  console.log("funnelGroup", funnelGroup);
+
+  // let hasFilters = false;
 
   useEffect(() => {
     setTabValue(tabArr[1].value);
