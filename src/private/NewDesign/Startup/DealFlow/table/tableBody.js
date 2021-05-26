@@ -6,6 +6,7 @@ import moment from "moment";
 //Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
+import classnames from "classnames";
 
 export default function TableBody(props) {
   const {
@@ -110,17 +111,19 @@ export default function TableBody(props) {
             return (
               <tr key={index}>
                 <td style={{ paddingTop: "-10px" }}>
+                  {/*Checkbox*/}
                   <label className={styles.customCheck}>
                     <input type="checkbox" />
-                    <span className={styles.checkmark}></span>
+                    <span className={styles.checkmark} />
                   </label>
+
+                  {/*Star*/}
                   <div
                     style={{ marginTop: "-5px" }}
                     className={styles.favStartup}
                     onClick={() => {
                       setStarMutation({
                         variables: { id },
-
                         optimisticResponse: {
                           __typename: "Mutation",
                           connectionSetStar: {
@@ -139,14 +142,21 @@ export default function TableBody(props) {
                     ></i>
                   </div>
                 </td>
+
                 <td>
                   <div
                     onMouseOver={() => showPreview(index)}
                     onMouseLeave={hidePreview}
-                    className={styles.user_profile_Img}
+                    className={classnames(
+                      styles.user_profile_Img,
+                      creative.logo && styles.with_logo
+                    )}
                   >
-                    {item.creative.name.charAt(0).toUpperCase()}
+                    {(!creative.logo && (
+                      <span>{creative.name.charAt(0).toUpperCase()}</span>
+                    )) || <img src={creative.logo} />}
                   </div>
+
                   <span
                     onMouseOver={() => showPreview(index)}
                     onMouseLeave={hidePreview}
@@ -164,6 +174,7 @@ export default function TableBody(props) {
                     )}
                   </span>
                 </td>
+
                 {columnSettings.groups && (
                   <td>
                     <ul>

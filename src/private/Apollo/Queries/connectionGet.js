@@ -21,6 +21,7 @@ export default gql`
         id
         name
         sharedWithEmail
+        logo
         answers {
           inputType
           sectionId

@@ -6,6 +6,7 @@ export default gql`
     name
     accountId
     description
+    logo
     templateId
     createdAt
     sharedWithEmail
