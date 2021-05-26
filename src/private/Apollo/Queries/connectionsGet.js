@@ -19,6 +19,7 @@ export default gql`
       creative {
         id
         name
+        logo
         answers {
           questionName
           questionId

@@ -76,12 +76,15 @@ Amplify.configure({
     ],
   },
   Storage: {
-    AWSS3: {},
+    AWSS3: {
+      bucket: "notata.userfiles",
+      region: "eu-west-1",
+    },
   },
 });
 
 const STAGE = "dev2";
-const isLocal = false;
+const isLocal = true;
 
 const GQL = {
   private: {

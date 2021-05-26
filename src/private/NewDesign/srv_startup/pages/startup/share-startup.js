@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./share-startup.scss";
 import Scrollspy from "react-scrollspy";
 import google from "../../../../../assets/images/google.png";
@@ -14,11 +14,319 @@ import { creativeTemplateGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 import { GeneralInput } from "./Inputs/GeneralInput";
 import { creativeUpdate } from "private/Apollo/Mutations";
+
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../ui-kits/text-box";
 import InviteStartup from "./InviteStartup";
 
 import ButtonWithIcon from "../../pages/ui-kits/button-with-icon";
+import { Storage } from "aws-amplify";
+
+const publicFilePath = `https://s3-eu-west-1.amazonaws.com/notata.userfiles/public/`;
+
+// const FileUploader = ({ creativeId, connectionId }) => {
+//
+//   const folderPath = `${creativeId}/`;
+//
+//   const [files, setFiles] = useState([]);
+//
+//   const addFiles = (newFiles) => {
+//     setFiles((oldFiles) => [
+//       ...oldFiles,
+//       ...newFiles.map((file) => ({
+//         ...file,
+//         loading: false,
+//       })),
+//     ]);
+//   };
+//
+//   const addFile = (newFile) => {
+//     setFiles((oldFiles) => [...oldFiles, newFile]);
+//   };
+//
+//   const changeFileLoading = (file) => {
+//     setFiles((oldFiles) =>
+//       oldFiles.map((oldFile) => {
+//         if (oldFile.key !== file.key) {
+//           return oldFile;
+//         } else {
+//           return {
+//             ...file,
+//             loading: file.loaded !== file.total,
+//           };
+//         }
+//       }),
+//     );
+//   };
+//
+//
+//   useEffect(() => {
+//     Storage.list(
+//       folderPath,
+//       { level: "private" }
+//       )
+//       .then((result) => addFiles(result))
+//       .catch((err) => console.log(err));
+//   }, []);
+//
+//   return (
+//     <div>
+//       <h4>Files</h4>
+//
+//       {files.map((file) => {
+//         if (file.loading) {
+//           const progress = (file.loaded / file.total) * 100;
+//           let backgroundImage = `linear-gradient(to right, #53af64 ${progress}%, grey ${100 - progress}%)`;
+//           return (
+//             <div
+//               style={{
+//                 position: "relative",
+//                 backgroundImage: backgroundImage,
+//               }}
+//             >
+//               {file.key.split(folderPath)[1]}
+//             </div>
+//           );
+//         } else {
+//           return (
+//             <div>
+//               <button
+//                 onClick={() => {
+//                   Storage.get(file.key, { level: "private" })
+//                     .then((result) => window.open(result))
+//                     .catch((err) => console.log(err));
+//                 }}
+//               >
+//                 {file.key.split(folderPath)[1]}
+//               </button>
+//               <div>
+//                 <button
+//                   onClick={() => {
+//                     setFiles((oldFiles) =>
+//                       oldFiles.filter((oldFile) => oldFile.key !== file.key),
+//                     );
+//                     Storage.remove(file.key, { level: "private" })
+//                       .then((result) => console.log(result))
+//                       .catch((err) => console.log(err));
+//                   }}
+//                 >
+//                   <i className="fas fa-minus-circle" />
+//                 </button>
+//               </div>
+//             </div>
+//           );
+//         }
+//       })}
+//
+//       <div>
+//         <input
+//           type="file"
+//           multiple
+//           onChange={(e) => {
+//             Array.from(e.target.files).forEach((file) => {
+//               const filename = `${folderPath}${file.name}`;
+//               addFile({
+//                 key: filename,
+//                 loading: true,
+//                 loaded: 0,
+//                 total: 100,
+//               });
+//               Storage.put(filename, file, {
+//                 progressCallback(progress) {
+//                   changeFileLoading({
+//                     key: filename,
+//                     loaded: progress.loaded,
+//                     total: progress.total,
+//                   });
+//                 },
+//                 level: "private",
+//               })
+//                 .then((result) =>
+//                   changeFileLoading({
+//                     key: result.key,
+//                     loaded: 1,
+//                     total: 1,
+//                   }),
+//                 )
+//                 .catch((err) => console.log(err));
+//             });
+//           }}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+async function removeLogoPromise(key, config) {
+  return new Promise((resolve, reject) => {
+    Storage.remove(key, config).then(resolve).catch(reject);
+  });
+}
+
+async function uploadLogoPromise(filename, file, setProgress) {
+  return new Promise((resolve, reject) => {
+    Storage.put(filename, file, {
+      progressCallback(progress) {
+        if (setProgress) {
+          setProgress({
+            loaded: progress.loaded,
+            total: progress.total,
+          });
+        }
+      },
+      level: "public",
+    })
+      .then(resolve)
+      .catch(reject);
+  });
+}
+
+const FileUploader = ({ connection }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const [mutate] = useMutation(creativeUpdate);
+  const folderPath = `${connection?.creative?.id}/`;
+
+  const formRef = useRef(null);
+
+  const [progress, setProgress] = useState();
+
+  async function handleUpload(e) {
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
+
+    // Get file
+    let file = e.target.files[0];
+
+    // Return if no file
+    if (!file) {
+      return;
+    }
+
+    // Get file size
+    let filesize = (file.size / 1024 / 1024).toFixed(4); // MB
+
+    // Do not allow pictures larger than one mb
+    if (filesize >= 1) {
+      return;
+    }
+
+    // Get the file name parts
+    let split = file.name.split(".");
+
+    // Save as logo.ext
+    let name = `logo.` + split[split.length - 1];
+
+    // Get path and file name together
+    const filename = `${folderPath}${name}`;
+
+    // Save file to s3
+    let result;
+    try {
+      result = await uploadLogoPromise(filename, file, setProgress());
+    } catch (error) {
+      setIsLoading(false);
+      console.log("error", error);
+      return;
+    }
+
+    // Save file in DB
+    try {
+      let { key } = result;
+      let path = `${publicFilePath}${key}`;
+      let variables = {
+        id: connection.creative.id,
+        input: { logo: path },
+      };
+      await mutate({ variables });
+    } catch (error) {
+      setIsLoading(false);
+      console.log("error2", error);
+      return;
+    }
+
+    setIsLoading(false);
+  }
+
+  async function handleDelete() {
+    if (isDeleting) {
+      return;
+    }
+    setIsDeleting(true);
+
+    let parts = connection?.creative?.logo.split("/");
+    let key = `/${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
+
+    try {
+      await removeLogoPromise(key, { level: "public" });
+    } catch (error) {
+      console.log("error", error);
+    }
+
+    try {
+      let variables = {
+        id: connection.creative.id,
+        input: { removeLogo: true },
+      };
+      await mutate({ variables });
+    } catch (error) {
+      console.log("error", error);
+    }
+
+    setIsDeleting(false);
+    formRef.current.reset();
+  }
+
+  return (
+    <div className="col-sm-10 col-xs-9">
+      <div className="row">
+        <div className="col-sm-12 col-md-5 col-lg-4">
+          <div className="hidden-file-input">
+            <form ref={formRef}>
+              <label htmlFor="file-upload" className="upload-logo-btn">
+                <input
+                  type="file"
+                  accept="image/png, image/gif, image/jpeg"
+                  onChange={handleUpload}
+                />
+                <span>
+                  {(!isLoading && <span>UPLOAD LOGO</span>) || (
+                    <span>UPLOADING...</span>
+                  )}
+                </span>
+              </label>
+            </form>
+          </div>
+        </div>
+
+        <div className="col-sm-12 col-md-5 col-lg-4">
+          <button className="delete-btn" onClick={handleDelete}>
+            {(!isDeleting && <span>DELETE</span>) || <span>DELETING...</span>}
+          </button>
+        </div>
+
+        {/*<div>*/}
+        {/*  {progress && (*/}
+        {/*    <div>*/}
+        {/*      {Math.round(progress.loaded / progress.total * 100)}*/}
+        {/*    </div>*/}
+        {/*  )}*/}
+        {/*</div>*/}
+
+        <div>
+          {/*<input*/}
+          {/*  type="file"*/}
+          {/*  accept="image/png, image/gif, image/jpeg"*/}
+          {/*  onChange={handleUpload}*/}
+          {/*/>*/}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function ShareStartup({ setshareStartup, connection }) {
   const [answers, setAnswers] = useState([]);
@@ -67,7 +375,6 @@ export default function ShareStartup({ setshareStartup, connection }) {
     details[item.id] = "";
   });
   const [collapseDetailList, setCollapseDetailList] = useState(details);
-  console.log("creativeTemplate", creativeTemplate);
 
   if (!creativeTemplateGetData) {
     return <GhostLoader />;
@@ -153,21 +460,20 @@ export default function ShareStartup({ setshareStartup, connection }) {
                 </Scrollspy>
               </div>
             </div>
+
             <div className="col-md-9 col-sm-9 col-xs-12 startup-details-container">
               <div className="row">
                 <div className="col-sm-2 col-xs-3">
-                  <i class="camera fa fa-camera" aria-hidden="true"></i>
-                </div>
-                <div className="col-sm-10 col-xs-9">
-                  <div className="row">
-                    <div className="col-sm-12 col-md-5 col-lg-4">
-                      <button className="upload-logo-btn">UPLOAD LOGO</button>
+                  {(!connection.creative.logo && (
+                    <i className="camera fa fa-camera" aria-hidden="true"></i>
+                  )) || (
+                    <div className="logo">
+                      <img src={connection.creative.logo} />
                     </div>
-                    <div className="col-sm-12 col-md-5 col-lg-4">
-                      <button className="delete-btn">DELETE</button>
-                    </div>
-                  </div>
+                  )}
                 </div>
+
+                <FileUploader connection={connection} />
               </div>
               <div>
                 {creativeTemplate?.sections?.map(section => (
