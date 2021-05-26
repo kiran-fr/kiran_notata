@@ -281,7 +281,7 @@ export default function Overview(props) {
                   <div>Your Team</div>
                   <div className="score">{parseFloat(teamAvg)}</div>
                   <div className="highest-score">
-                    {teamMinScore} <span className="highest">HIGHEST</span>
+                    {teamMaxScore} <span className="highest">HIGHEST</span>
                   </div>
                   <div className="lowest-score">
                     {teamMinScore} <span className="lowest">LOWEST</span>
