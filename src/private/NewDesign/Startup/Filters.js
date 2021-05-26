@@ -249,7 +249,9 @@ export default function Filters({
         </div>
         {activeTab === "spreadsheet" ? (
           <div
-            className="text-right text-danger"
+            className={
+              styles.clearAllTxt + " " + "text-right" + " " + styles.handCursor
+            }
             onClick={() => {
               setFilters({
                 search: "",

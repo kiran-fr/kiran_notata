@@ -19,7 +19,8 @@ input {
   box-sizing: border-box;
   color: #b7b7b7;
 }
-button {
+button,
+.handCursor {
   cursor: pointer;
 }
 .tableSearch button {
@@ -204,4 +205,8 @@ button {
 
 .grayFadeOut {
   opacity: 0.4;
+}
+
+.clearAllTxt {
+  color: red;
 }
