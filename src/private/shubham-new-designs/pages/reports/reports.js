@@ -3,6 +3,7 @@ import "./reports.scss";
 import group from "../../../../assets/images/group.png";
 import business from "../../../../assets/images/business.png";
 import SubjectiveScoreEvaluations from "./subjective-scores-evaluation";
+import ChartTile from "./chart-tile";
 
 export default function Reports() {
   return (
@@ -158,6 +159,10 @@ export default function Reports() {
         </div>
         <div className="col-sm-12">
           <SubjectiveScoreEvaluations></SubjectiveScoreEvaluations>
+        </div>
+        <div className="col-sm-12 tags-container-heading">Tags</div>
+        <div className="col-sm-4">
+          <ChartTile tileHeading="Business" />
         </div>
       </div>
     </div>

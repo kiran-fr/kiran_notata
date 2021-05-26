@@ -12,6 +12,9 @@ import InviteMembers from "./invite-members";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
 import { ICONPOSITION } from "../constants";
 import SharingOptions from "../startup/groups-individuals/sharing-options";
+import GroupMembers from "./group-members";
+import LeaveGroup from "./leave-group-modal";
+import DeleteGroup from "./delete-group-modal";
 
 function a11yProps(index) {
   return {
@@ -34,8 +37,14 @@ export default function GroupDashboard() {
   const [addStartupModal, setAddStartupModal] = useState(false);
   const [manageTemplateModal, setManageTemplateModal] = useState(false);
   const [inviteMembersModal, setInviteMembersModal] = useState(false);
+  const [inviteMembersModal2, setInviteMembersModal2] = useState(false);
+  const [groupMemberModal, setGroupMemberModal] = useState(false);
+  const [leaveGroupModal, setLeaveGroupModal] = useState(false);
+  const [deleteGroupModal, setDeleteGroupModal] = useState(false);
+
   const [fullListModal, setFullListModal] = useState(false);
   const [shareGroupModal, setShareGroupModal] = useState(false);
+  const [adminDataVisible, SetAdminDataVisible] = useState(false);
   const inMyDealFlow = true;
   const [fullListModalObj, setFullListModalObj] = useState({
     evalType: "First Impression",
@@ -170,7 +179,7 @@ export default function GroupDashboard() {
                       {value === 0 ? (
                         <div
                           className="material-icons group-dashboard-container__browse-card__drop-dwon__item leave"
-                          onClick={() => null}
+                          onClick={() => setDeleteGroupModal(true)}
                         >
                           <span class="material-icons leave">delete</span>
                           <span className="text">DELETE GROUP</span>
@@ -178,7 +187,7 @@ export default function GroupDashboard() {
                       ) : (
                         <div
                           className="material-icons group-dashboard-container__browse-card__drop-dwon__item leave"
-                          onClick={() => null}
+                          onClick={() => setLeaveGroupModal(true)}
                         >
                           <span class="material-icons leave">delete</span>
                           <span className="text">LEAVE GROUP</span>
@@ -202,11 +211,12 @@ export default function GroupDashboard() {
                     <Tab label="Member View" {...a11yProps(1)} />
                   </Tabs>
                   <div className="users-container">
-                    <div className="users-container__user-count">
-                      <div className="users-container__user-count__name">
-                        10 evaluation templates
-                      </div>
-                      {value === 0 && (
+                    {value === 0 && (
+                      <div className="users-container__user-count">
+                        <div className="users-container__user-count__name">
+                          10 evaluation templates
+                        </div>
+
                         <div className="users-container__user-count__action">
                           <div
                             className="users-container__user-count__action__btn"
@@ -215,32 +225,64 @@ export default function GroupDashboard() {
                             Manage templates
                           </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                     <div className="users-container__user-count">
                       <div className="users-container__user-count__name">
                         <u>4 members</u>
                       </div>
-                      {value === 0 && (
+                      <>
                         <div className="users-container__user-count__action">
                           <div
                             className="users-container__user-count__action__btn"
                             onClick={() => setInviteMembersModal(true)}
                           >
-                            Invite members
+                            IM1
+                          </div>
+                          <div
+                            className="users-container__user-count__action__btn"
+                            onClick={() => setGroupMemberModal(true)}
+                          >
+                            GM
+                          </div>
+                          <div
+                            className="users-container__user-count__action__btn"
+                            onClick={() => setInviteMembersModal2(true)}
+                          >
+                            IM2
                           </div>
                         </div>
-                      )}
+                      </>
                     </div>
                     <div className="users-container__user-count">
                       <div className="users-container__user-count__name">
                         2 admins
                       </div>
                       <div className="users-container__user-count__action">
+                        {adminDataVisible && (
+                          <div className="admins-data">
+                            <div className="admin">
+                              <div className="username">Daria Kyselova</div>
+                              <div className="email">
+                                (daria@leverageux.com)
+                              </div>
+                            </div>
+                            <div className="admin">
+                              <div className="username">Daria Kyselova</div>
+                              <div className="email">
+                                (daria@leverageux.com)
+                              </div>
+                            </div>
+                          </div>
+                        )}
                         <i
-                          class={`users-container__user-count__action__icon fa fa-chevron-down`}
+                          class={`users-container__user-count__action__icon fa ${
+                            adminDataVisible
+                              ? "fa-chevron-up"
+                              : "fa-chevron-down"
+                          }`}
                           aria-hidden="true"
-                          onClick={() => null}
+                          onClick={() => SetAdminDataVisible(!adminDataVisible)}
                         ></i>
                       </div>
                     </div>
@@ -791,6 +833,32 @@ export default function GroupDashboard() {
           innerClassName="invite-member-modal"
         ></Modal>
       )}
+      {groupMemberModal && (
+        <Modal
+          title="Group Members"
+          close={() => {
+            setGroupMemberModal(false);
+          }}
+          closeTxt="CANCEL"
+          innerClassName="group-member-modal"
+          children={<GroupMembers />}
+        ></Modal>
+      )}
+      {inviteMembersModal2 && (
+        <Modal
+          title="Invite Members"
+          submit={() => {
+            setInviteMembersModal2(false);
+          }}
+          close={() => {
+            setInviteMembersModal2(false);
+          }}
+          submitTxt="SEND INVITATIONS"
+          closeTxt="CANCEL"
+          children={<InviteMembers type={2} />}
+          innerClassName="invite-member-modal"
+        ></Modal>
+      )}
       {shareGroupModal && (
         <Modal
           title="Sharing options"
@@ -803,6 +871,36 @@ export default function GroupDashboard() {
           submitTxt="Save"
           closeTxt="Cancel"
           children={<SharingOptions></SharingOptions>}
+        ></Modal>
+      )}
+      {deleteGroupModal && (
+        <Modal
+          title="Delete group"
+          submit={() => {
+            setDeleteGroupModal(false);
+          }}
+          close={() => {
+            setDeleteGroupModal(false);
+          }}
+          submitTxt="Delete"
+          closeTxt="Cancel"
+          submitButtonStyle="secondary"
+          children={<DeleteGroup></DeleteGroup>}
+        ></Modal>
+      )}
+      {leaveGroupModal && (
+        <Modal
+          title="Leave group"
+          submit={() => {
+            setLeaveGroupModal(false);
+          }}
+          close={() => {
+            setLeaveGroupModal(false);
+          }}
+          submitTxt="Leave"
+          closeTxt="Cancel"
+          submitButtonStyle="secondary"
+          children={<LeaveGroup></LeaveGroup>}
         ></Modal>
       )}
     </>
