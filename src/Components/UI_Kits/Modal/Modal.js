@@ -27,7 +27,7 @@ export function Modal({
   useEffect(() => {
     function downHandler(e) {
       e.key === "Escape" && close(e);
-      e.key === "Enter" && !loading && submit && submit(e);
+      // e.key === "Enter" && !loading && submit && submit(e);
     }
     window.addEventListener("keydown", downHandler);
     return () => {
