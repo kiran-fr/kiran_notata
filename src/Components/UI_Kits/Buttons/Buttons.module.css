@@ -120,9 +120,10 @@
   width: 30px;
   height: 30px;
   right: 3px;
-  top: 0px;
+  top: 5px;
   padding-top: 4px;
   align-items: center;
+  position: absolute;
 }
 
 .medium_button .loading_icon i {
