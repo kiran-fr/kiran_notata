@@ -15,14 +15,16 @@ export default function TableHeader(props) {
   return (
     <thead>
       <tr>
-        <td>
-          <label className={styles.customCheck} style={{ top: "-8px" }}>
-            <input type="checkbox" />
-            <span className={styles.checkmark}></span>
-          </label>
-          <span onClick={handlePopup} className={styles.selectDropdown}>
-            <img src={PopupDropdown} alt=""></img>
-          </span>
+        <td className={styles.tableHeaderCheckmark}>
+          <div>
+            <label className={styles.customCheck}>
+              <input type="checkbox" />
+              <span className={styles.headCheckmark}></span>
+            </label>
+            <div onClick={handlePopup} className={styles.selectDropdown}>
+              <img src={PopupDropdown} alt=""></img>
+            </div>
+          </div>
         </td>
         <td>
           COMPANY NAME

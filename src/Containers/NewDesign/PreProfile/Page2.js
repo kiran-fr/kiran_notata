@@ -129,12 +129,18 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
             back
           </Button>
           <Button
+            value="SAVE"
             size="medium"
             buttonStyle="green"
-            type="submit"
-            loading={isSubmitting}
+            type={!isSubmitting ? "right_arrow" : ""}
           >
-            NEXT
+            {!isSubmitting ? (
+              "NEXT"
+            ) : (
+              <span className={styles.loading_icon}>
+                <i className="fa fa-spinner fa-spin" />
+              </span>
+            )}
           </Button>
         </div>
       </form>
