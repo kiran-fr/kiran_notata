@@ -140,16 +140,6 @@ export default function Filters({
             isOpen={kanbanPopup}
             setIsOpen={setKanbanPopup}
           ></PopupMenu>
-          {/* <DropMenu
-            dropMenuArr={[
-              { iconName: "", title: "Funnel 1" },
-              { iconName: "", title: "Funnel 2" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-            ]}
-          ></DropMenu> */}
         </div>
       ),
     },
@@ -171,6 +161,12 @@ export default function Filters({
   const handleSearch = e => {
     if (activeTab === "spreadsheet") {
       setFilterValue(e.target.value);
+    }
+  };
+
+  const searchOnEnter = e => {
+    if (e.key === "Enter" && activeTab === "spreadsheet") {
+      setFilters({ ...filters, search: filterValue });
     }
   };
 
@@ -207,7 +203,7 @@ export default function Filters({
                     className={styles.addButton}
                     onClick={() => setModal("startup")}
                   >
-                    <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
+                    <i className="far fa-plus"></i>Add new startup
                   </button>
                   <div
                     className={
@@ -220,8 +216,12 @@ export default function Filters({
                       type="text"
                       value={filterValue}
                       onChange={e => handleSearch(e)}
+                      onKeyPress={e => searchOnEnter(e)}
                     />
-                    <button onClick={() => handleSearchBtn()}>Search</button>
+                    <button onClick={() => handleSearchBtn()}>
+                      <span>Search</span>
+                      <span>S</span>
+                    </button>
                     <i className="far fa-search"></i>
                   </div>
                 </div>
@@ -246,6 +246,7 @@ export default function Filters({
               className={
                 styles.table_headerChild + " " + styles.table_headerChildLast
               }
+              style={{ width: "20%" }}
             >
               <div>
                 <OptionalFilterSidebar

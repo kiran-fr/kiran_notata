@@ -101,14 +101,19 @@ export default function Page3({ setPage, extraInputs, history }) {
           >
             Back
           </Button>
-
           <Button
+            value="SAVE"
             size="medium"
             buttonStyle="green"
-            type="right_arrow"
-            loading={isSubmitting}
+            type={!isSubmitting ? "right_arrow" : ""}
           >
-            NEXT
+            {!isSubmitting ? (
+              "NEXT"
+            ) : (
+              <span className={styles.loading_icon}>
+                <i className="fa fa-spinner fa-spin" />
+              </span>
+            )}
           </Button>
         </div>
       </div>

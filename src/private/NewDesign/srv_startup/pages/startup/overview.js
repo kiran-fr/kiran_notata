@@ -260,7 +260,17 @@ export default function Overview(props) {
                   </div>
 
                   <div>
-                    <span className="score selected you">{myAvgScore}</span>
+                    {console.log(
+                      "yourteam",
+                      parseFloat(teamAvg),
+                      parseFloat(myAvgScore),
+                      typeof myAvgScore,
+                      myAvgScore.toString()
+                    )}
+
+                    <span className="score selected you">
+                      {parseFloat(myAvgScore)}
+                    </span>
                     <i
                       onClick={() => setShowSubjectiveScore(true)}
                       className=" editMarker fas fa-pen"
@@ -269,9 +279,9 @@ export default function Overview(props) {
                 </div>
                 <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
                   <div>Your Team</div>
-                  <div className="score">{teamAvg}</div>
+                  <div className="score">{parseFloat(teamAvg)}</div>
                   <div className="highest-score">
-                    {teamMinScore} <span className="highest">HIGHEST</span>
+                    {teamMaxScore} <span className="highest">HIGHEST</span>
                   </div>
                   <div className="lowest-score">
                     {teamMinScore} <span className="lowest">LOWEST</span>
@@ -341,7 +351,7 @@ export default function Overview(props) {
               </div>
               <div className="row funnel-summary-container">
                 <div className="overview-container__scores__heading">
-                  Evaluation summaries
+                  Funnels
                 </div>
                 <Funels></Funels>
               </div>

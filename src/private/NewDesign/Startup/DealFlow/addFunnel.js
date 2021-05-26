@@ -21,10 +21,14 @@ export default function AddFunnel(props) {
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
 
   useEffect(() => {
-    // const newArr = funnelGroup.map(items => items.funnelTags.length > 0)
-    // console.log('newArrdae', newArr)
-    setFunnelGroupArray(funnelGroup);
+    const newArr = funnelGroup.filter(items => items.funnelTags.length > 0);
+    setFunnelGroupArray(newArr);
   }, [funnelGroup.length]);
+
+  useEffect(() => {
+    setFunnelName("");
+    setFunnelID("");
+  }, [selectedGroupId]);
 
   useEffect(() => {
     if (props.funnelUpdate) {
@@ -54,6 +58,8 @@ export default function AddFunnel(props) {
               {item.funnelTags.length &&
                 item.funnelTags.map((data, index) => (
                   <li key={index} onClick={() => handleFunnel(data)}>
+                    {console.log("datavalue", data)}
+
                     <div>
                       <p>{data.name}</p>
                     </div>

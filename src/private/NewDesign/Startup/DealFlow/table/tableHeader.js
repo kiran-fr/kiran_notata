@@ -15,14 +15,16 @@ export default function TableHeader(props) {
   return (
     <thead>
       <tr>
-        <td>
-          <label className={styles.customCheck} style={{ top: "-8px" }}>
-            <input type="checkbox" />
-            <span className={styles.checkmark}></span>
-          </label>
-          <span onClick={handlePopup} className={styles.selectDropdown}>
-            <img src={PopupDropdown} alt=""></img>
-          </span>
+        <td className={styles.tableHeaderCheckmark}>
+          <div>
+            <label className={styles.customCheck}>
+              <input type="checkbox" />
+              <span className={styles.headCheckmark}></span>
+            </label>
+            <div onClick={handlePopup} className={styles.selectDropdown}>
+              <img src={PopupDropdown} alt=""></img>
+            </div>
+          </div>
         </td>
         <td>
           COMPANY NAME
@@ -86,35 +88,36 @@ export default function TableHeader(props) {
             className="fal fa-exchange"
           />
         </td>
-        {evaluationTemplates.length &&
-          evaluationTemplates.map(({ name, id }) =>
-            columnSettings.evaluationTemplates.includes(id) ? (
-              <td>
-                {name}
-                <i
-                  onClick={() => {
-                    let sortBy = "EVALUATION";
-                    let sortDirection =
-                      filters.sortBy === "EVALUATION" &&
-                      filters.sortDirection !== "DESC" &&
-                      filters.sortByVal === id
-                        ? "DESC"
-                        : "ASC";
+        {evaluationTemplates.length
+          ? evaluationTemplates.map(({ name, id }) =>
+              columnSettings.evaluationTemplates.includes(id) ? (
+                <td>
+                  {name}
+                  <i
+                    onClick={() => {
+                      let sortBy = "EVALUATION";
+                      let sortDirection =
+                        filters.sortBy === "EVALUATION" &&
+                        filters.sortDirection !== "DESC" &&
+                        filters.sortByVal === id
+                          ? "DESC"
+                          : "ASC";
 
-                    setFilters({
-                      ...filters,
-                      sortBy,
-                      sortDirection,
-                      sortByVal: id,
-                    });
-                  }}
-                  className="fal fa-exchange"
-                />
-              </td>
-            ) : (
-              ""
+                      setFilters({
+                        ...filters,
+                        sortBy,
+                        sortDirection,
+                        sortByVal: id,
+                      });
+                    }}
+                    className="fal fa-exchange"
+                  />
+                </td>
+              ) : (
+                ""
+              )
             )
-          )}
+          : ""}
       </tr>
     </thead>
   );

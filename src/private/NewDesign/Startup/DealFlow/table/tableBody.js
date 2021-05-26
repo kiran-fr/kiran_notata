@@ -110,36 +110,41 @@ export default function TableBody(props) {
 
             return (
               <tr key={index}>
-                <td style={{ paddingTop: "-10px" }}>
+                <td
+                  className={styles.dealflowColumnHead}
+                  style={{ paddingTop: "-10px" }}
+                >
                   {/*Checkbox*/}
-                  <label className={styles.customCheck}>
-                    <input type="checkbox" />
-                    <span className={styles.checkmark} />
-                  </label>
+                  <div className={styles.columnHead}>
+                    <label className={styles.customCheck}>
+                      <input type="checkbox" />
+                      <span className={styles.checkmark} />
+                    </label>
 
-                  {/*Star*/}
-                  <div
-                    style={{ marginTop: "-5px" }}
-                    className={styles.favStartup}
-                    onClick={() => {
-                      setStarMutation({
-                        variables: { id },
-                        optimisticResponse: {
-                          __typename: "Mutation",
-                          connectionSetStar: {
-                            ...item,
-                            starred: !starred,
+                    {/*Star*/}
+                    <div
+                      style={{ marginTop: "-5px" }}
+                      className={styles.favStartup}
+                      onClick={() => {
+                        setStarMutation({
+                          variables: { id },
+                          optimisticResponse: {
+                            __typename: "Mutation",
+                            connectionSetStar: {
+                              ...item,
+                              starred: !starred,
+                            },
                           },
-                        },
-                      });
-                    }}
-                  >
-                    <i
-                      style={{
-                        color: starred ? "orange" : "lightgray",
+                        });
                       }}
-                      className="fas fa-star"
-                    ></i>
+                    >
+                      <i
+                        style={{
+                          color: starred ? "orange" : "lightgray",
+                        }}
+                        className="fas fa-star"
+                      ></i>
+                    </div>
                   </div>
                 </td>
 
