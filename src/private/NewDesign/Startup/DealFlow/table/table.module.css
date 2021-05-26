@@ -103,11 +103,15 @@
   min-height: 55px;
   /* position: relative; */
 }
-.startupTable tbody td:nth-child(2) img {
-  min-width: 30px;
-  display: inline;
-  margin-right: 4px;
-}
+
+/*.startupTable tbody td:nth-child(2) img {*/
+/*  min-width: 30px;*/
+/*  display: inline;*/
+/*  margin-right: 4px;*/
+/*}*/
+
+/* TODO: we cannot have "nth-child" in a dynamic table */
+
 .startupTable td:nth-child(3) {
   min-width: 174px;
 }
@@ -303,10 +307,25 @@
   top: 16px;
   min-width: 27px;
   min-height: 27px;
+  width: 27px;
+  height: 27px;
+  overflow: hidden;
   color: white;
   margin-right: 12px;
   border-radius: 50%;
   background: #b7b7b7;
+}
+
+.user_profile_Img.with_logo {
+  background: none;
+}
+
+.user_profile_Img img {
+  height: 120%;
+  width: 120%;
+  margin: -10px;
+  top: -1px;
+  position: relative;
 }
 
 .empty_list {
@@ -379,13 +398,84 @@
 }
 
 .selectDropdown {
-  margin-left: 30px;
   cursor: pointer;
 }
 
 .selectDropdown img {
   transform: rotate(180deg) !important;
-  position: absolute;
-  margin-top: 9px;
-  margin-left: 9px;
+}
+
+/* Custom Check 2.0 */
+
+.dealflowColumnHead .customCheck {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  display: block;
+  margin-top: 5px;
+}
+.dealflowColumnHead .customCheck input {
+  display: none;
+}
+/* Create a custom checkbox */
+.dealflowColumnHead .checkmark {
+  display: block;
+  height: 15px;
+  width: 15px;
+  border-radius: 3px;
+  border: 1px solid #dadada;
+}
+/* On mouse-over, add a grey background color */
+.dealflowColumnHead .customCheck:hover input ~ .checkmark {
+  border-color: rgb(190, 190, 190);
+}
+
+/* When the checkbox is checked, add a blue background */
+.dealflowColumnHead .customCheck input:checked ~ .checkmark {
+  background-color: #53cab2;
+  border: none;
+}
+
+/* Table Header Checkmark */
+
+.tableHeaderCheckmark .customCheck {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: block;
+  cursor: pointer;
+}
+
+.tableHeaderCheckmark > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tableHeaderCheckmark .customCheck input {
+  display: none;
+}
+/* Create a custom checkbox */
+.headCheckmark {
+  display: block;
+
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  border: 1px solid #dadada;
+}
+/* On mouse-over, add a grey background color */
+.tableHeaderCheckmark .customCheck:hover input ~ .checkmark {
+  border-color: rgb(190, 190, 190);
+}
+
+/* When the checkbox is checked, add a blue background */
+.tableHeaderCheckmark .customCheck input:checked ~ .checkmark {
+  background-color: #53cab2;
+  border: none;
 }

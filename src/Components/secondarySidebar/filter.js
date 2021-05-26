@@ -7,6 +7,7 @@ import { Modal } from "../UI_Kits/Modal/Modal";
 
 // common dynamic funnel img function
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
+import { CheckBox } from "Components/UI_Kits";
 
 // API
 import { useQuery } from "@apollo/client";
@@ -167,9 +168,10 @@ export default function FilterBar({
             setFilters({
               search: "",
               tags: [],
-              funnelTags: [],
+              funnelTag: [],
               fromDate: new Date().getTime() - 40000,
               toDate: new Date().getTime(),
+              starred: false,
             });
           }}
         >
@@ -194,6 +196,15 @@ export default function FilterBar({
           >
             Search
           </button>
+        </div>
+        <div>
+          <CheckBox
+            label={"Starred"}
+            isSelected={filters.starred}
+            onSelect={() =>
+              setFilters({ ...filters, starred: !filters.starred })
+            }
+          />
         </div>
         <div className={styles.funnelStage}>
           <h2>FUNNEL STAGE</h2>

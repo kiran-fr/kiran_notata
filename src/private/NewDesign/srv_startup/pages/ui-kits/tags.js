@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./tags.scss";
+import { Tags } from "./Tags/Tags";
 
 export default function ShareTemplate() {
   let tagTypesState = {};
@@ -9,17 +10,7 @@ export default function ShareTemplate() {
     {
       type: "Business",
       id: "business",
-      tags: [
-        "Hardware",
-        "Software",
-        "Financal",
-        "Hardware",
-        "Software",
-        "Financal",
-        "Hardware",
-        "Software",
-        "Financal",
-      ],
+      tags: ["Hardware", "Software", "Financal"],
     },
     {
       type: "Source",
@@ -34,27 +25,8 @@ export default function ShareTemplate() {
   return (
     <div className="tags-container">
       <div className="tags-container__sub-heading">Write or choose Tags</div>
-      <div className="tags-container__heading ">Tags</div>
-      <div className="tags-container__placeholder">
-        {selectedTags.map((item, index) => {
-          return (
-            <div className="tag" key={`${index}-tag`}>
-              {item}
-              <span
-                className="delete"
-                onClick={() => {
-                  let updatedselectedTags = [...selectedTags];
-                  updatedselectedTags.pop(item);
-                  console.log(updatedselectedTags);
-                  setSelectedTags(updatedselectedTags);
-                }}
-              >
-                X
-              </span>
-            </div>
-          );
-        })}
-      </div>
+      <div className="mb-2 tags-container__heading ">Tags</div>
+      <Tags setTags={selectedTags} getSelectedTag={setSelectedTags} />
       <div className="tags-container__dropdown">
         {tags.map(item => {
           return (
@@ -81,7 +53,7 @@ export default function ShareTemplate() {
               <div className={`col-sm-12 col-xs-12 ${tagsStates[item.id]}`}>
                 <div className="type-tags-container">
                   {item.tags.map((tag, index) => {
-                    return !selectedTags.includes(`${item.type}:${tag}`) ? (
+                    return (
                       <div
                         className="tag suggested-tag"
                         key={`${item.id}-${index}`}
@@ -94,8 +66,6 @@ export default function ShareTemplate() {
                       >
                         {tag}
                       </div>
-                    ) : (
-                      <></>
                     );
                   })}
                 </div>

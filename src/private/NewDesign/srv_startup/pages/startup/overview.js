@@ -199,7 +199,7 @@ export default function Overview(props) {
           setPageState={setPageState}
           archiveConnection={archiveConnection}
           deleteConnection={deleteConnection}
-        ></ArchiveList>
+        />
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">
@@ -213,9 +213,7 @@ export default function Overview(props) {
                 <div className="col-11 col-sm-10 col-xs-10">
                   <div className="row overview-container__details">
                     <div className="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                      <div className="overview-container__heading">
-                        {name} <span className="material-icons">star</span>
-                      </div>
+                      <div className="overview-container__heading">{name}</div>
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 col-xs-12">
                       <span className="overview-container__last-updated">
@@ -262,7 +260,17 @@ export default function Overview(props) {
                   </div>
 
                   <div>
-                    <span className="score selected you">{myAvgScore}</span>
+                    {console.log(
+                      "yourteam",
+                      parseFloat(teamAvg),
+                      parseFloat(myAvgScore),
+                      typeof myAvgScore,
+                      myAvgScore.toString()
+                    )}
+
+                    <span className="score selected you">
+                      {parseFloat(myAvgScore)}
+                    </span>
                     <i
                       onClick={() => setShowSubjectiveScore(true)}
                       className=" editMarker fas fa-pen"
@@ -271,9 +279,9 @@ export default function Overview(props) {
                 </div>
                 <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
                   <div>Your Team</div>
-                  <div className="score">{teamAvg}</div>
+                  <div className="score">{parseFloat(teamAvg)}</div>
                   <div className="highest-score">
-                    {teamMinScore} <span className="highest">HIGHEST</span>
+                    {teamMaxScore} <span className="highest">HIGHEST</span>
                   </div>
                   <div className="lowest-score">
                     {teamMinScore} <span className="lowest">LOWEST</span>
@@ -343,7 +351,7 @@ export default function Overview(props) {
               </div>
               <div className="row funnel-summary-container">
                 <div className="overview-container__scores__heading">
-                  Evaluation summaries
+                  Funnels
                 </div>
                 <Funels></Funels>
               </div>

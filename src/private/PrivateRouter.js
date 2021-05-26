@@ -39,6 +39,7 @@ import {
   evaluation_template_profile,
   add_section_dev,
   reports,
+  notifications_page,
 } from "../definitions";
 
 // Landing page / list
@@ -95,6 +96,9 @@ import { ElevationTemplates as ElevationTemplatesDev } from "./NewDesign/srv_sta
 import { AddSection as AddSectionDev } from "./NewDesign/srv_startup/pages/startup/evaluations/add-new-section";
 import { TemplateSection } from "./NewDesign/srv_startup/pages/startup/evaluations/template-section";
 
+// New Jørgen import
+import NotificationsPage from "./NewDesign/Notifications/notifications";
+
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
 export const RouterComponent = ({ history }) => {
@@ -111,6 +115,8 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={external_form} component={ExternalForm} />
 
       <Route exact path={charts} component={Charts} />
+
+      <Route eaxct path={notifications_page} component={NotificationsPage} />
 
       <Route exact path={funnels} component={Funnels} />
 
@@ -219,6 +225,7 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={add_section} component={AddSection} />
       <Route eaxct path={reports} component={Reports} />
+
       <Route render={() => <div>404</div>} />
     </Switch>
   );

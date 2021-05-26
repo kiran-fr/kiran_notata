@@ -8,6 +8,10 @@ import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
 
+//API
+import { funnelGroupGet } from "private/Apollo/Queries";
+import { useQuery } from "@apollo/client";
+
 import PopupMenu from "./PopupMenu";
 
 import {
@@ -17,29 +21,32 @@ import {
   filter_container,
 } from "./Filters.module.scss";
 
-
 const handleOptional = (setState, filterType, disabled) => {
-  if(disabled === "") {
-    setState(filterType)
+  if (disabled === "") {
+    setState(filterType);
   } else {
-    console.log("kanban section")
+    console.log("kanban section");
   }
-}
+};
 
 const OptionalFilterSidebar = ({ setOptionalFilter, grayFadeOut }) => {
   return (
-    <div className = {grayFadeOut}>
+    <div className={grayFadeOut}>
       <div className={styles.filterContainer}>
         <button
           className={styles.filterButton + " " + styles.manageButton}
           style={{ marginRight: "10px" }}
-          onClick={() => handleOptional(setOptionalFilter, "column", grayFadeOut)}
+          onClick={() =>
+            handleOptional(setOptionalFilter, "column", grayFadeOut)
+          }
         >
           <img src={Column} alt="" /> <span>Manage Columns</span>
         </button>
         <button
           className={styles.filterButton}
-          onClick={() => handleOptional(setOptionalFilter, "filter", grayFadeOut)}
+          onClick={() =>
+            handleOptional(setOptionalFilter, "filter", grayFadeOut)
+          }
         >
           <img src={Filterr} alt="" /> <span>Filter</span>
         </button>
@@ -47,6 +54,22 @@ const OptionalFilterSidebar = ({ setOptionalFilter, grayFadeOut }) => {
     </div>
   );
 };
+
+// function getHasFilters(filters) {
+//    const hasFilters =
+//     filters.tags && filters.tags.length ||
+//     filters.funnelTag && filters.funnelTag.length ||
+//     filters.search ||
+//     filters.starred
+//     // (filters.dateRange.length &&
+//     // (filters.dateRange[0] || filters.dateRange[1]));
+//     console.log('insidefilter',filters, hasFilters)
+//     if(hasFilters) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+// }
 
 export default function Filters({
   history,
@@ -65,12 +88,22 @@ export default function Filters({
 
   const [kanbanPopup, setKanbanPopup] = useState(false);
 
+  // Query: getfunnelGroup
+  const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
+
+  const funnelGroup = data ? data.accountGet.funnelGroups : [];
+
+  console.log("funnelGroup", funnelGroup);
+
+  // let hasFilters = false;
+
   useEffect(() => {
     setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
   }, []);
 
   useEffect(() => {
+    // hasFilters = getHasFilters(filters)
     setFilterValue(filters.search);
   }, [filters]);
 
@@ -107,16 +140,6 @@ export default function Filters({
             isOpen={kanbanPopup}
             setIsOpen={setKanbanPopup}
           ></PopupMenu>
-          {/* <DropMenu
-            dropMenuArr={[
-              { iconName: "", title: "Funnel 1" },
-              { iconName: "", title: "Funnel 2" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-            ]}
-          ></DropMenu> */}
         </div>
       ),
     },
@@ -136,21 +159,30 @@ export default function Filters({
   ];
 
   const handleSearch = e => {
-    if(activeTab === "spreadsheet") {
+    if (activeTab === "spreadsheet") {
       setFilterValue(e.target.value);
+    }
+  };
+
+  const searchOnEnter = e => {
+    if (e.key === "Enter" && activeTab === "spreadsheet") {
+      setFilters({ ...filters, search: filterValue });
     }
   };
 
   const handleTab = val => {
     setTabValue(val);
     setActiveTab(val);
+    if (val !== "spreadsheet") {
+      setOptionalFilter("");
+    }
   };
 
   const handleSearchBtn = () => {
-    if(activeTab === "spreadsheet") {
-      setFilters({ ...filters, search: filterValue })
+    if (activeTab === "spreadsheet") {
+      setFilters({ ...filters, search: filterValue });
     }
-  }
+  };
 
   return (
     <div className={styles.override}>
@@ -171,25 +203,24 @@ export default function Filters({
                     className={styles.addButton}
                     onClick={() => setModal("startup")}
                   >
-                    <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
+                    <i className="far fa-plus"></i>Add new startup
                   </button>
-                  <div className={activeTab !== "spreadsheet"
-                    ?
-                      styles.grayFadeOut +
-                      " " +
-                      styles.tableSearch
-                    :
-                      styles.tableSearch
+                  <div
+                    className={
+                      activeTab !== "spreadsheet"
+                        ? styles.grayFadeOut + " " + styles.tableSearch
+                        : styles.tableSearch
                     }
                   >
                     <input
                       type="text"
                       value={filterValue}
                       onChange={e => handleSearch(e)}
+                      onKeyPress={e => searchOnEnter(e)}
                     />
-                    <button
-                      onClick={() => handleSearchBtn()}>
-                      Search
+                    <button onClick={() => handleSearchBtn()}>
+                      <span>Search</span>
+                      <span>S</span>
                     </button>
                     <i className="far fa-search"></i>
                   </div>
@@ -215,20 +246,40 @@ export default function Filters({
               className={
                 styles.table_headerChild + " " + styles.table_headerChildLast
               }
+              style={{ width: "20%" }}
             >
               <div>
-                <OptionalFilterSidebar setOptionalFilter={setOptionalFilter}
-                  grayFadeOut = {activeTab !== "spreadsheet"
-                  ?
-                    styles.grayFadeOut
-                  :
-                    ""
+                <OptionalFilterSidebar
+                  setOptionalFilter={setOptionalFilter}
+                  grayFadeOut={
+                    activeTab !== "spreadsheet" ? styles.grayFadeOut : ""
                   }
                 />
               </div>
             </div>
           </div>
         </div>
+        {activeTab === "spreadsheet" ? (
+          <div
+            className={
+              styles.clearAllTxt + " " + "text-right" + " " + styles.handCursor
+            }
+            onClick={() => {
+              setFilters({
+                search: "",
+                tags: [],
+                funnelTag: [],
+                fromDate: new Date().getTime() - 40000,
+                toDate: new Date().getTime(),
+                starred: false,
+              });
+            }}
+          >
+            Clear All Filters
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       {modal === "startup" && (

@@ -63,6 +63,10 @@ export const startup_company_profile = `${startup_page}/company/:id`;
 export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-templates`;
 export const evaluation_template_profile = `${startup_page}/settings/evaluation-template`;
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
+
+// JØRGEN's NEW ROUTES
+export const notifications_page = `${startup_page}/notifications`;
+
 // PUBLIC ROUTES
 export const public_pages = `/public`;
 export const public_creative = `${public_pages}/creative`;

@@ -57,7 +57,7 @@ const onDragEnd = (result, columns, setColumns, updateFunnelTag) => {
   }
 };
 
-export const Kanban = () => {
+export const Kanban = props => {
   const [columns, setColumns] = useState({});
   const [getConnections, setGetConnections] = useState(false);
   const [loadingAPI, setLoadingAPI] = useState(true);
@@ -163,7 +163,10 @@ export const Kanban = () => {
                                           ...provided.draggableProps.style,
                                         }}
                                       >
-                                        <BoardItem connection={item}>
+                                        <BoardItem
+                                          history={props.history}
+                                          connection={item}
+                                        >
                                           {item.content}
                                         </BoardItem>
                                       </div>

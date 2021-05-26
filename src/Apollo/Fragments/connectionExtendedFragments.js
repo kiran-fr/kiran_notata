@@ -136,6 +136,7 @@ export default gql`
       description
       templateId
       createdAt
+      logo
       sharedWithEmail
       sharedByEmail
       submit
