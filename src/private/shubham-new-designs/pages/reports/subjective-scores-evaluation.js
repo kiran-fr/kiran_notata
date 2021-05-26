@@ -2,472 +2,89 @@ import React from "react";
 import "./subjective-scores-evaluation.scss";
 
 export default function SubjectiveScoreEvaluation() {
-  let startDay = 2;
-  const year_data = [
-    {
-      name: "MAR",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "APR",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "MAY",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "JUN",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "JUL",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "AUG",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "SEP",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "OCT",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "NOV",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "DEC",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "JAN",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
-    {
-      name: "FEB",
-      data: [
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-        10,
-        5,
-        15,
-        20,
-        0,
-      ],
-    },
+  let array = [0, 5, 10, 15, 20];
+  let months = [
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+    "JAN",
+    "FEB",
+    "MAR",
   ];
   return (
     <div className="card subjective-score-evaluations-container">
-      <div className="card-heading">Subjective score and evaluations</div>
-      <div className="subjective-score-evaluations-container__year">
-        <div className="days">
-          <div className="day">SUN</div>
-          <div className="day">MON</div>
-          <div className="day">TUE</div>
-          <div className="day">WED</div>
-          <div className="day">THU</div>
-          <div className="day">FRI</div>
-          <div className="day">SAT</div>
+      <div className="col-sm-6 card-heading">
+        Subjective score and evaluations
+      </div>
+      <div className="col-sm-3 col-xs-6">
+        <div className="range-legend">
+          <span className="min">-</span>
+          <div className="legend">
+            <div className="legend-value">0</div>
+            <div className="legend-icon-0"></div>
+          </div>
+          <div className="legend">
+            <div className="legend-value">5</div>
+            <div className="legend-icon-5"></div>
+          </div>
+          <div className="legend">
+            <div className="legend-value">10</div>
+            <div className="legend-icon-10"></div>
+          </div>
+          <div className="legend">
+            <div className="legend-value">15</div>
+            <div className="legend-icon-15"></div>
+          </div>
+          <div className="legend">
+            <div className="legend-value">20</div>
+            <div className="legend-icon-20"></div>
+          </div>
+          <span className="min">+</span>
         </div>
-        {/* {year_data.map((item,index)=>{
-                    <div className="month">                    
-                        <div className="week">
-                            {[0,1,2,3,4,5,6].map(element => {
-                                return  element >= startDay ?
-                                    <div className={`day-score days-score-${item.data[element]}`}></div>             
-                                    :
-                                    <div className="day-score"></div>
-                            })}
-                            {[0,1,2,3,4,5,6].map(element => {
-                                return  element >= startDay ?
-                                    <div className={`day-score days-score-${item.data[element]}`}></div>             
-                                    :
-                                    <div className="day-score"></div>
-                            })}
-                        </div>
-                    </div>
-                })} */}
+        <div className="added-startups">Added startups</div>
+      </div>
+      <div className="col-sm-2 col-xs-6 last-year">
+        <div className="txt">Last Year</div>
+        <div className="date">Mar 16, 2020 - Mar 16, 2020</div>
+      </div>
+      <div className="subjective-score-evaluations-container__data">
+        <div className="months">
+          {months.map(month => {
+            return <div className="month">{month}</div>;
+          })}
+        </div>
+        <div className="subjective-score-evaluations-container__year">
+          <div className="days">
+            <div className="day">SUN</div>
+            <div className="day">MON</div>
+            <div className="day">TUE</div>
+            <div className="day">WED</div>
+            <div className="day">THU</div>
+            <div className="day">FRI</div>
+            <div className="day">SAT</div>
+          </div>
+          {[...Array(52)].map((elementInArray, index) => {
+            return (
+              <div className="week" key={`week-id-${index}`}>
+                {[0, 1, 2, 3, 4, 5, 6].map(element => {
+                  return (
+                    <div
+                      className={`day-score days-score-${
+                        array[Math.floor(Math.random() * array.length)]
+                      }`}
+                    ></div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

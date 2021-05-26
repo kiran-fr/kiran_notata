@@ -8,9 +8,6 @@
         padding-left:0px;
         padding-right:0px;
     } 
-    .card{
-        height:100%;
-    }
     .MuiTabs-root{
         margin-left:20px;
     }
@@ -85,27 +82,28 @@
         &__write-comment{
             width: 90%;
             margin-left: 5%;
-            position: absolute;
             bottom: 20px;
             height: 86px;
             border-radius: 20px;
             border: none;
             resize: none;
             background: #F4F4F4;
+            margin-top:50px;
             @media only screen and(max-width:991px) {
                 width: 80%;
+                margin-left:10%;
             }
         }
         &__send{
             font-size: 22px;
             right: calc(5% + 15px);
             @media only screen and(max-width:991px) {
-                right: calc(5% + 40px);
+                right: calc(10% + 40px);
             }
             position: absolute;
             cursor: pointer;
             color: #969BA3;
-            bottom: 53px;
+            margin-top: 80px;
         }
         &__edit-delete{
             position: absolute;
@@ -148,6 +146,7 @@
                 padding: 5px;
                 border-radius: 12px;
                 margin-right: 10px;
+                cursor: pointer;
             }
             .save{
                 color: #FFFFFF;
@@ -160,15 +159,12 @@
             }
         }
         &__activity{
-            font-family: 'Roboto';
+            margin-top: 10px;
+            font-family: "Roboto";
             font-size: 14px;
             line-height: 16px;
             letter-spacing: 0.03em;
-            margin-top:10px;
-            background: #F4F4F4;
-            width: fit-content;
-            padding: 5px 12px 5px 12px;
-            border-radius: 8px;
+            color: #969BA3;
         }
     }
 }
