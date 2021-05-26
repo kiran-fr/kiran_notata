@@ -86,35 +86,36 @@ export default function TableHeader(props) {
             className="fal fa-exchange"
           />
         </td>
-        {evaluationTemplates.length &&
-          evaluationTemplates.map(({ name, id }) =>
-            columnSettings.evaluationTemplates.includes(id) ? (
-              <td>
-                {name}
-                <i
-                  onClick={() => {
-                    let sortBy = "EVALUATION";
-                    let sortDirection =
-                      filters.sortBy === "EVALUATION" &&
-                      filters.sortDirection !== "DESC" &&
-                      filters.sortByVal === id
-                        ? "DESC"
-                        : "ASC";
+        {evaluationTemplates.length
+          ? evaluationTemplates.map(({ name, id }) =>
+              columnSettings.evaluationTemplates.includes(id) ? (
+                <td>
+                  {name}
+                  <i
+                    onClick={() => {
+                      let sortBy = "EVALUATION";
+                      let sortDirection =
+                        filters.sortBy === "EVALUATION" &&
+                        filters.sortDirection !== "DESC" &&
+                        filters.sortByVal === id
+                          ? "DESC"
+                          : "ASC";
 
-                    setFilters({
-                      ...filters,
-                      sortBy,
-                      sortDirection,
-                      sortByVal: id,
-                    });
-                  }}
-                  className="fal fa-exchange"
-                />
-              </td>
-            ) : (
-              ""
+                      setFilters({
+                        ...filters,
+                        sortBy,
+                        sortDirection,
+                        sortByVal: id,
+                      });
+                    }}
+                    className="fal fa-exchange"
+                  />
+                </td>
+              ) : (
+                ""
+              )
             )
-          )}
+          : ""}
       </tr>
     </thead>
   );
