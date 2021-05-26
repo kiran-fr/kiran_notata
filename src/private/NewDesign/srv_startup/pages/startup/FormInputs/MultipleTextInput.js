@@ -4,6 +4,9 @@ import classnames from "classnames";
 
 import styles from "./input.module.scss";
 
+import addCircle from "assets/images/addCircle.svg";
+import deleteCircle from "assets/images/deleteCircle.svg";
+
 export default function MultipleTextInput({
   handleOnSubmit,
   handleOnDelete,
@@ -29,22 +32,11 @@ export default function MultipleTextInput({
     <form onSubmit={handleSubmit(onSubmit)}>
       {answers.map(({ id, val }, i) => (
         <div className={styles.inputWrapper} key={id || val}>
-          {/* <input
-            autoComplete="off"
-            type="text"
-            ref={register}
-            name={id || i}
-            defaultValue={val}
-            placeholder="Say something..."
-            onBlur={handleSubmit(onSubmit)}
-          ></input> */}
-          <div className="col-sm-10">
+          <div>
             <div className={classnames(styles.textbox, styles.noOfFounders)}>
               <input
                 type="text"
-                placeholder="Write your answer..."
                 autoComplete="off"
-                type="text"
                 ref={register}
                 name={id || i}
                 defaultValue={val}
@@ -52,29 +44,22 @@ export default function MultipleTextInput({
               />
             </div>
           </div>
-
-          <span className={styles.inputIcon} onClick={() => onDelete(id || i)}>
-            <i className="fal fa-times" />
-          </span>
+          <div className={styles.addIcon}>
+            <span
+              className={styles.inputIcon}
+              onClick={() => onDelete(id || i)}
+            >
+              <img src={deleteCircle} alt="" />
+            </span>
+          </div>
         </div>
       ))}
 
       <div className={styles.inputWrapper}>
-        {/* <input
-          autoComplete="off"
-          type="text"
-          ref={register}
-          name="new"
-          placeholder="Say something..."
-          onBlur={handleSubmit(onSubmit)}
-          onKeyDown={handleKeyDown}
-        /> */}
         <div className={classnames(styles.textbox, styles.noOfFounders)}>
           <input
             type="text"
-            placeholder="Write your answer..."
             autoComplete="off"
-            type="text"
             ref={register}
             name="new"
             placeholder="Say something..."
@@ -82,15 +67,14 @@ export default function MultipleTextInput({
             onKeyDown={handleKeyDown}
           />
         </div>
-        <span
-          className={styles.inputIcon}
-          onClick={() => handleSubmit(onSubmit)}
-        >
-          <i className="fal fa-plus" />
-        </span>
-        {/* <div className="inputIcon" onClick={() => handleSubmit(onSubmit)}>
-          <i className="fal fa-plus" />
-        </div> */}
+        <div className={styles.addIcon}>
+          <span
+            className={styles.inputIcon}
+            onClick={() => handleSubmit(onSubmit)}
+          >
+            <img src={addCircle} alt="" />
+          </span>
+        </div>
       </div>
     </form>
   );

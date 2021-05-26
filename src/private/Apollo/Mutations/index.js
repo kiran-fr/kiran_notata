@@ -14,12 +14,16 @@ export { default as evaluationCreate } from "./evaluationCreate";
 export { default as evaluationUpdate } from "./evaluationUpdate";
 export { default as evaluationDelete } from "./evaluationDelete";
 
+export { default as evaluationTemplateCreate } from "./evaluationTemplateCreate";
+export { default as evaluationTemplateUpdate } from "./evaluationTemplateUpdate";
 export { default as evaluationTemplatePut } from "./evaluationTemplatePut";
 export { default as evaluationTemplateDelete } from "./evaluationTemplateDelete";
+export { default as evaluationTemplateSectionCreate } from "./evaluationTemplateSectionCreate";
 export { default as evaluationTemplateSectionPut } from "./evaluationTemplateSectionPut";
 export { default as evaluationTemplateSectionDelete } from "./evaluationTemplateSectionDelete";
 export { default as evaluationTemplateQuestionPut } from "./evaluationTemplateQuestionPut";
 export { default as evaluationTemplateQuestionDelete } from "./evaluationTemplateQuestionDelete";
+export { default as evaluationTemplateSectionUpdate } from "./evaluationTemplateSectionUpdate";
 export { default as groupPut } from "./groupPut";
 export { default as groupLogPut } from "./groupLogPut";
 export { default as tagGroupPut } from "./tagGroupPut";

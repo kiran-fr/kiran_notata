@@ -3,7 +3,7 @@ import Scrollspy from "react-scrollspy";
 import "./edit-evaluation.scss";
 import { useMutation } from "@apollo/client";
 import { evaluationUpdate, evaluationCreate } from "private/Apollo/Mutations";
-import { GeneralInput } from "Components/Forms/TemplatedForm/Inputs/GeneralInput";
+import { GeneralInput } from "../Inputs/GeneralInput";
 
 export default function EditEvaluation({
   setEditEvaluation,
