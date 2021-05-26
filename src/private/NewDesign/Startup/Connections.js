@@ -101,6 +101,7 @@ function ListOfStartups({
 
       {showFunnelScoreForId && (
         <SetFunnelScore
+          updateFunnelTag={updateFunnelTag}
           connection={connections.find(({ id }) => id === showFunnelScoreForId)}
           close={() => setShowFunnelScoreForId(undefined)}
         />
@@ -250,7 +251,7 @@ export default function Connections({ history }) {
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
-      {tabValue === "spreadsheet" ? (
+      {tabValue !== "spreadsheet" ? (
         <>
           <ListOfStartups
             history={history}
@@ -268,7 +269,7 @@ export default function Connections({ history }) {
           />
         </>
       ) : (
-        <Kanban />
+        <Kanban history={history} />
       )}
     </>
   );
