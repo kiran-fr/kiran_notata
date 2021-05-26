@@ -1,4 +1,15 @@
 .report-container{
+    .fillter-btn{
+        margin-top:20px;
+        border: 1px solid #6A6a6a;
+        height: 30px;
+        color: #6a6a6a;
+        padding: 5px 15px!important;
+        margin-lefT: 15px;
+        .MuiButton-label{
+            color: #6a6a6a;
+        }
+    }
     .funnels-container{
         padding: 20px 20px 40px 65px;
         @media only screen and(max-width:991px) {
@@ -154,10 +165,6 @@
         }
     }
     .my-groups-container{
-        @media only screen and(min-width:991px) and(max-width:1199px) {
-            padding-left:0px;
-            padding-right: 0px;
-        }
         &__noOfRecords{
             font-family: 'Proxima Nova';
             font-style: normal;
