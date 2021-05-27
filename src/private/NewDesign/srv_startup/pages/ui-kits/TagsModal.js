@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./tags.scss";
+import "./TagsModal.scss";
 import { Tags } from "./Tags/Tags";
 
-export default function ShareTemplate() {
+export default function TagsModal() {
   let tagTypesState = {};
   const [selectedTags, setSelectedTags] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
