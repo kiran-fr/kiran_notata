@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./table.module.css";
+import styles, { activePopup } from "./table.module.css";
 import Red from "../../../../../assets/images/red.png";
 import Green from "../../../../../assets/images/green.png";
 import Violet from "../../../../../assets/images/violet.png";
@@ -30,22 +30,23 @@ export default function TableBody(props) {
   const [funnel, setFunnel] = useState();
   const [showFunnel, setShowFunnel] = useState(false);
 
-  const FunnelPopup = ({ tags, id }) => {
+  const FunnelPopup = ({ tags, id, index }) => {
     const updateFunnelTagForConnection = funnelTagId => {
       updateFunnelTag(funnelTagId, id);
       setFunnel(false);
     };
 
     return (
-      <div className={styles.funnelPopup} style={{ top: `50px` }}>
+      <div
+        className={styles.funnelPopup}
+        style={{ top: index > 20 ? "-400%" : `50px` }}
+      >
         <ul>
           {tags?.map(tag => (
             <li
               key={tag.id}
               onClick={() => updateFunnelTagForConnection(tag.id)}
             >
-              {" "}
-              {console.log(tag)}
               <img
                 src={
                   tag.name === "Invested"
@@ -223,17 +224,25 @@ export default function TableBody(props) {
                           />
                           {tagSet.name}
                           <span
+                            className={classnames(
+                              (funnel === index) & showFunnel ? activePopup : ""
+                            )}
                             onClick={() => {
                               setFunnel(funnel ? null : index);
                               setShowFunnel(!showFunnel);
                             }}
                           >
-                            <i className="fas fa-chevron-down"></i>
+                            {" "}
+                            {console.log("Funnel & Index: ", funnel, index)}
+                            <i
+                              className={classnames("fas fa-chevron-down")}
+                            ></i>
                           </span>
-                          {(funnel === index) & showFunnel && (
+                          {funnel === index && showFunnel && (
                             <FunnelPopup
                               tags={funnelTags?.[0]?.group?.funnelTags || []}
                               id={id}
+                              index={index}
                             />
                           )}
                         </>
@@ -258,7 +267,10 @@ export default function TableBody(props) {
                           </li>
                         ))}
                       {
-                        <li onClick={() => setShowTagGroupForId(item.id)}>
+                        <li
+                          style={{ marginLeft: item.tags ? "10px" : "" }}
+                          onClick={() => setShowTagGroupForId(item.id)}
+                        >
                           <ButtonGreen />
                         </li>
                       }
