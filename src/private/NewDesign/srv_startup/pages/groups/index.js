@@ -10,6 +10,7 @@ import DeleteGroup from "./delete-group-modal";
 import LeaveGroup from "./leave-group-modal";
 import Settings from "../startup/groups-individuals/create-new-group/settings";
 import { group_dashboard } from "../../../../definitions";
+import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 
 function a11yProps(index) {
   return {
@@ -43,6 +44,7 @@ export default function Groups({ history }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [leaveModal, setLeaveModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
+  const [createGroupModal, setCreateGroupModal] = useState(false);
 
   return (
     <div className="groups-contianer">
@@ -82,6 +84,7 @@ export default function Groups({ history }) {
               className="create-new-group"
               text="CREATE NEW GROUP"
               iconPosition={ICONPOSITION.START}
+              onClick={() => setCreateGroupModal(true)}
             ></ButtonWithIcon>
           </div>
         </div>
@@ -195,6 +198,20 @@ export default function Groups({ history }) {
           submitTxt="Save"
           closeTxt="Cancel"
           children={<Settings isAdmin={value === 0}></Settings>}
+        ></Modal>
+      )}
+      {createGroupModal && (
+        <Modal
+          title="Create new group"
+          submit={() => {
+            setCreateGroupModal(false);
+          }}
+          close={() => {
+            setCreateGroupModal(false);
+          }}
+          submitTxt="Create"
+          closeTxt="Cancel"
+          children={<CreateNewGroup></CreateNewGroup>}
         ></Modal>
       )}
     </div>
