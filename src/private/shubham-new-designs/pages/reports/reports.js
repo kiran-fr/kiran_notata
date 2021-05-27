@@ -10,6 +10,15 @@ import Filter from "./filter";
 
 export default function Reports() {
   const [isFilterVisible, setFilterVisible] = useState(false);
+  let data = [
+    { name: "Business", type: REPORTCHARTS.COLUMN, isDropDown: false },
+    { name: "Market", type: REPORTCHARTS.PIE, isDropDown: false },
+    { name: "Phase", type: REPORTCHARTS.BAR, isDropDown: false },
+    { name: "Source of lead", type: REPORTCHARTS.COLUMN, isDropDown: true },
+    { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
+    { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
+  ];
+  const [chartData, setChartData] = useState(data);
   return (
     <div className="report-container">
       <div className="row">
@@ -174,36 +183,34 @@ export default function Reports() {
           <SubjectiveScoreEvaluations></SubjectiveScoreEvaluations>
         </div>
         <div className="col-sm-12 tags-container-heading">Tags</div>
-        <div className="col-sm-6 col-md-6 col-lg-4">
-          <ChartTile tileHeading="Business" />
-        </div>
-        <div className="col-sm-6 col-md-6 col-lg-4">
-          <ChartTile
-            tileHeading="Market"
-            selectedChartType={REPORTCHARTS.PIE}
-          />
-        </div>
-        <div className="col-sm-6 col-md-6 col-lg-4">
-          <ChartTile tileHeading="Phase" selectedChartType={REPORTCHARTS.BAR} />
-        </div>
-        <div className="col-sm-6 col-md-6 col-lg-4">
-          <ChartTile tileHeading="Source of lead" isDropDownOption={true} />
-        </div>
-        <div className="col-sm-6 col-md-6 col-lg-4">
-          <ChartTile
-            tileHeading="HQ Country"
-            selectedChartType={REPORTCHARTS.PIE}
-            isDropDownOption={true}
-          />
-        </div>
-        <div className="col-sm-6 col-md-6 col-lg-4">
-          <ChartTile
-            tileHeading="HQ Country"
-            selectedChartType={REPORTCHARTS.BAR}
-            isDropDownOption={true}
-          />
-        </div>
+        {chartData.map((chart, index) => {
+          return (
+            <div
+              className="col-sm-6 col-md-6 col-lg-4"
+              key={`chart-id-${index}`}
+            >
+              <ChartTile
+                tileHeading={chart.name}
+                selectedChartType={chart.type}
+                isDropDownOption={chart.isDropDown}
+              />
+            </div>
+          );
+        })}
         {isFilterVisible && <Filter close={setFilterVisible} />}
+        <div className="col-sm-12 report-container__add-icon-container">
+          <div>
+            <i
+              className="fa fa-plus report-container__add-icon-container__add-icon"
+              onClick={() => {
+                let charts = [...chartData];
+                console.log(",,,", charts);
+                charts.push(charts[charts.length - 1]);
+                setChartData(charts);
+              }}
+            ></i>
+          </div>
+        </div>
       </div>
     </div>
   );

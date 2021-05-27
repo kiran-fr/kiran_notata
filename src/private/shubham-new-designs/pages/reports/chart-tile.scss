@@ -15,10 +15,10 @@
             border-radius: 5px;
             padding: 4px 17px;
             z-index: 999;
-            margin-top: 7px;
+            margin-top: 51px;
             text-align: left;
             text-align: initial;
-            margin-left: 36px;
+            margin-left: 28%;
             .drop-down-item{
                 font-family: "Proxima Nova";
                 font-style: normal;
@@ -35,22 +35,15 @@
             padding-top:25px;
             margin-left: auto;
             margin-right:25px;
-            i{
-                font-size:10px;
-                margin-right:10px;
-                color:#C4C4C4;
-                padding-bottom: 1px;
-            }
             .selected{
                 color:#000;
                 border-bottom: 1px solid #000;
-                
             }
             img{
                 margin-top: 3px;
                 margin-right: 5px;
                 height: 10px;
-                padding-bottom: 1px;
+                padding-bottom:1px;
             }
         }
     }

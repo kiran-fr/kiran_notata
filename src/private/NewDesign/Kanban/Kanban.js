@@ -61,6 +61,8 @@ export const Kanban = props => {
   const [columns, setColumns] = useState({});
   const [getConnections, setGetConnections] = useState(false);
   const [loadingAPI, setLoadingAPI] = useState(true);
+  const [sorting, setSorting] = useState("");
+
   const { data: accountGet, loading, error } = useQuery(accountGetData);
   let response = accountGet?.accountGet?.funnelGroups?.[0].funnelTags;
 
@@ -92,7 +94,7 @@ export const Kanban = props => {
         setColumns({ ...columnsCopy });
       });
     }
-  }, [getConnections]);
+  }, [getConnections || sorting]);
 
   useEffect(() => {
     if (loading === false && accountGet) {
