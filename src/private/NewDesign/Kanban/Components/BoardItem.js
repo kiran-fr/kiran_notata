@@ -19,6 +19,7 @@ export default function BoardItem(props) {
       tags,
       groupSharingInfo,
       id,
+      starred,
     },
     history,
   } = props;
@@ -54,12 +55,14 @@ export default function BoardItem(props) {
             <img src={companyLogo} alt="Brand Logo" />
             <p>{creative?.name}</p>
           </h3>
-
-          <img
-            style={{ marginLeft: "auto", pointer: "cursor" }}
-            src={star}
-            alt="Favourite"
-          />
+          <i
+            style={{
+              color: starred ? "orange" : "lightgray",
+              marginLeft: "auto",
+              // pointer: "cursor"
+            }}
+            className="fa fa-star"
+          ></i>
         </div>
         {creative.answers.map(items => {
           return (
