@@ -8,15 +8,22 @@ import {
 } from "Apollo/Fragments";
 
 export default gql`
-  query {
-    groupsGetV2 {
+  mutation groupEvaluationRemove(
+    $groupId: ID!
+    $creativeId: ID!
+    $evaluationId: ID!
+  ) {
+    groupEvaluationRemove(
+      groupId: $groupId
+      creativeId: $creativeId
+      evaluationId: $evaluationId
+    ) {
       id
       name
       iAmAdmin
       description
       createdAt
       updatedAt
-
       createdByUser {
         email
         given_name
@@ -66,23 +73,25 @@ export default gql`
       }
 
       startups {
-        createdAt
-        seen
-        isInMyDealFlow
-
         sharedByUser {
           email
           given_name
           family_name
         }
+        createdAt
+        seen
+        isInMyDealFlow
 
         creative {
-          id
-          name
+          ...creativeFields
         }
 
         connection {
           id
+        }
+
+        evaluations {
+          ...evaluationV2Fields
         }
 
         subjectiveScores {
@@ -135,18 +144,12 @@ export default gql`
           highestScore
           lowestScore
         }
-
-        evaluations {
-          ...evaluationV2Fields
-        }
       }
     }
   }
-
   ${evaluationTemplateFragments}
   ${evaluationTemplateSectionFragments}
   ${evaluationTemplateQuestionFragments}
+  ${creativeFragments}
   ${evaluationV2Fragments}
 `;
-
-// ${creativeFragments}

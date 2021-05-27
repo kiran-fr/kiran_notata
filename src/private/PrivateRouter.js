@@ -71,8 +71,10 @@ import EvaluationSummary from "./pages/EvaluationV2/Summary";
 import Group from "./pages/Groups/Group/Group";
 import GroupConnection from "./pages/Groups/GroupConnection";
 import GroupSettings from "./pages/Groups/GroupSettings";
-
-import Groups from "./shubham-new-designs/pages/groups/index";
+// import Groups from "./shubham-new-designs/pages/groups/index";
+import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
+import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
+// import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
 
 // Loader
 import { GhostLoader } from "Components/elements";
@@ -87,7 +89,7 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 import { Startup } from "./shubham-new-designs/pages/startup/index";
 import ElevationTemplates from "./shubham-new-designs/pages/startup/evaluations/evaluation-templates";
 import AddSection from "./shubham-new-designs/pages/startup/evaluations/add-new-section";
-import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
+// import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
 import Reports from "./shubham-new-designs/pages/reports/reports";
 
 // New Startup Info
@@ -196,7 +198,11 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={startup_company_profile} component={StartupInfo} />
 
       <Route exact path={startup_index} component={Startup} />
-      <Route exact path={group_dashboard} component={GroupDashboard} />
+      <Route
+        exact
+        path={`${group_dashboard}/:groupId`}
+        component={GroupDashboard}
+      />
 
       <Route
         exact

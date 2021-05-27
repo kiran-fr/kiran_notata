@@ -60,3 +60,12 @@ export { default as groupStartupAdd } from "./groupStartupAdd";
 
 export { default as notificationsMarkAsSeen } from "./notificationsMarkAsSeen";
 export { default as notificationsMarkAllAsSeen } from "./notificationsMarkAllAsSeen";
+
+export { default as groupTemplateAdd } from "./groupTemplateAdd";
+export { default as groupTemplateRemove } from "./groupTemplateRemove";
+
+export { default as groupSubjectiveScoreAdd } from "./groupSubjectiveScoreAdd";
+export { default as groupSubjectiveScoreRemove } from "./groupSubjectiveScoreRemove";
+
+export { default as groupEvaluationAdd } from "./groupEvaluationAdd";
+export { default as groupEvaluationRemove } from "./groupEvaluationRemove";
