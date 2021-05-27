@@ -4,7 +4,7 @@ import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import { AddScore } from "../addScore";
 import AddFunnel from "../addFunnel";
-import Tags from "../../../srv_startup/pages/ui-kits/tags";
+import TagsModal from "../../../srv_startup/pages/ui-kits/TagsModal";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import Funnel from "assets/images/funnelNoText.png";
 import FunnelMobile from "assets/images/funnelMobile.png";
@@ -266,7 +266,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<Tags></Tags>}
+          children={<TagsModal></TagsModal>}
         ></Modal>
       )}
     </form>
