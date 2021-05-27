@@ -7,7 +7,7 @@ import images from "./Images/";
 import { ICONPOSITION, OVERVIEWPAGESTATE } from "../constants";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
 import ShareTemplate from "./share-template";
-import Tags from "../ui-kits/tags";
+import TagsModal from "../ui-kits/TagsModal";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import Funels from "./funels";
 import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
@@ -739,7 +739,7 @@ export default function Overview(props) {
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<Tags></Tags>}
+          children={<TagsModal></TagsModal>}
         ></Modal>
       )}
       {archiveModal && (

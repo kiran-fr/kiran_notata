@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./sidebar.module.css";
 import Sidebar from "./index";
 // import { Tags } from "Components/UI_Kits/Tags/Tags";
-import Tags from "../../private/NewDesign/srv_startup/pages/ui-kits/tags";
+import TagsModal from "../../private/NewDesign/srv_startup/pages/ui-kits/TagsModal";
 import { Modal } from "../UI_Kits/Modal/Modal";
 
 // common dynamic funnel img function
@@ -261,7 +261,7 @@ export default function FilterBar({
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<Tags></Tags>}
+          children={<TagsModal></TagsModal>}
         ></Modal>
       )}
     </Sidebar>
