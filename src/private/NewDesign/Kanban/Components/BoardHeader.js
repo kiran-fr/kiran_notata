@@ -16,7 +16,7 @@ export default function BoardHeader({ children, icon }) {
       <h2 className={styles.boardHeader}>{children}</h2>
       <span className={styles.boardHeadSortBy}>
         <SortByPopup
-          items={["Starred", "Alphabet", "Numerical", "Something"]}
+          items={["Starred", "Company Name"]}
           isOpen={popup}
           setIsOpen={setPopup}
         ></SortByPopup>
