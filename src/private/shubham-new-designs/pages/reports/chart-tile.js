@@ -3,6 +3,11 @@ import "./chart-tile.scss";
 import { REPORTCHARTS } from "../constants";
 import ghraphChart from "../../../../assets/images/bar-graph.png";
 import selectedBarGraphChart from "../../../../assets/images/selected-bar-graph.png";
+import selectedColumnGraph from "../../../../assets/images/column-graph-selected.png";
+import pieChart from "../../../../assets/images/pi-chart.png";
+import selectedPieChart from "../../../../assets/images/pie-chart-selected.png";
+import columnChart from "../../../../assets/images/column-chart.png";
+
 import {
   BarChart,
   Bar,
@@ -70,22 +75,24 @@ export default function ChartTile({
         <div className="card-heading">
           {tileHeading}
           {isDropDownOption && (
-            <i
-              class={`fa ${
-                dropDown ? "fa-chevron-up" : "fa-chevron-down"
-              } chart-tile-container__header__downup`}
-              aria-hidden="true"
-              onClick={() => setDropDown(!dropDown)}
-            ></i>
-          )}
-          {dropDown && (
-            <div className="chart-tile-container__header__dropdown">
-              <div class="drop-down-item">Item 1</div>
-              <div class="drop-down-item">Item 2</div>
-              <div class="drop-down-item">Item 3</div>
-            </div>
+            <>
+              <i
+                class={`fa ${
+                  dropDown ? "fa-chevron-up" : "fa-chevron-down"
+                } chart-tile-container__header__downup`}
+                aria-hidden="true"
+                onClick={() => setDropDown(!dropDown)}
+              ></i>
+            </>
           )}
         </div>
+        {dropDown && (
+          <div className="chart-tile-container__header__dropdown">
+            <div class="drop-down-item">Item 1</div>
+            <div class="drop-down-item">Item 2</div>
+            <div class="drop-down-item">Item 3</div>
+          </div>
+        )}
         <div className="chart-tile-container__header__icons">
           <img
             src={
@@ -96,20 +103,22 @@ export default function ChartTile({
             class={`${selectedChart === REPORTCHARTS.BAR ? "selected" : ""}`}
             onClick={() => setSelectedChart(REPORTCHARTS.BAR)}
           />
-          <i
-            class={`fa fa-signal ${
-              selectedChart === REPORTCHARTS.COLUMN ? "selected" : ""
-            }`}
-            aria-hidden="true"
+          <img
+            src={
+              selectedChart === REPORTCHARTS.COLUMN
+                ? selectedColumnGraph
+                : columnChart
+            }
+            class={`${selectedChart === REPORTCHARTS.COLUMN ? "selected" : ""}`}
             onClick={() => setSelectedChart(REPORTCHARTS.COLUMN)}
-          ></i>
-          <i
-            class={`fa fa-pie-chart ${
-              selectedChart === REPORTCHARTS.PIE ? "selected" : ""
-            }`}
-            aria-hidden="true"
+          />
+          <img
+            src={
+              selectedChart === REPORTCHARTS.PIE ? selectedPieChart : pieChart
+            }
+            class={`${selectedChart === REPORTCHARTS.PIE ? "selected" : ""}`}
             onClick={() => setSelectedChart(REPORTCHARTS.PIE)}
-          ></i>
+          />
         </div>
       </div>
 
