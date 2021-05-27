@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./chart-tile.scss";
 import { REPORTCHARTS } from "../constants";
-
+import ghraphChart from "../../../../assets/images/bar-graph.png";
+import selectedBarGraphChart from "../../../../assets/images/selected-bar-graph.png";
 import {
   BarChart,
   Bar,
@@ -29,21 +30,25 @@ const renderActiveShape = props => {
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius - 75) * cos;
-  const sy = cy + (outerRadius - 75) * sin;
+  const sx = cx + (outerRadius - 55) * cos;
+  const sy = cy + (outerRadius - 55) * sin;
   return (
     <Sector
       cx={sx}
       cy={sy}
-      innerRadius={50}
-      outerRadius={95}
+      innerRadius={30}
+      outerRadius={65}
       startAngle={startAngle}
       endAngle={endAngle}
       fill="url(#gradient1)"
     />
   );
 };
-export default function ChartTile({ tileHeading }) {
+export default function ChartTile({
+  tileHeading,
+  selectedChartType = REPORTCHARTS.COLUMN,
+  isDropDownOption = false,
+}) {
   const data = [
     { techValue: 50, startupName: "FINTECH" },
     { techValue: 40, startupName: "PROPTECH" },
@@ -57,19 +62,40 @@ export default function ChartTile({ tileHeading }) {
     { value: 25, color: "url(#gradient3)" },
   ];
   const shiftSize = 7;
-  const [selectedChart, setSelectedChart] = useState(REPORTCHARTS.COLUMN);
+  const [selectedChart, setSelectedChart] = useState(selectedChartType);
+  const [dropDown, setDropDown] = useState(false);
   return (
     <div className="card chart-tile-container">
       <div className="chart-tile-container__header">
-        <div className="card-heading">{tileHeading}</div>
+        <div className="card-heading">
+          {tileHeading}
+          {isDropDownOption && (
+            <i
+              class={`fa ${
+                dropDown ? "fa-chevron-up" : "fa-chevron-down"
+              } chart-tile-container__header__downup`}
+              aria-hidden="true"
+              onClick={() => setDropDown(!dropDown)}
+            ></i>
+          )}
+          {dropDown && (
+            <div className="chart-tile-container__header__dropdown">
+              <div class="drop-down-item">Item 1</div>
+              <div class="drop-down-item">Item 2</div>
+              <div class="drop-down-item">Item 3</div>
+            </div>
+          )}
+        </div>
         <div className="chart-tile-container__header__icons">
-          <i
-            class={`fa fa-signal ${
-              selectedChart === REPORTCHARTS.BAR ? "selected" : ""
-            }`}
-            aria-hidden="true"
+          <img
+            src={
+              selectedChart === REPORTCHARTS.BAR
+                ? selectedBarGraphChart
+                : ghraphChart
+            }
+            class={`${selectedChart === REPORTCHARTS.BAR ? "selected" : ""}`}
             onClick={() => setSelectedChart(REPORTCHARTS.BAR)}
-          ></i>
+          />
           <i
             class={`fa fa-signal ${
               selectedChart === REPORTCHARTS.COLUMN ? "selected" : ""
@@ -141,18 +167,37 @@ export default function ChartTile({ tileHeading }) {
         </div>
       )}
       {selectedChart === REPORTCHARTS.PIE && (
-        <>
+        <div className="row">
+          <div className="col-lg-5 col-md-12 col-sm-12 col-lg-push-7 col-xs-12">
+            <div className="pie-legends">
+              <div className="legend">
+                <div className="legend-icon icon-0"></div>
+                <div className="legend-text">B2B - 160</div>
+                <div className="legend-count max">44%</div>
+              </div>
+              <div className="legend">
+                <div className="legend-icon icon-1"></div>
+                <div className="legend-text">B2G - 113</div>
+                <div className="legend-count">31%</div>
+              </div>
+              <div className="legend">
+                <div className="legend-icon icon-2"></div>
+                <div className="legend-text">B2C - 92</div>
+                <div className="legend-count">25%</div>
+              </div>
+            </div>
+          </div>
           <div
-            className={`chart-tile-container__chart chart-tile-container__${selectedChart.toLowerCase()} col-sm-8`}
+            className={`chart-tile-container__${selectedChart.toLowerCase()} col-lg-7 col-md-12 col-sm-8 col-lg-pull-5 col-xs-12`}
           >
-            <ResponsiveContainer height={250}>
-              <PieChart height={250}>
+            <ResponsiveContainer>
+              <PieChart>
                 <Pie
                   activeIndex={0}
                   data={pieChartData}
                   dataKey="value"
-                  innerRadius={55}
-                  outerRadius={85}
+                  innerRadius={35}
+                  outerRadius={60}
                   activeShape={renderActiveShape}
                   startAngle={-60}
                   endAngle={300}
@@ -183,10 +228,98 @@ export default function ChartTile({ tileHeading }) {
               <div className="count">365</div>
             </div>
           </div>
-          <div className="col-sm-4">
-            <h3>heello</h3>
-          </div>
-        </>
+        </div>
+      )}
+      {selectedChart === REPORTCHARTS.BAR && (
+        <table className="bar-chart-container">
+          <thead>
+            <th className="th-country">Country</th>
+            <th className="th-startup">Startups</th>
+            <th className="th-noof-startups">% of Startups</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="td-country">Norway</td>
+              <td className="td-startups">200</td>
+              <td className="td-noof-startups">
+                45%
+                <div className="bar-container">
+                  <div className="bar-45"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="td-country">USA</td>
+              <td className="td-startups">180</td>
+              <td className="td-noof-startups">
+                25%
+                <div className="bar-container">
+                  <div className="bar-25"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="td-country">Netherland</td>
+              <td className="td-startups">125</td>
+              <td className="td-noof-startups">
+                10%
+                <div className="bar-container">
+                  <div className="bar-10"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="td-country">Singapore</td>
+              <td className="td-startups">80</td>
+              <td className="td-noof-startups">
+                80%
+                <div className="bar-container">
+                  <div className="bar-80"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="td-country">USA</td>
+              <td className="td-startups">180</td>
+              <td className="td-noof-startups">
+                25%
+                <div className="bar-container">
+                  <div className="bar-25"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="td-country">Netherland</td>
+              <td className="td-startups">125</td>
+              <td className="td-noof-startups">
+                10%
+                <div className="bar-container">
+                  <div className="bar-10"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="td-country">Singapore</td>
+              <td className="td-startups">80</td>
+              <td className="td-noof-startups">
+                80%
+                <div className="bar-container">
+                  <div className="bar-80"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className="td-country">Other</td>
+              <td className="td-startups">120</td>
+              <td className="td-noof-startups">
+                30%
+                <div className="bar-container">
+                  <div className="bar-30"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       )}
     </div>
   );
