@@ -23,20 +23,6 @@ export default function BoardItem(props) {
     history,
   } = props;
 
-  let oneLiner = "";
-
-  console.log("props", props);
-
-  // if (creative && creative.answers.length > 0) {
-  //   oneLiner = creative.answers.find(
-  //     ({ questionId }) => questionId === "q01_section_info"
-  //   )
-  // } else {
-  //   oneLiner =""
-  // }
-
-  // console.log('oneLinervalue', oneLiner)
-
   const getTotalScore = arr => {
     if (Array.isArray(arr) && arr.length > 0) {
       return arr?.reduce((acc, obj) => {
