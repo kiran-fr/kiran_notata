@@ -122,7 +122,7 @@ export default function ManageSidebar({
     <Sidebar title="Manage Columns" close={close}>
       <div className={styles.manage}>
         <ul>
-          <li>
+          <li className={styles.firstOrderManage}>
             <label className={styles.customCheck}>
               <input
                 type="checkbox"

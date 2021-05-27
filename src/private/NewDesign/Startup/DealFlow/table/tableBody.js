@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "./table.module.css";
 import Red from "../../../../../assets/images/red.png";
 import Green from "../../../../../assets/images/green.png";
+import Violet from "../../../../../assets/images/violet.png";
+import Yellow from "../../../../../assets/images/Bar_Icon_04.svg";
 import moment from "moment";
 //Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
@@ -26,6 +28,7 @@ export default function TableBody(props) {
   } = props;
 
   const [funnel, setFunnel] = useState();
+  const [showFunnel, setShowFunnel] = useState(false);
 
   const FunnelPopup = ({ tags, id }) => {
     const updateFunnelTagForConnection = funnelTagId => {
@@ -42,7 +45,20 @@ export default function TableBody(props) {
               onClick={() => updateFunnelTagForConnection(tag.id)}
             >
               {" "}
-              <img src={Green} /> {tag.name}
+              {console.log(tag)}
+              <img
+                src={
+                  tag.name === "Invested"
+                    ? Red
+                    : tag.name === "Initial assessment"
+                    ? Yellow
+                    : tag.name === "Met team"
+                    ? Violet
+                    : Green
+                }
+                alt=""
+              />{" "}
+              {tag.name}
             </li>
           ))}
         </ul>
@@ -198,6 +214,7 @@ export default function TableBody(props) {
                       {tagSet ? (
                         <>
                           <img
+                            alt=""
                             src={
                               `${tagSet.name.toUpperCase()}` === "ANALYZED"
                                 ? Red
@@ -205,10 +222,15 @@ export default function TableBody(props) {
                             }
                           />
                           {tagSet.name}
-                          <span onClick={() => setFunnel(index)}>
+                          <span
+                            onClick={() => {
+                              setFunnel(funnel ? null : index);
+                              setShowFunnel(!showFunnel);
+                            }}
+                          >
                             <i className="fas fa-chevron-down"></i>
                           </span>
-                          {funnel === index && (
+                          {(funnel === index) & showFunnel && (
                             <FunnelPopup
                               tags={funnelTags?.[0]?.group?.funnelTags || []}
                               id={id}
