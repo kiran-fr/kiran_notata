@@ -29,6 +29,8 @@
 
 .buttongreen {
   background-color: transparent;
+  margin-left: -11.5px;
+  margin-top: 2px;
   border: none;
 }
 .buttongreen i {
@@ -116,7 +118,7 @@
   min-width: 174px;
 }
 .startupTable td:nth-child(4) {
-  min-width: 160px;
+  min-width: 175px;
 }
 .startupTable td:nth-child(5) {
   min-width: 260px;
@@ -253,6 +255,7 @@
 }
 .startupTable .startupStatus i {
   font-size: 12px;
+  transition: all 0.1s ease;
   cursor: pointer;
 }
 
@@ -499,4 +502,9 @@
 .tableHeaderCheckmark .customCheck input:checked ~ .checkmark {
   background-color: #53cab2;
   border: none;
+}
+
+.activePopup i {
+  color: #53cab2 !important;
+  transform: rotate(180deg);
 }

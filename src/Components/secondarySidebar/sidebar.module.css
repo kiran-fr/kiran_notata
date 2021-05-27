@@ -392,3 +392,7 @@
   color: #ffffff;
   cursor: pointer;
 }
+
+.activePopup:before {
+  color: #53cab2 !important;
+}
