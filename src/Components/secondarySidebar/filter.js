@@ -15,20 +15,6 @@ import { funnelGroupGet } from "private/Apollo/Queries";
 import DateRangeSelector from "Components/elements/NotataComponents/DateRangeSelector";
 import moment from "moment";
 
-/* const DatePicker = ({ filters, setFilters }) => {
-  const setDateFilter = dateRange => {
-    let from = moment(dateRange[0]);
-    let to = moment(dateRange[1]);
-
-    if (from.isValid() && to.isValid()) {
-      let fromDate = from?.format("x");
-      let toDate = to?.format("x");
-      console.log(fromDate, toDate);
-      setFilters({ ...filters, fromDate, toDate });
-    }
-  };
-}
- */
 const DatePicker = ({ filters, setFilters }) => {
   const setDateFilter = dateRange => {
     let from = moment(dateRange[0]);
@@ -106,6 +92,7 @@ export default function FilterBar({
   setFilters,
   filterValue,
   handleSearch,
+  defaultFilters,
 }) {
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
@@ -165,14 +152,7 @@ export default function FilterBar({
           className={styles.clearAllButton}
           type="button"
           onClick={() => {
-            setFilters({
-              search: "",
-              tags: [],
-              funnelTag: [],
-              fromDate: new Date().getTime() - 40000,
-              toDate: new Date().getTime(),
-              starred: false,
-            });
+            setFilters(defaultFilters);
           }}
         >
           Clear All Filters
@@ -224,25 +204,6 @@ export default function FilterBar({
               ></i>
             </div>
           </div>
-          {/* <Tags
-            suggested={true}
-            size="smallInput"
-            items={[
-              { name: "software", id: "4" },
-              { name: "saas", id: "23" },
-              { name: "finance", id: "34" },
-              { name: "automotive", id: "17" },
-            ]}
-            tagSize="smallTagSize"
-            setTags={filters.tags}
-            // getSelectedTag={tags => {
-            //   setFilters({
-            //     ...filters,
-            //     tags: [...tags],
-            //   });
-            // }}
-            closeIcon="smallCloseIcon"
-          /> */}
         </div>
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
