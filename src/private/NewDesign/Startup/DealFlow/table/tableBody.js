@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./table.module.css";
 import Red from "../../../../../assets/images/red.png";
 import Green from "../../../../../assets/images/green.png";
+import More from "../../../../../assets/images/more.svg";
 import moment from "moment";
 //Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
@@ -229,12 +230,24 @@ export default function TableBody(props) {
                       {(item.tags || [])
                         .slice(0, 2)
                         .map(({ name, id, group }) => (
-                          <li key={id}>
-                            <span>
-                              {group.name}: {name}
-                            </span>
-                          </li>
+                          <>
+                            <li key={id}>
+                              <span>
+                                {group.name}: {name}
+                              </span>
+                            </li>
+                          </>
                         ))}
+                      {item.tags.length > 2 ? (
+                        <li
+                          style={{ marginLeft: 8 }}
+                          onClick={() => setShowTagGroupForId(item.id)}
+                        >
+                          <img src={More} alt="" />
+                        </li>
+                      ) : (
+                        <></>
+                      )}
                       {
                         <li onClick={() => setShowTagGroupForId(item.id)}>
                           <ButtonGreen />
