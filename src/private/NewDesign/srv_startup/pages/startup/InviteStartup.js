@@ -5,6 +5,9 @@ import { creativeUpdate } from "private/Apollo/Mutations";
 import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 import { useMutation } from "@apollo/client";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
+import { Button } from "Components/UI_Kits/Buttons/Buttons";
+
+import styles from "./InviteStartup.module.css";
 
 // Regex
 import { email as reg_email } from "../../../../../utils/regex";
@@ -32,6 +35,7 @@ export const InviteStartup = ({
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
 
   function getPublicShareUrl(creative) {
+    console.log(creative);
     let url =
       `${window.location.protocol}//` +
       `${window.location.host}/` +
@@ -94,31 +98,66 @@ export const InviteStartup = ({
     setValidate(isEmailValidaion ? false : true);
   };
 
-  console.log("validate", validate);
   return (
     <Modal
       title={inviteSent ? "Revoke Startup Link" : "Invite Startup"}
-      submit={() => (inviteSent ? revoke() : onSubmit())}
+      submit={() =>
+        inviteSent
+          ? revoke()
+          : email === ""
+          ? setEmail(inputEmail?.variables?.input?.email)
+          : onSubmit()
+      }
       close={() => {
         setInviteStartUpModal(false);
       }}
       disabled={inviteSent ? false : validate}
       children={
         inviteSent ? (
-          <div>{urlToShare}</div>
+          <>
+            <div className={styles.email}>
+              <p>
+                You can now share this form with {creative?.sharedWithEmail}. No
+                email has been sent from Notata, so you will have to copy the
+                link and send it by email.
+              </p>
+            </div>
+            <div className={styles.revokeURL}>
+              <a href={urlToShare}>{urlToShare}</a>
+            </div>
+          </>
         ) : (
-          <InputForm
-            type="email"
-            fullWidth={true}
-            handleInputChange={value => handleInput(value)}
-            name="email"
-            placeholder="company@gmail.com"
-            required
-          />
+          <>
+            <p className={styles.inviteText}>
+              The startup will then have access to this form, and will be able
+              to see all pre filled inforation you may have provided.
+            </p>
+            {email ? (
+              <div className={styles.email}>
+                <h4>Email</h4>
+                <div>
+                  <p>{email}</p>
+                  <Button size="extra-small" onClick={onSubmit()}>
+                    Invite
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <InputForm
+                type="email"
+                fullWidth={true}
+                handleInputChange={value => handleInput(value)}
+                name="email"
+                placeholder="company@domain.com"
+                required
+              />
+            )}
+          </>
         )
       }
-      submitTxt={inviteSent ? "Revoke" : "Invite"}
-      closeTxt="Cancel"
+      submitTxt={inviteSent ? "Revoke" : email === "" ? "Okay" : ""}
+      disableFoot={email !== "" && inviteSent}
+      closeTxt={email !== "" ? "" : "Cancel"}
     ></Modal>
   );
 };
