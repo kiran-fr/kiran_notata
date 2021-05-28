@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./tags.scss";
+import "./TagsModal.scss";
 import { Tags } from "./Tags/Tags";
 import { useQuery, gql, useMutation } from "@apollo/client";
 
@@ -76,7 +76,7 @@ const STATIONS_QUERY = gql`
     }
   }
 `;
-export default function ShareTemplate({ connection }) {
+export default function TagsModel({ connection }) {
   // Queries
 
   const tagGroupsQuery = useQuery(tagGroupsGet);
