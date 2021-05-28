@@ -14,7 +14,7 @@ export default function SelectTagsForStartup({ connection, close }) {
       }}
       submitTxt="Save"
       closeTxt="Cancel"
-      children={<TagsModal></TagsModal>}
-    ></Modal>
+      children={<TagsModal connection={connection} />}
+    />
   );
 }

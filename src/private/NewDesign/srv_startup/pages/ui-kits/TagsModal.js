@@ -12,77 +12,33 @@ import {
   connectionTagRemove,
 } from "private/Apollo/Mutations";
 
-const addTag = (tag, connection) => ({
-  variables: {
-    connectionId: connection.id,
-    tagId: tag.id,
-  },
+// Your problem starts with this query.
+// The tag group query is more extensive, and contains both group and tags.
 
-  optimisticResponse: {
-    __typename: "Mutation",
-    connectionTagAdd: {
-      ...connection,
-      tags: [
-        ...connection.tags,
-        {
-          createdAt: new Date().getTime(),
-          index: connection.tags.length,
-          createdBy: "tmp",
-          id: "tmp-id",
-          description: null,
-          name: tag.name,
-          tagGroupId: tag.tagGroupId,
-          __typename: "Tag",
-        },
-      ],
-      __typename: "Connection",
-    },
-  },
-});
+// //set data query
+// const STATIONS_QUERY = gql`
+//   {
+//     tagGroupsGet {
+//       name
+//       tags {
+//         name
+//       }
+//     }
+//   }
+// `;
 
-const deleteTag = (tag, connection) => ({
-  variables: {
-    connectionId: connection.id,
-    tagId: tag.id,
-  },
-
-  optimisticResponse: {
-    __typename: "Mutation",
-    connectionTagRemove: {
-      ...connection,
-      tags: [
-        ...connection.tags
-          .filter(({ id }) => id !== tag.id)
-          .map(t => ({
-            ...t,
-            index: null,
-            description: null,
-            createdBy: "tmp",
-            createdAt: 0,
-          })),
-      ],
-      __typename: "Connection",
-    },
-  },
-});
-//set data query
-const STATIONS_QUERY = gql`
-  {
-    tagGroupsGet {
-      name
-      tags {
-        name
-      }
-    }
-  }
-`;
 export default function TagsModel({ connection }) {
-  // Queries
+  console.log("connection", connection);
 
-  const tagGroupsQuery = useQuery(tagGroupsGet);
-  const tagGroups = tagGroupsQuery?.data?.tagGroupsGet || [];
+  // Queries
+  const { data, loading, error } = useQuery(tagGroupsGet);
+
+  // Good :D
+  const tagGroups = data?.tagGroupsGet || [];
+
   // Mutations
   const [addTagMutation] = useMutation(connectionTagAdd);
+  const [removeTagMutation] = useMutation(connectionTagRemove);
 
   // Add tag function
   // function addTag(tag) {
@@ -91,92 +47,173 @@ export default function TagsModel({ connection }) {
 
   let tagTypesState = {};
   const [selectedTags, setSelectedTags] = useState([]);
+
   //const [showDropDown, setShowDropDown] = useState(false);
 
-  const tags = [
-    {
-      type: "Business",
-      id: "business",
-      tags: ["Hardware", "Software", "Financal"],
-    },
-    {
-      type: "Source",
-      id: "source",
-      tags: ["Hardware", "Software", "Financal"],
-    },
-  ];
+  // const tags = [
+  //   {
+  //     type: "Business",
+  //     id: "business",
+  //     tags: ["Hardware", "Software", "Financal"],
+  //   },
+  //   {
+  //     type: "Source",
+  //     id: "source",
+  //     tags: ["Hardware", "Software", "Financal"],
+  //   },
+  // ];
 
   const [tagsStates, setTagsStates] = useState(tagTypesState);
-  const { data, loading, error } = useQuery(STATIONS_QUERY); //create query
+
+  console.log("tagsStates", tagsStates);
+
+  // const { data, loading, error } = useQuery(STATIONS_QUERY); //create query
+
   if (loading) return "Loading..."; //query processing
   if (error) return <pre>{error.message}</pre>; //if query has issue
-  data.tagGroupsGet &&
-    data.tagGroupsGet.map(item => {
-      tagTypesState[item.name] = "collapse";
-    });
 
-  setTimeout(function () {
-    const divs = document.querySelectorAll(".Buttons_primary_color__1fBdS");
+  // tagGroups.map(({ id }) => {
+  //   tagTypesState[id] = "collapse";
+  // });
 
-    divs.forEach(el =>
-      el.addEventListener("click", event => {
-        //addTag(selectedTags);
-        // addTagMutation(addTag(selectedTags, connection));
+  // This is not very react'y :P
 
-        console.log("tag added");
-        return false;
-      })
-    );
-  }, 10000);
+  // setTimeout(function () {
+  //   const divs = document.querySelectorAll(".Buttons_primary_color__1fBdS");
+  //
+  //   divs.forEach(el =>
+  //     el.addEventListener("click", event => {
+  //       //addTag(selectedTags);
+  //       // addTagMutation(addTag(selectedTags, connection));
+  //
+  //       console.log("tag added");
+  //       return false;
+  //     })
+  //   );
+  // }, 10000);
 
   return (
     <div className="tags-container">
       <div className="tags-container__sub-heading">Write or choose Tags</div>
       <div className="mb-2 tags-container__heading ">Tags</div>
-      <Tags setTags={selectedTags} getSelectedTag={setSelectedTags} />
+
+      <Tags
+        setTags={connection?.tags || []}
+        getSelectedTag={data => {
+          console.log("data", data);
+
+          // let variables = {
+          //   connectionId: connection.id,
+          //   tagId: data.id,
+          // }
+
+          // let optimisticResponse = {
+          //   __typename: "Mutation",
+          //     connectionTagRemove: {
+          //   ...connection,
+          //       tags: [
+          //       ...connection.tags
+          //         .filter(({ id }) => id !== data.id)
+          //         .map(t => ({
+          //           ...t,
+          //           index: null,
+          //           description: null,
+          //           createdBy: "tmp",
+          //           createdAt: 0,
+          //         })),
+          //     ],
+          //       __typename: "Connection",
+          //   },
+          // }
+          //
+          // removeTagMutation({
+          //   variables,
+          //   optimisticResponse
+          // })
+        }}
+      />
+
       <div className="tags-container__dropdown">
-        {data.tagGroupsGet &&
-          data.tagGroupsGet.map(item => {
-            if (item.name !== null) {
+        {
+          // data.tagGroupsGet && data.tagGroupsGet.map(item => {
+          tagGroups.map(tagGroup => {
+            if (!!tagGroup?.tags?.length) {
               return (
-                <div className="row" key={item.name}>
+                <div className="row" key={tagGroup.id}>
                   <div className="col-sm-10 col-xs-10 section-heading">
-                    {item.name}
+                    {tagGroup.name}
                   </div>
                   <div className="col-sm-2 col-xs-2 expand-collapse-icon">
                     <i
                       className={`fa ${
-                        tagsStates[item.name] === ""
+                        tagsStates[tagGroup.id]
                           ? "fa-chevron-up"
                           : "fa-chevron-down"
                       }`}
                       aria-hidden="true"
                       onClick={() => {
-                        let updatedTagsStates = { ...tagsStates };
-                        updatedTagsStates[item.name] =
-                          tagsStates[item.name] === "" ? "collapse" : "";
-                        setTagsStates(updatedTagsStates);
+                        setTagsStates({
+                          ...tagsStates,
+                          [tagGroup.id]: !tagsStates[tagGroup.id],
+                        });
                       }}
-                    ></i>
+                    />
                   </div>
                   <div
                     className={`col-sm-12 col-xs-12 ${
-                      tagsStates[item.name] === "" ? "" : "collapse"
+                      tagsStates[tagGroup.id] ? "" : "collapse"
                     }`}
                   >
                     <div className="type-tags-container">
-                      {item.tags.map((tag, index) => {
+                      {tagGroup.tags.map((tag, index) => {
                         return (
                           <div
                             className="tag suggested-tag"
-                            key={`${item.name}-${index}`}
+                            key={tag.id}
                             onClick={() => {
-                              let updatedselectedTags = [...selectedTags];
-                              updatedselectedTags.push(
-                                `${item.name}:${tag.name}`
-                              );
-                              console.log(updatedselectedTags);
-                              setSelectedTags(updatedselectedTags);
+                              let variables = {
+                                connectionId: connection.id,
+                                tagId: tag.id,
+                              };
+
+                              let optimisticResponse = {
+                                __typename: "Mutation",
+                                connectionTagAdd: {
+                                  ...connection,
+                                  tags: [
+                                    ...connection.tags,
+                                    {
+                                      createdAt: new Date().getTime(),
+                                      index: connection.tags.length,
+                                      createdBy: "tmp",
+                                      id: "tmp-id",
+                                      description: null,
+                                      name: tag.name,
+                                      tagGroupId: tag.tagGroupId,
+                                      __typename: "Tag",
+                                    },
+                                  ],
+                                  __typename: "Connection",
+                                },
+                              };
+
+                              addTagMutation({
+                                variables,
+                                optimisticResponse,
+                              });
+
+                              // let updatedselectedTags = [...selectedTags];
+                              // updatedselectedTags.push(
+                              //   `${item.name}:${tag.name}`
+                              // );
+
+                              // console.log(updatedselectedTags);
+
+                              // Selected tags should come from API, and not
+                              // a custom state like this. Apollo should be able
+                              // to deal with the state of the tags, and you can
+                              // remove API call delays by using "optimisticResponse"
+                              // setSelectedTags(updatedselectedTags);
                             }}
                           >
                             {tag.name}
@@ -188,7 +225,8 @@ export default function TagsModel({ connection }) {
                 </div>
               );
             }
-          })}
+          })
+        }
       </div>
     </div>
   );

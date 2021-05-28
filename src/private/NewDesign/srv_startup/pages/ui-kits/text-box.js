@@ -9,6 +9,6 @@ export default function TextBox({ placeholder, maxWidth, inputval, ...props }) {
       placeholder={placeholder}
       className={maxWidth ? "max-text-box text-box" : "text-box"}
       {...props}
-    ></input>
+    />
   );
 }
