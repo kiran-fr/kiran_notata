@@ -2,7 +2,7 @@ import React from "react";
 import Tags from "../../srv_startup/pages/ui-kits/tags";
 import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
 
-export default function SelectTagsForStartup({ close }) {
+export default function SelectTagsForStartup({ connection, close }) {
   return (
     <Modal
       title="Add Tags"
