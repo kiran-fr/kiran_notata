@@ -103,9 +103,9 @@ export default function Groups({ history }) {
               }`}
               aria-hidden="true"
               onClick={() => setShowSortByDropDown(!showSortByDropDown)}
-            ></i>
-            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            />
+            <i class="fa fa-arrow-up" aria-hidden="true" />
+            <i class="fa fa-arrow-down" aria-hidden="true" />
             {showSortByDropDown && (
               <div className="sortby-dropdown">
                 <div className="sortby-dropdown__item">Name</div>
@@ -121,7 +121,7 @@ export default function Groups({ history }) {
               className="create-new-group"
               text="CREATE NEW GROUP"
               iconPosition={ICONPOSITION.START}
-            ></ButtonWithIcon>
+            />
           </div>
         </div>
 

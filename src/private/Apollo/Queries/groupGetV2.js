@@ -80,6 +80,48 @@ export default gql`
 
         connection {
           id
+          subjectiveScores {
+            createdBy
+            createdAt
+            score
+            isMe
+          }
+          evaluationSummaries {
+            templateId
+            templateName
+            averagePercentageScore
+            highestScore
+            lowestScore
+            submissions
+          }
+          evaluations {
+            id
+            isMe
+            createdAt
+            templateId
+            template {
+              id
+              name
+            }
+            createdByUser {
+              family_name
+              given_name
+              email
+            }
+            summary {
+              scorePercent
+              sections {
+                sectionId
+                sectionName
+                scorePercent
+                scorePerAnswer {
+                  questionName
+                  possibleScore
+                  score
+                }
+              }
+            }
+          }
         }
 
         evaluations {

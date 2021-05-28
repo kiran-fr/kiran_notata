@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { groupGetV2 } from "../../../../Apollo/Queries";
 import "./group-dashboard.scss";
+import { GhostLoader } from "../../../../../Components/elements";
 import StartupPerformanceChart from "./startup-performance-chart";
 import CommentsActivities from "./comments-activities";
-import { GhostLoader } from "../../../../../Components/elements";
 import CompanyNameAndDescription from "./CompanyNameAndDescription";
 import ManageResources from "./ManageResources";
 import StartupList from "./StartupList";
 
-export default function GroupDashboard({ match }) {
+export default function GroupDashboard({ match, history }) {
   // Queries
-  let [groupGet, groupRes] = useLazyQuery(groupGetV2);
+  let [groupGet, { data, loading, error, called }] = useLazyQuery(groupGetV2);
 
   // Execute lazy query
   useEffect(() => {
@@ -24,9 +24,10 @@ export default function GroupDashboard({ match }) {
   }, [match]);
 
   // Define group
-  let group = groupRes?.data?.groupGetV2 || {};
+  let group = data?.groupGetV2 || {};
 
-  if (groupRes?.loading && !groupRes?.data) {
+  // Load if API is called, loading, and had not received data
+  if (called && loading && !data) {
     return <GhostLoader />;
   }
 
@@ -58,7 +59,7 @@ export default function GroupDashboard({ match }) {
               </div>
 
               {/* Startups */}
-              <StartupList group={group} />
+              <StartupList group={group} history={history} />
             </div>
           </div>
           <div className="col-md-3 col-sm-12 col-xs-12 comments-activities-container">

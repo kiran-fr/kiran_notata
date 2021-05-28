@@ -98,7 +98,6 @@ export default function TableBody(props) {
             let subjectiveScoreValAvg = subjectiveScore(item);
             let oneLiner = "";
             let problem = "";
-
             if (creative.answers) {
               oneLiner = creative.answers.find(
                 ({ questionId }) => questionId === "q01_section_info"

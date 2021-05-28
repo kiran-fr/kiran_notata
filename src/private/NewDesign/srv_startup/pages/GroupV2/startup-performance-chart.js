@@ -22,8 +22,6 @@ export default function StartupPerformanceChart({ group }) {
 
   let usedTemplates = getAllUsedTemplates(startups);
 
-  console.log("disabledTemplates", disabledTemplates);
-
   let data = startups.map(startup => {
     let subjectiveScoreSummary = getSubjectiveScoreSummary(startup);
     let subjectiveScore = Math.round(

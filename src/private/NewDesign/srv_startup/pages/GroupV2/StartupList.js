@@ -3,7 +3,7 @@ import StartupCard from "./StartupCard";
 import SubmissionFullList from "../startup/evaluations/submission-full-list";
 import { Modal } from "Components/UI_Kits/Modal/Modal";
 
-export default function StartupList({ group }) {
+export default function StartupList({ group, history }) {
   const [fullListModal, setFullListModal] = useState(false);
 
   return (
@@ -14,6 +14,7 @@ export default function StartupList({ group }) {
           group={group}
           startup={startup}
           setFullListModal={setFullListModal}
+          history={history}
         />
       ))}
 

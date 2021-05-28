@@ -31,16 +31,47 @@
         height: 30px;
         padding: 5px 15px!important;
     }
-    .share-back{
-        border: 1px solid #6A6a6a;
+
+    .stop-sharing-btn{
+
         height: 30px;
-        color: #6a6a6a;
         padding: 5px 15px!important;
-        margin-lefT: 15px;
+        margin-left: 15px;
+
+        border: 1px solid #6A6a6a;
+        color: #6a6a6a;
+
         .MuiButton-label{
             color: #6a6a6a;
         }
     }
+
+    .sharing-bth{
+        height: 30px;
+        padding: 5px 15px!important;
+        margin-left: 15px;
+
+
+        background: #53CAB2;
+
+        .MuiButton-label{
+            font-size: 12px;
+            line-height: 15px;
+        }
+        &:hover{
+            background-color: #fff;
+            .MuiButton-label{
+                color:#969BA3!important;
+            }
+            border: 1px solid #969BA3;
+        }
+    }
+
+
+
+
+
+
     &__card-heading{
         font-family: 'Proxima Nova';
         font-style: normal;
@@ -53,6 +84,7 @@
         display: flex;
         border-bottom: 1px solid #F1F1F1;
         padding-bottom: 20px;
+        padding-right: 60px;
         .material-icons{
             color:#C4C4C4;
             margin-right:16px;
@@ -267,6 +299,7 @@
             }
             margin-top:5px;
         }
+
         .subjective-score-container{
             margin-left: 60px;
             &__subjective-score{
@@ -301,6 +334,9 @@
             }
             &__evaluations-heading{
                 color: #969BA3;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
             &__score{
                 font-family: 'Proxima Nova';
@@ -611,7 +647,9 @@
             &__record{
                 margin-top:20px;
                 &__share-with-group{
+                    cursor: pointer;
                     width: 140px;
+                    text-align: center;
                     font-family: Proxima Nova;
                     font-style: normal;
                     font-weight: 600;

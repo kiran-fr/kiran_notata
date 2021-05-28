@@ -24,7 +24,7 @@ export default function ExternalForm({ history }: { history: History }) {
 
   const loading: boolean = accountQuery.loading;
 
-  if (loading && !accountQuery.data) return <GhostLoader />;
+  if (loading && !accountQuery.data) return <GhostLoader small={false}/>;
 
   const iFrameUrl: string = `${window.location.protocol}//${window.location.host}/public/${account.id}/form.html`;
   const iFrameContent = `<iframe src="${iFrameUrl}" 
