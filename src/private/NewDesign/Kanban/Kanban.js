@@ -14,7 +14,7 @@ import { appsyncClient } from "../../../awsconfig";
 
 // common dynamic funnel img function
 
-import { DynamicIcons } from "../CommonFunctions";
+import { DynamicIcons, sortArr } from "../CommonFunctions";
 
 // Components
 import BoardHeader from "./Components/BoardHeader";
@@ -94,11 +94,12 @@ export const Kanban = props => {
         setColumns({ ...columnsCopy });
       });
     }
-  }, [getConnections || sorting]);
+  }, [getConnections]);
 
   useEffect(() => {
     if (loading === false && accountGet) {
-      setColumns({ ...response });
+      const indexSort = sortArr(response);
+      setColumns({ ...indexSort });
       setGetConnections(true);
     }
   }, [loading, accountGet]);
