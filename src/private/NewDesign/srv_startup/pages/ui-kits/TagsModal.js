@@ -99,37 +99,43 @@ export default function TagsModel({ connection }) {
 
       <Tags
         setTags={connection?.tags || []}
-        getSelectedTag={data => {
-          console.log("data", data);
+        getSelectedTag={d => {
+          console.log("d", d);
 
-          // let variables = {
-          //   connectionId: connection.id,
-          //   tagId: data.id,
-          // }
+          if (!d.id) {
+            // You need to get the ID of the tag object you are deleting...
+            // Right now that does not seem to be passed in the "data" object
+            return;
+          }
 
-          // let optimisticResponse = {
-          //   __typename: "Mutation",
-          //     connectionTagRemove: {
-          //   ...connection,
-          //       tags: [
-          //       ...connection.tags
-          //         .filter(({ id }) => id !== data.id)
-          //         .map(t => ({
-          //           ...t,
-          //           index: null,
-          //           description: null,
-          //           createdBy: "tmp",
-          //           createdAt: 0,
-          //         })),
-          //     ],
-          //       __typename: "Connection",
-          //   },
-          // }
-          //
-          // removeTagMutation({
-          //   variables,
-          //   optimisticResponse
-          // })
+          let variables = {
+            connectionId: connection.id,
+            tagId: d.id,
+          };
+
+          let optimisticResponse = {
+            __typename: "Mutation",
+            connectionTagRemove: {
+              ...connection,
+              tags: [
+                ...connection.tags
+                  .filter(({ id }) => id !== d.id)
+                  .map(t => ({
+                    ...t,
+                    index: null,
+                    description: null,
+                    createdBy: "tmp",
+                    createdAt: 0,
+                  })),
+              ],
+              __typename: "Connection",
+            },
+          };
+
+          removeTagMutation({
+            variables,
+            optimisticResponse,
+          });
         }}
       />
 
