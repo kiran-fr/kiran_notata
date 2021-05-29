@@ -59,8 +59,8 @@ export const AddSection = props => {
       },
     }
   );
-  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections.name);
-  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections[0].id);
+  /* console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections.name);
+  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections[0].id); */
   const evaluationTemplateAPIResp =
     evaluationTemplateGetData?.evaluationTemplateGet;
 

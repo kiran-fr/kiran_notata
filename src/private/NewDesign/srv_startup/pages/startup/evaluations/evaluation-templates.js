@@ -8,6 +8,7 @@ import { evaluation_template_profile } from "../../../../../../definitions";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import TextBox from "../../ui-kits/text-box";
 import { useQuery, useMutation } from "@apollo/client";
+import { add_section_dev } from "../../../../../../definitions";
 import { accountGet } from "private/Apollo/Queries";
 import {
   evaluationTemplateCreate,
@@ -183,6 +184,7 @@ export const ElevationTemplates = ({ history }) => {
           loading={saveLoader}
           close={() => {
             setCreateNewTemplate(false);
+            history.push(add_section_dev);
           }}
           submitTxt="Save"
           closeTxt="Cancel"

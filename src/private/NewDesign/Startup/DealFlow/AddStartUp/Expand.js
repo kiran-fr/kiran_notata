@@ -21,6 +21,7 @@ import {
   creativePut,
   connectionFunnelTagAdd,
   connectionSubjectiveScorePut,
+  connectionTadAdd,
   groupStartupAdd,
 } from "private/Apollo/Mutations";
 import _ from "lodash";
@@ -130,6 +131,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
           variables: funnelVariables,
         });
       }
+
       if (selectedGroup) {
         const groupVariables = {
           groupId: selectedGroup.id,
@@ -274,6 +276,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
               setTagSelected={setTagSelected}
             />
           }
+
         ></Modal>
       )}
     </form>
