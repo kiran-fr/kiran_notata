@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./TagsModal.scss";
 import { Tags } from "./Tags/Tags";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 
 // API STUFF
 
@@ -11,7 +11,7 @@ import {
   connectionTagAdd,
   connectionTagRemove,
 } from "private/Apollo/Mutations";
-//import { GhostLoader } from "Components/elements";
+import { GhostLoader } from "Components/elements";
 
 export default function TagsModal({ connection }) {
   // Queries
@@ -61,9 +61,7 @@ export default function TagsModal({ connection }) {
   return (
     <div className="tags-container">
       <div className="tags-container__sub-heading">Write or choose Tags</div>
-      {/*}
-      <GhostLoader></GhostLoader>
-  {*/}
+      {/* <GhostLoader></GhostLoader> */}
       <Tags
         setTags={connection?.tags || []}
         removeTag={removeTag}
