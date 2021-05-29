@@ -29,6 +29,8 @@
 
 .buttongreen {
   background-color: transparent;
+  margin-left: -11.5px;
+  margin-top: 2px;
   border: none;
 }
 .buttongreen i {
@@ -116,7 +118,7 @@
   min-width: 174px;
 }
 .startupTable td:nth-child(4) {
-  min-width: 160px;
+  min-width: 175px;
 }
 .startupTable td:nth-child(5) {
   min-width: 320px;
@@ -243,6 +245,7 @@
 }
 .startupTable .startupStatus i {
   font-size: 12px;
+  transition: all 0.1s ease;
   cursor: pointer;
 }
 
@@ -358,27 +361,48 @@
 }
 
 .funnelPopup {
-  position: absolute;
   background-color: #fff;
-  z-index: 99;
-  top: 10px;
-  left: 0;
-  box-shadow: 0px 6px 10px rgba(41, 70, 103, 0.2);
-  border-radius: 6px;
-  width: 100%;
+  min-width: 180px;
+  padding: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0px 3px 20px 5px rgba(30, 30, 30, 0.1);
+  position: absolute;
+  z-index: 90000 !important;
+  height: auto;
+  top: 60px;
+  overflow: visible;
+  transition: all 0.1s ease-in;
+  transform-origin: 0 0;
+  animation: open 0.1s;
 }
+
+@keyframes open {
+  0% {
+    transform: scaleY(0.2);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
 .funnelPopup ul {
   flex-direction: column;
   margin: 0;
   padding: 0;
   background-color: #fff;
-  width: calc(100% - 30px);
+  width: 100%;
 }
 .funnelPopup ul li {
   margin: 0 !important;
   padding: 0;
-  padding: 5px 6px;
+  padding: 15px 17px;
   cursor: pointer;
+  transition: background-color 0.1s ease-in;
+}
+
+.funnelPopup ul li:hover {
+  background-color: #f4f4f4;
 }
 .funnelPopup .floatingArrow {
   position: absolute;
@@ -468,4 +492,9 @@
 .tableHeaderCheckmark .customCheck input:checked ~ .checkmark {
   background-color: #53cab2;
   border: none;
+}
+
+.activePopup i {
+  color: #53cab2 !important;
+  transform: rotate(180deg);
 }

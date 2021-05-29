@@ -34,3 +34,23 @@ export const DynamicIcons = (index, option) => {
       : BarIcon5;
   }
 };
+
+export const sortArr = arr => {
+  let sortedColumn = [];
+  for (const data of Object.keys(arr)) {
+    sortedColumn.push(arr[data]);
+  }
+  sortedColumn.sort((a, b) => (a.index > b.index ? 1 : -1));
+  return sortedColumn || [];
+};
+
+export const arrayPositionSort = (arr, index, newItem) => [
+  // part of the array before the specified index
+  ...arr.slice(0, index),
+  // inserted item
+  newItem,
+  // part of the array after the specified index
+  ...arr.slice(index),
+];
+
+// const result123 = arrayPositionSort(columnsCopy, key, columnUpdatedObj)

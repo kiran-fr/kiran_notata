@@ -1,0 +1,50 @@
+.inviteText {
+  color: rgba(150, 155, 163, 1);
+  font-size: 13px;
+  font-family: Roboto;
+  margin: 30px 0;
+}
+
+.email {
+  margin: 20px 0;
+}
+
+.email h4 {
+  font-size: 13px;
+  font-weight: 500;
+  font-family: Roboto;
+  color: rgba(106, 106, 106, 1);
+}
+
+.email > div {
+  display: flex;
+  align-items: center;
+}
+
+.email p {
+  font-family: Proxima Nova;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(106, 106, 106, 1);
+  margin-right: 25px;
+}
+
+.revokeURL {
+  background-color: #424242;
+  color: #fff;
+  padding: 20px;
+  font-family: Proxima Nova;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
+.revokeURL a {
+  color: #fff;
+}
+
+.revokeURL a:hover {
+  color: rgb(221, 221, 221);
+}

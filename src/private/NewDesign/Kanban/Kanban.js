@@ -14,7 +14,7 @@ import { appsyncClient } from "../../../awsconfig";
 
 // common dynamic funnel img function
 
-import { DynamicIcons } from "../CommonFunctions";
+import { DynamicIcons, sortArr } from "../CommonFunctions";
 
 // Components
 import BoardHeader from "./Components/BoardHeader";
@@ -61,6 +61,8 @@ export const Kanban = props => {
   const [columns, setColumns] = useState({});
   const [getConnections, setGetConnections] = useState(false);
   const [loadingAPI, setLoadingAPI] = useState(true);
+  const [sorting, setSorting] = useState("");
+
   const { data: accountGet, loading, error } = useQuery(accountGetData);
   let response = accountGet?.accountGet?.funnelGroups?.[0].funnelTags;
 
@@ -96,7 +98,8 @@ export const Kanban = props => {
 
   useEffect(() => {
     if (loading === false && accountGet) {
-      setColumns({ ...response });
+      const indexSort = sortArr(response);
+      setColumns({ ...indexSort });
       setGetConnections(true);
     }
   }, [loading, accountGet]);
