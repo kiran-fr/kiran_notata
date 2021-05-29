@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from "react";
 import TagsInput from "./TagsInput";
-import { Tag } from "Components/elements";
 
 //styles
 import styles from "./Tag.module.css";
-import classnames from "classnames";
 
-//Tag buttons
-function getTagButtons(tagButtons) {
-  switch (tagButtons) {
-    case "bigButtons":
-      return styles.tagBigButton;
-    case "smallButtons":
-      return styles.tagSmallButton;
-    default:
-      return styles.tagBigButton;
-  }
-}
 // Main function
 export const Tags = ({
   size,
@@ -26,23 +13,25 @@ export const Tags = ({
   ulSize,
   getSelectedTag,
   setTags,
+  removeTag,
 }) => {
   // States
   const [selectedTags, setSelectedTags] = useState([]);
-
-  // console.log("items", items);
-  // console.log("selectedTags", selectedTags);
 
   useEffect(() => {
     if (setTags) {
       let tags = [];
       setTags.forEach(el => {
-        tags.push(el.toString());
+        tags.push({
+          id: el.id,
+          name: el.name,
+          type: el.group.name,
+        });
       });
       setSelectedTags(tags);
     }
   }, [setTags]);
-
+  console.log(selectedTags);
   // Select tags
   function selectTags(tags) {
     setSelectedTags(tags);
@@ -62,6 +51,7 @@ export const Tags = ({
           tagName={tagName}
           closeIcon={closeIcon}
           ulSize={ulSize}
+          removeTag={removeTag}
         />
       </div>
     </div>

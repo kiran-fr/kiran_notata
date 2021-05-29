@@ -154,10 +154,24 @@ export default ({
                 onClick={() => {}}
                 kill={false}
               >
-                {group.name}: {name}
+                {group.name}: {name} HEEEE
               </Tag>
             ))}
-
+            {connection.tags.length > 2 ? (
+              <Tag
+                isButton={true}
+                active={false}
+                className={""}
+                kill={false}
+                onClick={() => {
+                  setShowTagGroupForId(connection.id);
+                }}
+              >
+                ...
+              </Tag>
+            ) : (
+              <></>
+            )}
             <Tag
               isButton={true}
               active={false}
