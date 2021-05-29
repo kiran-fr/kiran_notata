@@ -20,11 +20,12 @@ import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
 import TextBox from "../ui-kits/text-box";
-import { logCreate, logDelete } from "private/Apollo/Mutations";
+import { logCreate, logDelete, logUpdate } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
   const [mutationlogCreate] = useMutation(logCreate);
+  const [mutationlogUpdate] = useMutation(logUpdate);
   const [mutationlogDelete] = useMutation(logDelete);
   const [comments, setComments] = useState([]);
   const [mutateConnectionPut] = useMutation(connectionPut);
@@ -101,6 +102,7 @@ export default function Overview(props) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
   const [message, setMessage] = useState(null);
+  const [updatemessage, setUpdateMessage] = useState(null);
 
   const connectionData = { id: id, subjectiveScores: subjectiveScores };
   const { data: connectionsGetData, loading, error } = useQuery(
@@ -128,6 +130,11 @@ export default function Overview(props) {
     setMessage(value);
   };
 
+  const handleUpdateMessageChange = e => {
+    const { value } = e.target;
+    setUpdateMessage(value);
+  };
+
   const saveComment = async () => {
     if (message) {
       let variables = {
@@ -146,6 +153,27 @@ export default function Overview(props) {
       if (savedLog) {
         setComments([...comments, savedLog]);
       }
+    }
+  };
+
+  const UpdateChat = async (CommentID, INTVAL) => {
+    console.log(INTVAL);
+    let variables = {
+      id: CommentID,
+      input: {
+        logType: "COMMENT",
+        dataPairs: [
+          {
+            key: "TEXT",
+            val: INTVAL,
+          },
+        ],
+      },
+    };
+    let logConnection = await mutationlogUpdate({ variables });
+    let msg = logConnection?.data?.logUpdate?.message;
+    if (msg) {
+      setComments(comments);
     }
   };
 
@@ -652,6 +680,7 @@ export default function Overview(props) {
                                   comment?.dataPairs?.length > 0 &&
                                   comment?.dataPairs[0].val
                                 }
+                                onChange={handleUpdateMessageChange}
                               />
                             </div>
                             <div className="row">
@@ -667,7 +696,9 @@ export default function Overview(props) {
                                 className="ml-2 text-center archive-btn"
                                 text="Save"
                                 iconPosition={ICONPOSITION.NONE}
-                                onClick={() => setEditChat(false)}
+                                onClick={() =>
+                                  UpdateChat(comment.id, updatemessage)
+                                }
                               ></ButtonWithIcon>
                             </div>
                           </>

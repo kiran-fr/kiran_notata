@@ -121,7 +121,7 @@
   min-width: 175px;
 }
 .startupTable td:nth-child(5) {
-  min-width: 260px;
+  min-width: 320px;
 }
 .startupTable td:nth-child(6) {
   min-width: 120px;
@@ -159,12 +159,6 @@
 }
 
 .startupTable td ul li span {
-  /*background-color: #6a6a6a;*/
-  /*padding: 4px 9px;*/
-  /*color: #fff;*/
-  /*border-radius: 15px;*/
-  /*font-size: 10px;*/
-
   background-color: #6a6a6a;
   padding: 2px 9px;
   color: #fff;
@@ -175,14 +169,10 @@
   overflow: hidden;
   display: block;
   white-space: nowrap;
-
+  max-width: 110px;
   position: relative;
-  /*top: -4px;*/
 }
 
-.startupTable td ul li:not(:first-child) {
-  /*margin-left: 8px;*/
-}
 .startupTable td span i {
   font-size: 12px;
   color: #969ba3;
