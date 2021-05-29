@@ -5,7 +5,7 @@ import { Startups } from "private/Apollo/Queries/groupsGet";
 import { connectionsGet, groupsGet, userGet } from "private/Apollo/Queries";
 import { connectionCreate } from "private/Apollo/Mutations";
 
-import { dashboard, group, settings, charts, signOut } from "definitions.js";
+import { dashboard, group, settings, charts, signOut,settings_new } from "definitions.js";
 import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
 import Groups, { GroupsData } from "private/pages/Groups/Groups";
 import { Connection } from "private/pages/Dashboard/Connections/types";
@@ -214,7 +214,7 @@ const SideBarTreeMenu = ({ location, history }: any) => {
     {
       key: "settings",
       label: "Settings",
-      link: settings,
+      link: settings_new,
       root: true,
     },
     {

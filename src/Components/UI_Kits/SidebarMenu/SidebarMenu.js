@@ -11,6 +11,7 @@ import {
   startup_page,
   pre_profile,
   reports,
+  settings_new,
 } from "definitions.js";
 
 // Styles
@@ -149,7 +150,7 @@ export function SideBarMenu() {
             <div className={styles.menu_list + " " + styles.menu_listSettings}>
               <NavLink
                 exact={true}
-                to={settings}
+                to={settings_new}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}
