@@ -245,6 +245,7 @@ export default function Connections({ history }) {
         setFilters={setFilters}
         filters={filters}
         history={history}
+        defaultFilters={defaultFilters}
         fullFilter={true}
         tabValue={tabValue}
         setTabValue={setTabValue}

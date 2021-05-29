@@ -1,4 +1,32 @@
 .report-container{
+    .fillter-btn{
+        margin-top:20px;
+        border: 1px solid #6A6a6a;
+        height: 30px;
+        color: #6a6a6a;
+        padding: 5px 15px!important;
+        margin-lefT: 15px;
+        .MuiButton-label{
+            color: #6a6a6a;
+        }
+    }
+    &__add-icon-container{
+        display: flex;
+        justify-content: flex-end;
+        &__add-icon{
+            width: 48px;
+            height: 48px;
+            background: #FF8775;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            display: flex!important;
+            align-items: center;
+            justify-content: center;
+            color: #FFF;
+            margin-top:15px;
+        }
+    }
+    
     .funnels-container{
         padding: 20px 20px 40px 65px;
         @media only screen and(max-width:991px) {
@@ -154,10 +182,6 @@
         }
     }
     .my-groups-container{
-        @media only screen and(min-width:991px) and(max-width:1199px) {
-            padding-left:0px;
-            padding-right: 0px;
-        }
         &__noOfRecords{
             font-family: 'Proxima Nova';
             font-style: normal;

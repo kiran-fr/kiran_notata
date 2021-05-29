@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import styles from "./table.module.css";
+import styles, { activePopup } from "./table.module.css";
 import Red from "../../../../../assets/images/red.png";
 import Green from "../../../../../assets/images/green.png";
 import More from "../../../../../assets/images/more.svg";
+import Violet from "../../../../../assets/images/violet.png";
+import Yellow from "../../../../../assets/images/Bar_Icon_04.svg";
 import moment from "moment";
 //Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
@@ -27,23 +29,38 @@ export default function TableBody(props) {
   } = props;
 
   const [funnel, setFunnel] = useState();
+  const [showFunnel, setShowFunnel] = useState(false);
 
-  const FunnelPopup = ({ tags, id }) => {
+  const FunnelPopup = ({ tags, id, index }) => {
     const updateFunnelTagForConnection = funnelTagId => {
       updateFunnelTag(funnelTagId, id);
       setFunnel(false);
     };
 
     return (
-      <div className={styles.funnelPopup} style={{ top: `50px` }}>
+      <div
+        className={styles.funnelPopup}
+        style={{ top: index > 20 ? "-400%" : `50px` }}
+      >
         <ul>
           {tags?.map(tag => (
             <li
               key={tag.id}
               onClick={() => updateFunnelTagForConnection(tag.id)}
             >
-              {" "}
-              <img src={Green} /> {tag.name}
+              <img
+                src={
+                  tag.name === "Invested"
+                    ? Red
+                    : tag.name === "Initial assessment"
+                    ? Yellow
+                    : tag.name === "Met team"
+                    ? Violet
+                    : Green
+                }
+                alt=""
+              />{" "}
+              {tag.name}
             </li>
           ))}
         </ul>
@@ -199,6 +216,7 @@ export default function TableBody(props) {
                       {tagSet ? (
                         <>
                           <img
+                            alt=""
                             src={
                               `${tagSet.name.toUpperCase()}` === "ANALYZED"
                                 ? Red
@@ -206,13 +224,26 @@ export default function TableBody(props) {
                             }
                           />
                           {tagSet.name}
-                          <span onClick={() => setFunnel(index)}>
-                            <i className="fas fa-chevron-down"></i>
+                          <span
+                            className={classnames(
+                              (funnel === index) & showFunnel ? activePopup : ""
+                            )}
+                            onClick={() => {
+                              setFunnel(funnel ? null : index);
+                              setShowFunnel(!showFunnel);
+                            }}
+                          >
+                            {" "}
+                            {console.log("Funnel & Index: ", funnel, index)}
+                            <i
+                              className={classnames("fas fa-chevron-down")}
+                            ></i>
                           </span>
-                          {funnel === index && (
+                          {funnel === index && showFunnel && (
                             <FunnelPopup
                               tags={funnelTags?.[0]?.group?.funnelTags || []}
                               id={id}
+                              index={index}
                             />
                           )}
                         </>
@@ -249,7 +280,10 @@ export default function TableBody(props) {
                         <></>
                       )}
                       {
-                        <li onClick={() => setShowTagGroupForId(item.id)}>
+                        <li
+                          style={{ marginLeft: item.tags ? "10px" : "" }}
+                          onClick={() => setShowTagGroupForId(item.id)}
+                        >
                           <ButtonGreen />
                         </li>
                       }

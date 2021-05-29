@@ -10,6 +10,7 @@ import {
   signOut,
   startup_page,
   pre_profile,
+  reports,
 } from "definitions.js";
 
 // Styles
@@ -47,7 +48,7 @@ export function SideBarMenu() {
       label: "Reports and analytics",
       iconClass: "fas fa-file-alt",
       iconStyle: { paddingTop: "7px" },
-      link: charts,
+      link: reports,
     },
     //  hide for now  (commented by siva)
     // {
