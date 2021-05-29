@@ -101,6 +101,7 @@ export default function FilterBar({
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
   const [showTagsModal, setShowTagsModal] = useState(false);
+  const [tagSelected, setTagSelected] = useState([]);
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -296,7 +297,13 @@ export default function FilterBar({
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<TagsModal></TagsModal>}
+          children={
+            <TagsModal
+              tagFlag={true}
+              tagSelected={tagSelected}
+              setTagSelected={setTagSelected}
+            />
+          }
         ></Modal>
       )}
     </Sidebar>

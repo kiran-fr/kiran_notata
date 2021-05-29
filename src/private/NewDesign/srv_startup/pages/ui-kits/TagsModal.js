@@ -13,7 +13,12 @@ import {
 } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 
-export default function TagsModal({ connection }) {
+export default function TagsModal({
+  connection,
+  tagSelected,
+  setTagSelected,
+  tagFlag,
+}) {
   // Queries
   const { data, loading, error } = useQuery(tagGroupsGet);
 
@@ -25,34 +30,81 @@ export default function TagsModal({ connection }) {
   const [removeTagMutation] = useMutation(connectionTagRemove);
 
   let tagTypesState = {};
-  const [selectedTags, setSelectedTags] = useState([]);
 
   const [tagsStates, setTagsStates] = useState(tagTypesState);
 
   const removeTag = tagId => {
-    let variables = {
-      connectionId: connection.id,
-      tagId: tagId,
-    };
-    let optimisticResponse = {
-      __typename: "Mutation",
-      connectionTagRemove: {
-        ...connection,
-        tags: [
-          ...connection.tags
-            .filter(({ id }) => id !== tagId)
-            .map(t => ({
-              ...t,
-              index: null,
-              description: null,
-              createdBy: "tmp",
-              createdAt: 0,
-            })),
-        ],
-        __typename: "Connection",
-      },
-    };
-    removeTagMutation({ variables, optimisticResponse });
+    if (tagFlag) {
+      let filterData = tagSelected.filter(data => data.id !== tagId);
+      if (filterData.length === 0) {
+        setTagSelected([...filterData]);
+      }
+    } else {
+      let variables = {
+        connectionId: connection.id,
+        tagId: tagId,
+      };
+      let optimisticResponse = {
+        __typename: "Mutation",
+        connectionTagRemove: {
+          ...connection,
+          tags: [
+            ...connection.tags
+              .filter(({ id }) => id !== tagId)
+              .map(t => ({
+                ...t,
+                index: null,
+                description: null,
+                createdBy: "tmp",
+                createdAt: 0,
+              })),
+          ],
+          __typename: "Connection",
+        },
+      };
+      removeTagMutation({ variables, optimisticResponse });
+    }
+  };
+
+  const addTags = (connection, tag) => {
+    const tagArr = tagFlag ? tagSelected : connection.tags;
+    let filterData = tagArr.filter(data => data.id === tag.id);
+    if (filterData.length === 0) {
+      if (tagFlag) {
+        setTagSelected([...tagSelected, tag]);
+      } else {
+        let variables = {
+          connectionId: connection.id,
+          tagId: tag.id,
+        };
+
+        let optimisticResponse = {
+          __typename: "Mutation",
+          connectionTagAdd: {
+            ...connection,
+            tags: [
+              ...connection.tags,
+              {
+                createdAt: new Date().getTime(),
+                index: connection.tags.length,
+                createdBy: "tmp",
+                id: "tmp-id",
+                description: null,
+                name: tag.name,
+                tagGroupId: tag.tagGroupId,
+                __typename: "Tag",
+              },
+            ],
+            __typename: "Connection",
+          },
+        };
+
+        addTagMutation({
+          variables,
+          optimisticResponse,
+        });
+      }
+    }
   };
 
   if (loading) return "Loading..."; //query processing
@@ -63,7 +115,7 @@ export default function TagsModal({ connection }) {
       <div className="tags-container__sub-heading">Write or choose Tags</div>
       {/* <GhostLoader></GhostLoader> */}
       <Tags
-        setTags={connection?.tags || []}
+        setTags={!tagFlag ? connection?.tags || [] : tagSelected}
         removeTag={removeTag}
         getSelectedTag={d => {
           if (!d.id) {
@@ -72,34 +124,36 @@ export default function TagsModal({ connection }) {
             return;
           }
 
-          let variables = {
-            connectionId: connection.id,
-            tagId: d.id,
-          };
+          if (!tagFlag) {
+            let variables = {
+              connectionId: connection.id,
+              tagId: d.id,
+            };
 
-          let optimisticResponse = {
-            __typename: "Mutation",
-            connectionTagRemove: {
-              ...connection,
-              tags: [
-                ...connection.tags
-                  .filter(({ id }) => id !== d.id)
-                  .map(t => ({
-                    ...t,
-                    index: null,
-                    description: null,
-                    createdBy: "tmp",
-                    createdAt: 0,
-                  })),
-              ],
-              __typename: "Connection",
-            },
-          };
+            let optimisticResponse = {
+              __typename: "Mutation",
+              connectionTagRemove: {
+                ...connection,
+                tags: [
+                  ...connection.tags
+                    .filter(({ id }) => id !== d.id)
+                    .map(t => ({
+                      ...t,
+                      index: null,
+                      description: null,
+                      createdBy: "tmp",
+                      createdAt: 0,
+                    })),
+                ],
+                __typename: "Connection",
+              },
+            };
 
-          removeTagMutation({
-            variables,
-            optimisticResponse,
-          });
+            removeTagMutation({
+              variables,
+              optimisticResponse,
+            });
+          }
         }}
       />
       <div className="mb-2 tags-container__heading ">Suggested Tags</div>
@@ -142,36 +196,7 @@ export default function TagsModal({ connection }) {
                             className="tag suggested-tag"
                             key={tag.id}
                             onClick={() => {
-                              let variables = {
-                                connectionId: connection.id,
-                                tagId: tag.id,
-                              };
-
-                              let optimisticResponse = {
-                                __typename: "Mutation",
-                                connectionTagAdd: {
-                                  ...connection,
-                                  tags: [
-                                    ...connection.tags,
-                                    {
-                                      createdAt: new Date().getTime(),
-                                      index: connection.tags.length,
-                                      createdBy: "tmp",
-                                      id: "tmp-id",
-                                      description: null,
-                                      name: tag.name,
-                                      tagGroupId: tag.tagGroupId,
-                                      __typename: "Tag",
-                                    },
-                                  ],
-                                  __typename: "Connection",
-                                },
-                              };
-
-                              addTagMutation({
-                                variables,
-                                optimisticResponse,
-                              });
+                              addTags(connection, tag);
                             }}
                           >
                             {tag.name}
