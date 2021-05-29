@@ -770,7 +770,7 @@ export default function Overview(props) {
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<TagsModal></TagsModal>}
+          children={<TagsModal connection={props.creativity}></TagsModal>}
         ></Modal>
       )}
       {archiveModal && (

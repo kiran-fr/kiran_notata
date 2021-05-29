@@ -33,6 +33,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
   const [subScore, setSubScore] = useState();
   const [funnelId, setFunnelId] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const [tagSelected, setTagSelected] = useState([]);
 
   const { data: groupsGetV2Data, loading, error } = useQuery(groupsGetV2);
 
@@ -266,7 +267,13 @@ export default function Expand({ closeModal, styles, connections, history }) {
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<TagsModal></TagsModal>}
+          children={
+            <TagsModal
+              tagFlag={true}
+              tagSelected={tagSelected}
+              setTagSelected={setTagSelected}
+            />
+          }
         ></Modal>
       )}
     </form>
