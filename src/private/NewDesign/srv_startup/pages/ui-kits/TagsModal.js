@@ -11,7 +11,7 @@ import {
   connectionTagAdd,
   connectionTagRemove,
 } from "private/Apollo/Mutations";
-import { GhostLoader } from "Components/elements";
+//import { GhostLoader } from "Components/elements";
 
 export default function TagsModal({ connection }) {
   // Queries
@@ -61,7 +61,9 @@ export default function TagsModal({ connection }) {
   return (
     <div className="tags-container">
       <div className="tags-container__sub-heading">Write or choose Tags</div>
+      {/*}
       <GhostLoader></GhostLoader>
+  {*/}
       <Tags
         setTags={connection?.tags || []}
         removeTag={removeTag}
