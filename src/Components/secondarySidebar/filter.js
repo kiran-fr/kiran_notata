@@ -118,6 +118,16 @@ export default function FilterBar({
 
   const funnelGroupArray = data ? data.accountGet.funnelGroups : [];
 
+    useEffect(() => {
+      let tagArr = []
+      tagSelected.map(el =>
+        tagArr.push(el.id)
+      )
+      console.log("value", tagArr)
+      
+      setFilters({ ...filters, tags: tagArr })
+    }, [tagSelected]);
+
   const FunnelStage = () => (
     <ul className={styles.funnelUl}>
       {funnelGroupArray.length ? (
@@ -220,6 +230,15 @@ export default function FilterBar({
                 aria-hidden="true"
                 onClick={() => setShowTagsModal(true)}
               ></i>
+              {tagSelected.length > 0
+                ? tagSelected.map(el =>
+                  <span className = "ml-2" key ={el.id}>
+                    {el.group.name} : {el.name}
+                  </span>
+                )
+              :
+                ""
+              }
             </div>
           </div>
         </div>
