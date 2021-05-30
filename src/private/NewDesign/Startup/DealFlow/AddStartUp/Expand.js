@@ -261,6 +261,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
       {showTagsModal && (
         <Modal
           title="Add Tags"
+          disableFoot = {true}
           submit={() => {
             setShowTagsModal(false);
           }}

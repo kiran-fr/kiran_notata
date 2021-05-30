@@ -107,110 +107,121 @@ export default function TagsModal({
     }
   };
 
-  if (loading) return "Loading..."; //query processing
   if (error) return <pre>{error.message}</pre>; //if query has issue
 
   return (
     <div className="tags-container">
-      <div className="tags-container__sub-heading">Write or choose Tags</div>
-      {/* <GhostLoader></GhostLoader> */}
-      <Tags
-        setTags={!tagFlag ? connection?.tags || [] : tagSelected}
-        removeTag={removeTag}
-        getSelectedTag={d => {
-          if (!d.id) {
-            // You need to get the ID of the tag object you are deleting...
-            // Right now that does not seem to be passed in the "data" object
-            return;
-          }
+      {loading
+      ?
+        /* //query processing */
+        <div className = "text-center">
+          <span className={"loading_icon"}>
+            <i className="fa fa-spinner fa-spin" />
+          </span>
+        </div>
+      :
+        <>
+          <div className="tags-container__sub-heading">Write or choose Tags</div>
+          {/* <GhostLoader></GhostLoader> */}
+          <Tags
+            setTags={!tagFlag ? connection?.tags || [] : tagSelected}
+            removeTag={removeTag}
+            getSelectedTag={d => {
+              if (!d.id) {
+                // You need to get the ID of the tag object you are deleting...
+                // Right now that does not seem to be passed in the "data" object
+                return;
+              }
 
-          if (!tagFlag) {
-            let variables = {
-              connectionId: connection.id,
-              tagId: d.id,
-            };
+              if (!tagFlag) {
+                let variables = {
+                  connectionId: connection.id,
+                  tagId: d.id,
+                };
 
-            let optimisticResponse = {
-              __typename: "Mutation",
-              connectionTagRemove: {
-                ...connection,
-                tags: [
-                  ...connection.tags
-                    .filter(({ id }) => id !== d.id)
-                    .map(t => ({
-                      ...t,
-                      index: null,
-                      description: null,
-                      createdBy: "tmp",
-                      createdAt: 0,
-                    })),
-                ],
-                __typename: "Connection",
-              },
-            };
+                let optimisticResponse = {
+                  __typename: "Mutation",
+                  connectionTagRemove: {
+                    ...connection,
+                    tags: [
+                      ...connection.tags
+                        .filter(({ id }) => id !== d.id)
+                        .map(t => ({
+                          ...t,
+                          index: null,
+                          description: null,
+                          createdBy: "tmp",
+                          createdAt: 0,
+                        })),
+                    ],
+                    __typename: "Connection",
+                  },
+                };
 
-            removeTagMutation({
-              variables,
-              optimisticResponse,
-            });
-          }
-        }}
-      />
-      <div className="mb-2 tags-container__heading ">Suggested Tags</div>
+                removeTagMutation({
+                  variables,
+                  optimisticResponse,
+                });
+              }
+            }}
+          />
+          <div className="mb-2 tags-container__heading ">Suggested Tags</div>
 
-      <div className="tags-container__dropdown">
-        {
-          // data.tagGroupsGet && data.tagGroupsGet.map(item => {
-          tagGroups.map(tagGroup => {
-            if (!!tagGroup?.tags?.length) {
-              return (
-                <div className="row" key={tagGroup.id}>
-                  <div className="col-sm-10 col-xs-10 section-heading">
-                    {tagGroup.name}
-                  </div>
-                  <div className="col-sm-2 col-xs-2 expand-collapse-icon">
-                    <i
-                      className={`fa ${
-                        tagsStates[tagGroup.id]
-                          ? "fa-chevron-up"
-                          : "fa-chevron-down"
-                      }`}
-                      aria-hidden="true"
-                      onClick={() => {
-                        setTagsStates({
-                          ...tagsStates,
-                          [tagGroup.id]: !tagsStates[tagGroup.id],
-                        });
-                      }}
-                    />
-                  </div>
-                  <div
-                    className={`col-sm-12 col-xs-12 ${
-                      tagsStates[tagGroup.id] ? "" : "collapse"
-                    }`}
-                  >
-                    <div className="type-tags-container">
-                      {tagGroup.tags.map((tag, index) => {
-                        return (
-                          <div
-                            className="tag suggested-tag"
-                            key={tag.id}
-                            onClick={() => {
-                              addTags(connection, tag);
-                            }}
-                          >
-                            {tag.name}
-                          </div>
-                        );
-                      })}
+          <div className="tags-container__dropdown">
+            {
+              // data.tagGroupsGet && data.tagGroupsGet.map(item => {
+              tagGroups.map(tagGroup => {
+                if (!!tagGroup?.tags?.length) {
+                  return (
+                    <div className="row" key={tagGroup.id}>
+                      <div className="col-sm-10 col-xs-10 section-heading">
+                        {tagGroup.name}
+                      </div>
+                      <div className="col-sm-2 col-xs-2 expand-collapse-icon">
+                        <i
+                          className={`fa ${
+                            tagsStates[tagGroup.id]
+                              ? "fa-chevron-up"
+                              : "fa-chevron-down"
+                          }`}
+                          aria-hidden="true"
+                          onClick={() => {
+                            setTagsStates({
+                              ...tagsStates,
+                              [tagGroup.id]: !tagsStates[tagGroup.id],
+                            });
+                          }}
+                        />
+                      </div>
+                      <div
+                        className={`col-sm-12 col-xs-12 ${
+                          tagsStates[tagGroup.id] ? "" : "collapse"
+                        }`}
+                      >
+                        <div className="type-tags-container">
+                          {tagGroup.tags.map((tag, index) => {
+                            return (
+                              <div
+                                className="tag suggested-tag"
+                                key={tag.id}
+                                onClick={() => {
+                                  addTags(connection, tag);
+                                }}
+                              >
+                                {tag.name}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              );
+                  );
+                }
+              })
             }
-          })
-        }
-      </div>
+          </div>
+        </>
+      }
     </div>
   );
 }

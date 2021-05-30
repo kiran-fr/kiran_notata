@@ -289,6 +289,7 @@ export default function FilterBar({
       {showTagsModal && (
         <Modal
           title="Add Tags"
+          disableFoot = {true}
           submit={() => {
             setShowTagsModal(false);
           }}
