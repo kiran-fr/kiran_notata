@@ -13,6 +13,7 @@ import styles from "./InviteStartup.module.css";
 import { email as reg_email } from "../../../../../utils/regex";
 
 export const InviteStartup = ({
+  connection,
   id,
   answers,
   creative,
@@ -20,7 +21,7 @@ export const InviteStartup = ({
 }) => {
   const [inviteSent, setInviteSent] = useState(false);
   const [urlToShare, setUrlToShare] = useState(null);
-  const [email, setEmail] = useState("");
+  const [emailValue, setEmailValue] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [validate, setValidate] = useState(true);
 
@@ -35,7 +36,7 @@ export const InviteStartup = ({
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
 
   function getPublicShareUrl(creative) {
-    console.log(creative);
+
     let url =
       `${window.location.protocol}//` +
       `${window.location.host}/` +
@@ -55,14 +56,16 @@ export const InviteStartup = ({
         answers,
       },
     };
-    setEmail(inputEmail?.variables?.input?.email);
     let update = await mutateCreativeUpdate({
       variables,
     });
 
-    setUrlToShare(getPublicShareUrl(update?.data?.creativePut));
-    setInviteSent(true);
-    setValidate(true);
+    if(urlToShare === null) {
+      setUrlToShare(getPublicShareUrl(update?.data?.creativeUpdate));
+      setInviteSent(true);
+      setValidate(true);
+      setEmailValue(inputEmail?.variables?.input?.email);
+    }
   };
 
   // Submit function with mutations
@@ -70,18 +73,20 @@ export const InviteStartup = ({
     let variables = {
       id: id,
       input: {
-        sharedWithEmail: email,
+        sharedWithEmail: emailValue,
         removeSharing: true,
         answers,
       },
     };
-    setInputEmail("");
-    setValidate(true);
 
     let update = await mutateCreativeUpdate({
       variables,
     });
     setInviteSent(false);
+    setUrlToShare(null)
+    setInputEmail("");
+    setEmailValue("")
+    setValidate(true);
   };
 
   const handleInput = val => {
@@ -104,8 +109,6 @@ export const InviteStartup = ({
       submit={() =>
         inviteSent
           ? revoke()
-          : email === ""
-          ? setEmail(inputEmail?.variables?.input?.email)
           : onSubmit()
       }
       close={() => {
@@ -132,14 +135,11 @@ export const InviteStartup = ({
               The startup will then have access to this form, and will be able
               to see all pre filled inforation you may have provided.
             </p>
-            {email ? (
+            {emailValue ? (
               <div className={styles.email}>
                 <h4>Email</h4>
                 <div>
-                  <p>{email}</p>
-                  <Button size="extra-small" onClick={onSubmit()}>
-                    Invite
-                  </Button>
+                  <p>{emailValue}</p>
                 </div>
               </div>
             ) : (
@@ -155,9 +155,8 @@ export const InviteStartup = ({
           </>
         )
       }
-      submitTxt={inviteSent ? "Revoke" : email === "" ? "Okay" : ""}
-      disableFoot={email !== "" && inviteSent}
-      closeTxt={email !== "" ? "" : "Cancel"}
+      submitTxt={inviteSent ? "Revoke" : emailValue === "" ? "Okay" : ""}
+      closeTxt={emailValue !== "" ? "" : "Cancel"}
     ></Modal>
   );
 };
