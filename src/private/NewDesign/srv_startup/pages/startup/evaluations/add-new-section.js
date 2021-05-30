@@ -20,6 +20,7 @@ import {
 } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 import { evaluation_template_profile } from "../../../../../../definitions";
+import { specifiedSDLRules } from "graphql/validation/specifiedRules";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,8 +60,8 @@ export const AddSection = props => {
       },
     }
   );
-  /* console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections.name);
-  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections[0].id); */
+  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections.name);
+  //console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections[0].id);
   const evaluationTemplateAPIResp =
     evaluationTemplateGetData?.evaluationTemplateGet;
 
@@ -90,6 +91,7 @@ export const AddSection = props => {
   const [noOfQuestions, setNoOfQuestions] = useState(1);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
+  const [sectiondescription, setSectionDescription] = useState(null);
   const [sectionName, setSectionName] = useState(null);
   const [saveLoader, setSaveLoader] = useState(false);
   const [evaluationTemplateData, setEvaluationTemplateData] = useState(null);
@@ -99,6 +101,10 @@ export const AddSection = props => {
     const { name, value } = e.target;
     if (name === "name") {
       setName(value);
+    } else if (name === "sectionName") {
+      setSectionName(value);
+    } else if (name === "sectiondescription") {
+      setSectionDescription(value);
     } else {
       setDescription(value);
     }
@@ -166,26 +172,47 @@ export const AddSection = props => {
   }
   return (
     <>
-      <div className={`add-section-conatiner`}>
+      <div className={`add-section-conatiner ssss`}>
         <div className="row">
           <div className={`col-sm-8 text-container`}>
-            <form>
-              <TextBox
-                name="name"
-                defaultValue={name}
-                onChange={handleInputChange}
-                onBlur={upateTemplate}
-              />
-              <textarea
-                name="description"
-                onChange={handleInputChange}
-                value={description}
-                rows="4"
-                cols="50"
-                onBlur={upateTemplate}
-              ></textarea>
-            </form>
+            {!questionOption && (
+              <form className="templateform">
+                <TextBox
+                  name="name"
+                  defaultValue={name}
+                  onChange={handleInputChange}
+                  onBlur={upateTemplate}
+                />
+                <textarea
+                  name="description"
+                  onChange={handleInputChange}
+                  value={description}
+                  rows="4"
+                  cols="50"
+                  onBlur={upateTemplate}
+                ></textarea>
+              </form>
+            )}
+            {questionOption && (
+              <form className="sectionform">
+                <TextBox
+                  name="name"
+                  defaultValue={sectionName}
+                  onChange={handleInputChange}
+                  onBlur={upateTemplate}
+                />
+                <textarea
+                  name="description"
+                  onChange={handleInputChange}
+                  value={sectiondescription}
+                  rows="4"
+                  cols="50"
+                  onBlur={upateTemplate}
+                ></textarea>
+              </form>
+            )}
           </div>
+
           {!questionOption && (
             <div className="col-sm-4">
               <div className="row">
