@@ -180,7 +180,6 @@ export default function Overview(props) {
       setComments(updatedComments);
       setEditComment(index);
     }
-
     //setComments(comments);
     //  setEditComment(index);
   };
