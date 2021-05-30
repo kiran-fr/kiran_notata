@@ -95,6 +95,7 @@ import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/in
 import { ElevationTemplates as ElevationTemplatesDev } from "./NewDesign/srv_startup/pages/startup/evaluations/evaluation-templates";
 import { AddSection as AddSectionDev } from "./NewDesign/srv_startup/pages/startup/evaluations/add-new-section";
 import { TemplateSection } from "./NewDesign/srv_startup/pages/startup/evaluations/template-section";
+import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
 
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
@@ -225,6 +226,11 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={add_section} component={AddSection} />
       <Route eaxct path={reports} component={Reports} />
+      <Route
+        eaxct
+        path={`${startup_page}/report/reports`}
+        component={ReportsAdd}
+      />
 
       <Route render={() => <div>404</div>} />
     </Switch>
