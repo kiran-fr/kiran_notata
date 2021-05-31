@@ -21,6 +21,7 @@ import { connectionsGet } from "private/Apollo/Queries";
 import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
 import TextBox from "../ui-kits/text-box";
 import { logCreate, logDelete, logUpdate } from "private/Apollo/Mutations";
+import More from "assets/images/more.svg";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
@@ -251,9 +252,15 @@ export default function Overview(props) {
                     {name?.substr(0, 1)?.toUpperCase()}
                   </div>
                 </div>
-                <div className="col-11 col-sm-10 col-xs-10">
+                <div
+                  className="col-11 col-sm-10 col-xs-10"
+                  style={{ paddingLeft: 25 }}
+                >
                   <div className="row overview-container__details">
-                    <div className="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                    <div
+                      className="col-lg-5 col-md-12 col-sm-12 col-xs-12"
+                      style={{ paddingLeft: 0 }}
+                    >
                       <div className="overview-container__heading">{name}</div>
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 col-xs-12">
@@ -265,13 +272,13 @@ export default function Overview(props) {
                       </span>
                     </div>
                   </div>
+                  {/* <div className="col-sm-12 col-xs-12"> */}
+                  <p className="overview-container__startup-overview">
+                    {section?.val}
+                  </p>
                 </div>
               </div>
-              <div className="col-sm-12 col-xs-12">
-                <p className="overview-container__startup-overview">
-                  {section?.val}
-                </p>
-              </div>
+
               <div className="row overview-notata-info">
                 <div className="col-sm-6 col-xs-6 overview-notata-info__slidedeck">
                   {slideDeck && (
@@ -295,7 +302,7 @@ export default function Overview(props) {
                 <div className="col-sm-6 col-md-3 col-xs-12 overview-container__scores__label">
                   <div>
                     You
-                    <span className="your_updated-date-tag ">
+                    <span className="your_updated-date-tag">
                       {updatedAt ? moment(updatedAt).format("ll") : ""}
                     </span>
                   </div>
@@ -383,20 +390,38 @@ export default function Overview(props) {
                   Write or choose tags
                 </div>
                 <div className="tags-container__placeholder">
+                  {props.creativity.tags.length > 0
+                    ? props.creativity.tags.slice(0, 2).map(el => (
+                        <span
+                          style={{
+                            height: "100%",
+                            color: "white",
+                            padding: "2px 10px",
+                            backgroundColor: "#555",
+                            borderRadius: 15,
+                            fontSize: 10,
+                            marginTop: 1,
+                            marginRight: 7,
+                            marginBottom: 4,
+                          }}
+                          key={el.id}
+                        >
+                          {el.group.name} : {el.name}
+                        </span>
+                      ))
+                    : ""}
+                  {props.creativity.tags.length > 2 ? (
+                    <img
+                      src={More}
+                      alt=""
+                      onClick={() => setShowTagsModal(true)}
+                    />
+                  ) : null}
                   <i
                     class="fa fa-plus"
                     aria-hidden="true"
                     onClick={() => setShowTagsModal(true)}
                   ></i>
-                    {props.creativity.tags.length > 0
-                      ? props.creativity.tags.map(el =>
-                          <span className = "ml-2" key ={el.id}>
-                            {el.group.name} : {el.name}
-                          </span>
-                        )
-                      :
-                        ""
-                    }
                 </div>
               </div>
               <div className="row funnel-summary-container">
@@ -416,14 +441,14 @@ export default function Overview(props) {
                   <span className="add-text">Add startup to a group</span>
                   <span className="add-startup-to-group">
                     <Dropdown title="" items={items}></Dropdown>
+                    <span className="green_plus">
+                      <i
+                        class="fa fa-plus"
+                        aria-hidden="true"
+                        onClick={() => setCreateGroupModal(true)}
+                      ></i>
+                    </span>
                   </span>
-                  <div className="green_plus">
-                    <i
-                      class="fa fa-plus"
-                      aria-hidden="true"
-                      onClick={() => setCreateGroupModal(true)}
-                    ></i>
-                  </div>
                 </div>
               </div>
               <div className="row impact-goals-container">
@@ -460,7 +485,7 @@ export default function Overview(props) {
                         <th>COMPANY NAME</th>
                         <th>TAGS</th>
                         <th>SUBJECTIVE SCORE</th>
-                        <th>LAST EVALUATION</th>
+                        {/* <th>LAST EVALUATION</th> */}
                         <th>UPDATED</th>
                       </tr>
                     </thead>
@@ -484,17 +509,35 @@ export default function Overview(props) {
                           </td>
                           <td>
                             <div className="tag-placeholder">
-                              {company?.tags?.map(tag => (
-                                <div className="tag">{tag.name}</div>
+                              {company?.tags?.slice(0, 2).map(tag => (
+                                <span className="tag">{tag.name}</span>
                               ))}
+                              {company?.tags?.length > 2 ? (
+                                <img src={More} alt=""></img>
+                              ) : null}
                             </div>
                           </td>
                           <td>
-                            <div className="subjective-score">
+                            {
+                              ("SS",
+                              console.log(getCompAvg(company.subjectiveScores)))
+                            }
+                            {console.log(
+                              typeof getCompAvg(company.subjectiveScores)
+                            )}
+                            <div
+                              className="subjective-score"
+                              style={{
+                                filter:
+                                  getCompAvg(company.subjectiveScores) === "0.0"
+                                    ? "grayscale(0%)"
+                                    : "",
+                              }}
+                            >
                               {getCompAvg(company.subjectiveScores)}
                             </div>
                           </td>
-                          <td>
+                          {/* <td>
                             <div>
                               {company?.evaluationSummaries
                                 ?.slice(0)
@@ -517,7 +560,7 @@ export default function Overview(props) {
                                   </>
                                 ))}
                             </div>
-                          </td>
+                          </td> */}
                           <td>
                             <span className="updated-date">
                               {moment(company.updatedAt).format("ll")}
@@ -530,7 +573,7 @@ export default function Overview(props) {
                 </div>
               </div>
             </div>
-            <div className="card similar-startup-card">
+            {/* <div className="card similar-startup-card">
               <div className="row similar-startups-contianer">
                 <div className="similar-startups-contianer__heading">
                   Sharing startup template
@@ -628,7 +671,7 @@ export default function Overview(props) {
                   ></ButtonWithIcon>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-xs-6 col-sm-6">
                 <ButtonWithIcon
@@ -668,26 +711,27 @@ export default function Overview(props) {
                 <div className="row discussions-contianer__disucssions">
                   {comments?.map((comment, index) => (
                     <div className="discussions-contianer__disucssions__discussion">
-                      <div>
+                      <div className="editbox">
                         <i
                           class=" comment fa fa-comments-o"
                           aria-hidden="true"
                         ></i>
-                        <span className="discussions-contianer__disucssions__sender">
+                        <div className="discussions-contianer__disucssions__sender">
                           {comment?.isMe
                             ? "You"
                             : `${comment?.createdByUser?.given_name} ${comment?.createdByUser?.family_name}`}
-                        </span>
-                        <span className="editDelete_icons">
+                        </div>
+                        <div className="editDelete_icons">
                           <i
                             onClick={() => setEditComment(index)}
-                            className=" edit fas fa-pen"
+                            className="fas fa-pen"
+                            style={{ color: "#53cab2", marginRight: 10 }}
                           ></i>
                           <i
                             onClick={() => deleteComment(comment.id)}
                             class="fa fa-trash-o deleted"
                           ></i>
-                        </span>
+                        </div>
                       </div>
 
                       <div className="discussions-contianer__disucssions__message">
@@ -709,7 +753,7 @@ export default function Overview(props) {
                             <div className="row editdiv">
                               <ButtonWithIcon
                                 iconName="add"
-                                className="text-center archive-btn"
+                                className="text-center archive-btn cancel-btn"
                                 text="Cancel"
                                 iconPosition={ICONPOSITION.NONE}
                                 onClick={() => setEditComment(index)}
@@ -730,13 +774,12 @@ export default function Overview(props) {
                         )}
                       </div>
 
-                      {comment.createdAt !== comment.updatedAt && (
-                        <span>(edited)</span>
-                      )}
-
                       {!hidden[index] ? (
                         <div className="discussions-contianer__disucssions__date">
-                          {moment(comment.createdAt).format("lll")}
+                          {moment(comment.createdAt).format("lll")}{" "}
+                          {comment.createdAt !== comment.updatedAt && (
+                            <span>(edited)</span>
+                          )}
                         </div>
                       ) : (
                         ""
@@ -744,8 +787,16 @@ export default function Overview(props) {
                     </div>
                   ))}
                 </div>
-                <div className="row">
-                  <div className="col-sm-12 col-xs-11">
+                <div className="row" style={{ padding: 0 }}>
+                  <div
+                    className="col-sm-12 col-xs-11"
+                    style={{
+                      padding: 0,
+                      margin: 0,
+                      float: "none",
+                      width: "100%",
+                    }}
+                  >
                     <input
                       className="discussions-contianer__disucssions__text"
                       type="input"
@@ -754,11 +805,7 @@ export default function Overview(props) {
                       onChange={handleMessageChange}
                     />
                     <span class="discussions-contianer__disucssions__send-icon">
-                      <button
-                        class="btn btn-outline-secondary"
-                        type="button"
-                        onClick={saveComment}
-                      >
+                      <button type="button" onClick={saveComment}>
                         <i class="fa fa-paper-plane"></i>
                       </button>
                     </span>
@@ -793,6 +840,7 @@ export default function Overview(props) {
             setShowTagsModal(false);
           }}
           submitTxt="Save"
+          disableFoot={true}
           closeTxt="Cancel"
           children={<TagsModal connection={props.creativity}></TagsModal>}
         ></Modal>
