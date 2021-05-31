@@ -20,16 +20,18 @@ import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
 import TextBox from "../ui-kits/text-box";
-import { logCreate, logDelete } from "private/Apollo/Mutations";
+import { logCreate, logDelete, logUpdate } from "private/Apollo/Mutations";
 
 export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
   const [mutationlogCreate] = useMutation(logCreate);
+  const [mutationlogUpdate] = useMutation(logUpdate);
   const [mutationlogDelete] = useMutation(logDelete);
   const [comments, setComments] = useState([]);
   const [mutateConnectionPut] = useMutation(connectionPut);
   const [mutateConnectionDelete] = useMutation(connectionDelete);
   const [editChat, setEditChat] = useState(false);
+  const [hidden, setHidden] = useState({});
 
   const items = [
     { id: 1, name: "First" },
@@ -101,6 +103,7 @@ export default function Overview(props) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
   const [message, setMessage] = useState(null);
+  const [updatemessage, setUpdateMessage] = useState(null);
 
   const connectionData = { id: id, subjectiveScores: subjectiveScores };
   const { data: connectionsGetData, loading, error } = useQuery(
@@ -128,6 +131,11 @@ export default function Overview(props) {
     setMessage(value);
   };
 
+  const handleUpdateMessageChange = e => {
+    const { value } = e.target;
+    setUpdateMessage(value);
+  };
+
   const saveComment = async () => {
     if (message) {
       let variables = {
@@ -147,6 +155,39 @@ export default function Overview(props) {
         setComments([...comments, savedLog]);
       }
     }
+  };
+
+  const UpdateChat = async (CommentID, INTVAL, index) => {
+    console.log(INTVAL);
+    let variables = {
+      id: CommentID,
+      input: {
+        logType: "COMMENT",
+        dataPairs: [
+          {
+            key: "TEXT",
+            val: INTVAL,
+          },
+        ],
+      },
+    };
+    let logConnection = await mutationlogUpdate({ variables });
+    let savedLog = logConnection?.data?.logUpdate;
+    setMessage("");
+    if (savedLog) {
+      //setComments([...comments, savedLog]);
+      let updatedComments = comments?.filter(l => l.logType === "COMMENT");
+      setComments(updatedComments);
+      setEditComment(index);
+    }
+    //setComments(comments);
+    //  setEditComment(index);
+  };
+
+  const setEditComment = async index => {
+    console.log(index);
+    setHidden({ [index]: !hidden[index] });
+    setEditChat(true);
   };
 
   const archiveConnection = async (connectionId, archive) => {
@@ -347,6 +388,13 @@ export default function Overview(props) {
                     aria-hidden="true"
                     onClick={() => setShowTagsModal(true)}
                   ></i>
+                  {props.creativity.tags.length > 0
+                    ? props.creativity.tags.map(el => (
+                        <span className="ml-2" key={el.id}>
+                          {el.group.name} : {el.name}
+                        </span>
+                      ))
+                    : ""}
                 </div>
               </div>
               <div className="row funnel-summary-container">
@@ -616,7 +664,7 @@ export default function Overview(props) {
                   Notes from you and your team
                 </div>
                 <div className="row discussions-contianer__disucssions">
-                  {comments?.map(comment => (
+                  {comments?.map((comment, index) => (
                     <div className="discussions-contianer__disucssions__discussion">
                       <div>
                         <i
@@ -630,7 +678,7 @@ export default function Overview(props) {
                         </span>
                         <span className="editDelete_icons">
                           <i
-                            onClick={() => setEditChat(true)}
+                            onClick={() => setEditComment(index)}
                             className=" edit fas fa-pen"
                           ></i>
                           <i
@@ -639,35 +687,39 @@ export default function Overview(props) {
                           ></i>
                         </span>
                       </div>
+
                       <div className="discussions-contianer__disucssions__message">
-                        {!editChat
+                        {!hidden[index]
                           ? comment?.dataPairs?.length > 0 &&
                             comment?.dataPairs[0].val
                           : ""}
-                        {editChat ? (
+                        {hidden[index] && editChat ? (
                           <>
-                            <div className="row">
+                            <div className="row editdiv">
                               <TextBox
                                 inputval={
                                   comment?.dataPairs?.length > 0 &&
                                   comment?.dataPairs[0].val
                                 }
+                                onChange={handleUpdateMessageChange}
                               />
                             </div>
-                            <div className="row">
+                            <div className="row editdiv">
                               <ButtonWithIcon
                                 iconName="add"
                                 className="text-center archive-btn"
                                 text="Cancel"
                                 iconPosition={ICONPOSITION.NONE}
-                                onClick={() => setEditChat(false)}
+                                onClick={() => setEditComment(index)}
                               ></ButtonWithIcon>
                               <ButtonWithIcon
                                 iconName="add"
                                 className="ml-2 text-center archive-btn"
                                 text="Save"
                                 iconPosition={ICONPOSITION.NONE}
-                                onClick={() => setEditChat(false)}
+                                onClick={() =>
+                                  UpdateChat(comment.id, updatemessage, index)
+                                }
                               ></ButtonWithIcon>
                             </div>
                           </>
@@ -675,11 +727,12 @@ export default function Overview(props) {
                           ""
                         )}
                       </div>
+
                       {comment.createdAt !== comment.updatedAt && (
                         <span>(edited)</span>
                       )}
 
-                      {!editChat ? (
+                      {!hidden[index] ? (
                         <div className="discussions-contianer__disucssions__date">
                           {moment(comment.createdAt).format("lll")}
                         </div>
@@ -739,7 +792,7 @@ export default function Overview(props) {
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<TagsModal></TagsModal>}
+          children={<TagsModal connection={props.creativity}></TagsModal>}
         ></Modal>
       )}
       {archiveModal && (

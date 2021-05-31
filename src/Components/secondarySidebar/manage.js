@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import styles from "./sidebar.module.css";
+import styles from "./sidebar.module.scss";
 
 // API STUFF
 import { useMutation } from "@apollo/client";

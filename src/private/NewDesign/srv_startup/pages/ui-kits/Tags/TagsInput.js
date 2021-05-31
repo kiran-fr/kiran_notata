@@ -69,11 +69,14 @@ export default function TagsInput({
   tagSize,
   tagName,
   closeIcon,
+  removeTag,
   ulSize,
 }) {
   //remove tag
-  function removeTagByname(index) {
+  function removeTagById(index) {
     let newTags = selectedTags.filter(i => i !== index);
+    // console.log(index);
+    removeTag(index.id);
     selectTags(newTags);
   }
 
@@ -106,12 +109,13 @@ export default function TagsInput({
       <ul className={classnames(getULSize(ulSize))}>
         {selectedTags.map((tag, index) => (
           <li key={index} className={classnames(getTagSize(tagSize))}>
-            {console.log("TAG: ", tag)}
-            <span className={classnames(getTagName(tagName))}>{tag}</span>
+            <span className={classnames(getTagName(tagName))}>
+              {tag.type}:{tag.name}
+            </span>
 
             <span
               className={classnames(getCloseIcon(closeIcon))}
-              onClick={() => removeTagByname(tag)}
+              onClick={() => removeTagById(tag)}
             >
               <i className={"fal fa-times"} />
             </span>

@@ -4,7 +4,7 @@ import TextBox from "../../ui-kits/text-box";
 import InputCheckBox from "../../ui-kits/check-box";
 
 export default function MultiPleAnswer() {
-  const noOfRows = 3;
+  const noOfRows = 1;
   return (
     <>
       {[...Array(noOfRows)].map((elementInArray, index) => {
@@ -35,11 +35,13 @@ export default function MultiPleAnswer() {
         );
       })}
       <div className="row single-answer-option add-option-container">
-        <div className="col-sm-1 col-xs-1">
+        <div className="col-sm-1 col-xs-1 d-none">
+          {/*}
           <InputCheckBox
             name="single-answer-option"
             id="add-other"
           ></InputCheckBox>
+    {*/}
         </div>
         <div className="col-sm-10 col-xs-10">
           <div className="add-option-text">
