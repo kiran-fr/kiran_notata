@@ -206,7 +206,9 @@ export default function TableBody(props) {
                         <li>{group.name}</li>
                       ))}
                       <li>
+
                         <img onClick = {()=>setShowTagGroupForId(item.id)} src={InvisiblePlus} />
+
                       </li>
                     </ul>
                   </td>

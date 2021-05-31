@@ -127,7 +127,7 @@ export default function TagsInput({
               marginTop: selectedTags.length > 0 ? "3px" : "2px",
               width: "100px",
             }}
-            onKeyPress={handleUserEnter}
+            // onKeyPress={handleUserEnter}
           />
         </div>
       </ul>
