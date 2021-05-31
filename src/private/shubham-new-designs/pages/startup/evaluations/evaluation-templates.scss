@@ -16,6 +16,11 @@
         font-size: 24px;
         line-height: 29px;
         color: #6A6A6A;
+        i{
+            color: #53CAB2;
+            margin-right: 13px;
+            cursor: pointer;
+        }
     }
     &__create-template{
         @media only screen and(min-width:768px) {

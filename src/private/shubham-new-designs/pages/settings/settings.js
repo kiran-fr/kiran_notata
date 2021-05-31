@@ -13,6 +13,7 @@ import YourTeam from "./your-team";
 import WebForm from "./web-form";
 import Notifications from "./notifications";
 import Tags from "./tags";
+import ElevationTemplates from "../startup/evaluations/evaluation-templates";
 
 export default function Settings_Home() {
   const [isEvaluationCardVisible, setEvaluationCard] = useState(true);
@@ -137,6 +138,11 @@ export default function Settings_Home() {
         <Tags setMenuSelected={setMenuSelected}></Tags>
       ) : menuSelected === SETTINGSMENU.FUNNELS ? (
         <Tags setMenuSelected={setMenuSelected}></Tags>
+      ) : menuSelected === SETTINGSMENU.EVALUATIONTEMPLATE ? (
+        <ElevationTemplates
+          setMenuSelected={setMenuSelected}
+          isBackButton
+        ></ElevationTemplates>
       ) : (
         <></>
       )}
