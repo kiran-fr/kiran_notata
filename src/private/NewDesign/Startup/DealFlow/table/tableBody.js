@@ -16,6 +16,7 @@ export default function TableBody(props) {
     data,
     evaluationTemplates,
     setShowTagGroupForId,
+    setShowStartUpForId,
     setShowFunnelScoreForId,
     setShowSubjectiveScoreForId,
     hidePreview,
@@ -205,7 +206,7 @@ export default function TableBody(props) {
                         <li>{group.name}</li>
                       ))}
                       <li>
-                        <img src={InvisiblePlus} />
+                        <img onClick = {()=>setShowTagGroupForId(item.id)} src={InvisiblePlus} />
                       </li>
                     </ul>
                   </td>
@@ -272,7 +273,7 @@ export default function TableBody(props) {
                       {item.tags.length > 2 ? (
                         <li
                           style={{ marginLeft: 8 }}
-                          onClick={() => setShowTagGroupForId(item.id)}
+                          onClick={() => setShowStartUpForId(item.id)}
                         >
                           <img src={More} alt="" />
                         </li>
@@ -282,7 +283,7 @@ export default function TableBody(props) {
                       {
                         <li
                           style={{ marginLeft: item.tags ? "10px" : "" }}
-                          onClick={() => setShowTagGroupForId(item.id)}
+                          onClick={() => setShowStartUpForId(item.id)}
                         >
                           <ButtonGreen />
                         </li>
