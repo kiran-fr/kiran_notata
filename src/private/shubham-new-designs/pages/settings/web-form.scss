@@ -1,0 +1,97 @@
+.web-form-container{
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__card{
+        max-width: 529px;
+        padding-bottom: 40px!important;
+    }
+    &__heading{
+        padding-left: 50px!important;
+        padding-top: 41px!important;
+        i{
+            color: #53CAB2;
+            margin-right: 13px;
+            cursor: pointer;
+        }
+    }
+    .web-form{
+        padding:41px 40px 25px 50px;
+        &__description{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 19px;
+            color: #969BA3;
+        }
+        &__link{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 19px;
+            color: #969BA3;
+            margin-top:25px;
+        }
+        &__link-url{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 22px;
+            overflow-wrap: anywhere;
+            text-decoration: underline;
+        }
+        &__copy-link{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 11px;
+            line-height: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #60CEB8;
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            cursor: pointer;
+            img{
+                margin-right:7px;
+            }
+        }
+        &__code-heading{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: 0.03em;
+            color: #969BA3;
+            margin-top:33px;
+        }
+        &__code-iframe{
+            padding:14px 21px;
+            background: #F4F4F4;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-family: 'Roboto';
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.03em;
+            color: #6A6A6A;
+            margin-bottom: 14px;
+            overflow-wrap: anywhere;
+        }
+        &__customization-container{
+            display: flex;
+            margin-top:45px;
+            &__customize-btn{
+                background-color: #53CAB2;
+                margin-left:auto;
+                height:40px;
+            }
+        }
+    }
+}

@@ -10,6 +10,9 @@ import yourTeam from "../../../../assets/images/settings_your-team.png";
 import { ICONPOSITION, SETTINGSMENU } from "../constants";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
 import YourTeam from "./your-team";
+import WebForm from "./web-form";
+import Notifications from "./notifications";
+import Tags from "./tags";
 
 export default function Settings_Home() {
   const [isEvaluationCardVisible, setEvaluationCard] = useState(true);
@@ -126,6 +129,14 @@ export default function Settings_Home() {
         </div>
       ) : menuSelected === SETTINGSMENU.YOURTEAM ? (
         <YourTeam setMenuSelected={setMenuSelected}></YourTeam>
+      ) : menuSelected === SETTINGSMENU.WEBFORM ? (
+        <WebForm setMenuSelected={setMenuSelected}></WebForm>
+      ) : menuSelected === SETTINGSMENU.NOTIFICATIONS ? (
+        <Notifications setMenuSelected={setMenuSelected}></Notifications>
+      ) : menuSelected === SETTINGSMENU.TAGS ? (
+        <Tags setMenuSelected={setMenuSelected}></Tags>
+      ) : menuSelected === SETTINGSMENU.FUNNELS ? (
+        <Tags setMenuSelected={setMenuSelected}></Tags>
       ) : (
         <></>
       )}
