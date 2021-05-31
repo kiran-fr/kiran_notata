@@ -216,7 +216,7 @@ button,
     width: 50% !important;
   }
   .manageButton {
-    display: none;
+    /* display: none; */
   }
 }
 

@@ -205,7 +205,7 @@ export default function TableBody(props) {
                         <li>{group.name}</li>
                       ))}
                       <li>
-                        <img src={InvisiblePlus} />
+                        <img src={InvisiblePlus} alt="" />
                       </li>
                     </ul>
                   </td>
