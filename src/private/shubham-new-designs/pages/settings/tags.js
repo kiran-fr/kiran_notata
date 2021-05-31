@@ -11,6 +11,7 @@ export default function Tags({ setMenuSelected }) {
   const [newTagGroup, setNewTagGroup] = useState("");
   const [createModal, setCreateModal] = useState(false);
   const [tagsGroups, setTagGroups] = useState(["Market"]);
+  const [isTagDropDown, setIsTagDropDown] = useState(false);
   return (
     <div className="tags-container">
       <div className="card tags-container__card">
@@ -28,7 +29,43 @@ export default function Tags({ setMenuSelected }) {
               className="tags-container__tag"
               key={`tag-group-record-${tagIndex}`}
             >
-              <div className="tags-container__tag__heading">{tagGroup}</div>
+              <div className="tags-container__tag__heading">
+                {tagGroup}
+                <span
+                  class="material-icons tags-container__tag__heading__more"
+                  onClick={() => setIsTagDropDown(!isTagDropDown)}
+                >
+                  {" "}
+                  more_horiz{" "}
+                  {isTagDropDown && (
+                    <div className="tags-container__tag__heading__dropdown">
+                      <div
+                        className="drop-down-item"
+                        onClick={() => setIsTagDropDown(false)}
+                      >
+                        <span class="material-icons">edit</span>
+                        <span className="text">EDIT</span>
+                      </div>
+                      <div
+                        className="drop-down-item leave"
+                        onClick={() => {
+                          let available_tags_groups = [...tagsGroups];
+                          available_tags_groups = available_tags_groups.filter(
+                            available_tags_group => {
+                              return available_tags_group != tagGroup;
+                            }
+                          );
+                          setIsTagDropDown(false);
+                          setTagGroups(available_tags_groups);
+                        }}
+                      >
+                        <span class="material-icons leave">delete</span>
+                        <span className="text">DELETE TAG GROUP</span>
+                      </div>
+                    </div>
+                  )}
+                </span>
+              </div>
               <div className="tags-container__tag__available-tags">
                 {availableTags.map((item, index) => {
                   return (
