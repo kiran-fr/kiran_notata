@@ -20,6 +20,7 @@ export default gql`
       creative {
         id
         name
+        accountId
         sharedWithEmail
         logo
         answers {

@@ -388,6 +388,15 @@ export default function Overview(props) {
                     aria-hidden="true"
                     onClick={() => setShowTagsModal(true)}
                   ></i>
+                    {props.creativity.tags.length > 0
+                      ? props.creativity.tags.map(el =>
+                          <span className = "ml-2" key ={el.id}>
+                            {el.group.name} : {el.name}
+                          </span>
+                        )
+                      :
+                        ""
+                    }
                 </div>
               </div>
               <div className="row funnel-summary-container">

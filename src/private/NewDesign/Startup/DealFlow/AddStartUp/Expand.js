@@ -6,8 +6,6 @@ import { AddScore } from "../addScore";
 import AddFunnel from "../addFunnel";
 import TagsModal from "../../../srv_startup/pages/ui-kits/TagsModal";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
-import Funnel from "assets/images/funnelNoText.png";
-import FunnelMobile from "assets/images/funnelMobile.png";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@apollo/client";
 // import styles from "../modal.module.css"
@@ -21,7 +19,7 @@ import {
   creativePut,
   connectionFunnelTagAdd,
   connectionSubjectiveScorePut,
-  connectionTadAdd,
+  connectionTagAdd,
   groupStartupAdd,
 } from "private/Apollo/Mutations";
 import _ from "lodash";
@@ -35,6 +33,8 @@ export default function Expand({ closeModal, styles, connections, history }) {
   const [funnelId, setFunnelId] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [tagSelected, setTagSelected] = useState([]);
+  const [connectionData, setconnectionData] = useState([]);
+
 
   const { data: groupsGetV2Data, loading, error } = useQuery(groupsGetV2);
 
@@ -58,6 +58,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
   const [mutateFunnelTag] = useMutation(connectionFunnelTagAdd);
   const [mutateConnectionScore] = useMutation(connectionSubjectiveScorePut);
   const [mutateGroupStartupAdd] = useMutation(groupStartupAdd);
+   const [addTagMutation] = useMutation(connectionTagAdd);
   const [showTagsModal, setShowTagsModal] = useState(false);
 
   const debounced = _.debounce(
@@ -74,7 +75,9 @@ export default function Expand({ closeModal, styles, connections, history }) {
             setExistedFlag(
               result?.data?.connectionAutoCompleteName[0]?.creativeName
             );
+            setconnectionData(result?.data?.connectionAutoCompleteName)
           } else {
+            setconnectionData([])
             setExistedFlag(undefined);
           }
         });
@@ -91,12 +94,17 @@ export default function Expand({ closeModal, styles, connections, history }) {
   // Submit function with mutations
   const onSubmit = async data => {
     // Stop if startup with same name exists
-    console.log("submit expand", data, subScore, funnelId);
-    if (existedFlag) {
-      closeModal();
-      setExistedFlag(undefined);
-      return;
+    if(existedFlag) {
+      // existing company 
+      if(connectionData.length > 0) {
+        connectionData.map(el => {
+          if((el.creativeName).toLowerCase().trim() === ((data.variables.input.name).toLowerCase().trim())) {
+            history.push(`${startup_page}/company/${el.connectionId}`);
+          } 
+        })
+      }
     }
+
 
     try {
       // Create creative
@@ -132,6 +140,20 @@ export default function Expand({ closeModal, styles, connections, history }) {
         });
       }
 
+      if(tagSelected.length) {
+        // api for array of tags 
+        tagSelected.map(el => {
+          let variables = {
+            connectionId: connection.id,
+            tagId: el.id,
+          };
+          
+          addTagMutation({
+            variables
+          });
+        })
+      }
+
       if (selectedGroup) {
         const groupVariables = {
           groupId: selectedGroup.id,
@@ -163,6 +185,8 @@ export default function Expand({ closeModal, styles, connections, history }) {
   };
   const list = [{ id: "3344", name: "group 1" }];
 
+  console.log('tagSelected', tagSelected)
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.expand}>
@@ -193,6 +217,15 @@ export default function Expand({ closeModal, styles, connections, history }) {
                 aria-hidden="true"
                 onClick={() => setShowTagsModal(true)}
               ></i>
+              {tagSelected.length > 0
+                ? tagSelected.map(el =>
+                  <span className = "ml-2" key ={el.id}>
+                    {el.group.name} : {el.name}
+                  </span>
+                )
+              :
+                ""
+              }
             </div>
           </div>
           {/* <Tags /> */}
@@ -254,13 +287,14 @@ export default function Expand({ closeModal, styles, connections, history }) {
           <button onClick={() => closeModal()}>CANCEL</button>
           <button type="submit">
             {" "}
-            {isSubmitting ? <i className={"fa fa-spinner fa-spin"} /> : "SAVE"}
+            {isSubmitting ? <i className={"fa fa-spinner fa-spin"} /> :  existedFlag ?  "Okay" : "SAVE"}
           </button>
         </div>
       </div>
       {showTagsModal && (
         <Modal
           title="Add Tags"
+          disableFoot = {true}
           submit={() => {
             setShowTagsModal(false);
           }}
