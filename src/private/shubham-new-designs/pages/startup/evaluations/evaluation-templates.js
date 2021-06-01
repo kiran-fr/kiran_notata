@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./evaluation-templates.scss";
 import ButtonWithIcon from "../../ui-kits/button-with-icon";
-import { ICONPOSITION } from "../../constants";
+import { ICONPOSITION, SETTINGSMENU } from "../../constants";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { add_section } from "../../../../../definitions";
@@ -14,7 +14,11 @@ function a11yProps(index) {
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-export default function ElevationTemplates({ history }) {
+export default function ElevationTemplates({
+  history,
+  setMenuSelected,
+  isBackButton = false,
+}) {
   const [value, setValue] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -29,6 +33,13 @@ export default function ElevationTemplates({ history }) {
       <div className="evaluation-templates-container">
         <div className="row">
           <div className="col-sm-6 col-xs-12 evaluation-templates-container__heading">
+            {isBackButton && (
+              <i
+                class="fa fa-chevron-left"
+                aria-hidden="true"
+                onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+              ></i>
+            )}
             Evaluation templates
           </div>
           <div className="col-sm-6 col-xs-12 evaluation-templates-container__create-template">

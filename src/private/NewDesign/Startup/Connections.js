@@ -21,7 +21,7 @@ import { Kanban } from "../Kanban/Kanban";
 
 // Components
 import Paginator from "./Paginator";
-import AddGroup from "./Modal/addGroup"
+import AddGroup from "./Modal/addGroup";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
@@ -97,11 +97,10 @@ function ListOfStartups({
         history={history}
         setShowFunnelScoreForId={setShowFunnelScoreForId}
         setShowTagGroupForId={setShowTagGroupForId}
-        setShowStartUpForId = {setShowStartUpForId}
+        setShowStartUpForId={setShowStartUpForId}
         setShowSubjectiveScoreForId={setShowSubjectiveScoreForId}
         updateFunnelTag={updateFunnelTag}
       ></Table>
-    
 
       {showTagGroupForId && (
         <AddGroup
