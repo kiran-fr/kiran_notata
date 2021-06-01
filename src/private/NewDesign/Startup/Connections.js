@@ -21,10 +21,11 @@ import { Kanban } from "../Kanban/Kanban";
 
 // Components
 import Paginator from "./Paginator";
-
+import AddGroup from "./Modal/addGroup";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
+
 // import Table from "./DealFlow/table/newdesignTable/table";
 
 function getCleanFilterData(filters) {
@@ -52,6 +53,7 @@ function ListOfStartups({
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
+  const [showStartUpForId, setShowStartUpForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
 
@@ -95,9 +97,17 @@ function ListOfStartups({
         history={history}
         setShowFunnelScoreForId={setShowFunnelScoreForId}
         setShowTagGroupForId={setShowTagGroupForId}
+        setShowStartUpForId={setShowStartUpForId}
         setShowSubjectiveScoreForId={setShowSubjectiveScoreForId}
         updateFunnelTag={updateFunnelTag}
       ></Table>
+
+      {showTagGroupForId && (
+        <AddGroup
+          connection={connections.find(({ id }) => id === showTagGroupForId)}
+          close={() => setShowTagGroupForId(undefined)}
+        />
+      )}
 
       {showFunnelScoreForId && (
         <SetFunnelScore
@@ -107,10 +117,10 @@ function ListOfStartups({
         />
       )}
 
-      {showTagGroupForId && (
+      {showStartUpForId && (
         <SelectTagsForStartup
-          connection={connections.find(({ id }) => id === showTagGroupForId)}
-          close={() => setShowTagGroupForId(undefined)}
+          connection={connections.find(({ id }) => id === showStartUpForId)}
+          close={() => setShowStartUpForId(undefined)}
         />
       )}
 

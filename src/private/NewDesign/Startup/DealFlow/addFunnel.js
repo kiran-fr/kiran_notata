@@ -83,21 +83,19 @@ export default function AddFunnel(props) {
     <div className={styles.group}>
       <div className={styles.groupChild + " " + styles.groupFunnelChild}>
         <div style={{ marginBottom: "30px" }}>
-          <h2 className="mb-5">
-            {funnelName ? (
-              <>
-                {funnelName}
-                <i
-                  onClick={() => setFunnelName("")}
-                  style={{ cursor: "pointer" }}
-                  className="fas fa-times-circle"
-                ></i>
-              </>
-            ) : (
-              ""
-            )}
-            {selectedGroupId ? <FunnelStage /> : ""}
-          </h2>
+          {funnelName ? (
+            <>
+              {funnelName}
+              <i
+                onClick={() => setFunnelName("")}
+                style={{ cursor: "pointer" }}
+                className="fas fa-times-circle"
+              ></i>
+            </>
+          ) : (
+            ""
+          )}
+          {selectedGroupId ? <FunnelStage /> : ""}
         </div>
       </div>
       <div className={styles.groupChild}>

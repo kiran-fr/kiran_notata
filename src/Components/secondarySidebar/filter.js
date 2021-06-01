@@ -19,6 +19,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./sidebar.module.scss";
 
+import More from "assets/images/more.svg";
+
 // const DatePicker = ({ filters, setFilters }) => {
 //   const setDateFilter = dateRange => {
 //     let from = moment(dateRange[0]);
@@ -223,18 +225,31 @@ export default function FilterBar({
               Write or choose tags
             </div>
             <div className={styles.tags__placeholder}>
+              {tagSelected.length > 0
+                ? tagSelected.slice(0, 2).map(el => (
+                    <span
+                      style={{
+                        height: "100%",
+                        color: "white",
+                        padding: "2px 10px",
+                        backgroundColor: "#555",
+                        borderRadius: 15,
+                        fontSize: 10,
+                        marginTop: 1,
+                        marginRight: 7,
+                      }}
+                      key={el.id}
+                    >
+                      {el.group.name} : {el.name}
+                    </span>
+                  ))
+                : ""}
+              {tagSelected.length > 2 ? <img src={More} alt="" /> : null}
               <i
                 class="fa fa-plus"
                 aria-hidden="true"
                 onClick={() => setShowTagsModal(true)}
               ></i>
-              {tagSelected.length > 0
-                ? tagSelected.map(el => (
-                    <span className="ml-2" key={el.id}>
-                      {el.group.name} : {el.name}
-                    </span>
-                  ))
-                : ""}
             </div>
           </div>
         </div>
