@@ -1,3 +1,5 @@
+import React from "react";
+
 export { MenuIconItem } from "./NotataComponents/MenuIconItem";
 export { Card } from "./NotataComponents/Card";
 export { Tag } from "./NotataComponents/Tag";
@@ -16,5 +18,6 @@ export { SuccessBox } from "./NotataComponents/SuccessBox";
 export { MessageBox } from "./NotataComponents/MessageBox";
 export { ErrorBox } from "./NotataComponents/ErrorBox";
 export { GhostLoader } from "./NotataComponents/GhostLoader";
+export { Loader } from "./NotataComponents/Loader";
 
 export { default as AutoHeightTextarea } from "./NotataComponents/AutoHeightTextArea.tsx";

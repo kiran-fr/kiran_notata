@@ -1,7 +1,7 @@
 import React from "react";
 import "./add-startup.scss";
 
-export default function InviteMembers() {
+export default function InviteMembers({ type = 1 }) {
   const noOfMembers = 7;
   return (
     <div className="invite-member-modal-container">
@@ -11,22 +11,16 @@ export default function InviteMembers() {
             return (
               <div className="member-record" key={`member-id-${index}`}>
                 <div className="invite-member-modal__name-container">
-                  <i class="icon fa fa-times-circle" aria-hidden="true"></i>
-                  <div className="name">Ana Konavalenkova</div>
-                  <div className="member-btn">member</div>
+                  {type === 1 && (
+                    <i class="icon fa fa-times-circle" aria-hidden="true"></i>
+                  )}
+                  <div className="name">Jørgen Ekvoll</div>
+                  {type === 1 && <div className="member-btn">member</div>}
                 </div>
-                <div className="email">ana@leverageux.com</div>
+                <div className={`email email-${type}`}>ana@leverageux.com</div>
               </div>
             );
           })}
-          <div className="member-record">
-            <div className="invite-member-modal__name-container">
-              <i class="icon fa fa-times-circle" aria-hidden="true"></i>
-              <div className="name">Ana Konavalenkova</div>
-              <div className="member-btn">member</div>
-            </div>
-            <div className="email">ana@leverageux.com</div>
-          </div>
         </div>
         <div className="col-sm-6">
           <div className="search">

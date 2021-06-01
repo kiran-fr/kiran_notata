@@ -56,6 +56,11 @@ export { default as creativeTemplatePut } from "./creativeTemplatePut";
 
 export { default as presentationPut } from "./presentationPut";
 
+export { default as groupUserInvite } from "./groupUserInvite";
+export { default as groupUserInvitationRemove } from "./groupUserInvitationRemove";
+export { default as groupUserSetRole } from "./groupUserSetRole";
+export { default as groupUserRemove } from "./groupUserRemove";
+
 export { default as externalResourcePut } from "./externalResourcePut";
 export { default as externalResourceDelete } from "./externalResourceDelete";
 

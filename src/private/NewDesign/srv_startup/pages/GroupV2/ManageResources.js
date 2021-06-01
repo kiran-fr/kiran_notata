@@ -133,9 +133,9 @@ export default function ManageResources({ group }) {
           close={() => {
             setInviteMembersModal(false);
           }}
-          submitTxt="SEND INVITATIONS"
-          closeTxt="CANCEL"
-          children={<InviteMembers />}
+          submitTxt="OK"
+          closeTxt="CLOSE"
+          children={<InviteMembers group={group} />}
           innerClassName="invite-member-modal"
         />
       )}

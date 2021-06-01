@@ -739,6 +739,14 @@
     }
     .member-record{
         margin-top:15px;
+        .icon{
+            color: #FF937C;
+            margin-top: 2px;
+            position: relative;
+            left: -4px;
+            top: 1px;
+            cursor: pointer;
+        }
     }
     &__name-container{
         display: flex;
@@ -756,7 +764,7 @@
             color:#FF937C;
             margin-top: 2px;
         }
-        .member-btn{
+        .member-btn {
             background: #FAC76F;
             padding-left: 18px;
             padding-right: 18px;
@@ -767,8 +775,55 @@
             color: #fff;
             margin-left: auto;
             padding-top: 1px;
-            width:83px;
+            text-align: center;
+            position: relative;
+            width: 83px;
+            //cursor: pointer;
+
+            span {
+                z-index: 10;
+            }
+
+            .member-role-slct {
+                display: none;
+                position: absolute;
+                width: 100%;
+                top: 0;
+                left: 0;
+                border-radius: 8px;
+                color: #6A6A6A;
+                font-family: "Proxima Nova";
+                font-size: 12px;
+                box-shadow: 0px 3px 12px rgb(41 70 103 / 20%);
+                padding-top: 20px;
+                padding-bottom: 5px;
+                line-height: 2;
+                background: white;
+                z-index: -1;
+                text-align: left;
+                padding-left: 25px;
+            }
+
+            i {
+                color: #53CAB2;
+                left: 0;
+                top: 0;
+            }
+
         }
+
+        .member-btn:hover > .member-role-slct {
+            display: block;
+        }
+
+        .member-btn:hover {
+            z-index: 999999;
+        }
+
+
+
+
+
         .invite-btn{
             background-color: #53CAB2;
         }
@@ -776,6 +831,7 @@
             background-color: #FFF;
             border: 1px solid #6A6A6A;
             color: #6A6A6A;
+            cursor: default;
         }
     }
     .email{
@@ -791,6 +847,16 @@
         margin-left:5px;
     }
     .search{
+
+        .is-duplicate {
+            color: red;
+            font-size: 12px;
+        }
+
+        .submit-button-container {
+            text-align: right;
+        }
+
         .material-icons{
             position:absolute;
             left: 19px;
@@ -826,8 +892,14 @@
 }
 .group-member-modal{
     margin-top:30px;
-    .member-record{
+    .member-record {
         margin-top:10px;
+        display: flex;
+
+        .icon{
+            color:#FF937C;
+            margin-top: 2px;
+        }
     }
     .name{
         font-family: "Proxima Nova";
