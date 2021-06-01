@@ -7,7 +7,8 @@ import { Modal } from "../UI_Kits/Modal/Modal";
 
 // common dynamic funnel img function
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
-import { CheckBox } from "Components/UI_Kits";
+import { CheckBox, Datepicker1 } from "Components/UI_Kits";
+
 
 // API
 import { useQuery } from "@apollo/client";
@@ -109,6 +110,10 @@ export default function FilterBar({
   const [endDate, setEndDate] = useState(null);
   const onChange = dates => {
     const [start, end] = dates;
+
+    // let fromDate = start?.format("x");
+    // let toDate = end?.format("x");
+    // setFilters({ ...filters, fromDate, toDate });
     setStartDate(start);
     setEndDate(end);
 
@@ -116,6 +121,23 @@ export default function FilterBar({
       setCalendarVisible(false);
     }
   };
+
+  // useEffect(() => {
+  //   if (moment(filters.fromDate)?.isValid()) {
+  //     setStartDate(moment(filters.fromDate).format("YYYY-MM-DD"));
+  //   } else {
+  //     setStartDate(moment.unix(filters.fromDate).format("YYYY-MM-DD"));
+  //   }
+  // }, [filters.fromDate]);
+
+  //   useEffect(() => {
+  //   if (moment(filters.toDate)?.isValid()) {
+  //     setEndDate(moment(filters.toDate)?.format("YYYY-MM-DD"));
+  //   } else {
+  //     setEndDate(moment.unix(filters.toDate)?.format("YYYY-MM-DD"));
+  //   }
+  // }, [filters.toDate]);
+
   const [isCalendarVisible, setCalendarVisible] = useState(false);
 
   const funnelGroupArray = data ? data.accountGet.funnelGroups : [];
@@ -255,9 +277,17 @@ export default function FilterBar({
         </div>
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
-          {/* <DatePickerNewdesign filters={filters} setFilters={setFilters} />
-          <DatePicker filters={filters} setFilters={setFilters} /> */}
-          <div className={styles.date_time}>
+          <Datepicker1
+             selected={startDate}
+             setCalendarVisible ={setCalendarVisible}
+             onChange={onChange}
+             isCalendarVisible = {isCalendarVisible}
+             startDate={startDate}
+             endDate={endDate}
+             formatWeekDay={nameOfDay => nameOfDay.substr(0, 1)}
+          />
+          
+          {/* <div className={styles.date_time}>
             <div className={styles.from_to}>
               <div className={styles.from_to__header}>From</div>
               <div
@@ -284,8 +314,8 @@ export default function FilterBar({
                 </div>
               </div>
             </div>
-          </div>
-          <div className={styles.last_day_container}>
+          </div> */}
+          {/* <div className={styles.last_day_container}>
             <div className={styles.last_day_container__last_day}>
               last 7 days
             </div>
@@ -309,11 +339,12 @@ export default function FilterBar({
                 endDate={endDate}
                 formatWeekDay={nameOfDay => nameOfDay.substr(0, 1)}
                 selectsRange
+                isCalendarVisible = {isCalendarVisible}
+                setCalendarVisible = {setCalendarVisible}
                 inline
               />
-              {/* <div className="ghost-filter"></div> */}
             </>
-          )}
+          )} */}
         </div>
       </div>
       {showTagsModal && (
