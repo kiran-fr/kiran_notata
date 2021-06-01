@@ -8,16 +8,8 @@ import {
 } from "Apollo/Fragments";
 
 export default gql`
-  mutation groupEvaluationRemove(
-    $groupId: ID!
-    $creativeId: ID!
-    $evaluationId: ID!
-  ) {
-    groupEvaluationRemove(
-      groupId: $groupId
-      creativeId: $creativeId
-      evaluationId: $evaluationId
-    ) {
+  mutation groupTemplateRemove($groupId: ID!, $templateId: ID!) {
+    groupTemplateRemove(groupId: $groupId, templateId: $templateId) {
       id
       name
       iAmAdmin
@@ -118,7 +110,11 @@ export default gql`
           updatedAt
           logType
           notifyUsers
-          seenBy
+          seenBy {
+            family_name
+            given_name
+            email
+          }
           reference {
             key
             val
