@@ -13,9 +13,10 @@ import YourTeam from "./your-team";
 import WebForm from "./web-form";
 import Notifications from "./notifications";
 import Tags from "./tags";
+import Funnels from "./funnels";
 import ElevationTemplates from "../startup/evaluations/evaluation-templates";
 
-export default function Settings_Home() {
+export default function Settings_Home({ history }) {
   const [isEvaluationCardVisible, setEvaluationCard] = useState(true);
   const [menuSelected, setMenuSelected] = useState(SETTINGSMENU.HOME);
   return (
@@ -67,7 +68,7 @@ export default function Settings_Home() {
             </div>
             <div
               className="menu-container__menu"
-              onClick={() => setMenuSelected(SETTINGSMENU.USERPROFILE)}
+              onClick={() => history.push("/profile")}
             >
               <img src={yourProfile}></img>
               <div className="menu-container__menu__name">User Profile</div>
@@ -137,7 +138,7 @@ export default function Settings_Home() {
       ) : menuSelected === SETTINGSMENU.TAGS ? (
         <Tags setMenuSelected={setMenuSelected}></Tags>
       ) : menuSelected === SETTINGSMENU.FUNNELS ? (
-        <Tags setMenuSelected={setMenuSelected}></Tags>
+        <Funnels setMenuSelected={setMenuSelected}></Funnels>
       ) : menuSelected === SETTINGSMENU.EVALUATIONTEMPLATE ? (
         <ElevationTemplates
           setMenuSelected={setMenuSelected}
