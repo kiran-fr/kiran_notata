@@ -104,6 +104,7 @@
     "rc-slider": "^9.6.4",
     "react-app-polyfill": "^1.0.6",
     "react-beautiful-dnd": "^13.1.0",
+    "react-datepicker": "^3.8.0",
     "react-google-charts": "^3.0.15",
     "react-hook-form": "^6.11.5",
     "react-minimal-pie-chart": "^8.2.0",

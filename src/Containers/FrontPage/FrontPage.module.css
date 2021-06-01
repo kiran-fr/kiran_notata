@@ -29,6 +29,11 @@
   cursor: pointer;
 }
 
+.login_class:hover,
+.login_class:focus {
+  color: white !important;
+}
+
 .about_section {
   max-width: 680px;
   margin: auto;

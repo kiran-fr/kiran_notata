@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import styles from "./sidebar.module.css";
+import styles from "./sidebar.module.scss";
 
 // API STUFF
 import { useMutation } from "@apollo/client";
@@ -122,7 +122,7 @@ export default function ManageSidebar({
     <Sidebar title="Manage Columns" close={close}>
       <div className={styles.manage}>
         <ul>
-          <li>
+          <li className={styles.firstOrderManage}>
             <label className={styles.customCheck}>
               <input
                 type="checkbox"

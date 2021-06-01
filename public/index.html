@@ -21,6 +21,48 @@
     window.addEventListener('popstate', function () {
       console.log('change...')
     });
+
+    //evaluation remove question functionality
+    function removeRow(input) {
+      document.getElementById('questionDiv').removeChild(input.parentNode.parentNode);
+    }
+
+
+    // question points add & decrese functionality
+     function addPoints(input)
+     {
+      var contactName = input  // this is the element that has the click listener
+        .parentNode  // this would be .actions div
+        .parentNode  // this would be .info div
+        .querySelector('.numbers')  // the link with the name
+        .value; // the inner contents of the link, in this case the name
+        contactName = isNaN(contactName) ? 0 : contactName;
+        contactName++;
+        input  // this is the element that has the click listener
+        .parentNode  // this would be .actions div
+        .parentNode  // this would be .info div
+        .querySelector('.numbers')  // the link with the name
+        .value = contactName;
+     }
+
+     function removePoints(input)
+     {
+      var contactName = input  // this is the element that has the click listener
+        .parentNode  // this would be .actions div
+        .parentNode  // this would be .info div
+        .querySelector('.numbers')  // the link with the name
+        .value; // the inner contents of the link, in this case the name
+        contactName = isNaN(contactName) ? 0 : contactName;
+        if(contactName!=1)
+        {
+          contactName--;
+          input  // this is the element that has the click listener
+          .parentNode  // this would be .actions div
+          .parentNode  // this would be .info div
+          .querySelector('.numbers')  // the link with the name
+          .value = contactName;
+        }
+     }
   </script>
   
   <!-- Hotjar Tracking Code for notata.io -->
@@ -69,6 +111,13 @@
 
 
   <title>notata</title>
+  <style>
+    #number, .no-of-points.numbers
+    {
+      width: 17px;
+      border: none;
+    }
+  </style>
 </head>
 <body>
 <noscript>

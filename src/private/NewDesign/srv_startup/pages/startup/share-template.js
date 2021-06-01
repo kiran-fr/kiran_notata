@@ -3,7 +3,7 @@ import "./share-template.scss";
 import TextBox from "../ui-kits/text-box";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
 import { ICONPOSITION, OVERVIEWPAGESTATE } from "../constants";
-import Tags from "../ui-kits/tags";
+import TagsModal from "../ui-kits/TagsModal";
 import InputCheckBox from "../ui-kits/check-box";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
@@ -78,7 +78,7 @@ export default function ShareTemplate({ setPageState }) {
                   Look like the template looks like:
                 </div>
                 <div className="col-sm-12">
-                  <Tags />
+                  <TagsModal />
                 </div>
               </div>
             </div>

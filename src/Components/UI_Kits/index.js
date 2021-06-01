@@ -15,3 +15,6 @@ export { Toggle } from "./Toggle/index";
 export { Tabsection } from "./Tabs/index";
 export { Tables as Table } from "./Table/Table";
 export { Card } from "./Card/Card";
+export { Datepicker1 } from "./DatePicker/datepicker1";
+
+

@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "./reports.scss";
 import group from "../../../../assets/images/group.png";
 import business from "../../../../assets/images/business.png";
 import SubjectiveScoreEvaluations from "./subjective-scores-evaluation";
 import ChartTile from "./chart-tile";
+import { REPORTCHARTS, ICONPOSITION } from "../constants";
+import ButtonWithIcon from "../ui-kits/button-with-icon";
+import Filter from "./filter";
 
 export default function Reports() {
+  const [isFilterVisible, setFilterVisible] = useState(false);
+  let data = [
+    { name: "Business", type: REPORTCHARTS.COLUMN, isDropDown: false },
+    { name: "Market", type: REPORTCHARTS.PIE, isDropDown: false },
+    { name: "Phase", type: REPORTCHARTS.BAR, isDropDown: false },
+    { name: "Source of lead", type: REPORTCHARTS.COLUMN, isDropDown: true },
+    { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
+    { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
+  ];
+  const [chartData, setChartData] = useState(data);
   return (
     <div className="report-container">
       <div className="row">
-        <div className="col-md-7 col-lg-6 col-xs-12">
+        <div className="col-sm-12 text-right">
+          <ButtonWithIcon
+            iconName="filter_alt"
+            className="fillter-btn"
+            text="Filter"
+            iconPosition={ICONPOSITION.START}
+            onClick={() => setFilterVisible(true)}
+          ></ButtonWithIcon>
+        </div>
+        <div className="col-md-12 col-lg-6 col-xs-12 nopadding-right">
           <div className="card">
             <div className="card-heading">Funnels</div>
             <div className="row">
@@ -93,9 +115,9 @@ export default function Reports() {
             </div>
           </div>
         </div>
-        <div className="col-md-5 col-lg-6 col-xs-12">
+        <div className="col-md-12 col-lg-6 col-xs-12">
           <div className="row">
-            <div className="col-sm-6 col-xs-12 col-md-12 col-lg-6 nopadding-left nopadding-right my-groups-container">
+            <div className="col-sm-6 col-xs-12 col-md-6 nopadding-right col-lg-6 my-groups-container">
               <div className="card">
                 <div className="card-heading">My Groups</div>
                 <div className="my-groups-container__noOfRecords">10</div>
@@ -113,7 +135,7 @@ export default function Reports() {
                 </div>
               </div>
             </div>
-            <div className="col-sm-6 col-xs-12 col-md-12 col-lg-6 my-groups-container">
+            <div className="col-sm-6 col-xs-12 col-md-6 col-lg-6 my-groups-container">
               <div className="card">
                 <div className="card-heading">All Startups</div>
                 <div className="my-groups-container__noOfRecords">1526</div>
@@ -131,7 +153,7 @@ export default function Reports() {
                 </div>
               </div>
             </div>
-            <div className="col-sm-6 col-xs-12 col-md-12 col-lg-6 nopadding-left nopadding-right my-groups-container">
+            <div className="col-sm-6 col-xs-12 col-md-6 nopadding-right col-lg-6 my-groups-container">
               <div className="card">
                 <div className="card-heading">People in your network</div>
                 <div className="my-groups-container__noOfRecords">987</div>
@@ -143,7 +165,7 @@ export default function Reports() {
                 <img src={group} />
               </div>
             </div>
-            <div className="col-sm-6 col-xs-12 col-md-12 col-lg-6 my-groups-container">
+            <div className="col-sm-6 col-xs-12 col-md-6 col-lg-6 my-groups-container">
               <div className="card">
                 <div className="card-heading">Group startups</div>
                 <div className="my-groups-container__noOfRecords">1890</div>
@@ -161,8 +183,33 @@ export default function Reports() {
           <SubjectiveScoreEvaluations></SubjectiveScoreEvaluations>
         </div>
         <div className="col-sm-12 tags-container-heading">Tags</div>
-        <div className="col-sm-4">
-          <ChartTile tileHeading="Business" />
+        {chartData.map((chart, index) => {
+          return (
+            <div
+              className="col-sm-6 col-md-6 col-lg-4"
+              key={`chart-id-${index}`}
+            >
+              <ChartTile
+                tileHeading={chart.name}
+                selectedChartType={chart.type}
+                isDropDownOption={chart.isDropDown}
+              />
+            </div>
+          );
+        })}
+        {isFilterVisible && <Filter close={setFilterVisible} />}
+        <div className="col-sm-12 report-container__add-icon-container">
+          <div>
+            <i
+              className="fa fa-plus report-container__add-icon-container__add-icon"
+              onClick={() => {
+                let charts = [...chartData];
+                console.log(",,,", charts);
+                charts.push(charts[charts.length - 1]);
+                setChartData(charts);
+              }}
+            ></i>
+          </div>
         </div>
       </div>
     </div>

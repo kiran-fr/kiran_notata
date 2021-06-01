@@ -80,7 +80,7 @@ export default function Table(props) {
           isOpen={popup}
           setIsOpen={setPopup}
         ></SelectAllPopup>
-        {loading && (
+        {!data.length && loading && (
           <div className={styles.loader}>
             <i className={"fa fa-spinner fa-spin"} />
           </div>

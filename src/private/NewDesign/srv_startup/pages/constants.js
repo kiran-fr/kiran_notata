@@ -4,3 +4,9 @@ export const OVERVIEWPAGESTATE = {
   SHARETEMPLATE: "SHARETEMPLATE",
   ARCHIVElIST: "ARCHIVElIST",
 };
+
+export const REPORTCHARTS = {
+  BAR: "BAR",
+  COLUMN: "COLUMN",
+  PIE: "PIE",
+};

@@ -21,10 +21,14 @@ export default function AddFunnel(props) {
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
 
   useEffect(() => {
-    // const newArr = funnelGroup.map(items => items.funnelTags.length > 0)
-    // console.log('newArrdae', newArr)
-    setFunnelGroupArray(funnelGroup);
+    const newArr = funnelGroup.filter(items => items.funnelTags.length > 0);
+    setFunnelGroupArray(newArr);
   }, [funnelGroup.length]);
+
+  useEffect(() => {
+    setFunnelName("");
+    setFunnelID("");
+  }, [selectedGroupId]);
 
   useEffect(() => {
     if (props.funnelUpdate) {
@@ -54,6 +58,8 @@ export default function AddFunnel(props) {
               {item.funnelTags.length &&
                 item.funnelTags.map((data, index) => (
                   <li key={index} onClick={() => handleFunnel(data)}>
+                    {console.log("datavalue", data)}
+
                     <div>
                       <p>{data.name}</p>
                     </div>
@@ -77,21 +83,19 @@ export default function AddFunnel(props) {
     <div className={styles.group}>
       <div className={styles.groupChild + " " + styles.groupFunnelChild}>
         <div style={{ marginBottom: "30px" }}>
-          <h2 className="mb-5">
-            {funnelName ? (
-              <>
-                {funnelName}
-                <i
-                  onClick={() => setFunnelName("")}
-                  style={{ cursor: "pointer" }}
-                  className="fas fa-times-circle"
-                ></i>
-              </>
-            ) : (
-              ""
-            )}
-            {selectedGroupId ? <FunnelStage /> : ""}
-          </h2>
+          {funnelName ? (
+            <>
+              {funnelName}
+              <i
+                onClick={() => setFunnelName("")}
+                style={{ cursor: "pointer" }}
+                className="fas fa-times-circle"
+              ></i>
+            </>
+          ) : (
+            ""
+          )}
+          {selectedGroupId ? <FunnelStage /> : ""}
         </div>
       </div>
       <div className={styles.groupChild}>

@@ -36,6 +36,14 @@ button,
   border: none;
   outline: none;
 }
+
+.tableSearch button span:last-of-type {
+  display: none;
+}
+
+.tableSearch button span:first-of-type {
+  display: block;
+}
 .tableSearch i {
   position: absolute;
   left: 15px;
@@ -61,6 +69,7 @@ button,
 }
 .table_headerChild .addButton i {
   color: #fff;
+  margin-right: 5px;
 }
 .filterButton {
   width: 105px;
@@ -153,10 +162,23 @@ button,
   .addButton {
     width: 200px !important;
   }
+
+  .addButton i {
+    display: none;
+  }
+
   .tableSearch {
     width: 50% !important;
   }
   .tableSearch button {
+    width: 40px;
+  }
+
+  .tableSearch button span:last-of-type {
+    display: block;
+  }
+
+  .tableSearch button span:first-of-type {
     display: none;
   }
 }
@@ -194,7 +216,7 @@ button,
     width: 50% !important;
   }
   .manageButton {
-    display: none;
+    /* display: none; */
   }
 }
 
@@ -208,5 +230,12 @@ button,
 }
 
 .clearAllTxt {
-  color: red;
+  color: #53cab2;
+  margin-top: 15px;
+  transition: color 0.1s ease-in;
+  font-weight: 600;
+}
+
+.clearAllTxt:hover {
+  color: #49b6a0;
 }

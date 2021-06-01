@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./sidebar.module.css";
+import styles from "./sidebar.module.scss";
 
 export default function SecondarySidebar({ children, title, icon, close }) {
   return (

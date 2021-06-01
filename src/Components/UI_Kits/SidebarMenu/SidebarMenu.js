@@ -10,6 +10,8 @@ import {
   signOut,
   startup_page,
   pre_profile,
+  reports,
+  settings_new,
 } from "definitions.js";
 
 // Styles
@@ -47,7 +49,7 @@ export function SideBarMenu() {
       label: "Reports and analytics",
       iconClass: "fas fa-file-alt",
       iconStyle: { paddingTop: "7px" },
-      link: charts,
+      link: `${startup_page}/report/reports`,
     },
     //  hide for now  (commented by siva)
     // {
@@ -148,7 +150,7 @@ export function SideBarMenu() {
             <div className={styles.menu_list + " " + styles.menu_listSettings}>
               <NavLink
                 exact={true}
-                to={settings}
+                to={settings_new}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}

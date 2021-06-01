@@ -40,6 +40,7 @@ import {
   add_section_dev,
   reports,
   notifications_page,
+  settings_new,
 } from "../definitions";
 
 // Landing page / list
@@ -91,12 +92,14 @@ import ElevationTemplates from "./shubham-new-designs/pages/startup/evaluations/
 import AddSection from "./shubham-new-designs/pages/startup/evaluations/add-new-section";
 // import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
 import Reports from "./shubham-new-designs/pages/reports/reports";
+import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 
 // New Startup Info
 import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
 import { ElevationTemplates as ElevationTemplatesDev } from "./NewDesign/srv_startup/pages/startup/evaluations/evaluation-templates";
 import { AddSection as AddSectionDev } from "./NewDesign/srv_startup/pages/startup/evaluations/add-new-section";
 import { TemplateSection } from "./NewDesign/srv_startup/pages/startup/evaluations/template-section";
+import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
 
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
@@ -231,6 +234,12 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={add_section} component={AddSection} />
       <Route eaxct path={reports} component={Reports} />
+      <Route eaxct path={settings_new} component={Settings_Home} />
+      <Route
+        eaxct
+        path={`${startup_page}/report/reports`}
+        component={ReportsAdd}
+      />
 
       <Route render={() => <div>404</div>} />
     </Switch>

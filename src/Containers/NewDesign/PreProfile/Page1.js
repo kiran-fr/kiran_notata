@@ -201,10 +201,15 @@ export default function Page1({ setPage }) {
             value="SAVE"
             size="medium"
             buttonStyle="green"
-            type="right_arrow"
-            loading={isSubmitting}
+            type={!isSubmitting ? "right_arrow" : ""}
           >
-            NEXT
+            {!isSubmitting ? (
+              "NEXT"
+            ) : (
+              <span className={styles.loading_icon}>
+                <i className="fa fa-spinner fa-spin" />
+              </span>
+            )}
           </Button>
         </div>
       </form>

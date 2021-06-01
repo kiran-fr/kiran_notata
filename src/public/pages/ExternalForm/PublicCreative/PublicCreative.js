@@ -107,6 +107,9 @@ function Submit({
                 accountId: accountId,
                 input: {
                   name: name,
+                  // accountId: accountId,
+                  // templateId: template?.id,
+                  // sharedWithEmail: creative?.sharedWithEmail || null,
                   submit: true,
                   answers: answers.map(ans => omit(ans, ["__typename", "id"])),
                 },

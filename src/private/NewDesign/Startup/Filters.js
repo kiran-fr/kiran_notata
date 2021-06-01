@@ -55,21 +55,20 @@ const OptionalFilterSidebar = ({ setOptionalFilter, grayFadeOut }) => {
   );
 };
 
-// function getHasFilters(filters) {
-//    const hasFilters =
-//     filters.tags && filters.tags.length ||
-//     filters.funnelTag && filters.funnelTag.length ||
-//     filters.search ||
-//     filters.starred
-//     // (filters.dateRange.length &&
-//     // (filters.dateRange[0] || filters.dateRange[1]));
-//     console.log('insidefilter',filters, hasFilters)
-//     if(hasFilters) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-// }
+function handleclearTxt(filters) {
+  const hideTxt =
+    (filters.tags && filters.tags.length > 0) ||
+    (filters.funnelTag && filters.funnelTag.length > 0) ||
+    filters.search ||
+    filters.starred ||
+    (filters.fromDate && filters.toDate);
+
+  if (hideTxt) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 export default function Filters({
   history,
@@ -80,12 +79,14 @@ export default function Filters({
   setManageColValue,
   manageColValue,
   evaluationTemplates,
+  defaultFilters,
 }) {
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState();
   const [optionalFilter, setOptionalFilter] = useState();
   const [filterValue, setFilterValue] = useState();
-
+  const [kanbanDropDown, setKanbanDropDown] = useState([]);
+  const [clearFilterTxt, setClearFilterTxt] = useState(false);
   const [kanbanPopup, setKanbanPopup] = useState(false);
 
   // Query: getfunnelGroup
@@ -93,17 +94,24 @@ export default function Filters({
 
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
 
-  console.log("funnelGroup", funnelGroup);
-
-  // let hasFilters = false;
-
   useEffect(() => {
     setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
   }, []);
 
+  // Kanban funnels dropdown
   useEffect(() => {
-    // hasFilters = getHasFilters(filters)
+    const groupArr = [];
+    funnelGroup.filter(item => {
+      if (item.funnelTags.length > 0) {
+        groupArr.push(item.name);
+      }
+    });
+    setKanbanDropDown(groupArr);
+  }, [funnelGroup.length]);
+
+  useEffect(() => {
+    setClearFilterTxt(handleclearTxt(filters));
     setFilterValue(filters.search);
   }, [filters]);
 
@@ -136,20 +144,10 @@ export default function Filters({
           ></i>
           <PopupMenu
             title="Kanban"
-            items={["All Startups", "Funnel 1", "Funnel 2", "Funnel 3"]}
+            items={kanbanDropDown}
             isOpen={kanbanPopup}
             setIsOpen={setKanbanPopup}
           ></PopupMenu>
-          {/* <DropMenu
-            dropMenuArr={[
-              { iconName: "", title: "Funnel 1" },
-              { iconName: "", title: "Funnel 2" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-              { iconName: "", title: "Funnel 3" },
-            ]}
-          ></DropMenu> */}
         </div>
       ),
     },
@@ -171,6 +169,12 @@ export default function Filters({
   const handleSearch = e => {
     if (activeTab === "spreadsheet") {
       setFilterValue(e.target.value);
+    }
+  };
+
+  const searchOnEnter = e => {
+    if (e.key === "Enter" && activeTab === "spreadsheet") {
+      setFilters({ ...filters, search: filterValue });
     }
   };
 
@@ -207,7 +211,7 @@ export default function Filters({
                     className={styles.addButton}
                     onClick={() => setModal("startup")}
                   >
-                    <i className="far fa-plus"></i>&nbsp; &nbsp; Add new startup
+                    <i className="far fa-plus"></i>Add new startup
                   </button>
                   <div
                     className={
@@ -220,8 +224,12 @@ export default function Filters({
                       type="text"
                       value={filterValue}
                       onChange={e => handleSearch(e)}
+                      onKeyPress={e => searchOnEnter(e)}
                     />
-                    <button onClick={() => handleSearchBtn()}>Search</button>
+                    <button onClick={() => handleSearchBtn()}>
+                      <span>Search</span>
+                      <span>S</span>
+                    </button>
                     <i className="far fa-search"></i>
                   </div>
                 </div>
@@ -246,6 +254,7 @@ export default function Filters({
               className={
                 styles.table_headerChild + " " + styles.table_headerChildLast
               }
+              style={{ width: "20%" }}
             >
               <div>
                 <OptionalFilterSidebar
@@ -258,20 +267,13 @@ export default function Filters({
             </div>
           </div>
         </div>
-        {activeTab === "spreadsheet" ? (
+        {activeTab === "spreadsheet" && clearFilterTxt ? (
           <div
             className={
               styles.clearAllTxt + " " + "text-right" + " " + styles.handCursor
             }
             onClick={() => {
-              setFilters({
-                search: "",
-                tags: [],
-                funnelTag: [],
-                fromDate: new Date().getTime() - 40000,
-                toDate: new Date().getTime(),
-                starred: false,
-              });
+              setFilters(defaultFilters);
             }}
           >
             Clear All Filters
@@ -294,6 +296,7 @@ export default function Filters({
       ) : (
         optionalFilter === "filter" && (
           <FilterSidebar
+            defaultFilters={defaultFilters}
             close={setOptionalFilter}
             filters={filters}
             handleSearch={handleSearch}

@@ -8,20 +8,18 @@
         padding-left:0px;
         padding-right:0px;
     } 
-    .card{
-        height:100%;
-    }
     .MuiTabs-root{
         margin-left:20px;
     }
     .comments{
+        margin-top:10px;
         @media only screen and(max-width:991px) {
             padding-bottom: 149px;
         }
     }
     .comment{
         margin-left: 25px;
-        margin-top: 25px;
+        margin-top: 40px;
         &__username{
             font-family: 'Roboto';
             font-weight: bold;
@@ -30,8 +28,26 @@
             letter-spacing: 0.03em;
             color: #6A6A6A;
         }
+        &__seperate-date-time{
+            display: flex;
+            justify-content: center;
+            margin-left: -20px;
+            &__separator{
+                border-bottom: 1px solid #E8E8E8;
+                width: 20px;
+                @media only screen and(max-width:768px) {
+                    width:70px;
+                }
+                height: 6px;
+            }
+        }        
         &__you{
             color: #53CAB2;
+            &:hover{
+                .comment__edit-delete{
+                    display: flex;
+                }
+            }
         }
         &__msg{
             margin-top: 10px;
@@ -59,32 +75,35 @@
             line-height: 12px;
             letter-spacing: 0.03em;
             color: #969BA3;
-            margin-left:10px;
+            margin-left:15px;
+            margin-right: 15px;
+            margin-bottom: 22px;
         }
         &__write-comment{
             width: 90%;
             margin-left: 5%;
-            position: absolute;
             bottom: 20px;
             height: 86px;
             border-radius: 20px;
             border: none;
             resize: none;
             background: #F4F4F4;
+            margin-top:50px;
             @media only screen and(max-width:991px) {
                 width: 80%;
+                margin-left:10%;
             }
         }
         &__send{
             font-size: 22px;
             right: calc(5% + 15px);
             @media only screen and(max-width:991px) {
-                right: calc(5% + 40px);
+                right: calc(10% + 40px);
             }
             position: absolute;
             cursor: pointer;
             color: #969BA3;
-            bottom: 53px;
+            margin-top: 80px;
         }
         &__edit-delete{
             position: absolute;
@@ -94,6 +113,7 @@
             border-radius: 10px;
             padding: 1px;
             display: flex;
+            display: none;
             @media only screen and(max-width:991px) {
                 right: 21px;
             }
@@ -109,16 +129,42 @@
                 margin-left:6px;
             }
         }
+        &__save-cancel{
+            text-align: center;
+            margin-top:10px;
+            .save,
+            .cancel{
+                font-family: "Proxima Nova";
+                font-style: normal;
+                font-weight: bold;
+                font-size: 10px;
+                line-height: 12px;
+                /* display: flex; */
+                letter-spacing: 0.03em;
+                padding: 5px 15px 5px 15px!important;
+                justify-content: center;
+                padding: 5px;
+                border-radius: 12px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .save{
+                color: #FFFFFF;
+                background: #53CAB2;
+            }
+            .cancel{
+                color:#6a6a6a;
+                background-color: #FFFFFF;
+                border: 1px solid #6a6a6a;
+            }
+        }
         &__activity{
-            font-family: 'Roboto';
+            margin-top: 10px;
+            font-family: "Roboto";
             font-size: 14px;
             line-height: 16px;
             letter-spacing: 0.03em;
-            margin-top:10px;
-            background: #F4F4F4;
-            width: fit-content;
-            padding: 5px 12px 5px 12px;
-            border-radius: 8px;
+            color: #969BA3;
         }
     }
 }

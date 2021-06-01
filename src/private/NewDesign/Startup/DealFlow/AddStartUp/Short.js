@@ -21,6 +21,7 @@ import { startup_page } from "definitions";
 export const Short = ({ history, closeModal, styles, connections }) => {
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
+  const [connectionData, setconnectionData] = useState([]);
 
   // Form
   const { register, handleSubmit, formState } = useForm();
@@ -44,7 +45,9 @@ export const Short = ({ history, closeModal, styles, connections }) => {
             setExistedFlag(
               result?.data?.connectionAutoCompleteName[0]?.creativeName
             );
+            setconnectionData(result?.data?.connectionAutoCompleteName);
           } else {
+            setconnectionData([]);
             setExistedFlag(undefined);
           }
         });
@@ -62,9 +65,17 @@ export const Short = ({ history, closeModal, styles, connections }) => {
   const onSubmit = async data => {
     // Stop if startup with same name exists
     if (existedFlag) {
-      closeModal();
-      setExistedFlag(undefined);
-      return;
+      // existing company
+      if (connectionData.length > 0) {
+        connectionData.map(el => {
+          if (
+            el.creativeName.toLowerCase().trim() ===
+            data.variables.input.name.toLowerCase().trim()
+          ) {
+            history.push(`${startup_page}/company/${el.connectionId}`);
+          }
+        });
+      }
     }
 
     try {
@@ -117,7 +128,13 @@ export const Short = ({ history, closeModal, styles, connections }) => {
           <button onClick={() => closeModal()}>CANCEL</button>
           <button type="submit">
             {" "}
-            {isSubmitting ? <i className={"fa fa-spinner fa-spin"} /> : "SAVE"}
+            {isSubmitting ? (
+              <i className={"fa fa-spinner fa-spin"} />
+            ) : existedFlag ? (
+              "Okay"
+            ) : (
+              "SAVE"
+            )}
           </button>
         </div>
       </div>
