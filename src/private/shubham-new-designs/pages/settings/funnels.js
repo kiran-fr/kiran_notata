@@ -21,28 +21,6 @@ export default function Funnels({ setMenuSelected }) {
           <div className="funnels-container__funnels__funnel">
             <div className="funnels-container__funnels__funnel__heading">
               STAGE
-              <span
-                class="material-icons funnels-container__funnels__funnel__heading__more"
-                onClick={() => setIsTagDropDown(!isTagDropDown)}
-              >
-                {" "}
-                more_horiz{" "}
-                {isTagDropDown && (
-                  <div className="funnels-container__funnels__funnel__heading__dropdown">
-                    <div
-                      className="drop-down-item"
-                      onClick={() => setIsTagDropDown(false)}
-                    >
-                      <span class="material-icons">edit</span>
-                      <span className="text">EDIT</span>
-                    </div>
-                    <div className="drop-down-item leave" onClick={() => {}}>
-                      <span class="material-icons leave">delete</span>
-                      <span className="text">DELETE FUNNEL</span>
-                    </div>
-                  </div>
-                )}
-              </span>
             </div>
           </div>
         </div>
