@@ -70,6 +70,7 @@ export { default as groupStartupAdd } from "./groupStartupAdd";
 export { default as groupStartupRemove } from "./groupStartupRemove";
 
 export { default as groupDelete } from "./groupDelete";
+export { default as groupLeave } from "./groupLeave";
 
 export { default as notificationsMarkAsSeen } from "./notificationsMarkAsSeen";
 export { default as notificationsMarkAllAsSeen } from "./notificationsMarkAllAsSeen";

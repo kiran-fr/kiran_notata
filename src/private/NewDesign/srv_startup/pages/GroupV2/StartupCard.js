@@ -247,7 +247,7 @@ function YourEvaluations({ startup, group, history }) {
         )
       }
 
-      {unusedEvaluations && unusedEvaluations.length && (
+      {unusedEvaluations && !!unusedEvaluations.length && (
         <>
           <div className="col-sm-12 your-evaluations-container__details-heading">
             requested evaluations
@@ -543,191 +543,199 @@ export default function StartupCard({
             <p className="startup-container__description">{oneLiner || ""}</p>
           </div>
 
-          {/* subjective score */}
-          <div className="row subjective-score-container">
-            {/* toggle open */}
-            <div style={{ position: "relative " }}>
-              <i
-                className={`subjective-score-container__heading__icon
+          {startup.evaluationSummaries &&
+            !!startup.evaluationSummaries.length &&
+            subjectiveScoreSummary && (
+              <>
+                {/* subjective score */}
+                <div className="row subjective-score-container">
+                  {/* toggle open */}
+                  <div style={{ position: "relative " }}>
+                    <i
+                      className={`subjective-score-container__heading__icon
                   ${
                     subjectiveScoreState
                       ? "fa fa-chevron-up"
                       : "fa fa-chevron-down"
                   }`}
-                aria-hidden="true"
-                onClick={() => setSubjectiveScoreState(!subjectiveScoreState)}
-              />
-            </div>
-
-            {/* subjective score */}
-
-            {subjectiveScoreSummary && (
-              <div className="col-sm-4 col-md-3 col-xs-6 subjective-score-container__subjective-score">
-                <div className="subjective-score-container__heading">
-                  subjective score
-                </div>
-
-                <div className="subjective-score-container__score">
-                  {subjectiveScoreSummary?.average}
-                </div>
-
-                <div className="subjective-score-container__highest-lowest-score">
-                  <div className="subjective-score-container__highest-lowest-score__record">
-                    <span className="material-icons north">north</span>
-                    <span className="subjective-score-container__highest-lowest-score__score highest">
-                      {subjectiveScoreSummary?.max}
-                    </span>
-                    <span className="subjective-score-container__highest-lowest-score__type">
-                      highest
-                    </span>
+                      aria-hidden="true"
+                      onClick={() =>
+                        setSubjectiveScoreState(!subjectiveScoreState)
+                      }
+                    />
                   </div>
-                  <div className="subjective-score-container__highest-lowest-score__record">
-                    <span className="material-icons south">south</span>
-                    <span className="subjective-score-container__highest-lowest-score__score lowest">
-                      {subjectiveScoreSummary?.min}
-                    </span>
-                    <span className="subjective-score-container__highest-lowest-score__type">
-                      lowest
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
 
-            {/*</div>*/}
+                  {/* subjective score */}
+                  {subjectiveScoreSummary && (
+                    <div className="col-sm-4 col-md-3 col-xs-6 subjective-score-container__subjective-score">
+                      <div className="subjective-score-container__heading">
+                        subjective score
+                      </div>
 
-            {/* ... end subjective score */}
+                      <div className="subjective-score-container__score">
+                        {subjectiveScoreSummary?.average}
+                      </div>
 
-            {startup.evaluationSummaries?.map(summary => {
-              return (
-                <div className="col-sm-6 col-md-3 col-xs-6">
-                  <div className="subjective-score-container__heading subjective-score-container__evaluations-heading">
-                    {summary.templateName}
-                  </div>
-                  <div className="subjective-score-container__score">
-                    {summary.averagePercentageScore}%
-                  </div>
-                  <div className="subjective-score-container__highest-lowest-score">
-                    <div className="subjective-score-container__highest-lowest-score__record">
-                      <span className="material-icons north">north</span>
-                      <span className="subjective-score-container__highest-lowest-score__score highest">
-                        {summary.highestScore}
-                      </span>
-                      <span className="subjective-score-container__highest-lowest-score__type">
-                        highest
-                      </span>
+                      <div className="subjective-score-container__highest-lowest-score">
+                        <div className="subjective-score-container__highest-lowest-score__record">
+                          <span className="material-icons north">north</span>
+                          <span className="subjective-score-container__highest-lowest-score__score highest">
+                            {subjectiveScoreSummary?.max}
+                          </span>
+                          <span className="subjective-score-container__highest-lowest-score__type">
+                            highest
+                          </span>
+                        </div>
+                        <div className="subjective-score-container__highest-lowest-score__record">
+                          <span className="material-icons south">south</span>
+                          <span className="subjective-score-container__highest-lowest-score__score lowest">
+                            {subjectiveScoreSummary?.min}
+                          </span>
+                          <span className="subjective-score-container__highest-lowest-score__type">
+                            lowest
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="subjective-score-container__highest-lowest-score__record">
-                      <span className="material-icons south">south</span>
-                      <span className="subjective-score-container__highest-lowest-score__score lowest">
-                        {summary.lowestScore}
-                      </span>
-                      <span className="subjective-score-container__highest-lowest-score__type">
-                        lowest
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                  )}
 
-          {subjectiveScoreState && (
-            <>
-              {/* subjective score */}
-              <div className="row subjective-score-evaluation-container">
-                <i
-                  className={`subjective-score-evaluation-container__icon fa fa-chevron-down`}
-                  aria-hidden="true"
-                  onClick={() => null}
-                />
-                <div className="col-sm-6 col-xs-9 subjective-score-evaluation-container__name">
-                  Subjective Score
+                  {/*</div>*/}
+
+                  {/* ... end subjective score */}
+                  {startup.evaluationSummaries?.map(summary => {
+                    return (
+                      <div className="col-sm-6 col-md-3 col-xs-6">
+                        <div className="subjective-score-container__heading subjective-score-container__evaluations-heading">
+                          {summary.templateName}
+                        </div>
+                        <div className="subjective-score-container__score">
+                          {summary.averagePercentageScore}%
+                        </div>
+                        <div className="subjective-score-container__highest-lowest-score">
+                          <div className="subjective-score-container__highest-lowest-score__record">
+                            <span className="material-icons north">north</span>
+                            <span className="subjective-score-container__highest-lowest-score__score highest">
+                              {summary.highestScore}
+                            </span>
+                            <span className="subjective-score-container__highest-lowest-score__type">
+                              highest
+                            </span>
+                          </div>
+                          <div className="subjective-score-container__highest-lowest-score__record">
+                            <span className="material-icons south">south</span>
+                            <span className="subjective-score-container__highest-lowest-score__score lowest">
+                              {summary.lowestScore}
+                            </span>
+                            <span className="subjective-score-container__highest-lowest-score__type">
+                              lowest
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
-                <div className="col-sm-3 col-xs-9 subjective-score-evaluation-container__submitions">
-                  {startup.subjectiveScores?.length} submissions
-                </div>
-                <div className="col-sm-3 col-xs-3 subjective-score-evaluation-container__score">
-                  {subjectiveScoreSummary?.average}
-                </div>
-              </div>
-
-              {/* evaluations */}
-              <div className="row evaluation-container">
-                <div className="col-sm-12 evaluation-container__heading">
-                  EVALUATIONS
-                </div>
-              </div>
-
-              {evaluationsByTemplate?.map(({ summary, evaluations }) => {
-                return (
+                {subjectiveScoreState && (
                   <>
-                    <div
-                      className="row evaluation-container"
-                      key={summary.templateId}
-                    >
-                      {/* toggle open */}
+                    {/* subjective score */}
+                    <div className="row subjective-score-evaluation-container">
                       <i
-                        className={`subjective-score-evaluation-container__icon 
+                        className={`subjective-score-evaluation-container__icon fa fa-chevron-down`}
+                        aria-hidden="true"
+                        onClick={() => null}
+                      />
+                      <div className="col-sm-6 col-xs-9 subjective-score-evaluation-container__name">
+                        Subjective Score
+                      </div>
+
+                      <div className="col-sm-3 col-xs-9 subjective-score-evaluation-container__submitions">
+                        {startup.subjectiveScores?.length} submissions
+                      </div>
+                      <div className="col-sm-3 col-xs-3 subjective-score-evaluation-container__score">
+                        {subjectiveScoreSummary?.average}
+                      </div>
+                    </div>
+
+                    {/* evaluations */}
+                    <div className="row evaluation-container">
+                      <div className="col-sm-12 evaluation-container__heading">
+                        EVALUATIONS
+                      </div>
+                    </div>
+
+                    {evaluationsByTemplate?.map(({ summary, evaluations }) => {
+                      return (
+                        <>
+                          <div
+                            className="row evaluation-container"
+                            key={summary.templateId}
+                          >
+                            {/* toggle open */}
+                            <i
+                              className={`subjective-score-evaluation-container__icon 
                             ${
                               expandedTemplates[summary.templateId]
                                 ? "fa fa-chevron-up"
                                 : "fa fa-chevron-down"
                             }`}
-                        aria-hidden="true"
-                        onClick={() =>
-                          setExpandedTemplates({
-                            ...expandedTemplates,
-                            [summary.templateId]: !expandedTemplates[
-                              summary.templateId
-                            ],
-                          })
-                        }
-                      />
+                              aria-hidden="true"
+                              onClick={() =>
+                                setExpandedTemplates({
+                                  ...expandedTemplates,
+                                  [summary.templateId]: !expandedTemplates[
+                                    summary.templateId
+                                  ],
+                                })
+                              }
+                            />
 
-                      <div className="col-sm-6 col-xs-9 subjective-score-evaluation-container__name">
-                        {summary.templateName}
-                      </div>
-                      <div className="col-sm-3 col-xs-9 subjective-score-evaluation-container__submitions">
-                        {evaluations.length} submitions
-                      </div>
-                      <div className="col-sm-3 col-xs-3 subjective-score-evaluation-container__score">
-                        {summary.averagePercentageScore}%
-                      </div>
-                    </div>
-
-                    {expandedTemplates[summary.templateId] &&
-                      evaluations.map(evaluation => {
-                        return (
-                          <div
-                            className="row evaluation-list-container"
-                            key={evaluation.id}
-                          >
-                            <div className="col-sm-6 col-xs-9 subjective-score-evaluation-container__username">
-                              {evaluation.createdByUser?.given_name}{" "}
-                              {evaluation.createdByUser?.family_name}
+                            <div className="col-sm-6 col-xs-9 subjective-score-evaluation-container__name">
+                              {summary.templateName}
                             </div>
                             <div className="col-sm-3 col-xs-9 subjective-score-evaluation-container__submitions">
-                              {moment(evaluation.updatedAt).format("ll")}
+                              {evaluations.length} submitions
                             </div>
                             <div className="col-sm-3 col-xs-3 subjective-score-evaluation-container__score">
-                              {evaluation.summary?.scorePercent}%{" "}
-                              <span
-                                className="full-list"
-                                onClick={() => setFullListModal(evaluation)}
-                              >
-                                Full list
-                              </span>
+                              {summary.averagePercentageScore}%
                             </div>
                           </div>
-                        );
-                      })}
+
+                          {expandedTemplates[summary.templateId] &&
+                            evaluations.map(evaluation => {
+                              return (
+                                <div
+                                  className="row evaluation-list-container"
+                                  key={evaluation.id}
+                                >
+                                  <div className="col-sm-6 col-xs-9 subjective-score-evaluation-container__username">
+                                    {evaluation.createdByUser?.given_name}{" "}
+                                    {evaluation.createdByUser?.family_name}
+                                  </div>
+                                  <div className="col-sm-3 col-xs-9 subjective-score-evaluation-container__submitions">
+                                    {moment(evaluation.updatedAt).format("ll")}
+                                  </div>
+                                  <div className="col-sm-3 col-xs-3 subjective-score-evaluation-container__score">
+                                    {evaluation.summary?.scorePercent}%{" "}
+                                    <span
+                                      className="full-list"
+                                      onClick={() =>
+                                        setFullListModal(evaluation)
+                                      }
+                                    >
+                                      Full list
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                        </>
+                      );
+                    })}
                   </>
-                );
-              })}
-            </>
-          )}
+                )}
+              </>
+            )}
 
           {/*Only show "your evaluations" if startup is in deal flow*/}
           {startup.isInMyDealFlow && (
