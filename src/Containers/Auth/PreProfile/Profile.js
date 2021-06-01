@@ -15,7 +15,7 @@ function Dots({ page, setPage }) {
         <div
           key={n}
           className={classnames(styles.dot, page >= n && styles.dot_active)}
-        ></div>
+        />
       ))}
     </div>
   );

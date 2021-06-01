@@ -109,7 +109,6 @@ export default gql`
           updatedAt
           logType
           notifyUsers
-          seenBy
           reference {
             key
             val
@@ -123,6 +122,11 @@ export default gql`
             name
           }
           seen
+          seenBy {
+            family_name
+            given_name
+            email
+          }
         }
 
         evaluationSummaries {

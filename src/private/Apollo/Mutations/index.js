@@ -26,6 +26,9 @@ export { default as evaluationTemplateQuestionDelete } from "./evaluationTemplat
 export { default as evaluationTemplateSectionUpdate } from "./evaluationTemplateSectionUpdate";
 export { default as groupPut } from "./groupPut";
 export { default as groupLogPut } from "./groupLogPut";
+
+export { default as groupLogCreate } from "./groupLogCreate";
+
 export { default as tagGroupPut } from "./tagGroupPut";
 export { default as tagPut } from "./tagPut";
 export { default as funnelGroupPut } from "./funnelGroupPut";
@@ -41,6 +44,8 @@ export { default as connectionDelete } from "./connectionDelete";
 export { default as connectionPut } from "./connectionPut";
 
 export { default as groupMarkAsSeen } from "./groupMarkAsSeen";
+
+export { default as groupLogMarkConversationAsSeen } from "./groupLogMarkConversationAsSeen";
 
 export { default as tagDelete } from "./tagDelete";
 export { default as funnelTagDetele } from "./funnelTagDelete";

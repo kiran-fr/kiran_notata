@@ -62,6 +62,7 @@ export const Kanban = props => {
   const [getConnections, setGetConnections] = useState(false);
   const [loadingAPI, setLoadingAPI] = useState(true);
   const { data: accountGet, loading, error } = useQuery(accountGetData);
+
   let response = accountGet?.accountGet?.funnelGroups?.[0].funnelTags;
 
   // Mutation updating funnel tag for connection

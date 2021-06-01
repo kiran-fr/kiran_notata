@@ -84,7 +84,7 @@ Amplify.configure({
 });
 
 const STAGE = "dev2";
-const isLocal = false;
+const isLocal = true;
 
 const GQL = {
   private: {
@@ -140,6 +140,7 @@ export const appsyncClient = new ApolloClient({
       fetch: awsGraphqlFetch,
     })
   ),
+
   cache: new InMemoryCache(apolloInMemoryCache),
   defaultOptions: {
     watchQuery: {

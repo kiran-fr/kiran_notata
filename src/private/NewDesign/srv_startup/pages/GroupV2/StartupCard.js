@@ -13,10 +13,23 @@ import {
   groupEvaluationAdd,
   groupEvaluationRemove,
   connectionSubjectiveScorePut,
+  groupLogCreate,
+  groupLogMarkConversationAsSeen,
+  connectionCreate,
 } from "../../../../Apollo/Mutations";
+
+import {
+  groupGet,
+  groupGetV2,
+  presentationsGet,
+} from "../../../../Apollo/Queries";
+
 import { startup_page } from "../../../../../definitions";
 import SharingOptions from "../startup/groups-individuals/sharing-options";
 import { Modal } from "../../../../../Components/UI_Kits";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers";
+import * as yup from "yup";
 
 function YourEvaluations({ startup, group, history }) {
   let connection = startup?.connection;
@@ -274,6 +287,120 @@ function YourEvaluations({ startup, group, history }) {
   );
 }
 
+function CommentSection({ startup, group }) {
+  const [addComment, { error, data, loading }] = useMutation(groupLogCreate);
+
+  const { register, handleSubmit, setValue, formState } = useForm();
+  // const { isSubmitting } = formState;
+
+  // Submit comment function
+  async function submit({ text }) {
+    // If loading or text is empty, return
+    if (!text.length || loading) {
+      return;
+    }
+
+    // Mutation variables
+    let variables = {
+      groupId: group.id,
+      creativeId: startup.creative.id,
+      input: {
+        logType: "COMMENT",
+        dataPairs: [
+          {
+            key: "text",
+            val: text,
+          },
+        ],
+      },
+    };
+
+    console.log("variables", variables);
+
+    // Update group object in Apollo cache
+    function update(proxy, { data: { groupLogCreate } }) {
+      // Get old group data
+      const data = proxy.readQuery({
+        query: groupGetV2,
+        variables: { id: group.id },
+      });
+
+      // Predict new group data
+      const newData = {
+        groupGetV2: {
+          ...data?.groupGetV2,
+          startups: data?.groupGetV2.startups.map(startup => ({
+            ...startup,
+            log: [...startup.log, groupLogCreate],
+          })),
+        },
+      };
+
+      // Update cache
+      proxy.writeQuery({
+        query: groupGetV2,
+        variables: { id: group.id },
+        data: newData,
+      });
+    }
+
+    // Clear input field
+    setValue("text", "");
+
+    // Mutate, and update cache
+    addComment({
+      variables,
+      update,
+    });
+  }
+
+  return (
+    <div className="comment-container">
+      {startup.log?.map(logItem => {
+        return (
+          <div key={logItem.id} className="col-sm-12 col-xs-12 comment">
+            <div>
+              <span className="comment__username">
+                {logItem.createdByUser?.given_name}{" "}
+                {logItem.createdByUser?.family_name}
+              </span>
+              <span className="comment__datetime">
+                {moment(logItem.createdAt).format("ll")}
+              </span>
+            </div>
+
+            <div>
+              <p className="comment__comment">{logItem.dataPairs?.[0]?.val}</p>
+            </div>
+          </div>
+        );
+      })}
+
+      <form onSubmit={handleSubmit(submit)}>
+        <div className="col-sm-12 col-xs-12">
+          <input
+            ref={register}
+            name="text"
+            type="text"
+            className="comment__write-comment"
+          />
+
+          {!loading && (
+            <button
+              type="submit"
+              className="comment__send fa fa-paper-plane"
+              aria-hidden="true"
+              value=""
+            />
+          )}
+
+          {loading && <i className="fal fa-spinner fa-spin" />}
+        </div>
+      </form>
+    </div>
+  );
+}
+
 export default function StartupCard({
   group,
   startup,
@@ -288,9 +415,25 @@ export default function StartupCard({
   const [startupDescription, setStartupDescription] = useState(false);
   const [viewSharingOptions, setViewSharingOptions] = useState();
 
+  // Mutations
+  const [markConversationAsSeen] = useMutation(groupLogMarkConversationAsSeen);
+  const [createConnection, createConnectionRes] = useMutation(
+    connectionCreate,
+    {
+      refetchQueries: [
+        {
+          query: groupGetV2,
+          variables: { id: group.id },
+        },
+      ],
+      awaitRefetchQueries: true,
+    }
+  );
+
+  // Data maps
   let subjectiveScoreSummary = getSubjectiveScoreSummary(startup);
   let evaluationsByTemplate = getEvaluationsByTemplate(startup);
-  let unreadComments = startup?.log?.map(({ seen }) => !seen) || [];
+  let unreadComments = startup?.log?.filter(({ seen }) => !seen) || [];
 
   let oneLiner, problem, solution;
   if (startup?.creative?.answers) {
@@ -345,6 +488,14 @@ export default function StartupCard({
                   className="add-to-deal-flow"
                   text="ADD TO DEAL FLOW"
                   iconPosition={ICONPOSITION.START}
+                  loading={createConnectionRes.loading}
+                  onClick={() => {
+                    let variables = {
+                      groupId: group.id,
+                      creativeId: startup?.creative?.id,
+                    };
+                    createConnection({ variables });
+                  }}
                 />
               )}
             </div>
@@ -618,51 +769,30 @@ export default function StartupCard({
                 </div>
 
                 <div className="your-evaluations-container__show-comments">
-                  {!!unreadComments.length && <span>4 unread comments</span>}
+                  {!!unreadComments.length && (
+                    <span>{unreadComments.length} unread comments</span>
+                  )}
                   <i
                     className={`fa ${
                       showCommentSection ? "fa-chevron-up" : "fa-chevron-down"
                     }`}
                     aria-hidden="true"
-                    onClick={() => setShowCommentSection(!showCommentSection)}
+                    onClick={() => {
+                      if (!showCommentSection) {
+                        let variables = {
+                          groupId: group.id,
+                          creativeId: startup.creative.id,
+                        };
+                        markConversationAsSeen({ variables });
+                      }
+                      setShowCommentSection(!showCommentSection);
+                    }}
                   />
                 </div>
               </div>
 
               {showCommentSection && (
-                <div className="comment-container">
-                  {startup.log?.map(logItem => {
-                    return (
-                      <div
-                        key={logItem.id}
-                        className="col-sm-12 col-xs-12 comment"
-                      >
-                        <div>
-                          <span className="comment__username">
-                            {logItem.createdByUser?.given_name}{" "}
-                            {logItem.createdByUser?.family_name}
-                          </span>
-                          <span className="comment__datetime">
-                            {moment(logItem.createdAt).fomat("ll")}
-                          </span>
-                        </div>
-                        <div>
-                          <p className="comment__comment">
-                            {logItem.dataPairs?.[0]?.val}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  <div className="col-sm-12 col-xs-12">
-                    <input type="text" className="comment__write-comment" />
-                    <i
-                      className="comment__send fa fa-paper-plane"
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
+                <CommentSection startup={startup} group={group} />
               )}
             </div>
           )}
@@ -678,8 +808,8 @@ export default function StartupCard({
           close={() => {
             setViewSharingOptions(false);
           }}
-          submitTxt="Save"
-          closeTxt="CANCEL"
+          submitTxt="OK"
+          closeTxt="CLOSE"
           children={<SharingOptions group={group} startup={startup} />}
           // innerClassName="invite-member-modal"
         />

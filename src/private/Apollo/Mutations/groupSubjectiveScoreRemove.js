@@ -110,7 +110,11 @@ export default gql`
           updatedAt
           logType
           notifyUsers
-          seenBy
+          seenBy {
+            email
+            family_name
+            given_name
+          }
           reference {
             key
             val
