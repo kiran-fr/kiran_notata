@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { groupDelete } from "../../../../Apollo/Mutations";
+import { group } from "../../../../../definitions";
 
-export default function CompanyNameAndDescription({ group }) {
+export default function CompanyNameAndDescription({ group, history }) {
   const [dropDownState, setDropDownState] = useState(false);
+
+  const [deleteGroup] = useMutation(groupDelete);
 
   return (
     <>
@@ -50,7 +55,25 @@ export default function CompanyNameAndDescription({ group }) {
               onClick={() => null}
             >
               <span className="material-icons leave">delete</span>
-              <span className="text">DELETE GROUP</span>
+
+              <span
+                className="text"
+                onClick={async () => {
+                  let variables = {
+                    id: group.id,
+                  };
+
+                  try {
+                    await deleteGroup({ variables });
+                  } catch (error) {
+                    console.log("error", error);
+                  }
+
+                  history.push(group);
+                }}
+              >
+                DELETE GROUP
+              </span>
             </div>
           </div>
         )

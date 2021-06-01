@@ -40,7 +40,7 @@ export default function GroupDashboard({ match, history }) {
               {/* Company name and description */}
               <div className="col-sm-7 col-md-7">
                 <div className="card">
-                  <CompanyNameAndDescription group={group} />
+                  <CompanyNameAndDescription group={group} history={history} />
                 </div>
               </div>
 

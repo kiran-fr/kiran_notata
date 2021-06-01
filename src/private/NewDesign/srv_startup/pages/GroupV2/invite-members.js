@@ -12,29 +12,21 @@ import {
 import { Loader } from "Components/elements";
 
 export default function InviteMembers({ group }) {
-  console.log("group", group);
-
   // States
   const [isEmail, setIsEmail] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [isRemovingUser, setIsRemovingUser] = useState({});
+  const [isRemovingInv, setIsRemovingInv] = useState({});
+  const [isChangingRole, setIsChangingRole] = useState({});
 
   // Mutations
   const [userInvite, userInviteRes] = useMutation(groupUserInvite);
-  const [invitationRemove, invitationRemoveRes] = useMutation(
-    groupUserInvitationRemove
-  );
-  const [setRole, setRoleRes] = useMutation(groupUserSetRole);
-  const [userRemove, userRemoveRes] = useMutation(groupUserRemove);
+  const [invitationRemove] = useMutation(groupUserInvitationRemove);
+  const [setRole] = useMutation(groupUserSetRole);
+  const [userRemove] = useMutation(groupUserRemove);
 
   // Form stuff
-  const { register, handleSubmit } = useForm();
-
-  // Data maps
-  let isLoading =
-    userInviteRes.loading ||
-    invitationRemoveRes.loading ||
-    setRoleRes.loading ||
-    userRemoveRes.loading;
+  const { register, handleSubmit, setValue } = useForm();
 
   // Group privileges
   // TODO: use settings
@@ -43,7 +35,7 @@ export default function InviteMembers({ group }) {
   let canRemove = group.iAmAdmin;
 
   async function onSubmit({ email }, event) {
-    if (!canRemove) {
+    if (!canInvite) {
       return;
     }
 
@@ -57,12 +49,13 @@ export default function InviteMembers({ group }) {
       console.log("error", error);
     }
 
-    event.target.value = "";
+    setValue("email", "");
+    setIsEmail(false);
   }
 
   return (
     <div className="invite-member-modal-container">
-      {isLoading && <Loader />}
+      {/*{isLoading && <Loader />}*/}
 
       <div className="row">
         <div className={`${canInvite ? "col-sm-6" : "col-sm-12"}`}>
@@ -72,14 +65,39 @@ export default function InviteMembers({ group }) {
                 <div className="invite-member-modal__name-container">
                   {canRemove && (
                     <i
-                      className="icon fa fa-times-circle"
+                      className={
+                        isRemovingUser[member.user?.email]
+                          ? "fa fa-spinner fa-spin"
+                          : "icon fa fa-times-circle"
+                      }
                       aria-hidden="true"
-                      onClick={() => {
+                      onClick={async () => {
+                        let email = member?.user?.email;
+
+                        if (isRemovingUser[email]) {
+                          return;
+                        }
+
+                        setIsRemovingUser({
+                          ...isRemovingUser,
+                          [email]: true,
+                        });
+
                         let variables = {
                           groupId: group.id,
-                          email: member?.user?.email,
+                          email: email,
                         };
-                        userRemove({ variables });
+
+                        try {
+                          await userRemove({ variables });
+                        } catch (error) {
+                          console.log("error", error);
+                        }
+
+                        setIsRemovingUser({
+                          ...isRemovingUser,
+                          [email]: false,
+                        });
                       }}
                     />
                   )}
@@ -95,18 +113,50 @@ export default function InviteMembers({ group }) {
                         member.role === "USER" ? "#FAC76F" : "#C4A9FC",
                     }}
                   >
-                    <span>{member.role === "USER" ? "member" : "admin"}</span>
+                    <span>
+                      {isChangingRole[member.user?.email] ? (
+                        <i
+                          className="fa fa-spinner fa-spin"
+                          style={{ color: "white" }}
+                        />
+                      ) : member.role === "USER" ? (
+                        "member"
+                      ) : (
+                        "admin"
+                      )}
+                    </span>
 
                     {canChangeRole && (
                       <div
                         className="member-role-slct"
-                        onClick={() => {
+                        onClick={async () => {
+                          let email = member.user?.email;
+
+                          if (isChangingRole[email]) {
+                            return;
+                          }
+
+                          setIsChangingRole({
+                            ...isChangingRole,
+                            [email]: true,
+                          });
+
                           let variables = {
                             groupId: group.id,
                             email: member?.user?.email,
                             role: member.role === "USER" ? "ADMIN" : "USER",
                           };
-                          setRole({ variables });
+
+                          try {
+                            await setRole({ variables });
+                          } catch (error) {
+                            console.log("error", error);
+                          }
+
+                          setIsChangingRole({
+                            ...isChangingRole,
+                            [email]: false,
+                          });
                         }}
                       >
                         <div>
@@ -161,9 +211,13 @@ export default function InviteMembers({ group }) {
 
                 {isEmail && !isDuplicate && (
                   <div className="submit-button-container">
-                    <button type="submit" value="invite">
-                      invite
-                    </button>
+                    {(userInviteRes.loading && (
+                      <i className="fa fa-spinner fa-spin" />
+                    )) || (
+                      <button type="submit" value="invite">
+                        invite
+                      </button>
+                    )}
                   </div>
                 )}
               </form>
@@ -176,13 +230,36 @@ export default function InviteMembers({ group }) {
                       <div className="name">
                         <i
                           className="icon fa fa-times-circle"
+                          className={
+                            isRemovingInv[email]
+                              ? "fa fa-spinner fa-spin"
+                              : "icon fa fa-times-circle"
+                          }
                           aria-hidden="true"
-                          onClick={() => {
+                          onClick={async () => {
+                            if (isRemovingInv[email]) {
+                              return;
+                            }
+
+                            setIsRemovingInv({
+                              ...isRemovingInv,
+                              [email]: true,
+                            });
+
                             let variables = {
                               groupId: group.id,
                               email: email,
                             };
-                            invitationRemove({ variables });
+                            try {
+                              await invitationRemove({ variables });
+                            } catch (error) {
+                              console.log("error", error);
+                            }
+
+                            setIsRemovingInv({
+                              ...isRemovingInv,
+                              [email]: false,
+                            });
                           }}
                         />
                         {email}

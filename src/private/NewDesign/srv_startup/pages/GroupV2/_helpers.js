@@ -34,7 +34,7 @@ export function getAllUsedTemplates(startups) {
 export function getSubjectiveScoreSummary(startup) {
   // Gets subjective score summary for each startup.
 
-  let scores = startup?.subjectiveScores.map(({ score }) => score);
+  let scores = startup?.subjectiveScores?.map(({ score }) => score);
   if (!scores || !scores.length) return;
 
   let min = Math.min(...scores);

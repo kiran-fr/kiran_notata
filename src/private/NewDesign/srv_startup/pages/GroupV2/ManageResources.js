@@ -53,7 +53,7 @@ export default function ManageResources({ group }) {
         {/* users */}
         <div className="users-container__user-count">
           <div className="users-container__user-count__name">
-            <u>{group.members?.length || "0"} members</u>
+            {group.members?.length || "0"} members
           </div>
           {value === 0 && (
             <div className="users-container__user-count__action">
@@ -104,12 +104,13 @@ export default function ManageResources({ group }) {
       {/* MODALS */}
       {addStartupModal && (
         <Modal
-          title="Add Startups"
+          title="Manage Startups"
           submit={() => setAddStartupModal(false)}
           close={() => setAddStartupModal(false)}
-          submitTxt="SAVE"
-          closeTxt="CANCEL"
-          children={<AddStartup />}
+          submitTxt="OK"
+          closeTxt="CLOSE"
+          children={<AddStartup group={group} />}
+          innerClassName="add-startup-modal"
         />
       )}
 
@@ -118,8 +119,8 @@ export default function ManageResources({ group }) {
           title="Manage Templates"
           submit={() => setManageTemplateModal(false)}
           close={() => setManageTemplateModal(false)}
-          submitTxt="SAVE"
-          closeTxt="CANCEL"
+          submitTxt="OK"
+          closeTxt="CLOSE"
           children={<ManageTemplates group={group} />}
         />
       )}
