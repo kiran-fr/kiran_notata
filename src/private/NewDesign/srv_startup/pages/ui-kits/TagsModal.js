@@ -111,17 +111,18 @@ export default function TagsModal({
 
   return (
     <div className="tags-container">
-      {loading
-      ?
+      {loading ? (
         /* //query processing */
-        <div className = "text-center">
+        <div className="text-center">
           <span className={"loading_icon"}>
             <i className="fa fa-spinner fa-spin" />
           </span>
         </div>
-      :
+      ) : (
         <>
-          <div className="tags-container__sub-heading">Write or choose Tags</div>
+          <div className="tags-container__sub-heading">
+            Write or choose Tags
+          </div>
           {/* <GhostLoader></GhostLoader> */}
           <Tags
             setTags={!tagFlag ? connection?.tags || [] : tagSelected}
@@ -221,7 +222,7 @@ export default function TagsModal({
             }
           </div>
         </>
-      }
+      )}
     </div>
   );
 }

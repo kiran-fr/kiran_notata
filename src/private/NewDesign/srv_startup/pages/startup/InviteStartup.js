@@ -36,7 +36,6 @@ export const InviteStartup = ({
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
 
   function getPublicShareUrl(creative) {
-
     let url =
       `${window.location.protocol}//` +
       `${window.location.host}/` +
@@ -60,7 +59,7 @@ export const InviteStartup = ({
       variables,
     });
 
-    if(urlToShare === null) {
+    if (urlToShare === null) {
       setUrlToShare(getPublicShareUrl(update?.data?.creativeUpdate));
       setInviteSent(true);
       setValidate(true);
@@ -83,9 +82,9 @@ export const InviteStartup = ({
       variables,
     });
     setInviteSent(false);
-    setUrlToShare(null)
+    setUrlToShare(null);
     setInputEmail("");
-    setEmailValue("")
+    setEmailValue("");
     setValidate(true);
   };
 
@@ -106,11 +105,7 @@ export const InviteStartup = ({
   return (
     <Modal
       title={inviteSent ? "Revoke Startup Link" : "Invite Startup"}
-      submit={() =>
-        inviteSent
-          ? revoke()
-          : onSubmit()
-      }
+      submit={() => (inviteSent ? revoke() : onSubmit())}
       close={() => {
         setInviteStartUpModal(false);
       }}

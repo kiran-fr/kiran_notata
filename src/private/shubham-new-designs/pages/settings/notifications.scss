@@ -1,0 +1,147 @@
+.notifications-container{
+    display: flex;    
+    justify-content: center;
+    &__card{
+        @media  only screen and(min-width:768px) {
+            width:614px;
+        }
+        padding-bottom: 40px!important;
+    }
+    &__heading{
+        padding-left: 50px!important;
+        @media only screen and(max-width:768px) {
+            padding-left: 15px!important;
+        }
+        padding-top: 41px!important;
+        i{
+            color: #53CAB2;
+            margin-right: 13px;
+            cursor: pointer;
+        }
+    }
+    &__header{
+        display:flex;
+        padding-right:10px;
+    }
+    &__show{
+        font-family: 'Proxima Nova';
+        font-weight: bold;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #60CEB8;
+        padding-top: 41px!important;
+        margin-left: auto;
+        cursor: pointer;
+        i{
+            margin-left:10px;            
+        }
+    }
+    .notifications{
+        padding-left:50px;
+        margin-top:45px;
+        @media only screen and(max-width:768px) {
+            padding-left: 15px!important;
+            margin-top:34px;            
+        }        
+        &__notification{            
+            display: flex;
+            @media only screen and(max-width:650px) {
+                flex-wrap: wrap;
+            }
+            align-items: end;
+            padding-bottom: 20px;
+            padding-top:20px;
+            border-bottom: 1px solid #F1F1F1;
+            img{
+                border-radius: 50%;
+            }
+            &__comment-text{
+                font-family: 'Roboto';
+                font-style: italic;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 14px;
+                letter-spacing: 0.03em;
+                color: #969BA3;
+                margin-left:15px;
+            }
+            &__tags-text{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 14px;
+                letter-spacing: 0.03em;
+                color: #969BA3;
+                margin-left:15px;
+            }
+            &__text{
+                @media only screen and(max-width:650px) {
+                    width:215px;
+                }
+                margin-left:15px;
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 15px;
+                letter-spacing: 0.03em;
+                color:#6A6A6A;
+                .highlight{
+                    color: #53CAB2;  
+                    font-weight: bold;
+                }              
+            }
+            &__decline-btn{
+                @media only screen and(max-width:650px) {
+                    margin-left: 60px;   
+                }                
+
+                height:11PX;
+                border: 1px solid #969BA3;
+                @media only screen and(min-width:768px) {
+                    margin-left: auto;
+                }
+                max-width:81px;
+                margin-left:8px;
+                .MuiButton-label{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 10px;
+                    line-height: 12px;
+                    display: flex;
+                    align-items: center;
+                    text-align: center;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                    color: #969BA3;
+                }
+            }
+            &__join-btn{
+                height:11PX;
+                background-color: #53CAB2;
+                margin-left:8px;
+                max-width:90px;
+                .MuiButton-label{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 10px;
+                    line-height: 12px;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                    color: #FFFFFF;
+                    .material-icons{
+                        font-size:15px;
+                    }
+                }
+            }
+            .img-src{
+                width:48px;
+            }
+        }
+    }
+}

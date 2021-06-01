@@ -6,7 +6,7 @@ export default function SelectTagsForStartup({ connection, close }) {
   return (
     <Modal
       title="Add Tags"
-      disableFoot = {true}
+      disableFoot={true}
       submit={() => {
         close();
       }}
