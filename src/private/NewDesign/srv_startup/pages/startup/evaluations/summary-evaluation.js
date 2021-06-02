@@ -51,7 +51,6 @@ export default function SummaryEvaluation({
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
-        sadbfhjkdsafh
         <span
           class="material-icons back-icon"
           onClick={() => {
