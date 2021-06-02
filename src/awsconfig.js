@@ -140,6 +140,7 @@ export const appsyncClient = new ApolloClient({
       fetch: awsGraphqlFetch,
     })
   ),
+
   cache: new InMemoryCache(apolloInMemoryCache),
   defaultOptions: {
     watchQuery: {

@@ -26,6 +26,9 @@ export { default as evaluationTemplateQuestionDelete } from "./evaluationTemplat
 export { default as evaluationTemplateSectionUpdate } from "./evaluationTemplateSectionUpdate";
 export { default as groupPut } from "./groupPut";
 export { default as groupLogPut } from "./groupLogPut";
+
+export { default as groupLogCreate } from "./groupLogCreate";
+
 export { default as tagGroupPut } from "./tagGroupPut";
 export { default as tagPut } from "./tagPut";
 export { default as funnelGroupPut } from "./funnelGroupPut";
@@ -42,6 +45,8 @@ export { default as connectionPut } from "./connectionPut";
 
 export { default as groupMarkAsSeen } from "./groupMarkAsSeen";
 
+export { default as groupLogMarkConversationAsSeen } from "./groupLogMarkConversationAsSeen";
+
 export { default as tagDelete } from "./tagDelete";
 export { default as funnelTagDetele } from "./funnelTagDelete";
 export { default as tagGroupDelete } from "./tagGroupDelete";
@@ -51,12 +56,30 @@ export { default as creativeTemplatePut } from "./creativeTemplatePut";
 
 export { default as presentationPut } from "./presentationPut";
 
+export { default as groupUserInvite } from "./groupUserInvite";
+export { default as groupUserInvitationRemove } from "./groupUserInvitationRemove";
+export { default as groupUserSetRole } from "./groupUserSetRole";
+export { default as groupUserRemove } from "./groupUserRemove";
+
 export { default as externalResourcePut } from "./externalResourcePut";
 export { default as externalResourceDelete } from "./externalResourceDelete";
 
 export { default as impactGoalsPut } from "./impactGoalsPut";
 
 export { default as groupStartupAdd } from "./groupStartupAdd";
+export { default as groupStartupRemove } from "./groupStartupRemove";
+
+export { default as groupDelete } from "./groupDelete";
+export { default as groupLeave } from "./groupLeave";
 
 export { default as notificationsMarkAsSeen } from "./notificationsMarkAsSeen";
 export { default as notificationsMarkAllAsSeen } from "./notificationsMarkAllAsSeen";
+
+export { default as groupTemplateAdd } from "./groupTemplateAdd";
+export { default as groupTemplateRemove } from "./groupTemplateRemove";
+
+export { default as groupSubjectiveScoreAdd } from "./groupSubjectiveScoreAdd";
+export { default as groupSubjectiveScoreRemove } from "./groupSubjectiveScoreRemove";
+
+export { default as groupEvaluationAdd } from "./groupEvaluationAdd";
+export { default as groupEvaluationRemove } from "./groupEvaluationRemove";

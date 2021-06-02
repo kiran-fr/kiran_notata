@@ -14,7 +14,7 @@ export default function InviteMembers({ type = 1 }) {
                   {type === 1 && (
                     <i class="icon fa fa-times-circle" aria-hidden="true"></i>
                   )}
-                  <div className="name">Ana Konavalenkova</div>
+                  <div className="name">Jørgen Ekvoll</div>
                   {type === 1 && <div className="member-btn">member</div>}
                 </div>
                 <div className={`email email-${type}`}>ana@leverageux.com</div>

@@ -8,8 +8,8 @@ import {
 } from "Apollo/Fragments";
 
 export default gql`
-  mutation groupStartupAdd($groupId: ID!, $creativeId: ID!) {
-    groupStartupAdd(groupId: $groupId, creativeId: $creativeId) {
+  mutation groupUserSetRole($groupId: ID!, $email: String!, $role: Role!) {
+    groupUserSetRole(groupId: $groupId, email: $email, role: $role) {
       id
       name
       iAmAdmin
@@ -111,9 +111,9 @@ export default gql`
           logType
           notifyUsers
           seenBy {
-            email
             family_name
             given_name
+            email
           }
           reference {
             key

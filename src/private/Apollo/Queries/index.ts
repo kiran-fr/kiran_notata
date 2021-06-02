@@ -17,6 +17,7 @@ export { default as evaluationTemplateSectionGet } from "./evaluationTemplateSec
 export { default as groupsGet } from "./groupsGet";
 
 export { default as groupsGetV2 } from "./groupsGetV2";
+export { default as groupGetV2 } from "./groupGetV2";
 
 export type { Groups as GroupsType } from "./groupsGet";
 export { default as groupGet } from "./groupGet";
@@ -42,3 +43,5 @@ export { default as evaluationGet } from "./evaluationGet";
 export { default as connectionAutoCompleteName } from "./connectionAutoCompleteName";
 
 export { default as notificationsGet } from "./notificationsGet";
+
+

@@ -8,8 +8,8 @@ import {
 } from "Apollo/Fragments";
 
 export default gql`
-  mutation groupStartupAdd($groupId: ID!, $creativeId: ID!) {
-    groupStartupAdd(groupId: $groupId, creativeId: $creativeId) {
+  query groupGetV2($id: ID!) {
+    groupGetV2(id: $id) {
       id
       name
       iAmAdmin
@@ -80,6 +80,48 @@ export default gql`
 
         connection {
           id
+          subjectiveScores {
+            createdBy
+            createdAt
+            score
+            isMe
+          }
+          evaluationSummaries {
+            templateId
+            templateName
+            averagePercentageScore
+            highestScore
+            lowestScore
+            submissions
+          }
+          evaluations {
+            id
+            isMe
+            createdAt
+            templateId
+            template {
+              id
+              name
+            }
+            createdByUser {
+              family_name
+              given_name
+              email
+            }
+            summary {
+              scorePercent
+              sections {
+                sectionId
+                sectionName
+                scorePercent
+                scorePerAnswer {
+                  questionName
+                  possibleScore
+                  score
+                }
+              }
+            }
+          }
         }
 
         evaluations {
@@ -111,9 +153,9 @@ export default gql`
           logType
           notifyUsers
           seenBy {
-            email
             family_name
             given_name
+            email
           }
           reference {
             key

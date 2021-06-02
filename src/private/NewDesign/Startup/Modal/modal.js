@@ -20,7 +20,7 @@ export default function DealFLowTag({
       <div className={styles.tableModalOutter}>
         <div className={styles.tableModalInner} style={{ width: width }}>
           <div className={styles.close} onClick={() => handleModal()}>
-            <i className="fal fa-times"></i>
+            <i className="fal fa-times" />
           </div>
           <div className={styles.top}>
             <h1>{title}</h1>
@@ -31,8 +31,7 @@ export default function DealFLowTag({
               <div className={styles.buttonContainer}>
                 <button onClick={() => handleModal()}>CANCEL</button>
                 <button onClick={() => handleSave()}>
-                  {" "}
-                  <i className="far fa-check"></i> SAVE
+                  <i className="far fa-check" /> SAVE
                 </button>
               </div>
             </div>

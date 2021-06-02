@@ -6,6 +6,10 @@ export default function SubmissionFullList({ obj }) {
   let sec = obj?.summary?.sections?.map(item => {
     details[item.sectionId] = "collapse";
   });
+
+  console.log("details", details);
+  console.log("obj", obj);
+
   const [collapseDetailList, setCollapseDetailList] = useState(details);
   return (
     <div className="submission-details">
@@ -33,7 +37,7 @@ export default function SubmissionFullList({ obj }) {
                       collapseList[section.sectionId] === "" ? "collapse" : "";
                     setCollapseDetailList(collapseList);
                   }}
-                ></i>
+                />
                 {section.sectionName}
               </div>
               <div className="col-sm-2 col-xs-2 score">

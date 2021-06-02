@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
+
 import { notificationsGet } from "private/Apollo/Queries";
+
 import {
   notificationsMarkAsSeen,
   notificationsMarkAllAsSeen,
@@ -9,7 +11,9 @@ import {
 export default function NotificationsPage() {
   const [markOne, res1] = useMutation(notificationsMarkAsSeen);
   const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
+
   const { data } = useQuery(notificationsGet);
+
   let notifications = data?.notificationsGet || [];
 
   return (
