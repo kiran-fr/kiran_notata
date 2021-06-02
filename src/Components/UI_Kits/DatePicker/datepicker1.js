@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 
-export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, onChange, startDate, endDate, formatWeekDay }) => {
+export const  Datepicker1 = ({ isCalendarVisible, dateRange, setCalendarVisible, selected, onChange, startDate, endDate, formatWeekDay }) => {
   
   const [daterange, setDaterange] = useState([null, null]);
 
@@ -15,7 +15,7 @@ export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, 
       range[1] = moment(range[1]).endOf("day").toDate();
     }
     setDaterange(range);
-    onChange("dateRange", range );
+    dateRange("dateRange", range);
   };
 
   const presetDateValues = () => {

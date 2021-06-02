@@ -32,13 +32,24 @@ export default function FilterBar({
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
   const [showTagsModal, setShowTagsModal] = useState(false);
   const [tagSelected, setTagSelected] = useState([]);
+  const [dateFlag, setDateFlag] = useState(false);
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const onChange = (dates, range) => {
-    if(dates === "dateRange") {
-      if (range) {
+  // useEffect(() => {
+  //   setStartDate(filters.fromDate)
+  //   setEndDate(filters.toDate)
+  //   setDateFlag(true)
+  // }, [filters.fromDate && filters.toDate && !dateFlag]);
+
+  useEffect(() => {
+    let tagArr = [];
+    tagSelected.map(el => tagArr.push(el.id));
+    setFilters({ ...filters, tags: tagArr });
+  }, [tagSelected]);
+
+  const dateRange = (dates, range) => {
         let fromDate = range[0] ? moment(range[0]).format("x") : "";
         let toDate = range[1] ? moment(range[1]).format("x") : "";
         if(fromDate && toDate ) {
@@ -49,22 +60,22 @@ export default function FilterBar({
         if (fromDate && toDate) {
           setCalendarVisible(false);
       }
-    } else {
-        const [start, end] = dates;
-        let fromDate = start ? moment(start).format("x") : "";
-        let toDate = end ? moment(end).format("x") : "";
-    
-        if(fromDate && toDate ) {
-          setFilters({ ...filters, fromDate, toDate });
-        }
-        setStartDate(start);
-        setEndDate(end);
-    
-        if (start && end) {
-          setCalendarVisible(false);
-        }
+
+  }
+  const onChange = (dates) => {
+      const [start, end] = dates;
+      let fromDate = start ? moment(start).format("x") : "";
+      let toDate = end ? moment(end).format("x") : "";
+  
+      if(fromDate && toDate ) {
+        setFilters({ ...filters, fromDate, toDate });
       }
-    }
+      setStartDate(start);
+      setEndDate(end);
+  
+      if (start && end) {
+        setCalendarVisible(false);
+      }
   }
 
 
@@ -75,8 +86,6 @@ export default function FilterBar({
   useEffect(() => {
     let tagArr = [];
     tagSelected.map(el => tagArr.push(el.id));
-    console.log("value", tagArr);
-
     setFilters({ ...filters, tags: tagArr });
   }, [tagSelected]);
 
@@ -211,6 +220,7 @@ export default function FilterBar({
              selected={startDate}
              setCalendarVisible ={setCalendarVisible}
              onChange={onChange}
+             dateRange = {dateRange}
              isCalendarVisible = {isCalendarVisible}
              startDate={startDate}
              endDate={endDate}
