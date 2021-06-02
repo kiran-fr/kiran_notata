@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./traffic-lights.scss";
 
 export default function TrafficLights() {
+  const [redCount, setRedCount] = useState(0);
+  const [yelloCount, setYellowCount] = useState(0);
+  const [greenCount, setGreenCount] = useState(0);
+
   return (
     <div className="row traffic-lights-container">
       <div className="col-sm-4 col-xs-12 option-container text-center">
@@ -15,9 +19,19 @@ export default function TrafficLights() {
         <div className="col-sm-12 col-xs-6">
           <div className="incre-decre-icons">
             <span class="points">Points</span>
-            <span class="material-icons remove">remove_circle</span>
-            <span className="no-of-points">1</span>
-            <span class="material-icons add">add_circle</span>
+            <span
+              class="material-icons remove"
+              onClick={() => setRedCount(redCount - 1)}
+            >
+              remove_circle
+            </span>
+            <span className="no-of-points">{redCount}</span>
+            <span
+              class="material-icons add"
+              onClick={() => setRedCount(redCount + 1)}
+            >
+              add_circle
+            </span>
           </div>
         </div>
       </div>
@@ -32,9 +46,19 @@ export default function TrafficLights() {
         <div className="col-sm-12 col-xs-6">
           <div className="incre-decre-icons">
             <span class="points">Points</span>
-            <span class="material-icons remove">remove_circle</span>
-            <span className="no-of-points">1</span>
-            <span class="material-icons add">add_circle</span>
+            <span
+              class="material-icons remove"
+              onClick={() => setYellowCount(yelloCount - 1)}
+            >
+              remove_circle
+            </span>
+            <span className="no-of-points">{yelloCount}</span>
+            <span
+              class="material-icons add"
+              onClick={() => setYellowCount(yelloCount + 1)}
+            >
+              add_circle
+            </span>
           </div>
         </div>
       </div>
@@ -49,9 +73,19 @@ export default function TrafficLights() {
         <div className="col-sm-12 col-xs-6">
           <div className="incre-decre-icons">
             <span class="points">Points</span>
-            <span class="material-icons remove">remove_circle</span>
-            <span className="no-of-points">1</span>
-            <span class="material-icons add">add_circle</span>
+            <span
+              class="material-icons remove"
+              onClick={() => setGreenCount(greenCount - 1)}
+            >
+              remove_circle
+            </span>
+            <span className="no-of-points">{greenCount}</span>
+            <span
+              class="material-icons add"
+              onClick={() => setGreenCount(greenCount + 1)}
+            >
+              add_circle
+            </span>
           </div>
         </div>
       </div>
