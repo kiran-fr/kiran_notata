@@ -1,53 +1,65 @@
-import React from "react";
-import TextBox from "../../ui-kits/text-box";
-/* import RadioButton from "../../ui-kits/radio-button"; */
+import React, { useState } from "react";
 import InputCheckBox from "../../ui-kits/check-box";
 
-export default function MultiPleAnswer() {
-  const noOfRows = 1;
+function SingleRow(props) {
+  const [count, setCount] = useState(0);
+
   return (
     <>
-      {[...Array(noOfRows)].map((elementInArray, index) => {
-        return (
-          <div
-            className="row single-answer-option"
-            key={`single-option-id-${index}`}
-          >
-            <div className="col-sm-1 col-xs-1">
-              <InputCheckBox
-                name="single-answer-option"
-                id="option-1"
-              ></InputCheckBox>
-            </div>
-            <div className="col-sm-7 col-xs-10">
-              <TextBox placeholder="Option 1"></TextBox>
-            </div>
-            <div className="col-sm-1 points-text col-xs-5">
-              <span className="points">Points</span>
-            </div>
-            <div className="col-sm-2 col-xs-6 incre-decre-icons">
-              <span class="material-icons remove">remove_circle</span>
-              <span className="no-of-points">1</span>
-              <span class="material-icons add">add_circle</span>
-              <span class="material-icons cancel">cancel</span>
-            </div>
-          </div>
-        );
-      })}
-      <div className="row single-answer-option add-option-container">
-        <div className="col-sm-1 col-xs-1 d-none">
-          {/*}
+      <div class="row single-answer-option">
+        <div class="col-sm-1 col-xs-1">
           <InputCheckBox
             name="single-answer-option"
-            id="add-other"
+            id="option-1"
           ></InputCheckBox>
-    {*/}
         </div>
+        <div class="col-sm-7 col-xs-10">
+          <input type="text" placeholder="Option 1" class="text-box" value="" />
+        </div>
+        <div class="col-sm-1 points-text col-xs-5">
+          <span class="points">Points</span>
+        </div>
+        <div class="col-sm-2 col-xs-6 incre-decre-icons">
+          <span
+            class="material-icons remove"
+            onClick={() => setCount(count - 1)}
+          >
+            remove_circle
+          </span>
+          <span class="no-of-points numbers" style={{ marginLeft: 0 }}>
+            {count}
+          </span>
+          <span class="material-icons add" onClick={() => setCount(count + 1)}>
+            add_circle
+          </span>
+          <span class="material-icons cancel" onClick={props.removeRow}>
+            cancel
+          </span>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default function MultiPleAnswer() {
+  const [rows, setRows] = useState(1);
+
+  const removeRows = () => {
+    setRows(rows - 1);
+  };
+
+  return (
+    <>
+      {[...Array(rows)].map((elementInArray, index) => {
+        return <SingleRow removeRow={removeRows}></SingleRow>;
+      })}
+      <div className="row single-answer-option add-option-container">
+        <div className="col-sm-1 col-xs-1 d-none"></div>
         <div className="col-sm-10 col-xs-10">
           <div className="add-option-text">
-            <span className="add-option">Add Option</span>
-            <span className="or">or</span>
-            <span className="add-other">Add “Other”</span>
+            <span className="add-other" onClick={() => setRows(rows + 1)}>
+              Add Other
+            </span>
           </div>
         </div>
       </div>
