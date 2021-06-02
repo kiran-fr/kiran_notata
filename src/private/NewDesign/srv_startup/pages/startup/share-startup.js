@@ -532,8 +532,12 @@ export default function ShareStartup({ setshareStartup, connection }) {
                     onClick={updateCreativeTemplate}
                     disabled={saveLoader}
                   >
-                    {saveLoader && <i className="fa fa-spinner fa-spin" />}
-                    SAVE CHANGES
+                    {saveLoader
+                      ?
+                        <i className="fa fa-spinner fa-spin" />
+                      :
+                        "SAVE CHANGES"
+                    }
                   </button>
                 </div>
               </div>
