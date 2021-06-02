@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import "./add-new-section.scss";
 import TextBox from "../../ui-kits/text-box";
 import ButtonWithIcon from "../../ui-kits/button-with-icon";
@@ -12,15 +12,25 @@ import FreeText from "./free-text";
 import TextLines from "./text-lines";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import ImportSection from "./import-section-modal";
+
+import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
+
 import { useQuery, useMutation } from "@apollo/client";
-import { evaluationTemplateGet } from "private/Apollo/Queries";
+
+import { omit } from "lodash";
+
+import {
+  evaluationTemplateGet,
+  evaluationTemplateSectionGet,
+} from "private/Apollo/Queries";
 import {
   evaluationTemplateUpdate,
   evaluationTemplateSectionCreate,
+  evaluationTemplateSectionUpdate,
 } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 import { evaluation_template_profile } from "../../../../../../definitions";
-import { specifiedSDLRules } from "graphql/validation/specifiedRules";
+import { useParams } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,6 +62,7 @@ export const AddSection = props => {
       params: { id },
     },
   } = props;
+
   const { data: evaluationTemplateGetData, loading, error } = useQuery(
     evaluationTemplateGet,
     {
@@ -60,8 +71,9 @@ export const AddSection = props => {
       },
     }
   );
-  console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections.name);
-  //console.log(evaluationTemplateGetData?.evaluationTemplateGet.sections[0].id);
+
+  // Questions Reducer
+
   const evaluationTemplateAPIResp =
     evaluationTemplateGetData?.evaluationTemplateGet;
 
@@ -71,10 +83,10 @@ export const AddSection = props => {
   const [mutateEvaluationTemplateSectionCreate] = useMutation(
     evaluationTemplateSectionCreate
   );
-  // const [tabValue, setTabValue] = React.useState(0);
-  // const handleChange = (event, newValue) => {
-  //   setTabValue(newValue);
-  // };
+
+  const [mutateEvaluationTemplateSectionUpdate] = useMutation(
+    evaluationTemplateSectionUpdate
+  );
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -91,11 +103,32 @@ export const AddSection = props => {
   const [noOfQuestions, setNoOfQuestions] = useState(1);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
-  const [sectiondescription, setSectionDescription] = useState(null);
+  const [sectionDescription, setSectionDescription] = useState(null);
   const [sectionName, setSectionName] = useState(null);
   const [saveLoader, setSaveLoader] = useState(false);
   const [evaluationTemplateData, setEvaluationTemplateData] = useState(null);
   const [questionOption, setQuestionOption] = useState(false);
+
+  const [currentSectionId, setCurrentSectionId] = useState(null);
+
+  // // Question Format
+  // const questionModel = {
+  //   name: String,
+  //   id
+  //   description: String,
+  //   options: []
+  //   inputType
+  // };
+
+  const questionFormat = {
+    id: Math.round(Math.random() * 10000).toString(),
+    name: "",
+    description: "",
+    options: [{ val: "", score: 0 }],
+    inputType: "RADIO",
+  };
+
+  const [questions, setQuestions] = useState([questionFormat]);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -109,6 +142,7 @@ export const AddSection = props => {
       setDescription(value);
     }
   };
+
   useEffect(() => {
     if (evaluationTemplateAPIResp) {
       setEvaluationTemplateData(evaluationTemplateAPIResp);
@@ -122,14 +156,14 @@ export const AddSection = props => {
       variables: {
         id: evaluationTemplateData?.id,
         input: {
-          name: data.variables?.input?.name,
+          name,
           description,
         },
       },
     });
   };
 
-  const upateTemplate = async () => {
+  const updateTemplate = async () => {
     const resp = await mutateEvaluationTemplateUpdate({
       variables: {
         id: evaluationTemplateData?.id,
@@ -139,6 +173,7 @@ export const AddSection = props => {
         },
       },
     });
+    console.log("Updated Template: ", resp.data);
   };
 
   const saveSection = async () => {
@@ -151,9 +186,8 @@ export const AddSection = props => {
         },
       },
     });
-    console.log("sectionName", sectionName);
+
     let savedLog = createResponse?.data?.evaluationTemplateSectionCreate;
-    console.log(savedLog);
 
     if (savedLog) {
       setSaveLoader(false);
@@ -162,11 +196,29 @@ export const AddSection = props => {
       let sections = [...templateData.sections, savedLog];
       templateData = { ...templateData, sections };
       setEvaluationTemplateData(templateData);
-      // setSectionDetails(true);
+      console.log("Create Response", createResponse);
+      setCurrentSectionId(
+        createResponse.data.evaluationTemplateSectionCreate.id
+      );
     }
   };
 
-  // console.log("evaluationTemplateAPIResp", evaluationTemplateGetData);
+  const updateSection = async () => {
+    console.log("UPDATING SECTION");
+    let updateResponse = await mutateEvaluationTemplateSectionUpdate({
+      variables: {
+        id: currentSectionId,
+        input: {
+          name: sectionName,
+          description: sectionDescription,
+          questions: questions.map(q => omit(q, "id")),
+        },
+      },
+    });
+
+    console.log("UPDATED SECTION: ", updateResponse);
+  };
+
   if (!evaluationTemplateAPIResp) {
     return <GhostLoader />;
   }
@@ -180,34 +232,36 @@ export const AddSection = props => {
                 <TextBox
                   name="name"
                   defaultValue={name}
-                  onChange={handleInputChange}
-                  onBlur={upateTemplate}
+                  onChange={e => setDescription(e.target.value)}
+                  placeholder="Template Name"
+                  onBlur={updateTemplate}
                 />
                 <textarea
                   name="description"
-                  onChange={handleInputChange}
+                  onChange={e => setDescription(e.target.value)}
                   value={description}
                   rows="4"
                   cols="50"
-                  onBlur={upateTemplate}
+                  placeholder="Template Description"
+                  onBlur={updateTemplate}
                 ></textarea>
               </form>
             )}
             {questionOption && (
               <form className="sectionform">
                 <TextBox
-                  name="name"
+                  name="sectionName"
                   defaultValue={sectionName}
                   onChange={handleInputChange}
-                  onBlur={upateTemplate}
+                  placeholder="Section Name"
                 />
                 <textarea
-                  name="description"
-                  onChange={handleInputChange}
-                  value={sectiondescription}
+                  name="sectionDescription"
+                  onChange={e => setSectionDescription(e.target.value)}
+                  value={sectionDescription}
                   rows="4"
                   cols="50"
-                  onBlur={upateTemplate}
+                  placeholder="Section Description"
                 ></textarea>
               </form>
             )}
@@ -222,7 +276,10 @@ export const AddSection = props => {
                     className="add-new-section-btn"
                     text="ADD NEW SECTION"
                     iconPosition={ICONPOSITION.START}
-                    onClick={() => setAddSectionModal(true)}
+                    onClick={() => {
+                      onSubmit();
+                      setAddSectionModal(true);
+                    }}
                   ></ButtonWithIcon>
                 </div>
                 <div className="col-sm-12 col-xs-6">
@@ -240,7 +297,7 @@ export const AddSection = props => {
 
         {questionOption && (
           <>
-            {[...Array(noOfQuestions)].map((elementInArray, index) => {
+            {questions.map((question, index) => {
               return (
                 <div className="card" key={`question-id-${index}`}>
                   <div className="row">
@@ -288,10 +345,34 @@ export const AddSection = props => {
                   </div>
                   <div className="question-container row">
                     <div className="col-sm-12">
-                      <TextBox placeholder="Question"></TextBox>
+                      <TextBox
+                        placeholder="Question"
+                        value={question.name}
+                        onChange={e =>
+                          setQuestions(
+                            questions.map(q =>
+                              q.id === question.id
+                                ? { ...q, name: e.target.value }
+                                : q
+                            )
+                          )
+                        }
+                      ></TextBox>
                     </div>
                     <div className="col-sm-12">
-                      <TextBox placeholder="Tagline"></TextBox>
+                      <TextBox
+                        placeholder="Tagline"
+                        value={question.description}
+                        onChange={e =>
+                          setQuestions(
+                            questions.map(q =>
+                              q.id === question.id
+                                ? { ...q, description: e.target.value }
+                                : q
+                            )
+                          )
+                        }
+                      ></TextBox>
                     </div>
                     <div className="col-sm-12 question-container__tabs">
                       <Tabs
@@ -301,7 +382,7 @@ export const AddSection = props => {
                         variant="scrollable"
                       >
                         <Tab label="SINGLE ANSWER" {...a11yProps(0)} />
-                        <Tab label="multiply choice" {...a11yProps(1)} />
+                        <Tab label="multiple choice" {...a11yProps(1)} />
                         <Tab label="traffic lights" {...a11yProps(2)} />
                         <Tab label="free text" {...a11yProps(3)} />
                         <Tab label="text lines" {...a11yProps(4)} />
@@ -331,7 +412,18 @@ export const AddSection = props => {
                 <ButtonWithIcon
                   className="new-question-btn"
                   text="New Question"
-                  onClick={() => setNoOfQuestions(noOfQuestions + 1)}
+                  onClick={() =>
+                    setQuestions([
+                      ...questions,
+                      {
+                        id: Math.round(Math.random() * 10000).toString(),
+                        name: "",
+                        description: "",
+                        options: [{ val: "", score: 0 }],
+                        inputType: "RADIO",
+                      },
+                    ])
+                  }
                 ></ButtonWithIcon>
               </div>
             </div>
@@ -347,6 +439,7 @@ export const AddSection = props => {
                 onClick={() => {
                   setQuestionOption(false);
                   setSectionDetails(true);
+                  updateSection();
                 }}
               ></ButtonWithIcon>
             </div>
@@ -356,8 +449,6 @@ export const AddSection = props => {
         {sectionDetails && (
           <div className="evaluation-templates-container__data-container">
             {evaluationTemplateData?.sections.map((section, index) => {
-              const { name, description } = section;
-              console.log("section", section.name);
               return (
                 <div
                   className="row evaluation-templates-container__data-container__data"
@@ -421,63 +512,6 @@ export const AddSection = props => {
             })}
           </div>
         )}
-        {/* {sectionDetails && (
-          <div className="evaluation-templates-container__data-container">
-            {[...Array(noOfRows)].map((elementInArray, index) => {
-              return (
-                <div
-                  className="row evaluation-templates-container__data-container__data"
-                  key={`row-id-${index}`}
-                >
-                  <div className="col-sm-4 col-xs-10 template-name">
-                    Problem
-                  </div>
-                  <div className="col-sm-3 col-xs-10 sections">6 sections</div>
-                  <div className="col-sm-3 group-name">3 Points</div>
-                  <div className="col-sm-2 col-xs-2 browse">
-                    <span
-                      class="material-icons"
-                      onClick={() => {
-                        let states = new Array(noOfRows).fill(false);
-                        states[index] = !browseDropDownStates[index];
-                        setBrowseDropDownStates(states);
-                      }}
-                    >
-                      more_horiz
-                    </span>
-                    {browseDropDownStates[index] && (
-                      <div className="browse__drop-dwon">
-                        <div
-                          className="browse__drop-dwon__item"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons settings">edit</span>
-                          <span className="text">EDIT</span>
-                        </div>
-                        <div
-                          className="browse__drop-dwon__item"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons settings">
-                            content_copy
-                          </span>
-                          <span className="text">COPY AND EDIT</span>
-                        </div>
-                        <div
-                          className="browse__drop-dwon__item leave"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons leave">delete</span>
-                          <span className="delete-text">DELETE GROUP</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}  */}
       </div>
       {importSectionModal && (
         <Modal
