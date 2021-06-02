@@ -205,10 +205,11 @@ export default function TableBody(props) {
                         <li>{group.name}</li>
                       ))}
                       <li>
-                        <img
-                          onClick={() => setShowTagGroupForId(item.id)}
-                          src={InvisiblePlus}
-                        />
+                         <button onClick={() => setShowTagGroupForId(item.id)}
+                          className={styles.buttongreen}
+                        >
+                          <i className="fas fa-plus-circle"></i>
+                        </button>
                       </li>
                     </ul>
                   </td>
