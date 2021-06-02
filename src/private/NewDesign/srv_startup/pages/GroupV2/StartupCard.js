@@ -56,7 +56,7 @@ function YourEvaluations({ startup, group, history }) {
     ({ id }) => !evaluations.some(({ templateId }) => templateId === id)
   );
 
-  let sharedSubjectiveScore = startup?.subjectiveScores.find(
+  let sharedSubjectiveScore = startup?.subjectiveScores?.find(
     ({ isMe }) => isMe
   );
 

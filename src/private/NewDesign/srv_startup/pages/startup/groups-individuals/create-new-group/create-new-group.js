@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./create-new-group.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -28,32 +28,35 @@ function a11yProps(index) {
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-export default function CreateNewGroup() {
-  const [value, setValue] = React.useState(0);
+export default function CreateNewGroup({ data, setData }) {
+  const [tab, setTab] = useState(0);
+  // const [data, setData] = useState(defaultData);
+
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setTab(newValue);
   };
+
   return (
     <>
       <div className="col-12 create-new-group-modal-container">
-        <Tabs value={value} onChange={handleChange}>
+        <Tabs value={tab} onChange={handleChange}>
           <Tab label="GENERAL" {...a11yProps(0)} />
           <Tab label="SETTINGS" {...a11yProps(1)} />
           <Tab label="STARTUPS" {...a11yProps(2)} />
           <Tab label="MEMBERS" {...a11yProps(3)} />
         </Tabs>
       </div>
-      <TabPanel value={value} index={0}>
-        <General />
+      <TabPanel value={tab} index={0}>
+        <General data={data} setData={setData} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Settings />
+      <TabPanel value={tab} index={1}>
+        <Settings data={data} setData={setData} />
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Startups />
+      <TabPanel value={tab} index={2}>
+        <Startups data={data} setData={setData} />
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        <Members />
+      <TabPanel value={tab} index={3}>
+        <Members data={data} setData={setData} />
       </TabPanel>
     </>
   );

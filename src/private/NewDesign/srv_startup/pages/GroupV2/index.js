@@ -1,7 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { groupsGetV2 } from "../../../../Apollo/Queries";
+import {
+  groupCreate,
+  groupDelete,
+  groupUserInvite,
+  groupStartupAdd,
+  groupLeave,
+  groupSettingsSet,
+} from "../../../../Apollo/Mutations";
 
 import "./index.scss";
 import "../public.scss";
@@ -15,6 +23,7 @@ import LeaveGroup from "./leave-group-modal";
 import Settings from "../startup/groups-individuals/create-new-group/settings";
 import { group_dashboard } from "definitions";
 import { GhostLoader } from "../../../../../Components/elements";
+import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 
 function a11yProps(index) {
   return {
@@ -23,30 +32,59 @@ function a11yProps(index) {
   };
 }
 
+let defaultData = {
+  general: {},
+  startups: {},
+  members: [],
+  settings: {
+    chat: true,
+    isPublic: false,
+    showUsers: true,
+    showScores: true,
+    showSummaries: true,
+    addStartup: false,
+    addUser: false,
+  },
+};
+
 export default function Groups({ history }) {
   const sortByRef = useRef();
 
   // States
+  const [isLoading, setIsLoading] = useState(false);
   const [showSortByDropDown, setShowSortByDropDown] = useState(false);
   const [browseDropDownState, setBrowseDropDownState] = useState(undefined);
-  const [value, setValue] = useState(0);
+  const [data, setData] = useState(defaultData);
+  const [tab, setValue] = useState(0);
 
   // Modal states
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [leaveModal, setLeaveModal] = useState(false);
-  const [settingsModal, setSettingsModal] = useState(false);
-
-  console.log("*******************");
-  console.log("showSortByDropDown", showSortByDropDown);
-  console.log("deleteModal", deleteModal);
-  console.log("leaveModal", leaveModal);
-  console.log("settingsModal", settingsModal);
-  console.log("value", value);
+  const [deleteModal, setDeleteModal] = useState(undefined);
+  const [leaveModal, setLeaveModal] = useState(undefined);
+  const [settingsModal, setSettingsModal] = useState(undefined);
+  const [createGroupModal, setCreateGroupModal] = useState(false);
 
   // Queries
-  let { data, error, loading } = useQuery(groupsGetV2);
+  let groupsQuery = useQuery(groupsGetV2);
 
   // Mutations
+  const [createGroup] = useMutation(groupCreate);
+  const [addMember] = useMutation(groupUserInvite);
+  const [addStartup] = useMutation(groupStartupAdd);
+
+  const [deleteGroup, deleteGroupRes] = useMutation(groupDelete, {
+    refetchQueries: [{ query: groupsGetV2 }],
+    awaitRefetchQueries: true,
+  });
+
+  const [leaveGroup, leaveGroupRes] = useMutation(groupLeave, {
+    refetchQueries: [{ query: groupsGetV2 }],
+    awaitRefetchQueries: true,
+  });
+
+  const [setSettings, setSettingsRes] = useMutation(groupSettingsSet, {
+    refetchQueries: [{ query: groupsGetV2 }],
+    awaitRefetchQueries: true,
+  });
 
   // Sorting
   useEffect(() => {
@@ -67,17 +105,79 @@ export default function Groups({ history }) {
     setValue(newValue);
   };
 
+  async function saveData() {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    let group;
+
+    // Create group with name, description and setting
+    try {
+      let variables = {
+        name: data.general.name,
+        description: data.general.description,
+      };
+      let res = await createGroup({ variables });
+      group = res.data?.groupCreate;
+    } catch (error) {
+      return console.log(error);
+    }
+
+    // Add startups to group
+    let creativeIds = Object.keys(data.startups);
+
+    if (creativeIds.length) {
+      let addStartupPromises = creativeIds.map(creativeId =>
+        addStartup({
+          variables: {
+            groupId: group.id,
+            creativeId: creativeId,
+          },
+        })
+      );
+      try {
+        await Promise.all(addStartupPromises);
+      } catch (error) {
+        return console.log(error);
+      }
+    }
+
+    // Invite members
+    if (data.members.length) {
+      let addMemberPromises = data.members.map(email =>
+        addMember({
+          variables: {
+            groupId: group.id,
+            email: email,
+          },
+        })
+      );
+      try {
+        await Promise.all(addMemberPromises);
+      } catch (error) {
+        return console.log(error);
+      }
+    }
+
+    history.push(`${group_dashboard}/${group.id}`);
+
+    // setCreateGroupModal(false);
+
+    setIsLoading(false);
+  }
+
   // MUST COME AFTER HOOKS
 
   // Split groups into two groups
   let groups = { iAmAdmin: [], iAmMember: [] };
-  for (let group of data?.groupsGetV2 || []) {
+  for (let group of groupsQuery?.data?.groupsGetV2 || []) {
     group.iAmAdmin ? groups.iAmAdmin.push(group) : groups.iAmMember.push(group);
   }
 
-  let groupArray = groups[value === 0 ? "iAmAdmin" : "iAmMember"] || [];
+  let groupArray = groups[tab === 0 ? "iAmAdmin" : "iAmMember"] || [];
 
-  if (loading) {
+  if (!groupsQuery.data && groupsQuery.loading) {
     return <GhostLoader />;
   }
 
@@ -86,7 +186,7 @@ export default function Groups({ history }) {
       <div className="card">
         <div className="card-heading">Groups</div>
 
-        <Tabs value={value} onChange={setTab}>
+        <Tabs value={tab} onChange={setTab}>
           <Tab label="I am admin of" {...a11yProps(0)} />
           <Tab label="I am member of" {...a11yProps(1)} />
         </Tabs>
@@ -104,13 +204,13 @@ export default function Groups({ history }) {
               aria-hidden="true"
               onClick={() => setShowSortByDropDown(!showSortByDropDown)}
             />
-            <i class="fa fa-arrow-up" aria-hidden="true" />
-            <i class="fa fa-arrow-down" aria-hidden="true" />
+            <i className="fa fa-arrow-up" aria-hidden="true" />
+            <i className="fa fa-arrow-down" aria-hidden="true" />
             {showSortByDropDown && (
               <div className="sortby-dropdown">
                 <div className="sortby-dropdown__item">Name</div>
                 <div className="sortby-dropdown__item">Members</div>
-                <div className="sortby-dropdown__item">Starred</div>
+                {/*<div className="sortby-dropdown__item">Starred</div>*/}
                 <div className="sortby-dropdown__item">Updated</div>
               </div>
             )}
@@ -121,6 +221,7 @@ export default function Groups({ history }) {
               className="create-new-group"
               text="CREATE NEW GROUP"
               iconPosition={ICONPOSITION.START}
+              onClick={() => setCreateGroupModal(true)}
             />
           </div>
         </div>
@@ -161,32 +262,59 @@ export default function Groups({ history }) {
 
                     {browseDropDownState === group.id && (
                       <div className="data__browse__drop-dwon">
-                        <div
-                          className="data__browse__drop-dwon__item"
-                          onClick={() => setSettingsModal(true)}
-                        >
-                          <span class="material-icons settings">
-                            content_copy
-                          </span>
-                          <span className="text">SETTINGS</span>
-                        </div>
-                        {value === 0 ? (
-                          <div
-                            className="data__browse__drop-dwon__item leave"
-                            onClick={() => setDeleteModal(true)}
-                          >
-                            <span class="material-icons leave">delete</span>
-                            <span className="text">DELETE GROUP</span>
-                          </div>
-                        ) : (
-                          <div
-                            className="data__browse__drop-dwon__item leave"
-                            onClick={() => setLeaveModal(true)}
-                          >
-                            <span class="material-icons leave">logout</span>
-                            <span className="text">LEAVE GROUP</span>
-                          </div>
-                        )}
+                        {
+                          // I AM ADMIN
+                          tab === 0 && (
+                            <>
+                              <div
+                                className="data__browse__drop-dwon__item"
+                                onClick={() => setSettingsModal(group)}
+                              >
+                                <span className="material-icons settings">
+                                  content_copy
+                                </span>
+                                <span className="text">SETTINGS</span>
+                              </div>
+
+                              <div
+                                className="data__browse__drop-dwon__item leave"
+                                onClick={() => setDeleteModal(group)}
+                              >
+                                <span className="material-icons leave">
+                                  delete
+                                </span>
+                                <span className="text">DELETE GROUP</span>
+                              </div>
+                            </>
+                          )
+                        }
+
+                        {
+                          // I AM NOT ADMIN
+                          tab === 1 && (
+                            <>
+                              {/*<div*/}
+                              {/*  className="data__browse__drop-dwon__item"*/}
+                              {/*  onClick={() => setSettingsModal(group)}*/}
+                              {/*>*/}
+                              {/*  <span className="material-icons settings">*/}
+                              {/*    content_copy*/}
+                              {/*  </span>*/}
+                              {/*  <span className="text">SETTINGS</span>*/}
+                              {/*</div>*/}
+
+                              <div
+                                className="data__browse__drop-dwon__item leave"
+                                onClick={() => setLeaveModal(group)}
+                              >
+                                <span className="material-icons leave">
+                                  logout
+                                </span>
+                                <span className="text">LEAVE GROUP</span>
+                              </div>
+                            </>
+                          )
+                        }
                       </div>
                     )}
                   </div>
@@ -201,47 +329,89 @@ export default function Groups({ history }) {
       {deleteModal && (
         <Modal
           title="Delete group"
-          submit={() => {
-            setDeleteModal(false);
+          loading={deleteGroupRes.loading}
+          submit={async () => {
+            if (deleteGroupRes.loading) return;
+            try {
+              await deleteGroup({ variables: { id: deleteModal.id } });
+            } catch (error) {
+              console.log("error", error);
+            }
+            setDeleteModal(undefined);
           }}
           close={() => {
-            setDeleteModal(false);
+            setDeleteModal(undefined);
           }}
           submitTxt="Delete"
           closeTxt="Cancel"
           submitButtonStyle="secondary"
-          children={<DeleteGroup />}
+          children={<DeleteGroup group={deleteModal} />}
         />
       )}
 
       {leaveModal && (
         <Modal
           title="Leave group"
-          submit={() => {
-            setLeaveModal(false);
+          loading={leaveGroupRes.loading}
+          submit={async () => {
+            if (leaveGroupRes.loading) return;
+            try {
+              await leaveGroup({ variables: { id: leaveModal.id } });
+            } catch (error) {
+              console.log("error", error);
+            }
+            setLeaveModal(undefined);
           }}
           close={() => {
-            setLeaveModal(false);
+            setLeaveModal(undefined);
           }}
           submitTxt="Leave"
           closeTxt="Cancel"
           submitButtonStyle="secondary"
-          children={<LeaveGroup />}
+          children={<LeaveGroup group={leaveModal} />}
         />
       )}
 
       {settingsModal && (
         <Modal
           title="Settings"
-          submit={() => {
-            setSettingsModal(false);
+          loading={setSettingsRes.loading}
+          submit={async () => {
+            if (setSettings.loading) return;
+            try {
+              await setSettings({
+                variables: {
+                  groupId: settingsModal.id,
+                  settings: data.settings,
+                },
+              });
+            } catch (error) {
+              console.log("error", error);
+            }
+            setSettingsModal(undefined);
           }}
           close={() => {
-            setSettingsModal(false);
+            setSettingsModal(undefined);
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<Settings isAdmin={value === 0} />}
+          children={
+            <Settings group={settingsModal} data={data} setData={setData} />
+          }
+        />
+      )}
+
+      {createGroupModal && (
+        <Modal
+          title="Create new group"
+          submit={saveData}
+          loading={isLoading}
+          close={() => {
+            setCreateGroupModal(undefined);
+          }}
+          submitTxt="Create"
+          closeTxt="Cancel"
+          children={<CreateNewGroup data={data} setData={setData} />}
         />
       )}
     </div>

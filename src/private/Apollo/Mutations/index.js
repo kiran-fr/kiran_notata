@@ -71,6 +71,8 @@ export { default as groupStartupRemove } from "./groupStartupRemove";
 
 export { default as groupDelete } from "./groupDelete";
 export { default as groupLeave } from "./groupLeave";
+export { default as groupCreate } from "./groupCreate";
+export { default as groupSettingsSet } from "./groupSettingsSet";
 
 export { default as notificationsMarkAsSeen } from "./notificationsMarkAsSeen";
 export { default as notificationsMarkAllAsSeen } from "./notificationsMarkAllAsSeen";

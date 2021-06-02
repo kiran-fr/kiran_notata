@@ -195,7 +195,7 @@ export default function Groups({ history }) {
           submitTxt="Save"
           closeTxt="Cancel"
           children={<Settings isAdmin={value === 0}></Settings>}
-        ></Modal>
+        />
       )}
     </div>
   );
