@@ -57,7 +57,7 @@ export default function Groups({
 
   if (error) throw error;
 
-  if (!data && loading && !showModalOnly) return <GhostLoader />;
+  if (!data && loading && !showModalOnly) return <GhostLoader small={false} />;
 
   let groups = data?.groupsGet;
 

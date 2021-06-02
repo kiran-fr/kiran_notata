@@ -488,15 +488,24 @@ input[type="submit"] {
 /* Loader */
 .lds-roller {
   font-size: 96px;
-  left: -40px;
-  top: -40px;
-  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999999;
+  position: relative;
+
+  left: -40px;
+  top: -40px;
+  display: flex;
   height: 100vh;
-  position: absolute;
   width: 100%;
+}
+
+.lds-roller.lds-roller-small {
+  left: 0px;
+  top: 0px;
+  display: block;
+  width: auto;
+  height: auto;
 }
 
 .lds-roller div {
@@ -513,6 +522,11 @@ input[type="submit"] {
   background: var(--color-primary-light);
   margin: -4px 0 0 -4px;
 }
+
+.lds-roller.lds-roller-small div:after {
+  background: var(--ui-color-gray-pale);
+}
+
 .lds-roller div:nth-child(1) {
   animation-delay: -0.036s;
 }

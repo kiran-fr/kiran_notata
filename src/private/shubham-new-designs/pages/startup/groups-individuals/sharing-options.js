@@ -21,7 +21,7 @@ export default function SharingOptions() {
             }`}
             aria-hidden="true"
             onClick={() => setShowEvaluations(!showEvaluations)}
-          ></i>
+          />
         </div>
         {showEvaluations && (
           <div className="evaluation-options-container">

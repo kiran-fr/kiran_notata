@@ -38,6 +38,7 @@ export default gql`
       }
       scoreTotal
       scorePossible
+      scorePercent
     }
   }
 `;

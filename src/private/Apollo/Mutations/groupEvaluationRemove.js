@@ -8,8 +8,16 @@ import {
 } from "Apollo/Fragments";
 
 export default gql`
-  mutation groupStartupAdd($groupId: ID!, $creativeId: ID!) {
-    groupStartupAdd(groupId: $groupId, creativeId: $creativeId) {
+  mutation groupEvaluationRemove(
+    $groupId: ID!
+    $creativeId: ID!
+    $evaluationId: ID!
+  ) {
+    groupEvaluationRemove(
+      groupId: $groupId
+      creativeId: $creativeId
+      evaluationId: $evaluationId
+    ) {
       id
       name
       iAmAdmin

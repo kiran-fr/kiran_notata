@@ -75,8 +75,8 @@ function Connections({
     throw error || tagGroupsQuery.error;
   }
 
-  if (!data && loading) return <GhostLoader />;
-  if (!tagGroupsQuery.data && tagGroupsQuery.loading) return <GhostLoader />;
+  if (!data && loading) return <GhostLoader small={false} />;
+  if (!tagGroupsQuery.data && tagGroupsQuery.loading) return <GhostLoader small={false} />;
 
   let connections = data.connectionsGet;
   let connectionsGeneral: any[] = [];
