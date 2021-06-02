@@ -19,7 +19,14 @@ export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, 
   };
 
   const presetDateValues = () => {
+
+  
+
     const toDate = moment().endOf("day").toDate();
+    const lastYear = new Date()
+    var pastYear = lastYear.getFullYear() - 1;
+    lastYear.setFullYear(pastYear);
+    
     const selectDateRange = [
       {
         label: "Last 7 Days",
@@ -39,7 +46,7 @@ export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, 
       },
       {
         label: "Last Year",
-        range: [moment().startOf("year").toDate(), toDate],
+        range: [lastYear, toDate],
       },
     ];
     return selectDateRange.map((value, index) => {
