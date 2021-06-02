@@ -184,7 +184,7 @@ export const ElevationTemplates = ({ history }) => {
           loading={saveLoader}
           close={() => {
             setCreateNewTemplate(false);
-            history.push(add_section_dev);
+            // history.push(add_section_dev);
           }}
           submitTxt="Save"
           closeTxt="Cancel"
