@@ -5,8 +5,12 @@
         max-width: 529px;
         padding-bottom: 40px!important;
     }
+    card-heading,
     &__heading{
         padding-left: 50px!important;
+        @media only screen and(max-width:768px) {
+            padding-left: 20px!important;
+        }
         padding-top: 41px!important;
         i{
             color: #53CAB2;
@@ -18,6 +22,9 @@
         &__funnel{
             margin-top:40px;
             margin-left:50px;
+            @media only screen and(max-width:768px) {
+                margin-left: 20px;
+            }
             &__heading{
                 font-family: 'Proxima Nova';
                 font-style: normal;
@@ -63,7 +70,165 @@
                     }
                 }
             }
+            .parts{
+                margin-top:20px;
+                &__part{
+                    display: flex;
+                    align-items: center;
+                    margin-top:5px;
+                    &__heading{
+                        font-family: "Proxima Nova";
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 17px;
+                        text-transform: capitalize;
+                        color: #969ba3;
+                        width:100px;
+                    }
+                    .red{
+                        background: linear-gradient(180deg, #FF725E 0%, #FFAD88 100%);
+                        height:16px;
+                        border-radius: 10px;
+                        width:180px;
+                    } 
+                    .blue{
+                        background: linear-gradient(180deg, #73C5B2 0%, #96E4D5 100%);
+                        height:16px;
+                        border-radius: 10px;
+                        width:140px;
+                        margin-left:20px;
+                    }
+                    .purple{
+                        background: linear-gradient(180deg, #9E80DD 0%, #C7ADFF 100%);
+                        height:16px;
+                        border-radius: 10px;
+                        width:100px;
+                        margin-left:40px;
+                    }
+                    .orange{
+                        background: linear-gradient(180deg, #F5C269 0%, #FFD898 102.82%, rgba(229, 232, 255, 0) 110.91%);
+                        height:16px;
+                        border-radius: 10px;
+                        width:60px;
+                        margin-left:60px;
+                    }
+                    .green{
+                        background: linear-gradient(180deg, #90E074 0%, #B3FF78 100%);
+                        height:16px;
+                        border-radius: 10px;
+                        width:20px;
+                        margin-left:80px;
+                    }                    
+                }
+            }
         }
+    }
+    &__new-funnel{
+        margin-top:50px;
+        margin-left: 50px;
+        @media only screen and(max-width:768px) {
+            margin-left: 20px;
+        }
+        &__text{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 17px;
+            color: #6A6A6A;
+            display: flex;
+            align-items: center;
+        }
+        &__save{
+            margin-left:auto!important;
+            margin-right:30px!important;
+            background: #53CAB2!important;
+            height:30px;
+        }
+        .groups{
+            margin-top:20px;
+            &__group{
+                display: flex;
+                align-items: center;
+                margin-top:10px;
+                flex-flow: wrap;
+                .fa-plus-circle{
+                    color: #53cab2;
+                    margin-left: 5px;
+                    cursor: pointer;
+                    @media only screen and(max-width:768px) {
+                        margin-top:10px;
+                    }
+                }
+                .fa-times-circle{
+                    color: #FF725E;
+                    margin-left: 5px;
+                    cursor: pointer;
+                }
+                &__heading{
+                    input{
+                        background: #FFFFFF;
+                        border: 1px solid #CECECE;
+                        box-sizing: border-box;
+                        border-radius: 20px;
+                        padding-left:15px;
+                        width:150px;
+                    }
+                }
+                &__heading-text{
+                    font-family: "Proxima Nova";
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 17px;
+                        text-transform: capitalize;
+                        color: #969ba3;
+                        width:150px;
+                }
+                &__funnel{
+                    height: 15px;
+                    width: 100px;
+                    margin-left: 20px;
+                    border-radius: 8px;
+                }
+                .red{
+                    background: linear-gradient(180deg, #FF725E 0%, #FFAD88 100%);
+                } 
+                .blue{
+                    background: linear-gradient(180deg, #73C5B2 0%, #96E4D5 100%);
+                }
+                .purple{
+                    background: linear-gradient(180deg, #9E80DD 0%, #C7ADFF 100%);
+                }
+                .orange{
+                    background: linear-gradient(180deg, #F5C269 0%, #FFD898 102.82%, rgba(229, 232, 255, 0) 110.91%);
+                }
+                .green{
+                    background: linear-gradient(180deg, #90E074 0%, #B3FF78 100%);
+                }  
+                &__color-pallets{
+                    display: flex;
+                    margin-left:10px;
+                    @media only screen and(max-width:768px) {
+                        margin-top:10px;
+                        margin-left: 170px;
+                    }
+                    .color-pallet{
+                        height:20px;
+                        width:20px;
+                        border-radius: 50%;   
+                        margin-right:5px;
+                        padding:2px;  
+                        cursor: pointer;             
+                    }
+                    .selected{
+                        box-shadow: 0 0 0 1px hsl(0deg 0% 80%), 0 0 0 2px hsl(0deg 0% 90%);
+                    }
+                }
+            }
+        }
+
     }
     &__create-new-funnel{
         margin-left:50px!important;

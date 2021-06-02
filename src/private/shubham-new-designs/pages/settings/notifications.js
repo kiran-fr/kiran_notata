@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./notifications.scss";
 import { ICONPOSITION, SETTINGSMENU } from "../constants";
 import NotificationProfile from "../../../../assets/images/notification-profile.png";
@@ -6,8 +6,11 @@ import ButtonWithIcon from "../ui-kits/button-with-icon";
 import NotificationAlarm from "../../../../assets/images/notification-alarm.png";
 import NotificationSetting from "../../../../assets/images/notifications-settings.png";
 import NotificationGroup from "../../../../assets/images/notification-group.png";
+import eye from "../../../../assets/images/eye.png";
+import eyeGray from "../../../../assets/images/eye-gray.png";
 
 export default function Notifications({ setMenuSelected }) {
+  const [isDropDown, setIsDropDown] = useState(false);
   return (
     <div className="notifications-container">
       <div className="notifications-container__card">
@@ -22,7 +25,40 @@ export default function Notifications({ setMenuSelected }) {
           </div>
           <div className="card-heading notifications-container__show">
             Show
-            <i className={`fa fa-chevron-down`} aria-hidden="true"></i>
+            <i
+              className={`fa ${
+                isDropDown ? "fa-chevron-up" : "fa-chevron-down"
+              }`}
+              aria-hidden="true"
+              onClick={() => {
+                setIsDropDown(!isDropDown);
+              }}
+            >
+              {isDropDown && (
+                <div className="notifications-container__show__dropdown">
+                  <div className="drop-down-item" onClick={() => {}}>
+                    <img src={eye} />
+                    <span className="text">Team</span>
+                  </div>
+                  <div className="drop-down-item" onClick={() => {}}>
+                    <img src={eyeGray} />
+                    <span className="text">Groups</span>
+                  </div>
+                  <div className="drop-down-item" onClick={() => {}}>
+                    <img src={eye} />
+                    <span className="text">Startups</span>
+                  </div>
+                  <div className="drop-down-item" onClick={() => {}}>
+                    <img src={eyeGray} />
+                    <span className="text">Reminders</span>
+                  </div>
+                  <div className="drop-down-item" onClick={() => {}}>
+                    <img src={eye} />
+                    <span className="text">Filter matches</span>
+                  </div>
+                </div>
+              )}
+            </i>
           </div>
         </div>
         <div className="notifications">
@@ -94,7 +130,9 @@ export default function Notifications({ setMenuSelected }) {
                 Stephanie Wykoff, Miranda Walsh, Sarah Parker, John Doe{" "}
               </span>
               and 15 other from <span className="highlight">Business Cats</span>
-              group filled <span className="highlight">First impression</span>{" "}
+              group filled <span className="highlight">
+                First impression
+              </span>{" "}
               evaluation.
             </p>
           </div>
