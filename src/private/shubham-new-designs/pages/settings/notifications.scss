@@ -18,6 +18,7 @@
             margin-right: 13px;
             cursor: pointer;
         }
+        
     }
     &__header{
         display:flex;
@@ -36,6 +37,34 @@
         cursor: pointer;
         i{
             margin-left:10px;            
+        }
+        &__dropdown{
+            position: absolute;
+            background: #FFFFFF;
+            box-shadow: 0px 3px 12px rgb(0 0 0 / 20%);
+            border-radius: 5px;
+            padding: 4px 17px;
+            z-index: 999;
+            text-align: left;
+            text-align: initial;
+            margin-left: -100px;
+            margin-top: 10px;
+            .drop-down-item{
+                display: flex;
+                align-items: center;
+                font-family: "Proxima Nova";
+                font-style: normal;
+                font-weight: normal;
+                font-size: 10px;
+                line-height: 12px;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                color: #6A6A6A;
+                cursor: pointer;
+                img{
+                    margin-right:10px;
+                }
+            }
         }
     }
     .notifications{
