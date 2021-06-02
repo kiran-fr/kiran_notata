@@ -22,7 +22,7 @@ export default function ShareTemplate({ setPageState, companyName }) {
               >
                 arrow_back_ios
               </span>
-              <span className="page-heading">{companyName}</span>
+              <span className="page-heading">Sharing template</span>
             </div>
           </div>
           <div className="row">
