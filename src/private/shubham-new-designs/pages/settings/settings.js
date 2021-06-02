@@ -15,6 +15,7 @@ import Notifications from "./notifications";
 import Tags from "./tags";
 import Funnels from "./funnels";
 import ElevationTemplates from "../startup/evaluations/evaluation-templates";
+import ProfileSettings from "./profile";
 
 export default function Settings_Home({ history }) {
   const [isEvaluationCardVisible, setEvaluationCard] = useState(true);
@@ -68,7 +69,7 @@ export default function Settings_Home({ history }) {
             </div>
             <div
               className="menu-container__menu"
-              onClick={() => history.push("/profile")}
+              onClick={() => setMenuSelected(SETTINGSMENU.USERPROFILE)}
             >
               <img src={yourProfile}></img>
               <div className="menu-container__menu__name">User Profile</div>
@@ -144,6 +145,8 @@ export default function Settings_Home({ history }) {
           setMenuSelected={setMenuSelected}
           isBackButton
         ></ElevationTemplates>
+      ) : menuSelected === SETTINGSMENU.USERPROFILE ? (
+        <ProfileSettings setMenuSelected={setMenuSelected}></ProfileSettings>
       ) : (
         <></>
       )}
