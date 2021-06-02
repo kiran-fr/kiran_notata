@@ -8,12 +8,12 @@ const Settings = ({ group, data, setData }) => {
   const [addAll, setAddAll] = useState(false);
 
   useEffect(() => {
-    if (group.settings !== data.settings) {
-      for (let key in group.settings) {
-        setSettings(key, group.settings[key]);
+    if (group?.settings !== data.settings) {
+      for (let key in group?.settings) {
+        setSettings(key, group?.settings[key]);
       }
     }
-  }, [group.settings]);
+  }, [group?.settings]);
 
   function setSettings(name, val) {
     setData({
@@ -27,7 +27,7 @@ const Settings = ({ group, data, setData }) => {
 
   return (
     <div className="settings-container">
-      {group.iAmAdmin && (
+      {(!group || group.iAmAdmin) && (
         <>
           <form>
             <div className="header">
@@ -159,8 +159,7 @@ const Settings = ({ group, data, setData }) => {
                   }}
                 />
                 <div className="radio-button-description">
-                  Only I can invite members. (Your team members have to be
-                  invited)
+                  Guests and team members have to be invited
                 </div>
               </div>
               <div className="option">

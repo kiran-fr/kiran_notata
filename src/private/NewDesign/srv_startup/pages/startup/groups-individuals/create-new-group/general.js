@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextBox from "../../../ui-kits/text-box";
 
-export default function General({ data, setData }) {
+export default function General({ group, data, setData }) {
+  useEffect(() => {
+    if (group) {
+      setData({
+        ...data,
+        general: {
+          name: group?.name,
+          description: group?.description,
+        },
+      });
+    }
+  }, [group]);
+
   return (
     <div className="genral-contianer">
       <div className="group-name">

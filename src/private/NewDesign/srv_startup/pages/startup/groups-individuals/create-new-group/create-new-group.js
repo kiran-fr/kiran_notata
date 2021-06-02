@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./create-new-group.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -9,7 +9,6 @@ import Members from "./members";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -28,13 +27,33 @@ function a11yProps(index) {
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-export default function CreateNewGroup({ data, setData }) {
+
+export default function CreateNewGroup({ group, data, setData }) {
   const [tab, setTab] = useState(0);
-  // const [data, setData] = useState(defaultData);
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
   };
+
+  useEffect(() => {
+    if (group) {
+      let newData = {
+        general: {
+          name: group.name + " - COPY",
+          description: group.description,
+        },
+        settings: group.settings,
+        members: group.members
+          ?.filter(({ user }) => !user.isMe)
+          .map(({ user }) => user.email),
+        startups: {},
+      };
+      for (let { creative } of group.startups || []) {
+        newData.startups[creative.id] = creative;
+      }
+      setData(newData);
+    }
+  }, [group]);
 
   return (
     <>

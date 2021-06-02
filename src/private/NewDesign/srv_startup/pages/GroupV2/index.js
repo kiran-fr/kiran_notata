@@ -5,8 +5,8 @@ import { groupsGetV2 } from "../../../../Apollo/Queries";
 import {
   groupCreate,
   groupDelete,
-  groupUserInvite,
-  groupStartupAdd,
+  groupUsersInvite,
+  groupStartupsAdd,
   groupLeave,
   groupSettingsSet,
 } from "../../../../Apollo/Mutations";
@@ -68,8 +68,8 @@ export default function Groups({ history }) {
 
   // Mutations
   const [createGroup] = useMutation(groupCreate);
-  const [addMember] = useMutation(groupUserInvite);
-  const [addStartup] = useMutation(groupStartupAdd);
+  const [addMembers] = useMutation(groupUsersInvite);
+  const [addStartups] = useMutation(groupStartupsAdd);
 
   const [deleteGroup, deleteGroupRes] = useMutation(groupDelete, {
     refetchQueries: [{ query: groupsGetV2 }],
@@ -128,16 +128,12 @@ export default function Groups({ history }) {
     let creativeIds = Object.keys(data.startups);
 
     if (creativeIds.length) {
-      let addStartupPromises = creativeIds.map(creativeId =>
-        addStartup({
-          variables: {
-            groupId: group.id,
-            creativeId: creativeId,
-          },
-        })
-      );
+      let variables = {
+        groupId: group.id,
+        creativeIds: creativeIds,
+      };
       try {
-        await Promise.all(addStartupPromises);
+        await addStartups({ variables });
       } catch (error) {
         return console.log(error);
       }
@@ -145,24 +141,18 @@ export default function Groups({ history }) {
 
     // Invite members
     if (data.members.length) {
-      let addMemberPromises = data.members.map(email =>
-        addMember({
-          variables: {
-            groupId: group.id,
-            email: email,
-          },
-        })
-      );
+      let variables = {
+        groupId: group.id,
+        emails: data.members,
+      };
       try {
-        await Promise.all(addMemberPromises);
+        await addMembers({ variables });
       } catch (error) {
         return console.log(error);
       }
     }
 
     history.push(`${group_dashboard}/${group.id}`);
-
-    // setCreateGroupModal(false);
 
     setIsLoading(false);
   }
