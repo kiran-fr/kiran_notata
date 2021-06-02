@@ -16,8 +16,8 @@ export default function SummaryEvaluation({
   allAnswers,
   evaluation,
 }) {
+
   const [deleteMoal, setDeleteMoal] = useState(false);
-  console.log("allAnswers", allAnswers, selectedTemplateToEvaluate);
   const [mutateEvaluationDelete] = useMutation(evaluationDelete);
   let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
     return {
@@ -47,9 +47,11 @@ export default function SummaryEvaluation({
     console.log("updated", update);
     setDeleteMoal(false);
   };
+
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
+        sadbfhjkdsafh
         <span
           class="material-icons back-icon"
           onClick={() => {
@@ -90,7 +92,8 @@ export default function SummaryEvaluation({
             {moment(selectedTemplateToEvaluate?.createdAt).format("lll")}
           </div>
           <div className="col-sm-12 col-xs-12 created-on">
-            Created by: {selectedTemplateToEvaluate?.createdBy}
+            Created by: {companyName}
+            {/* {selectedTemplateToEvaluate?.createdBy} */}
           </div>
         </div>
         <div className="row total-answers">

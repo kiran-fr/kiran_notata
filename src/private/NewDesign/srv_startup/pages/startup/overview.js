@@ -235,7 +235,7 @@ export default function Overview(props) {
   return (
     <>
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
-        <ShareTemplate setPageState={setPageState}></ShareTemplate>
+        <ShareTemplate companyName = {name} setPageState={setPageState}></ShareTemplate>
       ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
         <ArchiveList
           setPageState={setPageState}

@@ -14,6 +14,7 @@ export default function EditEvaluation({
   connectionId,
   evaluation,
   savedAnswers,
+  companyName,
   setActiveEvaluation,
 }) {
   const [answers, setAnswers] = useState([]);
@@ -94,7 +95,7 @@ export default function EditEvaluation({
         >
           arrow_back_ios
         </span>
-        <span className="page-heading">Sharing template</span>
+        <span className="page-heading">{companyName}</span>
       </div>
       <div className="col-sm-3 col-md-3">
         <div className="menu-container-1">
