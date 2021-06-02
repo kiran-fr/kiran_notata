@@ -22,6 +22,7 @@ export default function Evaluations(props) {
     },
     accountData,
   } = props;
+  
 
   const getTotalScore = arr => {
     if (Array.isArray(arr) && arr.length > 0) {
