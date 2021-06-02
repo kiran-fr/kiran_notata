@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import "./startup-info.scss";
 
-export default function ShareTemplate({ setPageState }) {
+export default function ShareTemplate({ setPageState, companyName }) {
   return (
     <div className="row tab-panel-container">
       <div className="col-sm-12">
@@ -22,7 +22,7 @@ export default function ShareTemplate({ setPageState }) {
               >
                 arrow_back_ios
               </span>
-              <span className="page-heading">Sharing template</span>
+              <span className="page-heading">{companyName}</span>
             </div>
           </div>
           <div className="row">

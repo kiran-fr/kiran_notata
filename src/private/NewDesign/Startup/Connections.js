@@ -143,8 +143,8 @@ export default function Connections({ history }) {
     search: "",
     tags: [],
     funnelTag: [],
-    fromDate: new Date().getTime() - 40000,
-    toDate: new Date().getTime(),
+    fromDate: null,
+    toDate: null,
     starred: false,
     // limit: 25
 
