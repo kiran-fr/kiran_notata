@@ -94,6 +94,7 @@ export default function Evaluations(props) {
               >
                 <SummaryEvaluation
                   companyName={name}
+                  accountData = {accountData}
                   setEditEvaluation={setEditEvaluation}
                   setSaveEvaluation={setSaveEvaluation}
                   selectedTemplateToEvaluate={selectedTemplateToEvaluate}

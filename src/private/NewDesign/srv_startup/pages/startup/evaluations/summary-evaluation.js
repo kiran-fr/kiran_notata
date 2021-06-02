@@ -15,6 +15,7 @@ export default function SummaryEvaluation({
   selectedTemplateToEvaluate,
   allAnswers,
   evaluation,
+  accountData
 }) {
 
   const [deleteMoal, setDeleteMoal] = useState(false);
@@ -91,7 +92,14 @@ export default function SummaryEvaluation({
             {moment(selectedTemplateToEvaluate?.createdAt).format("lll")}
           </div>
           <div className="col-sm-12 col-xs-12 created-on">
-            Created by: {companyName}
+            Created by: {
+              accountData
+              ?
+                (accountData.members[0].given_name) + " " +
+                (accountData.members[0].family_name)
+              :
+                ""
+            }
             {/* {selectedTemplateToEvaluate?.createdBy} */}
           </div>
         </div>
