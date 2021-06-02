@@ -6,7 +6,7 @@ import Modal from "../DealFlow/modal";
 export default function AddGroup({ close, connection }) {
   const list = [{ id: "3344", name: "group 1" }];
   return (
-    <Modal title="Add Startup to Group" closeModal={close}>
+    <Modal title="Add Startup to Group" saveModal ={close} closeModal={close}>
       <div className={styles.group}>
         <div className={styles.groupChild}>
           <h2>Currently startup belongs to:</h2>
