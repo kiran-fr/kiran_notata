@@ -7,9 +7,9 @@ export default function LeaveGroup() {
       <div className="description">
         Are you sure you want to leave this group?
       </div>
-      <div className="delete-traces">
-        <InputCheckBox /> Delete all your traces:
-      </div>
+      {/*<div className="delete-traces">*/}
+      {/*  <InputCheckBox /> Delete all your traces:*/}
+      {/*</div>*/}
       <div className="leave-modal-options">
         - Your added startups will be removed from group <br />
         - Comments will be deleted <br />

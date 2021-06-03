@@ -37,7 +37,8 @@ export default function AddStartup({ group }) {
   return (
     <div className="row">
       <div className={`startup-container ${canAdd ? "col-sm-6" : "col-sm-12"}`}>
-        {group.startups?.map(({ creative }, index) => {
+        {group.startups?.map((startup, index) => {
+          let { creative } = startup;
           return (
             <div className="startup-record" key={`startup-id-${index}`}>
               <div className="startup-container__name-container">
@@ -76,7 +77,15 @@ export default function AddStartup({ group }) {
                     }}
                   />
                 )}
-                <div className="name">{creative?.name}</div>
+
+                <div>
+                  <div className="name">{creative?.name}</div>
+
+                  <div className="name-shared-by">
+                    Shared by: {startup?.sharedByUser?.family_name}{" "}
+                    {startup?.sharedByUser?.given_name}
+                  </div>
+                </div>
               </div>
             </div>
           );
