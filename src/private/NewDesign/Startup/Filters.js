@@ -183,6 +183,8 @@ export default function Filters({
     setActiveTab(val);
     if (val !== "spreadsheet") {
       setOptionalFilter("");
+    } else {
+      setKanbanPopup(false)
     }
   };
 
