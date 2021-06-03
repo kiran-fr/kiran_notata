@@ -62,10 +62,15 @@ export const Kanban = props => {
   const [getConnections, setGetConnections] = useState(false);
   const [loadingAPI, setLoadingAPI] = useState(true);
   const [sorting, setSorting] = useState("");
+  const [funnelGroupIndex, setFunnelGroupIndex] = useState(0)
 
   const { data: accountGet, loading, error } = useQuery(accountGetData);
 
-  let response = accountGet?.accountGet?.funnelGroups?.[0].funnelTags;
+  useEffect(() => {
+    setFunnelGroupIndex(props.selectedfunnelGroup)
+  },[props.selectedfunnelGroup]);
+
+  let response = accountGet?.accountGet?.funnelGroups?.[funnelGroupIndex].funnelTags;
 
   // Mutation updating funnel tag for connection
   const [mutate] = useMutation(connectionFunnelTagAdd);
@@ -103,7 +108,7 @@ export const Kanban = props => {
       setColumns({ ...indexSort });
       setGetConnections(true);
     }
-  }, [loading, accountGet]);
+  }, [loading, accountGet, funnelGroupIndex]);
 
   const updateFunnelTag = (funnelTagId, connectionId) => {
     const variables = {
