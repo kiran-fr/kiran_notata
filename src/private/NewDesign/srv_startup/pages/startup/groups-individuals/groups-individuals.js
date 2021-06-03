@@ -5,104 +5,87 @@ import { ICONPOSITION } from "../../constants";
 import { Modal } from "../../../../../../Components/UI_Kits";
 import SharingOptions from "./sharing-options";
 import CreateNewGroup from "./create-new-group/create-new-group";
+import { group_dashboard } from "../../../../../../definitions";
 
-export default function GroupsIndividuals() {
+export default function GroupsIndividuals({ connection, history }) {
   const [showFullList, setShowFullList] = useState(false);
-  const [sharingOptionsModal, setSharingOptionsModal] = useState(false);
+  const [sharingOptionsModal, setSharingOptionsModal] = useState(undefined);
   const [createGroupModal, setCreateGroupModal] = useState(false);
 
-  const data = [
-    {
-      name: "Group 1",
-      member: 11,
-      evaluation_templates: [
-        "First impression",
-        "Before pitching",
-        "After pitching",
-      ],
-      subjective_score: "Shared",
-    },
-    {
-      name: "Group 1",
-      member: 11,
-      evaluation_templates: [
-        "First impression",
-        "Before pitching",
-        "After pitching",
-      ],
-      subjective_score: "Shared",
-    },
-    {
-      name: "Group 1",
-      member: 11,
-      evaluation_templates: [
-        "First impression",
-        "Before pitching",
-        "After pitching",
-      ],
-      subjective_score: "Shared",
-    },
-    {
-      name: "Group 1",
-      member: 11,
-      evaluation_templates: [
-        "First impression",
-        "Before pitching",
-        "After pitching",
-      ],
-      subjective_score: "Shared",
-    },
-    {
-      name: "Group 1",
-      member: 11,
-      evaluation_templates: [
-        "First impression",
-        "Before pitching",
-        "After pitching",
-      ],
-      subjective_score: "Shared",
-    },
-    {
-      name: "Group 1",
-      member: 11,
-      evaluation_templates: [
-        "First impression",
-        "Before pitching",
-        "After pitching",
-      ],
-      subjective_score: "Shared",
-    },
-  ];
+  console.log("connection", connection);
+
+  let data = [];
+  for (let info of connection?.groupSharingInfo || []) {
+    let creativeId = connection?.creative?.id;
+    let creativeName = connection?.creative?.name;
+    let sharedSubjectiveScore = info?.subjectiveScores?.some(
+      ({ isMe }) => isMe
+    );
+
+    let sharedEvaluations = info?.evaluations?.filter(
+      ({ createdByUser }) => createdByUser.isMe
+    );
+
+    console.log("\n**************");
+    console.log("info.evaluations", info.evaluations);
+    console.log("sharedEvaluations", sharedEvaluations);
+    console.log("===============\n");
+
+    let item = {
+      group: info?.group,
+      creativeId,
+      creativeName,
+      sharedSubjectiveScore,
+      sharedEvaluations,
+    };
+    data.push(item);
+  }
+
+  console.log("data", data);
+
+  const getItem = groupId => data.find(({ group }) => group.id === groupId);
+
   return (
     <>
       <div className="row tab-panel-container group-individual-container">
         <div className="col-sm-12">
           <div className="card">
             <div className="card-heading">Groups</div>
-            {data.map((item, index) => {
-              return !showFullList && index >= 2 ? (
-                <></>
-              ) : (
+            {data.map(item => {
+              return (
                 <div
                   className="row group-container"
-                  key={`group-${item.name}-${index}`}
+                  key={`group-${item.group.id}`}
                 >
                   <div className="col-sm-3 col-xs-6">
-                    <div className="group-name">{item.name}</div>
-                    <div className="members">{`${item.member} Members`}</div>
+                    <div
+                      className="group-name"
+                      onClick={() => {
+                        history.push(`${group_dashboard}/${item.group.id}`);
+                      }}
+                    >
+                      {item.group.name}
+                    </div>
+                    {/*<div className="members">{item.group.members.length} Members</div>*/}
                   </div>
                   <div className="col-sm-3 col-xs-6 evaluations">
                     <div className="evaluation-template">
                       Evaluations you share:
                     </div>
                     <div className="templates">
-                      {item.evaluation_templates.map((template, groupIndex) => {
+                      {!item.sharedEvaluations.length && (
+                        <div className="template" style={{ opacity: 0.5 }}>
+                          you are not sharing any evaluations
+                        </div>
+                      )}
+
+                      {item.sharedEvaluations.map(evaluation => {
                         return (
                           <div
                             className="template"
-                            key={`template-${item.name}-${template}-${groupIndex}`}
+                            key={`template-${item.group.id}-${evaluation?.id}`}
                           >
-                            {template}
+                            {evaluation?.template?.name}
                           </div>
                         );
                       })}
@@ -113,7 +96,9 @@ export default function GroupsIndividuals() {
                       Subjective score:
                     </div>
                     <div className="templates col-sm-12 col-xs-6">
-                      <div className="share">{item.subjective_score}</div>
+                      <div className="share">
+                        {item.sharedSubjectiveScore ? "shared" : "not shared"}
+                      </div>
                     </div>
                   </div>
                   <div className="col-sm-4 sharing-options">
@@ -121,26 +106,27 @@ export default function GroupsIndividuals() {
                       iconPosition={ICONPOSITION.START}
                       iconName={"share"}
                       text="Sharing options"
-                      onClick={() => setSharingOptionsModal(true)}
+                      onClick={() => setSharingOptionsModal(item.group.id)}
                     />
                   </div>
                 </div>
               );
             })}
 
-            <div className="row">
-              <div className="col-sm-12 text-right see-full-list">
-                See full list
-                <i
-                  class={`fa ${
-                    !showFullList ? "fa-chevron-up" : "fa-chevron-down"
-                  }`}
-                  aria-hidden="true"
-                  onClick={() => setShowFullList(!showFullList)}
-                ></i>
-              </div>
-            </div>
+            {/*<div className="row">*/}
+            {/*  <div className="col-sm-12 text-right see-full-list">*/}
+            {/*    See full list*/}
+            {/*    <i*/}
+            {/*      class={`fa ${*/}
+            {/*        !showFullList ? "fa-chevron-up" : "fa-chevron-down"*/}
+            {/*      }`}*/}
+            {/*      aria-hidden="true"*/}
+            {/*      onClick={() => setShowFullList(!showFullList)}*/}
+            {/*    />*/}
+            {/*  </div>*/}
+            {/*</div>*/}
           </div>
+
           <div className="row">
             <div className="col-sm-12 create-new-group">
               <ButtonWithIcon
@@ -157,15 +143,27 @@ export default function GroupsIndividuals() {
         <Modal
           title="Sharing options"
           submit={() => {
-            setSharingOptionsModal(false);
+            setSharingOptionsModal(undefined);
           }}
           close={() => {
-            setSharingOptionsModal(false);
+            setSharingOptionsModal(undefined);
           }}
-          submitTxt="Save"
-          closeTxt="Cancel"
-          children={<SharingOptions></SharingOptions>}
-        ></Modal>
+          submitTxt="OK"
+          closeTxt="CLOSE"
+          children={
+            <SharingOptions
+              groupId={getItem(sharingOptionsModal).group?.id}
+              creativeId={getItem(sharingOptionsModal)?.creativeId}
+              connection={connection}
+              sharedSubjectiveScore={
+                getItem(sharingOptionsModal)?.sharedSubjectiveScore
+              }
+              sharedEvaluations={
+                getItem(sharingOptionsModal)?.sharedEvaluations
+              }
+            />
+          }
+        />
       )}
       {createGroupModal && (
         <Modal
@@ -178,8 +176,8 @@ export default function GroupsIndividuals() {
           }}
           submitTxt="Create"
           closeTxt="Cancel"
-          children={<CreateNewGroup></CreateNewGroup>}
-        ></Modal>
+          children={<CreateNewGroup />}
+        />
       )}
     </>
   );

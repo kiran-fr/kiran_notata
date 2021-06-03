@@ -3,7 +3,7 @@ import "../public.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 
 import StartupInfo from "./startup-info";
 import Overview from "./overview";
@@ -38,17 +38,22 @@ function a11yProps(index) {
 }
 
 export const Startup = ({ match, history, location }) => {
-  const {
-    params: { id },
-  } = match;
-  const { data: connectionGetData, loading, error } = useQuery(connectionGet, {
-    variables: { id },
-  });
+  // Url stuff
+  const { id } = match?.params;
 
-  const { data: accountGetData } = useQuery(accountGet);
-
+  // States
   const [value, setValue] = React.useState(0);
 
+  // Queries
+  const { data: accountGetData } = useQuery(accountGet);
+  const [getConnection, getConnectionRes] = useLazyQuery(connectionGet);
+
+  // Execute query
+  useEffect(() => {
+    getConnection({ variables: { id } });
+  }, [id]);
+
+  // Set tab from url
   useEffect(() => {
     const { tab } = queryString.parse(location.search);
     if (tab) {
@@ -60,6 +65,10 @@ export const Startup = ({ match, history, location }) => {
     }
   }, [location]);
 
+  // Data maps
+  let connection = getConnectionRes?.data?.connectionGet;
+
+  // Update tab in url
   const handleChange = (event, newValue) => {
     let pathName = `${match.url}?tab=${newValue}`;
     history.push(pathName);
@@ -70,12 +79,10 @@ export const Startup = ({ match, history, location }) => {
     history.push(path);
   };
 
-  if (!connectionGetData) {
+  if (!getConnectionRes.data) {
     return <GhostLoader />;
   }
-  let connection = connectionGetData?.connectionGet;
 
-  console.log(connectionGetData);
   return (
     <>
       <div className="col-12 startup-container">
@@ -104,7 +111,7 @@ export const Startup = ({ match, history, location }) => {
         />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <GroupsIndividuals connection={connection} />
+        <GroupsIndividuals connection={connection} history={history} />
       </TabPanel>
       <TabPanel value={value} index={4}>
         <Materials />

@@ -9,7 +9,17 @@ import {
   groupEvaluationRemove,
 } from "../../../../../Apollo/Mutations";
 
-export default function SharingOptions({ group, startup }) {
+export default function SharingOptions({
+  groupId,
+  creativeId,
+  connection,
+  sharedSubjectiveScore,
+  sharedEvaluations,
+}) {
+  let myEvaluations = connection?.evaluations?.filter(({ isMe }) => isMe) || [];
+  myEvaluations = myEvaluations.filter(({ template }) => template?.name);
+
+  // Mutations
   const [scoreAdd, scoreAddRes] = useMutation(groupSubjectiveScoreAdd);
   const [scoreRemove, scoreRemoveRes] = useMutation(groupSubjectiveScoreRemove);
   const [evaluationAdd, evaluationAddRes] = useMutation(groupEvaluationAdd);
@@ -17,33 +27,12 @@ export default function SharingOptions({ group, startup }) {
     groupEvaluationRemove
   );
 
+  // Define loading state
   let isLoading =
     scoreAddRes.loading ||
     scoreRemoveRes.loading ||
     evaluationAddRes.loading ||
     evaluationRemoveRes.loading;
-
-  const [initialShared, setInitialShared] = useState({});
-
-  let sharedSubjectiveScore = startup?.subjectiveScores.find(
-    ({ isMe }) => isMe
-  );
-
-  let evaluations =
-    startup?.connection?.evaluations?.filter(({ isMe }) => isMe) || [];
-  evaluations = evaluations.filter(({ template }) => template?.name);
-
-  useEffect(() => {
-    for (let evaluation of evaluations) {
-      let hit = startup?.evaluations?.find(ev => ev.id === evaluation.id);
-      if (hit) {
-        setInitialShared({
-          ...initialShared,
-          [evaluation.id]: true,
-        });
-      }
-    }
-  }, [startup]);
 
   const [showEvaluations, setShowEvaluations] = useState(true);
 
@@ -61,8 +50,8 @@ export default function SharingOptions({ group, startup }) {
 
               // Variables
               let variables = {
-                groupId: group.id,
-                creativeId: startup.creative.id,
+                groupId: groupId,
+                creativeId: creativeId,
               };
 
               // Remove subjective score
@@ -79,13 +68,13 @@ export default function SharingOptions({ group, startup }) {
           Subjective Score
         </div>
 
-        {!evaluations.length && (
+        {!myEvaluations.length && (
           <div className="option" style={{ paddingTop: "15px" }}>
             You have not evaluated this startup.
           </div>
         )}
 
-        {!!evaluations.length && (
+        {!!myEvaluations.length && (
           <>
             <div className="option">
               {/*<InputCheckBox />*/}
@@ -101,10 +90,11 @@ export default function SharingOptions({ group, startup }) {
 
             {showEvaluations && (
               <div className="evaluation-options-container">
-                {evaluations.map(evaluation => {
-                  let hasShared = !!startup?.evaluations?.find(
+                {myEvaluations.map(evaluation => {
+                  let hasShared = !!sharedEvaluations?.find(
                     ev => ev.id === evaluation.id
                   );
+
                   return (
                     <div className="option" key={evaluation.id}>
                       <InputCheckBox
@@ -115,8 +105,8 @@ export default function SharingOptions({ group, startup }) {
                           // Variables
                           let variables = {
                             evaluationId: evaluation.id,
-                            groupId: group.id,
-                            creativeId: startup.creative.id,
+                            groupId: groupId,
+                            creativeId: creativeId,
                           };
 
                           // Remove evaluation

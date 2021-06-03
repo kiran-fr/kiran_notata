@@ -72,6 +72,7 @@ export default gql`
           family_name
           given_name
           email
+          isMe
         }
         summary {
           scorePercent
@@ -97,6 +98,25 @@ export default gql`
           templateName
           submissions
           averagePercentageScore
+        }
+
+        evaluations {
+          id
+          name
+          createdByUser {
+            given_name
+            family_name
+            email
+            isMe
+          }
+          template {
+            id
+            name
+          }
+        }
+
+        subjectiveScores {
+          isMe
         }
       }
       log {
