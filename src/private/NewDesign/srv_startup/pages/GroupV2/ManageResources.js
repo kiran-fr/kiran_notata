@@ -26,7 +26,7 @@ export default function ManageResources({ group }) {
   };
 
   return (
-    <>
+    <div className="manage-resources">
       <Tabs value={value} onChange={setTab}>
         <Tab label="Admin View" {...a11yProps(0)} />
         <Tab label="Member View" {...a11yProps(1)} />
@@ -140,6 +140,6 @@ export default function ManageResources({ group }) {
           innerClassName="invite-member-modal"
         />
       )}
-    </>
+    </div>
   );
 }
