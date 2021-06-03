@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./groups-individuals.scss";
 import ButtonWithIcon from "../../ui-kits/button-with-icon";
 import { ICONPOSITION } from "../../constants";
-import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
+import { Modal } from "../../../../../../Components/UI_Kits";
 import SharingOptions from "./sharing-options";
 import CreateNewGroup from "./create-new-group/create-new-group";
 
@@ -93,7 +93,7 @@ export default function GroupsIndividuals() {
                   </div>
                   <div className="col-sm-3 col-xs-6 evaluations">
                     <div className="evaluation-template">
-                      Evaluation templates:
+                      Evaluations you share:
                     </div>
                     <div className="templates">
                       {item.evaluation_templates.map((template, groupIndex) => {

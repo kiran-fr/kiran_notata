@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../public.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -13,6 +13,7 @@ import Evaluations from "./evaluations/evaluations";
 import { connectionGet, accountGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 import { startup_page } from "definitions";
+import queryString from "query-string";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,25 +37,39 @@ function a11yProps(index) {
   };
 }
 
-export const Startup = props => {
+export const Startup = ({ match, history, location }) => {
   const {
-    match: {
-      params: { id },
-    },
-  } = props;
+    params: { id },
+  } = match;
   const { data: connectionGetData, loading, error } = useQuery(connectionGet, {
     variables: { id },
   });
+
   const { data: accountGetData } = useQuery(accountGet);
+
   const [value, setValue] = React.useState(0);
+
+  useEffect(() => {
+    const { tab } = queryString.parse(location.search);
+    if (tab) {
+      try {
+        setValue(parseInt(tab));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [location]);
+
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    let pathName = `${match.url}?tab=${newValue}`;
+    history.push(pathName);
   };
 
   const redirectToCompanyPage = connectionId => {
     let path = `${startup_page}/company/${connectionId}`;
-    props.history.push(path);
+    history.push(path);
   };
+
   if (!connectionGetData) {
     return <GhostLoader />;
   }
@@ -83,13 +98,13 @@ export const Startup = props => {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Evaluations
-          history={props.history}
+          history={history}
           connection={connection}
           accountData={accountGetData?.accountGet}
         />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <GroupsIndividuals />
+        <GroupsIndividuals connection={connection} />
       </TabPanel>
       <TabPanel value={value} index={4}>
         <Materials />
