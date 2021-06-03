@@ -396,13 +396,10 @@ export default function ShareStartup({ setshareStartup, connection }) {
     if (email) {
       variables.input.sharedWithEmail = email;
     }
-    console.log(variables);
     let update = await mutateCreativeUpdate({
       variables,
     });
     setSaveLoader(false);
-    console.log(update?.creativePut);
-    setshareStartup();
   };
 
   return (
