@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-  mutation accountInvite($email: String) {
-    accountInvite(email: $email) {
+  mutation accountInviteCreate($email: String) {
+    accountInviteCreate(email: $email) {
       email
       accountId
       createdAt

@@ -8,7 +8,13 @@ import { userUpdate } from "private/Apollo/Mutations";
 import { userGet } from "private/Apollo/Queries";
 
 import styles from "./Profile.module.css";
-export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
+export default function Page2({
+  setPage,
+  extraInputs,
+  setExtraInputs,
+  page,
+  skipLast,
+}) {
   const [mutate] = useMutation(userUpdate);
   const userQuery = useQuery(userGet);
 
@@ -132,10 +138,14 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
             value="SAVE"
             size="medium"
             buttonStyle="green"
-            type={!isSubmitting ? "right_arrow" : ""}
+            type={!isSubmitting && !skipLast ? "right_arrow" : ""}
           >
             {!isSubmitting ? (
-              "NEXT"
+              skipLast ? (
+                "SAVE"
+              ) : (
+                "NEXT"
+              )
             ) : (
               <span className={styles.loading_icon}>
                 <i className="fa fa-spinner fa-spin" />
