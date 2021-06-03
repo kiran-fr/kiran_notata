@@ -72,6 +72,7 @@ export default gql`
           family_name
           given_name
           email
+          isMe
         }
         summary {
           scorePercent
@@ -88,15 +89,46 @@ export default gql`
         }
       }
       groupSharingInfo {
+        iAmOwner
+        iAmAdmin
+        iHaveSharedStartup
+
+        sharedBy {
+          isMe
+          family_name
+          given_name
+          email
+        }
+
         group {
           id
           name
         }
+
         evaluationSummaries {
           templateId
           templateName
           submissions
           averagePercentageScore
+        }
+
+        evaluations {
+          id
+          name
+          createdByUser {
+            given_name
+            family_name
+            email
+            isMe
+          }
+          template {
+            id
+            name
+          }
+        }
+
+        subjectiveScores {
+          isMe
         }
       }
       log {
