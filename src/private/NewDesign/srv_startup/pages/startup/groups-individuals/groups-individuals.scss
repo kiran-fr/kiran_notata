@@ -1,15 +1,16 @@
 .group-individual-container{
     .card{
-        @media only screen and (max-width:768px){
-            height: calc(100vh - 195px);   
-        }
-        @media only screen and (min-width:768px){
-            height: calc(100vh - 215px);   
-        }
+        //@media only screen and (max-width:768px){
+        //    height: calc(100vh - 195px);
+        //}
+        //@media only screen and (min-width:768px){
+        //    height: calc(100vh - 215px);
+        //}
+        height: auto;
         overflow-y: auto;
         overflow-x: hidden;
     }
-    .group-container{
+    .group-container {
         margin-left: 55px;
         width:90%;
         padding-bottom:39px;
@@ -37,11 +38,20 @@
             font-family: 'Proxima Nova';
             font-style: normal;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 12px;
             line-height: 18px;
-            text-decoration-line: underline;
             margin-top:5px;
             color: #969BA3;
+        }
+        .remove-from-group {
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 18px;
+            margin-top:5px;
+            color: var(--color-primary);
+            cursor: pointer;
         }
         .evaluation-template{
             font-family: 'Proxima Nova';
@@ -97,6 +107,11 @@
             }
         }
     }
+
+    .group-container:last-child {
+        border: none;
+    }
+
     .see-full-list{
         margin-top: 15px;
         font-family: 'Proxima Nova';
@@ -113,7 +128,7 @@
         }
     }
     .create-new-group{
-        text-align: center;
+        text-align: left;
         @media only screen and(min-width:768px) {
             margin-top: 16px;    
         }        

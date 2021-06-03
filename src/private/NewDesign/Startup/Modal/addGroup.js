@@ -1,32 +1,54 @@
 import React from "react";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import styles from "./modal.module.css";
-import Modal from "../DealFlow/modal";
+import { useMutation } from "@apollo/client";
+import { Loader } from "Components/elements";
+import { groupStartupAdd } from "../../../Apollo/Mutations";
 
-export default function AddGroup({ close, connection }) {
-  const list = [{ id: "3344", name: "group 1" }];
+export default function AddGroup({ groups, connection }) {
+  // Mutations
+  const [addStartup, addStartupRes] = useMutation(groupStartupAdd);
+
+  if (!groups) {
+    return <Loader />;
+  }
+
   return (
-    <Modal title="Add Startup to Group" saveModal ={close} closeModal={close}>
-      <div className={styles.group}>
-        <div className={styles.groupChild}>
-          <h2>Currently startup belongs to:</h2>
-          <ul>
-            <li>
-              Group <i className="fas fa-minus-circle"></i>{" "}
-            </li>
-            <li>
-              Big Group 2 <i className="fas fa-minus-circle"></i>{" "}
-            </li>
-          </ul>
-        </div>
-        <div className={styles.groupChild}>
-          <h2>Add startup to:</h2>
-          <div className={styles.groupDropContainer}>
-            <Dropdown items={list} />
-            <i style={{ color: "#53CAB2" }} className="fas fa-plus-circle"></i>
-          </div>
+    <div className={styles.group}>
+      {addStartupRes.loading && <Loader />}
+
+      <div className={styles.groupChild}>
+        <h2>Startup is in these groups:</h2>
+        <ul>
+          {connection?.groupSharingInfo?.map(({ group }) => (
+            <li key={group.id}>{group.name}</li>
+          ))}
+        </ul>
+      </div>
+      <div className={styles.groupChild}>
+        <h2>Add startup to:</h2>
+        <div className={styles.groupDropContainer}>
+          <Dropdown
+            items={groups}
+            setSelectedItem={async group => {
+              if (addStartupRes.loading) {
+                return;
+              }
+
+              let variables = {
+                groupId: group.id,
+                creativeId: connection.creative.id,
+              };
+
+              try {
+                await addStartup({ variables });
+              } catch (error) {
+                console.log("error", error);
+              }
+            }}
+          />
         </div>
       </div>
-    </Modal>
+    </div>
   );
 }

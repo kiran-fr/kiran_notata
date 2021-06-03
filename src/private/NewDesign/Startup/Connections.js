@@ -7,6 +7,7 @@ import {
   evaluationTemplatesGet,
   userGet,
   connectionAutoCompleteName,
+  groupsGetV2,
 } from "private/Apollo/Queries";
 import {
   connectionSetStar,
@@ -25,6 +26,8 @@ import AddGroup from "./Modal/addGroup";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
+import { Modal } from "Components/UI_Kits/Modal/Modal";
+// import { groupsGetV2 } from "../../Apollo/Queries";
 
 // import Table from "./DealFlow/table/newdesignTable/table";
 
@@ -56,6 +59,9 @@ function ListOfStartups({
   const [showStartUpForId, setShowStartUpForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
+
+  // Queries
+  const groupsQuery = useQuery(groupsGetV2);
 
   // Fetch more
   useEffect(() => {
@@ -100,12 +106,23 @@ function ListOfStartups({
         setShowStartUpForId={setShowStartUpForId}
         setShowSubjectiveScoreForId={setShowSubjectiveScoreForId}
         updateFunnelTag={updateFunnelTag}
-      ></Table>
+      />
 
       {showTagGroupForId && (
-        <AddGroup
-          connection={connections.find(({ id }) => id === showTagGroupForId)}
+        <Modal
+          title="Add startup to group"
+          submit={() => setShowTagGroupForId(undefined)}
           close={() => setShowTagGroupForId(undefined)}
+          submitTxt="OK"
+          closeTxt="CLOSE"
+          children={
+            <AddGroup
+              connection={connections.find(
+                ({ id }) => id === showTagGroupForId
+              )}
+              groups={groupsQuery?.data?.groupsGetV2}
+            />
+          }
         />
       )}
 
