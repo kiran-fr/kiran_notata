@@ -17,7 +17,7 @@ import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 
 import { useQuery, useMutation } from "@apollo/client";
 
-import { omit } from "lodash";
+import { omit, filter } from "lodash";
 
 import {
   evaluationTemplateGet,
@@ -120,15 +120,25 @@ export const AddSection = props => {
   //   inputType
   // };
 
+  const firstQID = Math.round(Math.random() * 10000).toString();
+
   const questionFormat = {
-    id: Math.round(Math.random() * 10000).toString(),
+    id: firstQID,
     name: "",
     description: "",
-    options: [{ val: "", score: 0 }],
     inputType: "RADIO",
+    options: [],
+  };
+
+  const optionFormat = {
+    id: Math.round(Math.random() * 100000).toString(),
+    questionId: firstQID,
+    val: "",
+    score: 0,
   };
 
   const [questions, setQuestions] = useState([questionFormat]);
+  const [options, setOptions] = useState([optionFormat]);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -142,6 +152,11 @@ export const AddSection = props => {
       setDescription(value);
     }
   };
+
+  // Debug
+  useEffect(() => {
+    console.log("OPTIONS: ", options);
+  }, [options]);
 
   useEffect(() => {
     if (evaluationTemplateAPIResp) {
@@ -173,7 +188,6 @@ export const AddSection = props => {
         },
       },
     });
-    console.log("Updated Template: ", resp.data);
   };
 
   const saveSection = async () => {
@@ -196,7 +210,6 @@ export const AddSection = props => {
       let sections = [...templateData.sections, savedLog];
       templateData = { ...templateData, sections };
       setEvaluationTemplateData(templateData);
-      console.log("Create Response", createResponse);
       setCurrentSectionId(
         createResponse.data.evaluationTemplateSectionCreate.id
       );
@@ -204,19 +217,39 @@ export const AddSection = props => {
   };
 
   const updateSection = async () => {
-    console.log("UPDATING SECTION");
-    let updateResponse = await mutateEvaluationTemplateSectionUpdate({
-      variables: {
-        id: currentSectionId,
-        input: {
-          name: sectionName,
-          description: sectionDescription,
-          questions: questions.map(q => omit(q, "id")),
-        },
-      },
+    const tempQuestion = questions.map(ques => {
+      const filtered = filter(options, o => {
+        return o.questionId === ques.id;
+      });
+
+      if (filtered[0].questionId === ques.id) {
+        // ques.options.push(
+        //   // filtered.map(filter => omit(filter, "id", "questionId"))
+        //   // filtered.filter(f => )
+        //   ...filtered
+        // );
+        filtered.forEach(val => {
+          ques.options.push(val);
+        });
+      }
+
+      return ques;
     });
 
-    console.log("UPDATED SECTION: ", updateResponse);
+    console.log("Temp Question: ", tempQuestion);
+
+    // let updateResponse = await mutateEvaluationTemplateSectionUpdate({
+    //   variables: {
+    //     id: currentSectionId,
+    //     input: {
+    //       name: sectionName,
+    //       description: sectionDescription,
+    //       questions: tempQuestion,
+    //     },
+    //   },
+    // });
+
+    // console.log("UPDATED SECTION: ", updateResponse);
   };
 
   if (!evaluationTemplateAPIResp) {
@@ -388,7 +421,11 @@ export const AddSection = props => {
                         <Tab label="text lines" {...a11yProps(4)} />
                       </Tabs>
                       <TabPanel value={value} index={0}>
-                        <SingleAndMultiPleAnswer></SingleAndMultiPleAnswer>
+                        <SingleAndMultiPleAnswer
+                          options={options}
+                          questionId={question.id}
+                          setOptions={setOptions}
+                        ></SingleAndMultiPleAnswer>
                       </TabPanel>
                       <TabPanel value={value} index={1}>
                         <MultiPleAnswer></MultiPleAnswer>
@@ -437,8 +474,8 @@ export const AddSection = props => {
                 className="save-btn"
                 text="Save Changes"
                 onClick={() => {
-                  setQuestionOption(false);
-                  setSectionDetails(true);
+                  // setQuestionOption(false);
+                  // setSectionDetails(true);
                   updateSection();
                 }}
               ></ButtonWithIcon>
