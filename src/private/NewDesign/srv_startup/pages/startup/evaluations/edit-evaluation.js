@@ -150,6 +150,15 @@ export default function EditEvaluation({
                         answers={answers}
                         setAnswers={setAnswers}
                       />
+                      <div className="row">
+                        <div className="col-sm-12 col-xs-12 add-comment">
+                          Add comment
+                          {/* <input type="text" className="add-comment-txt" /> */}
+                          <div className="textbox">
+                            <textarea placeholder="Write your comment..." />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </>
