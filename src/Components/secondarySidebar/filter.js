@@ -5,6 +5,8 @@ import Sidebar from "./index";
 import TagsModal from "../../private/NewDesign/srv_startup/pages/ui-kits/TagsModal";
 import { Modal } from "../UI_Kits/Modal/Modal";
 
+import { sortArr } from "../../private/NewDesign/CommonFunctions";
+
 // common dynamic funnel img function
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
 import { CheckBox, Datepicker1 } from "Components/UI_Kits";
@@ -97,7 +99,7 @@ export default function FilterBar({
             <>
               <h6>{item.name}</h6>
               {item.funnelTags.length &&
-                item.funnelTags.map((data, index) => (
+                sortArr(item.funnelTags).map((data, index) => (
                   <li key={index}>
                     <div>
                       <label>
