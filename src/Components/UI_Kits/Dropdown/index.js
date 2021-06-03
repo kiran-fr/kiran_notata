@@ -142,7 +142,7 @@ export function Dropdown({ title, items = [], setSelected, setSelectedItem }) {
 
       {isListOpen && (
         <div role="list" className={styles.dd_list}>
-          {items.map(item => (
+          {items?.map(item => (
             <button
               className={
                 item.name === name

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // REACT STUFF
 import { useForm } from "react-hook-form";
 import { Button, CheckBoxes, Tags } from "Components/UI_Kits";
@@ -32,10 +32,36 @@ export default function Page2({
 
   // Tags
   const [investment, setInvestment] = useState([]);
-  const [geography, setGerography] = useState([]);
+  const [geography, setGeography] = useState([]);
   const [stages, setStages] = useState([]);
 
+  const getId = () => Math.floor(Math.random() * 1000).toString();
+
+  useEffect(() => {
+    if (user && user.q3_investment) {
+      let investmentItems = user.q3_investment.map(el => ({
+        id: getId(),
+        name: el,
+      }));
+      setInvestment(investmentItems);
+    }
+
+    if (user && user.q4_geography) {
+      let geographyItems = user.q4_geography.map(el => ({
+        id: getId(),
+        name: el,
+      }));
+      setGeography(geographyItems);
+    }
+
+    if (user && user.q5_stage) {
+      let stageItems = user.q5_stage.map(name => name);
+      setStages(stageItems);
+    }
+  }, [user]);
+
   function handleBack(e) {
+    e.preventDefault();
     setPage(1);
   }
 
@@ -47,6 +73,8 @@ export default function Page2({
   }
 
   const onSubmit = async (data, event) => {
+    event.preventDefault();
+
     let q3 = [];
     let q4 = [];
 
@@ -64,13 +92,15 @@ export default function Page2({
       q5_stage: stages,
     };
 
-    event.preventDefault();
     try {
       await mutate({ variables: { input } });
     } catch (error) {
       console.log("error", error);
     }
-    setPage(3);
+
+    if (!skipLast) {
+      setPage(3);
+    }
   };
   return (
     <div>
@@ -95,7 +125,7 @@ export default function Page2({
               { name: "MedTech", id: "4" },
               { name: "Female Founders", id: "23" },
               { name: "B2B", id: "34" },
-            ]}
+            ].filter(it => !investment.some(({ name }) => name === it.name))}
           />
         </div>
         <h4>Main geography</h4>
@@ -105,7 +135,7 @@ export default function Page2({
             suggested={true}
             heading={false}
             title="domain"
-            getSelectedTag={setGerography}
+            getSelectedTag={setGeography}
             setTags={user?.q4_geography ? user?.q4_geography : null}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
@@ -113,7 +143,7 @@ export default function Page2({
               { name: "Norway", id: "4" },
               { name: "Sweden", id: "23" },
               { name: "Oslo", id: "34" },
-            ]}
+            ].filter(it => !geography.some(({ name }) => name === it.name))}
           />
         </div>
         <h4>Stage</h4>
@@ -123,17 +153,22 @@ export default function Page2({
             { id: 1, value: "Pre seed", label: "Pre seed" },
             { id: 2, value: "Seed", label: "Seed" },
             { id: 3, value: "Series A+", label: "Series A+" },
-          ]}
+          ].map(it => ({
+            ...it,
+            checked: stages.some(name => name === it.value),
+          }))}
         />
+
         <div className={styles.button_container_justify}>
           <Button
             size="medium"
             buttonStyle="white"
             type="button"
-            onClick={e => handleBack(e)}
+            onClick={handleBack}
           >
             back
           </Button>
+
           <Button
             value="SAVE"
             size="medium"

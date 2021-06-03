@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./CheckBox.module.css";
 
 export function CheckBox({ id, value, label, onSelect, isSelected }) {
@@ -20,20 +20,31 @@ export function CheckBox({ id, value, label, onSelect, isSelected }) {
 export function CheckBoxes({ data, getSelectedBox }) {
   const [selected, setSelected] = useState([]);
 
+  useEffect(() => {
+    if (data) {
+      let checkedBoxes = data.filter(({ checked }) => checked);
+      setSelected(checkedBoxes.map(({ value }) => value));
+    }
+  }, [data]);
+
   const handleChange = e => {
     const isSelected = selected.includes(e.target.value);
+
     if (isSelected) {
       setSelected(
         selected.filter(value => {
           return value !== e.target.value;
         })
       );
+
       getSelectedBox(
         selected.filter(value => {
           return value !== e.target.value;
         })
       );
-    } else {
+    }
+
+    if (!isSelected) {
       setSelected([e.target.value, ...selected]);
       getSelectedBox([e.target.value, ...selected]);
     }
@@ -47,6 +58,7 @@ export function CheckBoxes({ data, getSelectedBox }) {
           id={`${d.id}`}
           label={d.label}
           value={d.value}
+          isSelected={d.checked}
           onSelect={handleChange}
         />
       ))}

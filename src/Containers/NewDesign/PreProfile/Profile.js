@@ -19,10 +19,6 @@ export function ProfileContent({ history, skipLast }) {
     enter: { x: 0, y: 0, opacity: 1 },
   });
 
-  const handleTab = value => {
-    setPage(value);
-  };
-
   useEffect(() => {
     setRender(!render);
   }, [page]);
@@ -70,11 +66,7 @@ export function ProfileContent({ history, skipLast }) {
                 extraInputs={extraInputs}
                 setExtraInputs={setExtraInputs}
                 skipLast={skipLast}
-                setPage={p => {
-                  if (!skipLast) {
-                    setPage(p);
-                  }
-                }}
+                setPage={setPage}
               />
             </animated.div>
           ) : (
