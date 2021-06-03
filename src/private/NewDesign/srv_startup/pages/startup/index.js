@@ -90,7 +90,7 @@ export const Startup = ({ match, history, location }) => {
           <Tab label="STARTUP INFO" {...a11yProps(0)} />
           <Tab label="OVERVIEW" {...a11yProps(1)} />
           <Tab label="EVALUATIONS" {...a11yProps(2)} />
-          <Tab label="GROUP AND INDIVIDUALS" {...a11yProps(3)} />
+          <Tab label="GROUPS" {...a11yProps(3)} />
           <Tab label="MATERIALS" {...a11yProps(4)} />
         </Tabs>
       </div>

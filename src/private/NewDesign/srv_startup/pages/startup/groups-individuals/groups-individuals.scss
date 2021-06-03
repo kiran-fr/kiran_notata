@@ -1,15 +1,16 @@
 .group-individual-container{
     .card{
-        @media only screen and (max-width:768px){
-            height: calc(100vh - 195px);   
-        }
-        @media only screen and (min-width:768px){
-            height: calc(100vh - 215px);   
-        }
+        //@media only screen and (max-width:768px){
+        //    height: calc(100vh - 195px);
+        //}
+        //@media only screen and (min-width:768px){
+        //    height: calc(100vh - 215px);
+        //}
+        height: auto;
         overflow-y: auto;
         overflow-x: hidden;
     }
-    .group-container{
+    .group-container {
         margin-left: 55px;
         width:90%;
         padding-bottom:39px;
@@ -106,6 +107,11 @@
             }
         }
     }
+
+    .group-container:last-child {
+        border: none;
+    }
+
     .see-full-list{
         margin-top: 15px;
         font-family: 'Proxima Nova';
@@ -122,7 +128,7 @@
         }
     }
     .create-new-group{
-        text-align: center;
+        text-align: left;
         @media only screen and(min-width:768px) {
             margin-top: 16px;    
         }        

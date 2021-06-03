@@ -7,14 +7,20 @@ import SharingOptions from "./sharing-options";
 import CreateNewGroup from "./create-new-group/create-new-group";
 import RemoveFromGroup from "./remove-from-group";
 import { group_dashboard } from "../../../../../../definitions";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { groupStartupRemove } from "../../../../../Apollo/Mutations";
-import { connectionGet } from "../../../../../Apollo/Queries";
+import { connectionGet, groupsGetV2 } from "../../../../../Apollo/Queries";
+import AddGroup from "../../../../Startup/Modal/addGroup";
 
 export default function GroupsIndividuals({ connection, history }) {
   const [deleteModal, setDeleteModal] = useState(undefined);
   const [sharingOptionsModal, setSharingOptionsModal] = useState(undefined);
   const [createGroupModal, setCreateGroupModal] = useState(false);
+
+  const [addToGroupModal, setAddToGroupModal] = useState(undefined);
+
+  // Queries
+  const groupsQuery = useQuery(groupsGetV2);
 
   const [removeStartup, removeStartupRes] = useMutation(groupStartupRemove, {
     refetchQueries: [
@@ -43,15 +49,12 @@ export default function GroupsIndividuals({ connection, history }) {
       creativeName,
       sharedSubjectiveScore,
       sharedEvaluations,
-      // iHaveSharedStartup: info.iHaveSharedStartup,
       sharedBy: info.sharedBy,
       iAmAdmin: info.iAmAdmin,
       iAmOwner: info.iAmOwner,
     };
     data.push(item);
   }
-
-  console.log("data", data);
 
   const getItem = groupId => data.find(({ group }) => group.id === groupId);
 
@@ -136,19 +139,6 @@ export default function GroupsIndividuals({ connection, history }) {
                 </div>
               );
             })}
-
-            {/*<div className="row">*/}
-            {/*  <div className="col-sm-12 text-right see-full-list">*/}
-            {/*    See full list*/}
-            {/*    <i*/}
-            {/*      class={`fa ${*/}
-            {/*        !showFullList ? "fa-chevron-up" : "fa-chevron-down"*/}
-            {/*      }`}*/}
-            {/*      aria-hidden="true"*/}
-            {/*      onClick={() => setShowFullList(!showFullList)}*/}
-            {/*    />*/}
-            {/*  </div>*/}
-            {/*</div>*/}
           </div>
 
           <div className="row">
@@ -156,13 +146,14 @@ export default function GroupsIndividuals({ connection, history }) {
               <ButtonWithIcon
                 iconPosition={ICONPOSITION.START}
                 iconName={"add"}
-                text="CREATE NEW GROUP"
-                onClick={() => setCreateGroupModal(true)}
+                text="ADD TO NEW GROUP"
+                onClick={() => setAddToGroupModal(true)}
               />
             </div>
           </div>
         </div>
       </div>
+
       {sharingOptionsModal && (
         <Modal
           title="Sharing options"
@@ -189,6 +180,7 @@ export default function GroupsIndividuals({ connection, history }) {
           }
         />
       )}
+
       {createGroupModal && (
         <Modal
           title="Create new group"
@@ -198,9 +190,29 @@ export default function GroupsIndividuals({ connection, history }) {
           close={() => {
             setCreateGroupModal(false);
           }}
+          submitTxt="OK"
+          closeTxt="CLOSE"
+          children={<CreateNewGroup />}
+        />
+      )}
+
+      {addToGroupModal && (
+        <Modal
+          title="Add startup to group"
+          submit={() => {
+            setAddToGroupModal(false);
+          }}
+          close={() => {
+            setAddToGroupModal(false);
+          }}
           submitTxt="Create"
           closeTxt="Cancel"
-          children={<CreateNewGroup />}
+          children={
+            <AddGroup
+              connection={connection}
+              groups={groupsQuery?.data?.groupsGetV2}
+            />
+          }
         />
       )}
 

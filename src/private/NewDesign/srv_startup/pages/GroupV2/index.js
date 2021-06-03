@@ -36,13 +36,6 @@ export default function Groups({ history }) {
   const [leaveModal, setLeaveModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
 
-  console.log("*******************");
-  console.log("showSortByDropDown", showSortByDropDown);
-  console.log("deleteModal", deleteModal);
-  console.log("leaveModal", leaveModal);
-  console.log("settingsModal", settingsModal);
-  console.log("value", value);
-
   // Queries
   let { data, error, loading } = useQuery(groupsGetV2);
 
