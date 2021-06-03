@@ -89,10 +89,22 @@ export default gql`
         }
       }
       groupSharingInfo {
+        iAmOwner
+        iAmAdmin
+        iHaveSharedStartup
+
+        sharedBy {
+          isMe
+          family_name
+          given_name
+          email
+        }
+
         group {
           id
           name
         }
+
         evaluationSummaries {
           templateId
           templateName

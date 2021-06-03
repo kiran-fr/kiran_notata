@@ -5,14 +5,25 @@ import { ICONPOSITION } from "../../constants";
 import { Modal } from "../../../../../../Components/UI_Kits";
 import SharingOptions from "./sharing-options";
 import CreateNewGroup from "./create-new-group/create-new-group";
+import RemoveFromGroup from "./remove-from-group";
 import { group_dashboard } from "../../../../../../definitions";
+import { useMutation } from "@apollo/client";
+import { groupStartupRemove } from "../../../../../Apollo/Mutations";
+import { connectionGet } from "../../../../../Apollo/Queries";
 
 export default function GroupsIndividuals({ connection, history }) {
-  const [showFullList, setShowFullList] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(undefined);
   const [sharingOptionsModal, setSharingOptionsModal] = useState(undefined);
   const [createGroupModal, setCreateGroupModal] = useState(false);
 
-  console.log("connection", connection);
+  const [removeStartup, removeStartupRes] = useMutation(groupStartupRemove, {
+    refetchQueries: [
+      {
+        query: connectionGet,
+        variables: { id: connection.id },
+      },
+    ],
+  });
 
   let data = [];
   for (let info of connection?.groupSharingInfo || []) {
@@ -26,17 +37,16 @@ export default function GroupsIndividuals({ connection, history }) {
       ({ createdByUser }) => createdByUser.isMe
     );
 
-    console.log("\n**************");
-    console.log("info.evaluations", info.evaluations);
-    console.log("sharedEvaluations", sharedEvaluations);
-    console.log("===============\n");
-
     let item = {
       group: info?.group,
       creativeId,
       creativeName,
       sharedSubjectiveScore,
       sharedEvaluations,
+      // iHaveSharedStartup: info.iHaveSharedStartup,
+      sharedBy: info.sharedBy,
+      iAmAdmin: info.iAmAdmin,
+      iAmOwner: info.iAmOwner,
     };
     data.push(item);
   }
@@ -66,7 +76,21 @@ export default function GroupsIndividuals({ connection, history }) {
                     >
                       {item.group.name}
                     </div>
-                    {/*<div className="members">{item.group.members.length} Members</div>*/}
+
+                    <div className="members">
+                      Shared by: {item.sharedBy.given_name}{" "}
+                      {item.sharedBy.family_name}{" "}
+                      {item.sharedBy.isMe && " (you)"}
+                    </div>
+
+                    {item.sharedBy.isMe && (
+                      <div
+                        className="remove-from-group"
+                        onClick={() => setDeleteModal(item.group.id)}
+                      >
+                        remove from group
+                      </div>
+                    )}
                   </div>
                   <div className="col-sm-3 col-xs-6 evaluations">
                     <div className="evaluation-template">
@@ -177,6 +201,37 @@ export default function GroupsIndividuals({ connection, history }) {
           submitTxt="Create"
           closeTxt="Cancel"
           children={<CreateNewGroup />}
+        />
+      )}
+
+      {deleteModal && (
+        <Modal
+          title="Remove from group"
+          loading={removeStartupRes.loading}
+          submit={async () => {
+            if (removeStartupRes.loading) {
+              return;
+            }
+
+            let variables = {
+              groupId: deleteModal,
+              creativeId: connection.creative.id,
+            };
+
+            try {
+              await removeStartup({ variables });
+            } catch (error) {
+              console.log("error", error);
+            }
+
+            setDeleteModal(undefined);
+          }}
+          close={() => {
+            setDeleteModal(undefined);
+          }}
+          submitTxt="Remove"
+          closeTxt="Cancel"
+          children={<RemoveFromGroup />}
         />
       )}
     </>
