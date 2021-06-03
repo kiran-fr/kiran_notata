@@ -102,8 +102,11 @@ export default function InviteMembers({ group }) {
                     />
                   )}
 
+                  {console.log("member", member)}
+
                   <div className="name">
-                    {member.user?.given_name} {member.user?.family_name}
+                    {member.user?.given_name} {member.user?.family_name}{" "}
+                    {member.user?.isMe && " (you)"}
                   </div>
 
                   <div

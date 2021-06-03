@@ -8,8 +8,8 @@ import {
 } from "Apollo/Fragments";
 
 export default gql`
-  mutation groupTemplateRemove($groupId: ID!, $templateId: ID!) {
-    groupTemplateRemove(groupId: $groupId, templateId: $templateId) {
+  mutation groupSettingsSet($groupId: ID!, $settings: GroupSettingsInputV2!) {
+    groupSettingsSet(groupId: $groupId, settings: $settings) {
       id
       name
       iAmAdmin
@@ -112,9 +112,9 @@ export default gql`
           logType
           notifyUsers
           seenBy {
+            email
             family_name
             given_name
-            email
           }
           reference {
             key
