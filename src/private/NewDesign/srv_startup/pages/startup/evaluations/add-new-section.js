@@ -217,38 +217,32 @@ export const AddSection = props => {
   };
 
   const updateSection = async () => {
-    const tempQuestion = questions.map(ques => {
-      const filtered = filter(options, o => {
-        return o.questionId === ques.id;
-      });
-
-      if (filtered[0].questionId === ques.id) {
-        // ques.options.push(
-        //   // filtered.map(filter => omit(filter, "id", "questionId"))
-        //   // filtered.filter(f => )
-        //   ...filtered
-        // );
-        filtered.forEach(val => {
-          ques.options.push(val);
-        });
-      }
-
-      return ques;
+    const tempQuestion = questions.map(question => {
+      let currentOptions = options?.filter(
+        ({ questionId }) => questionId === question.id
+      );
+      return {
+        ...omit(question, "id"),
+        options: currentOptions.map(o => omit(o, ["id", "questionId"])),
+      };
     });
-
     console.log("Temp Question: ", tempQuestion);
-
-    // let updateResponse = await mutateEvaluationTemplateSectionUpdate({
-    //   variables: {
-    //     id: currentSectionId,
-    //     input: {
-    //       name: sectionName,
-    //       description: sectionDescription,
-    //       questions: tempQuestion,
-    //     },
-    //   },
-    // });
-
+    try {
+      let updateResponse = await mutateEvaluationTemplateSectionUpdate({
+        variables: {
+          id: currentSectionId,
+          input: {
+            name: sectionName,
+            description: sectionDescription,
+            questions: tempQuestion,
+          },
+        },
+      });
+      console.log("Updated!");
+      console.log(updateResponse);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
     // console.log("UPDATED SECTION: ", updateResponse);
   };
 
@@ -499,7 +493,7 @@ export const AddSection = props => {
                       )
                     }
                   >
-                    {section.name}
+                    {section.name} TEST
                   </div>
                   <div className="col-sm-3 col-xs-10 sections">
                     {section?.questions?.length || 0} questions
