@@ -463,6 +463,13 @@ export default function StartupCard({
               <span
                 onMouseEnter={() => setStartupDescription(true)}
                 onMouseLeave={() => setStartupDescription(false)}
+                onClick={() => {
+                  if (startup.connection) {
+                    history.push(
+                      `${startup_page}/company/${startup.connection.id}`
+                    );
+                  }
+                }}
               >
                 {startup?.creative?.name}
               </span>
@@ -818,7 +825,21 @@ export default function StartupCard({
           }}
           submitTxt="OK"
           closeTxt="CLOSE"
-          children={<SharingOptions group={group} startup={startup} />}
+          children={
+            <SharingOptions
+              groupId={group.id}
+              creativeId={startup.creative.id}
+              connection={startup.connection}
+              sharedSubjectiveScore={
+                !!startup.subjectiveScores?.find(({ isMe }) => isMe)
+              }
+              sharedEvaluations={
+                startup.evaluations?.filter(
+                  ({ createdByUser }) => createdByUser.isMe
+                ) || []
+              }
+            />
+          }
           // innerClassName="invite-member-modal"
         />
       )}

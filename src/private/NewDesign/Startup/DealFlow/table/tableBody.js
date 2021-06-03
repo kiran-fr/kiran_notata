@@ -205,7 +205,8 @@ export default function TableBody(props) {
                         <li>{group.name}</li>
                       ))}
                       <li>
-                         <button onClick={() => setShowTagGroupForId(item.id)}
+                        <button
+                          onClick={() => setShowTagGroupForId(item.id)}
                           className={styles.buttongreen}
                         >
                           <i className="fas fa-plus-circle"></i>
@@ -238,7 +239,6 @@ export default function TableBody(props) {
                             }}
                           >
                             {" "}
-                            {console.log("Funnel & Index: ", funnel, index)}
                             <i
                               className={classnames("fas fa-chevron-down")}
                             ></i>
