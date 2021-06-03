@@ -10,6 +10,7 @@ import moment from "moment";
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
 import classnames from "classnames";
+import { sortArr } from "../../../CommonFunctions";
 
 export default function TableBody(props) {
   const {
@@ -38,13 +39,15 @@ export default function TableBody(props) {
       setFunnel(false);
     };
 
+    const tagSort = sortArr(tags);
+
     return (
       <div
         className={styles.funnelPopup}
         style={{ top: index > 20 ? "-400%" : `50px` }}
       >
         <ul>
-          {tags?.map(tag => (
+          {tagSort?.map(tag => (
             <li
               key={tag.id}
               onClick={() => updateFunnelTagForConnection(tag.id)}
