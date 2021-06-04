@@ -1,23 +1,12 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import "./add-new-section.scss";
 import TextBox from "../../ui-kits/text-box";
 import ButtonWithIcon from "../../ui-kits/button-with-icon";
 import { ICONPOSITION } from "../../constants";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import SingleAndMultiPleAnswer from "./single-answer";
-import MultiPleAnswer from "./Multiple-answers";
-import TrafficLights from "./traffic-lights";
-import FreeText from "./free-text";
-import TextLines from "./text-lines";
 import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
 import ImportSection from "./import-section-modal";
 
-import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
-
 import { useQuery, useMutation } from "@apollo/client";
-
-import { omit, filter } from "lodash";
 
 import {
   evaluationTemplateGet,
@@ -30,30 +19,6 @@ import {
 } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 import { evaluation_template_profile } from "../../../../../../definitions";
-import { useParams } from "react-router-dom";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-auto-tabpanel-${index}`}
-      aria-labelledby={`scrollable-auto-tab-${index}`}
-      {...other}
-    >
-      {value === index && <>{children}</>}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `scrollable-auto-tab-${index}`,
-    "aria-controls": `scrollable-auto-tabpanel-${index}`,
-  };
-}
 
 // export default function AddSection() {
 export const AddSection = props => {
@@ -85,15 +50,6 @@ export const AddSection = props => {
     mutateEvaluationTemplateSectionCreateRes,
   ] = useMutation(evaluationTemplateSectionCreate);
 
-  const [mutateEvaluationTemplateSectionUpdate] = useMutation(
-    evaluationTemplateSectionUpdate
-  );
-
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const [dropDown, setDropDown] = useState(false);
   const [importSectionModal, setImportSectionModal] = useState(false);
   const [sectionDetails, setSectionDetails] = useState(true);
   const [addSectionModal, setAddSectionModal] = useState(false);
@@ -101,7 +57,6 @@ export const AddSection = props => {
   const [browseDropDownStates, setBrowseDropDownStates] = useState(
     new Array(noOfRows).fill(false)
   );
-  const [noOfQuestions, setNoOfQuestions] = useState(1);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
   const [sectionDescription, setSectionDescription] = useState(null);
@@ -112,24 +67,7 @@ export const AddSection = props => {
 
   const [currentSectionId, setCurrentSectionId] = useState(null);
 
-  // // Question Format
-  // const questionModel = {
-  //   name: String,
-  //   id
-  //   description: String,
-  //   options: []
-  //   inputType
-  // };
-
   const firstQID = Math.round(Math.random() * 10000).toString();
-
-  const questionFormat = {
-    id: firstQID,
-    name: "",
-    description: "",
-    inputType: "RADIO",
-    options: [],
-  };
 
   const optionFormat = {
     id: Math.round(Math.random() * 100000).toString(),
@@ -137,9 +75,6 @@ export const AddSection = props => {
     val: "",
     score: 0,
   };
-
-  const [questions, setQuestions] = useState([questionFormat]);
-  const [options, setOptions] = useState([optionFormat]);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -153,11 +88,6 @@ export const AddSection = props => {
       setDescription(value);
     }
   };
-
-  // Debug
-  useEffect(() => {
-    console.log("OPTIONS: ", options);
-  }, [options]);
 
   useEffect(() => {
     if (evaluationTemplateAPIResp) {
@@ -220,36 +150,6 @@ export const AddSection = props => {
     }
   };
 
-  const updateSection = async () => {
-    const tempQuestion = questions.map(question => {
-      let currentOptions = options?.filter(
-        ({ questionId }) => questionId === question.id
-      );
-      return {
-        ...omit(question, "id"),
-        options: currentOptions.map(o => omit(o, ["id", "questionId"])),
-      };
-    });
-    console.log("Temp Question: ", tempQuestion);
-    try {
-      let updateResponse = await mutateEvaluationTemplateSectionUpdate({
-        variables: {
-          id: currentSectionId,
-          input: {
-            name: sectionName,
-            description: sectionDescription,
-            questions: tempQuestion,
-          },
-        },
-      });
-      console.log("Updated!");
-      console.log(updateResponse);
-    } catch (error) {
-      console.log("Error: ", error);
-    }
-    // console.log("UPDATED SECTION: ", updateResponse);
-  };
-
   if (!evaluationTemplateAPIResp) {
     return <GhostLoader />;
   }
@@ -277,23 +177,6 @@ export const AddSection = props => {
                 onBlur={updateTemplate}
               />
             </form>
-
-            {/*<form className="sectionform">*/}
-            {/*  <TextBox*/}
-            {/*    name="sectionName"*/}
-            {/*    defaultValue={sectionName}*/}
-            {/*    onChange={handleInputChange}*/}
-            {/*    placeholder="Section Name"*/}
-            {/*  />*/}
-            {/*  <textarea*/}
-            {/*    name="sectionDescription"*/}
-            {/*    onChange={e => setSectionDescription(e.target.value)}*/}
-            {/*    value={sectionDescription}*/}
-            {/*    rows="4"*/}
-            {/*    cols="50"*/}
-            {/*    placeholder="Section Description"*/}
-            {/*  />*/}
-            {/*</form>*/}
           </div>
 
           <div className="col-sm-4">
@@ -313,7 +196,7 @@ export const AddSection = props => {
               <div className="col-sm-12 col-xs-6">
                 <ButtonWithIcon
                   className="import-section-btn"
-                  text="Import section"
+                  text="Import section 1"
                   onClick={() => setImportSectionModal(true)}
                 />
               </div>
@@ -335,7 +218,7 @@ export const AddSection = props => {
                     props.history.push(path);
                   }}
                 >
-                  {section.name} TEST
+                  {section.name}
                 </div>
                 <div className="col-sm-3 col-xs-10 sections">
                   {section?.questions?.length || 0} questions

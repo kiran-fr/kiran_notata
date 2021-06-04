@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import "./add-new-section.scss";
 import TextBox from "../../ui-kits/text-box";
 import ButtonWithIcon from "../../ui-kits/button-with-icon";
-import { ICONPOSITION } from "../../constants";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SingleAndMultiPleAnswer from "./single-answer";
@@ -10,27 +9,14 @@ import MultiPleAnswer from "./Multiple-answers";
 import TrafficLights from "./traffic-lights";
 import FreeText from "./free-text";
 import TextLines from "./text-lines";
-import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
-import ImportSection from "./import-section-modal";
 
-import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
+import { useMutation, useLazyQuery } from "@apollo/client";
 
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { omit } from "lodash";
 
-import { omit, filter } from "lodash";
-
-import {
-  evaluationTemplateGet,
-  evaluationTemplateSectionGet,
-} from "private/Apollo/Queries";
-import {
-  evaluationTemplateUpdate,
-  evaluationTemplateSectionCreate,
-  evaluationTemplateSectionUpdate,
-} from "private/Apollo/Mutations";
+import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
+import { evaluationTemplateSectionUpdate } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
-import { evaluation_template_profile } from "../../../../../../definitions";
-import { useParams } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -74,6 +60,7 @@ export const SectionPage = props => {
 
   // Sections
   const section = data?.evaluationTemplateSectionGet || {};
+  // console.log("GET SECTION: ", section);
 
   const [mutateEvaluationTemplateSectionUpdate] = useMutation(
     evaluationTemplateSectionUpdate
@@ -84,22 +71,11 @@ export const SectionPage = props => {
     setValue(newValue);
   };
   const [dropDown, setDropDown] = useState(false);
-  const [importSectionModal, setImportSectionModal] = useState(false);
-  const [sectionDetails, setSectionDetails] = useState(true);
-  const [addSectionModal, setAddSectionModal] = useState(false);
-  const noOfRows = 4;
-  const [browseDropDownStates, setBrowseDropDownStates] = useState(
-    new Array(noOfRows).fill(false)
-  );
   const [noOfQuestions, setNoOfQuestions] = useState(1);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
   const [sectionDescription, setSectionDescription] = useState(null);
   const [sectionName, setSectionName] = useState(null);
-  const [saveLoader, setSaveLoader] = useState(false);
-  const [evaluationTemplateData, setEvaluationTemplateData] = useState(null);
-  const [questionOption, setQuestionOption] = useState(false);
-  const [currentSectionId, setCurrentSectionId] = useState(null);
 
   const firstQID = Math.round(Math.random() * 10000).toString();
 
@@ -127,16 +103,17 @@ export const SectionPage = props => {
       setOptions(optionFormat);
       return;
     }
+    // console.log(options);
 
     setQuestions(section?.questions || [questionFormat]);
+    // console.log(questions[0]?.id);
     setOptions(
-      section?.questons?.map(q =>
-        q?.options?.map(o => ({ ...o, questionId: q.id }))
-      ) || [optionFormat]
+      section?.questions
+        ?.map(q => q?.options?.map(o => ({ ...o, questionId: q.id })))
+        .flat() || [optionFormat]
     );
+    // console.log("OPTIONS FROM SECTION: ", options);
   }, [section]);
-
-  console.log("questions", questions);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -153,48 +130,50 @@ export const SectionPage = props => {
 
   // Debug
   useEffect(() => {
-    console.log("OPTIONS: ", options);
+    // console.log("OPTIONS: ", options);
   }, [options]);
-
-  // useEffect(() => {
-  //   if (evaluationTemplateAPIResp) {
-  //     setEvaluationTemplateData(evaluationTemplateAPIResp);
-  //     setDescription(evaluationTemplateAPIResp?.description);
-  //     setName(evaluationTemplateAPIResp?.name);
-  //   }
-  // }, [evaluationTemplateAPIResp]);
-
-  const onSubmit = async data => {
-    // const resp = await mutateEvaluationTemplateUpdate({
-    //   variables: {
-    //     id: evaluationTemplateData?.id,
-    //     input: {
-    //       name,
-    //       description,
-    //     },
-    //   },
-    // });
-  };
 
   const updateSection = async () => {
     const tempQuestion = questions.map(question => {
       let currentOptions = options?.filter(
         ({ questionId }) => questionId === question.id
       );
+
+      let finalOptions = currentOptions.map(mapped => {
+        // console.log("MAPPED: ", omit(mapped, ["__typename"]));
+        return omit(mapped, ["__typename"]);
+      });
+
       return {
-        ...omit(question, "id"),
-        options: currentOptions.map(o => omit(o, ["id", "questionId"])),
+        ...omit(question, ["id", "_typename"]),
+        options: finalOptions.map(o =>
+          omit(o, ["id", "questionId", "__typename", "sid"])
+        ),
       };
     });
-    console.log("Temp Question: ", tempQuestion);
+
+    const finalQuestion = tempQuestion.map(q => omit(q, ["__typename"]));
+
+    // console.log("FINAL SUBMIT: ", {
+    //   variables: {
+    //     id: sectionId,
+    //     input: {
+    //       name: sectionName,
+    //       description: sectionDescription,
+    //       questions: finalQuestion,
+    //     },
+    //   },
+    // });
+    // currentOptions.map(o => omit(o, ["id", "questionId"]))
+    // console.log("Temp Question: ", tempQuestion);
     try {
       let updateResponse = await mutateEvaluationTemplateSectionUpdate({
         variables: {
-          id: currentSectionId,
+          id: sectionId,
           input: {
             name: sectionName,
             description: sectionDescription,
-            questions: tempQuestion,
+            questions: finalQuestion,
           },
         },
       });
@@ -203,7 +182,6 @@ export const SectionPage = props => {
     } catch (error) {
       console.log("Error: ", error);
     }
-    // console.log("UPDATED SECTION: ", updateResponse);
   };
 
   if (loading) {
@@ -233,7 +211,7 @@ export const SectionPage = props => {
             </form>
           </div>
 
-          <div className="col-sm-4">
+          {/* <div className="col-sm-4">
             <div className="row">
               <div className="col-sm-12 col-xs-6">
                 <ButtonWithIcon
@@ -242,7 +220,6 @@ export const SectionPage = props => {
                   text="ADD NEW SECTION"
                   iconPosition={ICONPOSITION.START}
                   onClick={() => {
-                    onSubmit();
                     setAddSectionModal(true);
                   }}
                 />
@@ -250,12 +227,12 @@ export const SectionPage = props => {
               <div className="col-sm-12 col-xs-6">
                 <ButtonWithIcon
                   className="import-section-btn"
-                  text="Import section"
+                  text="Import section 2"
                   onClick={() => setImportSectionModal(true)}
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="evaluation-templates-container__data-container">

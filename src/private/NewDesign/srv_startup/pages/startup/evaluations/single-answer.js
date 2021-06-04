@@ -4,11 +4,18 @@ import RadioButton from "../../ui-kits/radio-button";
 function SingleRow({ removeRow, opt, setOpt, index }) {
   const [option, setOption] = useState(opt);
 
+  // console.log("OPTIONS 2: ", option);
+
   const options = useMemo(() => {
     return opt;
   }, [opt]);
 
+  // useEffect(() => {
+  //   console.log("Changing Options: ", option);
+  //   setOption(option);
+  // }, [option]);
   useEffect(() => {
+    console.log("Changing Options: ", options);
     setOption(options);
   }, [options]);
 
@@ -69,30 +76,33 @@ export default function SingleAndMultiPleAnswer({
   questionId,
   options,
 }) {
-  const [opts, setOpts] = useState([
-    {
-      questionId,
-      id: Math.round(Math.random() * 100000).toString(),
-      val: "",
-      score: 0,
-    },
-  ]);
+  const [opts, setOpts] = useState(options);
+
+  useEffect(() => {
+    setOpts(options);
+    console.log("OPTIONS: ", options);
+  }, [options]);
 
   const handleOptions = opt => {
-    setOpts(
-      opts.map((option, i) => {
-        return option.id === opt.id ? { ...opt } : option;
-      })
-    );
+    // console.log("OPTION OPT: ", opt);
+    setOpts([
+      ...opts.map((option, i) => {
+        if (option.id === opt.id) {
+          console.log("YEP Changing: ", { ...opt });
+          // return opt;
+          return { ...opt };
+        } else {
+          console.log("NOT Changing: ", option);
+          return option;
+        }
+      }),
+    ]);
   };
 
   const handleUpdate = () => {
-    setOptions([
-      ...options.filter(f => f.questionId !== opts[0].questionId),
-      ...opts.map((option, i) => {
-        return option.id === options.id ? { ...options } : option;
-      }),
-    ]);
+    // console.log("Local Option", opts);
+    setOpts(opts);
+    setOptions(opts);
   };
 
   const removeRows = id => {
@@ -105,7 +115,7 @@ export default function SingleAndMultiPleAnswer({
     <>
       <div id="questionDiv" onBlur={handleUpdate}>
         {opts.map((opt, index) => {
-          return (
+          return opt.questionId === questionId ? (
             <SingleRow
               removeRow={() => removeRows(opt)}
               opt={opt}
@@ -113,7 +123,7 @@ export default function SingleAndMultiPleAnswer({
               setOpt={handleOptions}
               index={index + 1}
             ></SingleRow>
-          );
+          ) : null;
         })}
       </div>
       <div className="row single-answer-option add-option-container">
