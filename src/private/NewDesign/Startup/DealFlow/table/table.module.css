@@ -224,6 +224,7 @@
 .favStartup i {
   color: #c4c4c4;
   font-size: 11px;
+  cursor: pointer;
 }
 .startupTable .olderThan {
   background-color: #fcd99e;
