@@ -30,8 +30,15 @@ export { default as groupLogPut } from "./groupLogPut";
 export { default as groupLogCreate } from "./groupLogCreate";
 export { default as tagGroupPut } from "./tagGroupPut";
 export { default as tagPut } from "./tagPut";
+
 export { default as funnelGroupPut } from "./funnelGroupPut";
 export { default as funnelTagPut } from "./funnelTagPut";
+export { default as funnelTagDelete } from "./funnelTagDelete";
+export { default as funnelTagUpdate } from "./funnelTagUpdate";
+export { default as funnelTagCreate } from "./funnelTagCreate";
+
+export { default as funnelGroupCreate } from "./funnelGroupCreate";
+
 export { default as connectionCreate } from "./connectionCreate";
 export { default as connectionTagAdd } from "./connectionTagAdd";
 export { default as connectionTagRemove } from "./connectionTagRemove";
@@ -43,7 +50,7 @@ export { default as connectionPut } from "./connectionPut";
 export { default as groupMarkAsSeen } from "./groupMarkAsSeen";
 export { default as groupLogMarkConversationAsSeen } from "./groupLogMarkConversationAsSeen";
 export { default as tagDelete } from "./tagDelete";
-export { default as funnelTagDetele } from "./funnelTagDelete";
+
 export { default as tagGroupDelete } from "./tagGroupDelete";
 export { default as funnelGroupDelete } from "./funnelGroupDelete";
 export { default as creativeTemplatePut } from "./creativeTemplatePut";

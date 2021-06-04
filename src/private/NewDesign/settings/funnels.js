@@ -6,8 +6,14 @@ import {
 } from "../../NewDesign/srv_startup/pages/constants";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
 import { Modal } from "../../../Components/UI_Kits/Modal/Modal";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { accountGet } from "../../Apollo/Queries";
+import {
+  funnelTagCreate,
+  funnelTagUpdate,
+  funnelTagDelete,
+  funnelGroupCreate,
+} from "../../Apollo/Mutations";
 
 let colorArray = ["red", "blue", "purple", "orange", "green"];
 
@@ -23,6 +29,10 @@ function getDefaultFunnel() {
 function EditFunnel({ funnelGroup, save }) {
   let [funnel, setFunnel] = useState({});
   let [newFunnel, setNewFunnel] = useState(getDefaultFunnel());
+
+  const [createTagMutaton] = useMutation(funnelTagCreate);
+  const [updateTagMutation] = useMutation(funnelTagUpdate);
+  const [deleteTagMutation] = useMutation(funnelTagDelete);
 
   useEffect(() => {
     if (funnelGroup) {
@@ -45,17 +55,96 @@ function EditFunnel({ funnelGroup, save }) {
           className="funnels-container__new-funnel__save"
           text="Save"
           iconPosition={ICONPOSITION.NONE}
-          onClick={() => {
-            let saveObj = funnel;
+          onClick={async () => {
+            // console.log('funnel', funnel)
+            // console.log('newFunnel', newFunnel)
 
-            if (newFunnel.name?.length) {
-              saveObj = {
-                ...funnel,
-                funnelTags: [...funnel.funnelTags, newFunnel],
-              };
+            let funnelGroupId = funnelGroup.id;
+
+            if (funnelGroup.isNew) {
+              // Create new group
+              console.log("CREATE NEW GROUP");
+              try {
+                let variables = {
+                  input: {
+                    name: funnelGroup.name,
+                  },
+                };
+                let res = await funnelGroupCreate({ variables });
+                funnelGroupId = res?.data?.funnelGroupCreate?.id;
+              } catch (error) {
+                return console.log("error", error);
+              }
             }
 
-            console.log("save\n", JSON.stringify(saveObj, null, 2));
+            console.log("funnelGroupId", funnelGroupId);
+
+            // Update these
+            let updateItems = funnel.funnelTags?.filter(({ isNew }) => !isNew);
+            if (updateItems.length) {
+              // UPDATE
+              let promises = updateItems.map(it => {
+                let variables = {
+                  id: it.id,
+                  input: { name: it.name },
+                };
+                return createTagMutaton({ variables });
+              });
+              try {
+                await Promise.all(promises);
+              } catch (error) {
+                console.log("error", error);
+              }
+            }
+
+            // Created these
+            let createItems = funnel.funnelTags?.filter(({ isNew }) => isNew);
+            if (newFunnel.name?.length) {
+              createItems.push(newFunnel);
+            }
+            if (createItems.length) {
+              // UPDATE
+              let promises = updateItems.map(it => {
+                let variables = {
+                  funnelGroupId: funnelGroupId,
+                  input: { name: it.name },
+                };
+                return updateTagMutation({ variables });
+              });
+              try {
+                await Promise.all(promises);
+              } catch (error) {
+                console.log("error", error);
+              }
+            }
+
+            // Delete these
+            let deleteItems = funnelGroup?.funnelTags?.filter(
+              ({ id }) => !funnel.funnelTags?.find(t => t.id === id)
+            );
+            if (deleteItems.length) {
+              // DELETE
+              let promises = deleteItems.map(it => {
+                let variables = {
+                  id: it.id,
+                };
+                return deleteTagMutation({ variables });
+              });
+              try {
+                await Promise.all(promises);
+              } catch (error) {
+                console.log("error", error);
+              }
+            }
+
+            // console.log('create', createItems.length)
+            // console.log('update', updateItems.length)
+            // console.log('delete', deleteItems.length)
+            //
+            // console.log('******************\n')
+
+            // console.log("save\n", JSON.stringify(saveObj, null, 2));
+            save();
           }}
         />
       </div>
@@ -306,10 +395,11 @@ export default function Funnels({ setMenuSelected }) {
                   key={funnelGroup.id}
                   funnelGroup={funnelGroup}
                   save={() => {
-                    setIsEditing({
-                      ...isEditing,
-                      [funnelGroup.id]: false,
-                    });
+                    // setIsEditing({
+                    //   ...isEditing,
+                    //   [funnelGroup.id]: false,
+                    // });
+                    setIsEditing({});
                   }}
                 />
               );
@@ -318,7 +408,18 @@ export default function Funnels({ setMenuSelected }) {
         </div>
 
         {/* NEW FUNNEL */}
-        {newFunnel && <EditFunnel />}
+        {newFunnel && (
+          <EditFunnel
+            funnelGroup={{
+              name: newFunnel,
+              funnelTags: [],
+              isNew: true,
+            }}
+            save={() => {
+              setIsEditing({});
+            }}
+          />
+        )}
 
         <ButtonWithIcon
           className="funnels-container__create-new-funnel"
