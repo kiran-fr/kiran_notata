@@ -80,9 +80,10 @@ export const AddSection = props => {
   const [mutateEvaluationTemplateUpdate] = useMutation(
     evaluationTemplateUpdate
   );
-  const [mutateEvaluationTemplateSectionCreate] = useMutation(
-    evaluationTemplateSectionCreate
-  );
+  const [
+    mutateEvaluationTemplateSectionCreate,
+    mutateEvaluationTemplateSectionCreateRes,
+  ] = useMutation(evaluationTemplateSectionCreate);
 
   const [mutateEvaluationTemplateSectionUpdate] = useMutation(
     evaluationTemplateSectionUpdate
@@ -213,6 +214,9 @@ export const AddSection = props => {
       setCurrentSectionId(
         createResponse.data.evaluationTemplateSectionCreate.id
       );
+
+      let path = `${evaluation_template_profile}/${id}/${savedLog.id}`;
+      props.history.push(path);
     }
   };
 
@@ -249,300 +253,137 @@ export const AddSection = props => {
   if (!evaluationTemplateAPIResp) {
     return <GhostLoader />;
   }
+
   return (
     <>
       <div className={`add-section-conatiner ssss`}>
         <div className="row">
           <div className={`col-sm-8 text-container`}>
-            {!questionOption && (
-              <form className="templateform">
-                <TextBox
-                  name="name"
-                  defaultValue={name}
-                  onChange={e => setDescription(e.target.value)}
-                  placeholder="Template Name"
-                  onBlur={updateTemplate}
-                />
-                <textarea
-                  name="description"
-                  onChange={e => setDescription(e.target.value)}
-                  value={description}
-                  rows="4"
-                  cols="50"
-                  placeholder="Template Description"
-                  onBlur={updateTemplate}
-                ></textarea>
-              </form>
-            )}
-            {questionOption && (
-              <form className="sectionform">
-                <TextBox
-                  name="sectionName"
-                  defaultValue={sectionName}
-                  onChange={handleInputChange}
-                  placeholder="Section Name"
-                />
-                <textarea
-                  name="sectionDescription"
-                  onChange={e => setSectionDescription(e.target.value)}
-                  value={sectionDescription}
-                  rows="4"
-                  cols="50"
-                  placeholder="Section Description"
-                ></textarea>
-              </form>
-            )}
+            <form className="templateform">
+              <TextBox
+                name="name"
+                defaultValue={name}
+                onChange={e => setDescription(e.target.value)}
+                placeholder="Template Name"
+                onBlur={updateTemplate}
+              />
+              <textarea
+                name="description"
+                onChange={e => setDescription(e.target.value)}
+                value={description}
+                rows="4"
+                cols="50"
+                placeholder="Template Description"
+                onBlur={updateTemplate}
+              />
+            </form>
+
+            {/*<form className="sectionform">*/}
+            {/*  <TextBox*/}
+            {/*    name="sectionName"*/}
+            {/*    defaultValue={sectionName}*/}
+            {/*    onChange={handleInputChange}*/}
+            {/*    placeholder="Section Name"*/}
+            {/*  />*/}
+            {/*  <textarea*/}
+            {/*    name="sectionDescription"*/}
+            {/*    onChange={e => setSectionDescription(e.target.value)}*/}
+            {/*    value={sectionDescription}*/}
+            {/*    rows="4"*/}
+            {/*    cols="50"*/}
+            {/*    placeholder="Section Description"*/}
+            {/*  />*/}
+            {/*</form>*/}
           </div>
 
-          {!questionOption && (
-            <div className="col-sm-4">
-              <div className="row">
-                <div className="col-sm-12 col-xs-6">
-                  <ButtonWithIcon
-                    iconName="add"
-                    className="add-new-section-btn"
-                    text="ADD NEW SECTION"
-                    iconPosition={ICONPOSITION.START}
-                    onClick={() => {
-                      onSubmit();
-                      setAddSectionModal(true);
-                    }}
-                  ></ButtonWithIcon>
-                </div>
-                <div className="col-sm-12 col-xs-6">
-                  <ButtonWithIcon
-                    className="import-section-btn"
-                    text="Import section"
-                    onClick={() => null}
-                    onClick={() => setImportSectionModal(true)}
-                  ></ButtonWithIcon>
-                </div>
+          <div className="col-sm-4">
+            <div className="row">
+              <div className="col-sm-12 col-xs-6">
+                <ButtonWithIcon
+                  iconName="add"
+                  className="add-new-section-btn"
+                  text="ADD NEW SECTION"
+                  iconPosition={ICONPOSITION.START}
+                  onClick={() => {
+                    onSubmit();
+                    setAddSectionModal(true);
+                  }}
+                />
+              </div>
+              <div className="col-sm-12 col-xs-6">
+                <ButtonWithIcon
+                  className="import-section-btn"
+                  text="Import section"
+                  onClick={() => setImportSectionModal(true)}
+                />
               </div>
             </div>
-          )}
+          </div>
         </div>
 
-        {questionOption && (
-          <>
-            {questions.map((question, index) => {
-              return (
-                <div className="card" key={`question-id-${index}`}>
-                  <div className="row">
-                    <div className="col-sm-12 text-center">
-                      <span class="material-icons drag-indicator">
-                        drag_indicator
-                      </span>
-                      <span
-                        class="material-icons browse-card"
-                        onClick={() => setDropDown(!dropDown)}
-                      >
-                        more_horiz
-                      </span>
-                      {dropDown && (
-                        <div className="browse-card__drop-dwon">
-                          <div
-                            className="browse-card__drop-dwon__item"
-                            onClick={() => null}
-                          >
-                            <span class="material-icons settings">
-                              content_copy
-                            </span>
-                            <span className="text">DUPLICATE</span>
-                          </div>
-                          <div
-                            className="browse-card__drop-dwon__item leave"
-                            onClick={() => null}
-                          >
-                            <span class="material-icons leave">delete</span>
-                            <span className="delete-text">DELETE</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div className="action-container">
-                      <span class="material-icons copy">content_copy</span>
-                      <i
-                        class="fa fa-trash-o delete"
-                        onClick={() => setNoOfQuestions(noOfQuestions - 1)}
-                        aria-hidden="true"
-                      ></i>
-                      <span class="material-icons north">north</span>
-                      <span class="material-icons south">south</span>
-                    </div>
-                  </div>
-                  <div className="question-container row">
-                    <div className="col-sm-12">
-                      <TextBox
-                        placeholder="Question"
-                        value={question.name}
-                        onChange={e =>
-                          setQuestions(
-                            questions.map(q =>
-                              q.id === question.id
-                                ? { ...q, name: e.target.value }
-                                : q
-                            )
-                          )
-                        }
-                      ></TextBox>
-                    </div>
-                    <div className="col-sm-12">
-                      <TextBox
-                        placeholder="Tagline"
-                        value={question.description}
-                        onChange={e =>
-                          setQuestions(
-                            questions.map(q =>
-                              q.id === question.id
-                                ? { ...q, description: e.target.value }
-                                : q
-                            )
-                          )
-                        }
-                      ></TextBox>
-                    </div>
-                    <div className="col-sm-12 question-container__tabs">
-                      <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        scrollButtons="on"
-                        variant="scrollable"
-                      >
-                        <Tab label="SINGLE ANSWER" {...a11yProps(0)} />
-                        <Tab label="multiple choice" {...a11yProps(1)} />
-                        <Tab label="traffic lights" {...a11yProps(2)} />
-                        <Tab label="free text" {...a11yProps(3)} />
-                        <Tab label="text lines" {...a11yProps(4)} />
-                      </Tabs>
-                      <TabPanel value={value} index={0}>
-                        <SingleAndMultiPleAnswer
-                          options={options}
-                          questionId={question.id}
-                          setOptions={setOptions}
-                        ></SingleAndMultiPleAnswer>
-                      </TabPanel>
-                      <TabPanel value={value} index={1}>
-                        <MultiPleAnswer></MultiPleAnswer>
-                      </TabPanel>
-                      <TabPanel value={value} index={2}>
-                        <TrafficLights></TrafficLights>
-                      </TabPanel>
-                      <TabPanel value={value} index={3}>
-                        <FreeText></FreeText>
-                      </TabPanel>
-                      <TabPanel value={value} index={4}>
-                        <TextLines></TextLines>
-                      </TabPanel>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            <div className="row">
-              <div className="col-sm-4">
-                <ButtonWithIcon
-                  className="new-question-btn"
-                  text="New Question"
-                  onClick={() =>
-                    setQuestions([
-                      ...questions,
-                      {
-                        id: Math.round(Math.random() * 10000).toString(),
-                        name: "",
-                        description: "",
-                        options: [{ val: "", score: 0 }],
-                        inputType: "RADIO",
-                      },
-                    ])
-                  }
-                ></ButtonWithIcon>
-              </div>
-            </div>
-            <div className="btn-container">
-              <ButtonWithIcon
-                className="cancel-btn"
-                text="Cancel"
-                onClick={() => null}
-              ></ButtonWithIcon>
-              <ButtonWithIcon
-                className="save-btn"
-                text="Save Changes"
-                onClick={() => {
-                  // setQuestionOption(false);
-                  // setSectionDetails(true);
-                  updateSection();
-                }}
-              ></ButtonWithIcon>
-            </div>
-          </>
-        )}
-
-        {sectionDetails && (
-          <div className="evaluation-templates-container__data-container">
-            {evaluationTemplateData?.sections.map((section, index) => {
-              return (
+        <div className="evaluation-templates-container__data-container">
+          {evaluationTemplateData?.sections.map((section, index) => {
+            return (
+              <div
+                className="row evaluation-templates-container__data-container__data"
+                key={`row-id-${index}`}
+              >
                 <div
-                  className="row evaluation-templates-container__data-container__data"
-                  key={`row-id-${index}`}
+                  className="col-sm-4 col-xs-10 template-name"
+                  onClick={() => {
+                    let path = `${evaluation_template_profile}/${id}/${section.id}`;
+                    props.history.push(path);
+                  }}
                 >
-                  <div
-                    className="col-sm-4 col-xs-10 template-name"
-                    onClick={() =>
-                      props.history.push(
-                        `${evaluation_template_profile}/${id}/${section.id}`
-                      )
-                    }
-                  >
-                    {section.name} TEST
-                  </div>
-                  <div className="col-sm-3 col-xs-10 sections">
-                    {section?.questions?.length || 0} questions
-                  </div>
-                  <div className="col-sm-3 group-name">3 Points</div>
-                  <div className="col-sm-2 col-xs-2 browse">
-                    <span
-                      class="material-icons"
-                      onClick={() => {
-                        let states = new Array(noOfRows).fill(false);
-                        states[index] = !browseDropDownStates[index];
-                        setBrowseDropDownStates(states);
-                      }}
-                    >
-                      more_horiz
-                    </span>
-                    {browseDropDownStates[index] && (
-                      <div className="browse__drop-dwon">
-                        <div
-                          className="browse__drop-dwon__item"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons settings">edit</span>
-                          <span className="text">EDIT</span>
-                        </div>
-                        <div
-                          className="browse__drop-dwon__item"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons settings">
-                            content_copy
-                          </span>
-                          <span className="text">COPY AND EDIT</span>
-                        </div>
-                        <div
-                          className="browse__drop-dwon__item leave"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons leave">delete</span>
-                          <span className="delete-text">DELETE GROUP</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  {section.name} TEST
                 </div>
-              );
-            })}
-          </div>
-        )}
+                <div className="col-sm-3 col-xs-10 sections">
+                  {section?.questions?.length || 0} questions
+                </div>
+                <div className="col-sm-3 group-name">3 Points</div>
+                <div className="col-sm-2 col-xs-2 browse">
+                  <span
+                    class="material-icons"
+                    onClick={() => {
+                      let states = new Array(noOfRows).fill(false);
+                      states[index] = !browseDropDownStates[index];
+                      setBrowseDropDownStates(states);
+                    }}
+                  >
+                    more_horiz
+                  </span>
+                  {browseDropDownStates[index] && (
+                    <div className="browse__drop-dwon">
+                      <div
+                        className="browse__drop-dwon__item"
+                        onClick={() => null}
+                      >
+                        <span class="material-icons settings">edit</span>
+                        <span className="text">EDIT</span>
+                      </div>
+                      <div
+                        className="browse__drop-dwon__item"
+                        onClick={() => null}
+                      >
+                        <span class="material-icons settings">
+                          content_copy
+                        </span>
+                        <span className="text">COPY AND EDIT</span>
+                      </div>
+                      <div
+                        className="browse__drop-dwon__item leave"
+                        onClick={() => null}
+                      >
+                        <span class="material-icons leave">delete</span>
+                        <span className="delete-text">DELETE GROUP</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
       {importSectionModal && (
         <Modal
@@ -558,17 +399,19 @@ export const AddSection = props => {
           }}
           submitTxt="IMPORT"
           closeTxt="Cancel"
-          children={<ImportSection></ImportSection>}
-        ></Modal>
+          children={<ImportSection />}
+        />
       )}
+
       {addSectionModal && (
         <Modal
           title="New Section"
+          loading={mutateEvaluationTemplateSectionCreateRes.loading}
           submit={() => {
             saveSection();
-            setAddSectionModal(false);
-            setQuestionOption(true);
-            setSectionDetails(false);
+            // setAddSectionModal(false);
+            // setQuestionOption(true);
+            // setSectionDetails(false);
           }}
           loading={saveLoader}
           close={() => {
@@ -582,9 +425,9 @@ export const AddSection = props => {
               value={sectionName}
               onChange={handleInputChange}
               placeholder="Evaluation Section Name"
-            ></TextBox>
+            />
           }
-        ></Modal>
+        />
       )}
     </>
   );
