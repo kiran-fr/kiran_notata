@@ -18,6 +18,9 @@ import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
 import { evaluationTemplateSectionUpdate } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 
+// Helpers
+const getId = () => Math.round(Math.random() * 10000).toString();
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -41,78 +44,190 @@ function a11yProps(index) {
   };
 }
 
+function QuestionCard({
+  question,
+  questions,
+  setQuestions,
+  options,
+  setOptions,
+}) {
+  const [value, setValue] = React.useState(0);
+  const [dropDown, setDropDown] = useState(false);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className="card">
+      {/*TOP PART*/}
+      <div className="row">
+        <div className="col-sm-12 text-center">
+          <span className="material-icons drag-indicator">drag_indicator</span>
+          <span
+            className="material-icons browse-card"
+            onClick={() => setDropDown(!dropDown)}
+          >
+            more_horiz
+          </span>
+        </div>
+        <div className="action-container">
+          <span className="material-icons copy">content_copy</span>
+          <i className="fa fa-trash-o delete" aria-hidden="true" />
+          <span className="material-icons north">north</span>
+          <span className="material-icons south">south</span>
+        </div>
+      </div>
+      {/*END TOP PART*/}
+
+      <div className="question-container row">
+        <div className="col-sm-12">
+          <TextBox
+            placeholder="Question"
+            value={question.name}
+            onChange={e =>
+              setQuestions(
+                questions.map(q =>
+                  q.id === question.id ? { ...q, name: e.target.value } : q
+                )
+              )
+            }
+          />
+        </div>
+
+        <div className="col-sm-12">
+          <TextBox
+            placeholder="Tagline"
+            value={question.description}
+            onChange={e =>
+              setQuestions(
+                questions.map(q =>
+                  q.id === question.id
+                    ? { ...q, description: e.target.value }
+                    : q
+                )
+              )
+            }
+          />
+        </div>
+
+        <div className="col-sm-12 question-container__tabs">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            scrollButtons="on"
+            variant="scrollable"
+          >
+            <Tab label="SINGLE ANSWER" {...a11yProps(0)} />
+            <Tab label="multiple choice" {...a11yProps(1)} />
+            <Tab label="traffic lights" {...a11yProps(2)} />
+            <Tab label="free text" {...a11yProps(3)} />
+            <Tab label="text lines" {...a11yProps(4)} />
+          </Tabs>
+          <TabPanel value={value} index={0}>
+            <SingleAndMultiPleAnswer
+              options={options}
+              questionId={question.id}
+              setOptions={setOptions}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <MultiPleAnswer />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <TrafficLights />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <FreeText />
+          </TabPanel>
+          <TabPanel value={value} index={4}>
+            <TextLines />
+          </TabPanel>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export const SectionPage = props => {
+  // CONSTANTS
+  const getDefaultQuestion = () => {
+    let newId = getId();
+    return {
+      id: newId,
+      name: "",
+      description: "",
+      inputType: "RADIO",
+      options: [
+        {
+          id: getId(),
+          questionId: newId,
+          val: "",
+          score: 0,
+        },
+      ],
+    };
+  };
+
+  const defaultQuestion = getDefaultQuestion();
+  const defaultOption = defaultQuestion.options[0];
+
+  // URL Stuff
   const { match } = props;
   const {
-    params: { id, sectionId },
+    params: { sectionId },
   } = match;
+
+  // States
+  const [sectionDescription, setSectionDescription] = useState(null);
+  const [sectionName, setSectionName] = useState(null);
+  const [name, setName] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [questions, setQuestions] = useState([defaultQuestion]);
+  const [options, setOptions] = useState([defaultOption]);
 
   // Queries
   const [getSection, { data, loading }] = useLazyQuery(
     evaluationTemplateSectionGet
   );
 
+  // Mutations
+  const [mutateEvaluationTemplateSectionUpdate] = useMutation(
+    evaluationTemplateSectionUpdate
+  );
+
+  // Data maps
+  const section = data?.evaluationTemplateSectionGet || {};
+
+  // EFFECTS
+
+  // Get section
   useEffect(() => {
     if (sectionId) {
       getSection({ variables: { id: sectionId } });
     }
   }, [sectionId]);
 
-  // Sections
-  const section = data?.evaluationTemplateSectionGet || {};
-  // console.log("GET SECTION: ", section);
-
-  const [mutateEvaluationTemplateSectionUpdate] = useMutation(
-    evaluationTemplateSectionUpdate
-  );
-
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const [dropDown, setDropDown] = useState(false);
-  const [noOfQuestions, setNoOfQuestions] = useState(1);
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [sectionDescription, setSectionDescription] = useState(null);
-  const [sectionName, setSectionName] = useState(null);
-
-  const firstQID = Math.round(Math.random() * 10000).toString();
-
-  const questionFormat = {
-    id: firstQID,
-    name: "",
-    description: "",
-    inputType: "RADIO",
-    options: [],
-  };
-
-  const optionFormat = {
-    id: Math.round(Math.random() * 100000).toString(),
-    questionId: firstQID,
-    val: "",
-    score: 0,
-  };
-
-  const [questions, setQuestions] = useState([]);
-  const [options, setOptions] = useState([]);
-
+  // Set questions and options from server
   useEffect(() => {
     if (!section) {
-      setQuestions(questionFormat);
-      setOptions(optionFormat);
+      setQuestions([defaultQuestion]);
+      setOptions([defaultOption]);
       return;
     }
-    // console.log(options);
 
-    setQuestions(section?.questions || [questionFormat]);
-    // console.log(questions[0]?.id);
-    setOptions(
-      section?.questions
-        ?.map(q => q?.options?.map(o => ({ ...o, questionId: q.id })))
-        .flat() || [optionFormat]
-    );
-    // console.log("OPTIONS FROM SECTION: ", options);
+    let questionsFromServer = section?.questions;
+    if (questionsFromServer) {
+      setQuestions(questionsFromServer);
+    }
+
+    let optionsFromServer = section?.questions
+      ?.map(q => q?.options?.map(o => ({ ...o, questionId: q.id })))
+      .flat();
+
+    if (optionsFromServer?.length) {
+      setOptions(optionsFromServer);
+    }
   }, [section]);
 
   const handleInputChange = e => {
@@ -128,11 +243,6 @@ export const SectionPage = props => {
     }
   };
 
-  // Debug
-  useEffect(() => {
-    // console.log("OPTIONS: ", options);
-  }, [options]);
-
   const updateSection = async () => {
     const tempQuestion = questions.map(question => {
       let currentOptions = options?.filter(
@@ -140,7 +250,6 @@ export const SectionPage = props => {
       );
 
       let finalOptions = currentOptions.map(mapped => {
-        // console.log("MAPPED: ", omit(mapped, ["__typename"]));
         return omit(mapped, ["__typename"]);
       });
 
@@ -154,18 +263,6 @@ export const SectionPage = props => {
 
     const finalQuestion = tempQuestion.map(q => omit(q, ["__typename"]));
 
-    // console.log("FINAL SUBMIT: ", {
-    //   variables: {
-    //     id: sectionId,
-    //     input: {
-    //       name: sectionName,
-    //       description: sectionDescription,
-    //       questions: finalQuestion,
-    //     },
-    //   },
-    // });
-    // currentOptions.map(o => omit(o, ["id", "questionId"]))
-    // console.log("Temp Question: ", tempQuestion);
     try {
       let updateResponse = await mutateEvaluationTemplateSectionUpdate({
         variables: {
@@ -182,15 +279,19 @@ export const SectionPage = props => {
     } catch (error) {
       console.log("Error: ", error);
     }
+
+    // setQuestionOption(false);
+    // setSectionDetails(true);
   };
 
-  if (loading) {
+  if (!data && loading) {
     return <GhostLoader />;
   }
 
   return (
     <>
       <div className={`add-section-conatiner ssss`}>
+        {/* HEADER: NAME AND DESCRIPTION */}
         <div className="row">
           <div className={`col-sm-8 text-container`}>
             <form className="sectionform">
@@ -210,144 +311,18 @@ export const SectionPage = props => {
               />
             </form>
           </div>
-
-          {/* <div className="col-sm-4">
-            <div className="row">
-              <div className="col-sm-12 col-xs-6">
-                <ButtonWithIcon
-                  iconName="add"
-                  className="add-new-section-btn"
-                  text="ADD NEW SECTION"
-                  iconPosition={ICONPOSITION.START}
-                  onClick={() => {
-                    setAddSectionModal(true);
-                  }}
-                />
-              </div>
-              <div className="col-sm-12 col-xs-6">
-                <ButtonWithIcon
-                  className="import-section-btn"
-                  text="Import section 2"
-                  onClick={() => setImportSectionModal(true)}
-                />
-              </div>
-            </div>
-          </div> */}
         </div>
 
         <div className="evaluation-templates-container__data-container">
           {questions?.map((question, index) => {
             return (
-              <div className="card" key={`question-id-${index}`}>
-                <div className="row">
-                  <div className="col-sm-12 text-center">
-                    <span class="material-icons drag-indicator">
-                      drag_indicator
-                    </span>
-                    <span
-                      class="material-icons browse-card"
-                      onClick={() => setDropDown(!dropDown)}
-                    >
-                      more_horiz
-                    </span>
-                    {dropDown && (
-                      <div className="browse-card__drop-dwon">
-                        <div
-                          className="browse-card__drop-dwon__item"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons settings">
-                            content_copy
-                          </span>
-                          <span className="text">DUPLICATE</span>
-                        </div>
-                        <div
-                          className="browse-card__drop-dwon__item leave"
-                          onClick={() => null}
-                        >
-                          <span class="material-icons leave">delete</span>
-                          <span className="delete-text">DELETE</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div className="action-container">
-                    <span class="material-icons copy">content_copy</span>
-                    <i
-                      class="fa fa-trash-o delete"
-                      onClick={() => setNoOfQuestions(noOfQuestions - 1)}
-                      aria-hidden="true"
-                    />
-                    <span class="material-icons north">north</span>
-                    <span class="material-icons south">south</span>
-                  </div>
-                </div>
-                <div className="question-container row">
-                  <div className="col-sm-12">
-                    <TextBox
-                      placeholder="Question"
-                      value={question.name}
-                      onChange={e =>
-                        setQuestions(
-                          questions.map(q =>
-                            q.id === question.id
-                              ? { ...q, name: e.target.value }
-                              : q
-                          )
-                        )
-                      }
-                    />
-                  </div>
-                  <div className="col-sm-12">
-                    <TextBox
-                      placeholder="Tagline"
-                      value={question.description}
-                      onChange={e =>
-                        setQuestions(
-                          questions.map(q =>
-                            q.id === question.id
-                              ? { ...q, description: e.target.value }
-                              : q
-                          )
-                        )
-                      }
-                    />
-                  </div>
-                  <div className="col-sm-12 question-container__tabs">
-                    <Tabs
-                      value={value}
-                      onChange={handleChange}
-                      scrollButtons="on"
-                      variant="scrollable"
-                    >
-                      <Tab label="SINGLE ANSWER" {...a11yProps(0)} />
-                      <Tab label="multiple choice" {...a11yProps(1)} />
-                      <Tab label="traffic lights" {...a11yProps(2)} />
-                      <Tab label="free text" {...a11yProps(3)} />
-                      <Tab label="text lines" {...a11yProps(4)} />
-                    </Tabs>
-                    <TabPanel value={value} index={0}>
-                      <SingleAndMultiPleAnswer
-                        options={options}
-                        questionId={question.id}
-                        setOptions={setOptions}
-                      />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                      <MultiPleAnswer />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                      <TrafficLights />
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                      <FreeText />
-                    </TabPanel>
-                    <TabPanel value={value} index={4}>
-                      <TextLines />
-                    </TabPanel>
-                  </div>
-                </div>
-              </div>
+              <QuestionCard
+                key={question.id}
+                question={question}
+                options={options}
+                setOptions={setOptions}
+                setQuestions={setQuestions}
+              />
             );
           })}
 
@@ -356,18 +331,11 @@ export const SectionPage = props => {
               <ButtonWithIcon
                 className="new-question-btn"
                 text="New Question"
-                onClick={() =>
-                  setQuestions([
-                    ...questions,
-                    {
-                      id: Math.round(Math.random() * 10000).toString(),
-                      name: "",
-                      description: "",
-                      options: [{ val: "", score: 0 }],
-                      inputType: "RADIO",
-                    },
-                  ])
-                }
+                onClick={() => {
+                  let q = getDefaultQuestion();
+                  setQuestions([...questions, q]);
+                  setOptions([...options, ...q.options]);
+                }}
               />
             </div>
           </div>
@@ -380,11 +348,7 @@ export const SectionPage = props => {
             <ButtonWithIcon
               className="save-btn"
               text="Save Changes"
-              onClick={() => {
-                // setQuestionOption(false);
-                // setSectionDetails(true);
-                updateSection();
-              }}
+              onClick={updateSection}
             />
           </div>
         </div>
