@@ -38,6 +38,7 @@ export { default as funnelTagUpdate } from "./funnelTagUpdate";
 export { default as funnelTagCreate } from "./funnelTagCreate";
 
 export { default as funnelGroupCreate } from "./funnelGroupCreate";
+export { default as funnelGroupUpdate } from "./funnelGroupUpdate";
 
 export { default as connectionCreate } from "./connectionCreate";
 export { default as connectionTagAdd } from "./connectionTagAdd";
