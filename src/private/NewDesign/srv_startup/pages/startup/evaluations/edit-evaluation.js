@@ -4,6 +4,7 @@ import "./edit-evaluation.scss";
 import { useMutation } from "@apollo/client";
 import { evaluationUpdate, evaluationCreate } from "private/Apollo/Mutations";
 import { GeneralInput } from "../Inputs/GeneralInput";
+import CommentInput from "../FormInputs/CommentInput";
 
 export default function EditEvaluation({
   setEditEvaluation,
@@ -16,6 +17,7 @@ export default function EditEvaluation({
   savedAnswers,
   companyName,
   setActiveEvaluation,
+  props,
 }) {
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -85,6 +87,12 @@ export default function EditEvaluation({
   if (loading) {
     return "Saving...";
   }
+
+  //comment
+  // const comments = answers.filter(
+  //   ({ inputType, questionId: id }) =>
+  //     inputType === "COMMENT" && id === questionId
+  // );
 
   return (
     <div className="row edit-evaluation-container">
@@ -159,6 +167,7 @@ export default function EditEvaluation({
                           </div>
                         </div>
                       </div>
+                      <CommentInput {...props} />
                     </div>
                   </div>
                 </>
