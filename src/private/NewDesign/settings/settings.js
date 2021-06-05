@@ -7,7 +7,10 @@ import webForm from "../../../assets/images/settings_web-form.png";
 import tags from "../../../assets/images/settings_tags.png";
 import yourProfile from "../../../assets/images/settings_your-profile.png";
 import yourTeam from "../../../assets/images/settings_your-team.png";
-import { ICONPOSITION, SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
+import {
+  ICONPOSITION,
+  SETTINGSMENU,
+} from "../../NewDesign/srv_startup/pages/constants";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
 import YourTeam from "./your-team";
 import WebForm from "./web-form";
@@ -18,7 +21,6 @@ import { ElevationTemplates } from "../../NewDesign/srv_startup/pages/startup/ev
 import ProfileSettings from "./profile";
 
 export const Settings_Home = ({ history }) => {
-
   const [isEvaluationCardVisible, setEvaluationCard] = useState(true);
   const [menuSelected, setMenuSelected] = useState(SETTINGSMENU.HOME);
   return (
@@ -153,4 +155,4 @@ export const Settings_Home = ({ history }) => {
       )}
     </div>
   );
-}
+};

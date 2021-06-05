@@ -78,10 +78,11 @@ export const Kanban = props => {
   // const storeValue = useSelector((state) => state)
 
   useEffect(() => {
-    setFunnelGroupIndex(props.selectedfunnelGroup)
-  },[props.selectedfunnelGroup]);
+    setFunnelGroupIndex(props.selectedfunnelGroup);
+  }, [props.selectedfunnelGroup]);
 
-  let response = accountGet?.accountGet?.funnelGroups?.[funnelGroupIndex].funnelTags;
+  let response =
+    accountGet?.accountGet?.funnelGroups?.[funnelGroupIndex].funnelTags;
 
   // Mutation updating funnel tag for connection
   const [mutate] = useMutation(connectionFunnelTagAdd);

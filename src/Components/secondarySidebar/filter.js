@@ -11,7 +11,6 @@ import { sortArr } from "../../private/NewDesign/CommonFunctions";
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
 import { CheckBox, Datepicker1 } from "Components/UI_Kits";
 
-
 // API
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
@@ -52,34 +51,32 @@ export default function FilterBar({
   }, [tagSelected]);
 
   const dateRange = (dates, range) => {
-        let fromDate = range[0] ? moment(range[0]).format("x") : "";
-        let toDate = range[1] ? moment(range[1]).format("x") : "";
-        if(fromDate && toDate ) {
-          setFilters({ ...filters, fromDate, toDate });
-        }
-        setStartDate(range[0]);
-        setEndDate(range[1]);
-        if (fromDate && toDate) {
-          setCalendarVisible(false);
-      }
+    let fromDate = range[0] ? moment(range[0]).format("x") : "";
+    let toDate = range[1] ? moment(range[1]).format("x") : "";
+    if (fromDate && toDate) {
+      setFilters({ ...filters, fromDate, toDate });
+    }
+    setStartDate(range[0]);
+    setEndDate(range[1]);
+    if (fromDate && toDate) {
+      setCalendarVisible(false);
+    }
+  };
+  const onChange = dates => {
+    const [start, end] = dates;
+    let fromDate = start ? moment(start).format("x") : "";
+    let toDate = end ? moment(end).format("x") : "";
 
-  }
-  const onChange = (dates) => {
-      const [start, end] = dates;
-      let fromDate = start ? moment(start).format("x") : "";
-      let toDate = end ? moment(end).format("x") : "";
-  
-      if(fromDate && toDate ) {
-        setFilters({ ...filters, fromDate, toDate });
-      }
-      setStartDate(start);
-      setEndDate(end);
-  
-      if (start && end) {
-        setCalendarVisible(false);
-      }
-  }
+    if (fromDate && toDate) {
+      setFilters({ ...filters, fromDate, toDate });
+    }
+    setStartDate(start);
+    setEndDate(end);
 
+    if (start && end) {
+      setCalendarVisible(false);
+    }
+  };
 
   const [isCalendarVisible, setCalendarVisible] = useState(false);
 
@@ -219,14 +216,14 @@ export default function FilterBar({
         <div className={styles.funnelStage}>
           <h2>DATE</h2>
           <Datepicker1
-             selected={startDate}
-             setCalendarVisible ={setCalendarVisible}
-             onChange={onChange}
-             dateRange = {dateRange}
-             isCalendarVisible = {isCalendarVisible}
-             startDate={startDate}
-             endDate={endDate}
-             formatWeekDay={nameOfDay => nameOfDay.substr(0, 1)}
+            selected={startDate}
+            setCalendarVisible={setCalendarVisible}
+            onChange={onChange}
+            dateRange={dateRange}
+            isCalendarVisible={isCalendarVisible}
+            startDate={startDate}
+            endDate={endDate}
+            formatWeekDay={nameOfDay => nameOfDay.substr(0, 1)}
           />
         </div>
       </div>

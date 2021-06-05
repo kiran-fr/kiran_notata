@@ -12,6 +12,7 @@ import {
   pre_profile,
   reports,
   settings_new,
+  news,
 } from "definitions.js";
 
 // Styles
@@ -52,12 +53,12 @@ export function SideBarMenu() {
       link: `${startup_page}/report/reports`,
     },
     //  hide for now  (commented by siva)
-    // {
-    //   label: "News",
-    //   iconClass: "fas fa-globe",
-    //   iconStyle: { paddingTop: "2px" },
-    //   link: "",
-    // },
+    {
+      label: "News",
+      iconClass: "fas fa-globe",
+      iconStyle: { paddingTop: "2px" },
+      link: news,
+    },
   ];
 
   const openSidebar = () => {

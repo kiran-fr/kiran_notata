@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./your-team.scss";
-import { ICONPOSITION, SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
+import {
+  ICONPOSITION,
+  SETTINGSMENU,
+} from "../../NewDesign/srv_startup/pages/constants";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
 import { Modal } from "../../../Components/UI_Kits/Modal/Modal";
 
