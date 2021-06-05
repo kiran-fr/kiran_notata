@@ -37,6 +37,7 @@ export default function TableBody(props) {
     const updateFunnelTagForConnection = funnelTagId => {
       updateFunnelTag(funnelTagId, id);
       setFunnel(false);
+      setShowFunnel(false)
     };
 
     const tagSort = sortArr(tags);
