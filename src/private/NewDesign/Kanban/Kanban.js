@@ -70,12 +70,10 @@ export const Kanban = props => {
   const [columns, setColumns] = useState({});
   const [getConnections, setGetConnections] = useState(false);
   const [loadingAPI, setLoadingAPI] = useState(true);
-  const [sorting, setSorting] = useState("");
+  const [sortLoad, setSortLoad] = useState(false);
   const [funnelGroupIndex, setFunnelGroupIndex] = useState(0);
-
+  
   const { data: accountGet, loading, error } = useQuery(accountGetData);
-
-  // const storeValue = useSelector((state) => state)
 
   useEffect(() => {
     setFunnelGroupIndex(props.selectedfunnelGroup);
@@ -95,16 +93,16 @@ export const Kanban = props => {
 
 
   useEffect(() => {
-    if(filters.indexNumber) {
-      let slecectedColumn = [columns] 
-      let indexPoint = filters.indexNumber
-      handleFunnels(slecectedColumn[indexPoint], filters.sortBy, filters.sortDirection)
+    if(filters.sortDirection) {
+      let sortingcolumns = columns[filters.indexNumber]
+      setSortLoad(filters.indexNumber)
+      handleFunnels({sortingcolumns}, filters.sortBy, filters.sortDirection, filters.indexNumber)
     }
-  }, [filters]);
+  }, [(filters && filters.sortDirection), filters && filters.sortBy]);
 
-  const handleFunnels = (dataVal, sortBy, sortDirection) => {
-    console.log('direction', sortBy, sortDirection)
+  const handleFunnels = (dataVal, sortBy, sortDirection, sortingIndex) => {
     let columnsCopy = [];
+    let columnsSortObj = {}
 
     let apiPromise = Object.keys(dataVal).map((key, ind) => {
       return appsyncClient
@@ -123,13 +121,25 @@ export const Kanban = props => {
           let columnUpdatedObj = Object.assign({}, dataVal[key], {
             items: result?.data?.connectionsGet || [],
           });
-          columnsCopy.push(columnUpdatedObj);
+          if(sortingIndex || sortingIndex === 0 ) {
+            columnsSortObj = columnUpdatedObj
+          } else {
+            columnsCopy.push(columnUpdatedObj);
+          }
         });
     });
 
     Promise.all(apiPromise).then(response => {
       setLoadingAPI(false);
-      setColumns({ ...columnsCopy });
+      if( sortBy) {
+        const removeCoulmn = columns
+        delete columns[sortingIndex]
+        removeCoulmn[sortingIndex] = columnsSortObj;
+        setColumns(removeCoulmn);
+        setSortLoad(false)
+      } else {
+        setColumns({ ...columnsCopy });
+      }
     });
   }
 
@@ -173,59 +183,66 @@ export const Kanban = props => {
               >
                 {column.name}
               </BoardHeader>
-              <div className={styles.droppable}>
-                <Droppable droppableId={columnId} key={columnId}>
-                  {(provided, snapshot) => {
-                    return (
-                      <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        style={{
-                          width: "100%",
-                          minHeight: 500,
-                          transition: "all 0.15s ease-in",
-                          backgroundColor: snapshot.isDraggingOver
-                            ? "rgba(166, 248, 207, 0.32)"
-                            : "transparent",
-                        }}
-                      >
-                        {loadingAPI
-                          ? "Loading..."
-                          : column?.items?.map((item, index) => {
-                              return (
-                                <Draggable
-                                  key={item.id}
-                                  draggableId={item.id}
-                                  index={index}
-                                >
-                                  {(provided, snapshot) => {
-                                    return (
-                                      <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={{
-                                          ...provided.draggableProps.style,
-                                        }}
-                                      >
-                                        <BoardItem
-                                          history={props.history}
-                                          connection={item}
-                                        >
-                                          {item.content}
-                                        </BoardItem>
-                                      </div>
-                                    );
-                                  }}
-                                </Draggable>
-                              );
-                            })}
-                        {provided.placeholder}
-                      </div>
-                    );
-                  }}
-                </Droppable>
-              </div>
+              {sortLoad !== index
+                ?
+                  <div className={styles.droppable}>
+                    <Droppable droppableId={columnId} key={columnId}>
+                      {(provided, snapshot) => {
+                        return (
+                          <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={{
+                              width: "100%",
+                              minHeight: 500,
+                              transition: "all 0.15s ease-in",
+                              backgroundColor: snapshot.isDraggingOver
+                                ? "rgba(166, 248, 207, 0.32)"
+                                : "transparent",
+                            }}
+                          >
+                            {loadingAPI
+                              ? "Loading..."
+                              : column?.items?.map((item, index) => {
+                                  return (
+                                    <Draggable
+                                      key={item.id}
+                                      draggableId={item.id}
+                                      index={index}
+                                    >
+                                      {(provided, snapshot) => {
+                                        return (
+                                          <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            style={{
+                                              ...provided.draggableProps.style,
+                                            }}
+                                          >
+                                            <BoardItem
+                                              history={props.history}
+                                              connection={item}
+                                            >
+                                              {item.content}
+                                            </BoardItem>
+                                          </div>
+                                        );
+                                      }}
+                                    </Draggable>
+                                  );
+                                })}
+                            {provided.placeholder}
+                          </div>
+                        );
+                      }}
+                    </Droppable>
+                  </div>
+                :
+                  <div className={styles.loading_icon}>
+                    <i className={"fa fa-spinner fa-spin"} />
+                  </div>
+              }
             </div>
           );
         })}

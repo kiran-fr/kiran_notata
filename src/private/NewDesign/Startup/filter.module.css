@@ -67,6 +67,14 @@ button,
   margin-right: 30px;
   cursor: pointer;
 }
+
+.addButton:hover,
+.addButton:focus,
+.searchButton:hover,
+.searchButton:focus {
+  background-color: #49b6a0;
+}
+
 .table_headerChild .addButton i {
   color: #fff;
   margin-right: 5px;
@@ -210,13 +218,23 @@ button,
     justify-content: space-between;
   }
   .table_headerChildLast {
-    width: 60px !important;
+    /* width: 60px !important; */
   }
   .addButton {
     width: 50% !important;
   }
   .manageButton {
     /* display: none; */
+  }
+
+  .clearAllTxt {
+    color: #53cab2;
+    margin-top: -30px !important;
+    width: 100%;
+    padding-right: 13px;
+    position: absolute;
+    transition: color 0.1s ease-in;
+    font-weight: 600;
   }
 }
 

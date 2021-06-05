@@ -32,6 +32,17 @@ export default function BoardHeader({ children, icon, filters, setFilter, index 
         sortDirection,
         indexNumber: index
       });
+    } else {
+      let sortBy =  "STARRED";
+      let sortDirection = 
+        filters.sortBy === "STARRED" && filters.sortDirection !== "DESC"
+          ? "DESC"
+          : "ASC";
+        setFilter({
+        sortBy,
+        sortDirection,
+        indexNumber: index
+      });
     }
   }
 
