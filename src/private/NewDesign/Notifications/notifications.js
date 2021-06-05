@@ -16,6 +16,8 @@ export default function NotificationsPage() {
 
   let notifications = data?.notificationsGet || [];
 
+  console.log("Notifications: ", notifications);
+
   return (
     <div>
       <h1>Notifications...</h1>
