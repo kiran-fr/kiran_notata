@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-
-import {useSelector} from "react-redux"
-
 import styles from "./Kanban.module.css";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -62,11 +59,7 @@ const onDragEnd = (result, columns, setColumns, updateFunnelTag) => {
 
 export const Kanban = props => {
 
-  const defaultFilters = {
-    starred: false,
-  };
-
-  const [filters, setFilter] = useState(defaultFilters);
+  const [filters, setFilter] = useState({});
   const [columns, setColumns] = useState({});
   const [getConnections, setGetConnections] = useState(false);
   const [loadingAPI, setLoadingAPI] = useState(true);
