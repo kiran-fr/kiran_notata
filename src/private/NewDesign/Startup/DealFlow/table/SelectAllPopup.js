@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./SelectAllPopup.module.css";
 
 export default function SortByPopup({ items, isOpen }) {
@@ -7,6 +7,19 @@ export default function SortByPopup({ items, isOpen }) {
   useEffect(() => {
     setOpen(isOpen);
   }, [isOpen]);
+
+  const popup = useRef();
+
+  useEffect(() => {
+    const handleGlobalEvent = e =>
+      !e.path.includes(popup.current) && open && isOpen ? setOpen(false) : null;
+
+    window.addEventListener("click", handleGlobalEvent);
+
+    return () => {
+      window.removeEventListener("click", handleGlobalEvent);
+    };
+  });
 
   return (
     <>

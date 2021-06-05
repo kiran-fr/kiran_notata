@@ -15,7 +15,6 @@ import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
-import { StylesProvider } from "@material-ui/core";
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
@@ -181,8 +180,6 @@ export default function Overview(props) {
       setComments(updatedComments);
       setEditComment(index);
     }
-    //setComments(comments);
-    //  setEditComment(index);
   };
 
   const setEditComment = async index => {
@@ -235,7 +232,10 @@ export default function Overview(props) {
   return (
     <>
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
-        <ShareTemplate companyName = {name} setPageState={setPageState}></ShareTemplate>
+        <ShareTemplate
+          companyName={name}
+          setPageState={setPageState}
+        ></ShareTemplate>
       ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
         <ArchiveList
           setPageState={setPageState}
@@ -252,15 +252,9 @@ export default function Overview(props) {
                     {name?.substr(0, 1)?.toUpperCase()}
                   </div>
                 </div>
-                <div
-                  className="col-11 col-sm-10 col-xs-10"
-                  style={{ paddingLeft: 25 }}
-                >
+                <div className="col-11 col-sm-10 col-xs-10">
                   <div className="row overview-container__details">
-                    <div
-                      className="col-lg-5 col-md-12 col-sm-12 col-xs-12"
-                      style={{ paddingLeft: 0 }}
-                    >
+                    <div className="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                       <div className="overview-container__heading">{name}</div>
                     </div>
                     <div className="col-lg-7 col-md-12 col-sm-12 col-xs-12">
@@ -272,7 +266,6 @@ export default function Overview(props) {
                       </span>
                     </div>
                   </div>
-                  {/* <div className="col-sm-12 col-xs-12"> */}
                   <p className="overview-container__startup-overview">
                     {section?.val}
                   </p>
@@ -308,14 +301,6 @@ export default function Overview(props) {
                   </div>
 
                   <div>
-                    {console.log(
-                      "yourteam",
-                      parseFloat(teamAvg),
-                      parseFloat(myAvgScore),
-                      typeof myAvgScore,
-                      myAvgScore.toString()
-                    )}
-
                     <span className="score selected you">
                       {parseFloat(myAvgScore)}
                     </span>

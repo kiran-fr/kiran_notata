@@ -6,9 +6,9 @@
 .add-section-conatiner {
   @media only screen and(min-width:768px) {
     position: absolute;
-    left: calc(calc(100% - 700px)/2);
-    width: 700px;          
-}
+    left: calc(calc(100% - 700px) / 2);
+    width: 700px;
+  }
   .text-container {
     .text-box {
       max-width: 652px !important;
@@ -125,6 +125,11 @@
       font-size: 12px;
       line-height: 15px;
     }
+
+    &:hover,
+    &:focus {
+      background: #49b6a0 !important;
+    }
   }
   .new-question-btn {
     margin-top: 15px !important;
@@ -172,6 +177,11 @@
   }
   .import-section-btn {
     background: #ff8166;
+
+    &:hover,
+    &:focus {
+      background-color: #ed6d52 !important;
+    }
   }
   .card {
     max-width: 650px;

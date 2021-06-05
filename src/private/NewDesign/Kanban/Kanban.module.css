@@ -107,11 +107,11 @@
 .b_item_column {
   display: flex;
   align-items: center;
+  margin-top: 5px;
 }
 
 .b_item_tags {
   display: flex;
-  margin-top: 8px;
 }
 
 .b_item_tag {
@@ -119,9 +119,15 @@
   background-color: #6a6a6a;
   margin-left: 5px;
   font-size: 9px;
+  max-width: 70px;
   color: white;
   font-family: "Roboto";
-  padding: 3px 10px;
+  padding: 0px 10px;
+  height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 20px;
+  white-space: nowrap;
 }
 
 .b_item_groups {
@@ -190,6 +196,12 @@
 
   .board {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1180px) {
+  .b_item_tag {
+    max-width: 55px;
   }
 }
 
