@@ -51,7 +51,7 @@ export default function CommentInput({
   return (
     <>
       <div style={style}>
-        {!!comments.length && (
+        {!!comments?.length && (
           <div className={comments_list}>
             <div className={comments_label}>Comments</div>
             {comments.map(({ val, id }) => (
