@@ -15,7 +15,8 @@ export default function SummaryEvaluation({
   selectedTemplateToEvaluate,
   allAnswers,
   evaluation,
-  accountData
+  accountData,
+  setEvaluateModal
 }) {
 
   const [deleteMoal, setDeleteMoal] = useState(false);

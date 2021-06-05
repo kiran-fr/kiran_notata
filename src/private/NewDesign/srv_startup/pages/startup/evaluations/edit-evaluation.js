@@ -16,6 +16,7 @@ export default function EditEvaluation({
   savedAnswers,
   companyName,
   setActiveEvaluation,
+  setEvaluateModal
 }) {
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -86,12 +87,16 @@ export default function EditEvaluation({
     return "Saving...";
   }
 
+  const handleBack = () => {
+    setEvaluateModal(true)
+    setEditEvaluation(false)
+  }
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
         <span
           class="material-icons back-icon"
-          onClick={() => setEditEvaluation(false)}
+          onClick={() => handleBack()}
         >
           arrow_back_ios
         </span>

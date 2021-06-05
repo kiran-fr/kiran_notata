@@ -110,6 +110,7 @@ export default function Evaluations(props) {
                 style={{ display: saveEvaluation !== true ? "block" : "none" }}
               >
                 <EditEvaluation
+                  setEvaluateModal ={setEvaluateModal}
                   companyName={name}
                   setEditEvaluation={setEditEvaluation}
                   setSaveEvaluation={setSaveEvaluation}
@@ -694,7 +695,7 @@ export default function Evaluations(props) {
       )}
       {evaluateModal && (
         <Modal
-          title="Evaluate startup"
+          title="Evaluate startupjbhsdafb"
           close={() => {
             setEvaluateModal(false);
           }}

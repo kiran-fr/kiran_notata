@@ -8,6 +8,11 @@ export default function SortByPopup({ items, isOpen, setIsOpen }) {
     setOpen(isOpen);
   }, [isOpen]);
 
+  const handleName = (name) => {
+    setOpen(false)
+    setIsOpen(name)
+  }
+
   return (
     <>
       {open && (
@@ -15,7 +20,11 @@ export default function SortByPopup({ items, isOpen, setIsOpen }) {
           <div className={styles.popup}>
             <div className={styles.menu_items}>
               {items.map((name, i) => {
-                return <div onClick={() => setOpen(false)}>{name}</div>;
+                return (
+                  <div onClick={() => handleName(name)}>
+                    {name}
+                  </div>
+                )
               })}
             </div>
           </div>
