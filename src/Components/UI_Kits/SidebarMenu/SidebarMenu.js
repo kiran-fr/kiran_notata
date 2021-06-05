@@ -12,7 +12,7 @@ import {
   pre_profile,
   reports,
   settings_new,
-  news,
+  news1,
 } from "definitions.js";
 
 // Styles
@@ -57,7 +57,7 @@ export function SideBarMenu() {
       label: "News",
       iconClass: "fas fa-globe",
       iconStyle: { paddingTop: "2px" },
-      link: news,
+      link: news1,
     },
   ];
 
