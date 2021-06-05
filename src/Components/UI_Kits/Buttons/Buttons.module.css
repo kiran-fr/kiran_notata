@@ -39,7 +39,8 @@
   background-color: var(--ui-color-primary-orange-dark3);
 }
 .primary_hover:hover {
-  background-color: var(--ui-color-primary-green-dark3);
+  background-color: var(--ui-color-primary-green-dark3) !important;
+  background-color: aqua !important;
 }
 .gray_hover:hover {
   background-color: var(--ui-color-gray-dark3);
