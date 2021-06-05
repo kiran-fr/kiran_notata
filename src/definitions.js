@@ -63,6 +63,7 @@ export const startup_company_profile = `${startup_page}/company/:id`;
 export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-templates`;
 export const evaluation_template_profile = `${startup_page}/settings/evaluation-template`;
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
+export const news1 = `${startup_page}/news/news1`;
 
 // JØRGEN's NEW ROUTES
 export const notifications_page = `${startup_page}/notifications`;
@@ -84,3 +85,4 @@ export const add_section = `${startup_page}/components/ui/evaluation-templates/a
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
 export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
+export const news = `${startup_page}/components/ui/navigation1/news`;

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./notifications.scss";
-import { ICONPOSITION, SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
+import {
+  ICONPOSITION,
+  SETTINGSMENU,
+} from "../../NewDesign/srv_startup/pages/constants";
 import NotificationProfile from "../../../assets/images/notification-profile.png";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
 import NotificationAlarm from "../../../assets/images/notification-alarm.png";

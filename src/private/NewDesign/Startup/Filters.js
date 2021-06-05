@@ -80,7 +80,7 @@ export default function Filters({
   manageColValue,
   evaluationTemplates,
   defaultFilters,
-  setSelectedfunnelGroup
+  setSelectedfunnelGroup,
 }) {
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState();
@@ -147,7 +147,7 @@ export default function Filters({
             title="Kanban"
             items={kanbanDropDown}
             isOpen={kanbanPopup}
-            setSelectedfunnelGroup = {setSelectedfunnelGroup}
+            setSelectedfunnelGroup={setSelectedfunnelGroup}
             setIsOpen={setKanbanPopup}
           ></PopupMenu>
         </div>
@@ -186,7 +186,7 @@ export default function Filters({
     if (val !== "spreadsheet") {
       setOptionalFilter("");
     } else {
-      setKanbanPopup(false)
+      setKanbanPopup(false);
     }
   };
 

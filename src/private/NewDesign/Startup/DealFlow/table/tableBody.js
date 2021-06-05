@@ -205,7 +205,7 @@ export default function TableBody(props) {
                   <td>
                     <ul>
                       {(groupSharingInfo || []).slice(0, 3).map(({ group }) => (
-                        <li>{group.name}</li>
+                        <li>{group.name} {groupSharingInfo.length > 1 ? "," : ""} </li>
                       ))}
                       <li>
                         <button

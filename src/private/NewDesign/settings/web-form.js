@@ -1,6 +1,9 @@
 import React from "react";
 import "./web-form.scss";
-import { ICONPOSITION, SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
+import {
+  ICONPOSITION,
+  SETTINGSMENU,
+} from "../../NewDesign/srv_startup/pages/constants";
 import copy from "../../../assets/images/copy.png";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
 
