@@ -84,3 +84,4 @@ export const add_section = `${startup_page}/components/ui/evaluation-templates/a
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
 export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
+export const news = `${startup_page}/components/ui/navigation1/news`;

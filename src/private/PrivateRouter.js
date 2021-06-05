@@ -41,6 +41,7 @@ import {
   reports,
   notifications_page,
   settings_new,
+  news,
 } from "../definitions";
 
 // Landing page / list
@@ -93,6 +94,7 @@ import AddSection from "./shubham-new-designs/pages/startup/evaluations/add-new-
 // import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
 import Reports from "./shubham-new-designs/pages/reports/reports";
 import Settings_Home from "./shubham-new-designs/pages/settings/settings";
+import News from "./shubham-new-designs/pages/news/news";
 
 // New Startup Info
 import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
@@ -235,6 +237,7 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={add_section} component={AddSection} />
       <Route eaxct path={reports} component={Reports} />
       <Route eaxct path={settings_new} component={Settings_Home} />
+      <Route eaxct path={news} component={News} />
       <Route
         eaxct
         path={`${startup_page}/report/reports`}
