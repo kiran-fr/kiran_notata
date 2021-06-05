@@ -85,3 +85,4 @@ export const group_dashboard = `${startup_page}/components/ui/navigation1/group/
 export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
 export const news = `${startup_page}/components/ui/navigation1/news`;
+export const dashboard_new = `${startup_page}/components/ui/navigation1/dashboard`;
