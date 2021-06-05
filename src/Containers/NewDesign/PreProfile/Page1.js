@@ -199,6 +199,7 @@ export default function Page1({ setPage }) {
         <div className={styles.button_container}>
           <Button
             value="SAVE"
+            hover="primary_hover"
             size="medium"
             buttonStyle="green"
             type={!isSubmitting ? "right_arrow" : ""}
