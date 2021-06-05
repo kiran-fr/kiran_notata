@@ -196,3 +196,13 @@
 .oneLinerTxt {
   font-size: 12px;
 }
+
+.loading_icon {
+  color: var(--color-primary);
+  border-radius: 100%;
+  text-align: center;
+}
+
+.loading_icon i {
+  font-size: 30px;
+}
