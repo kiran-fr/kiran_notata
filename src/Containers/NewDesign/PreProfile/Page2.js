@@ -123,6 +123,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
           <Button
             size="medium"
             buttonStyle="white"
+            hover="white_hover"
             type="button"
             onClick={e => handleBack(e)}
           >
@@ -131,6 +132,7 @@ export default function Page2({ setPage, extraInputs, setExtraInputs, page }) {
           <Button
             value="SAVE"
             size="medium"
+            hover="primary_hover"
             buttonStyle="green"
             type={!isSubmitting ? "right_arrow" : ""}
           >
