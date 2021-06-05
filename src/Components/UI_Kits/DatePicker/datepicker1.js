@@ -4,29 +4,32 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 
-
-
-export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, onChange, startDate, endDate, formatWeekDay }) => {
-  
+export const Datepicker1 = ({
+  isCalendarVisible,
+  dateRange,
+  setCalendarVisible,
+  selected,
+  onChange,
+  startDate,
+  endDate,
+  formatWeekDay,
+}) => {
   const [daterange, setDaterange] = useState([null, null]);
 
-  const setRange = (range) => {
+  const setRange = range => {
     if (range[1]) {
       range[1] = moment(range[1]).endOf("day").toDate();
     }
     setDaterange(range);
-    onChange("dateRange", range );
+    dateRange("dateRange", range);
   };
 
   const presetDateValues = () => {
-
-  
-
     const toDate = moment().endOf("day").toDate();
-    const lastYear = new Date()
+    const lastYear = new Date();
     var pastYear = lastYear.getFullYear() - 1;
     lastYear.setFullYear(pastYear);
-    
+
     const selectDateRange = [
       {
         label: "Last 7 Days",
@@ -51,7 +54,8 @@ export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, 
     ];
     return selectDateRange.map((value, index) => {
       return (
-        <div key={index}
+        <div
+          key={index}
           onClick={() => setRange(value.range)}
           className="datepicker-container__last-day-container__last-day"
         >
@@ -59,8 +63,8 @@ export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, 
         </div>
       );
     });
-  }
-  
+  };
+
   return (
     <>
       <div className="datepicker-container ">
@@ -111,4 +115,4 @@ export const  Datepicker1 = ({ isCalendarVisible, setCalendarVisible, selected, 
       </div>
     </>
   );
-}
+};

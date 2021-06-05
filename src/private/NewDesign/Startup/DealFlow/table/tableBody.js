@@ -10,6 +10,7 @@ import moment from "moment";
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
 import classnames from "classnames";
+import { sortArr } from "../../../CommonFunctions";
 
 export default function TableBody(props) {
   const {
@@ -38,13 +39,15 @@ export default function TableBody(props) {
       setFunnel(false);
     };
 
+    const tagSort = sortArr(tags);
+
     return (
       <div
         className={styles.funnelPopup}
         style={{ top: index > 20 ? "-400%" : `50px` }}
       >
         <ul>
-          {tags?.map(tag => (
+          {tagSort?.map(tag => (
             <li
               key={tag.id}
               onClick={() => updateFunnelTagForConnection(tag.id)}
@@ -205,7 +208,8 @@ export default function TableBody(props) {
                         <li>{group.name}</li>
                       ))}
                       <li>
-                         <button onClick={() => setShowTagGroupForId(item.id)}
+                        <button
+                          onClick={() => setShowTagGroupForId(item.id)}
                           className={styles.buttongreen}
                         >
                           <i className="fas fa-plus-circle"></i>
@@ -238,7 +242,6 @@ export default function TableBody(props) {
                             }}
                           >
                             {" "}
-                            {console.log("Funnel & Index: ", funnel, index)}
                             <i
                               className={classnames("fas fa-chevron-down")}
                             ></i>

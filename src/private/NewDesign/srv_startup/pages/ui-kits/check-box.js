@@ -10,6 +10,7 @@ export default function InputCheckBox({
   name,
   value,
   defaultChecked,
+  register,
   ...props
 }) {
   return (
@@ -21,6 +22,7 @@ export default function InputCheckBox({
           value={value}
           name={name}
           onChange={onChange}
+          register={register}
         />
       }
       label={label}

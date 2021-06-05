@@ -179,17 +179,20 @@
             }
         }
     }
-    .MuiTabs-root{
-        position: relative;
-        margin-left: auto;
-        width:250px;
-        margin-right: 17px;
-        margin-top: 25px;
-        .MuiTab-root{
-            min-width:125px;
-        }
 
+    .manage-resources {
+        .MuiTabs-root{
+            position: relative;
+            margin-left: auto;
+            width:250px;
+            margin-right: 17px;
+            margin-top: 25px;
+            .MuiTab-root{
+                min-width:125px;
+            }
+        }
     }
+
     .MuiButtonBase-root{
         font-family: 'Proxima Nova';
         font-style: normal;

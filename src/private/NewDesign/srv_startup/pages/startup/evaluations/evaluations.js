@@ -22,7 +22,6 @@ export default function Evaluations(props) {
     },
     accountData,
   } = props;
-  
 
   const getTotalScore = arr => {
     if (Array.isArray(arr) && arr.length > 0) {
@@ -95,7 +94,7 @@ export default function Evaluations(props) {
               >
                 <SummaryEvaluation
                   companyName={name}
-                  accountData = {accountData}
+                  accountData={accountData}
                   setEditEvaluation={setEditEvaluation}
                   setSaveEvaluation={setSaveEvaluation}
                   selectedTemplateToEvaluate={selectedTemplateToEvaluate}
@@ -618,7 +617,7 @@ export default function Evaluations(props) {
                           groupEvalState === "" ? "collapse" : ""
                         )
                       }
-                    ></i>
+                    />
                     Groups evaluations
                   </div>
                   <div className={groupEvalState}>
@@ -654,7 +653,6 @@ export default function Evaluations(props) {
                 <div className="col-sm-12 text-right">
                   <button
                     className="evaluation-templates-btn"
-                    // onClick={() => setManageTemplateModal(true)}
                     onClick={() =>
                       props.history.push(evaluation_template_new_dev)
                     }
@@ -679,7 +677,7 @@ export default function Evaluations(props) {
           submitTxt="Request"
           closeTxt="Cancel"
           children={<RequestEvaluation />}
-        ></Modal>
+        />
       )}
       {fullListModal && (
         <Modal
@@ -692,7 +690,7 @@ export default function Evaluations(props) {
           }}
           submitTxt="OK"
           children={<SubmissionFullList obj={fullListModalObj} />}
-        ></Modal>
+        />
       )}
       {evaluateModal && (
         <Modal
@@ -713,7 +711,7 @@ export default function Evaluations(props) {
               setSavedAnswers={setSavedAnswers}
             />
           }
-        ></Modal>
+        />
       )}
       {manageTemplateModal && (
         <Modal
@@ -726,8 +724,8 @@ export default function Evaluations(props) {
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<ManageTemplates></ManageTemplates>}
-        ></Modal>
+          children={<ManageTemplates />}
+        />
       )}
     </div>
   );

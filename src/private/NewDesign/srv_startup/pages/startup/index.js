@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../public.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 
 import StartupInfo from "./startup-info";
 import Overview from "./overview";
@@ -13,6 +13,7 @@ import Evaluations from "./evaluations/evaluations";
 import { connectionGet, accountGet } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 import { startup_page } from "definitions";
+import queryString from "query-string";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,31 +37,52 @@ function a11yProps(index) {
   };
 }
 
-export const Startup = props => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-  const { data: connectionGetData, loading, error } = useQuery(connectionGet, {
-    variables: { id },
-  });
-  const { data: accountGetData } = useQuery(accountGet);
+export const Startup = ({ match, history, location }) => {
+  // Url stuff
+  const { id } = match?.params;
+
+  // States
   const [value, setValue] = React.useState(0);
+
+  // Queries
+  const { data: accountGetData } = useQuery(accountGet);
+  const [getConnection, getConnectionRes] = useLazyQuery(connectionGet);
+
+  // Execute query
+  useEffect(() => {
+    getConnection({ variables: { id } });
+  }, [id]);
+
+  // Set tab from url
+  useEffect(() => {
+    const { tab } = queryString.parse(location.search);
+    if (tab) {
+      try {
+        setValue(parseInt(tab));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [location]);
+
+  // Data maps
+  let connection = getConnectionRes?.data?.connectionGet;
+
+  // Update tab in url
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    let pathName = `${match.url}?tab=${newValue}`;
+    history.push(pathName);
   };
 
   const redirectToCompanyPage = connectionId => {
     let path = `${startup_page}/company/${connectionId}`;
-    props.history.push(path);
+    history.push(path);
   };
-  if (!connectionGetData) {
+
+  if (!getConnectionRes.data) {
     return <GhostLoader />;
   }
-  let connection = connectionGetData?.connectionGet;
 
-  console.log(connectionGetData);
   return (
     <>
       <div className="col-12 startup-container">
@@ -68,7 +90,7 @@ export const Startup = props => {
           <Tab label="STARTUP INFO" {...a11yProps(0)} />
           <Tab label="OVERVIEW" {...a11yProps(1)} />
           <Tab label="EVALUATIONS" {...a11yProps(2)} />
-          <Tab label="GROUP AND INDIVIDUALS" {...a11yProps(3)} />
+          <Tab label="GROUPS" {...a11yProps(3)} />
           <Tab label="MATERIALS" {...a11yProps(4)} />
         </Tabs>
       </div>
@@ -83,13 +105,13 @@ export const Startup = props => {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Evaluations
-          history={props.history}
+          history={history}
           connection={connection}
           accountData={accountGetData?.accountGet}
         />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <GroupsIndividuals />
+        <GroupsIndividuals connection={connection} history={history} />
       </TabPanel>
       <TabPanel value={value} index={4}>
         <Materials />

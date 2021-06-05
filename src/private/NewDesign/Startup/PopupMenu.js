@@ -3,7 +3,13 @@ import styles from "./PopupMenu.module.css";
 
 import KanbanIcon from "../../../assets/images/KanbanIcon.svg";
 
-export default function PopupMenu({ title, items, isOpen, setIsOpen }) {
+export default function PopupMenu({
+  title,
+  items,
+  isOpen,
+  setIsOpen,
+  setSelectedfunnelGroup,
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -13,6 +19,10 @@ export default function PopupMenu({ title, items, isOpen, setIsOpen }) {
   const close = () => {
     setIsOpen(false);
     setOpen(false);
+  };
+
+  const handleSelected = (name, index) => {
+    setSelectedfunnelGroup(index);
   };
 
   return (
@@ -38,8 +48,12 @@ export default function PopupMenu({ title, items, isOpen, setIsOpen }) {
               ></i>
             </div>
             <div className={styles.menu_items}>
-              {items.map((name, i) => {
-                return <div onClick={() => setOpen(false)}>{name}</div>;
+              {items.map((name, index) => {
+                return (
+                  <div key={index} onClick={() => handleSelected(name, index)}>
+                    {name}
+                  </div>
+                );
               })}
             </div>
           </div>
