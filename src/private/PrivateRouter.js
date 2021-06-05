@@ -106,6 +106,7 @@ import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/rep
 
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
+import { SectionPage } from "./NewDesign/srv_startup/pages/startup/evaluations/section-page";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -231,7 +232,7 @@ export const RouterComponent = ({ history }) => {
       <Route
         exact
         path={`${evaluation_template_profile}/:id/:sectionId`}
-        component={TemplateSection}
+        component={SectionPage}
       />
       <Route exact path={add_section_dev} component={AddSectionDev} />
 
