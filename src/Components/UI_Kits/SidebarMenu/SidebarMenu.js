@@ -14,6 +14,7 @@ import {
   settings_new,
   news,
   dashboard_new,
+  news1,
 } from "definitions.js";
 
 // Styles
@@ -57,7 +58,7 @@ export function SideBarMenu() {
       label: "News",
       iconClass: "fas fa-globe",
       iconStyle: { paddingTop: "2px" },
-      link: news,
+      link: news1,
     },
   ];
 

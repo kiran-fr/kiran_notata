@@ -43,6 +43,7 @@ import {
   settings_new,
   news,
   dashboard_new,
+  news1,
 } from "../definitions";
 
 // Landing page / list
@@ -78,6 +79,7 @@ import GroupSettings from "./pages/Groups/GroupSettings";
 import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
 import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
 // import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
+import News1 from "./NewDesign/news/news";
 
 // Loader
 import { GhostLoader } from "Components/elements";
@@ -109,6 +111,7 @@ import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/rep
 
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
+import { SectionPage } from "./NewDesign/srv_startup/pages/startup/evaluations/section-page";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -234,7 +237,7 @@ export const RouterComponent = ({ history }) => {
       <Route
         exact
         path={`${evaluation_template_profile}/:id/:sectionId`}
-        component={TemplateSection}
+        component={SectionPage}
       />
       <Route exact path={add_section_dev} component={AddSectionDev} />
 
@@ -242,6 +245,7 @@ export const RouterComponent = ({ history }) => {
       <Route eaxct path={reports} component={Reports} />
       <Route eaxct path={settings_new} component={Settings_Home} />
       <Route eaxct path={news} component={News} />
+      <Route eaxct path={news1} component={News1} />
       <Route
         eaxct
         path={`${startup_page}/setting/settingPage`}

@@ -16,6 +16,7 @@ export default gql`
         options {
           val
           sid
+          score
         }
       }
     }
