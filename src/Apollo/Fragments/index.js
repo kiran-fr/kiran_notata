@@ -23,3 +23,5 @@ export { default as grouplogItemFragments } from "./grouplogItemFragments";
 
 export { default as presentationFragments } from "./presentationFragments";
 export { default as pageMetaFragments } from "./pageMetaFragments";
+
+export { default as newsFragments } from "./newsFragments";

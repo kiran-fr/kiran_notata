@@ -186,10 +186,9 @@ const FileUploader = ({ connection }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [mutate] = useMutation(creativeUpdate);
+
   const folderPath = `${connection?.creative?.id}/`;
-
   const formRef = useRef(null);
-
   const [progress, setProgress] = useState();
 
   async function handleUpload(e) {

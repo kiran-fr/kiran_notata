@@ -64,6 +64,8 @@ export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-
 export const evaluation_template_profile = `${startup_page}/settings/evaluation-template`;
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
 export const news1 = `${startup_page}/news/news1`;
+export const edit_news = `${startup_page}/news/edit`;
+export const new_news = `${startup_page}/news/new`;
 
 // JØRGEN's NEW ROUTES
 export const notifications_page = `${startup_page}/notifications`;

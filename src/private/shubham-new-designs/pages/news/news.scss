@@ -200,9 +200,12 @@
                 }
                 &__icons{
                     margin-top:8px;
-                    img{
+                    img {
                         margin-right: 5px;
                         cursor: pointer;
+                    }
+                    .disabled {
+                        filter: grayscale(100%);
                     }
                 }
             }
