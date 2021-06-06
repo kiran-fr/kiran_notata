@@ -4,47 +4,52 @@ import DropDown from "../../../../assets/images/DropDown.svg";
 import Sort from "../../../../assets/images/sort.svg";
 import SortByPopup from "./SortByPopup";
 
-export default function BoardHeader({ children, icon, filters, setFilter, index }) {
-
-  console.log('indexPosition', index)
+export default function BoardHeader({
+  children,
+  icon,
+  filters,
+  setFilter,
+  index,
+}) {
+  console.log("indexPosition", index);
   const [popup, setPopup] = useState(false);
   const [sorting, setSorting] = useState(false);
   const [name, setName] = useState("Company Name");
 
-  const handleName = (name) =>{
-    setName(name)
-  }
+  const handleName = name => {
+    setName(name);
+  };
 
   const handlePopup = () => {
-    setPopup(!popup)
-  }
+    setPopup(!popup);
+  };
 
-  const handleSorting = (index) => {
-    console.log('sortingvalue')
+  const handleSorting = index => {
+    console.log("sortingvalue");
     if (name === "Company Name") {
-      let sortBy =  "ALPHA";
-      let sortDirection = 
+      let sortBy = "ALPHA";
+      let sortDirection =
         filters.sortBy === "ALPHA" && filters.sortDirection !== "DESC"
           ? "DESC"
           : "ASC";
-        setFilter({
+      setFilter({
         sortBy,
         sortDirection,
-        indexNumber: index
+        indexNumber: index,
       });
     } else {
-      let sortBy =  "STARRED";
-      let sortDirection = 
+      let sortBy = "STARRED";
+      let sortDirection =
         filters.sortBy === "STARRED" && filters.sortDirection !== "DESC"
           ? "DESC"
           : "ASC";
-        setFilter({
+      setFilter({
         sortBy,
         sortDirection,
-        indexNumber: index
+        indexNumber: index,
       });
     }
-  }
+  };
 
   return (
     <div className={styles.boardHead}>
@@ -56,10 +61,10 @@ export default function BoardHeader({ children, icon, filters, setFilter, index 
           isOpen={popup}
           setIsOpen={handleName}
         ></SortByPopup>
-        <span onClick={() =>handlePopup()}>
+        <span onClick={() => handlePopup()}>
           Sort By<img src={DropDown} alt="Drop Down Icon"></img>
         </span>
-        <span onClick ={()=>handleSorting(index)}>
+        <span onClick={() => handleSorting(index)}>
           <img src={Sort} alt="Sort"></img>
         </span>
       </span>

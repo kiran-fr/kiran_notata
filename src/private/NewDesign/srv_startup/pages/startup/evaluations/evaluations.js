@@ -110,7 +110,7 @@ export default function Evaluations(props) {
                 style={{ display: saveEvaluation !== true ? "block" : "none" }}
               >
                 <EditEvaluation
-                  setEvaluateModal ={setEvaluateModal}
+                  setEvaluateModal={setEvaluateModal}
                   companyName={name}
                   setEditEvaluation={setEditEvaluation}
                   setSaveEvaluation={setSaveEvaluation}

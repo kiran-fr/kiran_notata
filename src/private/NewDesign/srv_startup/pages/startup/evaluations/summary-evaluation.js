@@ -16,9 +16,8 @@ export default function SummaryEvaluation({
   allAnswers,
   evaluation,
   accountData,
-  setEvaluateModal
+  setEvaluateModal,
 }) {
-
   const [deleteMoal, setDeleteMoal] = useState(false);
   const [mutateEvaluationDelete] = useMutation(evaluationDelete);
   let sectionNamesArr = selectedTemplateToEvaluate?.sections?.map(section => {
@@ -93,14 +92,12 @@ export default function SummaryEvaluation({
             {moment(selectedTemplateToEvaluate?.createdAt).format("lll")}
           </div>
           <div className="col-sm-12 col-xs-12 created-on">
-            Created by: {
-              accountData
-              ?
-                (accountData.members[0].given_name) + " " +
-                (accountData.members[0].family_name)
-              :
-                ""
-            }
+            Created by:{" "}
+            {accountData
+              ? accountData.members[0].given_name +
+                " " +
+                accountData.members[0].family_name
+              : ""}
             {/* {selectedTemplateToEvaluate?.createdBy} */}
           </div>
         </div>

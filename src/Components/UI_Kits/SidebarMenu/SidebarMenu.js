@@ -12,6 +12,8 @@ import {
   pre_profile,
   reports,
   settings_new,
+  news,
+  dashboard_new,
   news1,
 } from "definitions.js";
 
@@ -27,13 +29,12 @@ export function SideBarMenu() {
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
   let menuList = [
-    // {
-    //   label: "Dashboard",
-    //   iconClass: "fas fa-signal-alt-3",
-    //   iconStyle: {},
-    //   link: "",
-    //   // highlight the text using dummy url (changed by siva)
-    // },
+    {
+      label: "Dashboard",
+      iconClass: "fas fa-signal-alt-3",
+      iconStyle: {},
+      link: dashboard_new,
+    },
     {
       label: "My Startups",
       iconClass: "fas fa-briefcase",

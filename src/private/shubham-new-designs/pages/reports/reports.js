@@ -35,46 +35,46 @@ export default function Reports() {
           <div className="card">
             <div className="card-heading">Funnels</div>
             <div className="row">
-              <div className="col-sm-10 col-lg-6 col-md-7 funnels-container">
-                <div className="funnels-container__filter">
-                  <div className="funnels-container__filter__stages">
+              <div className="col-sm-10 col-lg-6 col-md-7 reports-funnels-container">
+                <div className="reports-funnels-container__filter">
+                  <div className="reports-funnels-container__filter__stages">
                     STAGES
                   </div>
-                  <div className="funnels-container__filter__icons">
+                  <div className="reports-funnels-container__filter__icons">
                     <i class="fa fa-filter" aria-hidden="true"></i>
                     <i class="fa fa-signal" aria-hidden="true"></i>
                   </div>
                 </div>
-                <div className="funnels-container__funnels">
-                  <div className="funnels-container__funnels__funnel">
+                <div className="reports-funnels-container__funnels">
+                  <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">58</div>
                     <div className="funnel-chart">
                       <div className="red"></div>
                     </div>
                     <div className="funnel-type">Reviewed</div>
                   </div>
-                  <div className="funnels-container__funnels__funnel">
+                  <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
                       <div className="blue"></div>
                     </div>
                     <div className="funnel-type">Met</div>
                   </div>
-                  <div className="funnels-container__funnels__funnel">
+                  <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
                       <div className="purple"></div>
                     </div>
                     <div className="funnel-type">Analyzed</div>
                   </div>
-                  <div className="funnels-container__funnels__funnel">
+                  <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
                       <div className="orange"></div>
                     </div>
                     <div className="funnel-type">IC</div>
                   </div>
-                  <div className="funnels-container__funnels__funnel">
+                  <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
                       <div className="green"></div>
@@ -83,14 +83,14 @@ export default function Reports() {
                   </div>
                 </div>
               </div>
-              <div className="col-sm-10 col-lg-6 col-md-5 funnels-container__data-container">
-                <div className="row funnels-container__data-container__data-summary">
+              <div className="col-sm-10 col-lg-6 col-md-5 reports-funnels-container__data-container">
+                <div className="row reports-funnels-container__data-container__data-summary">
                   <div className="col-sm-6 col-xs-6 reviewed">Reviewed</div>
                   <div className="col-sm-6 col-xs-6 no-of-records">
                     10 of 250
                   </div>
                 </div>
-                <div className="funnels-container__data-container__data-headers">
+                <div className="reports-funnels-container__data-container__data-headers">
                   <div className="row">
                     <div className="col-sm-6 col-xs-6 name">Name</div>
                     <div className="col-sm-6 col-xs-6 added">Added</div>
@@ -98,7 +98,7 @@ export default function Reports() {
                   {[...Array(8)].map((elementInArray, index) => {
                     return (
                       <div key={`data-record-id-${index}`}>
-                        <div className="row funnels-container__data-container__data-record">
+                        <div className="row reports-funnels-container__data-container__data-record">
                           <div className="col-sm-6 col-xs-6 funnel-name">
                             Sanity Corp
                           </div>
