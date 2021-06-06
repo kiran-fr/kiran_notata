@@ -33,8 +33,7 @@
 }
 
 .revokeURL {
-  background-color: #424242;
-  color: #fff;
+  background-color: #f4f4f4;
   padding: 20px;
   font-family: Proxima Nova;
   font-size: 13px;
@@ -42,9 +41,26 @@
 }
 
 .revokeURL a {
-  color: #fff;
+  color: rgba(106, 106, 106, 1);
 }
 
 .revokeURL a:hover {
   color: rgb(221, 221, 221);
+}
+
+.copy {
+  margin-top: 14px;
+  display: block;
+  color: rgba(96, 206, 184, 1);
+  font-family: Proxima Nova;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.copy svg {
+  margin-right: 6px;
 }
