@@ -19,12 +19,20 @@ export default function ArchiveList({
       },
     }
   );
+
   let archivedConnections = connectionsGetData?.connectionsGet;
   return (
     <div className="row tab-panel-container archive-list-container">
       <div className="col-sm-12">
         <div className="card">
-          <div className="heading">Archive</div>
+          <div className="heading">
+            <i
+              onClick={() => setPageState(OVERVIEWPAGESTATE.OVERVIEW)}
+              class="fa fa-chevron-left"
+              aria-hidden="true"
+            ></i>
+            Archive
+          </div>
           <div className="startups">Startups</div>
           {loading ? (
             <div className="archive-list-data">Loading...</div>
