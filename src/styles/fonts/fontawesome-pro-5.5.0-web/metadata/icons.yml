@@ -10486,7 +10486,7 @@ hacker-news:
   changes:
     - '4.1'
     - 5.0.0
-  label: Hacker News
+  label: Hacker DashboardNews
   search:
     terms: []
   styles:
@@ -10495,7 +10495,7 @@ hacker-news:
 hacker-news-square:
   changes:
     - 5.0.0
-  label: Hacker News Square
+  label: Hacker DashboardNews Square
   search:
     terms: []
   styles:

@@ -171,7 +171,7 @@ export default function Table() {
                 <div className={styles.startupStatus}>
                   <img src={Red} /> Reviewed{" "}
                   <span onClick={() => setFunnel(0)}>
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down" />
                   </span>
                   {funnel === 0 && <FunnelPopup />}
                 </div>
