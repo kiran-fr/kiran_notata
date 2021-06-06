@@ -1,6 +1,13 @@
 .news-container{
     display: flex;
     justify-content: center;
+
+    .delete-btn {
+        font-size: 12px;
+        color: var(--color-primary);
+        cursor: pointer;
+    }
+
     &__main{
         width:680px;
         @media only screen and(min-width:768px) {
@@ -175,15 +182,30 @@
         font-size: 24px;
         line-height: 29px;
         color: #6A6A6A;
+
+        .new-icon {
+            padding-left: 10px;
+            cursor: pointer;
+            color: #53cab2;
+        }
     }
     &__card{
         margin-top:15px;
+
+
+
         &__heading{
             padding-left: 60px!important;
             @media only screen and(max-width:768px) {
                 padding-left: 24px!important;
             }
             padding-top:40px!important;
+            .edit-icon {
+                color: #71d0bd;
+                cursor: pointer;
+                font-size: 16px;
+                padding-left: 10px;
+            }
         }
         &__news{
             font-family: 'Proxima Nova';
@@ -273,11 +295,9 @@
         display: flex;
         justify-content: space-between;
         padding-top: 20px;
-        .delete-btn {
-            font-size: 12px;
-            color: var(--color-primary);
-            cursor: pointer;
-        }
+
+
+
         .save-btn{
             height: 18px;
             background-color: #FF8775;

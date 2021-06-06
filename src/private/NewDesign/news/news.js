@@ -2,20 +2,10 @@ import React from "react";
 import "./news.scss";
 import like from "../../../assets/images/like.png";
 import dislike from "../../../assets/images/dislike.png";
-import newsImg from "../../../assets/images/news-img.png";
-import MultiSelect from "../srv_startup/pages/ui-kits/multi-select";
-import uploadImage from "../../../assets/images/news-upload.png";
-import ButtonWithIcon from "../srv_startup/pages/ui-kits/button-with-icon";
-import { ICONPOSITION } from "../srv_startup/pages/constants";
 import { useMutation, useQuery } from "@apollo/client";
 import moment from "moment";
-import { newsGet } from "../../Apollo/Queries";
-import {
-  newsSet,
-  newsCreate,
-  newsUpdate,
-  newsDelete,
-} from "../../Apollo/Mutations";
+import { newsGet, userGet } from "../../Apollo/Queries";
+import { newsSet } from "../../Apollo/Mutations";
 import { GhostLoader } from "../../../Components/elements";
 import { new_news, edit_news } from "../../../definitions";
 
@@ -36,10 +26,16 @@ function EachNews({ data, history }) {
   return (
     <div className="card news-container__card">
       <div className="card-heading news-container__card__heading">
-        {data.title}{" "}
-        <span onClick={() => history.push(`${edit_news}/${data.id}`)}>
-          edit
-        </span>
+        {data.title}
+
+        {data.canEdit && (
+          <i
+            className="fas fa-pen edit-icon"
+            onClick={() => {
+              history.push(`${edit_news}/${data.id}`);
+            }}
+          />
+        )}
       </div>
 
       {data.image && (
@@ -125,6 +121,8 @@ function EachNews({ data, history }) {
 }
 
 export default function News1({ history }) {
+  const userQuery = useQuery(userGet);
+
   const { data, loading } = useQuery(newsGet);
   let news = data?.newsGet || [];
 
@@ -132,19 +130,21 @@ export default function News1({ history }) {
     return <GhostLoader />;
   }
 
+  let canEditNews = userQuery?.data?.userGet?.canEditNews;
+
   return (
     <div className="news-container">
       <div className="news-container__main">
         <div className="news-container__heading">
           <span>News</span>
-          <span
-            onClick={() => {
-              history.push(new_news);
-            }}
-          >
-            {" "}
-            +
-          </span>
+          {canEditNews && (
+            <i
+              className="fas fa-plus-circle new-icon"
+              onClick={() => {
+                history.push(new_news);
+              }}
+            />
+          )}
         </div>
 
         {news.map(data => (

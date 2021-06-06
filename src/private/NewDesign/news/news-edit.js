@@ -116,7 +116,7 @@ export default function NewsEdit({ history, match }) {
   const [createNews, createNewsRes] = useMutation(newsCreate);
   const [updateNews, updateNewsRes] = useMutation(newsUpdate);
   const [deleteNews, deleteNewsRes] = useMutation(newsDelete);
-  const [deleteImage, deleteImageRes] = useMutation(newsDeleteImage);
+  const [deleteImage] = useMutation(newsDeleteImage);
 
   // Effects
   useEffect(() => {
@@ -325,23 +325,28 @@ export default function NewsEdit({ history, match }) {
                       accept="image/png, image/gif, image/jpeg"
                       onChange={handleUploadImage}
                     />
-                    <span>
-                      <ButtonWithIcon
-                        className="add-picture-btn"
-                        iconName="add"
-                        text={isUploading ? "saving..." : "ADD PICTURE"}
-                        iconPosition={ICONPOSITION.START}
-                      />
-                    </span>
+                    <ButtonWithIcon
+                      className="add-picture-btn"
+                      iconName="add"
+                      text={isUploading ? "saving..." : "ADD PICTURE"}
+                      iconPosition={ICONPOSITION.START}
+                    />
                   </label>
                 </form>
 
                 {data.image && (
-                  <button className="delete-btn" onClick={handleDeleteImage}>
+                  <div
+                    className="delete-btn"
+                    onClick={handleDeleteImage}
+                    style={{
+                      textAlign: "center",
+                      paddingTop: "10px",
+                    }}
+                  >
                     {(!isDeleting && <span>delete image</span>) || (
                       <span>deleting...</span>
                     )}
-                  </button>
+                  </div>
                 )}
               </div>
             </div>
@@ -355,7 +360,7 @@ export default function NewsEdit({ history, match }) {
         <div className="news-container__bottom-container">
           {(id && (
             <div className="delete-btn" onClick={submitDeleteNews}>
-              delete
+              {deleteNewsRes?.loading ? "...deleting" : "delete"}
             </div>
           )) || <span />}
 

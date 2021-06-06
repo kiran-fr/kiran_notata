@@ -9,6 +9,7 @@ export default gql`
     content
     createdAt
     updatedAt
+    canEdit
     createdByUser {
       email
       family_name
