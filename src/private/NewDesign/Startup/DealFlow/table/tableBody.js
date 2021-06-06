@@ -37,7 +37,7 @@ export default function TableBody(props) {
     const updateFunnelTagForConnection = funnelTagId => {
       updateFunnelTag(funnelTagId, id);
       setFunnel(false);
-      setShowFunnel(false)
+      setShowFunnel(false);
     };
 
     const popup = useRef();

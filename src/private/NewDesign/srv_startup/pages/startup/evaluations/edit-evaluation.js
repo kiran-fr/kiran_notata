@@ -17,7 +17,7 @@ export default function EditEvaluation({
   companyName,
   setActiveEvaluation,
   props,
-  setEvaluateModal
+  setEvaluateModal,
 }) {
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -88,26 +88,21 @@ export default function EditEvaluation({
     return "Saving...";
   }
 
-
   //comment
   // const comments = answers.filter(
   //   ({ inputType, questionId: id }) =>
   //     inputType === "COMMENT" && id === questionId
   // );
 
-
   const handleBack = () => {
-    setEvaluateModal(true)
-    setEditEvaluation(false)
-  }
+    setEvaluateModal(true);
+    setEditEvaluation(false);
+  };
 
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
-        <span
-          class="material-icons back-icon"
-          onClick={() => handleBack()}
-        >
+        <span class="material-icons back-icon" onClick={() => handleBack()}>
           arrow_back_ios
         </span>
         <span className="page-heading">{companyName}</span>
