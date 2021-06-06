@@ -80,3 +80,8 @@ export { default as groupSubjectiveScoreAdd } from "./groupSubjectiveScoreAdd";
 export { default as groupSubjectiveScoreRemove } from "./groupSubjectiveScoreRemove";
 export { default as groupEvaluationAdd } from "./groupEvaluationAdd";
 export { default as groupEvaluationRemove } from "./groupEvaluationRemove";
+
+export { default as tagCreate } from "./tagCreate";
+export { default as tagUpdate } from "./tagUpdate";
+export { default as tagGroupCreate } from "./tagGroupCreate";
+export { default as tagGroupUpdate } from "./tagGroupUpdate";
