@@ -108,6 +108,8 @@ import { ElevationTemplates as ElevationTemplatesDev } from "./NewDesign/srv_sta
 import { AddSection as AddSectionDev } from "./NewDesign/srv_startup/pages/startup/evaluations/add-new-section";
 import { TemplateSection } from "./NewDesign/srv_startup/pages/startup/evaluations/template-section";
 import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
+import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
+
 
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
@@ -252,6 +254,10 @@ export const RouterComponent = ({ history }) => {
         component={SettingPage}
       />
       <Route eaxct path={dashboard_new} component={DashboardNew} />
+      <Route eaxct path={`${startup_page}/components/company/dashboard`} component={Dashboard} />
+
+
+      
 
       <Route
         eaxct
