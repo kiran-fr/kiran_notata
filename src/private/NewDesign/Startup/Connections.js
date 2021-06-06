@@ -200,6 +200,7 @@ export default function Connections({ history }) {
   const [filters, setFilterState] = useState(defaultFilters);
   const [currentPage, setCurrentPage] = useState(undefined);
   const [tabValue, setTabValue] = useState("spreadsheet");
+  const [selectedfunnelGroup, setSelectedfunnelGroup] = useState(0);
 
   const [manageColValue, setManageColValue] = useState({
     groups: true,
@@ -276,6 +277,7 @@ export default function Connections({ history }) {
         fullFilter={true}
         tabValue={tabValue}
         setTabValue={setTabValue}
+        setSelectedfunnelGroup={setSelectedfunnelGroup}
         evaluationTemplates={evaluationTemplates}
         setManageColValue={setManageColValue}
       />
@@ -297,7 +299,7 @@ export default function Connections({ history }) {
           />
         </>
       ) : (
-        <Kanban history={history} />
+        <Kanban history={history} selectedfunnelGroup={selectedfunnelGroup} />
       )}
     </>
   );

@@ -1,0 +1,600 @@
+.dashboard-container{
+    .card-heading-designer{
+        padding-top:30px;
+        padding-bottom:30px;
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 24px;
+        color: #FFFFFF;
+    }
+    &__recently-added-card{
+        background: linear-gradient(115.95deg, #FF8E6F 50.04%, #FF6581 97.03%);
+        border-radius: 8px;
+        padding-left:30px;
+        padding-bottom: 52px;
+        height:300px;
+        &__data-container{
+            &__data-entry{
+                padding-top: 8px;
+                display: flex;
+                margin-right: 35px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+                padding-bottom: 12px;
+                .startup-name,
+                .group-name{
+                    font-family: Proxima Nova;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 13px;
+                    line-height: 16px;
+                    color: #FFFFFF;
+                    flex: 1 0 33.3%;
+                }
+                .evaluate{
+                    background: #FFFFFF;
+                    border-radius: 12px;
+                    font-family: Proxima Nova;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 10px;
+                    line-height: 12px;
+                    display: flex;
+                    align-items: center;
+                    text-align: center;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                    color: #FF7460;
+                    height: 16px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    flex: 1 0 33.3%;
+                    max-width: 78px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    &__invited-to-groups-card{
+        background: linear-gradient(115.95deg, #61BDA7 50.04%, #2BA5A5 97.03%);
+        border-radius: 8px;
+        padding-left:30px;
+        height:300px;
+        .card-heading-designer{
+            padding-bottom: 17px;
+        }
+        &__data-container{
+            &__header{
+                display: flex;
+                margin-left: 37px;
+                .group-heading{
+                    font-family: Proxima Nova;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 8px;
+                    line-height: 10px;
+                    letter-spacing: 0.08em;
+                    color: rgba(255, 255, 255, 0.5);
+                    text-transform: uppercase;
+                    flex: 1 0 calc(60% - 70px);
+                }
+                .admin-heading{
+                    font-family: Proxima Nova;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 8px;
+                    line-height: 10px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.5);
+                    flex: 1 0 40%;
+                }
+            }
+            &__data-entry{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-right: 35px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+                padding-bottom: 12px;
+                padding-top:8px;
+                .group-name{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 13px;
+                    line-height: 16px;
+                    color: #FFFFFF;
+                    display: flex;
+                    align-items: center;
+                    flex: 1 0 60%;
+                    span{
+                        margin-right:13px;
+                        font-size: 18px!important;
+                    }
+                }
+                .admin{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 13px;
+                    line-height: 16px;
+                    text-decoration-line: underline;
+                    color: #FFFFFF;
+                    flex: 1 0 40%;
+                }                
+            }
+        }
+        &__invite-container{
+            background: rgba(0, 0, 0, 0.06);
+            margin-left: -20px;
+            margin-right: 10px;
+            margin-top:10px;
+            padding: 15px 30px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            &__invite{
+                .invite-member{
+                    .invitation-name{
+                        font-family: 'Proxima Nova';
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 12px;
+                        line-height: 15px;
+                        text-decoration-line: underline;
+                        color: #FFFFFF;
+                    }
+                    .invitation-text{
+                        font-family: 'Proxima Nova';
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 15px;
+                        color: #FFFFFF;
+                    }
+                }
+                .dashboard-container__invited-to-groups-card__data-container__data-entry{
+                    border-bottom: 0px;
+                }
+            }
+            &__close{
+                margin-left: auto;
+                span{
+                    color: rgba(255, 255, 255, 0.5);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    &__my-startups{
+        padding:30px;
+        height:300px;
+        &__heading{
+            font-family: Proxima Nova;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+
+            color: #969BA3;
+        }
+        &__data-container{
+            margin-top:17px;
+            .data-entry-heading{
+                border-bottom: none!important;
+            }
+            &__data-entry{
+                margin-top:25px;
+                display: flex;
+                flex-wrap: wrap;
+                @media only screen and(max-width:768px) {
+                    padding-bottom: 15px;
+                    border-bottom: 1px solid #E8E8E8;
+                }
+                &__heading{
+                    font-family: "Proxima Nova";
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 8px;
+                    line-height: 10px;
+                    letter-spacing: 0.08em;
+                    color: #CACACA;
+                    flex:1 0 33.3%;
+                    @media only screen and(max-width:768px) {
+                        display: none;
+                    }
+                }
+                &__startup-name{
+                    font-family: Proxima Nova;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 15px;
+                    line-height: 18px;
+                    color: #6A6A6A;
+                    flex: 1 0 33.3%;
+                    @media only screen and(max-width:768px) {
+                        flex: 1 0 50%;
+                    }
+                }
+                &__funnels{
+                    flex: 1 0 33.3%;
+                    @media only screen and(max-width:768px) {
+                        flex: 1 0 50%;
+                    }
+                    display: flex;
+                    &__funnel{
+                        .red-100{
+                            width:14px;
+                            height:2px;
+                            background: #FF7979;
+                            margin-top:2px;
+                        }   
+                        .gray-80{
+                            width:12px;
+                            height:2px;
+                            margin-left:1px;
+                            background: #C4C4C4;
+                            margin-top:1.5px;
+                        }
+                        .gray-60{
+                            width:10px;
+                            height:2px;
+                            margin-left:2px;
+                            background: #C4C4C4;
+                            margin-top:1.5px;
+                        }
+                        .gray-40{
+                            width:8px;
+                            height:2px;
+                            margin-left:3px;
+                            background: #C4C4C4;
+                            margin-top:1.5px;
+                        }
+                        .gray-20{
+                            width:6px;
+                            height:2px;
+                            margin-left:4px;
+                            background: #C4C4C4;
+                            margin-top:1.5px;
+                        }
+                        .purple-100{
+                            width:14px;
+                            height:2px;
+                            background: #B38FFF;
+                            margin-top:1px;
+                        }   
+                        .green-100{
+                            width:14px;
+                            height:2px;
+                            background: #71D0BD;
+                            margin-top:1px;
+                        }                        
+                    }
+                    &__funnel-type{
+                        font-family:'Proxima Nova';
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 15px;
+                        line-height: 18px;
+                        color: #B8B8B8;
+                        margin-left:5px;
+                    }
+                }
+                &__subjective-score{
+                    flex:1 0 33.3%;
+                    display: flex;
+                    align-items: center;
+                    @media only screen and(max-width:768px) {
+                        flex: 1 0 100%;                        
+                        margin-top:10px;
+                    }
+                    &__score{
+                        font-family: Proxima Nova;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 15px;
+                        line-height: 18px;
+                        color: #B8B8B8;
+                        @media only screen and(max-width:768px) {
+                            flex: 1 0 50%;
+                        }
+                        @media only screen and(min-width:768px) {
+                            flex: 1 0 10%;
+                        }
+                    }
+                    &__change{                        
+                        @media only screen and(max-width:768px) {
+                            flex: 1 0 50%;
+                        }         
+                        @media only screen and(min-width:768px) {
+                            flex: 1 0 90%;
+                        }              
+                        &__btn{
+                            font-family: 'Proxima Nova';
+                            font-weight: bold;
+                            font-size: 10px;
+                            line-height: 12px;
+                            letter-spacing: 0.03em;
+                            text-transform: uppercase;
+                            color: #FFFFFF;
+                            background-color: #53CAB2;
+                            display: flex;
+                            align-items: center;
+                            padding:2px 15px;
+                            border-radius: 12px;
+                            @media only screen and(min-width:768px) {
+                                margin-left: 20px;
+                            }
+                            max-width: 78px;
+                        }
+                    }
+                }
+            }
+        }
+        &__more-startups{
+            margin-top:25px;
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 11px;
+            line-height: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #60CEB8;
+            i{
+                cursor: pointer;
+            }
+        }
+    }
+    &__news{
+        padding:28px 34px; 
+        &__card-heading{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+            color: #969BA3;
+        }
+        &__date{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 10px;
+            line-height: 12px;
+            letter-spacing: 0.03em;
+            color: #969BA3;
+            margin-top:37px;
+        }
+        &__news{
+            margin-top:13px;
+            &__heading{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 14px;
+                line-height: 17px;
+                color: #6A6A6A;
+            }
+            &__detail{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 18px;
+                letter-spacing: 0.03em;
+                color: #969BA3;
+                margin-top:14px;
+            }
+            
+        }
+        &__footer{
+            margin-top:13px;
+            display: flex;
+            &__name{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 13px;
+                line-height: 16px;
+                letter-spacing: 0.03em;                    
+                color: #6A6A6A;
+            }
+            &__learn-more{
+                font-family: Proxima Nova;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 11px;
+                line-height: 13px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #53CAB2;
+                margin-left:auto;
+                i{
+                    margin-left:10px;
+                }
+            }
+        }
+        &__more-news{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 11px;
+            line-height: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top:55px;
+            padding-bottom:30px;
+            color: #60CEB8;
+            i{
+                cursor: pointer;
+            }
+        }
+    }
+    &__notification{
+        padding:29px 32px;
+        &__heading{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+            color: #969BA3;
+            padding-bottom:22px;
+        }
+        &__notification{
+            display: flex;
+            margin-top: 24px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #F0F0F0;
+            img{
+                height:24px;
+                width:24px;
+            }
+            &__text{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-size: 13px;
+                line-height: 17px;                    
+                letter-spacing: 0.03em;
+                color: #969BA3;
+                margin-left:18px;
+                &__username{                    
+                    font-weight: 500;                    
+                    text-decoration-line: underline;
+                }
+                &__hour-ago{
+                    font-family: 'Roboto';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 14px;
+                    letter-spacing: 0.03em;
+                    color: #969BA3;
+                    margin-top:10px;
+                }
+                &__comment{
+                    font-family: 'Roboto';
+                    font-style: italic;
+                    font-weight: 500;
+                    font-size: 13px;
+                    line-height: 17px;
+                    letter-spacing: 0.03em;
+                    color: #6A6A6A;
+                    margin-top:5px;
+                }
+            }
+        }
+        &__more-updates{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 11px;
+            line-height: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top:55px;
+            padding-bottom:30px;
+            color: #60CEB8;
+            i{
+                cursor: pointer;
+            }
+        }
+    }
+    &__reports-and-analytics{
+        padding:30px 32px;
+        @media only screen and(max-width:768px) {
+            padding: 30px 10px 30px 15px;
+        }
+        &__heading{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+            color: #969BA3;
+        }
+        &__scores-container{
+            margin-top:37px;
+            display: flex;
+            &__score{
+                flex: 1 0 50%;
+                &__heading{
+                    font-family: 'Proxima Nova';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 10px;
+                    line-height: 12px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #969BA3;
+                }
+                &__value-container{
+                    display: flex;
+                    align-items: center;
+                    @media only screen and(max-width:768px) {
+                        flex-wrap: wrap;
+                    }
+                    &__value{
+                        font-family: 'Proxima Nova';
+                        font-style: normal;
+                        font-weight: 300;
+                        font-size: 62px;
+                        line-height: 76px;
+                        color: #6A6A6A;
+                        margin-top: 10px;
+                        @media only screen and(max-width:768px) {
+                            flex: 1 0 100%;
+                        }
+                    }
+                    &__performance{
+                        @media only screen and(min-width:768px) {
+                            margin-left:15px;
+                        }
+                        &__score{
+                            font-family: 'Proxima Nova';
+                            font-style: normal;
+                            font-weight: 600;
+                            font-size: 18px;
+                            line-height: 22px;
+                            color: #60CEB8;
+                        }
+                        &__indicator{
+                            display: flex;
+                            align-items: center;
+                            &--up-arrow{
+                                color:#60CEB8;
+                            }
+                            &--since-last{
+                                margin-left: 2px;
+                                font-family: 'Proxima Nova';
+                                font-style: normal;
+                                font-weight: normal;
+                                font-size: 10px;
+                                line-height: 10px;
+                                color: rgba(0, 0, 0, 0.4);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__chart-funnel-container{
+            display: flex;
+            @media only screen and(max-width:768px) {
+                flex-wrap:wrap ;
+            }
+            &--chart{
+                flex: 1 0 45%;
+                margin-right:5%;
+                @media only screen and(max-width:768px) {
+                    flex: 1 0 90%;
+                    margin-right:2%;
+                    margin-left:2%;
+                }
+            }
+        }
+    }
+}

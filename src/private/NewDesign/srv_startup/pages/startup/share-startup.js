@@ -186,10 +186,9 @@ const FileUploader = ({ connection }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [mutate] = useMutation(creativeUpdate);
+
   const folderPath = `${connection?.creative?.id}/`;
-
   const formRef = useRef(null);
-
   const [progress, setProgress] = useState();
 
   async function handleUpload(e) {
@@ -396,13 +395,10 @@ export default function ShareStartup({ setshareStartup, connection }) {
     if (email) {
       variables.input.sharedWithEmail = email;
     }
-    console.log(variables);
     let update = await mutateCreativeUpdate({
       variables,
     });
     setSaveLoader(false);
-    console.log(update?.creativePut);
-    setshareStartup();
   };
 
   return (
@@ -532,12 +528,11 @@ export default function ShareStartup({ setshareStartup, connection }) {
                     onClick={updateCreativeTemplate}
                     disabled={saveLoader}
                   >
-                    {saveLoader
-                      ?
-                        <i className="fa fa-spinner fa-spin" />
-                      :
-                        "SAVE CHANGES"
-                    }
+                    {saveLoader ? (
+                      <i className="fa fa-spinner fa-spin" />
+                    ) : (
+                      "SAVE CHANGES"
+                    )}
                   </button>
                 </div>
               </div>

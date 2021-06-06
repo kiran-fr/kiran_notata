@@ -96,6 +96,7 @@ export default function Page3({ setPage, extraInputs, history }) {
           <Button
             size="medium"
             buttonStyle="white"
+            hover="white_hover"
             type="left_arrow"
             onClick={() => setPage(2)}
           >
@@ -104,6 +105,7 @@ export default function Page3({ setPage, extraInputs, history }) {
           <Button
             value="SAVE"
             size="medium"
+            hover="primary_hover"
             buttonStyle="green"
             type={!isSubmitting ? "right_arrow" : ""}
           >

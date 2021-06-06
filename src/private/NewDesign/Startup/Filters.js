@@ -24,8 +24,6 @@ import {
 const handleOptional = (setState, filterType, disabled) => {
   if (disabled === "") {
     setState(filterType);
-  } else {
-    console.log("kanban section");
   }
 };
 
@@ -80,6 +78,7 @@ export default function Filters({
   manageColValue,
   evaluationTemplates,
   defaultFilters,
+  setSelectedfunnelGroup,
 }) {
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState();
@@ -132,6 +131,7 @@ export default function Filters({
               height: 15,
               marginRight: "4px",
               transform: "rotateZ(360deg)",
+              opacity: activeTab === "kanban" ? 1 : 0.5,
             }}
             src={KanbanIcon}
             alt=""
@@ -146,6 +146,7 @@ export default function Filters({
             title="Kanban"
             items={kanbanDropDown}
             isOpen={kanbanPopup}
+            setSelectedfunnelGroup={setSelectedfunnelGroup}
             setIsOpen={setKanbanPopup}
           ></PopupMenu>
         </div>
@@ -156,7 +157,12 @@ export default function Filters({
       text: (
         <div>
           <img
-            style={{ width: 15, height: 15, marginRight: "4px" }}
+            style={{
+              width: 15,
+              height: 15,
+              marginRight: "4px",
+              opacity: activeTab === "kanban" ? 0.5 : 1,
+            }}
             src={Column}
             alt=""
           />
@@ -183,6 +189,8 @@ export default function Filters({
     setActiveTab(val);
     if (val !== "spreadsheet") {
       setOptionalFilter("");
+    } else {
+      setKanbanPopup(false);
     }
   };
 
@@ -226,7 +234,10 @@ export default function Filters({
                       onChange={e => handleSearch(e)}
                       onKeyPress={e => searchOnEnter(e)}
                     />
-                    <button onClick={() => handleSearchBtn()}>
+                    <button
+                      className={styles.searchButton}
+                      onClick={() => handleSearchBtn()}
+                    >
                       <span>Search</span>
                       <span>S</span>
                     </button>

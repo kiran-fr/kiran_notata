@@ -4,7 +4,7 @@ import "./edit-evaluation.scss";
 import { useMutation } from "@apollo/client";
 import { evaluationUpdate, evaluationCreate } from "private/Apollo/Mutations";
 import { GeneralInput } from "../Inputs/GeneralInput";
-
+import CommentInput from "../FormInputs/CommentInput";
 export default function EditEvaluation({
   setEditEvaluation,
   setSaveEvaluation,
@@ -16,6 +16,8 @@ export default function EditEvaluation({
   savedAnswers,
   companyName,
   setActiveEvaluation,
+  props,
+  setEvaluateModal,
 }) {
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -86,13 +88,21 @@ export default function EditEvaluation({
     return "Saving...";
   }
 
+  //comment
+  // const comments = answers.filter(
+  //   ({ inputType, questionId: id }) =>
+  //     inputType === "COMMENT" && id === questionId
+  // );
+
+  const handleBack = () => {
+    setEvaluateModal(true);
+    setEditEvaluation(false);
+  };
+
   return (
     <div className="row edit-evaluation-container">
       <div className="col-sm-12">
-        <span
-          class="material-icons back-icon"
-          onClick={() => setEditEvaluation(false)}
-        >
+        <span class="material-icons back-icon" onClick={() => handleBack()}>
           arrow_back_ios
         </span>
         <span className="page-heading">{companyName}</span>
@@ -150,6 +160,16 @@ export default function EditEvaluation({
                         answers={answers}
                         setAnswers={setAnswers}
                       />
+                      <div className="row">
+                        <div className="col-sm-12 col-xs-12 add-comment">
+                          Add comment
+                          {/* <input type="text" className="add-comment-txt" /> */}
+                          <div className="textbox">
+                            <textarea placeholder="Write your comment..." />
+                          </div>
+                        </div>
+                      </div>
+                      <CommentInput {...props} />
                     </div>
                   </div>
                 </>

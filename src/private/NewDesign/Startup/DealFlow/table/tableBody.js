@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles, { activePopup } from "./table.module.css";
 import Red from "../../../../../assets/images/red.png";
 import Green from "../../../../../assets/images/green.png";
@@ -10,6 +10,7 @@ import moment from "moment";
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
 import classnames from "classnames";
+import { sortArr } from "../../../CommonFunctions";
 
 export default function TableBody(props) {
   const {
@@ -36,15 +37,32 @@ export default function TableBody(props) {
     const updateFunnelTagForConnection = funnelTagId => {
       updateFunnelTag(funnelTagId, id);
       setFunnel(false);
+      setShowFunnel(false);
     };
+
+    const popup = useRef();
+
+    useEffect(() => {
+      const handleGlobalEvent = e =>
+        !e.path.includes(popup.current) ? setShowFunnel(false) : null;
+
+      window.addEventListener("click", handleGlobalEvent);
+
+      return () => {
+        window.removeEventListener("click", handleGlobalEvent);
+      };
+    });
+
+    const tagSort = sortArr(tags);
 
     return (
       <div
+        ref={popup}
         className={styles.funnelPopup}
         style={{ top: index > 20 ? "-400%" : `50px` }}
       >
         <ul>
-          {tags?.map(tag => (
+          {tagSort?.map(tag => (
             <li
               key={tag.id}
               onClick={() => updateFunnelTagForConnection(tag.id)}
@@ -70,10 +88,7 @@ export default function TableBody(props) {
   };
 
   const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
-    <div
-      className={styles.startupPreview}
-      style={{ top: `${100 + 56 * no}px` }}
-    >
+    <div className={styles.startupPreview} style={{ top: `${no + 56}px` }}>
       <h1>{companyName}</h1>
       {oneLiner && (
         <>
@@ -202,12 +217,15 @@ export default function TableBody(props) {
                   <td>
                     <ul>
                       {(groupSharingInfo || []).slice(0, 3).map(({ group }) => (
-                        <li>{group.name}</li>
+                        <li>
+                          {group.name} {groupSharingInfo.length > 1 ? "," : ""}
+                        </li>
                       ))}
                       <li>
                         <button
                           onClick={() => setShowTagGroupForId(item.id)}
                           className={styles.buttongreen}
+                          style={{ marginLeft: 0 }}
                         >
                           <i className="fas fa-plus-circle"></i>
                         </button>

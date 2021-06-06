@@ -125,7 +125,6 @@ export default function Page1({ setPage }) {
               className={styles.bottom_box}
             />
           </div>
-          {/* </div> */}
         </form>
       </Card>
     </div>

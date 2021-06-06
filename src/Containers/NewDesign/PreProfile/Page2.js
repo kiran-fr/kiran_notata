@@ -163,6 +163,7 @@ export default function Page2({
           <Button
             size="medium"
             buttonStyle="white"
+            hover="white_hover"
             type="button"
             onClick={handleBack}
           >
@@ -172,6 +173,7 @@ export default function Page2({
           <Button
             value="SAVE"
             size="medium"
+            hover="primary_hover"
             buttonStyle="green"
             type={!isSubmitting && !skipLast ? "right_arrow" : ""}
           >

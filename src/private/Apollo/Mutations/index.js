@@ -81,7 +81,15 @@ export { default as groupSubjectiveScoreRemove } from "./groupSubjectiveScoreRem
 export { default as groupEvaluationAdd } from "./groupEvaluationAdd";
 export { default as groupEvaluationRemove } from "./groupEvaluationRemove";
 
+
 export { default as tagCreate } from "./tagCreate";
 export { default as tagUpdate } from "./tagUpdate";
 export { default as tagGroupCreate } from "./tagGroupCreate";
 export { default as tagGroupUpdate } from "./tagGroupUpdate";
+
+export { default as newsCreate } from "./newsCreate";
+export { default as newsUpdate } from "./newsUpdate";
+export { default as newsDelete } from "./newsDelete";
+export { default as newsSet } from "./newsSet";
+export { default as newsDeleteImage } from "./newsDeleteImage";
+

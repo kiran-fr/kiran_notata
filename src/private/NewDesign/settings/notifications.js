@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./notifications.scss";
-import { ICONPOSITION, SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
+import {
+  ICONPOSITION,
+  SETTINGSMENU,
+} from "../../NewDesign/srv_startup/pages/constants";
 import NotificationProfile from "../../../assets/images/notification-profile.png";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
 import NotificationAlarm from "../../../assets/images/notification-alarm.png";
@@ -9,7 +12,27 @@ import NotificationGroup from "../../../assets/images/notification-group.png";
 import eye from "../../../assets/images/eye.png";
 import eyeGray from "../../../assets/images/eye-gray.png";
 
+import { useQuery, useMutation } from "@apollo/client";
+
+import { notificationsGet } from "private/Apollo/Queries";
+
+import {
+  notificationsMarkAsSeen,
+  notificationsMarkAllAsSeen,
+} from "private/Apollo/Mutations";
+
 export default function Notifications({ setMenuSelected }) {
+  const [markOne, res1] = useMutation(notificationsMarkAsSeen);
+  const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
+
+  const { data } = useQuery(notificationsGet);
+
+  let notifications = data?.notificationsGet || [];
+
+  useEffect(() => {
+    console.log("NOTIFICATIONS: ", notifications);
+  }, [notifications]);
+
   const [isDropDown, setIsDropDown] = useState(false);
   return (
     <div className="notifications-container">

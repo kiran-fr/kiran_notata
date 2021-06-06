@@ -15,7 +15,6 @@ import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 import DeleteStartup from "./delete-startup";
 import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
-import { StylesProvider } from "@material-ui/core";
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
@@ -62,7 +61,7 @@ export default function Overview(props) {
 
   let section = answers?.find(i => i.questionId === "q01_section_info");
   let website = answers?.find(i => i.questionId === "q06_section_info");
-  let slideDeck = answers.find(i => i.questionId === "q01_section_materials");
+  let slideDeck = answers?.find(i => i.questionId === "q01_section_materials");
 
   const getFilteredArray = (scores, isMe) => {
     return scores?.filter(i => i.isMe === isMe) || [];
@@ -181,8 +180,6 @@ export default function Overview(props) {
       setComments(updatedComments);
       setEditComment(index);
     }
-    //setComments(comments);
-    //  setEditComment(index);
   };
 
   const setEditComment = async index => {
@@ -235,7 +232,10 @@ export default function Overview(props) {
   return (
     <>
       {pageState === OVERVIEWPAGESTATE.SHARETEMPLATE ? (
-        <ShareTemplate companyName = {name} setPageState={setPageState}></ShareTemplate>
+        <ShareTemplate
+          companyName={name}
+          setPageState={setPageState}
+        ></ShareTemplate>
       ) : pageState === OVERVIEWPAGESTATE.ARCHIVElIST ? (
         <ArchiveList
           setPageState={setPageState}
@@ -245,51 +245,72 @@ export default function Overview(props) {
       ) : (
         <div className="row tab-panel-container overview-container">
           <div className="col-sm-8">
-            <div className="card">
-              <div className="row">
-                <div className="col-1 col-xs-1">
-                  <div className="name-icon">
-                    {name?.substr(0, 1)?.toUpperCase()}
+            <div className="card overviewContainer">
+              <div className="companyOverview">
+                <div className="companyIcon">
+                  <div className="icon">
+                    <span>{name?.substr(0, 1)?.toUpperCase()}</span>
                   </div>
                 </div>
-                <div
-                  className="col-11 col-sm-10 col-xs-10"
-                  style={{ paddingLeft: 25 }}
-                >
-                  <div className="row overview-container__details">
-                    <div
-                      className="col-lg-5 col-md-12 col-sm-12 col-xs-12"
-                      style={{ paddingLeft: 0 }}
-                    >
-                      <div className="overview-container__heading">{name}</div>
-                    </div>
-                    <div className="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-                      <span className="overview-container__last-updated">
-                        Last updated:
-                      </span>
-                      <span className="overview-container__last-updated__date">
-                        More than {updatedMonth || 0} months ago
-                      </span>
+                <div className="companyDetails">
+                  <div className="companyNameContainer">
+                    <div className="companyName">{name}</div>
+                    <div className="companyLastUpdated">
+                      Last updated:
+                      <span>More than {updatedMonth || 0} months ago</span>
                     </div>
                   </div>
-                  {/* <div className="col-sm-12 col-xs-12"> */}
-                  <p className="overview-container__startup-overview">
-                    {section?.val}
-                  </p>
+                  <div className="companyOneLiner">
+                    <p>{section?.val}</p>
+                    <div className="slideDeckContainer">
+                      <div className="slideDeckButton">
+                        {/* {slideDeck && ( */}
+                        <button>SLIDE DECK</button>
+                        <svg
+                          viewBox="0 0 6 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0.540537 0.159839L0.210697 0.487403C0.107688 0.590493 0.0509398 0.727648 0.0509398 0.874234C0.0509398 1.02074 0.107688 1.15806 0.210697 1.26115L3.94747 4.99776L0.206551 8.73869C0.103542 8.84162 0.046875 8.97893 0.046875 9.12544C0.046875 9.27195 0.103542 9.40934 0.206551 9.51235L0.534359 9.84C0.747531 10.0533 1.09477 10.0533 1.30794 9.84L5.77798 5.38598C5.8809 5.28305 5.95343 5.1459 5.95343 4.99809L5.95343 4.99638C5.95343 4.8498 5.88082 4.71264 5.77798 4.60971L1.32006 0.159839C1.21713 0.0567483 1.07583 0.000163033 0.929321 -3.85729e-08C0.782734 -3.21654e-08 0.643383 0.0567484 0.540537 0.159839Z"
+                            fill="white"
+                          />
+                        </svg>
+
+                        {/* )} */}
+                      </div>
+                      <div className="overviewWebsite">
+                        <a href={website?.val} target="_blank">
+                          {website?.val}www.notata.io
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div className="companyOneLinerBig">
+                <p>{section?.val}</p>
+              </div>
+              <div className="slideDeckContainerBig">
+                <div className="slideDeckButton">
+                  {/* {slideDeck && ( */}
+                  <button>SLIDE DECK</button>
+                  <svg
+                    viewBox="0 0 6 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0.540537 0.159839L0.210697 0.487403C0.107688 0.590493 0.0509398 0.727648 0.0509398 0.874234C0.0509398 1.02074 0.107688 1.15806 0.210697 1.26115L3.94747 4.99776L0.206551 8.73869C0.103542 8.84162 0.046875 8.97893 0.046875 9.12544C0.046875 9.27195 0.103542 9.40934 0.206551 9.51235L0.534359 9.84C0.747531 10.0533 1.09477 10.0533 1.30794 9.84L5.77798 5.38598C5.8809 5.28305 5.95343 5.1459 5.95343 4.99809L5.95343 4.99638C5.95343 4.8498 5.88082 4.71264 5.77798 4.60971L1.32006 0.159839C1.21713 0.0567483 1.07583 0.000163033 0.929321 -3.85729e-08C0.782734 -3.21654e-08 0.643383 0.0567484 0.540537 0.159839Z"
+                      fill="white"
+                    />
+                  </svg>
 
-              <div className="row overview-notata-info">
-                <div className="col-sm-6 col-xs-6 overview-notata-info__slidedeck">
-                  {slideDeck && (
-                    <Button endIcon={<Icon>arrow_forward_ios</Icon>}>
-                      SLIDE DECK
-                    </Button>
-                  )}
+                  {/* )} */}
                 </div>
-                <div className="col-sm-6 col-xs-6 overview-notata-info__web">
+                <div className="overviewWebsite">
                   <a href={website?.val} target="_blank">
-                    {website?.val}
+                    {website?.val}www.notata.io
                   </a>
                 </div>
               </div>
@@ -308,14 +329,6 @@ export default function Overview(props) {
                   </div>
 
                   <div>
-                    {console.log(
-                      "yourteam",
-                      parseFloat(teamAvg),
-                      parseFloat(myAvgScore),
-                      typeof myAvgScore,
-                      myAvgScore.toString()
-                    )}
-
                     <span className="score selected you">
                       {parseFloat(myAvgScore)}
                     </span>
@@ -721,17 +734,19 @@ export default function Overview(props) {
                             ? "You"
                             : `${comment?.createdByUser?.given_name} ${comment?.createdByUser?.family_name}`}
                         </div>
-                        <div className="editDelete_icons">
-                          <i
-                            onClick={() => setEditComment(index)}
-                            className="fas fa-pen"
-                            style={{ color: "#53cab2", marginRight: 10 }}
-                          ></i>
-                          <i
-                            onClick={() => deleteComment(comment.id)}
-                            class="fa fa-trash-o deleted"
-                          ></i>
-                        </div>
+                        {comment?.isMe ? (
+                          <div className="editDelete_icons">
+                            <i
+                              onClick={() => setEditComment(index)}
+                              className="fas fa-pen"
+                              style={{ color: "#53cab2", marginRight: 10 }}
+                            ></i>
+                            <i
+                              onClick={() => deleteComment(comment.id)}
+                              class="fa fa-trash-o deleted"
+                            ></i>
+                          </div>
+                        ) : null}
                       </div>
 
                       <div className="discussions-contianer__disucssions__message">
@@ -787,29 +802,16 @@ export default function Overview(props) {
                     </div>
                   ))}
                 </div>
-                <div className="row" style={{ padding: 0 }}>
-                  <div
-                    className="col-sm-12 col-xs-11"
-                    style={{
-                      padding: 0,
-                      margin: 0,
-                      float: "none",
-                      width: "100%",
-                    }}
-                  >
-                    <input
-                      className="discussions-contianer__disucssions__text"
-                      type="input"
-                      name="message"
-                      value={message}
-                      onChange={handleMessageChange}
-                    />
-                    <span class="discussions-contianer__disucssions__send-icon">
-                      <button type="button" onClick={saveComment}>
-                        <i class="fa fa-paper-plane"></i>
-                      </button>
-                    </span>
-                  </div>
+                <div className="commentInput">
+                  <input
+                    type="input"
+                    name="message"
+                    value={message}
+                    onChange={handleMessageChange}
+                  />
+                  <button type="button" onClick={saveComment}>
+                    <i class="fa fa-paper-plane"></i>
+                  </button>
                 </div>
               </div>
             </div>

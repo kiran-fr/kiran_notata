@@ -1,0 +1,110 @@
+.reports-analytics-funnel{
+    margin-top:57px;
+    &__top-bar{
+        display: flex;
+        &--tags{
+            &--heading{
+                font-family: Proxima Nova;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 10px;
+                line-height: 12px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #969BA3;
+            }
+            &--select-tag{
+                margin-left:5px;
+                font-family: Proxima Nova;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 10px;
+                line-height: 12px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #7FD5C3;
+                i{
+                    margin-left: 5px;
+                    cursor: pointer;
+                }
+            }            
+        }
+        &--chart-types{
+            margin-left:auto;
+            .selected{
+                color:#000;
+                border-bottom: 1px solid #000;
+            }
+            img{
+                margin-top: 3px;
+                margin-right: 5px;
+                height: 10px;
+                padding-bottom:1px;
+            }
+        }
+    }
+    &__funnels{
+        margin-top:40px;
+        display: flex;
+        justify-content: center;
+        &__funnel{
+            width:50px;
+            .score{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: bold;
+                font-size: 14px;
+                line-height: 17px;
+                letter-spacing: 0.03em;
+                color: #6A6A6A;
+                text-align: center;
+            }
+            .funnel-chart{
+                margin-top:10px;
+                height:203px;
+                width:24px;
+                background-color: #F5F7FF;
+                margin-left:13px;
+                margin-right:13px;
+                border-radius: 20px;
+                transform: scale(1, -1);
+                .red{
+                    background: linear-gradient(180deg, #FF725E 0%, #FFAD88 100%);
+                    height:100%;
+                    border-radius: 20px;
+                } 
+                .blue{
+                    background: linear-gradient(180deg, #73C5B2 0%, #96E4D5 100%);
+                    height:80%;
+                    border-radius: 20px;
+                }
+                .purple{
+                    background: linear-gradient(180deg, #9E80DD 0%, #C7ADFF 100%);
+                    height:60%;
+                    border-radius: 20px;
+                }
+                .orange{
+                    background: linear-gradient(180deg, #F5C269 0%, #FFD898 102.82%, rgba(229, 232, 255, 0) 110.91%);
+                    height:40%;
+                    border-radius: 20px;
+                }
+                .green{
+                    background: linear-gradient(180deg, #90E074 0%, #B3FF78 100%);
+                    height:20%;
+                    border-radius: 20px;
+                }
+            }
+            .funnel-type{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 10px;
+                line-height: 12px;
+                letter-spacing: 0.03em;
+                margin-top:10px;
+                text-align: center;
+                color: #969BA3;
+            }                
+        }
+    }
+}

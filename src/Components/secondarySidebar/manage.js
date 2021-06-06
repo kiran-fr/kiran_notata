@@ -52,6 +52,11 @@ export default function ManageSidebar({
           ["evaluationTemplates"]: [],
         });
       } else if (e.target.name === "evaluation" && e.target.checked === true) {
+        setManageColValue({
+          ...manageColValue,
+          ["evaluationTemplates"]: [],
+        });
+
         // evaluation checkbox is check
         evaluationTemplates.forEach(summary => {
           setManageColValue(manageColValue => ({
@@ -112,7 +117,8 @@ export default function ManageSidebar({
   ];
 
   const showAll =
-    manageColValue.evaluationTemplates.length === evaluationTemplates.length &&
+    (manageColValue.evaluationTemplates.length === evaluationTemplates.length ||
+      evaluationTemplates.length === 0) &&
     manageColValue.groups &&
     manageColValue.funnels &&
     manageColValue.tags &&

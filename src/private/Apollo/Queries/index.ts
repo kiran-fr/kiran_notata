@@ -44,4 +44,7 @@ export { default as connectionAutoCompleteName } from "./connectionAutoCompleteN
 
 export { default as notificationsGet } from "./notificationsGet";
 
+export { default as newsGet } from "./newsGet";
+export { default as newsGetOne } from "./newsGetOne";
+
 
