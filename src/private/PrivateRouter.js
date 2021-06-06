@@ -44,6 +44,8 @@ import {
   news,
   dashboard_new,
   news1,
+  new_news,
+  edit_news,
 } from "../definitions";
 
 // Landing page / list
@@ -80,6 +82,8 @@ import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
 import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
 // import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
 import News1 from "./NewDesign/news/news";
+import NewsEdit from "./NewDesign/news/news-edit";
+// import NewsEdit from "./NewDesign/news/news-edit";
 
 // Loader
 import { GhostLoader } from "Components/elements";
@@ -141,6 +145,11 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={facts_templates} component={FactsTemplates} />
 
       <Route exact path={`${facts_template}/:id`} component={FactsTemplate} />
+
+      <Route eaxct path={news1} component={News1} />
+
+      <Route eaxct path={new_news} component={NewsEdit} />
+      <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
 
       <Route
         exact
@@ -247,7 +256,7 @@ export const RouterComponent = ({ history }) => {
       <Route eaxct path={reports} component={Reports} />
       <Route eaxct path={settings_new} component={Settings_Home} />
       <Route eaxct path={news} component={News} />
-      <Route eaxct path={news1} component={News1} />
+
       <Route
         eaxct
         path={`${startup_page}/setting/settingPage`}

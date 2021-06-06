@@ -9,6 +9,7 @@ export default gql`
     family_name
     phone_number
     company
+    canEditNews
     MFA
     accountId
     createdAt
