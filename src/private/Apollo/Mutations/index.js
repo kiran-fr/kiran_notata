@@ -69,3 +69,9 @@ export { default as groupSubjectiveScoreAdd } from "./groupSubjectiveScoreAdd";
 export { default as groupSubjectiveScoreRemove } from "./groupSubjectiveScoreRemove";
 export { default as groupEvaluationAdd } from "./groupEvaluationAdd";
 export { default as groupEvaluationRemove } from "./groupEvaluationRemove";
+
+export { default as newsCreate } from "./newsCreate";
+export { default as newsUpdate } from "./newsUpdate";
+export { default as newsDelete } from "./newsDelete";
+export { default as newsSet } from "./newsSet";
+export { default as newsDeleteImage } from "./newsDeleteImage";
