@@ -671,3 +671,14 @@ span.recharts-legend-item-text {
     left: 5px;
   }
 }
+
+//Loading Icon
+.loading_icon {
+  color: var(--color-primary);
+  border-radius: 100%;
+  text-align: center;
+}
+
+.loading_icon i {
+  font-size: 30px;
+}

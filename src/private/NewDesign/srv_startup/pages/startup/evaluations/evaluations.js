@@ -695,7 +695,7 @@ export default function Evaluations(props) {
       )}
       {evaluateModal && (
         <Modal
-          title="Evaluate startupjbhsdafb"
+          title="Evaluate startup"
           close={() => {
             setEvaluateModal(false);
           }}
