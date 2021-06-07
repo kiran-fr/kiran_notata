@@ -670,6 +670,10 @@ span.recharts-legend-item-text {
   .table_headerChildMiddle .MuiTabs-flexContainer button:last-child::after {
     left: 5px;
   }
+
+  .MuiTab-wrapper > div > span {
+    display: none;
+  }
 }
 
 //Loading Icon

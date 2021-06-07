@@ -52,7 +52,7 @@ export default function GroupDashboard({ match, history }) {
               </div>
 
               {/* Chart */}
-              <div className="col-sm-12 startup-container">
+              <div className="col-sm-12">
                 <div className="card">
                   <StartupPerformanceChart group={group} />
                 </div>
