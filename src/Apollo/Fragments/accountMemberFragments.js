@@ -7,5 +7,6 @@ export default gql`
     family_name
     role
     latestActivity
+    isMe
   }
 `;

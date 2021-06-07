@@ -19,7 +19,6 @@ export default function ExternalForm({ history }: { history: History }) {
   const [copySuccess, setCopySuccess] = useState(false);
 
   const accountQuery = useQuery(accountGet);
-
   let account = accountQuery.data?.accountGet || {};
 
   const loading: boolean = accountQuery.loading;

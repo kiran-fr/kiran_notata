@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
   funnelGroupDelete,
   funnelGroupPut,
-  funnelTagDetele,
+  funnelTagDelete,
   funnelTagPut,
 } from "private/Apollo/Mutations";
 import { funnelGroupGet } from "private/Apollo/Queries";
@@ -55,7 +55,7 @@ export function DeleteFunnel({ funnelTag }) {
   let [
     mutateFunnelTagsDelete,
     { loading: funnelTagDeleteLoading },
-  ] = useMutation(funnelTagDetele, {
+  ] = useMutation(funnelTagDelete, {
     refetchQueries: [{ query: funnelGroupGet }],
     awaitRefetchQueries: true,
   });

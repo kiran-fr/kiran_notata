@@ -227,7 +227,7 @@ export default function TableBody(props) {
                           className={styles.buttongreen}
                           style={{ marginLeft: 0 }}
                         >
-                          <i className="fas fa-plus-circle"></i>
+                          <i className="fas fa-plus-circle" />
                         </button>
                       </li>
                     </ul>
@@ -257,9 +257,7 @@ export default function TableBody(props) {
                             }}
                           >
                             {" "}
-                            <i
-                              className={classnames("fas fa-chevron-down")}
-                            ></i>
+                            <i className={classnames("fas fa-chevron-down")} />
                           </span>
                           {funnel === index && showFunnel && (
                             <FunnelPopup

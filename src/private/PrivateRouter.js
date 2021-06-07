@@ -44,6 +44,7 @@ import {
   news,
   dashboard_new,
   news1,
+  news_view_one,
   new_news,
   edit_news,
 } from "../definitions";
@@ -82,6 +83,7 @@ import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
 import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
 // import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
 import News1 from "./NewDesign/news/news";
+import NewsViewOne from "./NewDesign/news/NewsViewOne";
 import NewsEdit from "./NewDesign/news/news-edit";
 // import NewsEdit from "./NewDesign/news/news-edit";
 
@@ -113,7 +115,6 @@ import { AddSection as AddSectionDev } from "./NewDesign/srv_startup/pages/start
 import { TemplateSection } from "./NewDesign/srv_startup/pages/startup/evaluations/template-section";
 import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
-
 
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
@@ -147,7 +148,7 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={`${facts_template}/:id`} component={FactsTemplate} />
 
       <Route eaxct path={news1} component={News1} />
-
+      <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
       <Route eaxct path={new_news} component={NewsEdit} />
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
 
@@ -263,10 +264,11 @@ export const RouterComponent = ({ history }) => {
         component={SettingPage}
       />
       <Route eaxct path={dashboard_new} component={DashboardNew} />
-      <Route eaxct path={`${startup_page}/components/company/dashboard`} component={Dashboard} />
-
-
-      
+      <Route
+        eaxct
+        path={`${startup_page}/components/company/dashboard`}
+        component={Dashboard}
+      />
 
       <Route
         eaxct

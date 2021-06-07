@@ -1,19 +1,25 @@
-.tags-container {
-  // display: flex;
-    // justify-content: center;
+.profile-container {
+   display: flex;
+   justify-content: center;
+
   &__card {
-    max-width: 529px;
+    max-width: 629px;
     padding-bottom: 40px !important;
   }
   &__heading {
-    // padding-left: 50px!important;
-    // padding-top: 41px!important;
     i {
       color: #53cab2;
       margin-right: 13px;
       cursor: pointer;
     }
   }
+
+  &__content {
+    padding: 40px;
+    margin-top: 20px;
+  }
+
+
   &__tag {
     margin-top: 40px;
     margin-left: 50px;
@@ -62,6 +68,9 @@
         }
       }
     }
+
+
+
     &__available-tags {
       margin-top: 20px;
       margin-right: 30px;
@@ -129,4 +138,5 @@
     margin-top: 20px;
     padding-left: 15px;
   }
+
 }

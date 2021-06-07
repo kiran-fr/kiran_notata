@@ -79,7 +79,9 @@ export const Tags = ({
           ulSize={ulSize}
         />
       </div>
-      {suggested && <div className={styles.tag_sub_title3}>Suggested tags</div>}
+      {suggested && !!items.length && (
+        <div className={styles.tag_sub_title3}>Suggested tags</div>
+      )}
       <div>
         {items.map(item => (
           // TODO: Should not be a button item

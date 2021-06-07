@@ -55,7 +55,7 @@ export function SideBarMenu() {
     },
     //  hide for now  (commented by siva)
     {
-      label: "News",
+      label: "DashboardNews",
       iconClass: "fas fa-globe",
       iconStyle: { paddingTop: "2px" },
       link: news1,
