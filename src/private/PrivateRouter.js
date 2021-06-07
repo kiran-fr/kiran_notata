@@ -15,7 +15,6 @@ import {
   profile,
   tags,
   funnels,
-  settings,
   ui_components,
   team,
   evaluation_templates,
@@ -40,13 +39,19 @@ import {
   add_section_dev,
   reports,
   notifications_page,
-  settings_new,
   news,
   dashboard_new,
   news1,
   news_view_one,
   new_news,
   edit_news,
+  your_team,
+  funnels1,
+  tags1,
+  web_form,
+  notification,
+  setting_profile,
+  settings,
 } from "../definitions";
 
 // Landing page / list
@@ -57,7 +62,7 @@ import Charts from "./pages/Dashboard/Charts/ChartsPage";
 import Profile from "./pages/Profile/Profile";
 import Tags from "./pages/Tags";
 import Funnels from "./pages/Funnels";
-import Settings from "./pages/Settings/Settings";
+// import Settings from "./pages/Settings/Settings";
 import Team from "./pages/Team/Team";
 import StartupPage from "./pages/StartupPage/StartupPage";
 import FactsPage from "./pages/StartupPage/Facts/Facts";
@@ -106,8 +111,8 @@ import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
-// New Startup Info
-import { Settings_Home as SettingPage } from "./NewDesign/settings/settings";
+// // New Startup Info
+// import { Settings_Home as SettingPage } from "./NewDesign/settings/settings";
 
 import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
 import { ElevationTemplates as ElevationTemplatesDev } from "./NewDesign/srv_startup/pages/startup/evaluations/evaluation-templates";
@@ -119,6 +124,15 @@ import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
 import { SectionPage } from "./NewDesign/srv_startup/pages/startup/evaluations/section-page";
+
+//settings
+import Settings from "./NewDesign/settings/settings";
+import yourTeam from "./NewDesign/settings/your-team";
+import webForm from "./NewDesign/settings/web-form";
+import TagGroup from "./NewDesign/settings/tags";
+import Funnels1 from "./NewDesign/settings/funnels";
+import Notifications from "./NewDesign/settings/notifications";
+import ProfileSettings from "./NewDesign/settings/profile";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -142,6 +156,12 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={funnels} component={Funnels} />
 
       <Route exact path={settings} component={Settings} />
+      <Route exact path={your_team} component={yourTeam} />
+      <Route exact path={web_form} component={webForm} />
+      <Route exact path={tags1} component={TagGroup} />
+      <Route exact path={funnels1} component={Funnels1} />
+      <Route exact path={notification} component={Notifications} />
+      <Route exact path={setting_profile} component={ProfileSettings} />
 
       <Route exact path={facts_templates} component={FactsTemplates} />
 
@@ -255,14 +275,14 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={add_section} component={AddSection} />
       <Route eaxct path={reports} component={Reports} />
-      <Route eaxct path={settings_new} component={Settings_Home} />
+      {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
 
-      <Route
+      {/* <Route
         eaxct
-        path={`${startup_page}/setting/settingPage`}
-        component={SettingPage}
-      />
+        path={`${startup_page}/settings`}
+        component={Settings}
+      /> */}
       <Route eaxct path={dashboard_new} component={DashboardNew} />
       <Route
         eaxct

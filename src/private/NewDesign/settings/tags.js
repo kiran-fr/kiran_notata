@@ -16,6 +16,7 @@ import {
   tagGroupUpdate,
   tagUpdate,
 } from "../../Apollo/Mutations";
+import { settings } from "../../../definitions";
 import { group as group_page } from "../../../definitions";
 import DeleteGroup from "../srv_startup/pages/GroupV2/delete-group-modal";
 import { Loader } from "../../../Components/elements";
@@ -375,7 +376,7 @@ function TagGroup({ tagGroup }) {
   );
 }
 
-export default function Tags({ setMenuSelected }) {
+export default function Tags({ history }) {
   // Queries
   const { data, loading, error } = useQuery(tagGroupsGet);
 
@@ -397,7 +398,7 @@ export default function Tags({ setMenuSelected }) {
           <i
             class="fa fa-chevron-left"
             aria-hidden="true"
-            onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+            onClick={() => history.push(settings)}
           />
           Tags
         </div>

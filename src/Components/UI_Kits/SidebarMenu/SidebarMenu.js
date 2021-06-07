@@ -152,7 +152,7 @@ export function SideBarMenu() {
             <div className={styles.menu_list + " " + styles.menu_listSettings}>
               <NavLink
                 exact={true}
-                to={`${startup_page}/setting/settingPage`}
+                to={`${startup_page}/settings`}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}
