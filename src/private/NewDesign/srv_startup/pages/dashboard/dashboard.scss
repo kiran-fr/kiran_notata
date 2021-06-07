@@ -9,6 +9,26 @@
         line-height: 24px;
         color: #FFFFFF;
     }
+
+    .coming-soon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 21px;
+        text-transform: uppercase;
+        color: #b7b7b7;
+    }
+
+    .hide-and-blur {
+        opacity: 0.3;
+        filter: blur(4px)
+    }
+
     &__recently-added-card{
         background: linear-gradient(115.95deg, #FF8E6F 50.04%, #FF6581 97.03%);
         border-radius: 8px;
@@ -16,6 +36,8 @@
         padding-bottom: 52px;
         height:300px;
         &__data-container{
+            max-height: 200px;
+            overflow: hidden;
             &__data-entry{
                 padding-top: 8px;
                 display: flex;
@@ -31,6 +53,8 @@
                     line-height: 16px;
                     color: #FFFFFF;
                     flex: 1 0 33.3%;
+                    text-decoration: underline;
+                    cursor: pointer;
                 }
                 .evaluate{
                     background: #FFFFFF;
@@ -112,6 +136,7 @@
                     span{
                         margin-right:13px;
                         font-size: 18px!important;
+                        cursor: pointer;
                     }
                 }
                 .admin{
@@ -123,7 +148,7 @@
                     text-decoration-line: underline;
                     color: #FFFFFF;
                     flex: 1 0 40%;
-                }                
+                }
             }
         }
         &__invite-container{
@@ -230,7 +255,7 @@
                             height:2px;
                             background: #FF7979;
                             margin-top:2px;
-                        }   
+                        }
                         .gray-80{
                             width:12px;
                             height:2px;
@@ -264,13 +289,13 @@
                             height:2px;
                             background: #B38FFF;
                             margin-top:1px;
-                        }   
+                        }
                         .green-100{
                             width:14px;
                             height:2px;
                             background: #71D0BD;
                             margin-top:1px;
-                        }                        
+                        }
                     }
                     &__funnel-type{
                         font-family:'Proxima Nova';
@@ -287,7 +312,7 @@
                     display: flex;
                     align-items: center;
                     @media only screen and(max-width:768px) {
-                        flex: 1 0 100%;                        
+                        flex: 1 0 100%;
                         margin-top:10px;
                     }
                     &__score{
@@ -304,13 +329,13 @@
                             flex: 1 0 10%;
                         }
                     }
-                    &__change{                        
+                    &__change{
                         @media only screen and(max-width:768px) {
                             flex: 1 0 50%;
-                        }         
+                        }
                         @media only screen and(min-width:768px) {
                             flex: 1 0 90%;
-                        }              
+                        }
                         &__btn{
                             font-family: 'Proxima Nova';
                             font-weight: bold;
@@ -343,13 +368,14 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: #60CEB8;
+            cursor: pointer;
             i{
                 cursor: pointer;
             }
         }
     }
     &__news{
-        padding:28px 34px; 
+        padding:28px 34px;
         &__card-heading{
             font-family: 'Proxima Nova';
             font-style: normal;
@@ -388,7 +414,7 @@
                 color: #969BA3;
                 margin-top:14px;
             }
-            
+
         }
         &__footer{
             margin-top:13px;
@@ -399,7 +425,7 @@
                 font-weight: 600;
                 font-size: 13px;
                 line-height: 16px;
-                letter-spacing: 0.03em;                    
+                letter-spacing: 0.03em;
                 color: #6A6A6A;
             }
             &__learn-more{
@@ -412,6 +438,7 @@
                 text-transform: uppercase;
                 color: #53CAB2;
                 margin-left:auto;
+                cursor: pointer;
                 i{
                     margin-left:10px;
                 }
@@ -428,6 +455,7 @@
             margin-top:55px;
             padding-bottom:30px;
             color: #60CEB8;
+            cursor: pointer;
             i{
                 cursor: pointer;
             }
@@ -457,12 +485,12 @@
                 font-family: 'Roboto';
                 font-style: normal;
                 font-size: 13px;
-                line-height: 17px;                    
+                line-height: 17px;
                 letter-spacing: 0.03em;
                 color: #969BA3;
                 margin-left:18px;
-                &__username{                    
-                    font-weight: 500;                    
+                &__username{
+                    font-weight: 500;
                     text-decoration-line: underline;
                 }
                 &__hour-ago{
@@ -498,6 +526,7 @@
             margin-top:55px;
             padding-bottom:30px;
             color: #60CEB8;
+            cursor: pointer;
             i{
                 cursor: pointer;
             }

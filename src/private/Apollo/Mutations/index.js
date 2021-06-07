@@ -93,3 +93,6 @@ export { default as newsDelete } from "./newsDelete";
 export { default as newsSet } from "./newsSet";
 export { default as newsDeleteImage } from "./newsDeleteImage";
 
+export { default as groupUserInvitationResponse } from "./groupUserInvitationResponse";
+export { default as groupPublicJoin } from "./groupPublicJoin";
+
