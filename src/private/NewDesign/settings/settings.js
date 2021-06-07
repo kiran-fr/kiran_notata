@@ -28,16 +28,16 @@ export const Settings_Home = ({ history }) => {
       {menuSelected === SETTINGSMENU.HOME ? (
         <div className="card settings-container__card">
           <div className="settings-container__card__heading">
-            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            <i class="fa fa-chevron-left" aria-hidden="true" />
             Settings
           </div>
-          <div className="settings-container__card__separator"></div>
+          <div className="settings-container__card__separator" />
           <div className="menu-container">
             <div
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.EVALUATIONTEMPLATE)}
             >
-              <img src={evaluationTemplate}></img>
+              <img src={evaluationTemplate} />
               <div className="menu-container__menu__name">
                 Evaluation templates
               </div>
@@ -46,49 +46,49 @@ export const Settings_Home = ({ history }) => {
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.TAGS)}
             >
-              <img src={tags}></img>
+              <img src={tags} />
               <div className="menu-container__menu__name">Tags</div>
             </div>
             <div
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.FUNNELS)}
             >
-              <img src={tags}></img>
+              <img src={tags} />
               <div className="menu-container__menu__name">Funnels</div>
             </div>
             <div
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.YOURTEAM)}
             >
-              <img src={yourTeam}></img>
+              <img src={yourTeam} />
               <div className="menu-container__menu__name">Your Team</div>
             </div>
             <div
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.WEBFORM)}
             >
-              <img src={webForm}></img>
+              <img src={webForm} />
               <div className="menu-container__menu__name">Web Form</div>
             </div>
             <div
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.USERPROFILE)}
             >
-              <img src={yourProfile}></img>
+              <img src={yourProfile} />
               <div className="menu-container__menu__name">User Profile</div>
             </div>
             <div
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.ACCOUNTSETTINGS)}
             >
-              <img src={accountSettings}></img>
+              <img src={accountSettings} />
               <div className="menu-container__menu__name">Account settings</div>
             </div>
             <div
               className="menu-container__menu"
               onClick={() => setMenuSelected(SETTINGSMENU.NOTIFICATIONS)}
             >
-              <img src={notifications}></img>
+              <img src={notifications} />
               <div className="menu-container__menu__name">Notifications</div>
             </div>
           </div>
@@ -102,7 +102,7 @@ export const Settings_Home = ({ history }) => {
                   class="fa fa-times"
                   aria-hidden="true"
                   onClick={() => setEvaluationCard(false)}
-                ></i>
+                />
               </div>
               <p className="settings-container__evaluation-card__description">
                 In the setting tab, you can create a new evaluation template or
@@ -121,35 +121,32 @@ export const Settings_Home = ({ history }) => {
                     iconName="chevron_left"
                     text="Previous"
                     iconPosition={ICONPOSITION.START}
-                  ></ButtonWithIcon>
+                  />
                   <ButtonWithIcon
                     className="next-btn prev-btn"
                     iconName="chevron_right"
                     text="Next"
                     iconPosition={ICONPOSITION.END}
-                  ></ButtonWithIcon>
+                  />
                 </div>
               </div>
             </div>
           )}
         </div>
       ) : menuSelected === SETTINGSMENU.YOURTEAM ? (
-        <YourTeam setMenuSelected={setMenuSelected}></YourTeam>
+        <YourTeam setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.WEBFORM ? (
-        <WebForm setMenuSelected={setMenuSelected}></WebForm>
+        <WebForm setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.NOTIFICATIONS ? (
-        <Notifications setMenuSelected={setMenuSelected}></Notifications>
+        <Notifications setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.TAGS ? (
-        <Tags setMenuSelected={setMenuSelected}></Tags>
+        <Tags setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.FUNNELS ? (
-        <Funnels setMenuSelected={setMenuSelected}></Funnels>
+        <Funnels setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.EVALUATIONTEMPLATE ? (
-        <ElevationTemplates
-          setMenuSelected={setMenuSelected}
-          isBackButton
-        ></ElevationTemplates>
+        <ElevationTemplates setMenuSelected={setMenuSelected} isBackButton />
       ) : menuSelected === SETTINGSMENU.USERPROFILE ? (
-        <ProfileSettings setMenuSelected={setMenuSelected}></ProfileSettings>
+        <ProfileSettings setMenuSelected={setMenuSelected} history={history} />
       ) : (
         <></>
       )}

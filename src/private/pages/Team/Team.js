@@ -14,7 +14,7 @@ import {
 } from "private/Apollo/Queries";
 
 import {
-  accountInvite,
+  accountInviteCreate,
   userInvitationResponse,
 } from "private/Apollo/Mutations";
 
@@ -44,7 +44,7 @@ import { team, settings } from "definitions.js";
 function Invite({ account, user }) {
   const [showModal, setShowModal] = useState(false);
 
-  const [mutate] = useMutation(accountInvite);
+  const [mutate] = useMutation(accountInviteCreate);
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(
       yup.object().shape({
@@ -130,7 +130,7 @@ function Invite({ account, user }) {
 }
 
 function PendingInvitations({ accountInvitations }) {
-  const [mutate, { loading }] = useMutation(accountInvite);
+  const [mutate, { loading }] = useMutation(accountInviteCreate);
 
   const columns = [
     {
