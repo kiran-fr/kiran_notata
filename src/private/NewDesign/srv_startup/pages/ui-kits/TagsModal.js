@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./TagsModal.module.scss";
+import "./TagsModal.scss";
 import { Tags } from "./Tags/Tags";
 import { useQuery, useMutation } from "@apollo/client";
 

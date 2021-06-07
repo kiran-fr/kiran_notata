@@ -1,8 +1,6 @@
-#tags-container1 {
+.tags-container1 {
   display: flex;
   justify-content: center;
-}
-.tags-container {
   &__card {
     max-width: 529px;
     padding-bottom: 40px !important;

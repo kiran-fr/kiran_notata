@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./SettingTags.module.scss";
+import "./SettingTags.scss";
 import {
   ICONPOSITION,
   SETTINGSMENU,
@@ -147,7 +147,7 @@ function EditTagModal({ tag, setEditTagModal }) {
       submitButtonStyle="secondary"
       children={
         <input
-          className="tags-container__create-new-tag-group-text"
+          className="tags-container1__create-new-tag-group-text"
           type="text"
           value={tagName}
           onChange={e => setTagName(e.target.value)}
@@ -198,7 +198,7 @@ function EditTagGroupModal({ tagGroup, setEditTagGroupModal }) {
       submitButtonStyle="secondary"
       children={
         <input
-          className="tags-container__create-new-tag-group-text"
+          className="tags-container1__create-new-tag-group-text"
           type="text"
           value={tagName}
           onChange={e => setTagName(e.target.value)}
@@ -224,17 +224,17 @@ function TagGroup({ tagGroup }) {
 
   return (
     <>
-      <div className="tags-container__tag">
+      <div className="tags-container1__tag">
         <div className="tags-container__tag__heading">
           {tagGroup.name}
           <span
-            className="material-icons tags-container__tag__heading__more"
+            className="material-icons tags-container1__tag__heading__more"
             onClick={() => setIsTagDropDown(!isTagDropDown)}
           >
             {" "}
             more_horiz{" "}
             {isTagDropDown && (
-              <div className="tags-container__tag__heading__dropdown">
+              <div className="tags-container1__tag__heading__dropdown">
                 <div
                   className="drop-down-item"
                   onClick={() => setIsTagDropDown(false)}
@@ -262,11 +262,11 @@ function TagGroup({ tagGroup }) {
             )}
           </span>
         </div>
-        <div className="tags-container__tag__available-tags">
+        <div className="tags-container1__tag__available-tags">
           {tagGroup?.tags?.map(tag => {
             return (
               <div
-                className="tags-container__tag__available-tags__tag-name"
+                className="tags-container1__tag__available-tags__tag-name"
                 key={`available-tags-record-${tag.id}`}
               >
                 <span
@@ -287,10 +287,10 @@ function TagGroup({ tagGroup }) {
             );
           })}
         </div>
-        <div className="tags-container__tag__add-new-tag">
+        <div className="tags-container1__tag__add-new-tag">
           <div className="heading">Add New Tag</div>
           <div
-            className="tags-container__tag__add-new-tag__input"
+            className="tags-container1__tag__add-new-tag__input"
             style={{ opacity: createTagRes.loading ? 0.5 : 1 }}
           >
             <input
@@ -392,76 +392,74 @@ export default function Tags({ history }) {
   const [createModal, setCreateModal] = useState(false);
   console.log("sir");
   return (
-    <div id="tags-container1">
-      <div className="tags-container" id="tags-container1">
-        <div className="card tags-container__card">
-          <div className="card-heading tags-container__heading">
-            <i
-              class="fa fa-chevron-left"
-              aria-hidden="true"
-              onClick={() => history.push(settings)}
-            />
-            Tags
-          </div>
-
-          {!data && loading && <Loader />}
-
-          {tagGroups.map(tagGroup => (
-            <TagGroup tagGroup={tagGroup} key={tagGroup.id} />
-          ))}
-
-          <ButtonWithIcon
-            className="tags-container__create-new-tag"
-            iconName="add"
-            text="CREATE NEW GROUP"
-            iconPosition={ICONPOSITION.START}
-            onClick={() => setCreateModal(true)}
+    <div className="tags-container1">
+      <div className="card tags-container1__card">
+        <div className="card-heading tags-container1__heading">
+          <i
+            class="fa fa-chevron-left"
+            aria-hidden="true"
+            onClick={() => history.push(settings)}
           />
+          Tags
         </div>
 
-        {createModal && (
-          <Modal
-            title="Create new tag group"
-            loading={createTagGroupRes.loading}
-            submit={async () => {
-              if (createTagGroupRes.loading) {
-                return;
-              }
+        {!data && loading && <Loader />}
 
-              if (!newTagGroup.length) {
-                return;
-              }
+        {tagGroups.map(tagGroup => (
+          <TagGroup tagGroup={tagGroup} key={tagGroup.id} />
+        ))}
 
-              let variables = {
-                input: {
-                  name: newTagGroup,
-                },
-              };
-              try {
-                await createTagGroup({ variables });
-              } catch (error) {
-                console.log("error", error);
-              }
-              setCreateModal(false);
-              setNewTagGroup("");
-            }}
-            close={() => {
-              setCreateModal(false);
-              setNewTagGroup("");
-            }}
-            submitTxt="Create"
-            closeTxt="Cancel"
-            children={
-              <input
-                className="tags-container__create-new-tag-group-text"
-                type="text"
-                value={newTagGroup}
-                onChange={e => setNewTagGroup(e.target.value)}
-              />
-            }
-          />
-        )}
+        <ButtonWithIcon
+          className="tags-container1__create-new-tag"
+          iconName="add"
+          text="CREATE NEW GROUP"
+          iconPosition={ICONPOSITION.START}
+          onClick={() => setCreateModal(true)}
+        />
       </div>
+
+      {createModal && (
+        <Modal
+          title="Create new tag group"
+          loading={createTagGroupRes.loading}
+          submit={async () => {
+            if (createTagGroupRes.loading) {
+              return;
+            }
+
+            if (!newTagGroup.length) {
+              return;
+            }
+
+            let variables = {
+              input: {
+                name: newTagGroup,
+              },
+            };
+            try {
+              await createTagGroup({ variables });
+            } catch (error) {
+              console.log("error", error);
+            }
+            setCreateModal(false);
+            setNewTagGroup("");
+          }}
+          close={() => {
+            setCreateModal(false);
+            setNewTagGroup("");
+          }}
+          submitTxt="Create"
+          closeTxt="Cancel"
+          children={
+            <input
+              className="tags-container1__create-new-tag-group-text"
+              type="text"
+              value={newTagGroup}
+              onChange={e => setNewTagGroup(e.target.value)}
+            />
+          }
+        />
+      )}
     </div>
   );
 }
