@@ -182,45 +182,54 @@ export default function TableBody(props) {
                 </td>
 
                 <td>
-                  <div
-                    onMouseOver={() => showPreview(index)}
-                    onMouseLeave={hidePreview}
-                    className={classnames(
-                      styles.user_profile_Img,
-                      creative.logo && styles.with_logo
-                    )}
-                  >
-                    {(!creative.logo && (
-                      <span>{creative.name.charAt(0).toUpperCase()}</span>
-                    )) || <img src={creative.logo} />}
-                  </div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      onMouseOver={() => showPreview(index)}
+                      onMouseLeave={hidePreview}
+                      className={classnames(
+                        styles.user_profile_Img,
+                        creative.logo && styles.with_logo
+                      )}
+                    >
+                      {(!creative.logo && (
+                        <span>{creative.name.charAt(0).toUpperCase()}</span>
+                      )) || <img src={creative.logo} />}
+                    </div>
 
-                  <span
-                    onMouseOver={() => showPreview(index)}
-                    onMouseLeave={hidePreview}
-                    className={styles.company_name}
-                    onClick={() => handleCompany(item)}
-                  >
-                    {item.creative.name}
-                    {preview === index && (
-                      <StartupPreview
-                        companyName={item.creative.name}
-                        oneLiner={oneLiner}
-                        problem={problem}
-                        no={index}
-                      />
-                    )}
-                  </span>
+                    <span
+                      onMouseOver={() => showPreview(index)}
+                      onMouseLeave={hidePreview}
+                      className={styles.company_name}
+                      onClick={() => handleCompany(item)}
+                    >
+                      {item.creative.name}
+                      {preview === index && (
+                        <StartupPreview
+                          companyName={item.creative.name}
+                          oneLiner={oneLiner}
+                          problem={problem}
+                          no={index}
+                        />
+                      )}
+                    </span>
+                  </div>
                 </td>
 
                 {columnSettings.groups && (
                   <td>
                     <ul>
-                      {(groupSharingInfo || []).slice(0, 3).map(({ group }) => (
+                      {(groupSharingInfo || []).slice(0, 2).map(({ group }) => (
                         <li>
                           {group.name} {groupSharingInfo.length > 1 ? "," : ""}
                         </li>
-                      ))}
+                      ))}{" "}
+                      {groupSharingInfo.length > 2 ? (
+                        <img
+                          onClick={() => setShowTagGroupForId(item.id)}
+                          src={More}
+                          alt=""
+                        />
+                      ) : null}
                       <li>
                         <button
                           onClick={() => setShowTagGroupForId(item.id)}

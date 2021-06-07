@@ -18,18 +18,12 @@ import {
   connectionCreate,
 } from "../../../../Apollo/Mutations";
 
-import {
-  groupGet,
-  groupGetV2,
-  presentationsGet,
-} from "../../../../Apollo/Queries";
+import { groupGetV2 } from "../../../../Apollo/Queries";
 
 import { startup_page } from "../../../../../definitions";
 import SharingOptions from "../startup/groups-individuals/sharing-options";
 import { Modal } from "../../../../../Components/UI_Kits";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers";
-import * as yup from "yup";
 
 function YourEvaluations({ startup, group, history }) {
   let connection = startup?.connection;

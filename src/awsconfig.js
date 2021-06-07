@@ -8,6 +8,7 @@ import {
   ApolloLink,
 } from "@apollo/client";
 import { apolloInMemoryCache } from "./apollo-cache";
+import { stubFalse } from "lodash";
 
 export const awsconfig = {
   region: "eu-west-1",

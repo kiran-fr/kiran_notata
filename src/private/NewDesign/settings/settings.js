@@ -138,7 +138,7 @@ export const Settings_Home = ({ history }) => {
       ) : menuSelected === SETTINGSMENU.WEBFORM ? (
         <WebForm setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.NOTIFICATIONS ? (
-        <Notifications setMenuSelected={setMenuSelected} />
+        <Notifications />
       ) : menuSelected === SETTINGSMENU.TAGS ? (
         <Tags setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.FUNNELS ? (

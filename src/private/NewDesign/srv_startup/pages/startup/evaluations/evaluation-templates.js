@@ -96,7 +96,8 @@ export const ElevationTemplates = ({ history }) => {
       <div className="evaluation-templates-container">
         <div className="row">
           <div className="col-sm-6 col-xs-12 evaluation-templates-container__heading">
-            Evaluation templates
+            <i class="fa fa-chevron-left" aria-hidden="true"></i> Evaluation
+            templates
           </div>
           <div className="col-sm-6 col-xs-12 evaluation-templates-container__create-template">
             <ButtonWithIcon
