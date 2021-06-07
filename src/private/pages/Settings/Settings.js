@@ -6,7 +6,7 @@ import {
   tags,
   funnels,
   team,
-  evaluation_templates,
+  evaluation_templates_page,
   facts_templates,
   external_form,
   signOut,
@@ -18,7 +18,7 @@ const linkList = [
   {
     label: "Evaluation templates",
     iconClass: "fal fa-copy",
-    link: evaluation_templates,
+    link: evaluation_templates_page,
   },
   {
     label: "Funnels",

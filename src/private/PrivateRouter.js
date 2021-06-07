@@ -18,9 +18,9 @@ import {
   settings,
   ui_components,
   team,
-  evaluation_templates,
-  evaluation_template,
-  evaluation_template_summary,
+  // evaluation_templates,
+  // evaluation_template,
+  // evaluation_template_summary,
   startup_page,
   pre_profile,
   group,
@@ -32,12 +32,12 @@ import {
   startup_company_profile,
   startup_info,
   group_new,
-  evaluation_template_new,
-  add_section,
+  // evaluation_template_new,
+  // add_section,
   group_dashboard,
-  evaluation_template_new_dev,
-  evaluation_template_profile,
-  add_section_dev,
+  // evaluation_template_new_dev,
+  // evaluation_template_profile,
+  // add_section_dev,
   reports,
   notifications_page,
   settings_new,
@@ -47,6 +47,8 @@ import {
   news_view_one,
   new_news,
   edit_news,
+  evaluation_templates_page,
+  evaluation_template_page,
 } from "../definitions";
 
 // Landing page / list
@@ -64,10 +66,7 @@ import FactsPage from "./pages/StartupPage/Facts/Facts";
 import UI_Components from "./pages/UI_Components";
 
 // Evaluation templates
-import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
-import EvaluationTemplate from "./pages/Templates/EvaluationTemplate/EvaluationTemplate";
-import EvaluationTemplateSection from "./pages/Templates/EvaluationTemplateSection";
-import EvaluationTemplateSummary from "./pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
+
 import FactsTemplates from "./pages/FactsTemplates/FactsTemplates/FactsTemplates";
 import FactsTemplate from "./pages/FactsTemplates/FactsTemplate/FactsTemplate";
 import EvaluationV2Page from "./pages/EvaluationV2/";
@@ -98,9 +97,6 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
 import { Startup } from "./shubham-new-designs/pages/startup/index";
-import ElevationTemplates from "./shubham-new-designs/pages/startup/evaluations/evaluation-templates";
-import AddSection from "./shubham-new-designs/pages/startup/evaluations/add-new-section";
-// import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
 import Reports from "./shubham-new-designs/pages/reports/reports";
 import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 import News from "./shubham-new-designs/pages/news/news";
@@ -108,19 +104,21 @@ import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
 import { Settings_Home as SettingPage } from "./NewDesign/settings/settings";
-
 import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
-import { ElevationTemplates as ElevationTemplatesDev } from "./NewDesign/srv_startup/pages/startup/evaluations/evaluation-templates";
-import { AddSection as AddSectionDev } from "./NewDesign/srv_startup/pages/startup/evaluations/add-new-section";
-import { TemplateSection } from "./NewDesign/srv_startup/pages/startup/evaluations/template-section";
 import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 
+// import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
+// import EvaluationTemplate from "./pages/Templates/EvaluationTemplate/EvaluationTemplate";
+// import EvaluationTemplateSection from "./pages/Templates/EvaluationTemplateSection";
+// import EvaluationTemplateSummary from "./pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
+
+import { EvaluationTemplatesPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
+import { EvaluationTemplatePage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplatePage/EvaluationTemplatePage";
+import { EvaluationTemplateSectionPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluationTemplateSectionPage";
+
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
-import { SectionPage } from "./NewDesign/srv_startup/pages/startup/evaluations/section-page";
-
-/* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -154,27 +152,47 @@ export const RouterComponent = ({ history }) => {
 
       <Route
         exact
-        path={evaluation_templates}
-        component={EvaluationTemplates}
+        path={evaluation_templates_page}
+        component={EvaluationTemplatesPage}
       />
 
       <Route
         exact
-        path={`${evaluation_template}/:id`}
-        component={EvaluationTemplate}
+        path={`${evaluation_template_page}/:id`}
+        component={EvaluationTemplatePage}
       />
 
       <Route
         exact
-        path={`${evaluation_template}/:id/:sectionId`}
-        component={TemplateSection}
+        path={`${evaluation_template_page}/:id/section/:sectionId`}
+        component={EvaluationTemplateSectionPage}
       />
 
-      <Route
-        exact
-        path={`${evaluation_template_summary}/:templateId`}
-        component={EvaluationTemplateSummary}
-      />
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={`${evaluation_template_profile}/:id/:sectionId`}*/}
+      {/*  component={EvaluationTemplatesPage}*/}
+      {/*/>*/}
+      {/*<Route exact path={add_section_dev} component={EvaluationTemplatesPage} />*/}
+      {/*<Route exact path={add_section} component={AddSection} />*/}
+
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={evaluation_template_new}*/}
+      {/*  component={ElevationTemplates}*/}
+      {/*/>*/}
+
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={evaluation_template_new_dev}*/}
+      {/*  component={ElevationTemplatesPage}*/}
+      {/*/>      */}
+
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={`${evaluation_template_summary}/:templateId`}*/}
+      {/*  component={EvaluationTemplateSummary}*/}
+      {/*/>*/}
 
       <Route exact path={`${group}`} component={Groups} />
       <Route exact path={`${group_new}`} component={Groups} />
@@ -228,32 +246,12 @@ export const RouterComponent = ({ history }) => {
         component={GroupDashboard}
       />
 
-      <Route
-        exact
-        path={evaluation_template_new}
-        component={ElevationTemplates}
-      />
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={`${evaluation_template_profile}/:id`}*/}
+      {/*  component={EvaluationTemplatesPage}*/}
+      {/*/>*/}
 
-      <Route
-        exact
-        path={evaluation_template_new_dev}
-        component={ElevationTemplatesDev}
-      />
-
-      <Route
-        exact
-        path={`${evaluation_template_profile}/:id`}
-        component={AddSectionDev}
-      />
-
-      <Route
-        exact
-        path={`${evaluation_template_profile}/:id/:sectionId`}
-        component={SectionPage}
-      />
-      <Route exact path={add_section_dev} component={AddSectionDev} />
-
-      <Route exact path={add_section} component={AddSection} />
       <Route eaxct path={reports} component={Reports} />
       <Route eaxct path={settings_new} component={Settings_Home} />
       <Route eaxct path={news} component={News} />
