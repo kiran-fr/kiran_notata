@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./tags.scss";
+import "./SettingTags.scss";
 import {
   ICONPOSITION,
   SETTINGSMENU,
@@ -16,6 +16,7 @@ import {
   tagGroupUpdate,
   tagUpdate,
 } from "../../Apollo/Mutations";
+import { settings } from "../../../definitions";
 import { group as group_page } from "../../../definitions";
 import DeleteGroup from "../srv_startup/pages/GroupV2/delete-group-modal";
 import { Loader } from "../../../Components/elements";
@@ -146,7 +147,7 @@ function EditTagModal({ tag, setEditTagModal }) {
       submitButtonStyle="secondary"
       children={
         <input
-          className="tags-container__create-new-tag-group-text"
+          className="tags-container1__create-new-tag-group-text"
           type="text"
           value={tagName}
           onChange={e => setTagName(e.target.value)}
@@ -197,7 +198,7 @@ function EditTagGroupModal({ tagGroup, setEditTagGroupModal }) {
       submitButtonStyle="secondary"
       children={
         <input
-          className="tags-container__create-new-tag-group-text"
+          className="tags-container1__create-new-tag-group-text"
           type="text"
           value={tagName}
           onChange={e => setTagName(e.target.value)}
@@ -223,17 +224,17 @@ function TagGroup({ tagGroup }) {
 
   return (
     <>
-      <div className="tags-container__tag">
+      <div className="tags-container1__tag">
         <div className="tags-container__tag__heading">
           {tagGroup.name}
           <span
-            className="material-icons tags-container__tag__heading__more"
+            className="material-icons tags-container1__tag__heading__more"
             onClick={() => setIsTagDropDown(!isTagDropDown)}
           >
             {" "}
             more_horiz{" "}
             {isTagDropDown && (
-              <div className="tags-container__tag__heading__dropdown">
+              <div className="tags-container1__tag__heading__dropdown">
                 <div
                   className="drop-down-item"
                   onClick={() => setIsTagDropDown(false)}
@@ -261,11 +262,11 @@ function TagGroup({ tagGroup }) {
             )}
           </span>
         </div>
-        <div className="tags-container__tag__available-tags">
+        <div className="tags-container1__tag__available-tags">
           {tagGroup?.tags?.map(tag => {
             return (
               <div
-                className="tags-container__tag__available-tags__tag-name"
+                className="tags-container1__tag__available-tags__tag-name"
                 key={`available-tags-record-${tag.id}`}
               >
                 <span
@@ -286,10 +287,10 @@ function TagGroup({ tagGroup }) {
             );
           })}
         </div>
-        <div className="tags-container__tag__add-new-tag">
+        <div className="tags-container1__tag__add-new-tag">
           <div className="heading">Add New Tag</div>
           <div
-            className="tags-container__tag__add-new-tag__input"
+            className="tags-container1__tag__add-new-tag__input"
             style={{ opacity: createTagRes.loading ? 0.5 : 1 }}
           >
             <input
@@ -375,7 +376,7 @@ function TagGroup({ tagGroup }) {
   );
 }
 
-export default function Tags({ setMenuSelected }) {
+export default function Tags({ history }) {
   // Queries
   const { data, loading, error } = useQuery(tagGroupsGet);
 
@@ -389,15 +390,15 @@ export default function Tags({ setMenuSelected }) {
 
   const [newTagGroup, setNewTagGroup] = useState("");
   const [createModal, setCreateModal] = useState(false);
-
+  console.log("sir");
   return (
-    <div className="tags-container">
-      <div className="card tags-container__card">
-        <div className="card-heading tags-container__heading">
+    <div className="tags-container1">
+      <div className="card tags-container1__card">
+        <div className="card-heading tags-container1__heading">
           <i
             class="fa fa-chevron-left"
             aria-hidden="true"
-            onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+            onClick={() => history.push(settings)}
           />
           Tags
         </div>
@@ -409,7 +410,7 @@ export default function Tags({ setMenuSelected }) {
         ))}
 
         <ButtonWithIcon
-          className="tags-container__create-new-tag"
+          className="tags-container1__create-new-tag"
           iconName="add"
           text="CREATE NEW GROUP"
           iconPosition={ICONPOSITION.START}
@@ -451,7 +452,7 @@ export default function Tags({ setMenuSelected }) {
           closeTxt="Cancel"
           children={
             <input
-              className="tags-container__create-new-tag-group-text"
+              className="tags-container1__create-new-tag-group-text"
               type="text"
               value={newTagGroup}
               onChange={e => setNewTagGroup(e.target.value)}

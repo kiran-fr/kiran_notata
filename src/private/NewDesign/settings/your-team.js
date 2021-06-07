@@ -14,9 +14,10 @@ import {
   accountInviteDelete,
   accountUserRemove,
 } from "../../Apollo/Mutations";
+import { settings } from "../../../definitions";
 import { Loader } from "../../../Components/elements";
 
-export default function YourTeam({ setMenuSelected }) {
+export default function YourTeam({ history }) {
   // States
   const [isEmail, setIsEmail] = useState(false);
   const [email, setEmail] = useState("");
@@ -57,7 +58,7 @@ export default function YourTeam({ setMenuSelected }) {
           <i
             className="fa fa-chevron-left"
             aria-hidden="true"
-            onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+            onClick={() => history.push(settings)}
           />
           Your team
         </div>

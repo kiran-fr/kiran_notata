@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./profile.scss";
 import { SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
 import { ProfileContent } from "../../../Containers/NewDesign/PreProfile/Profile";
+import { settings } from "../../../definitions";
 
-export default function ProfileSettings({ setMenuSelected, history }) {
+export default function ProfileSettings({ history }) {
   return (
     <div className="profile-container">
       <div className="card profile-container__card">
@@ -11,7 +12,7 @@ export default function ProfileSettings({ setMenuSelected, history }) {
           <i
             class="fa fa-chevron-left"
             aria-hidden="true"
-            onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+            onClick={() => history.push(settings)}
           />
           User profile
         </div>

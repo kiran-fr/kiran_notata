@@ -96,8 +96,12 @@ export const ElevationTemplates = ({ history }) => {
       <div className="evaluation-templates-container">
         <div className="row">
           <div className="col-sm-6 col-xs-12 evaluation-templates-container__heading">
-            <i class="fa fa-chevron-left" aria-hidden="true"></i> Evaluation
-            templates
+            <i
+              className="fa fa-chevron-left"
+              aria-hidden="true"
+              onClick={() => history.push("/")}
+            />
+            Evaluation templates
           </div>
           <div className="col-sm-6 col-xs-12 evaluation-templates-container__create-template">
             <ButtonWithIcon

@@ -16,6 +16,7 @@ import {
   funnelGroupUpdate,
   funnelGroupDelete,
 } from "../../Apollo/Mutations";
+import { settings } from "../../../definitions";
 import { GhostLoader } from "../../../Components/elements";
 
 let colorArray = ["red", "blue", "purple", "orange", "green"];
@@ -445,7 +446,7 @@ function Funnel({ funnelGroup, setEdit }) {
   );
 }
 
-export default function Funnels({ setMenuSelected }) {
+export default function Funnels1({ history }) {
   // States
   const [createModal, setCreateModal] = useState(false);
   const [newFunnel, setNewFunnel] = useState("");
@@ -476,7 +477,7 @@ export default function Funnels({ setMenuSelected }) {
             <i
               className="fa fa-chevron-left"
               aria-hidden="true"
-              onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+              onClick={() => history.push(settings)}
             />
             Funnels
           </div>

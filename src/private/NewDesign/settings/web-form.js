@@ -8,8 +8,9 @@ import copy from "../../../assets/images/copy.png";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
 import { useQuery } from "@apollo/client";
 import { accountGet } from "../../Apollo/Queries";
+import { settings } from "../../../definitions";
 
-export default function WebForm({ setMenuSelected }) {
+export default function WebForm({ history }) {
   // States
   const [copyUrlSuccess, setCopyUrlSuccess] = useState(false);
   const [copyIframeSuccess, setCopyIframeSuccess] = useState(false);
@@ -48,7 +49,7 @@ export default function WebForm({ setMenuSelected }) {
           <i
             className="fa fa-chevron-left"
             aria-hidden="true"
-            onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+            onClick={() => history.push(settings)}
           />
           Web Form
         </div>

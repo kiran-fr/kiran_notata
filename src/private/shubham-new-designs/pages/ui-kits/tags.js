@@ -32,10 +32,10 @@ export default function ShareTemplate() {
   });
   const [tagsStates, setTagsStates] = useState(tagTypesState);
   return (
-    <div className="tags-container">
-      <div className="tags-container__sub-heading">Write or choose Tags</div>
-      <div className="tags-container__heading ">Tags</div>
-      <div className="tags-container__placeholder">
+    <div className="tags1-container">
+      <div className="tags1-container__sub-heading">Write or choose Tags</div>
+      <div className="tags1-container__heading ">Tags</div>
+      <div className="tags1-container__placeholder">
         {selectedTags.map((item, index) => {
           return (
             <div className="tag" key={`${index}-tag`}>
@@ -55,7 +55,7 @@ export default function ShareTemplate() {
           );
         })}
       </div>
-      <div className="tags-container__dropdown">
+      <div className="tags1-container__dropdown">
         {tags.map(item => {
           return (
             <div className="row" key={item.id}>

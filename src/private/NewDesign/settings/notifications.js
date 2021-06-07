@@ -11,6 +11,7 @@ import NotificationSetting from "../../../assets/images/notifications-settings.p
 import NotificationGroup from "../../../assets/images/notification-group.png";
 import eye from "../../../assets/images/eye.png";
 import eyeGray from "../../../assets/images/eye-gray.png";
+import { settings } from "../../../definitions";
 
 import { useQuery, useMutation } from "@apollo/client";
 
@@ -21,7 +22,7 @@ import {
   notificationsMarkAllAsSeen,
 } from "private/Apollo/Mutations";
 
-function Notification({ content }) {
+function Notification({ content, history }) {
   console.log(
     "FROM NOTIFICATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   );
@@ -33,7 +34,7 @@ function Notification({ content }) {
   );
 }
 
-export default function Notifications() {
+export default function Notifications({ history }) {
   const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
 
   const [isDropDown, setIsDropDown] = useState(false);
@@ -60,7 +61,7 @@ export default function Notifications() {
             <i
               class="fa fa-chevron-left"
               aria-hidden="true"
-              // onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+              onClick={() => history.push(settings)}
             ></i>
             Notifications
           </div>

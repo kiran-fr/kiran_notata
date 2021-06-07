@@ -1,7 +1,8 @@
 import notificationProfile from "../../../../../assets/images/dashboard-notifictaion-profile.png";
 import notificationConversation from "../../../../../assets/images/dashboard-notifictaion-converstation.png";
 import React from "react";
-import { notifications_page } from "../../../../../definitions";
+// import { notifications_page } from "../../../../../definitions";
+import { notification } from "../../../../../definitions";
 import { useQuery } from "@apollo/client";
 import { notificationsGet } from "../../../../Apollo/Queries";
 import moment from "moment";
@@ -44,7 +45,7 @@ export default function DashboardNotifications({ history }) {
 
       <div
         className="dashboard-container__notification__more-updates"
-        onClick={() => history.push(notifications_page)}
+        onClick={() => history.push(notification)}
       >
         View notifications
       </div>

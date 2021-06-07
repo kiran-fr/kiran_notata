@@ -63,6 +63,15 @@ export const edit_news = `${startup_page}/news/edit`;
 export const new_news = `${startup_page}/news/new`;
 export const news_view_one = `${startup_page}/view`;
 
+//settings
+
+export const tags1 = `${startup_page}/settings/tags`;
+export const funnels1 = `${startup_page}/settings/funnels`;
+export const notification = `${startup_page}/settings/notifications`;
+export const web_form = `${startup_page}/settings/web_form`;
+export const your_team = `${startup_page}/settings/your_team`;
+export const setting_profile = `${startup_page}/settings/profile`;
+
 // JØRGEN's NEW ROUTES
 export const notifications_page = `${startup_page}/notifications`;
 
