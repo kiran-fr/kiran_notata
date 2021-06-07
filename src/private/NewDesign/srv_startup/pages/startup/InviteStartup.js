@@ -24,6 +24,7 @@ export const InviteStartup = ({
   const [emailValue, setEmailValue] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [validate, setValidate] = useState(true);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   useEffect(() => {
     if (creative?.sharedWithEmail) {
@@ -34,6 +35,13 @@ export const InviteStartup = ({
 
   // Mutations
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
+
+    // Copy string to clipboard
+    const copyToClipboard = ()=> {
+      navigator.clipboard.writeText(urlToShare);
+      setCopySuccess(true);
+    }
+  
 
   function getPublicShareUrl(creative) {
     let url =
@@ -86,6 +94,7 @@ export const InviteStartup = ({
     setInputEmail("");
     setEmailValue("");
     setValidate(true);
+    setCopySuccess(false);
   };
 
   const handleInput = val => {
@@ -123,7 +132,7 @@ export const InviteStartup = ({
             <div className={styles.revokeURL}>
               <a href={urlToShare}>{urlToShare}</a>
             </div>
-            <span className={styles.copy}>
+            <span  onClick = {()=> copyToClipboard()} className={styles.copy}>
               <svg
                 width="12"
                 height="12"
@@ -136,7 +145,7 @@ export const InviteStartup = ({
                   fill="#53CAB2"
                 />
               </svg>
-              COPY CODE
+              {copySuccess ? "LINK COPIED TO CLIPBOARD" : "COPY LINK"}
             </span>
           </>
         ) : (
@@ -165,7 +174,7 @@ export const InviteStartup = ({
           </>
         )
       }
-      submitTxt={inviteSent ? "Revoke" : emailValue === "" ? "Okay" : ""}
+      submitTxt={inviteSent ? "Revoke" : emailValue === "" ? "Invite" : ""}
       closeTxt={emailValue !== "" ? "" : "Cancel"}
     ></Modal>
   );
