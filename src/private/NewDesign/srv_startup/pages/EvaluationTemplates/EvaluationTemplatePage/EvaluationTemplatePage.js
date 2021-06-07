@@ -23,6 +23,7 @@ import ImportSectionModal from "./modals/ImportSectionModal";
 import AddSectionModal from "./modals/AddSectionModal";
 import DeleteSectionModal from "./modals/DeleteSectionModal";
 import CloneSectionModal from "./modals/CloneSectionModal";
+import { evaluation_templates_page } from "../../../../../../definitions";
 
 export const EvaluationTemplatePage = ({ match, history }) => {
   // Constants
@@ -200,7 +201,7 @@ export const EvaluationTemplatePage = ({ match, history }) => {
               <div className="col-sm-12 col-xs-6">
                 <ButtonWithIcon
                   className="import-section-btn"
-                  text="Import section 1"
+                  text="Import section"
                   onClick={() => setImportSectionModal(true)}
                 />
               </div>
@@ -267,6 +268,16 @@ export const EvaluationTemplatePage = ({ match, history }) => {
               </div>
             );
           })}
+        </div>
+
+        <div className="btn-container">
+          <ButtonWithIcon
+            className="cancel-btn"
+            text="Back"
+            onClick={() => {
+              history.push(evaluation_templates_page);
+            }}
+          />
         </div>
       </div>
 

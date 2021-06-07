@@ -9,11 +9,12 @@ import QuestionCard from "./QuestionCard";
 import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
 import { evaluationTemplateSectionUpdate } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
+import { evaluation_template_page } from "../../../../../../definitions";
 
 // Helpers
 const getId = () => Math.round(Math.random() * 10000).toString();
 
-export const EvaluationTemplateSectionPage = ({ match }) => {
+export const EvaluationTemplateSectionPage = ({ match, history }) => {
   // URL Stuff
   const templateId = match?.params?.id;
   const sectionId = match?.params?.sectionId;
@@ -191,11 +192,13 @@ export const EvaluationTemplateSectionPage = ({ match }) => {
             </div>
           </div>
           <div className="btn-container">
-            {/*<ButtonWithIcon*/}
-            {/*  className="cancel-btn"*/}
-            {/*  text="Cancel"*/}
-            {/*  onClick={() => null}*/}
-            {/*/>*/}
+            <ButtonWithIcon
+              className="cancel-btn"
+              text="Back"
+              onClick={() => {
+                history.push(`${evaluation_template_page}/${templateId}`);
+              }}
+            />
             <ButtonWithIcon
               className="save-btn"
               text={

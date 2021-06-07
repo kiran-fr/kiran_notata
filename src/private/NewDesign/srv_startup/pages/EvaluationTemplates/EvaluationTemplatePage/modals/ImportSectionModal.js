@@ -7,6 +7,7 @@ import InputCheckBox from "../../../ui-kits/check-box";
 import { evaluationTemplateSectionCreate } from "private/Apollo/Mutations";
 import { evaluation_template_page } from "definitions";
 import { Modal } from "../../../../../../../Components/UI_Kits";
+import "./ImportSectionModal.scss";
 
 export default function ImportSectionModal({ history, templateId, close }) {
   // States
