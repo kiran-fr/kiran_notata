@@ -184,6 +184,7 @@ export default function NewsEdit({ history, match }) {
     if (isDeleting) {
       return;
     }
+
     setIsDeleting(true);
 
     let parts = data?.image?.split("/");
