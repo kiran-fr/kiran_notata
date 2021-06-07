@@ -22,7 +22,7 @@ import {
   notificationsMarkAllAsSeen,
 } from "private/Apollo/Mutations";
 
-function Notification({ content }) {
+function Notification({ content, history }) {
   console.log(
     "FROM NOTIFICATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   );

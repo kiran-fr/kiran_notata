@@ -12,7 +12,7 @@ import {
   SETTINGSMENU,
 } from "../../NewDesign/srv_startup/pages/constants";
 import ButtonWithIcon from "../../NewDesign/srv_startup/pages/ui-kits/button-with-icon";
-import { evaluation_template_new_dev } from "../../../definitions";
+import { evaluation_templates_page } from "../../../definitions";
 import { tags1 } from "../../../definitions";
 import { funnels1 } from "../../../definitions";
 import { web_form } from "../../../definitions";
@@ -42,7 +42,7 @@ export default function Settings({ history }) {
         <div className="menu-container">
           <div
             className="menu-container__menu"
-            onClick={() => history.push(evaluation_template_new_dev)}
+            onClick={() => history.push(evaluation_templates_page)}
           >
             <img src={evaluationTemplate} />
             <div className="menu-container__menu__name">

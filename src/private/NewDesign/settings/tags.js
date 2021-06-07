@@ -390,7 +390,7 @@ export default function Tags({ history }) {
 
   const [newTagGroup, setNewTagGroup] = useState("");
   const [createModal, setCreateModal] = useState(false);
-
+  console.log("sir");
   return (
     <div className="tags-container">
       <div className="card tags-container__card">

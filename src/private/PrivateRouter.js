@@ -123,7 +123,7 @@ import { EvaluationTemplateSectionPage } from "./NewDesign/srv_startup/pages/Eva
 
 // New Jørgen import
 import NotificationsPage from "./NewDesign/Notifications/notifications";
-import { SectionPage } from "./NewDesign/srv_startup/pages/startup/evaluations/section-page";
+// import { SectionPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluatimplateSectionPage";
 
 //settings
 import Settings from "./NewDesign/settings/settings";

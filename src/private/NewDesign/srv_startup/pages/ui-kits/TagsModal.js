@@ -110,7 +110,7 @@ export default function TagsModal({
   if (error) return <pre>{error.message}</pre>; //if query has issue
 
   return (
-    <div className="tags-container">
+    <div className="tags1-container">
       {loading ? (
         /* //query processing */
         <div className="text-center">
@@ -120,7 +120,7 @@ export default function TagsModal({
         </div>
       ) : (
         <>
-          <div className="tags-container__sub-heading">
+          <div className="tags1-container__sub-heading">
             Write or choose Tags
           </div>
           {/* <GhostLoader></GhostLoader> */}
@@ -166,9 +166,9 @@ export default function TagsModal({
               }
             }}
           />
-          <div className="mb-2 tags-container__heading ">Suggested Tags</div>
+          <div className="mb-2 tags1-container__heading ">Suggested Tags</div>
 
-          <div className="tags-container__dropdown">
+          <div className="tags1-container__dropdown">
             {
               // data.tagGroupsGet && data.tagGroupsGet.map(item => {
               tagGroups.map(tagGroup => {
