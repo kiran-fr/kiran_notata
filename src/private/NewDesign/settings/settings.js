@@ -17,7 +17,7 @@ import WebForm from "./web-form";
 import Notifications from "./notifications";
 import Tags from "./tags";
 import Funnels from "./funnels";
-import { ElevationTemplates } from "../../NewDesign/srv_startup/pages/startup/evaluations/evaluation-templates";
+import { EvaluationTemplatesPage } from "../srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
 import ProfileSettings from "./profile";
 
 export const Settings_Home = ({ history }) => {
@@ -144,7 +144,10 @@ export const Settings_Home = ({ history }) => {
       ) : menuSelected === SETTINGSMENU.FUNNELS ? (
         <Funnels setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.EVALUATIONTEMPLATE ? (
-        <ElevationTemplates setMenuSelected={setMenuSelected} isBackButton />
+        <EvaluationTemplatesPage
+          setMenuSelected={setMenuSelected}
+          isBackButton
+        />
       ) : menuSelected === SETTINGSMENU.USERPROFILE ? (
         <ProfileSettings setMenuSelected={setMenuSelected} history={history} />
       ) : (

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./add-new-section.scss";
-import TextBox from "../../ui-kits/text-box";
-import ButtonWithIcon from "../../ui-kits/button-with-icon";
-import { ICONPOSITION } from "../../constants";
+import "./SectionPage.scss";
+import TextBox from "../ui-kits/text-box";
+import ButtonWithIcon from "../ui-kits/button-with-icon";
+import { ICONPOSITION } from "../constants";
 
-import { Modal } from "../../../../../../Components/UI_Kits/Modal/Modal";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import ImportSection from "./import-section-modal";
 import { useQuery, useMutation } from "@apollo/client";
 import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
@@ -12,7 +12,7 @@ import { evaluationTemplateSectionUpdate } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 import { useForm } from "react-hook-form";
 
-import Question from "../../../../../pages/Templates/EvaluationTemplateSection/QuestionComp";
+import Question from "../../../../pages/Templates/EvaluationTemplateSection/QuestionComp";
 
 export const TemplateSection = props => {
   const {

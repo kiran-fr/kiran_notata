@@ -13,10 +13,13 @@ export default function Dropdown({
   const [name, setName] = useState("");
 
   const selectedOption = item => {
+    setName(item.name);
+
     if (setSelected) {
       setSelected(item.id);
-      setName(item.name);
+      // setName(item.name);
     }
+
     if (setSelectedItem) {
       setSelectedItem(item);
     }
@@ -43,7 +46,6 @@ export default function Dropdown({
 
       {isListOpen && (
         <div role="list" className="dd_list">
-          {/*   <span>Selected: {selected ? selected.name : "none"}</span>  */}
           {items.map(item => (
             <div
               className="dd_list_item"
