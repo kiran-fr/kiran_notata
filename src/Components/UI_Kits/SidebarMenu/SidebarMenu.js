@@ -48,14 +48,14 @@ export function SideBarMenu() {
       link: group,
     },
     {
-      label: "Reports and analytics",
+      label: "Reports",
       iconClass: "fas fa-file-alt",
       iconStyle: { paddingTop: "7px" },
       link: `${startup_page}/report/reports`,
     },
     //  hide for now  (commented by siva)
     {
-      label: "DashboardNews",
+      label: "News",
       iconClass: "fas fa-globe",
       iconStyle: { paddingTop: "2px" },
       link: news1,

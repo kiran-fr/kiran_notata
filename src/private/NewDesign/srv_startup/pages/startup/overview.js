@@ -795,7 +795,7 @@ export default function Overview(props) {
               section.
             </div>
           }
-        ></Modal>
+        />
       )}
       {deleteModal && (
         <Modal
@@ -814,7 +814,7 @@ export default function Overview(props) {
           }}
           intermidateTxt="Archive"
           children={<DeleteStartup></DeleteStartup>}
-        ></Modal>
+        />
       )}
     </>
   );
