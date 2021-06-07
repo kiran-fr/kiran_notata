@@ -61,7 +61,13 @@ export default function EvaluateStartup({
     );
   };
   if (loader) {
-    return "Please wait loading...";
+    return(
+      <div className="text-center">
+        <span className={"loading_icon"}>
+          <i className="fa fa-spinner fa-spin" />
+        </span>
+      </div>
+    ) 
   }
   return (
     <div className="evaluate-startup-container">

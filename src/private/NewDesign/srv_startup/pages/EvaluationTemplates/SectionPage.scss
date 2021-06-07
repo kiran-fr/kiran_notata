@@ -151,6 +151,10 @@
     align-items: end;
     justify-content: flex-end;
     margin-right: 45px;
+    .success-message {
+      font-size: 12px;
+      color: #53cab2;
+    }
     .cancel-btn {
       color: #6a6a6a;
       border: 1px solid #6a6a6a;

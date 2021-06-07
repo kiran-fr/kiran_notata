@@ -48,9 +48,6 @@ export const tags = `${startup_page}/tags`;
 export const funnels = `${startup_page}/funnels`;
 export const settings = `${startup_page}/settings`;
 export const team = `${startup_page}/team`;
-export const evaluation_templates = `${startup_page}/templates`;
-export const evaluation_template = `${evaluation_templates}/edit`;
-export const evaluation_template_summary = `${evaluation_templates}/summary`;
 export const facts_templates = `${startup_page}/facts_templates`;
 export const facts_template = `${facts_templates}/edit`;
 export const group = `${startup_page}/group`;
@@ -60,8 +57,6 @@ export const ui_components = `${startup_page}/components/ui`;
 export const navigation = `${startup_page}/components/ui/navigation`;
 
 export const startup_company_profile = `${startup_page}/company/:id`;
-export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-templates`;
-export const evaluation_template_profile = `${startup_page}/settings/evaluation-template`;
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
 export const news1 = `${startup_page}/news/news1`;
 export const edit_news = `${startup_page}/news/edit`;
@@ -92,10 +87,20 @@ export const product_demo = `${public_pages}/product_demo`;
 
 // SHUBHAM ROUTES
 export const startup_index = `${startup_page}/components/ui/navigation1`;
-export const evaluation_template_new = `${startup_page}/components/ui/evaluation-templates`;
-export const add_section = `${startup_page}/components/ui/evaluation-templates/add-section`;
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
 export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
 export const news = `${startup_page}/components/ui/navigation1/news`;
 export const dashboard_new = `${startup_page}/components/ui/navigation1/dashboard`;
+
+// export const evaluation_templates = `${startup_page}/templates`;
+// export const evaluation_template = `${evaluation_templates}/edit`;
+// export const evaluation_template_summary = `${evaluation_templates}/summary`;
+
+// export const add_section = `${startup_page}/components/ui/evaluation-templates/add-section`;
+// export const evaluation_template_new = `${startup_page}/components/ui/evaluation-templates`;
+// export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-templates`;
+// export const evaluation_template_page = `${startup_page}/settings/evaluation-template`;
+
+export const evaluation_templates_page = `${startup_page}/settings/templates`;
+export const evaluation_template_page = `${startup_page}/settings/template`;

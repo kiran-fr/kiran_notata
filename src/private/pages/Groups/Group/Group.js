@@ -23,7 +23,7 @@ import Activity from "Components/Activity/Activity";
 
 import {
   group as group_route,
-  evaluation_template_summary,
+  // evaluation_template_summary,
 } from "definitions.js";
 
 import {
@@ -269,8 +269,8 @@ const Templates = ({ templates, isAdmin, mutate, group, history }) => {
             size="small"
             type="right_arrow"
             onClick={() => {
-              let path = `${evaluation_template_summary}/${template.id}`;
-              history.push(path);
+              // let path = `${evaluation_template_summary}/${template.id}`;
+              // history.push(path);
             }}
           >
             view

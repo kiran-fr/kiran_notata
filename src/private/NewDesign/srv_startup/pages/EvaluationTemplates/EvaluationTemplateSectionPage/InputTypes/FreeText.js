@@ -1,7 +1,7 @@
 import React from "react";
-import "./free-text.scss";
+import "./FreeText.scss";
 
-export default function FreeText() {
+export default function FreeText({ questions, question, setQuestions }) {
   return (
     <div className="free-text-conatiner">
       <div className="row">

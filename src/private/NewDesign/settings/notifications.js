@@ -18,23 +18,41 @@ import { useQuery, useMutation } from "@apollo/client";
 import { notificationsGet } from "private/Apollo/Queries";
 
 import {
-  notificationsMarkAsSeen,
+  // notificationsMarkAsSeen,
   notificationsMarkAllAsSeen,
 } from "private/Apollo/Mutations";
 
+function Notification({ content }) {
+  console.log(
+    "FROM NOTIFICATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  );
+  return (
+    <div className="notifications__notification">
+      <img src={NotificationAlarm} alt="Notification Icon" />
+      <p className="notifications__notification__text">{content}</p>
+    </div>
+  );
+}
+
 export default function Notifications({ history }) {
-  const [markOne, res1] = useMutation(notificationsMarkAsSeen);
   const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
+
+  const [isDropDown, setIsDropDown] = useState(false);
+
+  const [allNotifications, setAllNotifications] = useState([]);
 
   const { data } = useQuery(notificationsGet);
 
-  let notifications = data?.notificationsGet || [];
-
   useEffect(() => {
-    console.log("NOTIFICATIONS: ", notifications);
-  }, [notifications]);
+    if (data?.notificationsGet) {
+      setAllNotifications(data?.notificationsGet);
+      async function markAllAsSeen() {
+        await markAll();
+      }
+      markAllAsSeen();
+    }
+  }, [data]);
 
-  const [isDropDown, setIsDropDown] = useState(false);
   return (
     <div className="notifications-container">
       <div className="notifications-container__card">
@@ -85,7 +103,8 @@ export default function Notifications({ history }) {
             </i>
           </div>
         </div>
-        <div className="notifications">
+
+        {/* <div className="notifications">
           <div className="notifications__notification">
             <img src={NotificationProfile} />
             <p className="notifications__notification__text">
@@ -215,6 +234,19 @@ export default function Notifications({ history }) {
               </div>
             </div>
           </div>
+        </div> */}
+        {/* +++++++++++ NOTIFICATION IMPLEMENTATION +++++++++++ */}
+        <div className="notifications">
+          {allNotifications.length <= 0 ? (
+            <div className="noNotification">No Notification</div>
+          ) : (
+            allNotifications.map(notif => (
+              <Notification
+                key={notif.id}
+                content={notif.content}
+              ></Notification>
+            ))
+          )}
         </div>
       </div>
     </div>

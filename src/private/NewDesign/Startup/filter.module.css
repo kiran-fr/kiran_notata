@@ -128,9 +128,7 @@ button,
 .manageButton {
   width: 200px;
 }
-.manageButton img {
-  /* transform: rotate(90deg) !important; */
-}
+
 .table_headerChildMiddle button {
   display: flex;
   align-items: center;
@@ -214,17 +212,11 @@ button,
     display: none;
   }
   .table_headerChildMiddle {
-    width: calc(100% - 70px) !important;
     justify-content: space-between;
   }
-  .table_headerChildLast {
-    /* width: 60px !important; */
-  }
+
   .addButton {
     width: 50% !important;
-  }
-  .manageButton {
-    /* display: none; */
   }
 
   .clearAllTxt {

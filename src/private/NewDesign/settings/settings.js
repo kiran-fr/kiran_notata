@@ -146,13 +146,16 @@ export default function Settings({ history }) {
       ) : menuSelected === SETTINGSMENU.WEBFORM ? (
         <WebForm setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.NOTIFICATIONS ? (
-        <Notifications setMenuSelected={setMenuSelected} />
+        <Notifications />
       ) : menuSelected === SETTINGSMENU.TAGS ? (
         <Tags setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.FUNNELS ? (
         <Funnels setMenuSelected={setMenuSelected} />
       ) : menuSelected === SETTINGSMENU.EVALUATIONTEMPLATE ? (
-        <ElevationTemplates setMenuSelected={setMenuSelected} isBackButton />
+        <EvaluationTemplatesPage
+          setMenuSelected={setMenuSelected}
+          isBackButton
+        />
       ) : menuSelected === SETTINGSMENU.USERPROFILE ? (
         <ProfileSettings setMenuSelected={setMenuSelected} history={history} />
       ) : (

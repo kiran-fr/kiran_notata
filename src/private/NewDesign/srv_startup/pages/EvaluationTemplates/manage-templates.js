@@ -1,6 +1,6 @@
 import React from "react";
 import "./manage-templates.scss";
-import { Dropdown } from "../../../../../../Components/UI_Kits/Dropdown";
+import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 
 export default function ManageTemplates() {
   const templates = [
