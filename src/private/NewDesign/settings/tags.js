@@ -392,74 +392,76 @@ export default function Tags({ history }) {
   const [createModal, setCreateModal] = useState(false);
   console.log("sir");
   return (
-    <div className="tags-container">
-      <div className="card tags-container__card">
-        <div className="card-heading tags-container__heading">
-          <i
-            class="fa fa-chevron-left"
-            aria-hidden="true"
-            onClick={() => history.push(settings)}
+    <div id="tags-container1">
+      <div className="tags-container" id="tags-container1">
+        <div className="card tags-container__card">
+          <div className="card-heading tags-container__heading">
+            <i
+              class="fa fa-chevron-left"
+              aria-hidden="true"
+              onClick={() => history.push(settings)}
+            />
+            Tags
+          </div>
+
+          {!data && loading && <Loader />}
+
+          {tagGroups.map(tagGroup => (
+            <TagGroup tagGroup={tagGroup} key={tagGroup.id} />
+          ))}
+
+          <ButtonWithIcon
+            className="tags-container__create-new-tag"
+            iconName="add"
+            text="CREATE NEW GROUP"
+            iconPosition={ICONPOSITION.START}
+            onClick={() => setCreateModal(true)}
           />
-          Tags
         </div>
 
-        {!data && loading && <Loader />}
+        {createModal && (
+          <Modal
+            title="Create new tag group"
+            loading={createTagGroupRes.loading}
+            submit={async () => {
+              if (createTagGroupRes.loading) {
+                return;
+              }
 
-        {tagGroups.map(tagGroup => (
-          <TagGroup tagGroup={tagGroup} key={tagGroup.id} />
-        ))}
+              if (!newTagGroup.length) {
+                return;
+              }
 
-        <ButtonWithIcon
-          className="tags-container__create-new-tag"
-          iconName="add"
-          text="CREATE NEW GROUP"
-          iconPosition={ICONPOSITION.START}
-          onClick={() => setCreateModal(true)}
-        />
+              let variables = {
+                input: {
+                  name: newTagGroup,
+                },
+              };
+              try {
+                await createTagGroup({ variables });
+              } catch (error) {
+                console.log("error", error);
+              }
+              setCreateModal(false);
+              setNewTagGroup("");
+            }}
+            close={() => {
+              setCreateModal(false);
+              setNewTagGroup("");
+            }}
+            submitTxt="Create"
+            closeTxt="Cancel"
+            children={
+              <input
+                className="tags-container__create-new-tag-group-text"
+                type="text"
+                value={newTagGroup}
+                onChange={e => setNewTagGroup(e.target.value)}
+              />
+            }
+          />
+        )}
       </div>
-
-      {createModal && (
-        <Modal
-          title="Create new tag group"
-          loading={createTagGroupRes.loading}
-          submit={async () => {
-            if (createTagGroupRes.loading) {
-              return;
-            }
-
-            if (!newTagGroup.length) {
-              return;
-            }
-
-            let variables = {
-              input: {
-                name: newTagGroup,
-              },
-            };
-            try {
-              await createTagGroup({ variables });
-            } catch (error) {
-              console.log("error", error);
-            }
-            setCreateModal(false);
-            setNewTagGroup("");
-          }}
-          close={() => {
-            setCreateModal(false);
-            setNewTagGroup("");
-          }}
-          submitTxt="Create"
-          closeTxt="Cancel"
-          children={
-            <input
-              className="tags-container__create-new-tag-group-text"
-              type="text"
-              value={newTagGroup}
-              onChange={e => setNewTagGroup(e.target.value)}
-            />
-          }
-        />
-      )}
     </div>
   );
 }
