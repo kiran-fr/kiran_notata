@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./table.module.css";
 
 import PopupDropdown from "assets/images/PopupDown.svg";
+import { CheckBox } from "../../../../../Components/UI_Kits";
+import InputCheckBox from "../../../srv_startup/pages/ui-kits/check-box";
 
 export default function TableHeader(props) {
   const {
@@ -10,6 +12,8 @@ export default function TableHeader(props) {
     setFilters,
     columnSettings,
     handlePopup,
+    checkAll,
+    setCheckAll,
   } = props;
 
   return (
@@ -18,11 +22,14 @@ export default function TableHeader(props) {
         <td className={styles.tableHeaderCheckmark}>
           <div>
             <label className={styles.customCheck}>
-              <input type="checkbox" />
-              <span className={styles.headCheckmark}></span>
+              <InputCheckBox
+                checked={!!checkAll}
+                onChange={() => setCheckAll(!checkAll)}
+              />
             </label>
+
             <div onClick={handlePopup} className={styles.selectDropdown}>
-              <img src={PopupDropdown} alt=""></img>
+              <img src={PopupDropdown} alt="" />
             </div>
           </div>
         </td>

@@ -28,6 +28,9 @@ export default function TableBody(props) {
     preview,
     setStarMutation,
     updateFunnelTag,
+    checkAll,
+    checked,
+    setChecked,
   } = props;
 
   const [funnel, setFunnel] = useState();
@@ -150,7 +153,16 @@ export default function TableBody(props) {
                   {/*Checkbox*/}
                   <div className={styles.columnHead}>
                     <label className={styles.customCheck}>
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        checked={!!checkAll || !!checked[item.id]}
+                        onChange={() =>
+                          setChecked({
+                            ...checked,
+                            [item.id]: !checked[item.id],
+                          })
+                        }
+                      />
                       <span className={styles.checkmark} />
                     </label>
 
@@ -176,7 +188,7 @@ export default function TableBody(props) {
                           color: starred ? "orange" : "lightgray",
                         }}
                         className="fas fa-star"
-                      ></i>
+                      />
                     </div>
                   </div>
                 </td>
@@ -275,6 +287,7 @@ export default function TableBody(props) {
                     </div>
                   </td>
                 )}
+
                 {columnSettings.tags && (
                   <td>
                     <ul>
