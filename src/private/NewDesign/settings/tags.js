@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./tags.scss";
+import "./SettingTags.module.scss";
 import {
   ICONPOSITION,
   SETTINGSMENU,
