@@ -46,9 +46,12 @@ export default function AddFunnel(props) {
   const handleFunnel = value => {
     setFunnelName(value.name);
     setFunnelID(value.id);
+
     if(props.funnelModal) {
       props.setFunnelModalID(value.id)
     }
+
+
     if(!props.isModal) {
       props.updateFunnelTag(value.id, props.companyId);
     }
