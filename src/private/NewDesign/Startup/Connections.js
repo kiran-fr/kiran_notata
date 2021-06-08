@@ -6,8 +6,7 @@ import {
   connectionsGet,
   evaluationTemplatesGet,
   userGet,
-  connectionAutoCompleteName,
-  groupsGetV2,
+  groupsGetV2
 } from "private/Apollo/Queries";
 import {
   connectionSetStar,
