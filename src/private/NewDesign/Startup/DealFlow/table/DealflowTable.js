@@ -104,7 +104,7 @@ export default function Table(props) {
           />
 
           {!data.length && loading && (
-            <Loader size = "medium"/>
+            <Loader/>
           )}
 
           {!data.length && (
