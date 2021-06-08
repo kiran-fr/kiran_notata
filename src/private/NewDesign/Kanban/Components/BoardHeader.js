@@ -11,7 +11,6 @@ export default function BoardHeader({
   setFilter,
   index,
 }) {
-  console.log("indexPosition", index);
   const [popup, setPopup] = useState(false);
   const [sorting, setSorting] = useState(false);
   const [name, setName] = useState("Company Name");
