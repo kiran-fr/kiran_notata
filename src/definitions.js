@@ -35,7 +35,7 @@ export const link_bridge = `/link`;
 // export const ui_components = `${dashboard}/components/ui`;
 // export const navigation = `${dashboard}/components/ui/navigation`;
 
-export const dashboard = "/dashboard";
+// export const dashboard = "/dashboard";
 export const startup_page = "/startup_page";
 
 export const charts = `${startup_page}/charts`;
@@ -62,6 +62,9 @@ export const news1 = `${startup_page}/news/news1`;
 export const edit_news = `${startup_page}/news/edit`;
 export const new_news = `${startup_page}/news/new`;
 export const news_view_one = `${startup_page}/view`;
+
+//dashboard
+export const dashboard = `${startup_page}/dashboard`;
 
 //settings
 

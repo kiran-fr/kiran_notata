@@ -55,7 +55,7 @@ export default function Notifications({ history }) {
 
   return (
     <div className="notifications-container">
-      <div className="notifications-container__card">
+      <div className=" notifications-container__card">
         <div className="card-heading notifications-container__header">
           <div className="card-heading notifications-container__heading">
             <i

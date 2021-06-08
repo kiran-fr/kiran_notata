@@ -155,6 +155,9 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={funnels} component={Funnels} />
 
+      {/* dashboard */}
+      <Route exact path={dashboard} component={Dashboard} />
+
       <Route exact path={settings} component={Settings} />
       <Route exact path={your_team} component={yourTeam} />
       <Route exact path={web_form} component={webForm} />
@@ -283,13 +286,13 @@ export const RouterComponent = ({ history }) => {
         path={`${startup_page}/settings`}
         component={Settings}
       /> */}
-      <Route eaxct path={dashboard_new} component={DashboardNew} />
+      {/* <Route eaxct path={dashboard_new} component={DashboardNew} />
       <Route
         eaxct
         path={`${startup_page}/components/company/dashboard`}
         component={Dashboard}
       />
-
+ */}
       <Route
         eaxct
         path={`${startup_page}/report/reports`}

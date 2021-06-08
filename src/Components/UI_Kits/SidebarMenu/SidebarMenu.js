@@ -33,7 +33,7 @@ export function SideBarMenu() {
       label: "Dashboard",
       iconClass: "fas fa-signal-alt-3",
       iconStyle: {},
-      link: `${startup_page}/components/company/dashboard`,
+      link: `${startup_page}/dashboard`,
     },
     {
       label: "My Startups",
