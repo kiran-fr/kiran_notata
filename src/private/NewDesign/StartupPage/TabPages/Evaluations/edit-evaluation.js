@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import { evaluationUpdate, evaluationCreate } from "private/Apollo/Mutations";
 import { GeneralInput } from "../../Inputs/GeneralInput";
 import CommentInput from "../../FormInputs/CommentInput";
+import { Loader } from "Components/UI_Kits";
 export default function EditEvaluation({
   setEditEvaluation,
   setSaveEvaluation,
@@ -85,7 +86,7 @@ export default function EditEvaluation({
   };
 
   if (loading) {
-    return "Saving...";
+      return <Loader size="medium" />
   }
 
   //comment

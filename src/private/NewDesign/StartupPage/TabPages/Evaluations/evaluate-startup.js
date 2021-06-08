@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./evaluate-startup.scss";
 import moment from "moment";
 import { evaluationGet } from "private/Apollo/Queries";
+import { Loader } from "Components/UI_Kits";
 import { appsyncClient } from "../../../../../awsconfig";
 
 const transform = obj => {
@@ -61,13 +62,7 @@ export default function EvaluateStartup({
     );
   };
   if (loader) {
-    return (
-      <div className="text-center">
-        <span className={"loading_icon"}>
-          <i className="fa fa-spinner fa-spin" />
-        </span>
-      </div>
-    );
+    return <Loader size="medium" />
   }
   return (
     <div className="evaluate-startup-container">

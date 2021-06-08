@@ -142,6 +142,8 @@ import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
+      <Route eaxct path={reports} component={Reports} />
+
       <Route exact path={startup_page} component={StartupSection} />
 
       <Route exact path={profile} component={Profile} />
@@ -281,7 +283,6 @@ export const RouterComponent = ({ history }) => {
       {/*  component={EvaluationTemplatesPage}*/}
       {/*/>*/}
 
-      <Route eaxct path={reports} component={Reports} />
       {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
 
