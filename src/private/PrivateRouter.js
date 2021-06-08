@@ -109,7 +109,7 @@ import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
-import { StartupPage as StartupInfo } from "./NewDesign/srv_startup/pages/StartupPage/index";
+import { StartupPage as StartupInfo } from "./NewDesign/StartupPage/index";
 import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 

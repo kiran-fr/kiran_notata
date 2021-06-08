@@ -21,7 +21,7 @@ import {
 import { groupGetV2 } from "../../../../Apollo/Queries";
 
 import { startup_page } from "../../../../../definitions";
-import SharingOptions from "../StartupPage/TabPages/Groups/sharing-options";
+import SharingOptions from "../../../StartupPage/TabPages/Groups/sharing-options";
 import { Modal } from "../../../../../Components/UI_Kits";
 import { useForm } from "react-hook-form";
 
