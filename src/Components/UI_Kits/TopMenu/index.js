@@ -4,6 +4,8 @@ import { useQuery, useMutation } from "@apollo/client";
 import { userGet, notificationsGet } from "private/Apollo/Queries";
 import { notifications_page } from "definitions.js";
 import { History } from "history";
+import NotificationsDropDown from "./notification-top-menu";
+import ProfilePic from "../../../assets/images/profile-pic.png";
 
 // STYLE
 import styles from "./TopMenu.module.css";
@@ -25,11 +27,11 @@ export function TopMenu() {
   return (
     <div className={styles.top_menu_container}>
       {listOpen && (
-        <div style={{ position: "absolute", pointerEvents: "none" }}>
-          <div>user profile</div>
-          <div>team</div>
-          <div>settings</div>
-          <div>log out</div>
+        <div className={styles.profile_pic_dropdown}>
+          <div className={styles.profile_pic_dropdown_item}>user profile</div>
+          <div className={styles.profile_pic_dropdown_item}>team</div>
+          <div className={styles.profile_pic_dropdown_item}>settings</div>
+          <div className={styles.profile_pic_dropdown_item}>log out</div>
         </div>
       )}
 
@@ -45,25 +47,28 @@ export function TopMenu() {
         onMouseEnter={() => setNotificatonsOpen(true)}
         onMouseLeave={() => setNotificatonsOpen(false)}
       >
-        <Link to={notifications_page}>
-          <i className="fas fa-bell"></i>
+        <Link to="">
+          <i
+            className={`fas fa-bell ${
+              notificationsOpen ? styles.notification_icon_selected : ""
+            }`}
+          ></i>
           {unseen.length !== 0 && <div className={styles.circle}></div>}
         </Link>
+        {notificationsOpen && <NotificationsDropDown />}
 
-        {notificationsOpen && (
+        {/* {notificationsOpen && (
           <div style={{ position: "absolute" }}>
             <pre>{JSON.stringify(notifications, null, 2)}</pre>
           </div>
-        )}
+        )} */}
       </span>
 
       <div className={styles.profile}>
-        <div className={styles.profile_pic}>
-          <Link to="">n</Link>
-        </div>
+        <img src={ProfilePic} className={styles.profile_pic_img} />
         <p className={styles.profile_name}>
-          {user.given_name} {user.family_name}
-          {/*Profile Name*/}
+          {/* {user.given_name} {user.family_name} */}
+          Profile Name
         </p>
         <div
           role="button"
