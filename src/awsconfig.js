@@ -85,7 +85,6 @@ Amplify.configure({
 
 const STAGE = "dev2";
 const isLocal = true;
-
 const GQL = {
   private: {
     path: `/${STAGE}/private_graphql`,
