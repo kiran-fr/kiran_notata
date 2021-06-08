@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import styles from "./modal.module.css";
+import { Loader } from "Components/UI_Kits";
 
 // common dynamic funnel img function
 import { DynamicIcons } from "../../../NewDesign/CommonFunctions";
@@ -91,6 +92,10 @@ export default function AddFunnel(props) {
       </ul>
     );
   };
+
+  if(loading && props.funnelModal) {
+    return <Loader />
+  }
 
   return (
     <div className={styles.group}>
