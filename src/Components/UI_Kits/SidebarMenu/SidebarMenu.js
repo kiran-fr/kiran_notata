@@ -1,5 +1,10 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import GroupsImg from "../../../assets/images/navigation-groups.png";
+import NewsImg from "../../../assets/images/navigation-news.png";
+import ReportsImg from "../../../assets/images/navigation-reports.png";
+import SettingsImg from "../../../assets/images/navigation-settings.png";
+import StartupsImg from "../../../assets/images/navigation-startups.png";
 
 //links
 import {
@@ -37,26 +42,26 @@ export function SideBarMenu() {
     },
     {
       label: "My Startups",
-      iconClass: "fas fa-briefcase",
+      iconClass: StartupsImg,
       iconStyle: { paddingTop: "2px" },
       link: startup_page,
     },
     {
       label: "Groups",
-      iconClass: "fas fa-users",
+      iconClass: GroupsImg,
       iconStyle: {},
       link: group,
     },
     {
       label: "Reports and analytics",
-      iconClass: "fas fa-file-alt",
+      iconClass: ReportsImg,
       iconStyle: { paddingTop: "7px" },
       link: `${startup_page}/report/reports`,
     },
     //  hide for now  (commented by siva)
     {
       label: "News",
-      iconClass: "fas fa-globe",
+      iconClass: NewsImg,
       iconStyle: { paddingTop: "2px" },
       link: news1,
     },
@@ -136,12 +141,13 @@ export function SideBarMenu() {
                     )}
                   >
                     <div className={styles.icons} style={item.iconStyle}>
-                      <i
+                      {/* <i
                         className={item.iconClass}
                         style={{
                           marginLeft: item.label === "Groups" && "-3px",
                         }}
-                      />
+                      /> */}
+                      <img src={item.iconClass} className="" />
                     </div>
                     <p className={styles.list}>{item.label}</p>
                   </NavLink>
