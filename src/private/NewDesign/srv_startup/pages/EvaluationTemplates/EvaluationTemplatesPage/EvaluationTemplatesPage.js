@@ -14,15 +14,17 @@ import DeleteTemplateModal from "./modals/DeleteTemplateModal";
 import EditTemplateModal from "./modals/EditTemplateModal";
 import CloneTemplateModal from "./modals/CloneTemplateModal";
 
+import { useHistory } from "react-router-dom";
+
 // STYLES
 import "../evaluation-templates.scss";
-
-// HELPERS
 
 // OTHER
 import { ICONPOSITION } from "../../constants";
 
 export const EvaluationTemplatesPage = ({ history }) => {
+  const back = useHistory();
+
   // States
   const [viewDropdown, setViewDropdown] = useState(null);
   const [createNewModal, setCreateNewModal] = useState(false);
@@ -52,7 +54,8 @@ export const EvaluationTemplatesPage = ({ history }) => {
             <i
               class="fa fa-chevron-left"
               aria-hidden="true"
-              onClick={() => history.push("/")}
+              style={{ marginRight: 10, cursor: "pointer" }}
+              onClick={() => back.goBack()}
             ></i>
             Evaluation templates
           </div>
