@@ -102,14 +102,14 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
 import { Startup } from "./shubham-new-designs/pages/startup/index";
-import Reports from "./shubham-new-designs/pages/reports/reports";
+// import Reports from "./shubham-new-designs/pages/reports/reports";
 import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 // import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
 import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
-import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
+import Reports from "./NewDesign/srv_startup/pages/reports/reports";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 
 // import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
@@ -293,11 +293,11 @@ export const RouterComponent = ({ history }) => {
         component={Dashboard}
       />
  */}
-      <Route
+      {/* <Route
         eaxct
         path={`${startup_page}/report/reports`}
         component={ReportsAdd}
-      />
+      /> */}
 
       <Route render={() => <div>404</div>} />
     </Switch>

@@ -75,6 +75,9 @@ export const web_form = `${startup_page}/settings/web_form`;
 export const your_team = `${startup_page}/settings/your_team`;
 export const setting_profile = `${startup_page}/settings/profile`;
 
+//reports and analytics
+export const reports = `${startup_page}/report`;
+
 // JØRGEN's NEW ROUTES
 export const notifications_page = `${startup_page}/notifications`;
 
@@ -91,7 +94,7 @@ export const product_demo = `${public_pages}/product_demo`;
 // SHUBHAM ROUTES
 export const startup_index = `${startup_page}/components/ui/navigation1`;
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
-export const reports = `${startup_page}/components/ui/navigation1/report`;
+// export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
 // export const news = `${startup_page}/components/ui/navigation1/news`;
 export const dashboard_new = `${startup_page}/components/ui/navigation1/dashboard`;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./filter.scss";
 import InputCheckBox from "../ui-kits/check-box";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
-import { Tags } from "../ui-kits/Tags/Tags";
+import TagsModal from "../ui-kits/TagsModal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -147,7 +147,7 @@ export default function Filter({ close }) {
           }}
           submitTxt="Save"
           closeTxt="Cancel"
-          children={<Tags></Tags>}
+          children={<TagsModal></TagsModal>}
         ></Modal>
       )}
     </>
