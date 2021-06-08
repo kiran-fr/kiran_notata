@@ -11,7 +11,7 @@
   }
   span {
     font-family: "Proxima Nova";
-    font-size: 12px;
+    font-size: 15px;
     line-height: 15px;
     margin-left: 5px;
   }
@@ -19,6 +19,11 @@
 .checkbox1 {
   margin-left: 0px !important;
   margin-right: 0px !important;
+}
+
+.checkbox {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .textbox {

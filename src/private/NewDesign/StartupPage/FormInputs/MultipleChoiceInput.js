@@ -17,7 +17,8 @@ export default function MultipleChoiceInput({
               className={styles.checkbox1}
               value={val}
               disabled={disabled}
-              defaultChecked={checked}
+              // defaultChecked={checked}
+              checked={checked}
               onClick={handleOnClick}
               {...props}
             />

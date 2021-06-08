@@ -145,7 +145,7 @@ export default function EditEvaluation({
                     collapseList[section.id] === "" ? "collapse" : "";
                   setCollapseDetailList(collapseList);
                 }}
-              ></i>
+              />
               {section.name}
             </div>
             <div className={`${collapseDetailList[section?.id]}`}>

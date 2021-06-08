@@ -57,7 +57,7 @@ export default function MultipleChoiceInputContainer({
         return {
           val,
           key: sid,
-          checked: answer && answer.val,
+          checked: !!answer?.val,
           handleOnClick: () => handleSelect({ answer, sid, val }),
         };
       })}

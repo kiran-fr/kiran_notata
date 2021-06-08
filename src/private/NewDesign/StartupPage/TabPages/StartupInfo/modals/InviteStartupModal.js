@@ -44,7 +44,7 @@ export const InviteStartupModal = ({ connection, close }) => {
     let url =
       `${window.location.protocol}//` +
       `${window.location.host}/` +
-      `public/creative/` +
+      `public/creative_new/` +
       `${creative.accountId}/` +
       `${creative.id}` +
       `&email=${creative.sharedWithEmail}`;

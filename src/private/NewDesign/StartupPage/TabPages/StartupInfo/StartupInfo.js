@@ -39,7 +39,7 @@ export default function StartupInfo({ connection }) {
     <>
       {shareStartup ? (
         <EditStartupInfo
-          setShareStartup={() => setShareStartup(false)}
+          backToInfoPage={() => setShareStartup(false)}
           connection={connection}
         />
       ) : (

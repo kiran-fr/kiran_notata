@@ -51,14 +51,11 @@ export default function SingleChoiceInputContainer({
         // Get answer for this option
         const answer = getAnswer({ sid });
 
-        // Get boolean value
-        const checked = !!(answer && answer.val);
-
         // Return radio properties
         return {
           key: sid,
           val: val,
-          checked: checked,
+          checked: !!answer?.val,
           handleOnChange: () => {
             handleSelect({ answer, sid, val });
           },

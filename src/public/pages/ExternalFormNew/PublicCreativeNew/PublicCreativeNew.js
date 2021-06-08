@@ -1,289 +1,154 @@
 import React, { useEffect, useState } from "react";
+
+// API STUFF
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { creativePut } from "public/Apollo/Mutations";
-import { omit } from "lodash";
 import { creativeGet, creativeTemplateGet } from "public/Apollo/Queries";
+import { creativePut } from "public/Apollo/Mutations";
 
-import {
-  Content,
-  Card,
-  Button,
-  SuccessBox,
-  ErrorBox,
-  GhostLoader,
-} from "Components/elements";
+import { GhostLoader } from "Components/elements";
+import "./PublicCreativeNew.scss";
 
-import { GeneralInput } from "./Inputs/GeneralInput";
-import { CommentSection } from "./CommentSection";
+import EditStartupContent from "../../../../private/NewDesign/StartupPage/TabPages/StartupInfo/subPages/EditStartupContent";
+import MessageBox from "./MessageBox";
 
-import { sectionName } from "./PublicCreativeNew.module.css";
+let defaultCreative = {
+  id: null,
+  name: "",
+  description: "External Form",
+  templateId: "",
+  sharedWithEmail: null,
+  sharedByEmail: null,
+  submit: false,
+  answers: [],
+};
 
-function Question({ question, section, creative, setAnswers, answers }) {
-  const { name, description } = question;
-  return (
-    <Card
-      style={{ marginBottom: "10px", paddingBottom: "15px", marginTop: "0px" }}
-    >
-      <div className="form_h2">{name}</div>
-      <div className="form_p2">{description}</div>
-      <hr />
-      <div className="p1">
-        <GeneralInput
-          question={question}
-          section={section}
-          creative={creative}
-          setAnswers={setAnswers}
-          answers={answers}
-        />
-      </div>
-      <CommentSection
-        question={question}
-        section={section}
-        creative={creative}
-        answers={answers}
-        setAnswers={setAnswers}
-      />
-    </Card>
+export function PublicCreativeNew({ match }) {
+  // URL STUFF
+  let { id, accountId } = match.params;
+
+  // STATES
+  const [success, setSuccess] = useState(false);
+
+  // QUERIES
+  const queryOptions = { context: { clientName: "public" } };
+  const [getCreative, getCreativeRes] = useLazyQuery(creativeGet, queryOptions);
+  const [getTemplate, getTemplateRes] = useLazyQuery(
+    creativeTemplateGet,
+    queryOptions
   );
-}
 
-function findErrors(variables) {
-  let errs = [];
-
-  console.log(variables);
-
-  if (!variables.input.name) {
-    errs.push("Company name must be provided.");
-  }
-
-  if (
-    !variables.input.answers.find(
-      ({ questionId }) => questionId === "q01_section_terms"
-    )
-  ) {
-    errs.push("Terms and conditions are not accepted.");
-  }
-
-  if (
-    !variables.input.answers.find(
-      ({ questionId }) => questionId === "q05_section_info"
-    )
-  ) {
-    errs.push("Contact person is not provided.");
-  }
-
-  return errs;
-}
-
-function Submit({
-  creative,
-  template,
-  accountId,
-  answers,
-  name,
-  success,
-  setSuccess,
-}) {
-  console.log("accountId", accountId);
-
-  const [mutate, mres] = useMutation(creativePut, {
+  // MUTATIONS
+  const [mutate] = useMutation(creativePut, {
     context: { clientName: "public" },
   });
 
-  const [errors, setErrors] = useState([]);
+  // MAPS AND REDUCERS
+  let creative = getCreativeRes.data?.creativeGet;
+  let template = getTemplateRes?.data?.creativeTemplateGet;
+
+  // EFFECTS
+
+  // Get template
+  useEffect(() => {
+    if (!accountId) {
+      return;
+    }
+    let variables = { id: accountId };
+    getTemplate({ variables });
+  }, [accountId]);
+
+  // Get creative
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    let [creativeId] = id.split("&");
+    let variables = { id: creativeId };
+    getCreative({ variables });
+  }, [id]);
+
+  const error =
+    getCreativeRes.error ||
+    getTemplateRes.error ||
+    (!getCreativeRes?.data?.creativeGet && !getCreativeRes.loading);
+
+  const loading = getCreativeRes.loading || getTemplateRes.loading;
+
+  const gotAllData = getCreativeRes.data && getTemplateRes.data;
+
+  if (!gotAllData && loading) {
+    return <GhostLoader />;
+  }
+
+  if (!template) {
+    return <GhostLoader />;
+  }
+
+  if (!creative) {
+    creative = defaultCreative;
+  }
+
+  if (error && !id) {
+    return (
+      <MessageBox
+        title={"Form not found"}
+        message={
+          "It seems like this form doesn't exist, or that the person that shared it with you have revoked sharing privileges."
+        }
+      />
+    );
+  }
+
+  if (success) {
+    return (
+      <MessageBox
+        title={"Form successfully saved"}
+        message={
+          creative.id
+            ? template.successMessageInvited || ""
+            : template.successMessageWebForm || ""
+        }
+      />
+    );
+  }
 
   return (
-    <div>
-      {!success && (
-        <div className="text-right">
-          <Button
-            type="right_arrow"
-            loading={mres.loading}
-            onClick={async () => {
-              if (mres.loading) return;
+    <div className="row tab-panel-container public-creative-container">
+      <div className="col-sm-12 public-creative-container__content">
+        <div className="col-sm-12 public-creative-container__content__header">
+          {creative.id
+            ? template.headerMessageInvited || ""
+            : template.headerMessageWebForm || ""}
+        </div>
 
-              const variables = {
-                id: creative.id || "",
+        <div className="card col-sm-12">
+          <EditStartupContent
+            template={template}
+            creative={creative}
+            saveCreative={async input => {
+              let variables = {
                 accountId: accountId,
-                input: {
-                  name: name,
-                  // accountId: accountId,
-                  // templateId: template?.id,
-                  // sharedWithEmail: creative?.sharedWithEmail || null,
-                  submit: true,
-                  answers: answers.map(ans => omit(ans, ["__typename", "id"])),
-                },
+                input,
               };
 
-              let errs = findErrors(variables);
-              setErrors(errs);
-
-              if (errs.length) return;
+              if (creative.id) {
+                variables.id = creative.id;
+              }
 
               try {
                 await mutate({ variables });
+                if (creative.id && (input.removeLogo || input.logo)) {
+                  return;
+                }
                 setSuccess(true);
               } catch (error) {
                 console.log("error", error);
               }
             }}
-          >
-            Submit
-          </Button>
+            disableNavigation={true}
+          />
         </div>
-      )}
-
-      {!!errors.length && (
-        <div style={{ marginTop: "10px" }}>
-          <ErrorBox>
-            {errors.map((err, i) => (
-              <div key={i}>{err}</div>
-            ))}
-          </ErrorBox>
-        </div>
-      )}
-
-      {success && (
-        <div className="mt2">
-          <SuccessBox>
-            {creative.id && <div>{template.successMessageInvited || ""}</div>}
-
-            {!creative.id && <div>{template.successMessageWebForm || ""}</div>}
-          </SuccessBox>
-        </div>
-      )}
+      </div>
     </div>
   );
-}
-
-const CompanyName = ({ setName, creative }) => (
-  <div className="focus_form mb3">
-    <textarea
-      className="form_h1"
-      rows={1}
-      placeholder="Your company name"
-      name="input.name"
-      defaultValue={creative.name}
-      onBlur={e => {
-        setName(e.target.value);
-      }}
-    />
-  </div>
-);
-
-export function PublicCreativeNew({ match }) {
-  const [success, setSuccess] = useState(false);
-
-  let { id, accountId } = match.params;
-
-  const [answers, setAnswers] = useState({});
-  const [name, setName] = useState("");
-  const [getCreative, creativeQuery] = useLazyQuery(creativeGet, {
-    context: { clientName: "public" },
-  });
-  let creative = creativeQuery.data?.creativeGet;
-
-  const [
-    getCreativeTemplate,
-    creativeTemplateQuery,
-  ] = useLazyQuery(creativeTemplateGet, { context: { clientName: "public" } });
-  const template = creativeTemplateQuery?.data?.creativeTemplateGet;
-
-  useEffect(() => {
-    if (accountId) {
-      getCreativeTemplate({ variables: { id: accountId } });
-    }
-  }, [accountId && getCreativeTemplate]);
-
-  useEffect(() => {
-    if (id) {
-      let [creativeId] = id.split("&");
-
-      getCreative({ variables: { id: creativeId } });
-    }
-  }, [id && getCreative, getCreativeTemplate, id]);
-
-  useEffect(() => {
-    if (creative) {
-      setAnswers(creative.answers);
-    }
-  }, [creative]);
-
-  const error = creativeQuery.error || creativeTemplateQuery.error;
-  const loading = creativeQuery.loading || creativeTemplateQuery.loading;
-
-  if (error) {
-    return (
-      <Content maxWidth={780} center>
-        <ErrorBox>Form not found...</ErrorBox>
-      </Content>
-    );
-  }
-
-  if (!creative) {
-    creative = {
-      id: null,
-      name: "",
-      description: "External Form",
-      templateId: "",
-      sharedWithEmail: null,
-      sharedByEmail: null,
-      submit: false,
-      answers: [],
-    };
-  }
-
-  if (!loading && creative && template)
-    return (
-      <Content maxWidth={780}>
-        {!success && (
-          <div>
-            <div
-              style={{
-                marginBottom: "30px",
-                marginTop: "20px",
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {creative.id
-                ? template.headerMessageInvited || ""
-                : template.headerMessageWebForm || ""}
-            </div>
-
-            <div>NEW</div>
-
-            <CompanyName setName={setName} creative={creative} />
-
-            {(template.sections || []).map((section, i) => (
-              <div key={`section-${i}`}>
-                <div className={sectionName}>{section.name}</div>
-                <div>{section.description}</div>
-                {(section.questions || []).map((question, ii) => (
-                  <Question
-                    key={`q-${i}-${ii}`}
-                    question={question}
-                    section={section}
-                    creative={creative}
-                    setAnswers={setAnswers}
-                    answers={answers}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-        )}
-
-        <Submit
-          creative={creative}
-          accountId={accountId}
-          answers={answers}
-          name={name || creative.name}
-          template={template}
-          success={success}
-          setSuccess={setSuccess}
-        />
-      </Content>
-    );
-
-  return <GhostLoader />;
 }
