@@ -53,6 +53,7 @@ function ListOfStartups({
   evaluationTemplates,
   evaluationTemplatesQuery,
   updateFunnelTag,
+  funnelLoad
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
@@ -97,6 +98,7 @@ function ListOfStartups({
         data={connections}
         filters={filters}
         setFilters={setFilters}
+        funnelLoad = {funnelLoad}
         evaluationTemplates={evaluationTemplates}
         loading={loading || evaluationTemplatesQuery.loading}
         emptyLabel={"No results."}
@@ -201,6 +203,8 @@ export default function Connections({ history }) {
   const [currentPage, setCurrentPage] = useState(undefined);
   const [tabValue, setTabValue] = useState("spreadsheet");
   const [selectedfunnelGroup, setSelectedfunnelGroup] = useState(0);
+  const [funnelLoad, setFunnelLoad] = useState(false);
+
 
   const [manageColValue, setManageColValue] = useState({
     groups: true,
@@ -213,15 +217,20 @@ export default function Connections({ history }) {
   // Mutation updating funnel tag for connection
   const [mutate] = useMutation(connectionFunnelTagAdd);
 
-  const updateFunnelTag = (funnelTagId, connectionId) => {
+  const updateFunnelTag = async (funnelTagId, connectionId) => {
+    setFunnelLoad(true)
     const variables = {
       connectionId,
       funnelTagId,
     };
-    mutate({
+    await mutate({
       variables,
     });
+    setFunnelLoad(false)
   };
+
+  console.log('funnelLoad', funnelLoad)
+  
 
   // Load filters from local store
   useEffect(() => {
@@ -286,6 +295,7 @@ export default function Connections({ history }) {
           <ListOfStartups
             history={history}
             filters={filters}
+            funnelLoad = {funnelLoad}
             columnSettings={manageColValue}
             evaluationTemplatesQuery={evaluationTemplatesQuery}
             setFilters={setFilters}
