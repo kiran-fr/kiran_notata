@@ -11,6 +11,11 @@ import { sortArr } from "../../private/NewDesign/CommonFunctions";
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
 import { CheckBox, Datepicker1 } from "Components/UI_Kits";
 
+//Loader
+import {
+  Loader
+} from "Components/UI_Kits";
+
 // API
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
@@ -122,7 +127,7 @@ export default function FilterBar({
           )
         )
       ) : loading ? (
-        <i className={"fa fa-spinner fa-spin"} />
+          <Loader />
       ) : (
         ""
       )}

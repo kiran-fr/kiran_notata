@@ -337,33 +337,6 @@
   color: var(--color-gray-medium);
 }
 
-.loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 28px;
-}
-
-.loader:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  opacity: 0.7;
-}
-
-.loader i {
-  color: var(--color-gray-medium);
-}
-
 .company_name {
   color: var(--color-secondary);
   cursor: pointer;
