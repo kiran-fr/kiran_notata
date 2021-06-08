@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { userGet, notificationsGet } from "private/Apollo/Queries";
-import { notifications_page } from "definitions.js";
 import { settings, signOut, setting_profile, your_team } from "definitions.js";
 // import { History } from "history";
 import NotificationsDropDown from "./notification-top-menu";
