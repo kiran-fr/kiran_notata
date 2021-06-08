@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./TagsModal.scss";
 import { Tags } from "./Tags/Tags";
 import { useQuery, useMutation } from "@apollo/client";
+import { Loader } from "Components/UI_Kits";
 
 // API STUFF
 
@@ -11,7 +12,6 @@ import {
   connectionTagAdd,
   connectionTagRemove,
 } from "private/Apollo/Mutations";
-import { GhostLoader } from "Components/elements";
 
 export default function TagsModal({
   connection,
@@ -113,11 +113,7 @@ export default function TagsModal({
     <div className="tags-container">
       {loading ? (
         /* //query processing */
-        <div className="text-center">
-          <span className={"loading_icon"}>
-            <i className="fa fa-spinner fa-spin" />
-          </span>
-        </div>
+        <Loader size="medium"/>
       ) : (
         <>
           <div className="tags-container__sub-heading">
