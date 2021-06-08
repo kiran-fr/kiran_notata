@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./ArchivePage.scss";
 import { useMutation, useQuery } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
@@ -12,6 +12,8 @@ export default function ArchivePage({ history }) {
 
   const [archiveConnection, archiveConnectionRes] = useMutation(connectionPut);
   const [deleteConnection, deleteConnectionRes] = useMutation(connectionPut);
+  const [archiveId, setArchiveId] = useState("");
+
 
   let archivedConnections = data?.connectionsGet || [];
 
@@ -62,6 +64,8 @@ export default function ArchivePage({ history }) {
                       if (archiveConnectionRes.loading) {
                         return;
                       }
+                      setArchiveId(connection.id)
+
                       try {
                         let variables = {
                           id: connection.id,
@@ -75,7 +79,7 @@ export default function ArchivePage({ history }) {
                       }
                     }}
                   >
-                    {archiveConnectionRes.loading ? "...loading" : "UNARHIVE"}
+                    {archiveConnectionRes.loading && archiveId === connection.id ? "...loading" : "UNARHIVE"}
                   </div>
                   <div
                     className="col-sm-4 col-xs-12 delete-permanently"
@@ -83,6 +87,7 @@ export default function ArchivePage({ history }) {
                       if (deleteConnectionRes.loading) {
                         return;
                       }
+                      setArchiveId(connection.id)
                       try {
                         let variables = {
                           id: connection.id,
