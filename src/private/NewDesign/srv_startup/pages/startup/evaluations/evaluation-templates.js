@@ -98,6 +98,7 @@ export const ElevationTemplates = ({ history }) => {
           <div className="col-sm-6 col-xs-12 evaluation-templates-container__heading">
             <i
               className="fa fa-chevron-left"
+              style={{ paddingRight: "10px" }}
               aria-hidden="true"
               onClick={() => history.push("/")}
             />

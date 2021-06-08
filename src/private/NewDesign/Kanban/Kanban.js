@@ -8,6 +8,11 @@ import {
 } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 
+import {
+  Loader
+} from "Components/UI_Kits";
+
+
 import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
 import { appsyncClient } from "../../../awsconfig";
 
@@ -236,9 +241,7 @@ export const Kanban = props => {
                   </Droppable>
                 </div>
               ) : (
-                <div className={styles.loading_icon}>
-                  <i className={"fa fa-spinner fa-spin"} />
-                </div>
+                <Loader />
               )}
             </div>
           );

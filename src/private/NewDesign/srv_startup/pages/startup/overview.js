@@ -471,7 +471,7 @@ export default function Overview(props) {
                   text="DELETE STARTUP PERMANENTLY"
                   iconPosition={ICONPOSITION.NONE}
                   onClick={() => setDeleteModal(true)}
-                ></ButtonWithIcon>
+                />
               </div>
             </div>
           </div>
@@ -484,7 +484,7 @@ export default function Overview(props) {
                 <div className="discussions-contianer__sub-heading">
                   Notes from you and your team
                 </div>
-                <CommentBox connId={id}></CommentBox>
+                <CommentBox connectionId={id} />
               </div>
             </div>
           </div>
@@ -502,7 +502,7 @@ export default function Overview(props) {
           submitTxt="Create"
           closeTxt="Cancel"
           children={<CreateNewGroup></CreateNewGroup>}
-        ></Modal>
+        />
       )}
       {showTagsModal && (
         <Modal

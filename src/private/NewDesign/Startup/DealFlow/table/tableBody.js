@@ -11,6 +11,9 @@ import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
 import classnames from "classnames";
 import { sortArr } from "../../../CommonFunctions";
+import {
+  Loader
+} from "Components/UI_Kits";
 
 export default function TableBody(props) {
   const {
@@ -31,10 +34,14 @@ export default function TableBody(props) {
     checkAll,
     checked,
     setChecked,
+    funnelLoad
   } = props;
 
   const [funnel, setFunnel] = useState();
+  const [funnelId, setFunnelId] = useState();
+
   const [showFunnel, setShowFunnel] = useState(false);
+  
 
   const FunnelPopup = ({ tags, id, index }) => {
     const updateFunnelTagForConnection = funnelTagId => {
@@ -257,42 +264,48 @@ export default function TableBody(props) {
                 {columnSettings.funnels && (
                   <td>
                     <div className={styles.startupStatus}>
-                      {tagSet ? (
-                        <>
-                          <img
-                            alt=""
-                            src={
-                              `${tagSet.name.toUpperCase()}` === "ANALYZED"
-                                ? Red
-                                : Green
-                            }
-                          />
-                          {tagSet.name}
-                          <span
-                            className={classnames(
-                              (funnel === index) & showFunnel ? activePopup : ""
-                            )}
-                            onClick={() => {
-                              setFunnel(funnel ? null : index);
-                              setShowFunnel(!showFunnel);
-                            }}
-                          >
-                            {" "}
-                            <i className={classnames("fas fa-chevron-down")} />
-                          </span>
-                          {funnel === index && showFunnel && (
-                            <FunnelPopup
-                              tags={funnelTags?.[0]?.group?.funnelTags || []}
-                              id={id}
-                              index={index}
-                            />
-                          )}
-                        </>
-                      ) : (
-                        <span onClick={() => setShowFunnelScoreForId(item.id)}>
-                          <ButtonGreen />
-                        </span>
-                      )}
+                      {funnelLoad && funnelId === index
+                        ?
+                          <Loader /> 
+                        :
+                          tagSet
+                          ? 
+                            <>
+                              <img
+                                alt=""
+                                src={
+                                  `${tagSet.name.toUpperCase()}` === "ANALYZED"
+                                    ? Red
+                                    : Green
+                                }
+                              />
+                                {tagSet.name}
+                              <span
+                                className={classnames(
+                                  (funnel === index) & showFunnel ? activePopup : ""
+                                )}
+                                onClick={() => {
+                                  setFunnel(funnel ? null : index);
+                                  setFunnelId(index)
+                                  setShowFunnel(!showFunnel);
+                                }}
+                              >
+                                {" "}
+                                <i className={classnames("fas fa-chevron-down")} />
+                              </span>
+                              {funnel === index && showFunnel && (
+                                <FunnelPopup
+                                  tags={funnelTags?.[0]?.group?.funnelTags || []}
+                                  id={id}
+                                  index={index}
+                                />
+                              )}
+                            </>
+                            : 
+                              <span onClick={() => setShowFunnelScoreForId(item.id)}>
+                                <ButtonGreen />
+                              </span>
+                        }
                     </div>
                   </td>
                 )}
