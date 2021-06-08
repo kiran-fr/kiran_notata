@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { connectionsGet } from "../../../../Apollo/Queries";
-import SubjectiveScoreModal from "../../../../pages/Dashboard/Connections/SubjectiveScoreModal";
+import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Loader } from "../../../../../Components/elements";
 import { startup_page } from "../../../../../definitions";
 
