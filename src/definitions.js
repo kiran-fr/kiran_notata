@@ -76,7 +76,7 @@ export const your_team = `${startup_page}/settings/your_team`;
 export const setting_profile = `${startup_page}/settings/profile`;
 
 //reports and analytics
-export const reports = `${startup_page}/report`;
+export const reports = `${startup_page}/reports`;
 
 // JØRGEN's NEW ROUTES
 export const notifications_page = `${startup_page}/notifications`;

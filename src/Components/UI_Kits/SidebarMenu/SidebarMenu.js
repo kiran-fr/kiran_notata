@@ -55,7 +55,7 @@ export function SideBarMenu() {
       label: "Reports",
       iconClass: "fas fa-file-alt",
       iconStyle: { paddingTop: "7px" },
-      link: `${startup_page}/report/reports`,
+      link: reports,
     },
     //  hide for now  (commented by siva)
     {
