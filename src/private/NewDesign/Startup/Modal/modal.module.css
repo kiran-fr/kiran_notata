@@ -387,3 +387,8 @@
 .startupFunnel > div > div {
   width: 100%;
 }
+
+.companyLink {
+  color:  var(--ui-color-primary-green-dark2);
+  cursor: pointer;
+}

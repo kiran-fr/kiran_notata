@@ -36,7 +36,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
   const [funnelId, setFunnelId] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [tagSelected, setTagSelected] = useState([]);
-  const [connectionData, setconnectionData] = useState([]);
+  const [connectionId, setconnectionId] = useState("");
 
   const { data: groupsGetV2Data, loading, error } = useQuery(groupsGetV2);
 
@@ -77,9 +77,9 @@ export default function Expand({ closeModal, styles, connections, history }) {
             setExistedFlag(
               result?.data?.connectionAutoCompleteName[0]?.creativeName
             );
-            setconnectionData(result?.data?.connectionAutoCompleteName);
+            setconnectionId(result?.data?.connectionAutoCompleteName[0]?.connectionId);
           } else {
-            setconnectionData([]);
+            setconnectionId("");
             setExistedFlag(undefined);
           }
         });
@@ -98,16 +98,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
     // Stop if StartupPage with same name exists
     if (existedFlag) {
       // existing company
-      if (connectionData.length > 0) {
-        connectionData.map(el => {
-          if (
-            el.creativeName.toLowerCase().trim() ===
-            data.variables.input.name.toLowerCase().trim()
-          ) {
-            history.push(`${startup_page}/company/${el.connectionId}`);
-          }
-        });
-      }
+      closeModal();
     }
 
     try {
@@ -189,7 +180,12 @@ export default function Expand({ closeModal, styles, connections, history }) {
   };
   const list = [{ id: "3344", name: "group 1" }];
 
-  console.log("tagSelected", tagSelected);
+  const handleRedirect = () => {
+    if (connectionId) {
+      history.push(`${startup_page}/company/${connectionId}`);
+    }
+  }
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -207,7 +203,11 @@ export default function Expand({ closeModal, styles, connections, history }) {
           </div>
           {existedFlag && (
             <p className={styles.doyoumean}>
-              Do you mean <span>{existedFlag}</span> It`s already Exists
+              Do you mean <span className = {styles.companyLink}
+                onClick={()=>handleRedirect()}
+              >
+                {existedFlag}
+              </span> It`s already Exists
             </p>
           )}
           <div className="row tags-container overview-tags">
