@@ -77,9 +77,16 @@
                 width:100%;
             }
             &__invite-btn{
-                background: #53CAB2;
+                background: #7E7E7E;
                 height: 30px;
                 margin-left: 15px;
+                opacity: 0.3;
+                cursor: default;
+            }
+
+            &__invite-btn.active {
+                opacity: 1;
+                cursor: pointer;
             }
         }
     }

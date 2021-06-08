@@ -7,8 +7,7 @@ import SubmissionFullList from "./submission-full-list";
 import EvaluateStartup from "./evaluate-startup";
 import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
-import ManageTemplates from "./manage-templates";
-import { evaluation_template_new_dev } from "../../../../../../definitions";
+import { evaluation_templates_page } from "definitions";
 
 export default function Evaluations(props) {
   const {
@@ -37,40 +36,12 @@ export default function Evaluations(props) {
 
   const [myEvalState, setMyEvalState] = useState("");
   const [myTeamEvalState, setMyTeamEvalState] = useState("");
-  const [expertEvalState, setExpertEvalState] = useState("");
   const [groupEvalState, setGroupEvalState] = useState("");
-
   const [evaluationExpandState, setEvaluationExpandState] = useState({});
-  const [
-    myTeamFirstImpressionEvalState,
-    setMyTeamFirstImpressionEvalState,
-  ] = useState("collapse");
-  const [
-    myTeamBeforePitchingEvalState,
-    setMyTeamBeforePitchingEvalState,
-  ] = useState("collapse");
-  const [
-    myTeamAfterPitchingEvalState,
-    setMyTeamAfterPitchingEvalState,
-  ] = useState("collapse");
-
-  const [
-    expertFirstImpressionEvalState,
-    setExpertFirstImpressionEvalState,
-  ] = useState("collapse");
-  const [
-    expertBeforePitchingEvalState,
-    setExpertBeforePitchingEvalState,
-  ] = useState("collapse");
-  const [
-    expertAfterPitchingEvalState,
-    setExpertAfterPitchingEvalState,
-  ] = useState("collapse");
 
   const [evaluateModal, setEvaluateModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [fullListModal, setFullListModal] = useState(false);
-  const [manageTemplateModal, setManageTemplateModal] = useState(false);
   // pass a value to full list from this state variable
   const [fullListModalObj, setFullListModalObj] = useState({});
 
@@ -655,7 +626,7 @@ export default function Evaluations(props) {
                   <button
                     className="evaluation-templates-btn"
                     onClick={() =>
-                      props.history.push(evaluation_template_new_dev)
+                      props.history.push(evaluation_templates_page)
                     }
                   >
                     Evaluations templates
@@ -695,7 +666,7 @@ export default function Evaluations(props) {
       )}
       {evaluateModal && (
         <Modal
-          title="Evaluate startupjbhsdafb"
+          title="Evaluate startup"
           close={() => {
             setEvaluateModal(false);
           }}
@@ -712,20 +683,6 @@ export default function Evaluations(props) {
               setSavedAnswers={setSavedAnswers}
             />
           }
-        />
-      )}
-      {manageTemplateModal && (
-        <Modal
-          title="Manage templates"
-          submit={() => {
-            setManageTemplateModal(false);
-          }}
-          close={() => {
-            setManageTemplateModal(false);
-          }}
-          submitTxt="Save"
-          closeTxt="Cancel"
-          children={<ManageTemplates />}
         />
       )}
     </div>

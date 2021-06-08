@@ -95,6 +95,13 @@
         margin-top: 10px;
       }
     }
+
+    .upload-logo-btn {
+      &:hover,
+      &:focus {
+        background-color: #49b6a0;
+      }
+    }
     .delete-btn {
       border: 1px solid #969ba3;
       background-color: #ffffff;

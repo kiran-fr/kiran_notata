@@ -38,7 +38,7 @@ export function SideBarMenu() {
       label: "Dashboard",
       iconClass: "fas fa-signal-alt-3",
       iconStyle: {},
-      link: dashboard_new,
+      link: `${startup_page}/components/company/dashboard`,
     },
     {
       label: "My Startups",
@@ -53,8 +53,8 @@ export function SideBarMenu() {
       link: group,
     },
     {
-      label: "Reports and analytics",
-      iconClass: ReportsImg,
+      label: "Reports",
+      iconClass: "fas fa-file-alt",
       iconStyle: { paddingTop: "7px" },
       link: `${startup_page}/report/reports`,
     },
@@ -158,7 +158,7 @@ export function SideBarMenu() {
             <div className={styles.menu_list + " " + styles.menu_listSettings}>
               <NavLink
                 exact={true}
-                to={`${startup_page}/setting/settingPage`}
+                to={`${startup_page}/settings`}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}

@@ -6,7 +6,10 @@ export { default as userUpdate } from "./userUpdate";
 export { default as creativePut } from "./creativePut";
 export { default as creativeUpdate } from "./creativeUpdate";
 export { default as creativeDelete } from "./creativeDelete";
-export { default as accountInvite } from "./accountInvite";
+export { default as accountInviteCreate } from "./accountInviteCreate";
+export { default as accountInviteDelete } from "./accountInviteDelete";
+export { default as accountUserRemove } from "./accountUserRemove";
+
 export { default as userInvitationResponse } from "./userInvitationResponse";
 export { default as evaluationPut } from "./evaluationPut";
 export { default as evaluationCreate } from "./evaluationCreate";
@@ -27,8 +30,16 @@ export { default as groupLogPut } from "./groupLogPut";
 export { default as groupLogCreate } from "./groupLogCreate";
 export { default as tagGroupPut } from "./tagGroupPut";
 export { default as tagPut } from "./tagPut";
+
 export { default as funnelGroupPut } from "./funnelGroupPut";
 export { default as funnelTagPut } from "./funnelTagPut";
+export { default as funnelTagDelete } from "./funnelTagDelete";
+export { default as funnelTagUpdate } from "./funnelTagUpdate";
+export { default as funnelTagCreate } from "./funnelTagCreate";
+
+export { default as funnelGroupCreate } from "./funnelGroupCreate";
+export { default as funnelGroupUpdate } from "./funnelGroupUpdate";
+
 export { default as connectionCreate } from "./connectionCreate";
 export { default as connectionTagAdd } from "./connectionTagAdd";
 export { default as connectionTagRemove } from "./connectionTagRemove";
@@ -40,7 +51,7 @@ export { default as connectionPut } from "./connectionPut";
 export { default as groupMarkAsSeen } from "./groupMarkAsSeen";
 export { default as groupLogMarkConversationAsSeen } from "./groupLogMarkConversationAsSeen";
 export { default as tagDelete } from "./tagDelete";
-export { default as funnelTagDetele } from "./funnelTagDelete";
+
 export { default as tagGroupDelete } from "./tagGroupDelete";
 export { default as funnelGroupDelete } from "./funnelGroupDelete";
 export { default as creativeTemplatePut } from "./creativeTemplatePut";
@@ -69,3 +80,17 @@ export { default as groupSubjectiveScoreAdd } from "./groupSubjectiveScoreAdd";
 export { default as groupSubjectiveScoreRemove } from "./groupSubjectiveScoreRemove";
 export { default as groupEvaluationAdd } from "./groupEvaluationAdd";
 export { default as groupEvaluationRemove } from "./groupEvaluationRemove";
+
+export { default as tagCreate } from "./tagCreate";
+export { default as tagUpdate } from "./tagUpdate";
+export { default as tagGroupCreate } from "./tagGroupCreate";
+export { default as tagGroupUpdate } from "./tagGroupUpdate";
+
+export { default as newsCreate } from "./newsCreate";
+export { default as newsUpdate } from "./newsUpdate";
+export { default as newsDelete } from "./newsDelete";
+export { default as newsSet } from "./newsSet";
+export { default as newsDeleteImage } from "./newsDeleteImage";
+
+export { default as groupUserInvitationResponse } from "./groupUserInvitationResponse";
+export { default as groupPublicJoin } from "./groupPublicJoin";

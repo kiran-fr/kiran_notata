@@ -39,7 +39,7 @@ export const ListOfStartups = ({
         setShowFunnelScoreForId={setShowFunnelScoreForId}
         setShowTagGroupForId={setShowTagGroupForId}
         setShowSubjectiveScoreForId={setShowSubjectiveScoreForId}
-      ></Table>
+      />
 
       {showFunnelScoreForId && (
         <SetFunnelScore

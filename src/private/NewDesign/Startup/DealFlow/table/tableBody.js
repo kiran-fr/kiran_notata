@@ -28,6 +28,9 @@ export default function TableBody(props) {
     preview,
     setStarMutation,
     updateFunnelTag,
+    checkAll,
+    checked,
+    setChecked,
   } = props;
 
   const [funnel, setFunnel] = useState();
@@ -150,7 +153,16 @@ export default function TableBody(props) {
                   {/*Checkbox*/}
                   <div className={styles.columnHead}>
                     <label className={styles.customCheck}>
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        checked={!!checkAll || !!checked[item.id]}
+                        onChange={() =>
+                          setChecked({
+                            ...checked,
+                            [item.id]: !checked[item.id],
+                          })
+                        }
+                      />
                       <span className={styles.checkmark} />
                     </label>
 
@@ -176,58 +188,67 @@ export default function TableBody(props) {
                           color: starred ? "orange" : "lightgray",
                         }}
                         className="fas fa-star"
-                      ></i>
+                      />
                     </div>
                   </div>
                 </td>
 
                 <td>
-                  <div
-                    onMouseOver={() => showPreview(index)}
-                    onMouseLeave={hidePreview}
-                    className={classnames(
-                      styles.user_profile_Img,
-                      creative.logo && styles.with_logo
-                    )}
-                  >
-                    {(!creative.logo && (
-                      <span>{creative.name.charAt(0).toUpperCase()}</span>
-                    )) || <img src={creative.logo} />}
-                  </div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      onMouseOver={() => showPreview(index)}
+                      onMouseLeave={hidePreview}
+                      className={classnames(
+                        styles.user_profile_Img,
+                        creative.logo && styles.with_logo
+                      )}
+                    >
+                      {(!creative.logo && (
+                        <span>{creative.name.charAt(0).toUpperCase()}</span>
+                      )) || <img src={creative.logo} />}
+                    </div>
 
-                  <span
-                    onMouseOver={() => showPreview(index)}
-                    onMouseLeave={hidePreview}
-                    className={styles.company_name}
-                    onClick={() => handleCompany(item)}
-                  >
-                    {item.creative.name}
-                    {preview === index && (
-                      <StartupPreview
-                        companyName={item.creative.name}
-                        oneLiner={oneLiner}
-                        problem={problem}
-                        no={index}
-                      />
-                    )}
-                  </span>
+                    <span
+                      onMouseOver={() => showPreview(index)}
+                      onMouseLeave={hidePreview}
+                      className={styles.company_name}
+                      onClick={() => handleCompany(item)}
+                    >
+                      {item.creative.name}
+                      {preview === index && (
+                        <StartupPreview
+                          companyName={item.creative.name}
+                          oneLiner={oneLiner}
+                          problem={problem}
+                          no={index}
+                        />
+                      )}
+                    </span>
+                  </div>
                 </td>
 
                 {columnSettings.groups && (
                   <td>
                     <ul>
-                      {(groupSharingInfo || []).slice(0, 3).map(({ group }) => (
+                      {(groupSharingInfo || []).slice(0, 2).map(({ group }) => (
                         <li>
                           {group.name} {groupSharingInfo.length > 1 ? "," : ""}
                         </li>
-                      ))}
+                      ))}{" "}
+                      {groupSharingInfo.length > 2 ? (
+                        <img
+                          onClick={() => setShowTagGroupForId(item.id)}
+                          src={More}
+                          alt=""
+                        />
+                      ) : null}
                       <li>
                         <button
                           onClick={() => setShowTagGroupForId(item.id)}
                           className={styles.buttongreen}
                           style={{ marginLeft: 0 }}
                         >
-                          <i className="fas fa-plus-circle"></i>
+                          <i className="fas fa-plus-circle" />
                         </button>
                       </li>
                     </ul>
@@ -257,9 +278,7 @@ export default function TableBody(props) {
                             }}
                           >
                             {" "}
-                            <i
-                              className={classnames("fas fa-chevron-down")}
-                            ></i>
+                            <i className={classnames("fas fa-chevron-down")} />
                           </span>
                           {funnel === index && showFunnel && (
                             <FunnelPopup
@@ -277,6 +296,7 @@ export default function TableBody(props) {
                     </div>
                   </td>
                 )}
+
                 {columnSettings.tags && (
                   <td>
                     <ul>

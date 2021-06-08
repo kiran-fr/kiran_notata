@@ -1,18 +1,24 @@
 import React, { useState } from "react";
-import "./tags.scss";
+import "./profile.scss";
 import { SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
+import { ProfileContent } from "../../../Containers/NewDesign/PreProfile/Profile";
+import { settings } from "../../../definitions";
 
-export default function ProfileSettings({ setMenuSelected }) {
+export default function ProfileSettings({ history }) {
   return (
-    <div className="tags-container">
-      <div className="card tags-container__card">
-        <div className="card-heading tags-container__heading">
+    <div className="profile-container">
+      <div className="card profile-container__card">
+        <div className="card-heading profile-container__heading">
           <i
             class="fa fa-chevron-left"
             aria-hidden="true"
-            onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
-          ></i>
-          Settings
+            onClick={() => history.push(settings)}
+          />
+          User profile
+        </div>
+
+        <div className="profile-container__content">
+          <ProfileContent history={history} skipLast />
         </div>
       </div>
     </div>

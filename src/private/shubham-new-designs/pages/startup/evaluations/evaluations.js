@@ -7,7 +7,7 @@ import SubmissionFullList from "./submission-full-list";
 import EvaluateStartup from "./evaluate-startup";
 import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
-import { evaluation_template_new } from "../../../../../definitions";
+import { evaluation_templates_page } from "definitions";
 
 export default function Evaluations({ history }) {
   const [myEvalState, setMyEvalState] = useState("");
@@ -834,7 +834,7 @@ export default function Evaluations({ history }) {
                 <div className="col-sm-12 text-right">
                   <button
                     className="evaluation-templates-btn"
-                    onClick={() => history.push(evaluation_template_new)}
+                    onClick={() => history.push(evaluation_templates_page)}
                   >
                     Evaluations templates
                   </button>

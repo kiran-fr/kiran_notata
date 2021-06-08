@@ -11,29 +11,48 @@ import NotificationSetting from "../../../assets/images/notifications-settings.p
 import NotificationGroup from "../../../assets/images/notification-group.png";
 import eye from "../../../assets/images/eye.png";
 import eyeGray from "../../../assets/images/eye-gray.png";
+import { settings } from "../../../definitions";
 
 import { useQuery, useMutation } from "@apollo/client";
 
 import { notificationsGet } from "private/Apollo/Queries";
 
 import {
-  notificationsMarkAsSeen,
+  // notificationsMarkAsSeen,
   notificationsMarkAllAsSeen,
 } from "private/Apollo/Mutations";
 
-export default function Notifications({ setMenuSelected }) {
-  const [markOne, res1] = useMutation(notificationsMarkAsSeen);
+function Notification({ content, history }) {
+  console.log(
+    "FROM NOTIFICATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  );
+  return (
+    <div className="notifications__notification">
+      <img src={NotificationAlarm} alt="Notification Icon" />
+      <p className="notifications__notification__text">{content}</p>
+    </div>
+  );
+}
+
+export default function Notifications({ history }) {
   const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
+
+  const [isDropDown, setIsDropDown] = useState(false);
+
+  const [allNotifications, setAllNotifications] = useState([]);
 
   const { data } = useQuery(notificationsGet);
 
-  let notifications = data?.notificationsGet || [];
-
   useEffect(() => {
-    console.log("NOTIFICATIONS: ", notifications);
-  }, [notifications]);
+    if (data?.notificationsGet) {
+      setAllNotifications(data?.notificationsGet);
+      async function markAllAsSeen() {
+        await markAll();
+      }
+      markAllAsSeen();
+    }
+  }, [data]);
 
-  const [isDropDown, setIsDropDown] = useState(false);
   return (
     <div className="notifications-container">
       <div className="notifications-container__card">
@@ -42,7 +61,7 @@ export default function Notifications({ setMenuSelected }) {
             <i
               class="fa fa-chevron-left"
               aria-hidden="true"
-              onClick={() => setMenuSelected(SETTINGSMENU.HOME)}
+              onClick={() => history.push(settings)}
             ></i>
             Notifications
           </div>
@@ -84,7 +103,8 @@ export default function Notifications({ setMenuSelected }) {
             </i>
           </div>
         </div>
-        <div className="notifications">
+
+        {/* <div className="notifications">
           <div className="notifications__notification">
             <img src={NotificationProfile} />
             <p className="notifications__notification__text">
@@ -214,6 +234,19 @@ export default function Notifications({ setMenuSelected }) {
               </div>
             </div>
           </div>
+        </div> */}
+        {/* +++++++++++ NOTIFICATION IMPLEMENTATION +++++++++++ */}
+        <div className="notifications">
+          {allNotifications.length <= 0 ? (
+            <div className="noNotification">No Notification</div>
+          ) : (
+            allNotifications.map(notif => (
+              <Notification
+                key={notif.id}
+                content={notif.content}
+              ></Notification>
+            ))
+          )}
         </div>
       </div>
     </div>

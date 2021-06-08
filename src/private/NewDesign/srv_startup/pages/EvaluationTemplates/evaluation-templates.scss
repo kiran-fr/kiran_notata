@@ -1,0 +1,154 @@
+.evaluation-templates-container {
+  margin-top: 100px;
+  @media only screen and(min-width:768px) {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -10%);
+    width: 700px;
+  }
+  &__heading {
+    i {
+      color: #53cab2;
+      font-size: 24px;
+    }
+    @media only screen and(max-width:768px) {
+      margin-top: 25px;
+    }
+    font-family: "Proxima Nova";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    color: #6a6a6a;
+  }
+  &__create-template {
+    @media only screen and(min-width:768px) {
+      text-align: end;
+      margin-top: 0px;
+    }
+    margin-top: 15px;
+    .create-template-btn {
+      background: #53cab2;
+      height: 30px;
+      .MuiButton-label {
+        font-size: 12px;
+        line-height: 15px;
+      }
+    }
+  }
+  &__tabs-container {
+    margin-top: 50px;
+    @media only screen and(max-width:768px) {
+      padding-left: 15px;
+    }
+    .MuiButtonBase-root {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-size: 10px;
+      line-height: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #969ba3;
+    }
+    .Mui-selected {
+      font-weight: bolder;
+      font-family: "proxima_nova_altbold";
+    }
+    .MuiTabs-indicator {
+      border-bottom: 4px solid #969ba3;
+      border-radius: 2px;
+      transform: matrix(-1, 0, 0, 1, 0, 0);
+    }
+  }
+  &__data-container {
+    margin-top: 15px;
+    cursor: pointer;
+    @media only screen and(max-width:768px) {
+      margin-left: 15px;
+    }
+    &__data {
+      padding-top: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e8e8e8;
+      .template-name {
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 19px;
+        text-decoration-line: underline;
+        color: #6a6a6a;
+      }
+      .sections,
+      .group-name {
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 19px;
+        color: #969ba3;
+      }
+      .group-name {
+        @media only screen and(max-width:768px) {
+          display: none;
+        }
+        text-decoration-line: underline;
+      }
+      .browse {
+        @media only screen and(min-width:768px) {
+          text-align: end;
+        }
+        span {
+          cursor: pointer;
+          color: #c4c4c4;
+          &:hover {
+            color: #000 !important;
+          }
+        }
+        color: #c4c4c4;
+        cursor: pointer;
+        &:hover {
+          color: #000;
+        }
+        .selected {
+          color: #000;
+        }
+        &__drop-dwon {
+          position: absolute;
+          background: #ffffff;
+          box-shadow: 0px 3px 12px rgb(0 0 0 / 20%);
+          border-radius: 5px;
+          padding: 17px 25px;
+          z-index: 999;
+          margin-top: -10px;
+          text-align: initial;
+          right: 16px;
+          min-width: 149px;
+          &__item {
+            font-family: "Proxima Nova";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 10px;
+            line-height: 12px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            color: #6a6a6a;
+            cursor: pointer;
+            .settings,
+            .leave {
+              display: inline;
+              font-size: 12px;
+              margin-right: 10px;
+            }
+            .delete-text {
+              color: #ff4853 !important;
+            }
+          }
+          .leave {
+            color: #ff4853 !important;
+          }
+        }
+      }
+    }
+  }
+}
