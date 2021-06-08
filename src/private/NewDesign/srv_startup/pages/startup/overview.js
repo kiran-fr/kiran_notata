@@ -7,7 +7,7 @@ import ButtonWithIcon from "../ui-kits/button-with-icon";
 import ShareTemplate from "./share-template";
 import TagsModal from "../ui-kits/TagsModal";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
-import Funels from "./funels";
+import AddFunnel from "../../../../NewDesign/Startup/DealFlow/addFunnel";
 import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Dropdown } from "../../../../../Components/UI_Kits/Dropdown";
 import DeleteStartup from "./delete-startup";
@@ -15,7 +15,7 @@ import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
-import { connectionPut, connectionDelete } from "private/Apollo/Mutations";
+import { connectionPut, connectionDelete, connectionFunnelTagAdd } from "private/Apollo/Mutations";
 import More from "assets/images/more.svg";
 
 import CommentBox from "../CommentBox";
@@ -24,6 +24,19 @@ export default function Overview(props) {
   const [createGroupModal, setCreateGroupModal] = useState(false);
   const [mutateConnectionPut] = useMutation(connectionPut);
   const [mutateConnectionDelete] = useMutation(connectionDelete);
+
+  // Mutation updating funnel tag for connection
+  const [mutate] = useMutation(connectionFunnelTagAdd);
+
+  const updateFunnelTag = async (funnelTagId, connectionId) => {
+    const variables = {
+      connectionId,
+      funnelTagId,
+    };
+    await mutate({
+      variables,
+    });
+  };
 
   const items = [
     { id: 1, name: "First" },
@@ -108,7 +121,6 @@ export default function Overview(props) {
   };
 
   const archiveConnection = async (connectionId, archive) => {
-    console.log(id, archive);
     let variables = {
       id: connectionId,
       input: {
@@ -327,7 +339,9 @@ export default function Overview(props) {
                 <div className="overview-container__scores__heading">
                   Funnels
                 </div>
-                <Funels></Funels>
+                <AddFunnel companyId ={props.creativity.id}
+                  updateFunnelTag = {updateFunnelTag}
+                />
               </div>
               <div className="row groups-container">
                 <div className="overview-container__scores__heading">
@@ -417,13 +431,6 @@ export default function Overview(props) {
                             </div>
                           </td>
                           <td>
-                            {
-                              ("SS",
-                              console.log(getCompAvg(company.subjectiveScores)))
-                            }
-                            {console.log(
-                              typeof getCompAvg(company.subjectiveScores)
-                            )}
                             <div
                               className="subjective-score"
                               style={{

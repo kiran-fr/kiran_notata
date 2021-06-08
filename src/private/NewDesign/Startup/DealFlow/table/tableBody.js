@@ -1,20 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles, { activePopup } from "./table.module.css";
-import Red from "../../../../../assets/images/red.png";
-import Green from "../../../../../assets/images/green.png";
 import More from "../../../../../assets/images/more.svg";
-import Violet from "../../../../../assets/images/violet.png";
-import Yellow from "../../../../../assets/images/Bar_Icon_04.svg";
 import moment from "moment";
 //Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
 import classnames from "classnames";
 import { sortArr, DynamicIcons } from "../../../CommonFunctions";
-
-import {
-  Loader
-} from "Components/UI_Kits";
+import { Loader} from "Components/UI_Kits";
 
 export default function TableBody(props) {
   const {

@@ -230,9 +230,6 @@ export default function Connections({ history }) {
     setFunnelLoad(false)
   };
 
-  console.log('funnelLoad', funnelLoad)
-  
-
   // Load filters from local store
   useEffect(() => {
     let f;
