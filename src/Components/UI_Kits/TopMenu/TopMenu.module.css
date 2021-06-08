@@ -61,15 +61,25 @@
   text-decoration: none;
   color: white;
 }
+.profile_pic_img {
+  position: relative;
+  top: 16px;
+  height: 27px;
+  margin-left: 36px;
+  margin-right: 12px;
+  width: 27px;
+  border-radius: 50%;
+}
 
 .profile .profile_name {
-  /* font-family: Proxima Nova; */
+  font-family: "Proxima Nova";
   font-style: normal;
-  font-weight: normal;
+  font-weight: 600;
   font-size: 16px;
-  /* line-height: 19px; */
-  letter-spacing: 0.04em;
-
+  line-height: 19px;
+  letter-spacing: 0.03em;
+  top: 20px;
+  position: relative;
   color: #969ba3;
 }
 .angle_icon i {
@@ -78,6 +88,33 @@
   margin-left: 12px;
   padding-top: 21px;
   color: #71d0bd;
+}
+.notification_icon_selected {
+  color: #6a6a6a !important;
+}
+
+.profile_pic_dropdown {
+  position: absolute;
+  background: #ffffff;
+  box-shadow: 0px 3px 12px rgb(0 0 0 / 20%);
+  border-radius: 5px;
+  padding: 4px 17px;
+  z-index: 999;
+  margin-top: 51px;
+  text-align: left;
+  text-align: initial;
+  margin-left: 28%;
+}
+.profile_pic_dropdown_item {
+  font-family: "Proxima Nova";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #6a6a6a;
+  cursor: pointer;
 }
 
 /* .logo {

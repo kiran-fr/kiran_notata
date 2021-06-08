@@ -36,12 +36,11 @@ export const InviteStartup = ({
   // Mutations
   const [mutateCreativeUpdate] = useMutation(creativeUpdate);
 
-    // Copy string to clipboard
-    const copyToClipboard = ()=> {
-      navigator.clipboard.writeText(urlToShare);
-      setCopySuccess(true);
-    }
-  
+  // Copy string to clipboard
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(urlToShare);
+    setCopySuccess(true);
+  };
 
   function getPublicShareUrl(creative) {
     let url =
@@ -132,7 +131,7 @@ export const InviteStartup = ({
             <div className={styles.revokeURL}>
               <a href={urlToShare}>{urlToShare}</a>
             </div>
-            <span  onClick = {()=> copyToClipboard()} className={styles.copy}>
+            <span onClick={() => copyToClipboard()} className={styles.copy}>
               <svg
                 width="12"
                 height="12"
