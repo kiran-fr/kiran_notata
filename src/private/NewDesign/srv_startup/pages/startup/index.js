@@ -50,7 +50,9 @@ export const Startup = ({ match, history, location }) => {
 
   // Execute query
   useEffect(() => {
-    getConnection({ variables: { id } });
+    if (id) {
+      getConnection({ variables: { id } });
+    }
   }, [id]);
 
   // Set tab from url
@@ -78,6 +80,8 @@ export const Startup = ({ match, history, location }) => {
     let path = `${startup_page}/company/${connectionId}`;
     history.push(path);
   };
+
+  console.log("getConnectionRes", getConnectionRes);
 
   if (!getConnectionRes.data) {
     return <GhostLoader />;
