@@ -5,6 +5,9 @@ import Modal from "../DealFlow/modal";
 export default function SetFunnelScore({ connection, close, updateFunnelTag, funnelLoad }) {
   const [funnelModal, setFunnelModal] = useState(false);
 
+  const [funnelModalID, setFunnelModalID] = useState("");
+
+
   const handleSave = () => {
     setFunnelModal(true);
   };
@@ -16,7 +19,14 @@ export default function SetFunnelScore({ connection, close, updateFunnelTag, fun
   }, [funnelLoad && funnelModal]);
 
   return (
-    <Modal load = {funnelLoad} title="Set Funnel Stage" saveModal={()=>handleSave()} closeModal={close}>
+
+    <Modal disabled ={funnelModalID === "" ? true : false}
+      load = {funnelLoad}
+      title="Set Funnel Stage"
+      saveModal={()=>handleSave()}
+      closeModal={close}
+    >
+
       <AddFunnel
         close={close}
         funnelModal={funnelModal}
