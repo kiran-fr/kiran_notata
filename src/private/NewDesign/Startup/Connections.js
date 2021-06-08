@@ -131,6 +131,7 @@ function ListOfStartups({
       {showFunnelScoreForId && (
         <SetFunnelScore
           updateFunnelTag={updateFunnelTag}
+          funnelLoad = {funnelLoad}
           connection={connections.find(({ id }) => id === showFunnelScoreForId)}
           close={() => setShowFunnelScoreForId(undefined)}
         />
