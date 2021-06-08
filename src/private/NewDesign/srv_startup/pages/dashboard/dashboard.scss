@@ -381,7 +381,11 @@
     }
   }
   &__news {
+    height: 590px;
     padding: 28px 34px;
+    @media only screen and(max-width:768px) {
+      height: auto;
+    }
     &__card-heading {
       font-family: "Proxima Nova";
       font-style: normal;
@@ -467,7 +471,11 @@
     }
   }
   &__notification {
+    height: 590px;
     padding: 29px 32px;
+    @media only screen and(max-width:768px) {
+      height: auto;
+    }
     &__heading {
       font-family: "Proxima Nova";
       font-style: normal;

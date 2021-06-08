@@ -35,7 +35,7 @@ export const link_bridge = `/link`;
 // export const ui_components = `${dashboard}/components/ui`;
 // export const navigation = `${dashboard}/components/ui/navigation`;
 
-export const dashboard = "/dashboard";
+// export const dashboard = "/dashboard";
 export const startup_page = "/startup_page";
 
 export const charts = `${startup_page}/charts`;
@@ -58,10 +58,13 @@ export const navigation = `${startup_page}/components/ui/navigation`;
 
 export const startup_company_profile = `${startup_page}/company/:id`;
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
-export const news1 = `${startup_page}/news/news1`;
+export const news = `${startup_page}/news`;
 export const edit_news = `${startup_page}/news/edit`;
 export const new_news = `${startup_page}/news/new`;
 export const news_view_one = `${startup_page}/view`;
+
+//dashboard
+export const dashboard = `${startup_page}/dashboard`;
 
 //settings
 
@@ -90,7 +93,7 @@ export const startup_index = `${startup_page}/components/ui/navigation1`;
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
 export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
-export const news = `${startup_page}/components/ui/navigation1/news`;
+// export const news = `${startup_page}/components/ui/navigation1/news`;
 export const dashboard_new = `${startup_page}/components/ui/navigation1/dashboard`;
 
 // export const evaluation_templates = `${startup_page}/templates`;

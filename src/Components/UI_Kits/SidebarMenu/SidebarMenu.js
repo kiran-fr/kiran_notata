@@ -19,7 +19,6 @@ import {
   settings_new,
   news,
   dashboard_new,
-  news1,
 } from "definitions.js";
 
 // Styles
@@ -38,7 +37,7 @@ export function SideBarMenu() {
       label: "Dashboard",
       iconClass: "fas fa-signal-alt-3",
       iconStyle: {},
-      link: `${startup_page}/components/company/dashboard`,
+      link: `${startup_page}/dashboard`,
     },
     {
       label: "My Startups",
@@ -63,7 +62,7 @@ export function SideBarMenu() {
       label: "News",
       iconClass: NewsImg,
       iconStyle: { paddingTop: "2px" },
-      link: news1,
+      link: news,
     },
   ];
 
