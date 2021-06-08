@@ -31,7 +31,7 @@ export default function DealFLowTag({
           <div className={styles.main}>{children}</div>
           <div className={styles.footer}>
             <div className={styles.buttonContainer}>
-              <button  disabled = {nonClickable} onClick={() => handleModal()}>CANCEL</button>
+              <button  onClick={() => handleModal()}>CANCEL</button>
               <button disabled = {nonClickable}  onClick={() => handleSave()}>
                 {" "}
                 {load ? (
