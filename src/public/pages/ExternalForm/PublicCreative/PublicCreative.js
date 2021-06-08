@@ -250,6 +250,8 @@ export function PublicCreative({ match }) {
                 : template.headerMessageWebForm || ""}
             </div>
 
+            <div>LEGACY</div>
+
             <CompanyName setName={setName} creative={creative} />
 
             {(template.sections || []).map((section, i) => (

@@ -24,7 +24,7 @@ import { setting_profile } from "../../../definitions";
 // import Notifications from "./notifications";
 // import Tags from "./tags";
 // import Funnels from "./funnels";
-// import { ElevationTemplates } from "../../NewDesign/srv_startup/pages/startup/evaluations/evaluation-templates";
+// import { ElevationTemplates } from "../../NewDesign/srv_startup/pages/StartupPage/Evaluations/evaluation-templates";
 // import ProfileSettings from "./profile";
 
 export default function Settings({ history }) {
@@ -106,7 +106,7 @@ export default function Settings({ history }) {
                 Evaluation templates
               </div>
               <i
-                class="fa fa-times"
+                className="fa fa-times"
                 aria-hidden="true"
                 onClick={() => setEvaluationCard(false)}
               />

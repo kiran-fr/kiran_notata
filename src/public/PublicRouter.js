@@ -11,16 +11,20 @@ import {
   public_presentation,
   public_evaluation,
   oia_demo_page,
+  public_pages_new,
+  public_creative_new,
 } from "../definitions";
 
 import { ProductDemo } from "./pages/DemoPages/ProductDemo/ProductDemo";
 import { DemoPage } from "./pages/DemoPages/DemoPage/DemoPage";
 import { OIADemoPage } from "./pages/DemoPages/OIA_DemoPage/OIA_DemoPage";
 
-import { PublicCreative as ExternalForm } from "./pages/ExternalForm/PublicCreative/PublicCreative";
 import { PublicPresentationPage } from "./pages/PublicPresentationPage/PublicPresentationPage";
 import { PublicCompanyInfo } from "./pages/PublicPresentationPage/PublicCompanyInfo";
 import { EvaluationPage } from "./pages/EvaluationPage/EvaluationPage";
+import { PublicCreative as ExternalForm } from "./pages/ExternalForm/PublicCreative/PublicCreative";
+
+import { PublicCreativeNew } from "./pages/ExternalFormNew/PublicCreativeNew/PublicCreativeNew";
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -55,6 +59,16 @@ export const RouterComponent = ({ history }) => {
         ]}
         component={ExternalForm}
       />
+
+      <Route
+        exact
+        path={[
+          `${public_creative_new}/:accountId/:id`,
+          `${public_creative_new}/:accountId/form.html`,
+        ]}
+        component={PublicCreativeNew}
+      />
+
       <Route render={() => <div>404</div>} />
     </Switch>
   );

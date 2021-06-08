@@ -104,7 +104,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
   };
 
   if (userIsLoggedIn) {
-    // redirect to startup
+    // redirect to StartupPage
     // history.push(location.state || dashboard);
     history.push(startup_page);
   }

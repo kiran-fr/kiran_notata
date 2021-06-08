@@ -30,7 +30,7 @@ const getSummaries = (startups, hide, group) => {
   };
 
   for (let startup of startups) {
-    // console.log('startup', startup)
+    // console.log('StartupPage', StartupPage)
 
     // Get subjective score summaries
     if (startup.subjective_score) {

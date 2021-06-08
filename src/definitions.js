@@ -39,6 +39,7 @@ export const dashboard = "/dashboard";
 export const startup_page = "/startup_page";
 
 export const charts = `${startup_page}/charts`;
+export const archive_page = `${startup_page}/archive`;
 
 // KANBAN VIEW
 export const kanban = "/kanban";
@@ -77,13 +78,18 @@ export const notifications_page = `${startup_page}/notifications`;
 
 // PUBLIC ROUTES
 export const public_pages = `/public`;
-export const public_creative = `${public_pages}/creative`;
 export const demo_page = `${public_pages}/demo`;
 export const ban_demo_page = `${public_pages}/ban`;
 export const oia_demo_page = `${public_pages}/oia`;
 export const public_presentation = `${public_pages}/presentation`;
 export const public_evaluation = `${public_pages}/evaluation`;
 export const product_demo = `${public_pages}/product_demo`;
+
+export const public_creative = `${public_pages}/creative`;
+export const public_creative_new = `${public_pages}/creative_new`;
+
+export const public_pages_new = `/public_new`;
+// export const public_creative_new = `${public_pages_new}/creative`;
 
 // SHUBHAM ROUTES
 export const startup_index = `${startup_page}/components/ui/navigation1`;

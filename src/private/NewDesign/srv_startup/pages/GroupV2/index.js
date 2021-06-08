@@ -20,10 +20,10 @@ import Tab from "@material-ui/core/Tab";
 import { Modal } from "Components/UI_Kits/Modal/Modal";
 import DeleteGroup from "./delete-group-modal";
 import LeaveGroup from "./leave-group-modal";
-import Settings from "../startup/groups-individuals/create-new-group/settings";
+import Settings from "../StartupPage/TabPages/Groups/create-new-group/settings";
 import { group_dashboard } from "definitions";
 import { GhostLoader } from "../../../../../Components/elements";
-import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
+import CreateNewGroup from "../StartupPage/TabPages/Groups/create-new-group/create-new-group";
 
 function a11yProps(index) {
   return {

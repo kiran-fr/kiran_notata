@@ -63,7 +63,7 @@ export const Short = ({ history, closeModal, styles, connections }) => {
 
   // Submit function with mutations
   const onSubmit = async data => {
-    // Stop if startup with same name exists
+    // Stop if StartupPage with same name exists
     if (existedFlag) {
       // existing company
       if (connectionData.length > 0) {
@@ -88,7 +88,7 @@ export const Short = ({ history, closeModal, styles, connections }) => {
       let res_connection = await mutateConnectionCreate({ variables });
       let connection = res_connection?.data?.connectionCreate;
 
-      // Go to startup page
+      // Go to StartupPage page
       // let path = `${startup_page}/${connection.id}`;
       // let path = `${startup_page}/components/ui/navigation1`;
 

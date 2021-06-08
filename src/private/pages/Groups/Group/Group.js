@@ -605,7 +605,7 @@ export default function Group({ match, history }) {
         )}
 
         {
-          /* Add new startup */
+          /* Add new StartupPage */
           (isAdmin || (!isAdmin && settings.addStartup)) && (
             <AddNewStartup
               connections={connections}
@@ -630,7 +630,7 @@ export default function Group({ match, history }) {
             )}
 
             {
-              /* Add new startup */
+              /* Add new StartupPage */
               (isAdmin || (!isAdmin && settings.addStartup)) && (
                 <AddNewTemplate
                   isAdmin={isAdmin}

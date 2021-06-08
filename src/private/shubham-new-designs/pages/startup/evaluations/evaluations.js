@@ -160,10 +160,10 @@ export default function Evaluations({ history }) {
                 <div className="menu-container">
                   <Scrollspy
                     items={[
-                      "My evaluations",
-                      "My team evaluations",
-                      "External experts evaluations",
-                      "Groups evaluations",
+                      "My Evaluations",
+                      "My team Evaluations",
+                      "External experts Evaluations",
+                      "Groups Evaluations",
                     ]}
                     currentClassName="is-current"
                   >
@@ -276,7 +276,7 @@ export default function Evaluations({ history }) {
                           <div className="col-sm-2 col-xs-2 score">8,5</div>                    
                         </div>
                         <div className="row">
-                          <div className="col-sm-12 eval-section-heading">Avarage evaluations</div>
+                          <div className="col-sm-12 eval-section-heading">Avarage Evaluations</div>
                         </div> */}
                     <div className="row evalations-container__details">
                       <div className="col-sm-5 col-xs-9 eval-score-heading">

@@ -108,10 +108,10 @@ export default function StartupInfo({ history, match }) {
       />
 
       <Content maxWidth={600}>
-        {/* Edit startup name */}
+        {/* Edit StartupPage name */}
         <NameInput creativeId={creative.id} name={creative.name} />
 
-        {/* Invite startup */}
+        {/* Invite StartupPage */}
         <InviteStartup connectionId={connectionId} creative={creative} />
 
         {/* Roll out templated form */}

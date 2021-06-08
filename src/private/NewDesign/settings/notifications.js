@@ -141,7 +141,7 @@ export default function Notifications({ history }) {
                 <span className="highlight">Great Startup 1</span>
               </div>
               <div className="notifications__notification__comment-text">
-                This startup is really well!
+                This StartupPage is really well!
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function Notifications({ history }) {
             </div>
             <p className="notifications__notification__text">
               You set a reminder 30 days ago: Don’t forger to re-evaluate Great
-              startup 1.
+              StartupPage 1.
             </p>
             <ButtonWithIcon
               className="notifications__notification__decline-btn"

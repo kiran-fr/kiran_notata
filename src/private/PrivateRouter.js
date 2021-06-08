@@ -54,6 +54,7 @@ import {
   settings,
   evaluation_templates_page,
   evaluation_template_page,
+  archive_page,
 } from "../definitions";
 
 // Landing page / list
@@ -108,7 +109,7 @@ import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
-import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
+import { StartupPage as StartupInfo } from "./NewDesign/srv_startup/pages/StartupPage/index";
 import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 
@@ -133,6 +134,8 @@ import TagGroup from "./NewDesign/settings/tags";
 import Funnels1 from "./NewDesign/settings/funnels";
 import Notifications from "./NewDesign/settings/notifications";
 import ProfileSettings from "./NewDesign/settings/profile";
+
+import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -167,10 +170,12 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={`${facts_template}/:id`} component={FactsTemplate} />
 
-      <Route eaxct path={news1} component={News1} />
-      <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
-      <Route eaxct path={new_news} component={NewsEdit} />
-      <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
+      <Route exact path={news1} component={News1} />
+      <Route exact path={`${news_view_one}/:id`} component={NewsViewOne} />
+      <Route exact path={new_news} component={NewsEdit} />
+      <Route exact path={`${edit_news}/:id`} component={NewsEdit} />
+
+      <Route exact path={archive_page} component={ArchivePage} />
 
       <Route
         exact
