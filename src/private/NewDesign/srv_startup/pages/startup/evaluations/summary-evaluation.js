@@ -131,7 +131,7 @@ export default function SummaryEvaluation({
                   setCollapseDetailList(collapseList);
                 }}
               ></i>
-              {section.name}
+              <div>{section.name}</div>
               <i
                 class="fa fa-pencil"
                 aria-hidden="true"
