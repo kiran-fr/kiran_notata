@@ -94,7 +94,7 @@ export default function AddStartup({ group }) {
 
       {canAdd && (
         <div className={`startup-container col-sm-6`} style={{ padding: 0 }}>
-          {/*<div className="startup-container">*/}
+          {/*<div className="StartupPage-container">*/}
           <div className="search">
             {(loading && <i className="fa fa-spinner fa-spin" />) || (
               <span className="material-icons">search</span>

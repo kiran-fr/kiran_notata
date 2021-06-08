@@ -107,9 +107,6 @@ function Submit({
                 accountId: accountId,
                 input: {
                   name: name,
-                  // accountId: accountId,
-                  // templateId: template?.id,
-                  // sharedWithEmail: creative?.sharedWithEmail || null,
                   submit: true,
                   answers: answers.map(ans => omit(ans, ["__typename", "id"])),
                 },
@@ -147,7 +144,6 @@ function Submit({
         <div className="mt2">
           <SuccessBox>
             {creative.id && <div>{template.successMessageInvited || ""}</div>}
-
             {!creative.id && <div>{template.successMessageWebForm || ""}</div>}
           </SuccessBox>
         </div>
@@ -249,6 +245,8 @@ export function PublicCreative({ match }) {
                 ? template.headerMessageInvited || ""
                 : template.headerMessageWebForm || ""}
             </div>
+
+            <div>LEGACY</div>
 
             <CompanyName setName={setName} creative={creative} />
 

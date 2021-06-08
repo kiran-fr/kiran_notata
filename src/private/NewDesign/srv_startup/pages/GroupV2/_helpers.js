@@ -32,7 +32,7 @@ export function getAllUsedTemplates(startups) {
 }
 
 export function getSubjectiveScoreSummary(startup) {
-  // Gets subjective score summary for each startup.
+  // Gets subjective score summary for each StartupPage.
 
   let scores = startup?.subjectiveScores?.map(({ score }) => score);
   if (!scores || !scores.length) return;
@@ -53,12 +53,12 @@ export function getSubjectiveScoreSummary(startup) {
 export function getEvaluationsByTemplate(startup) {
   /*
 
-    Groups evaluations by evaluation template for each startup
+    Groups Evaluations by evaluation template for each StartupPage
 
     [
       {
         summary: Summary,          <- templateId, templateName, etc...
-        evaluations: [Evaluation]  <- each evaluation
+        Evaluations: [Evaluation]  <- each evaluation
       }
     ]
 

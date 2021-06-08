@@ -40,7 +40,7 @@ export default function StartupPerformanceChart({ group }) {
         s => s?.templateId === templateId
       );
 
-      // Add summary to startup item
+      // Add summary to StartupPage item
       if (summary && !disabledTemplates[templateId]) {
         item[templateId] = summary?.averagePercentageScore || 0;
       }

@@ -70,7 +70,7 @@ import tableStyles from "../../../../Components/elements/NotataComponents/Table.
 //       <textarea
 //         className="form_h1"
 //         rows={1}
-//         placeholder='I.e. "Early stage evaluations"'
+//         placeholder='I.e. "Early stage Evaluations"'
 //         name="input.name"
 //         ref={register}
 //         onBlur={handleSubmit(onSubmit)}

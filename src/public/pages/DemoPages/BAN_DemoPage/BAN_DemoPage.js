@@ -55,7 +55,7 @@ In order to work with the starups you have to add them to your deal flow. You ca
   },
   {
     image: VIEW_STARTUP,
-    title: "5) View startup",
+    title: "5) View StartupPage",
     text: `By clicking "view" on the startup, you will be taken to the startup page. Here you can add tags, write comments, share etc.
 
 We will focus on the evaluation part for now
@@ -64,7 +64,7 @@ We will focus on the evaluation part for now
   },
   {
     image: EVALUATE_STARTUP,
-    title: "6) Evaluate startup",
+    title: "6) Evaluate StartupPage",
     text: `Let's evaluate this startup!
 
     If you scroll down to the evaluation part, you will see a button labeled "FIRST IMPRESSION TEMPLATE 2020". Click this button to evaluate a startup.

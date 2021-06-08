@@ -54,6 +54,7 @@ import {
   settings,
   evaluation_templates_page,
   evaluation_template_page,
+  archive_page,
 } from "../definitions";
 
 // Landing page / list
@@ -108,8 +109,8 @@ import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
-import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
 import Reports from "./NewDesign/srv_startup/pages/reports/reports";
+import { StartupPage as StartupInfo } from "./NewDesign/StartupPage/index";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 
 // import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
@@ -134,11 +135,15 @@ import Funnels1 from "./NewDesign/settings/funnels";
 import Notifications from "./NewDesign/settings/notifications";
 import ProfileSettings from "./NewDesign/settings/profile";
 
+import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
+
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
+      <Route eaxct path={reports} component={Reports} />
+
       <Route exact path={startup_page} component={StartupSection} />
 
       <Route exact path={profile} component={Profile} />
@@ -174,6 +179,7 @@ export const RouterComponent = ({ history }) => {
       <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
       <Route eaxct path={new_news} component={NewsEdit} />
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
+      <Route exact path={archive_page} component={ArchivePage} />
 
       <Route
         exact
@@ -277,7 +283,6 @@ export const RouterComponent = ({ history }) => {
       {/*  component={EvaluationTemplatesPage}*/}
       {/*/>*/}
 
-      <Route eaxct path={reports} component={Reports} />
       {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
 

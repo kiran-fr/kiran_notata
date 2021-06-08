@@ -95,7 +95,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
 
   // Submit function with mutations
   const onSubmit = async data => {
-    // Stop if startup with same name exists
+    // Stop if StartupPage with same name exists
     if (existedFlag) {
       // existing company
       if (connectionData.length > 0) {
@@ -167,7 +167,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
           variables: groupVariables,
         });
       }
-      // Go to startup page
+      // Go to StartupPage page
       let path = `${startup_page}/company/${connection.id}`;
       history.push(path);
 
