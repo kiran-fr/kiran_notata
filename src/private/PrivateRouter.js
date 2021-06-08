@@ -86,7 +86,7 @@ import GroupSettings from "./pages/Groups/GroupSettings";
 import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
 import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
 // import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
-import News1 from "./NewDesign/news/news";
+import News from "./NewDesign/news/news";
 import NewsViewOne from "./NewDesign/news/NewsViewOne";
 import NewsEdit from "./NewDesign/news/news-edit";
 // import NewsEdit from "./NewDesign/news/news-edit";
@@ -104,7 +104,7 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 import { Startup } from "./shubham-new-designs/pages/startup/index";
 import Reports from "./shubham-new-designs/pages/reports/reports";
 import Settings_Home from "./shubham-new-designs/pages/settings/settings";
-import News from "./shubham-new-designs/pages/news/news";
+// import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
@@ -170,7 +170,7 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={`${facts_template}/:id`} component={FactsTemplate} />
 
-      <Route eaxct path={news1} component={News1} />
+      <Route eaxct path={news} component={News} />
       <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
       <Route eaxct path={new_news} component={NewsEdit} />
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />

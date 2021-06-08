@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { newsGet } from "../../../../Apollo/Queries";
 import moment from "moment";
-import { news1, news_view_one } from "../../../../../definitions";
+import { news, news_view_one } from "../../../../../definitions";
 import { Loader } from "../../../../../Components/elements";
 
 export default function DashboardNews({ history }) {
@@ -46,7 +46,7 @@ export default function DashboardNews({ history }) {
       <div
         className="dashboard-container__news__more-news"
         onClick={() => {
-          history.push(news1);
+          history.push(news);
         }}
       >
         More news

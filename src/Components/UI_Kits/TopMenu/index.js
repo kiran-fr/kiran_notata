@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { userGet, notificationsGet } from "private/Apollo/Queries";
 import { notifications_page } from "definitions.js";
-import { History } from "history";
+import { settings, signOut, setting_profile, your_team } from "definitions.js";
+// import { History } from "history";
 import NotificationsDropDown from "./notification-top-menu";
 import ProfilePic from "../../../assets/images/profile-pic.png";
 
@@ -12,7 +13,7 @@ import styles from "./TopMenu.module.css";
 
 const classnames = require("classnames");
 
-export function TopMenu() {
+export function TopMenu({ history }) {
   const { data } = useQuery(userGet);
   let user = data?.userGet || {};
 
@@ -28,10 +29,32 @@ export function TopMenu() {
     <div className={styles.top_menu_container}>
       {listOpen && (
         <div className={styles.profile_pic_dropdown}>
-          <div className={styles.profile_pic_dropdown_item}>user profile</div>
-          <div className={styles.profile_pic_dropdown_item}>team</div>
-          <div className={styles.profile_pic_dropdown_item}>settings</div>
-          <div className={styles.profile_pic_dropdown_item}>log out</div>
+          <div
+            className={styles.profile_pic_dropdown_item}
+            onClick={() => history.push(setting_profile)}
+          >
+            user profile
+          </div>
+          <div
+            className={styles.profile_pic_dropdown_item}
+            onClick={() => history.push(your_team)}
+          >
+            team
+          </div>
+
+          <div
+            className={styles.profile_pic_dropdown_item}
+            onClick={() => history.push(settings)}
+          >
+            settings
+          </div>
+
+          <div
+            className={styles.profile_pic_dropdown_item}
+            onClick={() => history.push(signOut)}
+          >
+            log out
+          </div>
         </div>
       )}
 
@@ -67,8 +90,7 @@ export function TopMenu() {
       <div className={styles.profile}>
         <img src={ProfilePic} className={styles.profile_pic_img} />
         <p className={styles.profile_name}>
-          {/* {user.given_name} {user.family_name} */}
-          Profile Name
+          {user.given_name} {user.family_name}
         </p>
         <div
           role="button"

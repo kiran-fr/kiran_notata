@@ -120,7 +120,7 @@ function EachNews({ data, history }) {
   );
 }
 
-export default function News1({ history }) {
+export default function News({ history }) {
   const userQuery = useQuery(userGet);
 
   const { data, loading } = useQuery(newsGet);

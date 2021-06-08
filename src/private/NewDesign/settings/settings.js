@@ -29,10 +29,9 @@ import { setting_profile } from "../../../definitions";
 
 export default function Settings({ history }) {
   const [isEvaluationCardVisible, setEvaluationCard] = useState(true);
-  // const [menuSelected, setMenuSelected] = useState(SETTINGSMENU.HOME);
+
   return (
     <div className="settings-container">
-      {/* {menuSelected === SETTINGSMENU.HOME ? ( */}
       <div className="card settings-container__card">
         <div className="settings-container__card__heading">
           <i class="fa fa-chevron-left" aria-hidden="true" />
@@ -99,7 +98,7 @@ export default function Settings({ history }) {
             <div className="menu-container__menu__name">Notifications</div>
           </div>
         </div>
-        {isEvaluationCardVisible && (
+        {/* {isEvaluationCardVisible && (
           <div className="card settings-container__evaluation-card">
             <div className="evaluation-header">
               <div className="evaluation-header__name">
@@ -138,29 +137,8 @@ export default function Settings({ history }) {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
-
-      {/* ) : menuSelected === SETTINGSMENU.YOURTEAM ? (
-        <YourTeam setMenuSelected={setMenuSelected} />
-      ) : menuSelected === SETTINGSMENU.WEBFORM ? (
-        <WebForm setMenuSelected={setMenuSelected} />
-      ) : menuSelected === SETTINGSMENU.NOTIFICATIONS ? (
-        <Notifications />
-      ) : menuSelected === SETTINGSMENU.TAGS ? (
-        <Tags setMenuSelected={setMenuSelected} />
-      ) : menuSelected === SETTINGSMENU.FUNNELS ? (
-        <Funnels setMenuSelected={setMenuSelected} />
-      ) : menuSelected === SETTINGSMENU.EVALUATIONTEMPLATE ? (
-        <EvaluationTemplatesPage
-          setMenuSelected={setMenuSelected}
-          isBackButton
-        />
-      ) : menuSelected === SETTINGSMENU.USERPROFILE ? (
-        <ProfileSettings setMenuSelected={setMenuSelected} history={history} />
-      ) : (
-        <></>
-      )} */}
     </div>
   );
 }
