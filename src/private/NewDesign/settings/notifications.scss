@@ -1,7 +1,7 @@
 .notifications-container {
   display: flex !important;
   justify-content: center !important;
-  //   height: 80vh;
+  min-height: 90vh;
   align-items: center;
   &__card {
     @media only screen and(min-width:768px) {
