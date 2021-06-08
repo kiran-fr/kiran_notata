@@ -1,7 +1,7 @@
 export default function getEvaluationSummariesForTeam({ evaluations, hide }) {
   let data = [];
 
-  // Cluster evaluations by template ID
+  // Cluster Evaluations by template ID
   // ––––––––––––––––––––––––––––––––––
   let evaluationsByTemplate = {};
   for (let evaluation of evaluations) {
@@ -11,7 +11,7 @@ export default function getEvaluationSummariesForTeam({ evaluations, hide }) {
   }
 
   for (let templateId in evaluationsByTemplate) {
-    // Get all shared evaluations
+    // Get all shared Evaluations
     let evaluations = evaluationsByTemplate[templateId] || [];
 
     // Get possible score

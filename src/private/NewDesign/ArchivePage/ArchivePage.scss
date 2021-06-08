@@ -1,0 +1,100 @@
+.archive-list-container {
+  .card {
+    //height: calc(100vh - 161px);
+    .heading {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      height: 50px;
+      padding: 25px 25px 0px 25px;
+      color: #969ba3;
+
+      i {
+        font-size: 24px;
+        color: #53cab2;
+        margin-right: 20px;
+        cursor: pointer;
+
+        &:hover {
+          color: #49b6a0;
+        }
+      }
+    }
+    .startups {
+      font-family: "Roboto";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 17px;
+      letter-spacing: 0.03em;
+      color: #969ba3;
+      margin-top: 20px;
+      margin-left: 25px;
+    }
+    .startup-name {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      color: #6a6a6a;
+      margin-top: 25px;
+    }
+    .unarchive {
+      padding: 0 10px;
+      height: 22px;
+      overflow: hidden;
+      background-color: #53cab2;
+      border-radius: 11px;
+      line-height: 22px;
+      cursor: pointer;
+      min-width: 130px;
+      font-family: Proxima Nova;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: none;
+      outline: none;
+      color: white;
+      text-align: center;
+      display: block !important;
+
+      &:hover,
+      &:focus {
+        background-color: #49b6a0;
+      }
+    }
+    .delete-permanently {
+      padding: 0 10px;
+      height: 22px;
+      overflow: hidden;
+      background-color: #ff937c;
+      border-radius: 11px;
+      line-height: 22px;
+      cursor: pointer;
+      min-width: 130px;
+      font-family: Proxima Nova;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: none;
+      outline: none;
+      color: white;
+      text-align: center;
+      display: block !important;
+
+      &:hover,
+      &:focus {
+        background-color: #ed6d52;
+      }
+    }
+    .archive-list-data {
+      padding-left: 25px;
+    }
+  }
+}

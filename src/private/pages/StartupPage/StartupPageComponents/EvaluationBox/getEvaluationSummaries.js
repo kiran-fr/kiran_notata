@@ -3,7 +3,7 @@ export function getDataForEvaluationsSharedInGroup({
   evaluations,
   hide,
 }) {
-  // Cluster evaluations by template ID
+  // Cluster Evaluations by template ID
   // ––––––––––––––––––––––––––––––––––
   let evaluationsByTemplate = {};
   for (let evaluation of evaluations) {
@@ -15,7 +15,7 @@ export function getDataForEvaluationsSharedInGroup({
   let data = [];
 
   for (let templateId in evaluationsByTemplate) {
-    // Get all shared evaluations
+    // Get all shared Evaluations
     let evaluations = evaluationsByTemplate[templateId] || [];
 
     // Get possible score
@@ -107,7 +107,7 @@ export function getDataForEvaluationsSharedInGroup({
 }
 
 export function getEvaluationSummaries({ connection, groups, hide }) {
-  // Get all shared evaluations
+  // Get all shared Evaluations
   // ––––––––––––––––––––––––––
   let sharedEvaluations = [];
   for (let sharedItem of connection.sharedWithMe) {
@@ -123,7 +123,7 @@ export function getEvaluationSummaries({ connection, groups, hide }) {
     }
   }
 
-  // Cluster evaluations by groupId
+  // Cluster Evaluations by groupId
   // ––––––––––––––––––––––––––––––
   let evaluationsByGroup = {};
   for (let { evaluation, sharedItem } of sharedEvaluations) {

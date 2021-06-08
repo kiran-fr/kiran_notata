@@ -21,7 +21,7 @@ import {
 import { groupGetV2 } from "../../../../Apollo/Queries";
 
 import { startup_page } from "../../../../../definitions";
-import SharingOptions from "../startup/groups-individuals/sharing-options";
+import SharingOptions from "../../../StartupPage/TabPages/Groups/sharing-options";
 import { Modal } from "../../../../../Components/UI_Kits";
 import { useForm } from "react-hook-form";
 
@@ -75,8 +75,8 @@ function YourEvaluations({ startup, group, history }) {
                 key={`score-option-id-${index}`}
                 className={
                   subjectiveScoreState === index + 1
-                    ? "your-evaluations-container__score-option-active"
-                    : "your-evaluations-container__score-option"
+                    ? "your-Evaluations-container__score-option-active"
+                    : "your-Evaluations-container__score-option"
                 }
                 onClick={() => {
                   let newScore = index + 1;
@@ -451,7 +451,7 @@ export default function StartupCard({
       <div className="col-sm-12 col-xs-12 startup-container">
         <div className="card">
           <div className="row">
-            {/* startup name */}
+            {/* StartupPage name */}
             <div className="group-dashboard-container__card-heading startup-heading col-md-6 col-sm-12">
               <div className="startup-container__startup-icon">G</div>
               <span
@@ -539,7 +539,7 @@ export default function StartupCard({
             </div>
           )}
 
-          {/* startup one liner */}
+          {/* StartupPage one liner */}
           <div className="row">
             <p className="startup-container__description">{oneLiner || ""}</p>
           </div>
@@ -658,7 +658,7 @@ export default function StartupCard({
                       </div>
                     </div>
 
-                    {/* evaluations */}
+                    {/* Evaluations */}
                     <div className="row evaluation-container">
                       <div className="col-sm-12 evaluation-container__heading">
                         EVALUATIONS
@@ -738,7 +738,7 @@ export default function StartupCard({
               </>
             )}
 
-          {/*Only show "your evaluations" if startup is in deal flow*/}
+          {/*Only show "your Evaluations" if StartupPage is in deal flow*/}
           {startup.isInMyDealFlow && (
             <div className="row your-evaluations-container">
               <div className="col-md-4 col-sm-6 col-xs-7">

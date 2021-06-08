@@ -14,9 +14,9 @@ import {
 } from "../../../../Apollo/Mutations";
 
 import { group_dashboard } from "definitions";
-import Settings from "../startup/groups-individuals/create-new-group/settings";
-import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
-import General from "../startup/groups-individuals/create-new-group/general";
+import Settings from "../../../StartupPage/TabPages/Groups/create-new-group/settings";
+import CreateNewGroup from "../../../StartupPage/TabPages/Groups/create-new-group/create-new-group";
+import General from "../../../StartupPage/TabPages/Groups/create-new-group/general";
 
 let defaultData = {
   general: {},

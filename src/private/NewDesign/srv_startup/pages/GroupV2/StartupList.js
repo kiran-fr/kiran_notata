@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import StartupCard from "./StartupCard";
-import SubmissionFullList from "../startup/evaluations/submission-full-list";
+import SubmissionFullList from "../../../StartupPage/TabPages/Evaluations/submission-full-list";
 import { Modal } from "Components/UI_Kits/Modal/Modal";
 
 export default function StartupList({ group, history }) {

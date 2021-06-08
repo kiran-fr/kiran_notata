@@ -54,6 +54,7 @@ import {
   settings,
   evaluation_templates_page,
   evaluation_template_page,
+  archive_page,
 } from "../definitions";
 
 // Landing page / list
@@ -108,8 +109,8 @@ import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
-import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
 import Reports from "./NewDesign/srv_startup/pages/reports/reports";
+import { StartupPage as StartupInfo } from "./NewDesign/StartupPage/index";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 
 // import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
@@ -133,6 +134,8 @@ import TagGroup from "./NewDesign/settings/tags";
 import Funnels1 from "./NewDesign/settings/funnels";
 import Notifications from "./NewDesign/settings/notifications";
 import ProfileSettings from "./NewDesign/settings/profile";
+
+import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -174,6 +177,7 @@ export const RouterComponent = ({ history }) => {
       <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
       <Route eaxct path={new_news} component={NewsEdit} />
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
+      <Route exact path={archive_page} component={ArchivePage} />
 
       <Route
         exact
