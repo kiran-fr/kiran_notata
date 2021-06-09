@@ -67,38 +67,53 @@ export default function EvaluateStartup({
   return (
     <div className="evaluate-startup-container">
       {evaluationTemplates?.map(template => (
-        <div className="row">
-          <div className="col-sm-4 col-xs-8 eval-type-heading">
-            {template.name}
-          </div>
+        <div key={template.id} className="evaluation-main">
+          <div className="eval-type-heading">{template.name}</div>
           {
-            <div>
+            <div className="evaluation-row">
               {getEvaluations(template.id, true)?.map(evaluation => (
-                <div className="row">
-                  <div className="col-sm-4 col-xs-5 evaluated-on">
-                    evaluated on {moment(evaluation.createdAt).format("lll")}
+                <>
+                  <div className="evaluate-action">
+                    <div>
+                      <span className="evaluated-on">
+                        Evaluated on{" "}
+                        {moment(evaluation.createdAt).format("lll")}
+                      </span>
+                      <button
+                        style={{ marginBottom: "1rem" }}
+                        className="evaluate-section-btn"
+                        onClick={() => {
+                          callBack(template, evaluation);
+                        }}
+                      >
+                        Edit evaluation
+                      </button>
+                      <button
+                        className="evaluate-section-btn"
+                        onClick={() => {
+                          callBack(template, null);
+                        }}
+                      >
+                        + New evaluation
+                      </button>
+                    </div>
                   </div>
-                  <div className="col-sm-3 col-xs-5 evaluate-action">
-                    <button
-                      onClick={() => {
-                        callBack(template, evaluation);
-                      }}
-                    >
-                      Edit evaluation
-                    </button>
-                  </div>
-                </div>
+                </>
               ))}
-              <div className="col-sm-4 col-xs-5 evaluated-on"></div>
-              <div className="col-sm-3 col-xs-5 evaluate-action">
+              {console.log(
+                "EVALUATION CHECK: ",
+                getEvaluations(template.id, true)
+              )}
+              {!(getEvaluations(template.id, true).length > 0) ? (
                 <button
+                  className="evaluate-section-btn"
                   onClick={() => {
                     callBack(template, null);
                   }}
                 >
                   + New evaluation
                 </button>
-              </div>
+              ) : null}
             </div>
           }
         </div>
