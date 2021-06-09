@@ -121,3 +121,28 @@
         padding-right: 0px;  
     }
 }
+.header-routing{
+    margin-top: -28px;
+    z-index: 9999;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    &__name{
+        font-family: Proxima Nova;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.03em;
+
+        color: #969BA3;
+    }
+    &__stilt{
+        color: #6A6A6A;
+        margin-right: 10px;
+        font-size: 10px;
+    }
+}
