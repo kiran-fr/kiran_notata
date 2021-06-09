@@ -5,9 +5,6 @@
 }
 .add-section-conatiner {
   padding: 2rem;
-  background: #ffffff;
-  box-shadow: 0px 3px 12px rgb(41 70 103 / 20%);
-  border-radius: 8px;
   margin-top: 1rem;
   @media only screen and(min-width:768px) {
     position: absolute;
@@ -41,6 +38,10 @@
     top: 10px;
     color: #969ba3;
     cursor: pointer;
+
+    .browse {
+      margin-left: 15%;
+    }
     @media only screen and(min-width:768px) {
       display: none;
     }
@@ -327,4 +328,10 @@
 }
 .max-width {
   max-width: 900px;
+}
+
+.ccard {
+  background: #ffffff;
+  box-shadow: 0px 3px 12px rgb(41 70 103 / 20%);
+  border-radius: 8px;
 }

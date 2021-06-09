@@ -145,26 +145,36 @@ export const EvaluationTemplateSectionPage = ({ match, history }) => {
 
   return (
     <>
-      <div className={`add-section-conatiner ssss`}>
+      <div className={`add-section-conatiner`}>
         {/* HEADER: NAME AND DESCRIPTION */}
         <div className="row">
           <div className={`col-sm-8 text-container`}>
             <form className="sectionform">
-              <i
-                className="fa fa-chevron-left"
-                onClick={() => hist.goBack()}
-                style={{
-                  color: "#53cab2",
-                  transform: "scale(1.4)",
-                  cursor: "pointer",
-                }}
-              ></i>
-              <TextBox
-                name="sectionName"
-                defaultValue={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="Section Name"
-              />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginRight: 10,
+                  }}
+                >
+                  <i
+                    className="fa fa-chevron-left"
+                    onClick={() => hist.goBack()}
+                    style={{
+                      color: "#53cab2",
+                      transform: "scale(1.4)",
+                      cursor: "pointer",
+                    }}
+                  ></i>
+                </div>
+                <TextBox
+                  name="sectionName"
+                  defaultValue={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder="Section Name"
+                />
+              </div>
               <textarea
                 name="sectionDescription"
                 onChange={e => setDescription(e.target.value)}
