@@ -90,7 +90,6 @@ let publicGroupsFromServer = publicGroupsQuery?.data?.groupsPublicGet || [];
               }
             
             onClick={() => {
-              // setSelectedGroup(oldArray => [...oldArray, group.id]);
               let variables = {
                 id: group.id,
               };
