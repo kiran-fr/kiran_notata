@@ -5,7 +5,7 @@ import OverviewCard from "./components/OverviewCard";
 import MainInputCard from "./components/MainInputCard";
 import SimilarStartupsCard from "./components/SimilarStartupsCard";
 import ArchiveAndDeleteSection from "./components/ArchiveAndDeleteSection";
-import ChatCard from "./components/ChatCard";
+import CommentBox from "./components/CommentBox";
 
 // STYLES
 import "./Overview.scss";
@@ -20,9 +20,22 @@ export default function Overview({ connection, history }) {
           <SimilarStartupsCard connection={connection} history={history} />
           <ArchiveAndDeleteSection connection={connection} history={history} />
         </div>
-
+        {/* 
         <div className="col-sm-4 col-xs-12 col-md-4 ">
-          <ChatCard connection={connection} history={history} />
+          <CommentBox connectionId={connection.id} />
+        </div> */}
+        <div className="col-sm-4 col-xs-12 col-md-4 ">
+          <div className="card discussion-card">
+            <div className="row discussions-contianer">
+              <div className="discussions-contianer__heading">
+                Discussion about startup
+              </div>
+              <div className="discussions-contianer__sub-heading">
+                Notes from you and your team
+              </div>
+              <CommentBox connectionId={connection.id} />
+            </div>
+          </div>
         </div>
       </div>
     </>

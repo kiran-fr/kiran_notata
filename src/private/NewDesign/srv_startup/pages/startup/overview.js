@@ -15,7 +15,11 @@ import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
-import { connectionPut, connectionDelete, connectionFunnelTagAdd } from "private/Apollo/Mutations";
+import {
+  connectionPut,
+  connectionDelete,
+  connectionFunnelTagAdd,
+} from "private/Apollo/Mutations";
 import More from "assets/images/more.svg";
 
 import CommentBox from "../CommentBox";
@@ -339,8 +343,9 @@ export default function Overview(props) {
                 <div className="overview-container__scores__heading">
                   Funnels
                 </div>
-                <AddFunnel companyId ={props.creativity.id}
-                  updateFunnelTag = {updateFunnelTag}
+                <AddFunnel
+                  companyId={props.creativity.id}
+                  updateFunnelTag={updateFunnelTag}
                 />
               </div>
               <div className="row groups-container">

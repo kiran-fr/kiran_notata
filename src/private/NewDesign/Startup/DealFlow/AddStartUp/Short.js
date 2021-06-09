@@ -45,7 +45,9 @@ export const Short = ({ history, closeModal, styles, connections }) => {
             setExistedFlag(
               result?.data?.connectionAutoCompleteName[0]?.creativeName
             );
-            setconnectionId(result?.data?.connectionAutoCompleteName[0]?.connectionId);
+            setconnectionId(
+              result?.data?.connectionAutoCompleteName[0]?.connectionId
+            );
           } else {
             setconnectionId("");
             setExistedFlag(undefined);
@@ -96,7 +98,7 @@ export const Short = ({ history, closeModal, styles, connections }) => {
     if (connectionId) {
       history.push(`${startup_page}/company/${connectionId}`);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -115,11 +117,14 @@ export const Short = ({ history, closeModal, styles, connections }) => {
           </div>
           {existedFlag && (
             <p className={styles.doyoumean}>
-              Do you mean <span className = {styles.companyLink}
-                onClick={()=>handleRedirect()}
+              Do you mean{" "}
+              <span
+                className={styles.companyLink}
+                onClick={() => handleRedirect()}
               >
                 {existedFlag}
-              </span> It`s already Exists
+              </span>{" "}
+              It`s already Exists
             </p>
           )}
         </div>
@@ -129,12 +134,7 @@ export const Short = ({ history, closeModal, styles, connections }) => {
           <button onClick={() => closeModal()}>CANCEL</button>
           <button type="submit">
             {" "}
-            {isSubmitting
-            ?
-              <i className={"fa fa-spinner fa-spin"} />
-            : 
-              "SAVE"
-            }
+            {isSubmitting ? <i className={"fa fa-spinner fa-spin"} /> : "SAVE"}
           </button>
         </div>
       </div>

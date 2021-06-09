@@ -86,7 +86,7 @@ export default function EditEvaluation({
   };
 
   if (loading) {
-      return <Loader size="medium" />
+    return <Loader size="medium" />;
   }
 
   //comment
