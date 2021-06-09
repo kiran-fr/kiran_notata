@@ -106,6 +106,7 @@ export default function SubjectiveScoreModal({ connection, close }) {
       saveModal={saveModal}
       closeModal={close}
       load={load}
+      disabled={subScore === ""}
     >
       {(!user && <GhostLoader />) || (
         <AddScore subScore={subScore} handleScore={handleScore} />

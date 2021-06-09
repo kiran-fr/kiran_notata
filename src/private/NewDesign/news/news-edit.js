@@ -17,7 +17,7 @@ import {
   newsDeleteImage,
 } from "../../Apollo/Mutations";
 
-import { news1 } from "../../../definitions";
+import { news } from "../../../definitions";
 import { Storage } from "aws-amplify";
 import { omit } from "lodash";
 import { GhostLoader } from "../../../Components/elements";
@@ -227,7 +227,7 @@ export default function NewsEdit({ history, match }) {
     } catch (error) {
       console.log(error);
     }
-    history.push(news1);
+    history.push(news);
   }
 
   async function submitUpdateNews() {
@@ -243,7 +243,7 @@ export default function NewsEdit({ history, match }) {
     } catch (error) {
       console.log(error);
     }
-    history.push(news1);
+    history.push(news);
   }
 
   async function submitDeleteNews() {
@@ -256,7 +256,7 @@ export default function NewsEdit({ history, match }) {
     } catch (error) {
       console.log(error);
     }
-    history.push(news1);
+    history.push(news);
   }
 
   if (id && !getOneNewsRes?.data && getOneNewsRes?.loading) {

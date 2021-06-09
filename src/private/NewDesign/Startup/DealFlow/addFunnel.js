@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import styles from "./modal.module.css";
-// import Funnel from "assets/images/funnel.png";
+import { Loader } from "Components/UI_Kits";
 
 // common dynamic funnel img function
 import { DynamicIcons } from "../../../NewDesign/CommonFunctions";
@@ -20,26 +20,40 @@ export default function AddFunnel(props) {
 
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
 
+  // maintain the funnel group (funnels.length >0)
   useEffect(() => {
     const newArr = funnelGroup.filter(items => items.funnelTags.length > 0);
     setFunnelGroupArray(newArr);
   }, [funnelGroup.length]);
 
+  // clear the value in state if user choose the new funnel group
   useEffect(() => {
     setFunnelName("");
     setFunnelID("");
+    if (props.funnelModal) {
+      props.setFunnelModalID("");
+    }
   }, [selectedGroupId]);
 
+  // modal window sumbit
   useEffect(() => {
-    if (props.funnelUpdate) {
+    if (props.funnelModal) {
       props.updateFunnelTag(funnelID, props.companyId);
-      props.close();
     }
-  }, [props.funnelUpdate]);
+  }, [props.funnelModal]);
 
+  // maintain funnel id and name. trigge the api
   const handleFunnel = value => {
     setFunnelName(value.name);
     setFunnelID(value.id);
+
+    if (props.funnelModal) {
+      props.setFunnelModalID(value.id);
+    }
+
+    if (!props.isModal) {
+      props.updateFunnelTag(value.id, props.companyId);
+    }
     if (props.setFunnelId) {
       props.setFunnelId(value.id);
     }
@@ -58,8 +72,6 @@ export default function AddFunnel(props) {
               {item.funnelTags.length &&
                 item.funnelTags.map((data, index) => (
                   <li key={index} onClick={() => handleFunnel(data)}>
-                    {console.log("datavalue", data)}
-
                     <div>
                       <p>{data.name}</p>
                     </div>
@@ -78,6 +90,10 @@ export default function AddFunnel(props) {
       </ul>
     );
   };
+
+  if (loading && props.funnelModal) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.group}>

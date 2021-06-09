@@ -49,7 +49,7 @@ export const CreateStartupModal = ({ history, open, close }) => {
 
   // Submit function with mutations
   const onSubmit = async data => {
-    // Stop if startup with same name exists
+    // Stop if StartupPage with same name exists
     if (existedFlag) {
       close();
       setExistedFlag(undefined);
@@ -66,7 +66,7 @@ export const CreateStartupModal = ({ history, open, close }) => {
       let res_connection = await mutateConnectionCreate({ variables });
       let connection = res_connection?.data?.connectionCreate;
 
-      // Go to startup page
+      // Go to StartupPage page
       let path = `${startup_page}/${connection.id}`;
       history.push(path);
 

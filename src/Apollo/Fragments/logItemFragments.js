@@ -23,6 +23,7 @@ export default gql`
       email
       given_name
       family_name
+      isMe
     }
   }
 `;

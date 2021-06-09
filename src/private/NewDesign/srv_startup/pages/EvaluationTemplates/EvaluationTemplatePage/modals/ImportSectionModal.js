@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { evaluationTemplatesGet } from "../../../../../../Apollo/Queries";
+import { evaluationTemplatesGet } from "private/Apollo/Queries";
 import { Loader } from "../../../../../../../Components/elements";
 import DropDown from "../../../ui-kits/drop-down";
 import InputCheckBox from "../../../ui-kits/check-box";

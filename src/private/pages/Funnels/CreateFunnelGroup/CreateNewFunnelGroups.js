@@ -61,7 +61,7 @@ export function CreateNewFunnelGroups({ index, open, close }) {
       setRequiredFlag(true);
       return;
     }
-    // Stop if startup with same name exists
+    // Stop if StartupPage with same name exists
     if (existedFlag) {
       close();
       setExistedFlag(undefined);

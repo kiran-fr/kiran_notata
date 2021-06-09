@@ -64,7 +64,9 @@ export function Facts({ label, hideTitle, connection, user, match, history }) {
               history.push(path);
             }}
           >
-            {isUntouched ? "Add info about this startup" : "Edit startup info"}
+            {isUntouched
+              ? "Add info about this StartupPage"
+              : "Edit StartupPage info"}
           </Button>
         </div>
       )}

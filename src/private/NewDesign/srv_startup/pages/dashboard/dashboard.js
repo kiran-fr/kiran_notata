@@ -7,7 +7,7 @@ import DashboardNews from "./DashboardNews";
 import DashboardNotifications from "./DashboardNotifications";
 import DashboardAnalytics from "./DashboardAnalytics";
 
-export default function DashboardNew({ history }) {
+export default function Dashboard({ history }) {
   return (
     <div className="dashboard-container">
       <div className="row">

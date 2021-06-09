@@ -8,7 +8,7 @@ import SummaryLine from "./SummaryLine";
 function getEvaluationSummaries({ evaluations, hide }) {
   let data = [];
 
-  // Cluster evaluations by template ID
+  // Cluster Evaluations by template ID
   // ––––––––––––––––––––––––––––––––––
   let evaluationsByTemplate = {};
   for (let evaluation of evaluations) {
@@ -18,7 +18,7 @@ function getEvaluationSummaries({ evaluations, hide }) {
   }
 
   for (let templateId in evaluationsByTemplate) {
-    // Get all shared evaluations
+    // Get all shared Evaluations
     let evaluations = evaluationsByTemplate[templateId] || [];
 
     // Get possible score

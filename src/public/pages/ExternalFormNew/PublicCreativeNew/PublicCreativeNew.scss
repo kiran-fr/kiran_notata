@@ -1,0 +1,28 @@
+.public-creative-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    max-width: 800px;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
+
+    &__header {
+      font-family: 'Proxima Nova';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 35px;
+      margin: -12px;
+      margin-bottom: 30px;
+      white-space: pre-wrap;
+      color: #969BA3;
+    }
+
+  }
+
+
+}
+

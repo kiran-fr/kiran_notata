@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles, { activePopup } from "./table.module.css";
-import Red from "../../../../../assets/images/red.png";
-import Green from "../../../../../assets/images/green.png";
 import More from "../../../../../assets/images/more.svg";
-import Violet from "../../../../../assets/images/violet.png";
-import Yellow from "../../../../../assets/images/Bar_Icon_04.svg";
 import moment from "moment";
 //Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 import { subjectiveScore } from "private/pages/Dashboard/Connections/types";
 import classnames from "classnames";
-import { sortArr } from "../../../CommonFunctions";
+import { sortArr, DynamicIcons } from "../../../CommonFunctions";
+import { Loader } from "Components/UI_Kits";
 
 export default function TableBody(props) {
   const {
@@ -31,9 +28,12 @@ export default function TableBody(props) {
     checkAll,
     checked,
     setChecked,
+    funnelLoad,
   } = props;
 
   const [funnel, setFunnel] = useState();
+  const [funnelId, setFunnelId] = useState();
+
   const [showFunnel, setShowFunnel] = useState(false);
 
   const FunnelPopup = ({ tags, id, index }) => {
@@ -65,24 +65,12 @@ export default function TableBody(props) {
         style={{ top: index > 20 ? "-400%" : `50px` }}
       >
         <ul>
-          {tagSort?.map(tag => (
+          {tagSort?.map((tag, index) => (
             <li
               key={tag.id}
               onClick={() => updateFunnelTagForConnection(tag.id)}
             >
-              <img
-                src={
-                  tag.name === "Invested"
-                    ? Red
-                    : tag.name === "Initial assessment"
-                    ? Yellow
-                    : tag.name === "Met team"
-                    ? Violet
-                    : Green
-                }
-                alt=""
-              />{" "}
-              {tag.name}
+              <img src={DynamicIcons(index)} alt="" /> {tag.name}
             </li>
           ))}
         </ul>
@@ -257,16 +245,11 @@ export default function TableBody(props) {
                 {columnSettings.funnels && (
                   <td>
                     <div className={styles.startupStatus}>
-                      {tagSet ? (
+                      {funnelLoad && funnelId === index ? (
+                        <Loader />
+                      ) : tagSet ? (
                         <>
-                          <img
-                            alt=""
-                            src={
-                              `${tagSet.name.toUpperCase()}` === "ANALYZED"
-                                ? Red
-                                : Green
-                            }
-                          />
+                          <img alt="" src={DynamicIcons(tagSet.index)} />
                           {tagSet.name}
                           <span
                             className={classnames(
@@ -274,6 +257,7 @@ export default function TableBody(props) {
                             )}
                             onClick={() => {
                               setFunnel(funnel ? null : index);
+                              setFunnelId(index);
                               setShowFunnel(!showFunnel);
                             }}
                           >
@@ -289,7 +273,12 @@ export default function TableBody(props) {
                           )}
                         </>
                       ) : (
-                        <span onClick={() => setShowFunnelScoreForId(item.id)}>
+                        <span
+                          onClick={() => {
+                            setShowFunnelScoreForId(item.id);
+                            setFunnelId(index);
+                          }}
+                        >
                           <ButtonGreen />
                         </span>
                       )}

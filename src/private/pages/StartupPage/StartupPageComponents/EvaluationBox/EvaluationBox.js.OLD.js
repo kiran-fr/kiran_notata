@@ -12,7 +12,7 @@ import styles from "./EvaluationBox.module.css";
 import { EvaluationRequest } from "./EvaluationRequest";
 
 function getEvaluationSummaries({ connection, groups, hide }) {
-  // Get all shared evaluations
+  // Get all shared Evaluations
   // ––––––––––––––––––––––––––
   let sharedEvaluations = [];
   for (let sharedItem of connection.sharedWithMe) {
@@ -28,7 +28,7 @@ function getEvaluationSummaries({ connection, groups, hide }) {
     }
   }
 
-  // Cluster evaluations by groupId
+  // Cluster Evaluations by groupId
   // ––––––––––––––––––––––––––––––
   let evaluationsByGroup = {};
   for (let { evaluation, sharedItem } of sharedEvaluations) {
@@ -43,7 +43,7 @@ function getEvaluationSummaries({ connection, groups, hide }) {
     let thisGroup = groups.find(g => g.id === groupId) || {};
     let sharedEvaluationsInGroup = evaluationsByGroup[groupId];
 
-    // Cluster evaluations by template ID
+    // Cluster Evaluations by template ID
     // ––––––––––––––––––––––––––––––––––
     let evaluationsByTemplate = {};
     for (let { evaluation } of sharedEvaluationsInGroup) {
@@ -54,7 +54,7 @@ function getEvaluationSummaries({ connection, groups, hide }) {
 
     let data2 = [];
     for (let templateId in evaluationsByTemplate) {
-      // Get all shared evaluations
+      // Get all shared Evaluations
       let evaluations = evaluationsByTemplate[templateId] || [];
 
       // Get possible score
@@ -485,7 +485,7 @@ function GroupEvaluations({
 function getEvaluationSummariesForTeam({ evaluations, hide }) {
   let data = [];
 
-  // Cluster evaluations by template ID
+  // Cluster Evaluations by template ID
   // ––––––––––––––––––––––––––––––––––
   let evaluationsByTemplate = {};
   for (let evaluation of evaluations) {
@@ -495,7 +495,7 @@ function getEvaluationSummariesForTeam({ evaluations, hide }) {
   }
 
   for (let templateId in evaluationsByTemplate) {
-    // Get all shared evaluations
+    // Get all shared Evaluations
     let evaluations = evaluationsByTemplate[templateId] || [];
 
     // Get possible score

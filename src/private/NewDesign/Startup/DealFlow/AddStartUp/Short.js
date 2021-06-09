@@ -21,7 +21,7 @@ import { startup_page } from "definitions";
 export const Short = ({ history, closeModal, styles, connections }) => {
   // States
   const [existedFlag, setExistedFlag] = useState(undefined);
-  const [connectionData, setconnectionData] = useState([]);
+  const [connectionId, setconnectionId] = useState("");
 
   // Form
   const { register, handleSubmit, formState } = useForm();
@@ -45,15 +45,17 @@ export const Short = ({ history, closeModal, styles, connections }) => {
             setExistedFlag(
               result?.data?.connectionAutoCompleteName[0]?.creativeName
             );
-            setconnectionData(result?.data?.connectionAutoCompleteName);
+            setconnectionId(
+              result?.data?.connectionAutoCompleteName[0]?.connectionId
+            );
           } else {
-            setconnectionData([]);
+            setconnectionId("");
             setExistedFlag(undefined);
           }
         });
     },
     // delay in ms
-    1000
+    10
   );
 
   // Look for duplicate names
@@ -63,19 +65,10 @@ export const Short = ({ history, closeModal, styles, connections }) => {
 
   // Submit function with mutations
   const onSubmit = async data => {
-    // Stop if startup with same name exists
+    // Stop if StartupPage with same name exists
     if (existedFlag) {
       // existing company
-      if (connectionData.length > 0) {
-        connectionData.map(el => {
-          if (
-            el.creativeName.toLowerCase().trim() ===
-            data.variables.input.name.toLowerCase().trim()
-          ) {
-            history.push(`${startup_page}/company/${el.connectionId}`);
-          }
-        });
-      }
+      closeModal();
     }
 
     try {
@@ -88,7 +81,7 @@ export const Short = ({ history, closeModal, styles, connections }) => {
       let res_connection = await mutateConnectionCreate({ variables });
       let connection = res_connection?.data?.connectionCreate;
 
-      // Go to startup page
+      // Go to StartupPage page
       // let path = `${startup_page}/${connection.id}`;
       // let path = `${startup_page}/components/ui/navigation1`;
 
@@ -98,6 +91,12 @@ export const Short = ({ history, closeModal, styles, connections }) => {
       closeModal();
     } catch (error) {
       console.log("ERROR CREATING STARTUP", error);
+    }
+  };
+
+  const handleRedirect = () => {
+    if (connectionId) {
+      history.push(`${startup_page}/company/${connectionId}`);
     }
   };
 
@@ -118,7 +117,14 @@ export const Short = ({ history, closeModal, styles, connections }) => {
           </div>
           {existedFlag && (
             <p className={styles.doyoumean}>
-              Do you mean <span>{existedFlag}</span> It`s already Exists
+              Do you mean{" "}
+              <span
+                className={styles.companyLink}
+                onClick={() => handleRedirect()}
+              >
+                {existedFlag}
+              </span>{" "}
+              It`s already Exists
             </p>
           )}
         </div>
@@ -128,13 +134,7 @@ export const Short = ({ history, closeModal, styles, connections }) => {
           <button onClick={() => closeModal()}>CANCEL</button>
           <button type="submit">
             {" "}
-            {isSubmitting ? (
-              <i className={"fa fa-spinner fa-spin"} />
-            ) : existedFlag ? (
-              "Okay"
-            ) : (
-              "SAVE"
-            )}
+            {isSubmitting ? <i className={"fa fa-spinner fa-spin"} /> : "SAVE"}
           </button>
         </div>
       </div>

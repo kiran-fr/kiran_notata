@@ -51,8 +51,8 @@ export function SideBarMenu() {
       label: "Dashboard",
       iconClass: DashbaordImg,
       iconStyle: {},
-      link: `${startup_page}/components/company/dashboard`,
-      subPaths: [`${startup_page}/components/company/dashboard`],
+      link: `${startup_page}/dashboard`,
+      subPaths: [`${startup_page}/dashboard`],
     },
     {
       label: "My Startups",
@@ -72,15 +72,15 @@ export function SideBarMenu() {
       label: "Reports",
       iconClass: ReportsImg,
       iconStyle: {},
-      link: `${startup_page}/report/reports`,
-      subPaths: [`${startup_page}/report/reports`],
+      link: reports,
+      subPaths: [reports],
     },
     //  hide for now  (commented by siva)
     {
       label: "News",
       iconClass: NewsImg,
       iconStyle: { paddingTop: "2px" },
-      link: news1,
+      link: news,
       subPaths: [news],
     },
   ];

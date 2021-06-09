@@ -1,105 +1,102 @@
-.your-team-container{
-    height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &__card{
-        max-width: 502px;
-        padding-bottom: 65px!important;
+.your-team-container {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__card {
+    max-width: 502px;
+    padding-bottom: 65px !important;
+  }
+  &__heading {
+    padding-left: 50px !important;
+    padding-top: 41px !important;
+    i {
+      color: #53cab2;
+      margin-right: 13px;
+      cursor: pointer;
     }
-    &__heading{
-        padding-left: 50px!important;
-        padding-top: 41px!important;
-        i{
-            color: #53CAB2;
-            margin-right: 13px;
-            cursor: pointer;
-        }
+  }
+  .your-team {
+    padding-top: 25px;
+    padding-left: 50px;
+    &__header {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 17px;
+      color: #6a6a6a;
     }
-    .your-team{
-        padding-top:25px;
-        padding-left: 50px;
-        &__header{
-            font-family: 'Proxima Nova';
-            font-style: normal;
-            font-weight: bold;
-            font-size: 16px;
-            line-height: 17px;
-            color: #6A6A6A;
-            
+    &__members {
+      margin-top: 25px;
+      &__member {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        color: #6a6a6a;
+        i {
+          margin-right: 13px;
+          color: #ff937c;
+          cursor: pointer;
         }
-        &__members{
-            margin-top:25px;
-            &__member{
-                display: flex;
-                align-items: center;
-                margin-top:10px;
-                font-family: 'Proxima Nova';
-                font-style: normal;
-                font-weight: normal;
-                font-size: 14px;
-                line-height: 17px;
-                color: #6A6A6A;
-                i {
-                    margin-right: 13px;
-                    color: #FF937C;
-                    cursor: pointer;
-                }
 
-                .name {
-
-                }
-                .email {
-                    font-size: 12px;
-                }
-
-            }
+        // .name {
+        // }
+        .email {
+          font-size: 12px;
         }
-        &__pending-invitation{
-            margin-top:44px;
-        }
-        &__email{
-            font-family: 'Proxima Nova';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 14px;
-            line-height: 17px;
-            text-transform: capitalize;
-            color: #969BA3;
-            margin-top:20px;
-        }
-        &__pending-invite-container{
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-            &__search-user{
-                height: 30px;
-                background: #FFFFFF;
-                border: 1px solid #CECECE;
-                border-radius: 20px;                
-                max-width: 280px;
-                padding-left:20px;
-                @media only screen and(max-width:768px) {
-                    max-width: 165px;
-                }
-                width:100%;
-            }
-            &__invite-btn{
-                background: #53CAB2;
-                height: 30px;
-                margin-left: 15px;
-            }
-        }
+      }
     }
+    &__pending-invitation {
+      margin-top: 44px;
+    }
+    &__email {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      text-transform: capitalize;
+      color: #969ba3;
+      margin-top: 20px;
+    }
+    &__pending-invite-container {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      &__search-user {
+        height: 30px;
+        background: #ffffff;
+        border: 1px solid #cecece;
+        border-radius: 20px;
+        max-width: 280px;
+        padding-left: 20px;
+        @media only screen and(max-width:768px) {
+          max-width: 165px;
+        }
+        width: 100%;
+      }
+      &__invite-btn {
+        background: #53cab2;
+        height: 30px;
+        margin-left: 15px;
+      }
+    }
+  }
 }
-.delete-member-modal-from-team{
-    font-family: 'Proxima Nova';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 17px;
-    color: #969BA3;
-    padding-top: 55px;
-    padding-left: 20px;
-    padding-bottom: 55px;
+.delete-member-modal-from-team {
+  font-family: "Proxima Nova";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #969ba3;
+  padding-top: 55px;
+  padding-left: 20px;
+  padding-bottom: 55px;
 }

@@ -1,274 +1,278 @@
-.report-container{
-    .fillter-btn{
-        margin-top:20px;
-        border: 1px solid #6A6a6a;
-        height: 30px;
-        color: #6a6a6a;
-        padding: 5px 15px!important;
-        margin-lefT: 15px;
-        .MuiButton-label{
-            color: #6a6a6a;
-        }
+.report-container {
+  .fillter-btn {
+    margin-top: 20px;
+    border: 1px solid #6a6a6a;
+    height: 30px;
+    color: #6a6a6a;
+    padding: 5px 15px !important;
+    margin-left: 15px;
+    .MuiButton-label {
+      color: #6a6a6a;
     }
-    &__add-icon-container{
-        display: flex;
-        justify-content: flex-end;
-        &__add-icon{
-            width: 48px;
-            height: 48px;
-            background: #FF8775;
-            margin-bottom: 15px;
-            border-radius: 50%;
-            display: flex!important;
-            align-items: center;
-            justify-content: center;
-            color: #FFF;
-            margin-top:15px;
-        }
+  }
+  &__add-icon-container {
+    display: flex;
+    justify-content: flex-end;
+    &__add-icon {
+      width: 48px;
+      height: 48px;
+      background: #ff8775;
+      margin-bottom: 15px;
+      border-radius: 50%;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-top: 15px;
     }
-    
-    .funnels-container{
-        padding: 20px 20px 40px 65px;
-        @media only screen and(max-width:991px) {
-            padding-bottom:20px;
-        }
-        &__filter{
-            display: flex;
-            &__stages{
-                font-family: 'Proxima Nova';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 10px;
-                line-height: 12px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: #53CAB2;
-                padding-top: 7px;
-            }
-            &__icons{
-                margin-left:auto;
-                @media only screen and(min-width:991px) {
-                    position: absolute;
-                    right:10px;
-                }
-                i{
-                    color: #c4c4c4;
-                    font-size: 12px;
-                    margin-right:10px;
-                    &:hover{
-                        color:#000;
-                        border-bottom: 1px solid #000;
-                    }
-                }
-            }
-        }
-        &__funnels{
-            margin-top:20px;
-            display: flex;
-            &__funnel{
-                width:50px;
-                .score{
-                    font-family: 'Proxima Nova';
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 14px;
-                    line-height: 17px;
-                    letter-spacing: 0.03em;
-                    color: #6A6A6A;
-                    text-align: center;
-                }
-                .funnel-chart{
-                    margin-top:10px;
-                    height:203px;
-                    width:24px;
-                    background-color: #F5F7FF;
-                    margin-left:13px;
-                    margin-right:13px;
-                    border-radius: 20px;
-                    transform: scale(1, -1);
-                    .red{
-                        background: linear-gradient(180deg, #FF725E 0%, #FFAD88 100%);
-                        height:100%;
-                        border-radius: 20px;
-                    } 
-                    .blue{
-                        background: linear-gradient(180deg, #73C5B2 0%, #96E4D5 100%);
-                        height:80%;
-                        border-radius: 20px;
-                    }
-                    .purple{
-                        background: linear-gradient(180deg, #9E80DD 0%, #C7ADFF 100%);
-                        height:60%;
-                        border-radius: 20px;
-                    }
-                    .orange{
-                        background: linear-gradient(180deg, #F5C269 0%, #FFD898 102.82%, rgba(229, 232, 255, 0) 110.91%);
-                        height:40%;
-                        border-radius: 20px;
-                    }
-                    .green{
-                        background: linear-gradient(180deg, #90E074 0%, #B3FF78 100%);
-                        height:20%;
-                        border-radius: 20px;
-                    }
-                }
-                .funnel-type{
-                    font-family: 'Proxima Nova';
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 10px;
-                    line-height: 12px;
-                    letter-spacing: 0.03em;
-                    margin-top:10px;
-                    text-align: center;
-                    color: #969BA3;
-                }                
-            }
-        }
-        &__data-container{
-            padding: 20px 20px 40px 65px;
-            @media only screen and(max-width:1199px) and (min-width:991px) {
-                padding-left:20px;
-            }
-            &__data-summary{
-                padding-top: 7px;
-                font-family: 'Proxima Nova';
-                font-style: normal;
-                font-weight: bold;
-                font-size: 10px;
-                line-height: 12px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                margin-right:20px;
-                color: #969BA3;
-                .no-of-records{
-                    margin-left: auto;
-                }
-            }
-            &__data-headers{
-                font-family: Roboto;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 10px;
-                line-height: 12px;
-                color: #979797;
-                margin-top:25px;
-            }
-            &__data-record{
-                margin-top:5px;
-                padding-top: 5px;
-                padding-bottom:5px;                
-                .funnel-name{
-                    font-family: 'Roboto';
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 14px;
-                    letter-spacing: 0.03em;
-                    color: #6A6A6A;
-                }
-                .funnel-date{
-                    font-family: 'Roboto';
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 10px;
-                    line-height: 12px;
-                }
-            }
-            .separator{
-                padding-top:0px;
-                margin-left:0px;
-            }
-        }
+  }
+
+  .reports-funnels-container {
+    padding: 20px 20px 40px 65px;
+    @media only screen and(max-width:991px) {
+      padding-bottom: 20px;
     }
-    .my-groups-container{
-        &__noOfRecords{
-            font-family: 'Proxima Nova';
-            font-style: normal;
-            font-weight: 300;
-            font-size: 68px;
-            line-height: 83px;
-            letter-spacing: -0.04em;
-            color: #6A6A6A;
-            margin-left: 25px;
-            margin-top: 10px;
-            width: calc(100% - 135px);
-            border-right: 1px solid #DEDEDE; 
-            @media only screen and(min-width:991px) and(max-width:1199px) {
-                border-right: 1px solid #DEDEDE;
-            }
-            
-        }
-        &__last-week-comparison{
-            margin-left:30px;
-            display: inline-block;
-            .performance{
-                font-family: 'Proxima Nova';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 18px;
-                line-height: 22px;                
-            }
-            .green{
-                color: #60CEB8;
-            }
-            .red{
-                color:#FF4853;
-            }
-            .since-last-month{
-                font-family: 'Proxima Nova';
-                font-style: normal;
-                font-weight: normal;
-                font-size: 10px;
-                line-height: 10px;
-                margin-left: 5px;
-                color: rgba(0, 0, 0, 0.4);
-            }
-            .material-icons{
-                font-size: 15px;
-                margin-left:5px;
-            }
-        }
-        &__footer-link{
-            text-align: end;
-            margin-right:20px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 15px;
-            .go-to-my-groups{
-                font-family: 'Proxima Nova';
-                font-style: normal;
-                font-weight: bold;
-                font-size: 11px;
-                line-height: 13px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: #60CEB8;
-                display: inline-block;
-                cursor: pointer;
-            }
-            .green{
-                color: #60CEB8;
-                cursor: pointer;
-            }
-        }
-        img{
-            position: absolute;
-            top:95px;
-            right:50px;
-        }
-    }   
-    .tags-container-heading{
-        font-family: 'Proxima Nova';
+    &__filter {
+      display: flex;
+      &__stages {
+        font-family: "Proxima Nova";
         font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 17px;
+        font-weight: 600;
+        font-size: 10px;
+        line-height: 12px;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #6A6A6A;
-        margin-top: 30px;
-        margin-left: 25px;
-    } 
+        color: #53cab2;
+        padding-top: 7px;
+      }
+      &__icons {
+        margin-left: auto;
+        @media only screen and(min-width:991px) {
+          position: absolute;
+          right: 10px;
+        }
+        i {
+          color: #c4c4c4;
+          font-size: 12px;
+          margin-right: 10px;
+          &:hover {
+            color: #000;
+            border-bottom: 1px solid #000;
+          }
+        }
+      }
+    }
+    &__funnels {
+      margin-top: 20px;
+      display: flex;
+      &__funnel {
+        width: 50px;
+        .score {
+          font-family: "Proxima Nova";
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: 0.03em;
+          color: #6a6a6a;
+          text-align: center;
+        }
+        .funnel-chart {
+          margin-top: 10px;
+          height: 203px;
+          width: 24px;
+          background-color: #f5f7ff;
+          margin-left: 13px;
+          margin-right: 13px;
+          border-radius: 20px;
+          transform: scale(1, -1);
+          .red {
+            background: linear-gradient(180deg, #ff725e 0%, #ffad88 100%);
+            height: 100%;
+            border-radius: 20px;
+          }
+          .blue {
+            background: linear-gradient(180deg, #73c5b2 0%, #96e4d5 100%);
+            height: 80%;
+            border-radius: 20px;
+          }
+          .purple {
+            background: linear-gradient(180deg, #9e80dd 0%, #c7adff 100%);
+            height: 60%;
+            border-radius: 20px;
+          }
+          .orange {
+            background: linear-gradient(
+              180deg,
+              #f5c269 0%,
+              #ffd898 102.82%,
+              rgba(229, 232, 255, 0) 110.91%
+            );
+            height: 40%;
+            border-radius: 20px;
+          }
+          .green {
+            background: linear-gradient(180deg, #90e074 0%, #b3ff78 100%);
+            height: 20%;
+            border-radius: 20px;
+          }
+        }
+        .funnel-type {
+          font-family: "Proxima Nova";
+          font-style: normal;
+          font-weight: normal;
+          font-size: 10px;
+          line-height: 12px;
+          letter-spacing: 0.03em;
+          margin-top: 10px;
+          text-align: center;
+          color: #969ba3;
+        }
+      }
+    }
+    &__data-container {
+      padding: 20px 20px 40px 65px;
+      @media only screen and(max-width:1199px) and (min-width: 991px) {
+        padding-left: 20px;
+      }
+      &__data-summary {
+        padding-top: 7px;
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: bold;
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-right: 20px;
+        color: #969ba3;
+        .no-of-records {
+          margin-left: auto;
+        }
+      }
+      &__data-headers {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 12px;
+        color: #979797;
+        margin-top: 25px;
+      }
+      &__data-record {
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        .funnel-name {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: 0.03em;
+          color: #6a6a6a;
+        }
+        .funnel-date {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: normal;
+          font-size: 10px;
+          line-height: 12px;
+        }
+      }
+      .separator {
+        padding-top: 0px;
+        margin-left: 0px;
+      }
+    }
+  }
+  .my-groups-container {
+    &__noOfRecords {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: 300;
+      font-size: 68px;
+      line-height: 83px;
+      letter-spacing: -0.04em;
+      color: #6a6a6a;
+      margin-left: 25px;
+      margin-top: 10px;
+      width: calc(100% - 135px);
+      border-right: 1px solid #dedede;
+      @media only screen and(min-width:991px) and(max-width:1199px) {
+        border-right: 1px solid #dedede;
+      }
+    }
+    &__last-week-comparison {
+      margin-left: 30px;
+      display: inline-block;
+      .performance {
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+      }
+      .green {
+        color: #60ceb8;
+      }
+      .red {
+        color: #ff4853;
+      }
+      .since-last-month {
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 10px;
+        margin-left: 5px;
+        color: rgba(0, 0, 0, 0.4);
+      }
+      .material-icons {
+        font-size: 15px;
+        margin-left: 5px;
+      }
+    }
+    &__footer-link {
+      text-align: end;
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 15px;
+      .go-to-my-groups {
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: bold;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #60ceb8;
+        display: inline-block;
+        cursor: pointer;
+      }
+      .green {
+        color: #60ceb8;
+        cursor: pointer;
+      }
+    }
+    img {
+      position: absolute;
+      top: 95px;
+      right: 50px;
+    }
+  }
+  .tags-container-heading {
+    font-family: "Proxima Nova";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6a6a6a;
+    margin-top: 30px;
+    margin-left: 25px;
+  }
 }

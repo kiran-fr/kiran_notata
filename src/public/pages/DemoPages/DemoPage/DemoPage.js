@@ -49,7 +49,7 @@ The starup is now in your deal flow and we can start working with it!
   },
   {
     image: VIEW_STARTUP,
-    title: "4) View startup",
+    title: "4) View StartupPage",
     text: `Let's take a look at the startup.
 
 On the startup page you can start working on the startup. In the top section you have the "facts" part that the startup have filled in.
@@ -60,7 +60,7 @@ Below that we have the funnel and tags before we get to the evaluation part. We 
   },
   {
     image: EVALUATE_STARTUP,
-    title: "5) Evaluate startup",
+    title: "5) Evaluate StartupPage",
     text: `Let's evaluate this startup!
 
 You can evaluate startups based on multiple templates, which in turn will generate a score.

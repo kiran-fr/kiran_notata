@@ -4,13 +4,11 @@ import Sidebar from "./index";
 // import { Tags } from "Components/UI_Kits/Tags/Tags";
 import TagsModal from "../../private/NewDesign/srv_startup/pages/ui-kits/TagsModal";
 import { Modal } from "../UI_Kits/Modal/Modal";
-
+import { Loader } from "Components/UI_Kits";
 import { sortArr } from "../../private/NewDesign/CommonFunctions";
-
 // common dynamic funnel img function
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
 import { CheckBox, Datepicker1 } from "Components/UI_Kits";
-
 // API
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
@@ -38,11 +36,13 @@ export default function FilterBar({
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  // useEffect(() => {
-  //   setStartDate(filters.fromDate)
-  //   setEndDate(filters.toDate)
-  //   setDateFlag(true)
-  // }, [filters.fromDate && filters.toDate && !dateFlag]);
+  useEffect(() => {
+    if (filters.fromDate && filters.toDate) {
+      setStartDate(new Date(parseInt(filters.fromDate)));
+      setEndDate(new Date(parseInt(filters.toDate)));
+    }
+    setDateFlag(true);
+  }, [filters.fromDate && filters.toDate && !dateFlag]);
 
   useEffect(() => {
     let tagArr = [];
@@ -122,7 +122,7 @@ export default function FilterBar({
           )
         )
       ) : loading ? (
-        <i className={"fa fa-spinner fa-spin"} />
+        <Loader />
       ) : (
         ""
       )}

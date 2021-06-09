@@ -8,6 +8,7 @@ export default function DealFLowTag({
   children,
   width,
   load,
+  disabled,
 }) {
   const handleModal = () => {
     closeModal(false);
@@ -15,6 +16,8 @@ export default function DealFLowTag({
   const handleSave = () => {
     saveModal();
   };
+
+  const nonClickable = disabled ? true : false;
   return (
     <div className={styles.tableModal}>
       <div className={styles.tableModalOutter}>
@@ -29,7 +32,7 @@ export default function DealFLowTag({
           <div className={styles.footer}>
             <div className={styles.buttonContainer}>
               <button onClick={() => handleModal()}>CANCEL</button>
-              <button onClick={() => handleSave()}>
+              <button disabled={nonClickable} onClick={() => handleSave()}>
                 {" "}
                 {load ? (
                   <i className={"fa fa-spinner fa-spin"} />

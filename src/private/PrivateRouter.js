@@ -54,6 +54,7 @@ import {
   settings,
   evaluation_templates_page,
   evaluation_template_page,
+  archive_page,
 } from "../definitions";
 
 // Landing page / list
@@ -86,7 +87,7 @@ import GroupSettings from "./pages/Groups/GroupSettings";
 import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
 import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
 // import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
-import News1 from "./NewDesign/news/news";
+import News from "./NewDesign/news/news";
 import NewsViewOne from "./NewDesign/news/NewsViewOne";
 import NewsEdit from "./NewDesign/news/news-edit";
 // import NewsEdit from "./NewDesign/news/news-edit";
@@ -102,14 +103,14 @@ import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
 import { Startup } from "./shubham-new-designs/pages/startup/index";
-import Reports from "./shubham-new-designs/pages/reports/reports";
+// import Reports from "./shubham-new-designs/pages/reports/reports";
 import Settings_Home from "./shubham-new-designs/pages/settings/settings";
-import News from "./shubham-new-designs/pages/news/news";
+// import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 
 // New Startup Info
-import { Startup as StartupInfo } from "./NewDesign/srv_startup/pages/startup/index";
-import { Reports as ReportsAdd } from "./NewDesign/srv_startup/pages/reports/reports";
+import Reports from "./NewDesign/srv_startup/pages/reports/reports";
+import { StartupPage as StartupInfo } from "./NewDesign/StartupPage/index";
 import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
 
 // import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
@@ -134,11 +135,15 @@ import Funnels1 from "./NewDesign/settings/funnels";
 import Notifications from "./NewDesign/settings/notifications";
 import ProfileSettings from "./NewDesign/settings/profile";
 
+import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
+
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
+      <Route eaxct path={reports} component={Reports} />
+
       <Route exact path={startup_page} component={StartupSection} />
 
       <Route exact path={profile} component={Profile} />
@@ -155,6 +160,9 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={funnels} component={Funnels} />
 
+      {/* dashboard */}
+      <Route exact path={dashboard} component={Dashboard} />
+
       <Route exact path={settings} component={Settings} />
       <Route exact path={your_team} component={yourTeam} />
       <Route exact path={web_form} component={webForm} />
@@ -167,10 +175,11 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={`${facts_template}/:id`} component={FactsTemplate} />
 
-      <Route eaxct path={news1} component={News1} />
+      <Route eaxct path={news} component={News} />
       <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
       <Route eaxct path={new_news} component={NewsEdit} />
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
+      <Route exact path={archive_page} component={ArchivePage} />
 
       <Route
         exact
@@ -274,7 +283,6 @@ export const RouterComponent = ({ history }) => {
       {/*  component={EvaluationTemplatesPage}*/}
       {/*/>*/}
 
-      <Route eaxct path={reports} component={Reports} />
       {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
 
@@ -283,18 +291,18 @@ export const RouterComponent = ({ history }) => {
         path={`${startup_page}/settings`}
         component={Settings}
       /> */}
-      <Route eaxct path={dashboard_new} component={DashboardNew} />
+      {/* <Route eaxct path={dashboard_new} component={DashboardNew} />
       <Route
         eaxct
         path={`${startup_page}/components/company/dashboard`}
         component={Dashboard}
       />
-
-      <Route
+ */}
+      {/* <Route
         eaxct
         path={`${startup_page}/report/reports`}
         component={ReportsAdd}
-      />
+      /> */}
 
       <Route render={() => <div>404</div>} />
     </Switch>
@@ -328,7 +336,7 @@ const WrapperComponent = ({ ...props }) => {
   return (
     <div className="page_container" style={{ display: "flex" }}>
       <Header history={props.history} />
-      <Navigation />
+      <Navigation history={props.history} />
       {/* <SideBarTreeMenu {...props} /> */}
       <div
         className={`logged_in_page_content ${

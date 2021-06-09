@@ -14,6 +14,8 @@ export const Loader = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        fontSize: "20px",
+        color: "#53CAB2",
       }}
     >
       <i className="fa fa-spinner fa-spin" />

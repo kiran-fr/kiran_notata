@@ -121,7 +121,7 @@ function checkErrors(answers, personalData) {
 
   if (answers.length === 0)
     errs.push(
-      "You didn't provide any evaluations, please return to previous sections and fill in at least 1 question."
+      "You didn't provide any Evaluations, please return to previous sections and fill in at least 1 question."
     );
 
   if (!personalData.firstname || !personalData.lastname || !personalData.email)

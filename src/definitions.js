@@ -35,10 +35,11 @@ export const link_bridge = `/link`;
 // export const ui_components = `${dashboard}/components/ui`;
 // export const navigation = `${dashboard}/components/ui/navigation`;
 
-export const dashboard = "/dashboard";
+// export const dashboard = "/dashboard";
 export const startup_page = "/startup_page";
 
 export const charts = `${startup_page}/charts`;
+export const archive_page = `${startup_page}/archive`;
 
 // KANBAN VIEW
 export const kanban = "/kanban";
@@ -58,10 +59,13 @@ export const navigation = `${startup_page}/components/ui/navigation`;
 
 export const startup_company_profile = `${startup_page}/company/:id`;
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
-export const news1 = `${startup_page}/news/news1`;
+export const news = `${startup_page}/news`;
 export const edit_news = `${startup_page}/news/edit`;
 export const new_news = `${startup_page}/news/new`;
 export const news_view_one = `${startup_page}/view`;
+
+//dashboard
+export const dashboard = `${startup_page}/dashboard`;
 
 //settings
 
@@ -72,12 +76,14 @@ export const web_form = `${startup_page}/settings/web_form`;
 export const your_team = `${startup_page}/settings/your_team`;
 export const setting_profile = `${startup_page}/settings/profile`;
 
+//reports and analytics
+export const reports = `${startup_page}/reports`;
+
 // JØRGEN's NEW ROUTES
 export const notifications_page = `${startup_page}/notifications`;
 
 // PUBLIC ROUTES
 export const public_pages = `/public`;
-export const public_creative = `${public_pages}/creative`;
 export const demo_page = `${public_pages}/demo`;
 export const ban_demo_page = `${public_pages}/ban`;
 export const oia_demo_page = `${public_pages}/oia`;
@@ -85,12 +91,18 @@ export const public_presentation = `${public_pages}/presentation`;
 export const public_evaluation = `${public_pages}/evaluation`;
 export const product_demo = `${public_pages}/product_demo`;
 
+export const public_creative = `${public_pages}/creative`;
+export const public_creative_new = `${public_pages}/creative_new`;
+
+export const public_pages_new = `/public_new`;
+// export const public_creative_new = `${public_pages_new}/creative`;
+
 // SHUBHAM ROUTES
 export const startup_index = `${startup_page}/components/ui/navigation1`;
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
-export const reports = `${startup_page}/components/ui/navigation1/report`;
+// export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
-export const news = `${startup_page}/components/ui/navigation1/news`;
+// export const news = `${startup_page}/components/ui/navigation1/news`;
 export const dashboard_new = `${startup_page}/components/ui/navigation1/dashboard`;
 
 // export const evaluation_templates = `${startup_page}/templates`;
