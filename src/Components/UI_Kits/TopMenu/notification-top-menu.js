@@ -8,16 +8,25 @@ import { notificationsGet } from "private/Apollo/Queries";
 
 import { notificationsMarkAllAsSeen } from "private/Apollo/Mutations";
 
-function Notification({ content }) {
+import { notification } from "definitions";
+import notificationProfile from "../../../assets/images/dashboard-notifictaion-profile.png";
+import moment from "moment";
+
+function Notification({ content, notificationCreatedAt }) {
   return (
     <div className="notifications__notification">
-      <img src={NotificationAlarm} alt="Notification Icon" />
-      <p className="notifications__notification__text">{content}</p>
+      <img src={notificationProfile} alt="Notification Icon" />
+      <div className="notifications__notification__text">
+        <span>{content}</span>
+        <span className="notifications__notification__text__hour-ago">
+          {moment(notificationCreatedAt).format("ll")}
+        </span>
+      </div>
     </div>
   );
 }
 
-export default function NotificationsDropDown() {
+export default function NotificationsDropDown({ history }) {
   const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
 
   const [allNotifications, setAllNotifications] = useState([]);
@@ -41,18 +50,24 @@ export default function NotificationsDropDown() {
           {allNotifications.length <= 0 ? (
             <div className="noNotification">No Notification</div>
           ) : (
-            allNotifications.map(notif => (
-              <Notification
-                key={notif.id}
-                content={notif.content}
-              ></Notification>
-            ))
+            allNotifications
+              .slice(0, 3)
+              .map(notif => (
+                <Notification
+                  key={notif.id}
+                  content={notif.content}
+                  notificationCreatedAt={notif.createdAt}
+                ></Notification>
+              ))
           )}
         </div>
       </div>
-      <div className="notification-menu__dropdown__footer">
+      <div
+        className="notification-menu__dropdown__footer"
+        onClick={() => history.push(notification)}
+      >
         See full list of notifications{" "}
-        <i class={`fa fa-chevron-down `} aria-hidden="true"></i>
+        {/* <i class={`fa fa-chevron-down `} aria-hidden="true"></i> */}
       </div>
     </div>
   );

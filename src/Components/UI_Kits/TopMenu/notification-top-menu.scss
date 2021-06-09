@@ -9,7 +9,8 @@
     text-align: initial;
     width: 407px;
     right: 138px;
-    height: 80vh;
+    height: auto;
+    padding-bottom: 50px;
     margin-top: -15px;
     .notifications {
       &::-webkit-scrollbar {
@@ -23,8 +24,9 @@
       padding-right: 12px;
       padding-left: 12px;
       margin-top: 10px;
-      max-height: calc(80vh - 70px);
-      min-height: calc(80vh - 100px);
+      ///max-height: calc(80vh - 70px);
+      //min-height: calc(80vh - 100px);
+      height: auto;
       overflow-x: auto;
       @media only screen and(max-width:768px) {
         padding-left: 15px !important;
@@ -40,7 +42,8 @@
         padding-top: 20px;
         border-bottom: 1px solid #f1f1f1;
         img {
-          border-radius: 50%;
+          height: 24px;
+          width: 24px;
         }
         &__comment-text {
           font-family: "Roboto";
@@ -63,6 +66,8 @@
           margin-left: 15px;
         }
         &__text {
+          display: flex;
+          flex-direction: column;
           @media only screen and(max-width:650px) {
             width: 215px;
           }
@@ -77,6 +82,16 @@
           .highlight {
             color: #53cab2;
             font-weight: bold;
+          }
+          &__hour-ago {
+            font-family: "Roboto";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 14px;
+            letter-spacing: 0.03em;
+            color: #969ba3;
+            margin-top: 10px;
           }
         }
         &__actions {
@@ -134,10 +149,11 @@
       line-height: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #60ceb8;
+      color: #53cab2;
       text-align: right;
       margin-right: 30px;
       margin-top: 20px;
+      cursor: pointer;
       i {
         margin-left: 5px !important;
         color: #60ceb8 !important;

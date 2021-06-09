@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { userGet, notificationsGet } from "private/Apollo/Queries";
 import { settings, signOut, setting_profile, your_team } from "definitions.js";
-// import { History } from "history";
 import NotificationsDropDown from "./notification-top-menu";
 import ProfilePic from "../../../assets/images/profile-pic.png";
 
