@@ -10,11 +10,14 @@ import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
 import { evaluationTemplateSectionUpdate } from "private/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 import { evaluation_template_page } from "../../../../../../definitions";
+import { useHistory } from "react-router-dom";
 
 // Helpers
 const getId = () => Math.round(Math.random() * 10000).toString();
 
 export const EvaluationTemplateSectionPage = ({ match, history }) => {
+  const hist = useHistory();
+
   // URL Stuff
   const templateId = match?.params?.id;
   const sectionId = match?.params?.sectionId;
@@ -142,17 +145,36 @@ export const EvaluationTemplateSectionPage = ({ match, history }) => {
 
   return (
     <>
-      <div className={`add-section-conatiner ssss`}>
+      <div className={`add-section-conatiner`}>
         {/* HEADER: NAME AND DESCRIPTION */}
         <div className="row">
           <div className={`col-sm-8 text-container`}>
             <form className="sectionform">
-              <TextBox
-                name="sectionName"
-                defaultValue={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="Section Name"
-              />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginRight: 10,
+                  }}
+                >
+                  <i
+                    className="fa fa-chevron-left"
+                    onClick={() => hist.goBack()}
+                    style={{
+                      color: "#53cab2",
+                      transform: "scale(1.4)",
+                      cursor: "pointer",
+                    }}
+                  ></i>
+                </div>
+                <TextBox
+                  name="sectionName"
+                  defaultValue={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder="Section Name"
+                />
+              </div>
               <textarea
                 name="sectionDescription"
                 onChange={e => setDescription(e.target.value)}
@@ -194,7 +216,7 @@ export const EvaluationTemplateSectionPage = ({ match, history }) => {
           <div className="btn-container">
             <ButtonWithIcon
               className="cancel-btn"
-              text="Back"
+              text="Cancel"
               onClick={() => {
                 history.push(`${evaluation_template_page}/${templateId}`);
               }}

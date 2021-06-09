@@ -113,7 +113,7 @@ export default function TagsModal({
     <div className="tags-container">
       {loading ? (
         /* //query processing */
-        <Loader size="medium"/>
+        <Loader size="medium" />
       ) : (
         <>
           <div className="tags-container__sub-heading">

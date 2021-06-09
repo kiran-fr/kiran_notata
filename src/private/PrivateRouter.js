@@ -336,7 +336,7 @@ const WrapperComponent = ({ ...props }) => {
   return (
     <div className="page_container" style={{ display: "flex" }}>
       <Header history={props.history} />
-      <Navigation history={props.history}/>
+      <Navigation history={props.history} />
       {/* <SideBarTreeMenu {...props} /> */}
       <div
         className={`logged_in_page_content ${

@@ -218,7 +218,7 @@ export default function Evaluations(props) {
                               Submitions
                             </div>
                             <div className="col-sm-3 col-xs-3 score">
-                              {evaluation.summary?.scorePercent || 0}
+                              {evaluation.summary?.scorePercent || "0%"}
                             </div>
                           </div>
                         )

@@ -160,12 +160,16 @@ export default function Groups({ history }) {
   // MUST COME AFTER HOOKS
 
   // Split groups into two groups
-  let groups = { iAmAdmin: [], iAmMember: [] };
-  for (let group of groupsQuery?.data?.groupsGetV2 || []) {
-    group.iAmAdmin ? groups.iAmAdmin.push(group) : groups.iAmMember.push(group);
-  }
+  // let groups = { iAmAdmin: [], iAmMember: [] };
+  // for (let group of groupsQuery?.data?.groupsGetV2 || []) {
+  //   group.iAmAdmin ? groups.iAmAdmin.push(group) : groups.iAmMember.push(group);
+  // }
 
-  let groupArray = groups[tab === 0 ? "iAmAdmin" : "iAmMember"] || [];
+  // let groupArray = groups[tab === 0 ? "iAmAdmin" : "iAmMember"] || [];
+
+  let groups = groupsQuery.data?.groupsGetV2
+
+  
 
   if (!groupsQuery.data && groupsQuery.loading) {
     return <GhostLoader />;
@@ -176,13 +180,13 @@ export default function Groups({ history }) {
       <div className="card">
         <div className="card-heading">Groups</div>
 
-        <Tabs value={tab} onChange={setTab}>
+       {/* <Tabs value={tab} onChange={setTab}>
           <Tab label="I am admin of" {...a11yProps(0)} />
           <Tab label="I am member of" {...a11yProps(1)} />
-        </Tabs>
+        </Tabs>  */}
 
-        <div className="row">
-          <div
+        <div className="row"> 
+          {/* <div
             className="col-sm-5 col-sm-push-0 col-xs-5 col-xs-push-6 sort-by"
             ref={sortByRef}
           >
@@ -200,12 +204,12 @@ export default function Groups({ history }) {
               <div className="sortby-dropdown">
                 <div className="sortby-dropdown__item">Name</div>
                 <div className="sortby-dropdown__item">Members</div>
-                {/*<div className="sortby-dropdown__item">Starred</div>*/}
+                <div className="sortby-dropdown__item">Starred</div>
                 <div className="sortby-dropdown__item">Updated</div>
               </div>
             )}
-          </div>
-          <div className="col-sm-6 col-xs-6 col-sm-pull-0 col-xs-pull-5 create-group-container">
+          </div> */}
+          <div className=" create-group-container">
             <ButtonWithIcon
               iconName="add"
               className="create-new-group"
@@ -214,11 +218,11 @@ export default function Groups({ history }) {
               onClick={() => setCreateGroupModal(true)}
             />
           </div>
-        </div>
+        </div> 
 
         {
           /* EACH GROUP LINE */
-          groupArray.map((group, index) => {
+          groups.map((group, index) => {
             return (
               <div key={group.id}>
                 <div className="row data" id={`row-data-${index}`}>

@@ -83,13 +83,13 @@ export default function Settings({ history }) {
             <img src={yourProfile} />
             <div className="menu-container__menu__name">User Profile</div>
           </div>
-          <div
+          {/* <div
             className="menu-container__menu"
             onClick={() => history.push("/")}
           >
             <img src={accountSettings} />
             <div className="menu-container__menu__name">Account settings</div>
-          </div>
+          </div> */}
           <div
             className="menu-container__menu"
             onClick={() => history.push(notification)}

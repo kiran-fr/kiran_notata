@@ -4,7 +4,7 @@ import Sidebar from "./index";
 // import { Tags } from "Components/UI_Kits/Tags/Tags";
 import TagsModal from "../../private/NewDesign/srv_startup/pages/ui-kits/TagsModal";
 import { Modal } from "../UI_Kits/Modal/Modal";
-import { Loader} from "Components/UI_Kits";
+import { Loader } from "Components/UI_Kits";
 import { sortArr } from "../../private/NewDesign/CommonFunctions";
 // common dynamic funnel img function
 import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
@@ -37,11 +37,11 @@ export default function FilterBar({
   const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
-    if(filters.fromDate && filters.toDate) {
-      setStartDate(new Date(parseInt(filters.fromDate)))
-      setEndDate(new Date(parseInt(filters.toDate)))
+    if (filters.fromDate && filters.toDate) {
+      setStartDate(new Date(parseInt(filters.fromDate)));
+      setEndDate(new Date(parseInt(filters.toDate)));
     }
-    setDateFlag(true)
+    setDateFlag(true);
   }, [filters.fromDate && filters.toDate && !dateFlag]);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export default function FilterBar({
           )
         )
       ) : loading ? (
-        <Loader/>
+        <Loader />
       ) : (
         ""
       )}

@@ -51,7 +51,7 @@
   top: 100px;
   margin: auto;
   padding-bottom: 24px;
-  max-width: 520px;
+  max-width: 620px !important;
   background: white;
   margin-bottom: 100px;
   text-align: left;

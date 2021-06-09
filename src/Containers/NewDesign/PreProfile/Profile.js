@@ -26,6 +26,7 @@ export function ProfileContent({ history, skipLast }) {
   return (
     <>
       <div className={styles.tabs_section}>
+      {!skipLast && (
         <div
           className={
             page === 1
@@ -34,6 +35,8 @@ export function ProfileContent({ history, skipLast }) {
           }
           onClick={() => setPage(1)}
         />
+      )}
+         {!skipLast && (
         <div
           className={
             page === 2
@@ -42,6 +45,7 @@ export function ProfileContent({ history, skipLast }) {
           }
           onClick={() => setPage(2)}
         />
+         )}
 
         {!skipLast && (
           <div

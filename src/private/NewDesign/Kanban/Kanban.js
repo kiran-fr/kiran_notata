@@ -8,10 +8,7 @@ import {
 } from "private/Apollo/Queries";
 import { GhostLoader } from "Components/elements";
 
-import {
-  Loader
-} from "Components/UI_Kits";
-
+import { Loader } from "Components/UI_Kits";
 
 import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
 import { appsyncClient } from "../../../awsconfig";

@@ -1,52 +1,71 @@
-.evaluate-startup-container{
-    .row{
-        margin:0px;  
-        padding-top: 6px;   
-        padding-bottom: 5px;
-        border-bottom: 1px solid #F1F1F1;   
+.evaluate-startup-container {
+  .row {
+    margin: 0px;
+    padding-top: 6px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  .evaluation-main {
+    display: flex;
+    // align-items: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(25, 25, 25, 0.1);
+    margin-bottom: 1rem;
+  }
+
+  .eval-type-heading {
+    min-width: 30%;
+  }
+
+  .evaluation-row {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .eval-type-heading {
+    font-family: "Proxima Nova";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    color: #969ba3;
+    padding-left: 0px !important;
+    margin-top: 5px;
+    padding-right: 0px !important;
+  }
+  .evaluated-on {
+    font-family: "Roboto";
+    font-size: 10px;
+    color: #979797;
+    flex-basis: 100%;
+    text-align: right;
+    margin-right: 10px;
+  }
+  .new-evaluation {
+    margin-top: 10px;
+  }
+  .evaluate-action {
+    @media only screen and(max-width:768px) {
+      padding: 0px;
     }
-    .eval-type-heading{
-        font-family: 'Proxima Nova';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 15px;
-        line-height: 18px;
-        color: #969BA3;
-        padding-left: 0px!important;
-        margin-top:5px;
-        padding-right: 0px!important;
-    }
-    .evaluated-on{
-        font-family: 'Roboto';
-        font-size: 10px;
-        line-height: 12px;
-        color: #979797;
-        margin-top:8px;
-        padding-left:0px;
-        padding-right:0px;
-    }
-    .new-evaluation{
-        margin-top:10px;
-    }
-    .evaluate-action{
-        @media only screen and(max-width:768px) {
-            padding: 0px;        
-        }        
-        text-align: end;
-        padding: 0px!important;
-        button{
-            background: #53CAB2;
-            border-radius: 12px;
-            border: 0px;
-            padding: 5px;
-            font-family: 'Proxima Nova';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 12px;
-            line-height: 15px;
-            color: #FFFFFF;
-            width: 143px;
-            letter-spacing: 0.04em;
-        }
-    }
+    text-align: end;
+    padding: 0px !important;
+  }
+}
+
+.evaluate-section-btn {
+  background: #53cab2;
+  border-radius: 12px;
+  border: 0px;
+  padding: 5px;
+  font-family: "Proxima Nova";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ffffff;
+  width: 143px;
+  letter-spacing: 0.04em;
 }
