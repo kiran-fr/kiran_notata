@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { useQuery, useMutation } from "@apollo/client";
 import { logGet } from "private/Apollo/Queries";
-import TextBox from "./ui-kits/text-box";
+import TextBox from "../../../../srv_startup/pages/ui-kits/text-box";
 import { logCreate, logDelete, logUpdate } from "private/Apollo/Mutations";
 
 import styles from "./CommentBox.module.scss";
-import { connectionsGet } from "../../../Apollo/Queries";
 
 function CommentBoxGeneral({
   comments,
@@ -14,8 +13,6 @@ function CommentBoxGeneral({
   createComment,
   updateComment,
 }) {
-  // console.log('CommentBoxGeneral')
-
   const [updateMessage, setUpdateMessage] = useState(null);
   const [editChat, setEditChat] = useState(false);
   const [hidden, setHidden] = useState({});
