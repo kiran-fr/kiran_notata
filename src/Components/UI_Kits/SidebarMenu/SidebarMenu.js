@@ -5,6 +5,7 @@ import NewsImg from "../../../assets/images/navigation-news.png";
 import ReportsImg from "../../../assets/images/navigation-reports.png";
 import SettingsImg from "../../../assets/images/navigation-settings.png";
 import StartupsImg from "../../../assets/images/navigation-startups.png";
+import DashbaordImg from "../../../assets/images/sidemenu-dashbaord.png";
 
 //links
 import {
@@ -36,7 +37,7 @@ export function SideBarMenu() {
   let menuList = [
     {
       label: "Dashboard",
-      iconClass: "fas fa-signal-alt-3",
+      iconClass: DashbaordImg,
       iconStyle: {},
       link: `${startup_page}/components/company/dashboard`,
     },
@@ -54,8 +55,8 @@ export function SideBarMenu() {
     },
     {
       label: "Reports",
-      iconClass: "fas fa-file-alt",
-      iconStyle: { paddingTop: "7px" },
+      iconClass: ReportsImg,
+      iconStyle: {},
       link: `${startup_page}/report/reports`,
     },
     //  hide for now  (commented by siva)
@@ -125,7 +126,7 @@ export function SideBarMenu() {
               onClick={openSidebar}
             >
               {" "}
-              <i className={`fal fa-chevron-${listOpen ? "right" : "left"}`} />
+              <i className={`fa fa-bars`} />
             </div>
           </div>
           {/* Main navigation icons */}
