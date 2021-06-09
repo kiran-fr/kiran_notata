@@ -16,7 +16,6 @@ export function InputForm({
   validate,
   reference,
   passwordConfirm,
-  // Cus error message to be displayed to the right of field!
   errorMessage,
   handleInputChange,
   primaryPwdVal,
@@ -29,6 +28,8 @@ export function InputForm({
   const [placeholderVal, setPlaceholderVal] = useState(
     placeholder || "Say something..."
   );
+
+  const [shouldValidate, setShouldValidate] = useState(false);
 
   const inputRef = reference;
 
@@ -53,6 +54,7 @@ export function InputForm({
     setPlaceholderVal(placeholder || "placeholder...");
     if (e.target.value === "") setPassStyle(false);
     validateFormInput(e.target.value);
+    // setShouldValidate(true);
   }
 
   // Change function (form function)
@@ -63,7 +65,9 @@ export function InputForm({
       handleInputChange(e.target.value, e.target.name);
     }
 
-    validateFormInput(e.target.value);
+    if (shouldValidate) {
+      validateFormInput(e.target.value);
+    }
     if (type === "password" && !passFlag) setPassStyle(true);
   }
 
