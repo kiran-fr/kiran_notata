@@ -25,7 +25,11 @@ import DeleteSectionModal from "./modals/DeleteSectionModal";
 import CloneSectionModal from "./modals/CloneSectionModal";
 import { evaluation_templates_page } from "../../../../../../definitions";
 
+import { useHistory } from "react-router-dom";
+
 export const EvaluationTemplatePage = ({ match, history }) => {
+  const hist = useHistory();
+
   // Constants
   const id = match?.params?.id;
 
@@ -147,6 +151,15 @@ export const EvaluationTemplatePage = ({ match, history }) => {
         <div className="row">
           <div className={`col-sm-8 text-container`}>
             <form className="templateform">
+              <i
+                className="fa fa-chevron-left"
+                onClick={() => hist.goBack()}
+                style={{
+                  color: "#53cab2",
+                  transform: "scale(1.4)",
+                  cursor: "pointer",
+                }}
+              ></i>
               <TextBox
                 name="name"
                 defaultValue={name}

@@ -46,7 +46,7 @@ export const EvaluationTemplatesPage = ({ history }) => {
   }
 
   return (
-    <>
+    <div>
       <div className="evaluation-templates-container">
         {/* HEADER */}
         <div className="row">
@@ -69,7 +69,6 @@ export const EvaluationTemplatesPage = ({ history }) => {
             />
           </div>
         </div>
-
         <div className="evaluation-templates-container__data-container">
           {templates?.map(template => (
             <div
@@ -163,6 +162,6 @@ export const EvaluationTemplatesPage = ({ history }) => {
           close={() => setCloneModalForTemplate(undefined)}
         />
       )}
-    </>
+    </div>
   );
 };
