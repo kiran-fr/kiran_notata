@@ -154,7 +154,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                 )}
                 <Button
                   size="large"
-                  buttonStyle="gray"
+                  buttonStyle="green"
                   style={{ marginBottom: "5px" }}
                   onClick={validate}
                   loading={isSubmitting || isLoading}
