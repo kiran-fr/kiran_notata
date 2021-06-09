@@ -101,6 +101,7 @@ export const TemplateSection = props => {
             } text-container`}
           >
             <form>
+              <i className="fa fa-chevron-left"></i>
               <TextBox
                 name="name"
                 defaultValue={name}
