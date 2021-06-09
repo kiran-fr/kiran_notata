@@ -100,6 +100,7 @@
         // text-decoration-line: underline;
       }
       .browse {
+        margin-left: 15%;
         @media only screen and(min-width:768px) {
           text-align: end;
         }
@@ -156,4 +157,8 @@
       }
     }
   }
+}
+
+.create-template-btn:hover {
+  background: #49b6a0 !important;
 }
