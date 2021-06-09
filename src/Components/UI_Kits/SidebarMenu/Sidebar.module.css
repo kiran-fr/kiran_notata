@@ -202,10 +202,11 @@
 }
 .active_open .icons {
   color: #ff8166 !important;
+}
+.active_close img {
   border-radius: 2px;
   border-bottom: 2px #ff8775 solid;
 }
-
 .active_close i {
   color: #969ba3 !important;
 }
@@ -229,6 +230,7 @@
   height: 18px;
   margin-top: -8px;
   display: inline;
+  padding-bottom: 2px;
 }
 .sidebar_container .icons i {
   font-size: 18px;
@@ -351,7 +353,9 @@
   width: 100%;
   text-align: center;
 }
-
+.sidebar_container1 .icons img {
+  padding-bottom: 2px;
+}
 .sidebar_container1 .icons i {
   font-size: 20px;
 }

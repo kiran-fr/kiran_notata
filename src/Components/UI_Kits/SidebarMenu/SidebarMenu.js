@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, matchPath } from "react-router-dom";
 import GroupsImg from "../../../assets/images/navigation-groups.png";
 import NewsImg from "../../../assets/images/navigation-news.png";
 import ReportsImg from "../../../assets/images/navigation-reports.png";
@@ -10,17 +10,28 @@ import DashbaordImg from "../../../assets/images/sidemenu-dashbaord.png";
 //links
 import {
   dashboard,
+  // groups sub paths
   group,
+  group_dashboard,
   settings,
   charts,
   signOut,
+  // startup pages
   startup_page,
+  startup_company_profile,
   pre_profile,
   reports,
   settings_new,
   news,
   dashboard_new,
   news1,
+  // settings paths
+  tags1,
+  funnels1,
+  notification,
+  web_form,
+  your_team,
+  setting_profile,
 } from "definitions.js";
 
 // Styles
@@ -40,24 +51,28 @@ export function SideBarMenu() {
       iconClass: DashbaordImg,
       iconStyle: {},
       link: `${startup_page}/components/company/dashboard`,
+      subPaths: [`${startup_page}/components/company/dashboard`],
     },
     {
       label: "My Startups",
       iconClass: StartupsImg,
       iconStyle: { paddingTop: "2px" },
       link: startup_page,
+      subPaths: [startup_page, startup_company_profile],
     },
     {
       label: "Groups",
       iconClass: GroupsImg,
       iconStyle: {},
       link: group,
+      subPaths: [group, `${group_dashboard}/:groupId`],
     },
     {
       label: "Reports",
       iconClass: ReportsImg,
       iconStyle: {},
       link: `${startup_page}/report/reports`,
+      subPaths: [`${startup_page}/report/reports`],
     },
     //  hide for now  (commented by siva)
     {
@@ -65,6 +80,7 @@ export function SideBarMenu() {
       iconClass: NewsImg,
       iconStyle: { paddingTop: "2px" },
       link: news1,
+      subPaths: [news],
     },
   ];
 
@@ -138,9 +154,19 @@ export function SideBarMenu() {
                     exact={true}
                     to={item.link}
                     isActive={(match, location) => {
-                      if (!match) {
-                        return false;
-                      } else return true;
+                      let isMatch = match ? true : false;
+                      if (!isMatch) {
+                        for (var i = 0; i < item.subPaths.length; i++) {
+                          let matchPathResult = matchPath(location.pathname, {
+                            path: item.subPaths[i],
+                          });
+                          isMatch = matchPathResult
+                            ? matchPathResult.isExact
+                            : false;
+                          if (isMatch) break;
+                        }
+                      }
+                      return isMatch;
                     }}
                     activeClassName={classnames(
                       !listOpen ? styles.active_open : styles.active_close
@@ -168,6 +194,29 @@ export function SideBarMenu() {
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}
+                isActive={(match, location) => {
+                  let isMatch = match ? true : false;
+                  let subPaths = [
+                    tags1,
+                    funnels1,
+                    notification,
+                    web_form,
+                    your_team,
+                    setting_profile,
+                  ];
+                  if (!isMatch) {
+                    for (var i = 0; i < subPaths.length; i++) {
+                      let matchPathResult = matchPath(location.pathname, {
+                        path: subPaths[i],
+                      });
+                      isMatch = matchPathResult
+                        ? matchPathResult.isExact
+                        : false;
+                      if (isMatch) break;
+                    }
+                  }
+                  return isMatch;
+                }}
               >
                 <div className={styles.icons}>
                   <i className="fas fa-cog" />

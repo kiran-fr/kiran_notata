@@ -11,6 +11,9 @@
         border: 1px solid red;
         width: 407px;
         right: 138px;
+        @media screen and(max-width:768px) {
+            right: 20px;
+        }
         height: 80vh;
         margin-top: -15px;
         .notifications{
