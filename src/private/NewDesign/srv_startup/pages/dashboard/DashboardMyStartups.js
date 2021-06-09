@@ -4,6 +4,8 @@ import { connectionsGet } from "../../../../Apollo/Queries";
 import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Loader } from "../../../../../Components/elements";
 import { startup_page } from "../../../../../definitions";
+import { DynamicIcons } from "../../../CommonFunctions";
+
 
 export default function DashboardMyStartups({ history }) {
   const [editScoreForConnection, setEditScoreForConnection] = useState(
@@ -56,6 +58,17 @@ export default function DashboardMyStartups({ history }) {
             ).toFixed(1);
           }
 
+          console.log('newbie', startup)
+          let tagSet;
+            if (startup.funnelTags.length) {
+              let highest = startup.funnelTags.reduce(
+                (max, tag) => (tag.index > max ? tag.index : max),
+                startup.funnelTags[0].index
+              );
+              tagSet = startup.funnelTags.find(({ index }) => index === highest);
+            }
+
+            console.log('newbie123', tagSet)
           return (
             <div
               className="dashboard-container__my-startups__data-container__data-entry"
@@ -64,18 +77,23 @@ export default function DashboardMyStartups({ history }) {
               <div className="dashboard-container__my-startups__data-container__data-entry__startup-name">
                 {startup?.creative?.name}
               </div>
+              {tagSet ?
               <div className="dashboard-container__my-startups__data-container__data-entry__funnels">
-                <div className="dashboard-container__my-startups__data-container__data-entry__funnels__funnel">
-                  <div className="red-100" />
+                {/* <div className="dashboard-container__my-startups__data-container__data-entry__funnels__funnel"> */}
+                  {/* <div className="red-100" />
                   <div className="gray-80" />
                   <div className="gray-60" />
                   <div className="gray-40" />
-                  <div className="gray-20" />
-                </div>
+                  <div className="gray-20" /> */}
+                {/* </div> */}
                 <div className="dashboard-container__my-startups__data-container__data-entry__funnels__funnel-type">
-                  Reviewed
+                  <img alt="" src={DynamicIcons(tagSet.index)} />
+                  {tagSet.name}
                 </div>
               </div>
+              :
+                "+" 
+              }
               <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score">
                 <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score__score">
                   {score ? score : "n/a"}
