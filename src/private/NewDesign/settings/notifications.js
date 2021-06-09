@@ -8,14 +8,21 @@ import { settings } from "../../../definitions";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { notificationsGet } from "private/Apollo/Queries";
+import notificationProfile from "../../../assets/images/dashboard-notifictaion-profile.png";
+import moment from "moment";
 
 import { notificationsMarkAllAsSeen } from "private/Apollo/Mutations";
 
-function Notification({ content }) {
+function Notification({ content, notificationCreatedAt }) {
   return (
     <div className="notifications__notification">
-      <img src={NotificationAlarm} alt="Notification Icon" />
-      <p className="notifications__notification__text">{content}</p>
+      <img src={notificationProfile} alt="Notification Icon" />
+      <div className="notifications__notification__text">
+        <span>{content}</span>
+        <span className="notifications__notification__text__hour-ago">
+          {moment(notificationCreatedAt).format("ll")}
+        </span>
+      </div>
     </div>
   );
 }
@@ -50,7 +57,7 @@ export default function Notifications({ history }) {
             ></i>
             Notifications
           </div>
-          <div className=" notifications-container__show">
+          {/* <div className=" notifications-container__show">
             Show
             <i
               className={`fa ${
@@ -86,7 +93,7 @@ export default function Notifications({ history }) {
                 </div>
               )}
             </i>
-          </div>
+          </div> */}
         </div>
 
         <div className="notifications">
@@ -97,6 +104,7 @@ export default function Notifications({ history }) {
               <Notification
                 key={notif.id}
                 content={notif.content}
+                notificationCreatedAt={notif.createdAt}
               ></Notification>
             ))
           )}
