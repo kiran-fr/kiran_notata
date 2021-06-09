@@ -137,6 +137,11 @@ export function SideBarMenu() {
                   <NavLink
                     exact={true}
                     to={item.link}
+                    isActive={(match, location) => {
+                      if (!match) {
+                        return false;
+                      } else return true;
+                    }}
                     activeClassName={classnames(
                       !listOpen ? styles.active_open : styles.active_close
                     )}
