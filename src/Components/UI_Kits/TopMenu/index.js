@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { userGet, notificationsGet } from "private/Apollo/Queries";
-import { settings, signOut, setting_profile, your_team } from "definitions.js";
+import { settings, signOut, setting_profile, your_team, notification } from "definitions.js";
 import NotificationsDropDown from "./notification-top-menu";
 import ProfilePic from "../../../assets/images/profile-pic.png";
 
@@ -56,19 +56,20 @@ export function TopMenu({ history }) {
         </div>
       )}
 
-      <span>
+      {/* no funcationality  coming soon */}
+      {/* <span>
         <i className="fas fa-question-circle"></i>
       </span>
 
       <span>
         <i className="fas fa-alarm-clock"></i>
-      </span>
+      </span> */}
 
       <span
         onMouseEnter={() => setNotificatonsOpen(true)}
         onMouseLeave={() => setNotificatonsOpen(false)}
       >
-        <Link to="">
+        <Link to={notification}>
           <i
             className={`fas fa-bell ${
               notificationsOpen ? styles.notification_icon_selected : ""

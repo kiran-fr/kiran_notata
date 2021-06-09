@@ -77,23 +77,22 @@ export default function DashboardMyStartups({ history }) {
               <div className="dashboard-container__my-startups__data-container__data-entry__startup-name">
                 {startup?.creative?.name}
               </div>
-              {tagSet ?
               <div className="dashboard-container__my-startups__data-container__data-entry__funnels">
-                {/* <div className="dashboard-container__my-startups__data-container__data-entry__funnels__funnel"> */}
-                  {/* <div className="red-100" />
-                  <div className="gray-80" />
-                  <div className="gray-60" />
-                  <div className="gray-40" />
-                  <div className="gray-20" /> */}
-                {/* </div> */}
+                {tagSet
+                  ?
+                    <img alt="" src={DynamicIcons(tagSet.index)} />
+                  : 
+                    ""
+                }
                 <div className="dashboard-container__my-startups__data-container__data-entry__funnels__funnel-type">
-                  <img alt="" src={DynamicIcons(tagSet.index)} />
-                  {tagSet.name}
+                {tagSet
+                  ?
+                    tagSet.name
+                  :
+                    "n/a"
+                }
                 </div>
               </div>
-              :
-                "+" 
-              }
               <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score">
                 <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score__score">
                   {score ? score : "n/a"}
