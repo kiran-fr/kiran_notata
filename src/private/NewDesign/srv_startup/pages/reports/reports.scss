@@ -1,4 +1,21 @@
+.coming-soon {
+  position: absolute;
+  width: 100%;
+  height: 800px;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 21px;
+  text-transform: uppercase;
+  color: #969BA3;
+}
+
 .report-container {
+  opacity: 0.3;
+  filter: blur(4px);
+
   .fillter-btn {
     margin-top: 20px;
     border: 1px solid #6a6a6a;
