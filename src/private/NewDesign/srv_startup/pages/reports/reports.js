@@ -14,14 +14,18 @@ export default function Reports() {
     { name: "Business", type: REPORTCHARTS.COLUMN, isDropDown: false },
     { name: "Market", type: REPORTCHARTS.PIE, isDropDown: false },
     { name: "Phase", type: REPORTCHARTS.BAR, isDropDown: false },
-    { name: "Source of lead", type: REPORTCHARTS.COLUMN, isDropDown: true },
-    { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
-    { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
+    // { name: "Source of lead", type: REPORTCHARTS.COLUMN, isDropDown: true },
+    // { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
+    // { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
   ];
   const [chartData, setChartData] = useState(data);
   return (
     <div className="report-container">
-      <div className="row">
+      <div className="coming-soon">
+        <div>Coming soon 🚀</div>
+      </div>
+
+      <div className="row hide-and-blur">
         <div className="col-sm-12 text-right">
           <ButtonWithIcon
             iconName="filter_alt"
@@ -29,7 +33,7 @@ export default function Reports() {
             text="Filter"
             iconPosition={ICONPOSITION.START}
             onClick={() => setFilterVisible(true)}
-          ></ButtonWithIcon>
+          />
         </div>
         <div className="col-md-12 col-lg-6 col-xs-12 nopadding-right">
           <div className="card">
@@ -41,43 +45,43 @@ export default function Reports() {
                     STAGES
                   </div>
                   <div className="reports-funnels-container__filter__icons">
-                    <i class="fa fa-filter" aria-hidden="true"></i>
-                    <i class="fa fa-signal" aria-hidden="true"></i>
+                    <i class="fa fa-filter" aria-hidden="true" />
+                    <i class="fa fa-signal" aria-hidden="true" />
                   </div>
                 </div>
                 <div className="reports-funnels-container__funnels">
                   <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">58</div>
                     <div className="funnel-chart">
-                      <div className="red"></div>
+                      <div className="red" />
                     </div>
                     <div className="funnel-type">Reviewed</div>
                   </div>
                   <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
-                      <div className="blue"></div>
+                      <div className="blue" />
                     </div>
                     <div className="funnel-type">Met</div>
                   </div>
                   <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
-                      <div className="purple"></div>
+                      <div className="purple" />
                     </div>
                     <div className="funnel-type">Analyzed</div>
                   </div>
                   <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
-                      <div className="orange"></div>
+                      <div className="orange" />
                     </div>
                     <div className="funnel-type">IC</div>
                   </div>
                   <div className="reports-funnels-container__funnels__funnel">
                     <div className="score">20</div>
                     <div className="funnel-chart">
-                      <div className="green"></div>
+                      <div className="green" />
                     </div>
                     <div className="funnel-type">Invested</div>
                   </div>
@@ -106,7 +110,7 @@ export default function Reports() {
                             Feb 16, 2021
                           </div>
                         </div>
-                        <div className="separator"></div>
+                        <div className="separator" />
                       </div>
                     );
                   })}
@@ -180,7 +184,7 @@ export default function Reports() {
           </div>
         </div>
         <div className="col-sm-12">
-          <SubjectiveScoreEvaluations></SubjectiveScoreEvaluations>
+          <SubjectiveScoreEvaluations />
         </div>
         <div className="col-sm-12 tags-container-heading">Tags</div>
         {chartData.map((chart, index) => {
@@ -208,7 +212,7 @@ export default function Reports() {
                 charts.push(charts[charts.length - 1]);
                 setChartData(charts);
               }}
-            ></i>
+            />
           </div>
         </div>
       </div>

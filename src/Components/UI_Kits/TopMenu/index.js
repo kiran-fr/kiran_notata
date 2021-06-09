@@ -5,7 +5,7 @@ import { userGet, notificationsGet } from "private/Apollo/Queries";
 import { settings, signOut, setting_profile, your_team } from "definitions.js";
 // import { History } from "history";
 import NotificationsDropDown from "./notification-top-menu";
-import ProfilePic from "../../../assets/images/profile-pic.png";
+import profilePic from "../../../assets/images/profile-pic.png";
 
 // STYLE
 import styles from "./TopMenu.module.css";
@@ -57,13 +57,13 @@ export function TopMenu({ history }) {
         </div>
       )}
 
-      <span>
-        <i className="fas fa-question-circle"></i>
-      </span>
+      {/*<span>*/}
+      {/*  <i className="fas fa-question-circle"/>*/}
+      {/*</span>*/}
 
-      <span>
-        <i className="fas fa-alarm-clock"></i>
-      </span>
+      {/*<span>*/}
+      {/*  <i className="fas fa-alarm-clock"/>*/}
+      {/*</span>*/}
 
       <span
         onMouseEnter={() => setNotificatonsOpen(true)}
@@ -74,7 +74,7 @@ export function TopMenu({ history }) {
             className={`fas fa-bell ${
               notificationsOpen ? styles.notification_icon_selected : ""
             }`}
-          ></i>
+          />
           {unseen.length !== 0 && <div className={styles.circle}></div>}
         </Link>
         {notificationsOpen && <NotificationsDropDown />}
@@ -87,7 +87,20 @@ export function TopMenu({ history }) {
       </span>
 
       <div className={styles.profile}>
-        <img src={ProfilePic} className={styles.profile_pic_img} />
+        <div className={styles.profile_pic_img}>
+          <span>{user?.given_name?.charAt(0)}</span>
+
+          {/*{*/}
+          {/*  profilePic && (*/}
+          {/*    <img src={profilePic} />*/}
+          {/*  ) || (*/}
+          {/*    <span>*/}
+          {/*      {user?.given_name?.charAt(0)}*/}
+          {/*    </span>              */}
+          {/*  )*/}
+          {/*}*/}
+        </div>
+
         <p className={styles.profile_name}>
           {user.given_name} {user.family_name}
         </p>

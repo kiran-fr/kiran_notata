@@ -69,6 +69,28 @@
   margin-right: 12px;
   width: 27px;
   border-radius: 50%;
+  overflow: hidden;
+  background: #b7b7b7;
+}
+
+.profile_pic_img span {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 2;
+  font-family: "Roboto";
+  font-weight: 900;
+  color: white;
+}
+
+.profile_pic_img img {
+  width: 110%;
+  height: 110%;
+  position: absolute;
+  top: -5%;
+  left: -5%;
 }
 
 .profile .profile_name {

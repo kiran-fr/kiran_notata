@@ -10,14 +10,29 @@ import ChatCard from "./components/ChatCard";
 // STYLES
 import "./Overview.scss";
 
-export default function Overview({ connection, history }) {
+export default function Overview({
+  connection,
+  user,
+  account,
+  history,
+  refetch,
+}) {
   return (
     <>
       <div className="row tab-panel-container overview-container">
         <div className="col-sm-8">
           <OverviewCard connection={connection} history={history} />
-          <MainInputCard connection={connection} history={history} />
+
+          <MainInputCard
+            connection={connection}
+            user={user}
+            account={account}
+            history={history}
+            refetch={refetch}
+          />
+
           <SimilarStartupsCard connection={connection} history={history} />
+
           <ArchiveAndDeleteSection connection={connection} history={history} />
         </div>
 

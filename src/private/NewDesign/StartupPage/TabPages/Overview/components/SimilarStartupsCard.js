@@ -61,26 +61,29 @@ export default function SimilarStartupsCard({ connection, history }) {
               </tr>
             </thead>
             <tbody>
-              {similarConnections?.map(company => (
+              {similarConnections?.map(connection => (
                 <tr
                   className="connection-link"
+                  key={connection.id}
                   onClick={() => {
-                    let path = `${startup_page}/company/${company.id}`;
+                    let path = `${startup_page}/company/${connection.id}`;
                     history.push(path);
                   }}
                 >
                   <td className="company-name">
                     <span className="icon">
-                      {company?.creative?.name?.substr(0, 1)?.toUpperCase()}
+                      {connection?.creative?.name?.substr(0, 1)?.toUpperCase()}
                     </span>
-                    <span className="name">{company?.creative?.name}</span>
+                    <span className="name">{connection?.creative?.name}</span>
                   </td>
                   <td>
                     <div className="tag-placeholder">
-                      {company?.tags?.slice(0, 2).map(tag => (
-                        <span className="tag">{tag.name}</span>
+                      {connection?.tags?.slice(0, 2).map(tag => (
+                        <span className="tag" key={tag.id}>
+                          {tag.name}
+                        </span>
                       ))}
-                      {company?.tags?.length > 2 ? (
+                      {connection?.tags?.length > 2 ? (
                         <img src={More} alt="" />
                       ) : null}
                     </div>
@@ -90,18 +93,18 @@ export default function SimilarStartupsCard({ connection, history }) {
                       className="subjective-score"
                       style={{
                         filter:
-                          getCompAvg(company.subjectiveScores) === "0.0"
+                          getCompAvg(connection.subjectiveScores) === "0.0"
                             ? "grayscale(0%)"
                             : "",
                       }}
                     >
-                      {getCompAvg(company.subjectiveScores)}
+                      {getCompAvg(connection.subjectiveScores)}
                     </div>
                   </td>
 
                   <td>
                     <span className="updated-date">
-                      {moment(company.updatedAt).format("ll")}
+                      {moment(connection.updatedAt).format("ll")}
                     </span>
                   </td>
                 </tr>

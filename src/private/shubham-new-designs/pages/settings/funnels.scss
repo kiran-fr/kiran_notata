@@ -19,7 +19,7 @@
         }
     }
     &__funnels{
-        &__funnel{
+        &__funnel {
             margin-top:40px;
             margin-left:50px;
             @media only screen and(max-width:768px) {
@@ -122,6 +122,9 @@
                     }                    
                 }
             }
+        }
+        &__funnel.no-margin {
+            margin-left:0px;
         }
     }
     &__new-funnel{

@@ -1,43 +1,38 @@
 import React, { useState } from "react";
-import moment from "moment";
 import SubjectiveScoreModal from "../../../../Startup/Modal/SubjectiveScoreModal";
+import { AddScore } from "../../../../Startup/DealFlow/addScore";
 
-const getFilteredArray = (scores, isMe) => {
-  return scores?.filter(i => i.isMe === isMe) || [];
-};
-
-const getScore = (scores, getMax) => {
+const getScoreSummaries = scores => {
   if (Array.isArray(scores) && scores.length > 0) {
-    return getMax
-      ? Math.max(...scores?.map(i => i.score || 0))
-      : Math.min(...scores?.map(i => i.score || 0));
-  }
-  return 0;
-};
+    let max = Math.max(...scores?.map(i => i.score || 0));
+    let min = Math.min(...scores?.map(i => i.score || 0));
 
-const getTotalScore = arr => {
-  if (Array.isArray(arr) && arr.length > 0) {
-    return arr?.reduce((acc, obj) => {
-      return acc + (obj.score || 0);
+    let total = scores?.reduce((scores, obj) => {
+      return scores + (obj.score || 0);
     }, 0);
+
+    let average = (total / (scores.length || 0)).toFixed(1);
+
+    let myScore = scores.find(({ isMe }) => isMe)?.score;
+
+    return {
+      max,
+      min,
+      total,
+      average,
+      myScore,
+    };
   }
-  return 0;
+
+  return {};
 };
 
-export default function SubjectiveScoresComp({ connection }) {
+export default function SubjectiveScoresComp({ connection, user, account }) {
   const [showSubjectiveScore, setShowSubjectiveScore] = useState();
 
-  let teamScoreArr = getFilteredArray(connection.subjectiveScores, false);
-  let teamMaxScore = getScore(teamScoreArr, true);
-  let teamMinScore = getScore(teamScoreArr, false);
-  let teamAvg = (
-    getTotalScore(teamScoreArr) / teamScoreArr.length || 0
-  ).toFixed(1);
+  let isTeamAccount = account?.members?.length !== 1;
 
-  let myScoreArr = getFilteredArray(connection.subjectiveScores, true);
-  let myAvgScore = (getTotalScore(myScoreArr) / myScoreArr.length || 0).toFixed(
-    1
-  );
+  let { min, max, average } = getScoreSummaries(connection.subjectiveScores);
 
   return (
     <>
@@ -45,35 +40,23 @@ export default function SubjectiveScoresComp({ connection }) {
         <div className="overview-container__scores__heading">
           Subjective Scores
         </div>
-        <div className="col-sm-6 col-md-3 col-xs-12 overview-container__scores__label">
-          <div>
-            You
-            <span className="your_updated-date-tag">
-              {connection?.updatedAt
-                ? moment(connection?.updatedAt).format("ll")
-                : ""}
-            </span>
-          </div>
 
-          <div>
-            <span className="score selected you">{parseFloat(myAvgScore)}</span>
-            <i
-              onClick={() => setShowSubjectiveScore(true)}
-              className=" editMarker fas fa-pen"
-            />
-          </div>
+        <div className="col-sm-12 col-md-12 col-xs-12 overview-container__scores__selector">
+          <AddScore connection={connection} />
         </div>
 
-        <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
-          <div>Your Team</div>
-          <div className="score">{parseFloat(teamAvg)}</div>
-          <div className="highest-score">
-            {teamMaxScore} <span className="highest">HIGHEST</span>
+        {isTeamAccount && connection.subjectiveScores?.length > 1 && (
+          <div className="col-sm-6 col-md-4 col-xs-6 overview-container__scores__label">
+            <div>Your Team</div>
+            <div className="score">{average}</div>
+            <div className="highest-score">
+              {max} <span className="highest">HIGHEST</span>
+            </div>
+            <div className="lowest-score">
+              {min} <span className="lowest">LOWEST</span>
+            </div>
           </div>
-          <div className="lowest-score">
-            {teamMinScore} <span className="lowest">LOWEST</span>
-          </div>
-        </div>
+        )}
       </div>
 
       {showSubjectiveScore && (

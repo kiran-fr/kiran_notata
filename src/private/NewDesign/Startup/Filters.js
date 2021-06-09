@@ -219,7 +219,8 @@ export default function Filters({
                     className={styles.addButton}
                     onClick={() => setModal("startup")}
                   >
-                    <i className="far fa-plus"></i>Add new startup
+                    <i className="far fa-plus" />
+                    Add new startup
                   </button>
                   <div
                     className={

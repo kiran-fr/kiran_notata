@@ -87,13 +87,17 @@
   font-weight: normal;
   font-family: "Proxima NOva";
   text-align: left;
-  padding: 3px 22px;
-  margin: 2px 0 0;
+  padding: 5px 22px;
+  /*margin: 2px 0 0;*/
   color: var(--ui-color-gray-dark);
 }
 
+.dd_list_item:nth-child(even) {
+  background-color: var(--color-gray-pale);
+}
+
 .dd_list_item:hover {
-  background-color: var(--ui-color-gray-pale1);
+  background-color: var(--ui-color-gray-pale1) !important;
   width: 100%;
   left: 0.2px;
 }

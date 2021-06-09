@@ -8,9 +8,6 @@ export default function MultipleChoiceInputContainer({
   answers,
   setAnswers,
 }) {
-  // Get options
-  const { options } = question;
-
   // Get answer from array of answers
   // ————————————————————————————————
   function getAnswer({ sid }) {
@@ -24,11 +21,30 @@ export default function MultipleChoiceInputContainer({
 
   // Handle select answer
   // ————————————————————
-  function handleSelect({ answer, sid, val }) {
+  function handleSelect(data) {
+    console.log("question", question);
+    console.log("data", data);
+
+    let { answer, sid, val } = data;
+
     let newAnswers =
       answer && answer.val
         ? // Remove answer
-          answers.filter(a => a.sid !== sid)
+          answers.filter(a => {
+            let sameSid = a.sid === sid;
+            let sameQuestionId = a.questionId === question.id;
+            let sameInputType = a.inputType === question.inputType;
+
+            if (!sameQuestionId) {
+              return true;
+            }
+
+            if (!sameInputType) {
+              return true;
+            }
+
+            return !sameSid;
+          })
         : // Add answer
           [
             ...answers,
@@ -49,7 +65,7 @@ export default function MultipleChoiceInputContainer({
 
   return (
     <MultipleChoiceInput
-      options={options.map(({ val, sid }) => {
+      options={question?.options.map(({ val, sid }) => {
         // Get answer for this option
         const answer = getAnswer({ sid });
 

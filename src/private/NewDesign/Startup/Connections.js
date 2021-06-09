@@ -6,7 +6,7 @@ import {
   connectionsGet,
   evaluationTemplatesGet,
   userGet,
-  groupsGetV2
+  groupsGetV2,
 } from "private/Apollo/Queries";
 import {
   connectionSetStar,
@@ -21,14 +21,10 @@ import { Kanban } from "../Kanban/Kanban";
 
 // Components
 import Paginator from "./Paginator";
-import AddGroup from "./Modal/addGroup";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
-import { Modal } from "Components/UI_Kits/Modal/Modal";
-// import { groupsGetV2 } from "../../Apollo/Queries";
-
-// import Table from "./DealFlow/table/newdesignTable/table";
+import AddToGroupModalNew from "./Modal/AddToGroupModalNew";
 
 function getCleanFilterData(filters) {
   let clean = {};
@@ -52,16 +48,13 @@ function ListOfStartups({
   evaluationTemplates,
   evaluationTemplatesQuery,
   updateFunnelTag,
-  funnelLoad
+  funnelLoad,
 }) {
   // States (for modal)
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showStartUpForId, setShowStartUpForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
-
-  // Queries
-  const groupsQuery = useQuery(groupsGetV2);
 
   // Fetch more
   useEffect(() => {
@@ -97,7 +90,7 @@ function ListOfStartups({
         data={connections}
         filters={filters}
         setFilters={setFilters}
-        funnelLoad = {funnelLoad}
+        funnelLoad={funnelLoad}
         evaluationTemplates={evaluationTemplates}
         loading={loading || evaluationTemplatesQuery.loading}
         emptyLabel={"No results."}
@@ -110,27 +103,16 @@ function ListOfStartups({
       />
 
       {showTagGroupForId && (
-        <Modal
-          title="Add startup to group"
-          submit={() => setShowTagGroupForId(undefined)}
+        <AddToGroupModalNew
+          connection={connections.find(({ id }) => id === showTagGroupForId)}
           close={() => setShowTagGroupForId(undefined)}
-          submitTxt="OK"
-          closeTxt="CLOSE"
-          children={
-            <AddGroup
-              connection={connections.find(
-                ({ id }) => id === showTagGroupForId
-              )}
-              groups={groupsQuery?.data?.groupsGetV2}
-            />
-          }
         />
       )}
 
       {showFunnelScoreForId && (
         <SetFunnelScore
           updateFunnelTag={updateFunnelTag}
-          funnelLoad = {funnelLoad}
+          funnelLoad={funnelLoad}
           connection={connections.find(({ id }) => id === showFunnelScoreForId)}
           close={() => setShowFunnelScoreForId(undefined)}
         />
@@ -205,7 +187,6 @@ export default function Connections({ history }) {
   const [selectedfunnelGroup, setSelectedfunnelGroup] = useState(0);
   const [funnelLoad, setFunnelLoad] = useState(false);
 
-
   const [manageColValue, setManageColValue] = useState({
     groups: true,
     funnels: true,
@@ -218,7 +199,7 @@ export default function Connections({ history }) {
   const [mutate] = useMutation(connectionFunnelTagAdd);
 
   const updateFunnelTag = async (funnelTagId, connectionId) => {
-    setFunnelLoad(true)
+    setFunnelLoad(true);
     const variables = {
       connectionId,
       funnelTagId,
@@ -226,7 +207,7 @@ export default function Connections({ history }) {
     await mutate({
       variables,
     });
-    setFunnelLoad(false)
+    setFunnelLoad(false);
   };
 
   // Load filters from local store
@@ -292,7 +273,7 @@ export default function Connections({ history }) {
           <ListOfStartups
             history={history}
             filters={filters}
-            funnelLoad = {funnelLoad}
+            funnelLoad={funnelLoad}
             columnSettings={manageColValue}
             evaluationTemplatesQuery={evaluationTemplatesQuery}
             setFilters={setFilters}

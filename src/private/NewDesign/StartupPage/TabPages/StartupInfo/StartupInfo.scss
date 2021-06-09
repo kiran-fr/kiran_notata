@@ -4,12 +4,17 @@
     @media only screen and(max-width:905px) {
       margin-top: 50px !important;
     }
+
+    .personalia {
+      padding-top: 10px;
+    }
+
   }
   .share-btn {
     position: absolute;
     right: 40px;
     background: #ffffff;
-    border-radius: 8px;
+    border-radius: 15px;
     font-family: "Proxima Nova";
     font-style: normal;
     font-weight: bold;
@@ -21,20 +26,33 @@
     text-transform: uppercase;
     color: #969ba3;
     padding-left: 10px;
-    height: 18px;
+    height: 22px;
     padding-right: 20px;
     border: 1px solid #969ba3;
     top: 37px;
     cursor: pointer;
     width: 145px;
     z-index: 999;
+
     span {
-      margin-left: 15px;
+      width: 100%;
+      text-align: center;
+      padding-right: 8px;
     }
-    @media only screen and(max-width:905px) {
-      left: 34px;
+
+    @media only screen and (max-width:920px) {
+      //left: 34px;
+      width: 22px;
+      span {
+        display: none;
+      }
     }
   }
+
+  .second-btn {
+    top: 65px;
+  }
+
   .name-icon {
     height: 50px;
     width: 50px;
@@ -139,11 +157,16 @@
     }
   }
   .startup-info-notata-info {
-    margin-top: 50px;
-    margin-left: 15px;
-    @media only screen and (min-width: 768px) {
-      margin-left: 20%;
-    }
+    margin-top: 20px;
+    margin-left: 80px;
+    display: flex;
+    margin-bottom: 20px;
+
+
+
+    //@media only screen and (min-width: 768px) {
+    //  margin-left: 20%;
+    //}
     &__web {
       font-family: "Proxima Nova";
       font-style: normal;
@@ -155,27 +178,29 @@
       padding-left: 0px !important;
       color: #53cab2;
     }
-    button {
-      height: 18px;
-      width: 109px;
-      font-family: "Proxima Nova";
-      font-style: normal;
-      font-weight: bold;
-      font-size: 10px;
-      line-height: 12px;
-      display: flex;
-      align-items: center;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: #ffffff;
-      background: #53cab2;
-      border-radius: 12px;
-      margin-top: -5px;
-      padding-left: 0px !important;
-      .material-icons {
-        font-size: 10px;
-      }
-    }
+
+    //button {
+    //  height: 18px;
+    //  width: 109px;
+    //  font-family: "Proxima Nova";
+    //  font-style: normal;
+    //  font-weight: bold;
+    //  font-size: 10px;
+    //  line-height: 12px;
+    //  display: flex;
+    //  align-items: center;
+    //  letter-spacing: 0.03em;
+    //  text-transform: uppercase;
+    //  color: #ffffff;
+    //  background: #53cab2;
+    //  border-radius: 12px;
+    //  margin-top: -5px;
+    //  padding-left: 0px !important;
+    //  .material-icons {
+    //    font-size: 10px;
+    //  }
+    //}
+
   }
   .startup-help-container {
     margin-top: 25px;
@@ -189,9 +214,9 @@
       color: #6a6a6a;
     }
     p {
-      font-family: Roboto;
-      font-size: 13px;
-      line-height: 17px;
+      font-family: "Proxima Nova";
+      font-size: 15px;
+      line-height: 26px;
       letter-spacing: 0.03em;
       color: #969ba3;
       margin-top: 10px;
@@ -216,12 +241,46 @@
       margin: 25px 0px 0px 25px;
       color: #6a6a6a;
     }
+
     &__video {
       margin-top: 25px;
       background: #c1c1c157;
       width: 100%;
       border-radius: 0px;
       padding: 25px;
+      position: relative;
+
+      .coming-soon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        justify-content: center;
+        align-items: center;
+        font-size: 21px;
+        text-transform: uppercase;
+        color: #b7b7b7;
+        z-index: 999;
+        display: flex;
+
+        .message-content {
+          position: absolute;
+        }
+
+        .block-out {
+          background-color: rgba(255,255,255,0.7);
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          filter: blur(4px);
+        }
+
+
+      }
+
       img {
         position: relative;
         width: inherit;
@@ -256,11 +315,11 @@
     }
     .key {
       font-family: Roboto;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 13px;
       letter-spacing: 0.03em;
       color: #969ba3;
-      margin: 15px 0px 0px 31px;
+      margin: 15px 0px 0px 26px
     }
     .value {
       font-family: Roboto;
@@ -270,6 +329,7 @@
       letter-spacing: 0.03em;
       color: #6a6a6a;
       margin: 15px 0px 0px 0px;
+      white-space: pre-wrap;
     }
   }
   .handCursor {

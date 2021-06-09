@@ -23,6 +23,7 @@ import "../srv_startup/pages/public.scss";
 
 // HELPERS
 import queryString from "query-string";
+import { userGet } from "../../Apollo/Queries";
 
 // OTHER / CONSTANTS
 
@@ -55,7 +56,8 @@ export const StartupPage = ({ match, history, location }) => {
   const [tab, setTab] = React.useState(0);
 
   // Queries
-  const { data: accountGetData } = useQuery(accountGet);
+  const userQuery = useQuery(userGet);
+  const accountQuery = useQuery(accountGet);
   const [getConnection, getConnectionRes] = useLazyQuery(connectionGet);
 
   // Execute query
@@ -79,6 +81,8 @@ export const StartupPage = ({ match, history, location }) => {
 
   // Data maps
   let connection = getConnectionRes?.data?.connectionGet;
+  let account = accountQuery?.data?.accountGet;
+  let user = userQuery?.data?.userGet;
 
   // Update tab in url
   const handleChange = (event, newValue) => {
@@ -86,45 +90,62 @@ export const StartupPage = ({ match, history, location }) => {
     history.push(pathName);
   };
 
-  if (!getConnectionRes.data) {
+  if (!getConnectionRes?.data) {
     return <GhostLoader />;
   }
 
   return (
     <>
-      <div className="col-12 startup-container">
-        <Tabs value={tab} onChange={handleChange}>
-          <Tab label="OVERVIEW" {...a11yProps(0)} />
-          <Tab label="STARTUP INFO" {...a11yProps(1)} />
-          <Tab label="EVALUATIONS" {...a11yProps(2)} />
-          <Tab label="GROUPS" {...a11yProps(3)} />
-          {/*<Tab label="MATERIALS" {...a11yProps(4)} />*/}
-        </Tabs>
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "auto",
+        }}
+      >
+        <div className="col-12 startup-container">
+          <Tabs value={tab} onChange={handleChange}>
+            <Tab label="OVERVIEW" {...a11yProps(0)} />
+            <Tab label="STARTUP INFO" {...a11yProps(1)} />
+            <Tab label="EVALUATIONS" {...a11yProps(2)} />
+            <Tab label="GROUPS" {...a11yProps(3)} />
+            {/*<Tab label="MATERIALS" {...a11yProps(4)} />*/}
+          </Tabs>
+        </div>
+
+        <TabPanel value={tab} index={0}>
+          <Overview
+            connection={connection}
+            history={history}
+            user={user}
+            account={account}
+            refetch={getConnectionRes.refetch}
+          />
+        </TabPanel>
+
+        <TabPanel value={tab} index={1}>
+          <StartupInfo connection={connection} />
+        </TabPanel>
+
+        <TabPanel value={tab} index={2}>
+          <Evaluations
+            history={history}
+            connection={connection}
+            accountData={account}
+          />
+        </TabPanel>
+
+        <TabPanel value={tab} index={3}>
+          <Groups
+            connection={connection}
+            history={history}
+            // refetch={getConnectionRes.refetch}
+          />
+        </TabPanel>
+
+        {/*<TabPanel value={value} index={4}>*/}
+        {/*  <Materials />*/}
+        {/*</TabPanel>*/}
       </div>
-
-      <TabPanel value={tab} index={0}>
-        <Overview connection={connection} history={history} />
-      </TabPanel>
-
-      <TabPanel value={tab} index={1}>
-        <StartupInfo connection={connection} />
-      </TabPanel>
-
-      <TabPanel value={tab} index={2}>
-        <Evaluations
-          history={history}
-          connection={connection}
-          accountData={accountGetData?.accountGet}
-        />
-      </TabPanel>
-
-      <TabPanel value={tab} index={3}>
-        <Groups connection={connection} history={history} />
-      </TabPanel>
-
-      {/*<TabPanel value={value} index={4}>*/}
-      {/*  <Materials />*/}
-      {/*</TabPanel>*/}
     </>
   );
 };
