@@ -9,6 +9,9 @@
     text-align: initial;
     width: 407px;
     right: 138px;
+    @media only screen and(max-width:768px) {
+      right:20px;
+    }
     height: auto;
     padding-bottom: 50px;
     margin-top: -15px;

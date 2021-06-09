@@ -1,24 +1,37 @@
 import React, { useState, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, matchPath } from "react-router-dom";
 import GroupsImg from "../../../assets/images/navigation-groups.png";
 import NewsImg from "../../../assets/images/navigation-news.png";
 import ReportsImg from "../../../assets/images/navigation-reports.png";
 import SettingsImg from "../../../assets/images/navigation-settings.png";
 import StartupsImg from "../../../assets/images/navigation-startups.png";
+import DashbaordImg from "../../../assets/images/sidemenu-dashbaord.png";
 
 //links
 import {
   dashboard,
+  // groups sub paths
   group,
+  group_dashboard,
   settings,
   charts,
   signOut,
+  // startup pages
   startup_page,
+  startup_company_profile,
   pre_profile,
   reports,
   settings_new,
   news,
   dashboard_new,
+  news1,
+  // settings paths
+  tags1,
+  funnels1,
+  notification,
+  web_form,
+  your_team,
+  setting_profile,
 } from "definitions.js";
 
 // Styles
@@ -30,32 +43,37 @@ import authLogo from "../../../assets/images/auth_logo.png";
 
 export function SideBarMenu() {
   const [listOpen, setListOpen] = useState(false);
+  const [isMobileList, setMobileList] = useState(false);
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
   let menuList = [
     {
       label: "Dashboard",
-      iconClass: "fas fa-signal-alt-3",
+      iconClass: DashbaordImg,
       iconStyle: {},
       link: `${startup_page}/dashboard`,
+      subPaths: [`${startup_page}/dashboard`],
     },
     {
       label: "My Startups",
       iconClass: StartupsImg,
       iconStyle: { paddingTop: "2px" },
       link: startup_page,
+      subPaths: [startup_page, startup_company_profile],
     },
     {
       label: "Groups",
       iconClass: GroupsImg,
       iconStyle: {},
       link: group,
+      subPaths: [group, `${group_dashboard}/:groupId`],
     },
     {
       label: "Reports",
-      iconClass: "fas fa-file-alt",
-      iconStyle: { paddingTop: "7px" },
+      iconClass: ReportsImg,
+      iconStyle: {},
       link: reports,
+      subPaths: [reports],
     },
     //  hide for now  (commented by siva)
     {
@@ -63,6 +81,7 @@ export function SideBarMenu() {
       iconClass: NewsImg,
       iconStyle: { paddingTop: "2px" },
       link: news,
+      subPaths: [news],
     },
   ];
 
@@ -80,7 +99,10 @@ export function SideBarMenu() {
       <div
         ref={sidebarr}
         className={classnames(
-          !listOpen ? styles.sidebar_container : styles.sidebar_container1
+          !listOpen ? styles.sidebar_container : styles.sidebar_container1,
+          isMobileList
+            ? styles.display_mobile_container
+            : styles.hide_mobile_container
         )}
       >
         <div className={styles.sidebar_containerInner}>
@@ -94,7 +116,7 @@ export function SideBarMenu() {
             <div className={styles.brand}>notata</div>
             <div
               className={styles.mobile_togglerInSidebar}
-              onClick={closeSidebar}
+              onClick={() => setMobileList(false)}
             >
               {" "}
               <i className={`fal fa-chevron-right`} />
@@ -106,6 +128,7 @@ export function SideBarMenu() {
             role="button"
             onClick={() => {
               setListOpen(!listOpen);
+              setMobileList(false);
             }}
             className={styles.desktop_sidebarCollapser}
           >
@@ -119,12 +142,17 @@ export function SideBarMenu() {
           </div>
           <div>
             <div
-              className={styles.mobile_toggler}
+              className={classnames(
+                styles.mobile_toggler,
+                isMobileList
+                  ? styles.hide_floating_button
+                  : styles.display_floating_button
+              )}
               ref={floatingButonn}
-              onClick={openSidebar}
+              onClick={() => setMobileList(true)}
             >
               {" "}
-              <i className={`fal fa-chevron-${listOpen ? "right" : "left"}`} />
+              <i className={`fa fa-bars`} />
             </div>
           </div>
           {/* Main navigation icons */}
@@ -135,6 +163,22 @@ export function SideBarMenu() {
                   <NavLink
                     exact={true}
                     to={item.link}
+                    onClick={() => setMobileList(false)}
+                    isActive={(match, location) => {
+                      let isMatch = match ? true : false;
+                      if (!isMatch) {
+                        for (var i = 0; i < item.subPaths.length; i++) {
+                          let matchPathResult = matchPath(location.pathname, {
+                            path: item.subPaths[i],
+                          });
+                          isMatch = matchPathResult
+                            ? matchPathResult.isExact
+                            : false;
+                          if (isMatch) break;
+                        }
+                      }
+                      return isMatch;
+                    }}
                     activeClassName={classnames(
                       !listOpen ? styles.active_open : styles.active_close
                     )}
@@ -158,12 +202,36 @@ export function SideBarMenu() {
               <NavLink
                 exact={true}
                 to={`${startup_page}/settings`}
+                onClick={() => setMobileList(false)}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}
+                isActive={(match, location) => {
+                  let isMatch = match ? true : false;
+                  let subPaths = [
+                    tags1,
+                    funnels1,
+                    notification,
+                    web_form,
+                    your_team,
+                    setting_profile,
+                  ];
+                  if (!isMatch) {
+                    for (var i = 0; i < subPaths.length; i++) {
+                      let matchPathResult = matchPath(location.pathname, {
+                        path: subPaths[i],
+                      });
+                      isMatch = matchPathResult
+                        ? matchPathResult.isExact
+                        : false;
+                      if (isMatch) break;
+                    }
+                  }
+                  return isMatch;
+                }}
               >
                 <div className={styles.icons}>
-                  <i className="fas fa-cog" />
+                  <img src={SettingsImg} className="" />
                 </div>
                 <p className={styles.list}>Settings</p>
               </NavLink>

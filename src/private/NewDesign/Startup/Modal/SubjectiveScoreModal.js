@@ -17,7 +17,6 @@ export default function SubjectiveScoreModal({ connection, close }) {
 
   const [subScore, setSubScore] = useState("");
   const [load, setLoad] = useState(false);
-  
 
   // Define data
   const subjectiveScores = connection?.subjectiveScores || [];
@@ -107,7 +106,7 @@ export default function SubjectiveScoreModal({ connection, close }) {
       saveModal={saveModal}
       closeModal={close}
       load={load}
-      disabled = {subScore === ""}
+      disabled={subScore === ""}
     >
       {(!user && <GhostLoader />) || (
         <AddScore subScore={subScore} handleScore={handleScore} />

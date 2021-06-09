@@ -8,9 +8,7 @@ import SelectAllPopup from "./SelectAllPopup";
 import ArchiveModal from "./modals/ArchiveModal";
 import AddToGroupModal from "./modals/AddToGroupModal";
 import AddTagsModal from "./modals/AddTagsModal";
-import {
-  Loader
-} from "Components/UI_Kits";
+import { Loader } from "Components/UI_Kits";
 
 export default function Table(props) {
   const { data, loading, emptyLabel, history, updateFunnelTag } = props;
@@ -103,9 +101,7 @@ export default function Table(props) {
             }}
           />
 
-          {!data.length && loading && (
-            <Loader/>
-          )}
+          {!data.length && loading && <Loader />}
 
           {!data.length && (
             <div className={styles.empty_list}>

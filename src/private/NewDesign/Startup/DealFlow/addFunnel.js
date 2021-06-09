@@ -26,34 +26,32 @@ export default function AddFunnel(props) {
     setFunnelGroupArray(newArr);
   }, [funnelGroup.length]);
 
-  // clear the value in state if user choose the new funnel group 
+  // clear the value in state if user choose the new funnel group
   useEffect(() => {
     setFunnelName("");
     setFunnelID("");
-    if(props.funnelModal) {
-      props.setFunnelModalID("")
+    if (props.funnelModal) {
+      props.setFunnelModalID("");
     }
-
   }, [selectedGroupId]);
 
-  // modal window sumbit 
+  // modal window sumbit
   useEffect(() => {
     if (props.funnelModal) {
       props.updateFunnelTag(funnelID, props.companyId);
     }
   }, [props.funnelModal]);
 
-  // maintain funnel id and name. trigge the api 
+  // maintain funnel id and name. trigge the api
   const handleFunnel = value => {
     setFunnelName(value.name);
     setFunnelID(value.id);
 
-    if(props.funnelModal) {
-      props.setFunnelModalID(value.id)
+    if (props.funnelModal) {
+      props.setFunnelModalID(value.id);
     }
 
-
-    if(!props.isModal) {
+    if (!props.isModal) {
       props.updateFunnelTag(value.id, props.companyId);
     }
     if (props.setFunnelId) {
@@ -93,8 +91,8 @@ export default function AddFunnel(props) {
     );
   };
 
-  if(loading && props.funnelModal) {
-    return <Loader />
+  if (loading && props.funnelModal) {
+    return <Loader />;
   }
 
   return (

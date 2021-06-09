@@ -62,7 +62,7 @@ export default function EvaluateStartup({
     );
   };
   if (loader) {
-    return <Loader size="medium" />
+    return <Loader size="medium" />;
   }
   return (
     <div className="evaluate-startup-container">

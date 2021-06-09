@@ -77,7 +77,9 @@ export default function Expand({ closeModal, styles, connections, history }) {
             setExistedFlag(
               result?.data?.connectionAutoCompleteName[0]?.creativeName
             );
-            setconnectionId(result?.data?.connectionAutoCompleteName[0]?.connectionId);
+            setconnectionId(
+              result?.data?.connectionAutoCompleteName[0]?.connectionId
+            );
           } else {
             setconnectionId("");
             setExistedFlag(undefined);
@@ -184,8 +186,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
     if (connectionId) {
       history.push(`${startup_page}/company/${connectionId}`);
     }
-  }
-
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -203,11 +204,14 @@ export default function Expand({ closeModal, styles, connections, history }) {
           </div>
           {existedFlag && (
             <p className={styles.doyoumean}>
-              Do you mean <span className = {styles.companyLink}
-                onClick={()=>handleRedirect()}
+              Do you mean{" "}
+              <span
+                className={styles.companyLink}
+                onClick={() => handleRedirect()}
               >
                 {existedFlag}
-              </span> It`s already Exists
+              </span>{" "}
+              It`s already Exists
             </p>
           )}
           <div className="row tags-container overview-tags">

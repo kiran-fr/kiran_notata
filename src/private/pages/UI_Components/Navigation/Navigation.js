@@ -5,12 +5,12 @@ import { TopMenu } from "Components/UI_Kits";
 import { RadioButtons } from "Components/UI_Kits";
 import { CheckBoxes } from "Components/UI_Kits";
 
-export default function Navigation({history}) {
+export default function Navigation({ history }) {
   return (
     <React.Fragment>
       <SideBarMenu />
       <div>
-        <TopMenu history = {history} />
+        <TopMenu history={history} />
 
         {/* <div className="container">
           <form>
