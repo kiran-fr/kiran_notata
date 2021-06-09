@@ -34,7 +34,7 @@
 .sidebar_container1 .sidebar_containerInner {
   height: 100vh;
   position: fixed;
-  left: 0;
+  left: 0px !important;
   top: 0;
   width: 80px;
   background-color: #fafafa;
@@ -194,7 +194,6 @@
 }
 .menu_list a {
   display: flex;
-  align-items: center;
 }
 .active_open .list {
   color: #ff8166 !important;
@@ -375,9 +374,36 @@
 .menu_listSettings i {
   margin-top: 5px;
 }
+@media (min-width: 768px) {
+  .display_floating_button,
+  .hide_floating_button {
+    display: none !important;
+  }
+  .hide_mobile_container {
+    left: 0px !important;
+  }
+}
 @media screen and (max-width: 769px) {
   .menu_listSettings {
     margin-top: 0 !important;
     margin-bottom: 32px !important;
   }
+  .sidebar_floating_close {
+    display: none;
+  }
+  .sidebar_floating_open {
+    display: none;
+  }
+}
+.display_floating_button {
+  display: block;
+}
+.hide_floating_button {
+  display: none;
+}
+.display_mobile_container {
+  left: 0px;
+}
+.hide_mobile_container {
+  left: -290px;
 }

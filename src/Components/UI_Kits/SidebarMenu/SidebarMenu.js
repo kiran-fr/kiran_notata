@@ -43,6 +43,7 @@ import authLogo from "../../../assets/images/auth_logo.png";
 
 export function SideBarMenu() {
   const [listOpen, setListOpen] = useState(false);
+  const [isMobileList, setMobileList] = useState(false);
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
   let menuList = [
@@ -98,7 +99,10 @@ export function SideBarMenu() {
       <div
         ref={sidebarr}
         className={classnames(
-          !listOpen ? styles.sidebar_container : styles.sidebar_container1
+          !listOpen ? styles.sidebar_container : styles.sidebar_container1,
+          isMobileList
+            ? styles.display_mobile_container
+            : styles.hide_mobile_container
         )}
       >
         <div className={styles.sidebar_containerInner}>
@@ -112,7 +116,7 @@ export function SideBarMenu() {
             <div className={styles.brand}>notata</div>
             <div
               className={styles.mobile_togglerInSidebar}
-              onClick={closeSidebar}
+              onClick={() => setMobileList(false)}
             >
               {" "}
               <i className={`fal fa-chevron-right`} />
@@ -124,6 +128,7 @@ export function SideBarMenu() {
             role="button"
             onClick={() => {
               setListOpen(!listOpen);
+              setMobileList(false);
             }}
             className={styles.desktop_sidebarCollapser}
           >
@@ -137,9 +142,14 @@ export function SideBarMenu() {
           </div>
           <div>
             <div
-              className={styles.mobile_toggler}
+              className={classnames(
+                styles.mobile_toggler,
+                isMobileList
+                  ? styles.hide_floating_button
+                  : styles.display_floating_button
+              )}
               ref={floatingButonn}
-              onClick={openSidebar}
+              onClick={() => setMobileList(true)}
             >
               {" "}
               <i className={`fa fa-bars`} />
@@ -153,6 +163,7 @@ export function SideBarMenu() {
                   <NavLink
                     exact={true}
                     to={item.link}
+                    onClick={() => setMobileList(false)}
                     isActive={(match, location) => {
                       let isMatch = match ? true : false;
                       if (!isMatch) {
@@ -191,6 +202,7 @@ export function SideBarMenu() {
               <NavLink
                 exact={true}
                 to={`${startup_page}/settings`}
+                onClick={() => setMobileList(false)}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}
@@ -219,7 +231,7 @@ export function SideBarMenu() {
                 }}
               >
                 <div className={styles.icons}>
-                  <i className="fas fa-cog" />
+                  <img src={SettingsImg} className="" />
                 </div>
                 <p className={styles.list}>Settings</p>
               </NavLink>
