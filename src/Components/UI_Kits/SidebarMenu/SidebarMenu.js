@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import { userGet } from "private/Apollo/Queries";
+import { useQuery} from "@apollo/client";
 import { NavLink, matchPath } from "react-router-dom";
 import GroupsImg from "../../../assets/images/navigation-groups.png";
 import NewsImg from "../../../assets/images/navigation-news.png";
@@ -6,6 +8,7 @@ import ReportsImg from "../../../assets/images/navigation-reports.png";
 import SettingsImg from "../../../assets/images/navigation-settings.png";
 import StartupsImg from "../../../assets/images/navigation-startups.png";
 import DashbaordImg from "../../../assets/images/sidemenu-dashbaord.png";
+
 
 //links
 import {
@@ -46,6 +49,10 @@ export function SideBarMenu() {
   const [isMobileList, setMobileList] = useState(false);
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
+
+  const { data } = useQuery(userGet);
+  let user = data?.userGet || {};
+
   let menuList = [
     {
       label: "Dashboard",
@@ -243,7 +250,8 @@ export function SideBarMenu() {
             >
               <NavLink
                 exact={true}
-                to={pre_profile}
+                to={setting_profile}
+                onClick={() => setMobileList(false)}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}
@@ -255,7 +263,7 @@ export function SideBarMenu() {
                     alt="img"
                   />
                 </div>
-                <p className={styles.list}>Profile Name</p>
+                <p className={styles.list}>{user.given_name} {user.family_name}</p>
               </NavLink>
             </div>
           </div>
