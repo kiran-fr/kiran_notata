@@ -42,10 +42,11 @@
 
 .mobile_toggler {
   position: fixed;
-  top: 30px;
+  top: 13px;
   left: 30px;
   display: none;
   z-index: 8;
+  font-size: 21px;
 }
 .mobile_togglerInSidebar {
   position: absolute;
