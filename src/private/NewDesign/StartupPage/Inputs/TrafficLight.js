@@ -15,8 +15,6 @@ export default function TrafficLights({
   );
 
   function handleSubmit(points) {
-    console.log("handleSubmit", points);
-
     // Skip if answer don't exist, and text field is empty
     // (if it does exist we need to be able to save an empty field)
     // if (!answer) {

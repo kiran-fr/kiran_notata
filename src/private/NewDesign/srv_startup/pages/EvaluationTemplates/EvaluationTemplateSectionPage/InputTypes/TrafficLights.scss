@@ -46,6 +46,10 @@
         }        
     }
 
+    .traffic-light.inactive {
+        filter: grayscale(100%);
+    }
+
     .incre-decre-icons{
         margin-top:20px;
         color:#B7B7B7;
