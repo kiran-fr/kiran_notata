@@ -32,15 +32,15 @@ export default function Overview(props) {
   // Mutation updating funnel tag for connection
   const [mutate] = useMutation(connectionFunnelTagAdd);
 
-  const updateFunnelTag = async (funnelTagId, connectionId) => {
-    const variables = {
-      connectionId,
-      funnelTagId,
-    };
-    await mutate({
-      variables,
-    });
-  };
+  // const updateFunnelTag = async (funnelTagId, connectionId) => {
+  //   const variables = {
+  //     connectionId,
+  //     funnelTagId,
+  //   };
+  //   await mutate({
+  //     variables,
+  //   });
+  // };
 
   const items = [
     { id: 1, name: "First" },
@@ -344,8 +344,8 @@ export default function Overview(props) {
                   Funnels
                 </div>
                 <AddFunnel
-                  companyId={props.creativity.id}
-                  updateFunnelTag={updateFunnelTag}
+                  // companyId={props.creativity.id}
+                  // updateFunnelTag={updateFunnelTag}
                 />
               </div>
               <div className="row groups-container">

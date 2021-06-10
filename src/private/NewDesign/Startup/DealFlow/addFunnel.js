@@ -52,7 +52,7 @@ export default function AddFunnel(props) {
     }
 
     if (!props.isModal) {
-      props.updateFunnelTag(value.id, props.companyId);
+      // props.updateFunnelTag(value.id, props.companyId);
     }
     if (props.setFunnelId) {
       props.setFunnelId(value.id);
