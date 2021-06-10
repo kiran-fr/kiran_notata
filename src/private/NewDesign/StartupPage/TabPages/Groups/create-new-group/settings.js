@@ -26,7 +26,7 @@ const Settings = ({ group, data, setData }) => {
   }
 
   return (
-    <div className="settings-container">
+    <div className="settings-containers">
       {(!group || group.iAmAdmin) && (
         <>
           <form>

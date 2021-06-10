@@ -260,13 +260,17 @@ export function SideBarMenu() {
                 )}
                 style={{ display: "flex" }}
               >
-                <div className={styles.icons} >
+               
+        
+               {/*  <div className={styles.icons} >
                   <img
                     src="https://www.clipartmax.com/png/small/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png"
                     alt="img"
                   />
-                </div>
+                </div> */}
                 <p className={styles.list}>{user.given_name} {user.family_name}</p>
+               
+                
               </NavLink>
             </div>
           </div>
