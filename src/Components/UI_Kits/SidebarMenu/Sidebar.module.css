@@ -347,7 +347,7 @@
   top: -30px;
 }
 
-.sidebar_container1 .icons {
+/* .sidebar_container1 .icons {
   color: #bfbfbf;
   width: 100%;
   text-align: center;
@@ -357,6 +357,11 @@
 }
 .sidebar_container1 .icons i {
   font-size: 20px;
+} */
+
+.sidebar_container1 .icons {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* .sidebar_container1 hr {
@@ -414,4 +419,7 @@
 }
 .hide_mobile_container {
   left: -290px;
+}
+.profile {
+  display: flex;
 }
