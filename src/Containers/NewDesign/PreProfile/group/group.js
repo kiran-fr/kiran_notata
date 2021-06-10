@@ -53,6 +53,7 @@ let publicGroupsFromServer = publicGroupsQuery?.data?.groupsPublicGet || [];
  
 
   return (
+    
     <div className={styles.group}>
       {showLoader && <Loader />}
       {publicGroups.map(group => (
@@ -84,9 +85,11 @@ let publicGroupsFromServer = publicGroupsQuery?.data?.groupsPublicGet || [];
           <p style={{}}>
           {group.description}
           </p>
-        </div>
+
+     
+      </div>
       </div>
       ))}
-    </div>
+  </div>
   );
 }
