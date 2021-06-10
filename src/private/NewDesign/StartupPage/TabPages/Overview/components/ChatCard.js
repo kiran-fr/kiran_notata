@@ -97,9 +97,7 @@ export default function ChatCard({ connection, history }) {
   return (
     <div className="card discussion-card">
       <div className="row discussions-contianer">
-        <div className="discussions-contianer__heading">
-          Discussion about startup
-        </div>
+        <div className="discussions-contianer__heading">Notes</div>
         <div className="discussions-contianer__sub-heading">
           Notes from you and your team
         </div>

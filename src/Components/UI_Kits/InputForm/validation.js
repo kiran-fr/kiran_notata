@@ -39,14 +39,18 @@ const getError = {
   },
 
   password: str => {
-    let isPassword = reg_pass.test(str);
-    return isPassword ? false : errorMessage[PASSWORD];
+    return false;
+    // let isPassword = reg_pass.test(str);
+    // return isPassword ? false : errorMessage[PASSWORD];
   },
+
   confirmPassword: (str, primaryPwd) => {
-    let isPassword = reg_pass.test(str);
+    // let isPassword = reg_pass.test(str);
     let Pwdmatching = primaryPwd === str;
-    return isPassword && Pwdmatching ? false : errorMessage[MATCH];
+    return Pwdmatching ? false : errorMessage[MATCH];
+    // return isPassword && Pwdmatching ? false : errorMessage[MATCH];
   },
+
   number: str => {
     let isNumber = reg_num.test(str);
     return !isNumber ? false : errorMessage[NUMBER];

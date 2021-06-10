@@ -8,16 +8,21 @@ import CreateNewGroup from "./create-new-group/create-new-group";
 import RemoveFromGroup from "./remove-from-group";
 import { group_dashboard } from "../../../../../definitions";
 import { useMutation, useQuery } from "@apollo/client";
-import { groupStartupRemove } from "../../../../Apollo/Mutations";
+import {
+  groupStartupAdd,
+  groupStartupRemove,
+} from "../../../../Apollo/Mutations";
 import { connectionGet, groupsGetV2 } from "../../../../Apollo/Queries";
 import AddGroup from "../../../Startup/Modal/addGroup";
 
 export default function Groups({ connection, history }) {
+  const [selectedGroup, selectGroup] = useState(undefined);
+
   const [deleteModal, setDeleteModal] = useState(undefined);
   const [sharingOptionsModal, setSharingOptionsModal] = useState(undefined);
   const [createGroupModal, setCreateGroupModal] = useState(false);
 
-  const [addToGroupModal, setAddToGroupModal] = useState(undefined);
+  const [addToGroupModal, setAddToGroupModal] = useState(false);
 
   // Queries
   const groupsQuery = useQuery(groupsGetV2);
@@ -30,6 +35,10 @@ export default function Groups({ connection, history }) {
       },
     ],
   });
+
+  const [addStartupToGroupMutation, addStartupToGroupMutationRes] = useMutation(
+    groupStartupAdd
+  );
 
   let data = [];
   for (let info of connection?.groupSharingInfo || []) {
@@ -199,18 +208,32 @@ export default function Groups({ connection, history }) {
       {addToGroupModal && (
         <Modal
           title="Add startup to group"
-          submit={() => {
+          loading={addStartupToGroupMutationRes?.loading}
+          submit={async () => {
+            let variables = {
+              groupId: selectedGroup?.id,
+              creativeId: connection?.creative?.id,
+            };
+            try {
+              await addStartupToGroupMutation({ variables });
+            } catch (error) {
+              console.log("error", error);
+            }
+
+            selectGroup(undefined);
             setAddToGroupModal(false);
           }}
           close={() => {
+            selectGroup(undefined);
             setAddToGroupModal(false);
           }}
-          submitTxt="Create"
+          submitTxt="Add"
           closeTxt="Cancel"
           children={
             <AddGroup
               connection={connection}
               groups={groupsQuery?.data?.groupsGetV2}
+              select={group => selectGroup(group)}
             />
           }
         />
