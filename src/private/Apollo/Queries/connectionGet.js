@@ -140,6 +140,19 @@ export default gql`
             id
             name
           }
+          summary {
+            scorePercent
+            sections {
+              sectionId
+              sectionName
+              scorePercent
+              scorePerAnswer {
+                questionName
+                possibleScore
+                score
+              }
+            }
+          }
         }
 
         subjectiveScores {

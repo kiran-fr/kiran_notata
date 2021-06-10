@@ -13,6 +13,9 @@ export default function MainInputCard({
   account,
   history,
 }) {
+  console.log("USER: ", user);
+  console.log("ACCOUNT: ", account);
+  console.log("CONNECTION: ", connection);
   return (
     <div className="card">
       {/*SUBJECTIVE SCORES*/}
@@ -21,6 +24,7 @@ export default function MainInputCard({
         account={account}
         user={user}
       />
+
       <div className="separator" />
 
       {/*EVALUATION SUMMARIES*/}

@@ -55,6 +55,8 @@ import {
   evaluation_templates_page,
   evaluation_template_page,
   archive_page,
+  evaluate_page,
+  evaluation_summary_page,
 } from "../definitions";
 
 // Landing page / list
@@ -137,6 +139,9 @@ import ProfileSettings from "./NewDesign/settings/profile";
 
 import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
 
+import EvaluatePage from "./NewDesign/Evaluate/EvaluatePage";
+import EvaluationSummaryPage from "./NewDesign/Evaluate/EvaluationSummaryPage";
+
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
 export const RouterComponent = ({ history }) => {
@@ -180,6 +185,21 @@ export const RouterComponent = ({ history }) => {
       <Route eaxct path={new_news} component={NewsEdit} />
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
       <Route exact path={archive_page} component={ArchivePage} />
+
+      <Route
+        exact
+        path={[
+          `${evaluate_page}/:connectionId/:templateId/:evaluationId`,
+          `${evaluate_page}/:connectionId/:templateId`,
+        ]}
+        component={EvaluatePage}
+      />
+
+      <Route
+        exact
+        path={`${evaluation_summary_page}/:connectionId/:templateId/:evaluationId`}
+        component={EvaluationSummaryPage}
+      />
 
       <Route
         exact

@@ -63,7 +63,7 @@ export const EvaluateSelector = ({ connection, close, history }) => {
   ];
 
   return (
-    <Modal title="Evaluate startup" close={close}>
+    <Modal title="EvaluatePage startup" close={close}>
       {(!data && (
         <div className={spinner_class}>
           <i className="fa fa-spinner fa-spin" />
