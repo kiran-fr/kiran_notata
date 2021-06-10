@@ -189,6 +189,7 @@ export const EvaluationTemplatePage = ({ match, history }) => {
 
   return (
     <>
+    <div className={`add-section-conatiners`}>
       <div className={`add-section-conatiner ccard`}>
         {/* HEADER */}
         <div className="row">
@@ -251,7 +252,7 @@ export const EvaluationTemplatePage = ({ match, history }) => {
                 </div>
               </div>
             </form>
-          </div>
+         
 
           <div className="col-sm-4">
             <div className="row">
@@ -277,7 +278,7 @@ export const EvaluationTemplatePage = ({ match, history }) => {
             </div>
           </div>
         </div>
-
+        </div>
         <div className="evaluation-templates-container__data-container">
           {template?.sections?.map(section => {
             return (
@@ -323,6 +324,7 @@ export const EvaluationTemplatePage = ({ match, history }) => {
           })}
         </div>
       </div>
+      </div>
 
       {importSectionModal && (
         <ImportSectionModal
@@ -357,6 +359,7 @@ export const EvaluationTemplatePage = ({ match, history }) => {
           close={() => setCloneModalForSection(undefined)}
         />
       )}
+      
     </>
   );
 };
