@@ -194,12 +194,12 @@ export const EvaluationTemplatePage = ({ match, history }) => {
         <div className="row">
           <div className={`col-sm-8 text-container`}>
             <form className="templateform">
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ display: "flex" }}>
                 <div
                   style={{
                     display: "flex",
-                    alignItems: "center",
                     marginRight: 10,
+                    marginTop: 33,
                   }}
                 >
                   <i
@@ -213,41 +213,43 @@ export const EvaluationTemplatePage = ({ match, history }) => {
                   ></i>
                 </div>
 
-                <TextBox
-                  name="name"
-                  defaultValue={name}
-                  onChange={e => setName(e.target.value)}
-                  placeholder="Template Name"
-                  onBlur={e => {
-                    updateTemplate({
-                      variables: {
-                        id: template?.id,
-                        input: {
-                          name: e.target.value,
+                <div>
+                  <TextBox
+                    name="name"
+                    defaultValue={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Template Name"
+                    onBlur={e => {
+                      updateTemplate({
+                        variables: {
+                          id: template?.id,
+                          input: {
+                            name: e.target.value,
+                          },
                         },
-                      },
-                    });
-                  }}
-                />
+                      });
+                    }}
+                  />
+                  <textarea
+                    name="description"
+                    onChange={e => setDescription(e.target.value)}
+                    value={description}
+                    rows="4"
+                    cols="50"
+                    placeholder="Template Description"
+                    onBlur={e => {
+                      updateTemplate({
+                        variables: {
+                          id: template?.id,
+                          input: {
+                            description: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </div>
               </div>
-              <textarea
-                name="description"
-                onChange={e => setDescription(e.target.value)}
-                value={description}
-                rows="4"
-                cols="50"
-                placeholder="Template Description"
-                onBlur={e => {
-                  updateTemplate({
-                    variables: {
-                      id: template?.id,
-                      input: {
-                        description: e.target.value,
-                      },
-                    },
-                  });
-                }}
-              />
             </form>
           </div>
 
