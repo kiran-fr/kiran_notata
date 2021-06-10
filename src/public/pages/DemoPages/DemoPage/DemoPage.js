@@ -60,7 +60,7 @@ Below that we have the funnel and tags before we get to the evaluation part. We 
   },
   {
     image: EVALUATE_STARTUP,
-    title: "5) Evaluate StartupPage",
+    title: "5) EvaluatePage StartupPage",
     text: `Let's evaluate this startup!
 
 You can evaluate startups based on multiple templates, which in turn will generate a score.

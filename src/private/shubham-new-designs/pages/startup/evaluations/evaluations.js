@@ -266,7 +266,7 @@ export default function Evaluations({ history }) {
                   </div>
                   <div className="col-sm-4 col-xs-12 request-eval">
                     <button onClick={() => setEvaluateModal(true)}>
-                      Evaluate
+                      EvaluatePage
                     </button>
                   </div>
                   <div className={myEvalState}>
@@ -873,7 +873,7 @@ export default function Evaluations({ history }) {
       )}
       {evaluateModal && (
         <Modal
-          title="Evaluate startup"
+          title="EvaluatePage startup"
           close={() => {
             setEvaluateModal(false);
           }}

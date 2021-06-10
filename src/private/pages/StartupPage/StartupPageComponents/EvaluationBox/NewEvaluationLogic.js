@@ -91,7 +91,7 @@ export default function NewEvaluationLogic({ connection, history }) {
 
       {showModal && (
         <Modal
-          title="Evaluate startup"
+          title="EvaluatePage startup"
           close={() => setShowModal(false)}
           disableFoot={true}
         >
@@ -123,7 +123,7 @@ export default function NewEvaluationLogic({ connection, history }) {
 
       {showConfirmModal && (
         <Modal
-          title="Evaluate startup"
+          title="EvaluatePage startup"
           close={() => {
             setShowConfirmModal(undefined);
             setShowModal(true);

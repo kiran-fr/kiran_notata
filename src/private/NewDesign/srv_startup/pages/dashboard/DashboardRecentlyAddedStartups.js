@@ -30,7 +30,7 @@ export default function DashboardRecentlyAddedStartups({ history }) {
             >
               {group.name}
             </div>
-            {/*<div className="evaluate">Evaluate</div>*/}
+            {/*<div className="evaluate">EvaluatePage</div>*/}
           </div>
         ))}
       </div>

@@ -740,7 +740,7 @@ function NewEvaluationLogic({ evaluations, templates, connection, history }) {
 
       {showModal && (
         <Modal
-          title="Evaluate startup"
+          title="EvaluatePage startup"
           close={() => setShowModal(false)}
           disableFoot={true}
         >
@@ -772,7 +772,7 @@ function NewEvaluationLogic({ evaluations, templates, connection, history }) {
 
       {showConfirmModal && (
         <Modal
-          title="Evaluate startup"
+          title="EvaluatePage startup"
           close={() => {
             setShowConfirmModal(undefined);
             setShowModal(true);
@@ -844,11 +844,11 @@ export function EvaluationBox({ connection, groups, user, history }) {
     <>
       {!evaluations.length && (
         <div style={{ paddingTop: "20px" }}>
-          <div style={{ fontSize: "18px" }}>Evaluate this startup</div>
+          <div style={{ fontSize: "18px" }}>EvaluatePage this startup</div>
           <div
             style={{ padding: "20px 0px", color: "var(--color-gray-medium)" }}
           >
-            Evaluate this startup based on your own criteria, or choose from
+            EvaluatePage this startup based on your own criteria, or choose from
             predefined templates.
           </div>
         </div>

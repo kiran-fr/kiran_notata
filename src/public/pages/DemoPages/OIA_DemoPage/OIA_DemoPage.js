@@ -27,7 +27,7 @@ let list = [
   },
   {
     image: PIC2,
-    title: "02) Evaluate StartupPage",
+    title: "02) EvaluatePage StartupPage",
     text: `Each startup on your list should have a button labeled "OIA - VOTING TOP 10". Click this button to start evaluating the company.`,
   },
   {
@@ -47,7 +47,7 @@ let list = [
   },
   {
     image: PIC6,
-    title: "6) Evaluate next StartupPage",
+    title: "6) EvaluatePage next StartupPage",
     text: `Choose the next startup you want to evaluate.`,
   },
   {

@@ -29,9 +29,20 @@
     }
     .total-answers {
       margin-top: 30px;
+
+      .summary-list {
+        padding: 5px;
+        margin-left: 15px;
+        margin-right: 0px;
+      }
+
+      .summary-list:nth-child(odd) {
+        background-color: var(--ui-color-gray-pale1)
+      }
+
       .type-heading,
       .attempts {
-        margin-top: 5px;
+        //margin-top: 5px;
         font-family: "Proxima Nova";
         font-style: normal;
         font-weight: normal;
@@ -39,6 +50,8 @@
         line-height: 19px;
         text-transform: capitalize;
         color: #6a6a6a;
+        margin: 0;
+        padding: 0;
       }
       .attempts,
       .total-attempts {
@@ -70,11 +83,15 @@
         line-height: 22px;
         letter-spacing: 0.03em;
         color: #6a6a6a;
+        margin-left: -31px;
+        margin-right: 31px;
+
         i {
           color: #71d0bd;
           margin-right: 15px;
           cursor: pointer;
         }
+
         .fa-pencil {
           margin-left: 20px;
           color: #969ba3;
@@ -94,7 +111,7 @@
           font-family: "Proxima Nova";
           font-style: normal;
           font-weight: normal;
-          font-size: 12px;
+          font-size: 15px;
           line-height: 15px;
           color: #ff937c;
           margin-top: 5px;
@@ -103,18 +120,44 @@
           font-family: "Proxima Nova";
           font-style: normal;
           font-weight: normal;
-          font-size: 12px;
+          font-size: 15px;
           line-height: 15px;
-          color: gray;
+          color: #bfbfbf;
           margin-top: 5px;
+
         }
       }
     }
-    .delete-btn {
+    //.delete-btn {
+    //  margin-top: 35px;
+    //  height: 30px;
+    //  width: 208px;
+    //  background: #ff937c;
+    //  border-radius: 20px;
+    //  border: none;
+    //  font-family: "Proxima Nova";
+    //  letter-spacing: 0.03em;
+    //  color: #ffffff;
+    //  padding: 4px;
+    //  font-size: 12px;
+    //  line-height: 15px;
+    //}
+
+    .delete-txt {
+      font-family: "Proxima Nova";
+      font-size: 12px;
+      color: #ff937c;
+      position: absolute;
+      bottom: -60px;
+      right: -20px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
       margin-top: 35px;
       height: 30px;
       width: 208px;
-      background: #ff937c;
+      background: #71D0BD;
       border-radius: 20px;
       border: none;
       font-family: "Proxima Nova";
