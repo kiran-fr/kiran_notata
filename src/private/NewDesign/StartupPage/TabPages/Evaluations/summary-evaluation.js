@@ -38,6 +38,7 @@ export default function SummaryEvaluation({
   const findAns = questionId => {
     return allAnswers?.find(ans => ans.questionId === questionId);
   };
+
   const deleteEvaluation = async () => {
     let variables = {
       id: evaluation?.id,
