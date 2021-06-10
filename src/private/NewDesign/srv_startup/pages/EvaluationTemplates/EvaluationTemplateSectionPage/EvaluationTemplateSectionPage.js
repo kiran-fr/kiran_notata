@@ -150,12 +150,12 @@ export const EvaluationTemplateSectionPage = ({ match, history }) => {
         <div className="row">
           <div className={`col-sm-8 text-container`}>
             <form className="sectionform">
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ display: "flex" }}>
                 <div
                   style={{
                     display: "flex",
-                    alignItems: "center",
                     marginRight: 10,
+                    marginTop: 36,
                   }}
                 >
                   <i
@@ -168,21 +168,23 @@ export const EvaluationTemplateSectionPage = ({ match, history }) => {
                     }}
                   ></i>
                 </div>
-                <TextBox
-                  name="sectionName"
-                  defaultValue={name}
-                  onChange={e => setName(e.target.value)}
-                  placeholder="Section Name"
-                />
+                <div>
+                  <TextBox
+                    name="sectionName"
+                    defaultValue={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Section Name"
+                  />
+                  <textarea
+                    name="sectionDescription"
+                    onChange={e => setDescription(e.target.value)}
+                    value={description}
+                    rows="4"
+                    cols="50"
+                    placeholder="Section Description"
+                  />
+                </div>
               </div>
-              <textarea
-                name="sectionDescription"
-                onChange={e => setDescription(e.target.value)}
-                value={description}
-                rows="4"
-                cols="50"
-                placeholder="Section Description"
-              />
             </form>
           </div>
         </div>

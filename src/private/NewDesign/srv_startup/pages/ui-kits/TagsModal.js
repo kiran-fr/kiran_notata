@@ -3,6 +3,7 @@ import "./TagsModal.scss";
 import { Tags } from "./Tags/Tags";
 import { useQuery, useMutation } from "@apollo/client";
 import { Loader } from "Components/UI_Kits";
+import { Tag } from "Components/elements";
 
 // API STUFF
 
@@ -25,6 +26,8 @@ export default function TagsModal({
   // Good :D
   const tagGroups = data?.tagGroupsGet || [];
 
+  console.log("TAGS: ", tagGroups);
+
   // Mutations
   const [addTagMutation] = useMutation(connectionTagAdd);
   const [removeTagMutation] = useMutation(connectionTagRemove);
@@ -32,6 +35,10 @@ export default function TagsModal({
   let tagTypesState = {};
 
   const [tagsStates, setTagsStates] = useState(tagTypesState);
+  const [filtered, setFiltered] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  console.log("TAG STATE: ", tagsStates);
 
   const removeTag = tagId => {
     if (tagFlag) {
@@ -107,6 +114,19 @@ export default function TagsModal({
     }
   };
 
+  function handleSearch(value) {
+    console.log("Search Value: ", value);
+    if (value && value !== " " && value.length !== 0) {
+      console.log("SEARCHING>>>");
+      setFiltered(true);
+      setSearchValue(value);
+    } else {
+      console.log("================ STOP SEARCHING ====================");
+      setFiltered(false);
+      setSearchValue("");
+    }
+  }
+
   if (error) return <pre>{error.message}</pre>; //if query has issue
 
   return (
@@ -116,52 +136,28 @@ export default function TagsModal({
         <Loader size="medium" />
       ) : (
         <>
-          <div className="tags-container__sub-heading">
-            Write or choose Tags
+          <div className="tags-container__sub-heading">Selected Tags</div>
+          <div className="selectedTags">
+            {connection?.tags?.map(tag => {
+              return (
+                <div className="singleTag">
+                  <span className="singleTagName" key={tag.id}>
+                    {tag.group.name}: {tag.name}
+                  </span>
+                  <span>
+                    <i
+                      className={"fal fa-times"}
+                      onClick={() => removeTag(tag.id)}
+                    />
+                  </span>
+                </div>
+              );
+            })}
           </div>
-          {/* <GhostLoader></GhostLoader> */}
-          <Tags
-            setTags={!tagFlag ? connection?.tags || [] : tagSelected}
-            removeTag={removeTag}
-            getSelectedTag={d => {
-              if (!d.id) {
-                // You need to get the ID of the tag object you are deleting...
-                // Right now that does not seem to be passed in the "data" object
-                return;
-              }
-
-              if (!tagFlag) {
-                let variables = {
-                  connectionId: connection.id,
-                  tagId: d.id,
-                };
-
-                let optimisticResponse = {
-                  __typename: "Mutation",
-                  connectionTagRemove: {
-                    ...connection,
-                    tags: [
-                      ...connection.tags
-                        .filter(({ id }) => id !== d.id)
-                        .map(t => ({
-                          ...t,
-                          index: null,
-                          description: null,
-                          createdBy: "tmp",
-                          createdAt: 0,
-                        })),
-                    ],
-                    __typename: "Connection",
-                  },
-                };
-
-                removeTagMutation({
-                  variables,
-                  optimisticResponse,
-                });
-              }
-            }}
-          />
+          <div className="tags-container__sub-heading">
+            Search or choose Tags
+          </div>
+          <Tags onchange={handleSearch}></Tags>
           <div className="mb-2 tags-container__heading ">Suggested Tags</div>
 
           <div className="tags-container__dropdown">
@@ -192,23 +188,51 @@ export default function TagsModal({
                       </div>
                       <div
                         className={`col-sm-12 col-xs-12 ${
-                          tagsStates[tagGroup.id] ? "" : "collapse"
+                          tagsStates[tagGroup.id] || filtered ? "" : "collapse"
                         }`}
                       >
                         <div className="type-tags-container">
-                          {tagGroup.tags.map((tag, index) => {
-                            return (
-                              <div
-                                className="tag suggested-tag"
-                                key={tag.id}
-                                onClick={() => {
-                                  addTags(connection, tag);
-                                }}
-                              >
-                                {tag.name}
-                              </div>
-                            );
-                          })}
+                          {!filtered ? (
+                            <>
+                              {tagGroup.tags.map((tag, index) => {
+                                return (
+                                  <div
+                                    className="tag suggested-tag"
+                                    key={tag.id}
+                                    onClick={() => {
+                                      addTags(connection, tag);
+                                    }}
+                                  >
+                                    {tag.name}
+                                  </div>
+                                );
+                              })}
+                            </>
+                          ) : (
+                            <>
+                              {tagGroup.tags
+                                .filter(tag =>
+                                  tag.name
+                                    .toLowerCase()
+                                    .indexOf(searchValue.toLowerCase()) === -1
+                                    ? false
+                                    : true
+                                )
+                                .map((tag, index) => {
+                                  return (
+                                    <div
+                                      className="tag suggested-tag"
+                                      key={tag.id}
+                                      onClick={() => {
+                                        addTags(connection, tag);
+                                      }}
+                                    >
+                                      {tag.name}
+                                    </div>
+                                  );
+                                })}
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
