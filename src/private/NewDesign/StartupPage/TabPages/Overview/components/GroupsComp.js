@@ -9,11 +9,11 @@ export default function GroupsComp({ refetch, connection, goToPath }) {
     <>
       <div className="row groups-container">
         <div className="overview-container__scores__heading">Groups</div>
-        <div className="tags-container__sub-heading">
-          Adding tags makes it easier to filter, find similar startups, and
-          makes great analytics
-        </div>
-        <div className="col-sm-12 col-xs-12"></div>
+        {/*<div className="tags-container__sub-heading">*/}
+        {/*  Adding tags makes it easier to filter, find similar startups, and*/}
+        {/*  makes great analytics*/}
+        {/*</div>*/}
+        <div className="col-sm-12 col-xs-12" />
         {connection?.groupSharingInfo?.map(info => (
           <div
             className="group-name"

@@ -130,7 +130,7 @@ export const StartupPage = ({ match, history, location }) => {
           <Evaluations
             history={history}
             connection={connection}
-            accountData={account}
+            account={account}
           />
         </TabPanel>
 

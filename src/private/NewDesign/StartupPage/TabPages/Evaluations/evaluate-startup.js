@@ -19,13 +19,13 @@ const transform = obj => {
 
 export default function EvaluateStartup({
   setEditEvaluation,
-  accountData,
+  account,
   evaluations,
   setSelectedTemplateToEvaluate,
   setActiveEvaluation,
   setSavedAnswers,
 }) {
-  const { evaluationTemplates } = accountData;
+  const { evaluationTemplates } = account;
   const [loader, setLoader] = useState(false);
   const callBack = (template, evaluation) => {
     setLoader(true);
@@ -62,7 +62,7 @@ export default function EvaluateStartup({
     );
   };
   if (loader) {
-    return <Loader size="medium" />
+    return <Loader size="medium" />;
   }
   return (
     <div className="evaluate-startup-container">
@@ -89,7 +89,7 @@ export default function EvaluateStartup({
                   </div>
                 </div>
               ))}
-              <div className="col-sm-4 col-xs-5 evaluated-on"></div>
+              <div className="col-sm-4 col-xs-5 evaluated-on" />
               <div className="col-sm-3 col-xs-5 evaluate-action">
                 <button
                   onClick={() => {
