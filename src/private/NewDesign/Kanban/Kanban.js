@@ -134,10 +134,12 @@ export const Kanban = props => {
         const removeCoulmn = columns;
         delete columns[sortingIndex];
         removeCoulmn[sortingIndex] = columnsSortObj;
-        setColumns(removeCoulmn);
+        const indexSort = sortArr([removeCoulmn]);
+        setColumns(indexSort);
         setSortLoad(false);
       } else {
-        setColumns({ ...columnsCopy });
+        const indexSort = sortArr(columnsCopy);
+        setColumns({ ...indexSort });
       }
     });
   };
