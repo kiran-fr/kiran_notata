@@ -113,10 +113,13 @@ function EditFunnel({ funnelGroup, save }) {
                 ({ isNew }) => !isNew
               );
               if (updateItems.length) {
-                let promises = updateItems.map(it => {
+                let promises = updateItems.map((it, index) => {
                   let variables = {
                     id: it.id,
-                    input: { name: it.name },
+                    input: {
+                      name: it.name,
+                      index,
+                    },
                   };
                   return updateTagMutation({ variables });
                 });
@@ -134,10 +137,13 @@ function EditFunnel({ funnelGroup, save }) {
                 createItems.push(newFunnel);
               }
               if (createItems.length) {
-                let promises = createItems.map(it => {
+                let promises = createItems.map((it, index) => {
                   let variables = {
                     funnelGroupId: funnelGroupId,
-                    input: { name: it.name },
+                    input: {
+                      name: it.name,
+                      index,
+                    },
                   };
                   return createTagMutation({ variables });
                 });

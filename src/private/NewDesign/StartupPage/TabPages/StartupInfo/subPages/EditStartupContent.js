@@ -14,10 +14,9 @@ export default function EditStartupContent({
   disableNavigation,
 }) {
   const [collapseList, setCollapseList] = useState({});
-
   const [name, setName] = useState("");
   const [logo, setLogo] = useState(undefined);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswersState] = useState([]);
   const [saveLoader, setSaveLoader] = useState(false);
 
   useEffect(() => {
@@ -27,11 +26,15 @@ export default function EditStartupContent({
       );
       setAnswers(cleanAnswers);
     }
-
     if (creative?.name) {
       setName(creative?.name || "");
     }
   }, [creative]);
+
+  function setAnswers(newAnswers) {
+    console.log("setAnswers", newAnswers);
+    setAnswersState(newAnswers);
+  }
 
   return (
     <div className="share-startup-container">

@@ -31,9 +31,9 @@
         span{
             margin-left:15px;
         }
-        @media only screen and(max-width:905px) {
-            left: 34px;    
-        }
+        //@media only screen and(max-width:905px) {
+        //    left: 34px;
+        //}
     }
     .name-icon{
         height: 50px;
@@ -131,11 +131,11 @@
         }
     }
     .startup-info-notata-info{
-        margin-top:50px;
-        margin-left: 15px;
-        @media only screen and (min-width: 768px) {
-            margin-left: 20%;
-        }
+        margin-top: 20px;
+        margin-left: 80px;
+        display: flex;
+        margin-bottom: 20px;
+
         &__web{
             font-family: 'Proxima Nova';
             font-style: normal;
@@ -147,27 +147,27 @@
             padding-left: 0px!important;
             color: #53CAB2;
         }
-        button{
-            height: 18px;
-            width: 109px;
-            font-family:'Proxima Nova';
-            font-style: normal;
-            font-weight: bold;
-            font-size: 10px;
-            line-height: 12px;
-            display: flex;
-            align-items: center;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-            color: #FFFFFF;
-            background: #53CAB2;
-            border-radius: 12px;
-            margin-top: -5px;            
-            padding-left: 0px!important;
-            .material-icons{
-                font-size: 10px;
-            }
-        }
+        //button{
+        //    height: 18px;
+        //    width: 109px;
+        //    font-family:'Proxima Nova';
+        //    font-style: normal;
+        //    font-weight: bold;
+        //    font-size: 10px;
+        //    line-height: 12px;
+        //    display: flex;
+        //    align-items: center;
+        //    letter-spacing: 0.03em;
+        //    text-transform: uppercase;
+        //    color: #FFFFFF;
+        //    background: #53CAB2;
+        //    border-radius: 12px;
+        //    margin-top: -5px;
+        //    padding-left: 0px!important;
+        //    .material-icons{
+        //        font-size: 10px;
+        //    }
+        //}
     }  
     .startup-help-container{
         margin-top: 25px;

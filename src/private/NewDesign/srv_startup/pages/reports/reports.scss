@@ -1,20 +1,23 @@
-.coming-soon {
-  position: absolute;
-  width: 100%;
-  height: 800px;
-  left: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 21px;
-  text-transform: uppercase;
-  color: #969BA3;
-}
-
 .report-container {
-  opacity: 0.3;
-  filter: blur(4px);
+
+  .coming-soon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+    text-transform: uppercase;
+    color: #b7b7b7;
+  }
+
+  .hide-and-blur {
+    opacity: 0.3;
+    filter: blur(4px);
+  }
 
   .fillter-btn {
     margin-top: 20px;
@@ -120,10 +123,10 @@
           }
           .orange {
             background: linear-gradient(
-              180deg,
-              #f5c269 0%,
-              #ffd898 102.82%,
-              rgba(229, 232, 255, 0) 110.91%
+                            180deg,
+                            #f5c269 0%,
+                            #ffd898 102.82%,
+                            rgba(229, 232, 255, 0) 110.91%
             );
             height: 40%;
             border-radius: 20px;
