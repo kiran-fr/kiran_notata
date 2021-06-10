@@ -82,7 +82,6 @@
     }
   }
 
-
   .tag {
     font-family: "Roboto";
     font-weight: 500;
@@ -129,4 +128,37 @@
 
 .expand-collapse-icon {
   cursor: pointer;
+}
+
+.selectedTags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.singleTag {
+  display: block;
+  margin-bottom: 10px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 10px;
+  padding: 0px 10px;
+  margin-right: 10px;
+  background-color: #555;
+
+  .singleTagName {
+    font-size: 12px;
+    line-height: 20px;
+    vertical-align: middle;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  i {
+    color: white;
+    margin-left: 10px;
+    transform: scale(0.8);
+    cursor: pointer;
+  }
 }
