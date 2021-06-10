@@ -26,8 +26,6 @@ export default function TagsModal({
   // Good :D
   const tagGroups = data?.tagGroupsGet || [];
 
-  console.log("TAGS: ", tagGroups);
-
   // Mutations
   const [addTagMutation] = useMutation(connectionTagAdd);
   const [removeTagMutation] = useMutation(connectionTagRemove);
@@ -35,12 +33,18 @@ export default function TagsModal({
   let tagTypesState = {};
 
   const [tagsStates, setTagsStates] = useState(tagTypesState);
+  const [selectedTag, setSelectedTag] = useState([]);
   const [filtered, setFiltered] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-  console.log("TAG STATE: ", tagsStates);
 
   const removeTag = tagId => {
+    // doubleclick ID logic 
+      const removeTagId = selectedTag.filter(
+        item => item !== tagId
+      );
+      setSelectedTag(removeTagId.length ? removeTagId : []);
+
     if (tagFlag) {
       let filterData = tagSelected.filter(data => data.id !== tagId);
       if (filterData.length === 0) {
@@ -74,9 +78,11 @@ export default function TagsModal({
   };
 
   const addTags = (connection, tag) => {
-    const tagArr = tagFlag ? tagSelected : connection.tags;
-    let filterData = tagArr.filter(data => data.id === tag.id);
-    if (filterData.length === 0) {
+
+    setSelectedTag(oldArray => [...oldArray, tag.id]);
+    let doubleClick = selectedTag.filter(data => data === tag.id);
+
+    if (doubleClick.length === 0) {
       if (tagFlag) {
         setTagSelected([...tagSelected, tag]);
       } else {
@@ -115,13 +121,10 @@ export default function TagsModal({
   };
 
   function handleSearch(value) {
-    console.log("Search Value: ", value);
     if (value && value !== " " && value.length !== 0) {
-      console.log("SEARCHING>>>");
       setFiltered(true);
       setSearchValue(value);
     } else {
-      console.log("================ STOP SEARCHING ====================");
       setFiltered(false);
       setSearchValue("");
     }
@@ -129,10 +132,11 @@ export default function TagsModal({
 
   if (error) return <pre>{error.message}</pre>; //if query has issue
 
-  return (
+
+    return (
     <div className="tags-container">
-      {loading ? (
-        /* //query processing */
+      {loading && !connection?.tags ? (
+        /* //query processing with tagset data */
         <Loader size="medium" />
       ) : (
         <>
@@ -195,17 +199,21 @@ export default function TagsModal({
                           {!filtered ? (
                             <>
                               {tagGroup.tags.map((tag, index) => {
-                                return (
-                                  <div
-                                    className="tag suggested-tag"
-                                    key={tag.id}
-                                    onClick={() => {
-                                      addTags(connection, tag);
-                                    }}
-                                  >
-                                    {tag.name}
-                                  </div>
-                                );
+                                const tagArr = tagFlag ? tagSelected : connection.tags;
+                                let filterData = tagArr.filter(data => data.id === tag.id);
+                                if(filterData.length === 0) {
+                                  return (
+                                    <div
+                                      className="tag suggested-tag"
+                                      key={tag.id}
+                                      onClick={() => {
+                                        addTags(connection, tag);
+                                      }}
+                                    >
+                                      {tag.name}
+                                    </div>
+                                  );
+                                }
                               })}
                             </>
                           ) : (
@@ -219,17 +227,21 @@ export default function TagsModal({
                                     : true
                                 )
                                 .map((tag, index) => {
-                                  return (
-                                    <div
-                                      className="tag suggested-tag"
-                                      key={tag.id}
-                                      onClick={() => {
-                                        addTags(connection, tag);
-                                      }}
-                                    >
-                                      {tag.name}
-                                    </div>
-                                  );
+                                  const tagArr = tagFlag ? tagSelected : connection.tags;
+                                  let filterData = tagArr.filter(data => data.id === tag.id);
+                                  if(filterData.length === 0) {
+                                    return (
+                                      <div
+                                        className="tag suggested-tag"
+                                        key={tag.id}
+                                        onClick={() => {
+                                          addTags(connection, tag);
+                                        }}
+                                      >
+                                        {tag.name}
+                                      </div>
+                                    );
+                                  }
                                 })}
                             </>
                           )}
