@@ -126,7 +126,7 @@ export function SideBarMenu() {
               onClick={() => setMobileList(false)}
             >
               {" "}
-              <i className={`fal fa-chevron-right`} />
+              <i className={`fal fa-chevron-left`} />
             </div>
           </div>
 
@@ -257,7 +257,7 @@ export function SideBarMenu() {
                 )}
                 style={{ display: "flex" }}
               >
-                <div className={styles.icons} style={{ marginTop: "5px" }}>
+                <div className={styles.icons} >
                   <img
                     src="https://www.clipartmax.com/png/small/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png"
                     alt="img"
