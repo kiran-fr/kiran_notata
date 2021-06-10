@@ -20,17 +20,12 @@ export default function Group() {
   // Mutations
   const [joinPublicGroup, joinPublicGroupRes] = useMutation(groupPublicJoin);
   const [updating, setUpdating] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState([]);
-
-
   
 
 // Maps
 let publicGroupsFromServer = publicGroupsQuery?.data?.groupsPublicGet || [];
   const user = userQuery.data?.userGet || {};
-  // let publicGroupsFromServer1 = publicGroupsFromServer.filter(
-  //   ({ iAmMember }) => !iAmMember
-  //  );
+
   let publicGroups = publicGroupsFromServer;
   let hasAllData =
     publicGroupsQuery?.data && userQuery?.data;
@@ -55,16 +50,7 @@ let publicGroupsFromServer = publicGroupsQuery?.data?.groupsPublicGet || [];
   //   }
   // };
 
-console.log("publicGroups", publicGroups)
-  useEffect(() => {
-    if(publicGroups.length){
-      const data = []
-      publicGroups.map(group => (
-        data.push(group.id)
-      ))
-      setSelectedGroup([...data])
-    }
-  }, [publicGroups]);
+ 
 
   return (
     <div className={styles.group}>
@@ -77,18 +63,8 @@ console.log("publicGroups", publicGroups)
             type="plus"
             type1 = "button"
             size="small"
-            disabled ={selectedGroup.includes(group.id)}
-            buttonStyle = {selectedGroup.length
-              ?
-                selectedGroup.includes(group.id)
-                ?
-                  "" 
-                  :
-                    "gray"
-                    :
-                      "gray"
-              }
-            
+            disabled ={group.iAmMember}
+            buttonStyle = {group.iAmMember ? "primary" : "gray"}
             onClick={() => {
               let variables = {
                 id: group.id,
