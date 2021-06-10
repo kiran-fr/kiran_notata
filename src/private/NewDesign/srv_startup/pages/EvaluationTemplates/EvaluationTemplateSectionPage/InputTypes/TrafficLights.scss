@@ -46,8 +46,20 @@
         }        
     }
 
-    .traffic-light.inactive {
-        filter: grayscale(100%);
+    // .traffic-light.inactive {
+    //     filter: grayscale(100%);
+    // }
+
+    .traffic-light.redActive {
+        background-color: #F36F56;
+    }
+
+    .traffic-light.yellowActive {
+        background-color: #FCB148;
+    }
+
+    .traffic-light.grenActive {
+        background-color: #63BAA4;
     }
 
     .incre-decre-icons{

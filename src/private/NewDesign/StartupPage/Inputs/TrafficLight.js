@@ -56,7 +56,7 @@ export default function TrafficLights({
         <div className="col-sm-12 col-xs-6">
           <div
             className={`traffic-light ${
-              answer?.val === 1 ? "active" : "inactive"
+              answer?.val === "1" ? "redActive" : "inactive"
             }`}
           >
             <div className="highlighter red">
@@ -73,7 +73,7 @@ export default function TrafficLights({
         <div className="col-sm-12 col-xs-6">
           <div
             className={`traffic-light ${
-              answer?.val === 2 ? "active" : "inactive"
+              answer?.val === "2" ? "yellowActive" : "inactive"
             }`}
           >
             <div className="highlighter yellow">
@@ -89,7 +89,7 @@ export default function TrafficLights({
         <div className="col-sm-12 col-xs-6">
           <div
             className={`traffic-light ${
-              answer?.val === 3 ? "active" : "inactive"
+              answer?.val === "3" ? "grenActive" : "inactive"
             }`}
           >
             <div className="highlighter green">
