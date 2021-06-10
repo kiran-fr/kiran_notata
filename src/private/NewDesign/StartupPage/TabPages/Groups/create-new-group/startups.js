@@ -32,7 +32,7 @@ export default function Startup({ data, setData }) {
     <div className="startup-container">
       <div className="add-startups row">
         <div className="col-sm-7 col-xs-12 add-text">
-          Add startups from your current group:
+          Add startups from existing group:
         </div>
         <div className="col-sm-3 col-xs-12 drop-down">
           <Dropdown

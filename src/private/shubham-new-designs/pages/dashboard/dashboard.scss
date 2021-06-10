@@ -1,4 +1,16 @@
 .dashboard-container{
+
+    .empty-wrapper {
+        margin-right: 25px;
+        font-size: 12px;
+        text-align: center;
+        color: white;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .card-heading-designer{
         padding-top:30px;
         padding-bottom:30px;
@@ -16,6 +28,9 @@
         padding-bottom: 52px;
         height:300px;
         &__data-container{
+
+
+
             &__data-entry{
                 padding-top: 8px;
                 display: flex;

@@ -21,6 +21,19 @@ export default function DashboardNotifications({ history }) {
 
       {!data && loading && <Loader />}
 
+      {!notifications.length && (
+        <div
+          style={{
+            marginTop: "50px",
+            marginBottom: "50px",
+            color: "#969ba3",
+            fontSize: "12px",
+          }}
+        >
+          You have no notifications
+        </div>
+      )}
+
       {notifications.slice(0, 4).map(notification => (
         <div
           className="dashboard-container__notification__notification"

@@ -15,6 +15,8 @@ export default function AddToGroupModalNew({ close, success, connection }) {
       title="Add startup to group"
       loading={addStartupRes.loading}
       submit={async () => {
+        if (!selected) return;
+
         if (addStartupRes.loading) {
           return;
         }

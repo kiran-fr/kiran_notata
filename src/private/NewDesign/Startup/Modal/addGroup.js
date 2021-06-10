@@ -25,10 +25,16 @@ export default function AddGroup({ connection, select }) {
   return (
     <div className={styles.group}>
       <div className={styles.groupChild}>
-        <h2>Select group from list below</h2>
-        <div className={styles.groupDropContainer}>
-          <Dropdown items={groups} setSelectedItem={select} />
-        </div>
+        {!groups.length && <div>You are in no groups</div>}
+
+        {!!groups.length && (
+          <>
+            <h2>Select group from list below</h2>
+            <div className={styles.groupDropContainer}>
+              <Dropdown items={groups} setSelectedItem={select} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
