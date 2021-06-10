@@ -55,37 +55,40 @@ export default function Group() {
       {showLoader && <Loader />}
       {publicGroups.map(group => (
         <div>
-      <div className={styles.group_top}>
-        <div className={styles.button_container}>
-          <Button
-            type="plus"
-            type1 = "button"
-            size="small"
-            disabled ={selectedGroup.includes(group.id)}
-            buttonStyle = {selectedGroup.length
-              ?
-                selectedGroup.includes(group.id)
-                ?
-                  "" 
-                  :
-                    "gray"
-                    :
-                      "gray"
-              }
-            
-            onClick={() => {
-              let variables = {
-                id: group.id,
-              };
-              joinPublicGroup({ variables });
-            }}
-          />
-        </div>
-        <div className={styles.info_container}>
-          <h2>{group.name}</h2>
-          <p>
-            Admin: <span>{group.createdByUser.given_name}{group.createdByUser.family_name}</span>
-          </p>
+          <div className={styles.group_top}>
+            <div className={styles.button_container}>
+              <Button
+                type="plus"
+                type1="button"
+                size="small"
+                disabled={selectedGroup.includes(group.id)}
+                buttonStyle={
+                  selectedGroup.length
+                    ? selectedGroup.includes(group.id)
+                      ? ""
+                      : "gray"
+                    : "gray"
+                }
+                onClick={() => {
+                  let variables = {
+                    id: group.id,
+                  };
+                  joinPublicGroup({ variables });
+                }}
+              />
+            </div>
+
+            <div className={styles.info_container}>
+              <h2>{group.name}</h2>
+              <p>
+                Admin:{" "}
+                <span>
+                  {group.createdByUser.given_name}
+                  {group.createdByUser.family_name}
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
       ))}
     </div>
