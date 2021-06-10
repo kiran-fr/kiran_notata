@@ -55,7 +55,7 @@ let publicGroupsFromServer = publicGroupsQuery?.data?.groupsPublicGet || [];
   //   }
   // };
 
-
+console.log("publicGroups", publicGroups)
   useEffect(() => {
     if(publicGroups.length){
       const data = []
@@ -100,7 +100,7 @@ let publicGroupsFromServer = publicGroupsQuery?.data?.groupsPublicGet || [];
         <div className={styles.info_container}>
           <h2>{group.name}</h2>
           <p>
-            Admin: <span>{user.family_name}{user.given_name}</span>
+            Admin: <span>{group.createdByUser.given_name}{group.createdByUser.family_name}</span>
           </p>
         </div>
       </div>
