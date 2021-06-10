@@ -25,24 +25,85 @@ export default function ManageSidebar({
   }, [manageColValue]);
 
   const handleManageSection = (e, evaltionId) => {
+    let checkboxValue = e.target.checked
     let checked =  e.target.checked
     let unchecked = !e.target.checked
-    let name = e.target.name
-    let evaluationNameWithUnCheck = name === "evaluation" && unchecked
-    let evaluationNameWithCheck =  name === "evaluation" && checked
-    let showAll = name === "showAll"
-    let evaltionIDClick = evaltionId
+    let checkboxName = e.target.name
+    let allEvaluationWithUnCheck = checkboxName === "evaluation" && unchecked
+    let allEvaluationWithCheck =  checkboxName === "evaluation" && checked
+    let showAll = checkboxName === "showAll"
+    let evaltionIDClick = evaltionId 
 
+    // show all check logic 
+    const showAllArr = (checkVal, arr) => {
+      setManageColValue({
+        ...manageColValue,
+        groups: checkVal,
+        funnels: checkVal,
+        tags: checkVal,
+        subjectiveScore: checkVal,
+        evaluationTemplates: arr,
+      })
+    }
 
-    if (evaltionIDClick) {
-      if (unchecked) {
+    // global evaltion checkbox clik 
+
+    if(allEvaluationWithUnCheck || allEvaluationWithCheck) {
+      switch(allEvaluationWithUnCheck || allEvaluationWithCheck) {
+        case allEvaluationWithUnCheck:
+          return (
+            setManageColValue({
+              ...manageColValue,
+              ["evaluationTemplates"]: [],
+            })
+          )
+        default:
+          const evaluationArr = []
+          evaluationTemplates.forEach(summary => {
+            evaluationArr.push(summary.id)
+          });
+          return (
+            setManageColValue(manageColValue => ({
+              ...manageColValue,
+              ["evaluationTemplates"]: [
+                ...evaluationArr,
+              ],
+            }))
+          )
+      }
+    }
+
+    // show all checkbox clik 
+
+    if(showAll) {
+      switch(showAll) {
+        case unchecked:
+          return (
+            showAllArr(checkboxValue, [])
+          )
+        default:
+          // showAll is checked
+          let newArr = [];
+          evaluationTemplates.forEach(summary => {
+            newArr.push(summary.id);
+          });
+        
+          return (
+            showAllArr(checkboxValue, newArr)
+          )
+      }
+    }
+
+    // evaltion checkbox clik 
+    if(evaltionIDClick) {
+      if(unchecked) {
         const filteredItems = manageColValue.evaluationTemplates.filter(
           item => item !== evaltionId
         );
         setManageColValue({
           ...manageColValue,
           ["evaluationTemplates"]: filteredItems,
-        });
+        })
       } else {
         var checkedEvaltion = manageColValue.evaluationTemplates
         .length
@@ -51,66 +112,28 @@ export default function ManageSidebar({
           :
             [];
         checkedEvaltion.push(evaltionId);
-        setManageColValue({
-          ...manageColValue,
-          ["evaluationTemplates"]: checkedEvaltion,
-        });
-
-      }
-    } else {
-        if (evaluationNameWithUnCheck) {
           setManageColValue({
             ...manageColValue,
-            ["evaluationTemplates"]: [],
-          });
-        } else if (evaluationNameWithCheck) {
-          const evaluationArr = []
-          evaluationTemplates.forEach(summary => {
-            evaluationArr.push(summary.id)
-          });
-
-          setManageColValue(manageColValue => ({
-            ...manageColValue,
-            ["evaluationTemplates"]: [
-              ...evaluationArr,
-            ],
-          }));
-        } else {
-          if (showAll) {
-            if (unchecked) {
-              setManageColValue({
-                ...manageColValue,
-                groups: false,
-                funnels: false,
-                tags: false,
-                subjectiveScore: false,
-                evaluationTemplates: [],
-              });
-            } else {
-              // showAll is checked
-              let newArr = [];
-              evaluationTemplates.forEach(summary => {
-                newArr.push(summary.id);
-              });
-              setManageColValue({
-                ...manageColValue,
-                groups: true,
-                funnels: true,
-                tags: true,
-                subjectiveScore: true,
-                evaluationTemplates: newArr,
-              });
-            }
-        } else {
-          // group, funnels, tags, subjective score check and uncheck logic
-          setManageColValue({
-            ...manageColValue,
-            [e.target.name]: e.target.checked,
-          });
-        }
+            ["evaluationTemplates"]: checkedEvaltion,
+          })
       }
     }
-    setRender(render);
+    
+    // check and unchecked rest
+
+    if( checkboxName !== "evaluation" &&
+      !showAll &&
+      !evaltionIDClick &&
+      (checked || unchecked)
+    ) {
+      setManageColValue({
+        ...manageColValue,
+        [checkboxName]: checkboxValue,
+      });
+    }
+
+    setRender(!render)
+
   };
 
   const allEvaluation =
