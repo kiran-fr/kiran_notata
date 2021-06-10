@@ -1,9 +1,8 @@
 .dashboard-container {
-
   .funnelSpacing {
     margin-left: 3px;
   }
-  
+
   .card-heading-designer {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -313,6 +312,9 @@
             line-height: 18px;
             color: #b8b8b8;
             margin-left: 5px;
+            text-overflow: ellipsis;
+            max-height: 33px;
+            overflow: hidden;
           }
         }
         &__subjective-score {

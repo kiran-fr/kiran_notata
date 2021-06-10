@@ -101,19 +101,27 @@ export const TemplateSection = props => {
             } text-container`}
           >
             <form>
-              <i className="fa fa-chevron-left"></i>
-              <TextBox
-                name="name"
-                defaultValue={name}
-                onChange={handleInputChange}
-              />
-              <textarea
-                name="description"
-                onChange={handleInputChange}
-                value={description}
-                rows="4"
-                cols="50"
-              ></textarea>
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{ display: "flex", marginTop: 33, marginRight: 10 }}
+                >
+                  <i className="fa fa-chevron-left"></i>
+                </div>
+                <div>
+                  <TextBox
+                    name="name"
+                    defaultValue={name}
+                    onChange={handleInputChange}
+                  />
+                  <textarea
+                    name="description"
+                    onChange={handleInputChange}
+                    value={description}
+                    rows="4"
+                    cols="50"
+                  ></textarea>
+                </div>
+              </div>
             </form>
           </div>
           {!questionOption && (
