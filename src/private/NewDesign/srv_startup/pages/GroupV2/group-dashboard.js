@@ -34,8 +34,15 @@ export default function GroupDashboard({ match, history }) {
   return (
     <>
       <div className="group-dashboard-container">
-        <div className="row">
-          <div className="col-md-9 col-sm-12 col-xs-12 nopadding-left">
+        <div
+          className="row"
+          style={{
+            maxWidth: "1100px",
+            margin: "auto",
+          }}
+        >
+          {/*<div className="col-md-9 col-sm-12 col-xs-12 nopadding-left">*/}
+          <div className="col-md-12 col-sm-12 col-xs-12 nopadding-left">
             <div className="row">
               {/* Company name and description */}
               <div className="col-sm-7 col-md-7">
@@ -62,9 +69,10 @@ export default function GroupDashboard({ match, history }) {
               <StartupList group={group} history={history} />
             </div>
           </div>
-          <div className="col-md-3 col-sm-12 col-xs-12 comments-activities-container">
-            <CommentsActivities />
-          </div>
+
+          {/*<div className="col-md-3 col-sm-12 col-xs-12 comments-activities-container">*/}
+          {/*  <CommentsActivities />*/}
+          {/*</div>*/}
         </div>
       </div>
     </>

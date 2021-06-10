@@ -25,30 +25,37 @@ export default function AddStartup({ closeModal, history, connections }) {
       disabledBtn={true}
       saveModal={closeModal}
       closeModal={closeModal}
-      width={"810px"}
+      // width={"810px"}
     >
       <div className={styles.startup + " " + "startupModal"}>
-        <Tabsection
-          tabArr={tabArr}
-          tabValue={activeTab}
-          tabFuc={setActiveTab}
+        <Short
+          history={history}
+          closeModal={closeModal}
+          connections={connections}
+          styles={styles}
         />
-        {activeTab === "expand" && (
-          <Expand
-            styles={styles}
-            history={history}
-            connections={connections}
-            closeModal={closeModal}
-          />
-        )}
-        {activeTab === "short" && (
-          <Short
-            history={history}
-            closeModal={closeModal}
-            connections={connections}
-            styles={styles}
-          />
-        )}
+
+        {/*<Tabsection*/}
+        {/*  tabArr={tabArr}*/}
+        {/*  tabValue={activeTab}*/}
+        {/*  tabFuc={setActiveTab}*/}
+        {/*/>*/}
+        {/*{activeTab === "expand" && (*/}
+        {/*  <Expand*/}
+        {/*    styles={styles}*/}
+        {/*    history={history}*/}
+        {/*    connections={connections}*/}
+        {/*    closeModal={closeModal}*/}
+        {/*  />*/}
+        {/*)}*/}
+        {/*{activeTab === "short" && (*/}
+        {/*  <Short*/}
+        {/*    history={history}*/}
+        {/*    closeModal={closeModal}*/}
+        {/*    connections={connections}*/}
+        {/*    styles={styles}*/}
+        {/*  />*/}
+        {/*)}*/}
       </div>
     </Modal>
   );

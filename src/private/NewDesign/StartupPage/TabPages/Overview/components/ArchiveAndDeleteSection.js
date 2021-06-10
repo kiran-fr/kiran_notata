@@ -16,7 +16,7 @@ export default function ArchiveAndDeleteSection({ connection, history }) {
           <ButtonWithIcon
             iconName="add"
             className="text-center archive-btn"
-            text="ARCHIEVE STARTUP"
+            text="ARCHIVE STARTUP"
             iconPosition={ICONPOSITION.NONE}
             onClick={() => setArchiveModal(true)}
           />

@@ -21,7 +21,7 @@ export const FrontPage = () => {
       <div
         className={classnames(container)}
         style={{
-          background: `linear-gradient(#52a99e, #2f6e7b)`,
+          background: `linear-gradient(152.3deg, #ffb28c 9.47%,rgb(47, 110, 123) 93.11%)`,
         }}
       >
         <div
@@ -38,7 +38,19 @@ export const FrontPage = () => {
         </div>
 
         <div style={{ position: "relative", top: "-50px" }}>
-          <h1>notata</h1>
+          <h1>
+            notata
+            <span
+              style={{
+                position: "absolute",
+                fontSize: "22px",
+                right: "-15px",
+                top: "19px",
+              }}
+            >
+              ™
+            </span>
+          </h1>
           <div className={subline}>for investors and startups</div>
         </div>
 

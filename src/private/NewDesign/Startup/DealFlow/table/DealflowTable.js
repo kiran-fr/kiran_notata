@@ -77,6 +77,7 @@ export default function Table(props) {
               checkAll={checkAll}
               setCheckAll={setCheckAll}
             />
+
             <TableBody
               {...props}
               handleCompany={handleCompany}

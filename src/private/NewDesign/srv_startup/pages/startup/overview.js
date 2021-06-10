@@ -344,8 +344,8 @@ export default function Overview(props) {
                   Funnels
                 </div>
                 <AddFunnel
-                  // companyId={props.creativity.id}
-                  // updateFunnelTag={updateFunnelTag}
+                // companyId={props.creativity.id}
+                // updateFunnelTag={updateFunnelTag}
                 />
               </div>
               <div className="row groups-container">
@@ -465,7 +465,7 @@ export default function Overview(props) {
                 <ButtonWithIcon
                   iconName="add"
                   className="text-center archive-btn"
-                  text="ARCHIEVE STARTUP"
+                  text="ARCHIVE STARTUP"
                   iconPosition={ICONPOSITION.NONE}
                   onClick={() => setArchiveModal(true)}
                 ></ButtonWithIcon>

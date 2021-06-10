@@ -59,7 +59,7 @@ function NavigationComp() {
         <Scrollspy
           items={[
             "My Evaluations",
-            "My team Evaluations",
+            "My Teams Evaluations",
             "Groups Evaluations",
           ]}
           currentClassName="is-current"
