@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { userGet, notificationsGet } from "private/Apollo/Queries";
-import { settings, signOut, setting_profile, your_team, notification } from "definitions.js";
+import {
+  settings,
+  signOut,
+  setting_profile,
+  your_team,
+  notification,
+} from "definitions.js";
 import NotificationsDropDown from "./notification-top-menu";
-import ProfilePic from "../../../assets/images/profile-pic.png";
+import profilePic from "../../../assets/images/profile-pic.png";
 
 // STYLE
 import styles from "./TopMenu.module.css";
@@ -56,15 +62,6 @@ export function TopMenu({ history }) {
         </div>
       )}
 
-      {/* no funcationality  coming soon */}
-      {/* <span>
-        <i className="fas fa-question-circle"></i>
-      </span>
-
-      <span>
-        <i className="fas fa-alarm-clock"></i>
-      </span> */}
-
       <span
         onMouseEnter={() => setNotificatonsOpen(true)}
         onMouseLeave={() => setNotificatonsOpen(false)}
@@ -74,7 +71,7 @@ export function TopMenu({ history }) {
             className={`fas fa-bell ${
               notificationsOpen ? styles.notification_icon_selected : ""
             }`}
-          ></i>
+          />
           {unseen.length !== 0 && <div className={styles.circle}></div>}
         </Link>
         {notificationsOpen && <NotificationsDropDown />}
@@ -87,7 +84,20 @@ export function TopMenu({ history }) {
       </span>
 
       <div className={styles.profile}>
-        <img src={ProfilePic} className={styles.profile_pic_img} />
+        <div className={styles.profile_pic_img}>
+          <span>{user?.given_name?.charAt(0)}</span>
+
+          {/*{*/}
+          {/*  profilePic && (*/}
+          {/*    <img src={profilePic} />*/}
+          {/*  ) || (*/}
+          {/*    <span>*/}
+          {/*      {user?.given_name?.charAt(0)}*/}
+          {/*    </span>              */}
+          {/*  )*/}
+          {/*}*/}
+        </div>
+
         <p className={styles.profile_name}>
           {user.given_name} {user.family_name}
         </p>

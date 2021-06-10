@@ -3,10 +3,10 @@
   &__heading {
     font-family: "Proxima Nova";
     font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    text-transform: capitalize;
+    font-size: 20px;
+    line-height: 24px;
     color: #969ba3;
+    text-transform: capitalize;
     margin-top: 25px;
   }
   &__sub-heading {
@@ -18,35 +18,21 @@
     margin-top: 5px;
   }
   &__placeholder {
-    border: 1px solid #b5b5b5;
     margin-top: 10px;
-    border-radius: 20px;
-    padding: 8px;
+    padding: 0px 8px;
     display: flex;
     flex-flow: row wrap;
     z-index: 999;
     min-height: 40px;
-    @media only screen and(max-width:500px) {
-      width: 300px;
-    }
-    @media only screen and (min-width: 500px) and (max-width: 768px) {
-      width: 450px;
-    }
-    @media only screen and (min-width: 768px) and (max-width: 1115px) {
-      width: 300px;
-    }
-    @media only screen and (min-width: 1115px) {
-      width: 450px;
-    }
+
     i {
       background-color: #53cab2;
       border-radius: 50%;
-      height: 18px;
-      width: 18px;
+      height: 23px;
+      width: 23px;
       text-align: center;
-      font-size: 10px;
-      margin-top: 2px;
-      /* position: absolute; */
+      font-size: 15px;
+      margin-top: 10px;
       padding-top: 4px;
       margin-left: 7px;
       color: #ffffff;
@@ -74,6 +60,29 @@
       color: #53cab2 !important;
     }
   }
+
+  &__tag-item {
+    position: relative;
+    height: 24px;
+    background: var(--ui-color-gray-dark1);
+    border-radius: 12px;
+    margin: 0 8px 0px 0;
+    padding: 4px 15px;
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    .inner-tag {
+      margin-right: 15px;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      color: white;
+    }
+  }
+
+
   .tag {
     font-family: "Roboto";
     font-weight: 500;

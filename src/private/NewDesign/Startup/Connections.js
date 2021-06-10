@@ -21,14 +21,10 @@ import { Kanban } from "../Kanban/Kanban";
 
 // Components
 import Paginator from "./Paginator";
-import AddGroup from "./Modal/addGroup";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/table/DealflowTable";
-import { Modal } from "Components/UI_Kits/Modal/Modal";
-// import { groupsGetV2 } from "../../Apollo/Queries";
-
-// import Table from "./DealFlow/table/newdesignTable/table";
+import AddToGroupModalNew from "./Modal/AddToGroupModalNew";
 
 function getCleanFilterData(filters) {
   let clean = {};
@@ -59,9 +55,6 @@ function ListOfStartups({
   const [showStartUpForId, setShowStartUpForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
-
-  // Queries
-  const groupsQuery = useQuery(groupsGetV2);
 
   // Fetch more
   useEffect(() => {
@@ -110,20 +103,9 @@ function ListOfStartups({
       />
 
       {showTagGroupForId && (
-        <Modal
-          title="Add startup to group"
-          submit={() => setShowTagGroupForId(undefined)}
+        <AddToGroupModalNew
+          connection={connections.find(({ id }) => id === showTagGroupForId)}
           close={() => setShowTagGroupForId(undefined)}
-          submitTxt="OK"
-          closeTxt="CLOSE"
-          children={
-            <AddGroup
-              connection={connections.find(
-                ({ id }) => id === showTagGroupForId
-              )}
-              groups={groupsQuery?.data?.groupsGetV2}
-            />
-          }
         />
       )}
 

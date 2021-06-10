@@ -1,4 +1,4 @@
-import React, { Children, useState } from "react";
+import React from "react";
 import styles from "./modal.module.css";
 
 export default function DealFLowTag({
@@ -13,6 +13,7 @@ export default function DealFLowTag({
   const handleModal = () => {
     closeModal(false);
   };
+
   const handleSave = () => {
     saveModal();
   };
@@ -23,7 +24,7 @@ export default function DealFLowTag({
       <div className={styles.tableModalOutter}>
         <div className={styles.tableModalInner} style={{ width: width }}>
           <div className={styles.close} onClick={() => handleModal()}>
-            <i className="fal fa-times"></i>
+            <i className="fal fa-times" />
           </div>
           <div className={styles.top}>
             <h1>{title}</h1>
@@ -43,6 +44,7 @@ export default function DealFLowTag({
                   </>
                 )}
               </button>
+              <button onClick={handleModal}>CLOSE</button>
             </div>
           </div>
         </div>

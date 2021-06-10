@@ -9,10 +9,11 @@ export default function MultipleTextInputContainer({
   setAnswers,
 }) {
   // Get answers for question
-  let currentAnswers = answers.filter(
-    ({ inputType, questionId }) =>
-      inputType === question.inputType && questionId === question.id
-  );
+  let currentAnswers = answers.filter(({ inputType, questionId }) => {
+    let sameInputType = inputType === question.inputType;
+    let sameQuestionId = questionId === question.id;
+    return sameInputType && sameQuestionId;
+  });
 
   // Add new answer
   function addNewAnswer(value, event) {
@@ -47,10 +48,11 @@ export default function MultipleTextInputContainer({
     if (!data) return;
 
     // Get all answers, except from current question
-    let otherAnswers = answers.filter(
-      ({ inputType, questionId }) =>
-        inputType !== question.inputType && questionId !== question.id
-    );
+    let otherAnswers = answers.filter(({ inputType, questionId }) => {
+      let sameInputType = inputType === question.inputType;
+      let sameQuestionId = questionId === question.id;
+      return !(sameInputType && sameQuestionId);
+    });
 
     // Updated answers
     let updatedAnswers = currentAnswers.map((answer, i) => ({
@@ -77,16 +79,19 @@ export default function MultipleTextInputContainer({
   // Event: onDelete
   function handleOnDelete(index) {
     // Get all answers, except from current question
-    let otherAnswers = answers.filter(
-      ({ inputType, questionId }) =>
-        inputType !== question.inputType && questionId !== question.id
-    );
+    let otherAnswers = answers.filter(({ inputType, questionId }) => {
+      let sameInputType = inputType === question.inputType;
+      let sameQuestionId = questionId === question.id;
+      return !(sameInputType && sameQuestionId);
+    });
 
     // Remove answer from current
     currentAnswers.splice(index, 1);
 
     // Combine answers
     let newAnswers = [...otherAnswers, ...currentAnswers];
+
+    console.log("newAnswers.length", newAnswers.length);
 
     // Set data
     setAnswers(newAnswers);

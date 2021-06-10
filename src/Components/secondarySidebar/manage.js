@@ -103,6 +103,7 @@ export default function ManageSidebar({
         }
       }
     }
+
     setRender(render);
   };
 

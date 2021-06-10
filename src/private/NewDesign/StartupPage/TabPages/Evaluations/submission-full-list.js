@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "./submission-full-list.scss";
 
-export default function SubmissionFullList({ obj }) {
+export default function SubmissionFullList({ evaluation }) {
   let details = {};
-  let sec = obj?.summary?.sections?.map(item => {
+  let sec = evaluation?.summary?.sections?.map(item => {
     details[item.sectionId] = "collapse";
   });
 
   console.log("details", details);
-  console.log("obj", obj);
+  console.log("obj", evaluation);
 
   const [collapseDetailList, setCollapseDetailList] = useState(details);
   return (
@@ -16,10 +16,10 @@ export default function SubmissionFullList({ obj }) {
       <div className="row">
         <div className="col-sm-10 col-xs-10 summary">Summary</div>
         <div className="col-sm-2 col-xs-2 score">
-          {obj?.summary?.scorePercent || 0}%
+          {evaluation?.summary?.scorePercent || 0}%
         </div>
       </div>
-      {obj?.summary?.sections?.map(section => {
+      {evaluation?.summary?.sections?.map(section => {
         return (
           <div key={section.sectionId}>
             <div className="row detail-type">

@@ -4,7 +4,6 @@ import { startup_page } from "definitions";
 import TableBody from "./tableBody";
 import TableHeader from "./tableHeader";
 import SelectAllPopup from "./SelectAllPopup";
-
 import ArchiveModal from "./modals/ArchiveModal";
 import AddToGroupModal from "./modals/AddToGroupModal";
 import AddTagsModal from "./modals/AddTagsModal";
