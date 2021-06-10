@@ -25,9 +25,17 @@ export default function ManageSidebar({
   }, [manageColValue]);
 
   const handleManageSection = (e, evaltionId) => {
-    if (evaltionId) {
-      if (e.target.checked === false) {
-        //  remove the unchecked evaluation template
+    let checked =  e.target.checked
+    let unchecked = !e.target.checked
+    let name = e.target.name
+    let evaluationNameWithUnCheck = name === "evaluation" && unchecked
+    let evaluationNameWithCheck =  name === "evaluation" && checked
+    let showAll = name === "showAll"
+    let evaltionIDClick = evaltionId
+
+
+    if (evaltionIDClick) {
+      if (unchecked) {
         const filteredItems = manageColValue.evaluationTemplates.filter(
           item => item !== evaltionId
         );
@@ -36,64 +44,63 @@ export default function ManageSidebar({
           ["evaluationTemplates"]: filteredItems,
         });
       } else {
-        //  add the checked evaluation template
-        var checkedEvaltion = manageColValue.evaluationTemplates;
+        var checkedEvaltion = manageColValue.evaluationTemplates
+        .length
+          ?
+            manageColValue.evaluationTemplates
+          :
+            [];
         checkedEvaltion.push(evaltionId);
         setManageColValue({
           ...manageColValue,
           ["evaluationTemplates"]: checkedEvaltion,
         });
+
       }
     } else {
-      if (e.target.name === "evaluation" && e.target.checked === false) {
-        // evaluation checkbox is uncheck
-        setManageColValue({
-          ...manageColValue,
-          ["evaluationTemplates"]: [],
-        });
-      } else if (e.target.name === "evaluation" && e.target.checked === true) {
-        setManageColValue({
-          ...manageColValue,
-          ["evaluationTemplates"]: [],
-        });
+        if (evaluationNameWithUnCheck) {
+          setManageColValue({
+            ...manageColValue,
+            ["evaluationTemplates"]: [],
+          });
+        } else if (evaluationNameWithCheck) {
+          const evaluationArr = []
+          evaluationTemplates.forEach(summary => {
+            evaluationArr.push(summary.id)
+          });
 
-        // evaluation checkbox is check
-        evaluationTemplates.forEach(summary => {
           setManageColValue(manageColValue => ({
             ...manageColValue,
             ["evaluationTemplates"]: [
-              ...manageColValue.evaluationTemplates,
-              summary.id,
+              ...evaluationArr,
             ],
           }));
-        });
-      } else {
-        if (e.target.name === "showAll") {
-          // showAll is unchecked
-          if (e.target.checked === false) {
-            setManageColValue({
-              ...manageColValue,
-              groups: false,
-              funnels: false,
-              tags: false,
-              subjectiveScore: false,
-              evaluationTemplates: [],
-            });
-          } else {
-            // showAll is checked
-            let newArr = [];
-            evaluationTemplates.forEach(summary => {
-              newArr.push(summary.id);
-            });
-            setManageColValue({
-              ...manageColValue,
-              groups: true,
-              funnels: true,
-              tags: true,
-              subjectiveScore: true,
-              evaluationTemplates: newArr,
-            });
-          }
+        } else {
+          if (showAll) {
+            if (unchecked) {
+              setManageColValue({
+                ...manageColValue,
+                groups: false,
+                funnels: false,
+                tags: false,
+                subjectiveScore: false,
+                evaluationTemplates: [],
+              });
+            } else {
+              // showAll is checked
+              let newArr = [];
+              evaluationTemplates.forEach(summary => {
+                newArr.push(summary.id);
+              });
+              setManageColValue({
+                ...manageColValue,
+                groups: true,
+                funnels: true,
+                tags: true,
+                subjectiveScore: true,
+                evaluationTemplates: newArr,
+              });
+            }
         } else {
           // group, funnels, tags, subjective score check and uncheck logic
           setManageColValue({
@@ -103,7 +110,6 @@ export default function ManageSidebar({
         }
       }
     }
-
     setRender(render);
   };
 
