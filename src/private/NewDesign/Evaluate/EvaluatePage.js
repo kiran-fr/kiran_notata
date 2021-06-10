@@ -83,10 +83,14 @@ export default function EvaluatePage({ match, history }) {
   // Functions
 
   const save = async () => {
+    console.log("save");
+
     setLoading(true);
 
     // Create new
     if (!evaluationId) {
+      console.log("new");
+
       try {
         let variables = {
           connectionId,
@@ -97,7 +101,7 @@ export default function EvaluatePage({ match, history }) {
         let id = res?.data?.evaluationCreate?.id;
 
         history.push(
-          `${evaluation_summary_page}/${connectionId}/${templateId}/${evaluationId}`
+          `${evaluation_summary_page}/${connectionId}/${templateId}/${id}`
         );
       } catch (error) {
         console.log("error", error);
@@ -106,6 +110,8 @@ export default function EvaluatePage({ match, history }) {
 
     // Update
     if (evaluationId) {
+      console.log("update");
+
       try {
         let updateVariables = {
           id: evaluationId,
