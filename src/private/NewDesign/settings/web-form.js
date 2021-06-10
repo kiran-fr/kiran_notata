@@ -24,7 +24,8 @@ export default function WebForm({ history }) {
   const iFrameUrl =
     `${window.location.protocol}//` +
     `${window.location.host}/` +
-    `public_new/` +
+    `public/` +
+    `creative_new/` +
     `${account.id || "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}/` +
     `form.html`;
 

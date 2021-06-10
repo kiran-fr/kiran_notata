@@ -177,7 +177,7 @@ export default function Evaluations({ history }) {
                         href="#my-team-eval"
                         onClick={() => setMyTeamEvalState("")}
                       >
-                        My team evaluations
+                        My teams evaluations
                       </a>
                     </li>
                     <li>
@@ -317,7 +317,7 @@ export default function Evaluations({ history }) {
                         )
                       }
                     ></i>
-                    My team evaluations
+                    My teams evaluations
                   </div>
                   <div className={myTeamEvalState}>
                     <div className="row evalations-container__details">

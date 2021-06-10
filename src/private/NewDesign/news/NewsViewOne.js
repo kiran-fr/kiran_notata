@@ -126,7 +126,7 @@ export default function NewsViewOne({ history, match }) {
   return (
     <div className="news-container">
       <div className="news-container__main">
-        <EachNews id={news?.id} data={news} istory={history} />
+        <EachNews id={news?.id} data={news} history={history} />
       </div>
     </div>
   );

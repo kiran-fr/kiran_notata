@@ -183,6 +183,7 @@ export const RouterComponent = ({ history }) => {
       <Route eaxct path={news} component={News} />
       <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
       <Route eaxct path={new_news} component={NewsEdit} />
+
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
       <Route exact path={archive_page} component={ArchivePage} />
 

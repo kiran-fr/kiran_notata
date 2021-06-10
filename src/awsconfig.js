@@ -37,6 +37,21 @@ Amplify.configure({
 
   API: {
     endpoints: [
+      // V3PROD
+      {
+        // PRIVATE
+        name: "GQL_APIG_PRIVATE_v3prod",
+        endpoint: "https://4uii2ofrmf.execute-api.eu-west-1.amazonaws.com",
+        region: awsconfig.region,
+      },
+      {
+        // PUBLIC
+        name: "GQL_APIG_PUBLIC_v3prod",
+        endpoint: "https://7y82z8zly4.execute-api.eu-west-1.amazonaws.com",
+        region: awsconfig.region,
+      },
+
+      // V2PROD
       {
         // private
         name: "GQL_APIG_PRIVATE_dev2",
@@ -49,6 +64,8 @@ Amplify.configure({
         endpoint: "https://v29pv4mmz3.execute-api.eu-west-1.amazonaws.com",
         region: awsconfig.region,
       },
+
+      // DEV2
       {
         // private
         name: "GQL_APIG_PRIVATE_v2prod",
@@ -61,6 +78,8 @@ Amplify.configure({
         endpoint: "https://jpu8yabr6h.execute-api.eu-west-1.amazonaws.com",
         region: awsconfig.region,
       },
+
+      // LOCAL
       {
         // private
         name: "GQL_APIG_PRIVATE_local",
@@ -84,7 +103,7 @@ Amplify.configure({
 });
 
 const STAGE = "dev2";
-const isLocal = true;
+const isLocal = false;
 
 const GQL = {
   private: {

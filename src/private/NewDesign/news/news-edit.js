@@ -101,6 +101,8 @@ function Preview({ data, user }) {
 }
 
 export default function NewsEdit({ history, match }) {
+  console.log("NewsEdit");
+
   let { id } = match?.params;
 
   // States

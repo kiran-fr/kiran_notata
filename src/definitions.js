@@ -64,8 +64,8 @@ export const evaluation_summary_page = `${startup_page}/summary`;
 
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
 export const news = `${startup_page}/news`;
-export const edit_news = `${startup_page}/news/edit`;
-export const new_news = `${startup_page}/news/new`;
+export const edit_news = `${startup_page}/edit_news`;
+export const new_news = `${startup_page}/new_news`;
 export const news_view_one = `${startup_page}/view`;
 
 //dashboard
