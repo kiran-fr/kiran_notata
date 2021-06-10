@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import styles from "./sidebar.module.scss";
+import { cloneDeep } from "lodash";
 
 // API STUFF
 import { useMutation } from "@apollo/client";
@@ -105,10 +106,9 @@ export default function ManageSidebar({
           ["evaluationTemplates"]: filteredItems,
         })
       } else {
-        var checkedEvaltion = manageColValue.evaluationTemplates
-        .length
+        var checkedEvaltion = cloneDeep(manageColValue.evaluationTemplates).length
           ?
-            manageColValue.evaluationTemplates
+            cloneDeep(manageColValue.evaluationTemplates)
           :
             [];
         checkedEvaltion.push(evaltionId);

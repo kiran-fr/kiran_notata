@@ -146,7 +146,7 @@ export default function TagsModal({
               return (
                 <div className="singleTag">
                   <span className="singleTagName" key={tag.id}>
-                    {tag.group.name}: {tag.name}
+                    {tag?.group?.name}: {tag?.name}
                   </span>
                   <span>
                     <i

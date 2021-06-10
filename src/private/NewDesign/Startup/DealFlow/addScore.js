@@ -32,7 +32,7 @@ export function AddScore({ connection }) {
   useEffect(() => {
     let yourScore = getMyScore({ connection });
     setSubjectiveScore(yourScore || "");
-  }, [connection]);
+  }, [connection && !subjectiveScore]);
 
   return (
     <div className={styles.score}>
