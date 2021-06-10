@@ -20,14 +20,22 @@
       width: 54px;
       border-radius: 50%;
     }
-    .red {
-      background-color: #ff9078;
+
+
+    // .traffic-light.inactive {
+    //     filter: grayscale(100%);
+    // }
+
+    .traffic-light.redActive {
+        background-color: #F36F56;
     }
-    .yellow {
-      background-color: #ffc86a;
+
+    .traffic-light.yellowActive {
+        background-color: #FCB148;
     }
-    .green {
-      background-color: #70d8c3;
+
+    .traffic-light.grenActive {
+        background-color: #63BAA4;
     }
     .text {
       font-family: "Proxima Nova";
