@@ -109,8 +109,12 @@
     padding-left: 10px;
   }
   .suggested-tag {
-    color: #dadada;
-    background: #9d9d9d;
+    // color: #dadada;
+    // background: #9d9d9d;
+    color: white;
+    background: #6a6a6a;
+    font-size: 11px;
+    padding: 5px 10px 5px 10px;
   }
   .loading_icon {
     color: var(--color-primary);
