@@ -94,9 +94,9 @@
   top: 50%;
   transform: translateY(-50%);
 }
-.startupTable td:nth-child(1) {
+/* .startupTable td:nth-child(1) {
   width: 84px;
-}
+} */
 .startupTable td:nth-child(2) {
   min-width: 185px;
   /* position: static !important; */
@@ -395,6 +395,7 @@
 
 .selectDropdown {
   cursor: pointer;
+  margin-left: -12px;
 }
 
 .selectDropdown img {
@@ -445,6 +446,7 @@
   user-select: none;
   display: block;
   cursor: pointer;
+  margin-left: 20px;
 }
 
 .tableHeaderCheckmark > div {
@@ -465,6 +467,7 @@
   border-radius: 3px;
   border: 1px solid #dadada;
 }
+
 /* On mouse-over, add a grey background color */
 .tableHeaderCheckmark .customCheck:hover input ~ .checkmark {
   border-color: rgb(190, 190, 190);

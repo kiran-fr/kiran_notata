@@ -51,6 +51,7 @@ export default function Group() {
   }, [publicGroups]);
 
   return (
+    
     <div className={styles.group}>
       {showLoader && <Loader />}
       {publicGroups.map(group => (
@@ -87,7 +88,9 @@ export default function Group() {
             Admin: <span>{group.createdByUser.given_name}{group.createdByUser.family_name}</span>
           </p>
         </div>
+        </div>
+        </div>
       ))}
-    </div>
+  </div>
   );
 }
