@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { userGet, notificationsGet } from "private/Apollo/Queries";
-import { settings, signOut, setting_profile, your_team } from "definitions.js";
+import {
+  settings,
+  signOut,
+  setting_profile,
+  your_team,
+  reminders,
+} from "definitions.js";
 import NotificationsDropDown from "./notification-top-menu";
 import ProfilePic from "../../../assets/images/profile-pic.png";
 
@@ -60,7 +66,7 @@ export function TopMenu({ history }) {
         <i className="fas fa-question-circle"></i>
       </span>
 
-      <span>
+      <span onClick={() => history.push(reminders)}>
         <i className="fas fa-alarm-clock"></i>
       </span>
 

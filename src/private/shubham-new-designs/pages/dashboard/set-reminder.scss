@@ -1,0 +1,250 @@
+.set-reminder-container-inner{
+    max-width:880px!important;
+}
+.set-reminder-container{
+    display: flex;
+    flex-wrap: wrap;
+    &__remind{
+        padding-top:25px;
+        flex: 1 0 33%;
+        @media only screen and(max-width:768px) {
+            flex: 1 0 100%;
+        }
+        &__my-teams{
+            margin-left: 20px;
+            margin-top:25px;
+        }
+        &__item{
+            margin-top:20px;
+            font-family: Proxima Nova;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 19px;
+            color: #6A6A6A;
+            input{
+                svg{
+                    margin-top: -2px;
+                }
+            }
+            span{
+                margin-left:10px;
+            }
+            i{
+                margin-left:10px;
+                color:#53CAB2;
+                cursor: pointer;
+            }
+            &__email{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: #969BA3;
+                margin-left: 46px;
+            }
+        }
+    }
+    &__header{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        text-transform: capitalize;
+        color: #969BA3;
+    }
+    &__to-do{
+        flex: 1 0 33%;
+        padding-top:25px;
+        padding-right:20px;
+        @media only screen and(max-width:768px) {
+            flex: 1 0 100%;
+        }
+        textarea{
+            height:150px;
+            width:266px;
+            background: #FFFFFF;
+            border: 1px solid #CECECE;
+            box-sizing: border-box;
+            border-radius: 8px;
+            resize: none;
+            margin-top:5px;
+        }
+    }
+    &__when{
+        flex: 1 0 30%;
+        padding-top:25px;
+        @media only screen and(max-width:768px) {
+            flex: 1 0 100%;
+        }
+        &__on{
+            display: flex;
+            align-items: center;
+            &__datePicker {
+                font-family: "Proxima Nova";
+                font-size: 12px;
+                line-height: 15px;
+                color: #969ba3;
+                background: #ffffff;
+                border: 1px solid #cecece;
+                box-sizing: border-box;
+                border-radius: 20px;
+                height: 30px;
+                padding: 6px 12px 8px 11px;
+                margin-top: 5px;
+                min-width: 200px;
+                margin-left:10px;
+                cursor: pointer;
+                i {
+                    cursor: pointer;
+                    margin-left: auto;
+                }
+                &--text{
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            &__header{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 19px;
+                text-transform: capitalize;
+                color: #969BA3;
+            }
+        }
+        &__in{
+            margin-top:25px;
+            display: flex;
+            align-items: center;
+            &__no-of-days{
+                background: #FFFFFF;
+                border: 1px solid #CECECE;
+                box-sizing: border-box;
+                border-radius: 20px;
+                height:40px;
+                width:89px;
+                margin-left: 20px;
+                padding-left: 20px;
+            }
+            &__no-of-days-dropdown{
+                height:40px;
+                width:89px;
+                margin-left: 10px;
+            }
+        }
+        &__or{
+            margin-top:25px;
+            display: flex;
+            align-items: center;
+            &__header{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 9px;
+                line-height: 11px;
+                letter-spacing: 0.03em;
+                color: #969BA3;
+            }
+            &__separator{
+                border-bottom: 1px solid #F0F0F0;
+                width: 80%;
+                margin-left: 20px;
+            }            
+        }
+    }
+    .react-datepicker {
+        position: absolute;
+        right: 48px;
+        @media only screen and(max-width:891px) {
+            left: 50px;
+            right:auto;
+        }
+        z-index: 99999;
+        margin-top: 20px;
+        &__month-container {
+          padding: 10px;
+        }
+        &__header {
+          background: #fff;
+          border-bottom: none;
+        }
+        &__current-month {
+          padding-top: 7px;
+          padding-bottom: 13px;
+          font-family: "Proxima Nova";
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 17px;
+          color: #969ba3;
+        }
+        &__day-names {
+          border-bottom: 1px solid #f0f0f0;
+        }
+        &__day-name {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 12px;
+          letter-spacing: 0.03em;
+          color: #63baa4;
+          margin-left: 0px;
+          margin-right: 0px;
+        }
+        &__month {
+          margin-top: 10px;
+        }
+        &__week {
+          padding-top: 2px;
+        }
+        &__day {
+          padding-bottom: 7px;
+          padding-top: 7px;
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: 0.03em;
+          margin-left: 0px;
+          margin-right: 0px;
+          color: #737373;
+          border-radius: 0px;
+          &--selected {
+            background-color: #53cab2 !important;
+            color: #ffffff;
+            border-radius: 50% !important;
+            font-weight: bold;
+          }
+          &:hover {
+            border-radius: 0px;
+            background-color: #bdfff2;
+          }
+          &--keyboard-selected,
+          &--in-selecting-range,
+          &--in-range {
+            border-radius: 0px;
+            background-color: #bdfff2;
+            &:hover {
+              background-color: #bdfff2;
+              border-radius: 0px;
+            }
+          }
+          &--range-start,
+          &--range-end {
+            border-radius: 50%;
+            background-color: #53cab2 !important;
+            color: #ffffff;
+            font-weight: bold;
+            &:hover {
+              border-radius: 50% !important;
+            }
+          }
+        }
+      }
+}

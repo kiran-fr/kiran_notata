@@ -92,6 +92,13 @@ export const StartupPage = ({ match, history, location }) => {
 
   return (
     <>
+      <div className="header-routing">
+        <span className="header-routing__highlight">My Startups</span>
+        <i className="fal fa-chevron-right header-routing__stilt"></i>
+        <span className="header-routing__name">
+          {`{Startup Name}`}:Selected Tab Name
+        </span>
+      </div>
       <div className="col-12 startup-container">
         <Tabs value={tab} onChange={handleChange}>
           <Tab label="OVERVIEW" {...a11yProps(0)} />

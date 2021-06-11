@@ -133,24 +133,29 @@ export default function News({ history }) {
   let canEditNews = userQuery?.data?.userGet?.canEditNews;
 
   return (
-    <div className="news-container">
-      <div className="news-container__main">
-        <div className="news-container__heading">
-          <span>News</span>
-          {canEditNews && (
-            <i
-              className="fas fa-plus-circle new-icon"
-              onClick={() => {
-                history.push(new_news);
-              }}
-            />
-          )}
-        </div>
-
-        {news.map(data => (
-          <EachNews id={data.id} data={data} history={history} />
-        ))}
+    <>
+      <div className="header-routing">
+        <span className="header-routing__highlight">News</span>
       </div>
-    </div>
+      <div className="news-container">
+        <div className="news-container__main">
+          <div className="news-container__heading">
+            <span>News</span>
+            {canEditNews && (
+              <i
+                className="fas fa-plus-circle new-icon"
+                onClick={() => {
+                  history.push(new_news);
+                }}
+              />
+            )}
+          </div>
+
+          {news.map(data => (
+            <EachNews id={data.id} data={data} history={history} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
