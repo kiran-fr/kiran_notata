@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./profile.scss";
-import { SETTINGSMENU } from "../../NewDesign/srv_startup/pages/constants";
+
 import { ProfileContent } from "../../../Containers/NewDesign/PreProfile/Profile";
 import { settings } from "../../../definitions";
 

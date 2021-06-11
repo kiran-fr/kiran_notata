@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import classnames from "classnames";
 import styles from "./modal.module.css";
 
-// Main function
+// API Stuff
+import { useMutation } from "@apollo/client";
+import { connectionSubjectiveScorePut } from "private/Apollo/Mutations";
 
-export function AddScore({ subScore, handleScore }) {
+function getMyScore({ connection }) {
+  return connection?.subjectiveScores?.find(({ isMe }) => isMe)?.score;
+}
+
+export function AddScore({ connection }) {
+  // States
+  const [subjectiveScore, setSubjectiveScore] = useState("");
+
+  // mutations
+  const [mutate] = useMutation(connectionSubjectiveScorePut);
+
+  // store the value in state
+  const handleUpdateScore = newScore => {
+    setSubjectiveScore(newScore);
+    let variables = {
+      id: connection.id,
+      score: newScore,
+    };
+    mutate({ variables });
+  };
+
+  // score given by this user or not
+  useEffect(() => {
+    let yourScore = getMyScore({ connection });
+    setSubjectiveScore(yourScore || "");
+  }, [connection && !subjectiveScore]);
+
   return (
     <div className={styles.score}>
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(sc => (
@@ -13,9 +41,9 @@ export function AddScore({ subScore, handleScore }) {
           key={`sc-${sc}`}
           className={classnames(
             styles.child,
-            subScore === sc ? styles.activeChild : ""
+            subjectiveScore === sc ? styles.activeChild : ""
           )}
-          onClick={() => handleScore(sc)}
+          onClick={() => handleUpdateScore(sc)}
         >
           <p>{sc}</p>
         </div>

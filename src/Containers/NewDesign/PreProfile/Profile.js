@@ -26,22 +26,26 @@ export function ProfileContent({ history, skipLast }) {
   return (
     <>
       <div className={styles.tabs_section}>
-        <div
-          className={
-            page === 1
-              ? styles.tabs_section_child_active
-              : styles.tabs_section_child
-          }
-          onClick={() => setPage(1)}
-        />
-        <div
-          className={
-            page === 2
-              ? styles.tabs_section_child_active
-              : styles.tabs_section_child
-          }
-          onClick={() => setPage(2)}
-        />
+        {!skipLast && (
+          <div
+            className={
+              page === 1
+                ? styles.tabs_section_child_active
+                : styles.tabs_section_child
+            }
+            onClick={() => setPage(1)}
+          />
+        )}
+        {!skipLast && (
+          <div
+            className={
+              page === 2
+                ? styles.tabs_section_child_active
+                : styles.tabs_section_child
+            }
+            onClick={() => setPage(2)}
+          />
+        )}
 
         {!skipLast && (
           <div

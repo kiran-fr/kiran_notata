@@ -32,15 +32,15 @@ export default function Overview(props) {
   // Mutation updating funnel tag for connection
   const [mutate] = useMutation(connectionFunnelTagAdd);
 
-  const updateFunnelTag = async (funnelTagId, connectionId) => {
-    const variables = {
-      connectionId,
-      funnelTagId,
-    };
-    await mutate({
-      variables,
-    });
-  };
+  // const updateFunnelTag = async (funnelTagId, connectionId) => {
+  //   const variables = {
+  //     connectionId,
+  //     funnelTagId,
+  //   };
+  //   await mutate({
+  //     variables,
+  //   });
+  // };
 
   const items = [
     { id: 1, name: "First" },
@@ -344,8 +344,8 @@ export default function Overview(props) {
                   Funnels
                 </div>
                 <AddFunnel
-                  companyId={props.creativity.id}
-                  updateFunnelTag={updateFunnelTag}
+                // companyId={props.creativity.id}
+                // updateFunnelTag={updateFunnelTag}
                 />
               </div>
               <div className="row groups-container">
@@ -465,7 +465,7 @@ export default function Overview(props) {
                 <ButtonWithIcon
                   iconName="add"
                   className="text-center archive-btn"
-                  text="ARCHIEVE STARTUP"
+                  text="ARCHIVE STARTUP"
                   iconPosition={ICONPOSITION.NONE}
                   onClick={() => setArchiveModal(true)}
                 ></ButtonWithIcon>
@@ -490,9 +490,7 @@ export default function Overview(props) {
           <div className="col-sm-4 col-xs-12 col-md-4 ">
             <div className="card discussion-card">
               <div className="row discussions-contianer">
-                <div className="discussions-contianer__heading">
-                  Discussion about startup
-                </div>
+                <div className="discussions-contianer__heading">Notes</div>
                 <div className="discussions-contianer__sub-heading">
                   Notes from you and your team
                 </div>

@@ -88,7 +88,8 @@
   flex-wrap: wrap;
 }
 .groupChild {
-  width: 50%;
+  /*width: 50%;*/
+  width: 100%;
   padding: 10px 0;
 }
 .groupChild h2 {

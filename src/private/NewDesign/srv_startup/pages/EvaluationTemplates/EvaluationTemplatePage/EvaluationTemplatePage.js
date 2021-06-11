@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // API STUFF
 import { useMutation, useLazyQuery } from "@apollo/client";
@@ -25,7 +25,42 @@ import DeleteSectionModal from "./modals/DeleteSectionModal";
 import CloneSectionModal from "./modals/CloneSectionModal";
 import { evaluation_templates_page } from "../../../../../../definitions";
 
+import { useHistory } from "react-router-dom";
+
+function TemplatePopup({
+  setCloneModalForSection,
+  setDeleteModalForSection,
+  section,
+  reference,
+}) {
+  return (
+    <div className="browse__drop-dwon" ref={reference}>
+      <div
+        className="browse__drop-dwon__item"
+        onClick={() => {
+          setCloneModalForSection(section);
+        }}
+      >
+        <span className="material-icons settings">content_copy</span>
+        <span className="text">CLONE</span>
+      </div>
+      <div
+        className="browse__drop-dwon__item leave"
+        onClick={() => {
+          setDeleteModalForSection(section);
+        }}
+      >
+        <span className="material-icons leave">delete</span>
+        <span className="delete-text">DELETE</span>
+      </div>
+    </div>
+  );
+}
+
 export const EvaluationTemplatePage = ({ match, history }) => {
+  const hist = useHistory();
+  const popup = useRef();
+
   // Constants
   const id = match?.params?.id;
 
@@ -68,6 +103,18 @@ export const EvaluationTemplatePage = ({ match, history }) => {
   }, [template]);
 
   // Other
+
+  // Effects
+  useEffect(() => {
+    const handleGlobalEvent = e =>
+      !e.path.includes(popup.current) && viewDropdown
+        ? setViewDropdown(null)
+        : null;
+    window.addEventListener("click", handleGlobalEvent);
+    return () => {
+      window.removeEventListener("click", handleGlobalEvent);
+    };
+  });
 
   const handleInputChange = e => {
     // const { name, value } = e.target;
@@ -142,142 +189,139 @@ export const EvaluationTemplatePage = ({ match, history }) => {
 
   return (
     <>
-      <div className={`add-section-conatiner ssss`}>
-        {/* HEADER */}
-        <div className="row">
-          <div className={`col-sm-8 text-container`}>
-            <form className="templateform">
-              <TextBox
-                name="name"
-                defaultValue={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="Template Name"
-                onBlur={e => {
-                  updateTemplate({
-                    variables: {
-                      id: template?.id,
-                      input: {
-                        name: e.target.value,
-                      },
-                    },
-                  });
-                }}
-              />
-              <textarea
-                name="description"
-                onChange={e => setDescription(e.target.value)}
-                value={description}
-                rows="4"
-                cols="50"
-                placeholder="Template Description"
-                onBlur={e => {
-                  updateTemplate({
-                    variables: {
-                      id: template?.id,
-                      input: {
-                        description: e.target.value,
-                      },
-                    },
-                  });
-                }}
-              />
-            </form>
-          </div>
+      <div className={`add-section-conatiners`}>
+        <div className={`add-section-conatiner ccard`}>
+          {/* HEADER */}
+          <div className="row">
+            <div className={`col-sm-8 text-container`}>
+              <form className="templateform">
+                <div style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      marginRight: 10,
+                      marginTop: 33,
+                    }}
+                  >
+                    <i
+                      className="fa fa-chevron-left"
+                      onClick={() => hist.goBack()}
+                      style={{
+                        color: "#53cab2",
+                        transform: "scale(1.4)",
+                        cursor: "pointer",
+                      }}
+                    ></i>
+                  </div>
 
-          <div className="col-sm-4">
-            <div className="row">
-              <div className="col-sm-12 col-xs-6">
-                <ButtonWithIcon
-                  iconName="add"
-                  className="add-new-section-btn"
-                  text="ADD NEW SECTION"
-                  iconPosition={ICONPOSITION.START}
-                  onClick={() => {
-                    onSubmit();
-                    setAddSectionModal(true);
-                  }}
-                />
-              </div>
-              <div className="col-sm-12 col-xs-6">
-                <ButtonWithIcon
-                  className="import-section-btn"
-                  text="Import section"
-                  onClick={() => setImportSectionModal(true)}
-                />
+                  <div>
+                    <TextBox
+                      name="name"
+                      defaultValue={name}
+                      onChange={e => setName(e.target.value)}
+                      placeholder="Template Name"
+                      onBlur={e => {
+                        updateTemplate({
+                          variables: {
+                            id: template?.id,
+                            input: {
+                              name: e.target.value,
+                            },
+                          },
+                        });
+                      }}
+                    />
+                    <textarea
+                      name="description"
+                      onChange={e => setDescription(e.target.value)}
+                      value={description}
+                      rows="4"
+                      cols="50"
+                      placeholder="Template Description"
+                      onBlur={e => {
+                        updateTemplate({
+                          variables: {
+                            id: template?.id,
+                            input: {
+                              description: e.target.value,
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                </div>
+              </form>
+
+              <div className="col-sm-4">
+                <div className="row">
+                  <div className="col-sm-12 col-xs-6">
+                    <ButtonWithIcon
+                      iconName="add"
+                      className="add-new-section-btn"
+                      text="ADD NEW SECTION"
+                      iconPosition={ICONPOSITION.START}
+                      onClick={() => {
+                        onSubmit();
+                        setAddSectionModal(true);
+                      }}
+                    />
+                  </div>
+                  <div className="col-sm-12 col-xs-6">
+                    <ButtonWithIcon
+                      className="import-section-btn"
+                      text="Import section"
+                      onClick={() => setImportSectionModal(true)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="evaluation-templates-container__data-container">
-          {template?.sections?.map(section => {
-            return (
-              <div
-                className="row evaluation-templates-container__data-container__data"
-                key={`row-id-${section.id}`}
-              >
+          <div className="evaluation-templates-container__data-container">
+            {template?.sections?.map(section => {
+              return (
                 <div
-                  className="col-sm-4 col-xs-10 template-name"
-                  onClick={() => {
-                    let path = `${evaluation_template_page}/${id}/section/${section.id}`;
-                    history.push(path);
-                  }}
+                  className="row evaluation-templates-container__data-container__data"
+                  key={`row-id-${section.id}`}
                 >
-                  {section.name}
-                </div>
-                <div className="col-sm-3 col-xs-10 sections">
-                  {section?.questions?.length || 0} questions
-                </div>
-                <div className="col-sm-3 group-name">3 Points</div>
-                <div className="col-sm-2 col-xs-2 browse">
-                  <span
-                    class="material-icons"
+                  <div
+                    className="col-sm-4 col-xs-10 template-name"
                     onClick={() => {
-                      setViewDropdown(
-                        viewDropdown === section.id ? null : section.id
-                      );
+                      let path = `${evaluation_template_page}/${id}/section/${section.id}`;
+                      history.push(path);
                     }}
                   >
-                    more_horiz
-                  </span>
-                  {viewDropdown === section.id && (
-                    <div className="browse__drop-dwon">
-                      <div
-                        className="browse__drop-dwon__item"
-                        onClick={() => {
-                          setCloneModalForSection(section);
-                        }}
-                      >
-                        <span className="material-icons settings">
-                          content_copy
-                        </span>
-                        <span className="text">CLONE</span>
-                      </div>
-                      <div
-                        className="browse__drop-dwon__item leave"
-                        onClick={() => {
-                          setDeleteModalForSection(section);
-                        }}
-                      >
-                        <span className="material-icons leave">delete</span>
-                        <span className="delete-text">DELETE</span>
-                      </div>
-                    </div>
-                  )}
+                    {section.name}
+                  </div>
+                  <div className="col-sm-3 col-xs-10 sections">
+                    {section?.questions?.length || 0} questions
+                  </div>
+                  <div className="col-sm-3 group-name">3 Points</div>
+                  <div className="col-sm-2 col-xs-2 browse">
+                    <span
+                      class="material-icons"
+                      onClick={() => {
+                        setViewDropdown(
+                          viewDropdown === section.id ? null : section.id
+                        );
+                      }}
+                    >
+                      more_horiz
+                    </span>
+                    {viewDropdown === section.id && (
+                      <TemplatePopup
+                        reference={popup}
+                        section={section}
+                        setCloneModalForSection={setCloneModalForSection}
+                        setDeleteModalForSection={setDeleteModalForSection}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="btn-container">
-          <ButtonWithIcon
-            className="cancel-btn"
-            text="Back"
-            onClick={() => {
-              history.push(evaluation_templates_page);
-            }}
-          />
+              );
+            })}
+          </div>
         </div>
       </div>
 

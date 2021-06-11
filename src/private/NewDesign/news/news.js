@@ -32,7 +32,7 @@ function EachNews({ data, history }) {
           <i
             className="fas fa-pen edit-icon"
             onClick={() => {
-              history.push(`${edit_news}/${data.id}`);
+              history.push(`${edit_news}/${data?.id}`);
             }}
           />
         )}

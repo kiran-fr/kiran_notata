@@ -17,7 +17,6 @@ export default function EditEvaluation({
   savedAnswers,
   companyName,
   setActiveEvaluation,
-  props,
   setEvaluateModal,
 }) {
   const [answers, setAnswers] = useState([]);
@@ -164,13 +163,11 @@ export default function EditEvaluation({
                       <div className="row">
                         <div className="col-sm-12 col-xs-12 add-comment">
                           Add comment
-                          {/* <input type="text" className="add-comment-txt" /> */}
                           <div className="textbox">
                             <textarea placeholder="Write your comment..." />
                           </div>
                         </div>
                       </div>
-                      <CommentInput {...props} />
                     </div>
                   </div>
                 </>

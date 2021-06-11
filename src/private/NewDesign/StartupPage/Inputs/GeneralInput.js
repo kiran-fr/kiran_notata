@@ -4,6 +4,7 @@ import TextInput from "./TextInput";
 import MultipleTextInput from "./MultipleTextInput";
 import SingleChoiceInput from "./SingleChoiceInput";
 import MultipleChoiceInput from "./MultipleChoiceInput";
+import TrafficLights from "./TrafficLight";
 
 export function GeneralInput(props) {
   switch (props.question.inputType) {
@@ -15,6 +16,8 @@ export function GeneralInput(props) {
       return <TextInput {...props} />;
     case "INPUT_MUTLIPLE_LINES":
       return <MultipleTextInput {...props} />;
+    case "TRAFFIC_LIGHTS":
+      return <TrafficLights {...props} />;
     default:
       return <MultipleChoiceInput {...props} />;
   }

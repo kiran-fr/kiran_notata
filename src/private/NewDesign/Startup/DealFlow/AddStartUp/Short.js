@@ -65,11 +65,11 @@ export const Short = ({ history, closeModal, styles, connections }) => {
 
   // Submit function with mutations
   const onSubmit = async data => {
-    // Stop if StartupPage with same name exists
-    if (existedFlag) {
-      // existing company
-      closeModal();
-    }
+    // // Stop if StartupPage with same name exists
+    // if (existedFlag) {
+    //   // existing company
+    //   closeModal();
+    // }
 
     try {
       // Create creative
@@ -82,10 +82,11 @@ export const Short = ({ history, closeModal, styles, connections }) => {
       let connection = res_connection?.data?.connectionCreate;
 
       // Go to StartupPage page
-      // let path = `${startup_page}/${connection.id}`;
-      // let path = `${startup_page}/components/ui/navigation1`;
+      let path = `${startup_page}/company/${connection.id}`;
 
-      // history.push(path);
+      // history.push(`${startup_page}//${connection.id}`);
+
+      history.push(path);
 
       // closeModal modal
       closeModal();

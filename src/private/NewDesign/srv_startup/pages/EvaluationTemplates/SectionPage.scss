@@ -3,7 +3,17 @@
     margin-top: 70px;
   }
 }
+.add-section-conatiners {
+  display: flex;
+  justify-content: center;
+  min-height: 90vh;
+  margin-bottom: 5rem;
+}
 .add-section-conatiner {
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 7rem;
+
   @media only screen and(min-width:768px) {
     position: absolute;
     left: calc(calc(100% - 700px) / 2);
@@ -36,6 +46,7 @@
     top: 10px;
     color: #969ba3;
     cursor: pointer;
+
     @media only screen and(min-width:768px) {
       display: none;
     }
@@ -82,7 +93,7 @@
     position: absolute;
     right: 20px;
     @media only screen and(max-width:768px) {
-      display: none;
+      // display: none;
     }
     .delete {
       position: absolute;
@@ -90,7 +101,7 @@
       font-family: "FontAwesome";
       font-size: 20px;
       top: 110px;
-      right: 0px;
+      // right: 0px;
       cursor: pointer;
     }
     .copy {
@@ -98,19 +109,19 @@
       top: 60px;
       font-size: 20px;
       color: #969ba3;
-      right: 0px;
+      // right: 0px;
       cursor: pointer;
     }
     .south {
       position: absolute;
       top: 271px;
-      right: 0px;
+      // right: 0px;
       cursor: pointer;
     }
     .north {
       position: absolute;
       top: 216px;
-      right: 0px;
+      // right: 0px;
       cursor: pointer;
     }
   }
@@ -254,6 +265,7 @@
         .incre-decre-icons {
           text-align: right;
           color: #b7b7b7;
+          user-select: none;
           .no-of-points {
             font-family: "Proxima Nova";
             font-style: normal;
@@ -322,4 +334,10 @@
 }
 .max-width {
   max-width: 900px;
+}
+
+.ccard {
+  background: #ffffff;
+  box-shadow: 0px 3px 12px rgb(41 70 103 / 20%);
+  border-radius: 8px;
 }

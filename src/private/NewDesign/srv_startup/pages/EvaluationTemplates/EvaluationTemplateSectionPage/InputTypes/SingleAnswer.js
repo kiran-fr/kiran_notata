@@ -15,7 +15,6 @@ function SingleRow({ removeOption, option, setOption, index }) {
             className="text-box"
             value={option?.val || ""}
             onChange={e => {
-              // setOption({ ...option, val: e.target.value });
               setOption({ ...option, val: e.target.value });
             }}
           />
@@ -27,19 +26,25 @@ function SingleRow({ removeOption, option, setOption, index }) {
           <span
             className="material-icons remove"
             onClick={() => {
-              setOption({ ...option, score: option?.score - 1 });
+              setOption({
+                ...option,
+                score: option?.score - 1 > 0 ? option?.score - 1 : 0,
+              });
             }}
           >
             remove_circle
           </span>
           <span className="no-of-points numbers" style={{ marginLeft: 0 }}>
-            {option?.score}
+            {option?.score || 0}
           </span>
 
           <span
             className="material-icons add"
             onClick={() => {
-              setOption({ ...option, score: option?.score + 1 });
+              setOption({
+                ...option,
+                score: option?.score + 1,
+              });
             }}
           >
             add_circle

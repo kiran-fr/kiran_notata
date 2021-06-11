@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AddFunnel from "../DealFlow/addFunnel";
-import Modal from "../DealFlow/modal";
+import { Modal } from "../../../../Components/UI_Kits";
 
 export default function SetFunnelScore({
   connection,
@@ -8,36 +8,14 @@ export default function SetFunnelScore({
   updateFunnelTag,
   funnelLoad,
 }) {
-  const [funnelModal, setFunnelModal] = useState(false);
-
-  const [funnelModalID, setFunnelModalID] = useState("");
-
-  const handleSave = () => {
-    setFunnelModal(true);
-  };
-
-  useEffect(() => {
-    if (!funnelLoad && funnelModal) {
-      close();
-    }
-  }, [funnelLoad && funnelModal]);
-
   return (
     <Modal
-      disabled={funnelModalID === "" ? true : false}
-      load={funnelLoad}
       title="Set Funnel Stage"
-      saveModal={() => handleSave()}
-      closeModal={close}
+      close={close}
+      submit={close}
+      submitTxt={"OK"}
     >
-      <AddFunnel
-        close={close}
-        funnelModal={funnelModal}
-        isModal={true}
-        companyId={connection.id}
-        funnelLoad={funnelLoad}
-        updateFunnelTag={updateFunnelTag}
-      />
+      <AddFunnel companyId={connection.id} updateFunnelTag={updateFunnelTag} />
     </Modal>
   );
 }

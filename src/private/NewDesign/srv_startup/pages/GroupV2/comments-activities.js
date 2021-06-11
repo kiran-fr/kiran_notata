@@ -32,78 +32,75 @@ export default function CommentsActivities() {
   const [editMessage, setEditMessage] = useState(false);
   return (
     <div className="card">
-      <Tabs value={value} onChange={handleChange}>
-        <Tab label="Comments" {...a11yProps(0)} />
-        <Tab label="Activities" {...a11yProps(1)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <div className="comments">
-          <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
-            </div>
-            <div className="comment__msg">This startup is really well!</div>
-          </div>
-          <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
-            </div>
-            <div className="comment__msg">This startup is really well!</div>
-          </div>
-          <div className="comment">
-            <div className="comment__username comment__you">
-              You
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
-              <div className="comment__edit-delete">
-                <i
-                  class="fa fa-pencil-square-o"
-                  aria-hidden="true"
-                  onClick={() => setEditMessage(!editMessage)}
-                ></i>
-                <span class="material-icons leave">delete</span>
+      <div className="coming-soon">
+        <div>Coming soon 🚀</div>
+      </div>
+
+      <div className="row hide-and-blur">
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label="Comments" {...a11yProps(0)} />
+          <Tab label="Activities" {...a11yProps(1)} />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <div className="comments">
+            <div className="comment">
+              <div className="comment__username comment__you">
+                You
+                <span className="comment__datetime">
+                  - Jan 28, 2021 10:53 PM
+                </span>
               </div>
+              {editMessage ? (
+                <div className="comment__msg-edit">
+                  <input
+                    type="text"
+                    value="This startup is really well!"
+                  ></input>
+                </div>
+              ) : (
+                <div className="comment__msg">
+                  This startup is awesome! Let's invest!
+                </div>
+              )}
             </div>
-            {editMessage ? (
-              <div className="comment__msg-edit">
-                <input type="text" value="This startup is really well!"></input>
+          </div>
+          <textarea className="comment__write-comment"></textarea>
+          <i className="comment__send fa fa-paper-plane" aria-hidden="true"></i>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div className="comments">
+            <div className="comment">
+              <div className="comment__username">
+                Shirisha
+                <span className="comment__datetime">
+                  - Jan 28, 2021 10:53 PM
+                </span>
               </div>
-            ) : (
-              <div className="comment__msg">This startup is really well!</div>
-            )}
-          </div>
-        </div>
-        <textarea className="comment__write-comment"></textarea>
-        <i className="comment__send fa fa-paper-plane" aria-hidden="true"></i>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <div className="comments">
-          <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+              <div className="comment__activity">Added Startup</div>
             </div>
-            <div className="comment__activity">Added Startup</div>
-          </div>
-          <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            <div className="comment">
+              <div className="comment__username">
+                Shirisha
+                <span className="comment__datetime">
+                  - Jan 28, 2021 10:53 PM
+                </span>
+              </div>
+              <div className="comment__activity">Added Tag:B2G</div>
             </div>
-            <div className="comment__activity">Added Tag:B2G</div>
-          </div>
-          <div className="comment">
-            <div className="comment__username">
-              Shirisha
-              <span className="comment__datetime">- Jan 28, 2021 10:53 PM</span>
+            <div className="comment">
+              <div className="comment__username">
+                Shirisha
+                <span className="comment__datetime">
+                  - Jan 28, 2021 10:53 PM
+                </span>
+              </div>
+              <div className="comment__activity">Removed Tag:B2G</div>
             </div>
-            <div className="comment__activity">Removed Tag:B2G</div>
           </div>
-        </div>
-        <textarea className="comment__write-comment"></textarea>
-        <i className="comment__send fa fa-paper-plane" aria-hidden="true"></i>
-      </TabPanel>
+          <textarea className="comment__write-comment"></textarea>
+          <i className="comment__send fa fa-paper-plane" aria-hidden="true"></i>
+        </TabPanel>
+      </div>
     </div>
   );
 }

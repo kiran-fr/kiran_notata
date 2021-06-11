@@ -1,53 +1,40 @@
 import React from "react";
 import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import styles from "./modal.module.css";
-import { useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Loader } from "Components/elements";
-import { groupStartupAdd } from "../../../Apollo/Mutations";
+import { groupsGetV2 } from "../../../Apollo/Queries";
 
-export default function AddGroup({ groups, connection }) {
-  // Mutations
-  const [addStartup, addStartupRes] = useMutation(groupStartupAdd);
+export default function AddGroup({ connection, select }) {
+  // Queries
+  const groupsQuery = useQuery(groupsGetV2);
+  let groups = groupsQuery?.data?.groupsGetV2;
 
   if (!groups) {
     return <Loader />;
   }
 
+  // Get only groups where I am admin
+  groups = groups.filter(({ iAmAdmin }) => iAmAdmin);
+
+  // Remove groups we are already part of
+  groups = groups.filter(
+    ({ id }) => !connection.groupSharingInfo.some(info => info.group.id === id)
+  );
+
   return (
     <div className={styles.group}>
-      {addStartupRes.loading && <Loader />}
-
       <div className={styles.groupChild}>
-        <h2>Startup is in these groups:</h2>
-        <ul>
-          {connection?.groupSharingInfo?.map(({ group }) => (
-            <li key={group.id}>{group.name}</li>
-          ))}
-        </ul>
-      </div>
-      <div className={styles.groupChild}>
-        <h2>Add startup to:</h2>
-        <div className={styles.groupDropContainer}>
-          <Dropdown
-            items={groups}
-            setSelectedItem={async group => {
-              if (addStartupRes.loading) {
-                return;
-              }
+        {!groups.length && <div>You are in no groups</div>}
 
-              let variables = {
-                groupId: group.id,
-                creativeId: connection.creative.id,
-              };
-
-              try {
-                await addStartup({ variables });
-              } catch (error) {
-                console.log("error", error);
-              }
-            }}
-          />
-        </div>
+        {!!groups.length && (
+          <>
+            <h2>Select group from list below</h2>
+            <div className={styles.groupDropContainer}>
+              <Dropdown items={groups} setSelectedItem={select} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

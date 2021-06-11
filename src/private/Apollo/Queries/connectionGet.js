@@ -10,6 +10,11 @@ export default gql`
       starred
       creativeId
 
+      impactGoals {
+        key
+        val
+      }
+
       subjectiveScores {
         createdBy
         createdAt
@@ -23,6 +28,7 @@ export default gql`
         accountId
         sharedWithEmail
         logo
+        canEdit
         answers {
           inputType
           sectionId
@@ -50,6 +56,15 @@ export default gql`
         funnelGroupId
         name
         index
+        group {
+          id
+          name
+          funnelTags {
+            id
+            name
+            index
+          }
+        }
       }
       evaluationSummaries {
         templateId
@@ -124,6 +139,19 @@ export default gql`
           template {
             id
             name
+          }
+          summary {
+            scorePercent
+            sections {
+              sectionId
+              sectionName
+              scorePercent
+              scorePerAnswer {
+                questionName
+                possibleScore
+                score
+              }
+            }
           }
         }
 

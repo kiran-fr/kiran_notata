@@ -158,7 +158,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               reference={register({ required: true })}
             />
             <Button
-              buttonStyle="gray"
+              buttonStyle="green"
               size="large"
               style={{ marginBottom: "15px" }}
               loading={isSubmitting}

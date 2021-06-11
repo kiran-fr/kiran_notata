@@ -1,4 +1,7 @@
 .edit-evaluation-container {
+
+  padding: 30px;
+
   .menu-container-1 {
     background: linear-gradient(115.95deg, #61bda7 50.04%, #2ba5a5 97.03%);
     border-radius: 8px;
@@ -23,9 +26,10 @@
     }
   }
   .edit-details {
-    max-width: 400px;
+    max-width: 550px;
     @media only screen and(max-width:768px) {
-      margin-left: 0px;
+      margin-left: 43px;
+
     }
     .heading {
       font-family: "Proxima Nova";
@@ -35,8 +39,11 @@
       line-height: 22px;
       letter-spacing: 0.03em;
       color: #6a6a6a;
-      margin-top: 60px;
       padding-left: 0px;
+      margin: 31px;
+      margin-left: -31px;
+      margin-top: 60px;
+
       i {
         color: #71d0bd;
         margin-right: 15px;
@@ -45,18 +52,32 @@
     }
     .question {
       font-family: "Roboto";
-      font-style: normal;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 16px;
+      font-size: 16px;
+      line-height: 30px;
       letter-spacing: 0.03em;
-      margin-top: 35px;
-      margin-bottom: 10px;
       color: #6a6a6a;
+      margin-top: 25px;
+      padding-left: 0px;
+      margin-left: 15px;
+      margin-bottom: 15px;
+
+      div {
+        font-family: "Roboto";
+        font-size: 13px;
+        line-height: 17px;
+        letter-spacing: 0.03em;
+        color: #969ba3;
+        margin-top: 3px;
+        font-weight: 400;
+        margin-bottom: 15px;
+      }
+
+
     }
     .options {
       margin-top: 15px;
-      margin-left: 15px;
+      margin-left: 10px;
       border-bottom: 1px solid #f1f1f1;
       padding-bottom: 10px;
       label {

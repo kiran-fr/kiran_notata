@@ -8,9 +8,10 @@ import {
   setting_profile,
   your_team,
   reminders,
+  notification,
 } from "definitions.js";
 import NotificationsDropDown from "./notification-top-menu";
-import ProfilePic from "../../../assets/images/profile-pic.png";
+import profilePic from "../../../assets/images/profile-pic.png";
 
 // STYLE
 import styles from "./TopMenu.module.css";
@@ -74,12 +75,12 @@ export function TopMenu({ history }) {
         onMouseEnter={() => setNotificatonsOpen(true)}
         onMouseLeave={() => setNotificatonsOpen(false)}
       >
-        <Link to="">
+        <Link to={notification}>
           <i
             className={`fas fa-bell ${
               notificationsOpen ? styles.notification_icon_selected : ""
             }`}
-          ></i>
+          />
           {unseen.length !== 0 && <div className={styles.circle}></div>}
         </Link>
         {notificationsOpen && <NotificationsDropDown />}
@@ -92,7 +93,20 @@ export function TopMenu({ history }) {
       </span>
 
       <div className={styles.profile}>
-        <img src={ProfilePic} className={styles.profile_pic_img} />
+        <div className={styles.profile_pic_img}>
+          <span>{user?.given_name?.charAt(0)}</span>
+
+          {/*{*/}
+          {/*  profilePic && (*/}
+          {/*    <img src={profilePic} />*/}
+          {/*  ) || (*/}
+          {/*    <span>*/}
+          {/*      {user?.given_name?.charAt(0)}*/}
+          {/*    </span>              */}
+          {/*  )*/}
+          {/*}*/}
+        </div>
+
         <p className={styles.profile_name}>
           {user.given_name} {user.family_name}
         </p>

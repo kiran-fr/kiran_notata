@@ -52,6 +52,7 @@
     "build_dev3": "cross-env REACT_APP_STAGE=dev3 react-scripts build",
     "build_prod": "cross-env REACT_APP_STAGE=prod react-scripts build",
     "build_v2prod": "cross-env REACT_APP_STAGE=v2prod react-scripts build",
+    "build_v3prod": "cross-env REACT_APP_STAGE=v3prod react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "serve": "serve -s build",

@@ -177,7 +177,7 @@ export default function Evaluations({ history }) {
                         href="#my-team-eval"
                         onClick={() => setMyTeamEvalState("")}
                       >
-                        My team evaluations
+                        My teams evaluations
                       </a>
                     </li>
                     <li>
@@ -266,7 +266,7 @@ export default function Evaluations({ history }) {
                   </div>
                   <div className="col-sm-4 col-xs-12 request-eval">
                     <button onClick={() => setEvaluateModal(true)}>
-                      Evaluate
+                      EvaluatePage
                     </button>
                   </div>
                   <div className={myEvalState}>
@@ -317,7 +317,7 @@ export default function Evaluations({ history }) {
                         )
                       }
                     ></i>
-                    My team evaluations
+                    My teams evaluations
                   </div>
                   <div className={myTeamEvalState}>
                     <div className="row evalations-container__details">
@@ -873,7 +873,7 @@ export default function Evaluations({ history }) {
       )}
       {evaluateModal && (
         <Modal
-          title="Evaluate startup"
+          title="EvaluatePage startup"
           close={() => {
             setEvaluateModal(false);
           }}

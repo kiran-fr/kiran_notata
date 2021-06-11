@@ -69,12 +69,14 @@ export const Kanban = props => {
 
   const { data: accountGet, loading, error } = useQuery(accountGetData);
 
-  useEffect(() => {
-    setFunnelGroupIndex(props.selectedfunnelGroup);
-  }, [props.selectedfunnelGroup]);
-
   let response =
     accountGet?.accountGet?.funnelGroups?.[funnelGroupIndex].funnelTags;
+
+  useEffect(() => {
+    setLoadingAPI(true);
+    setGetConnections(false);
+    setFunnelGroupIndex(props.selectedfunnelGroup);
+  }, [props.selectedfunnelGroup]);
 
   // Mutation updating funnel tag for connection
   const [mutate] = useMutation(connectionFunnelTagAdd);
@@ -134,16 +136,21 @@ export const Kanban = props => {
         const removeCoulmn = columns;
         delete columns[sortingIndex];
         removeCoulmn[sortingIndex] = columnsSortObj;
-        setColumns(removeCoulmn);
+        const indexSort = sortArr([removeCoulmn]);
+        setColumns(indexSort);
         setSortLoad(false);
       } else {
-        setColumns({ ...columnsCopy });
+        const indexSort = sortArr(columnsCopy);
+        setColumns({ ...indexSort });
       }
     });
   };
 
   useEffect(() => {
-    if (loading === false && accountGet) {
+    if ((loading === false && accountGet) || funnelGroupIndex) {
+      if (funnelGroupIndex) {
+        setLoadingAPI(false);
+      }
       const indexSort = sortArr(response);
       setColumns({ ...indexSort });
       setGetConnections(true);

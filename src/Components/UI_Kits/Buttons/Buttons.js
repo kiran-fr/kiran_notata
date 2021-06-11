@@ -93,6 +93,7 @@ export function Button({
   iconClass,
   style,
   disabled,
+  type1,
   ...children
 }) {
   // Default fallback with empty function
@@ -116,6 +117,7 @@ export function Button({
       )}
       style={style || {}}
       onClick={onClick}
+      type={type1 ? type1 : "sumbit"}
       disabled={disabled}
     >
       {/* check-icon */}

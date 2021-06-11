@@ -1,11 +1,14 @@
 import React, { useState, useRef } from "react";
+import { userGet } from "private/Apollo/Queries";
+import { useQuery } from "@apollo/client";
 import { NavLink, matchPath } from "react-router-dom";
-import GroupsImg from "../../../assets/images/navigation-groups.png";
-import NewsImg from "../../../assets/images/navigation-news.png";
-import ReportsImg from "../../../assets/images/navigation-reports.png";
-import SettingsImg from "../../../assets/images/navigation-settings.png";
-import StartupsImg from "../../../assets/images/navigation-startups.png";
-import DashbaordImg from "../../../assets/images/sidemenu-dashbaord.png";
+import nav_group from "../../../assets/images/nav_group.svg";
+import nav_newsicon from "../../../assets/images/nav_newsicon.svg";
+import nav_report from "../../../assets/images/nav_report.svg";
+import nav_setting from "../../../assets/images/nav_setting.svg";
+import nav_suitcase from "../../../assets/images/nav_suitcase.svg";
+import nav_bar from "../../../assets/images/nav_bar.svg";
+import mobile_toggler from "../../../assets/images/mobile_toggler.svg";
 
 //links
 import {
@@ -46,31 +49,35 @@ export function SideBarMenu() {
   const [isMobileList, setMobileList] = useState(false);
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
+
+  const { data } = useQuery(userGet);
+  let user = data?.userGet || {};
+
   let menuList = [
     {
       label: "Dashboard",
-      iconClass: DashbaordImg,
+      iconClass: nav_bar,
       iconStyle: {},
       link: `${startup_page}/dashboard`,
       subPaths: [`${startup_page}/dashboard`],
     },
     {
       label: "My Startups",
-      iconClass: StartupsImg,
+      iconClass: nav_suitcase,
       iconStyle: { paddingTop: "2px" },
       link: startup_page,
       subPaths: [startup_page, startup_company_profile],
     },
     {
       label: "Groups",
-      iconClass: GroupsImg,
+      iconClass: nav_group,
       iconStyle: {},
       link: group,
       subPaths: [group, `${group_dashboard}/:groupId`],
     },
     {
       label: "Reports",
-      iconClass: ReportsImg,
+      iconClass: nav_report,
       iconStyle: {},
       link: reports,
       subPaths: [reports],
@@ -78,7 +85,7 @@ export function SideBarMenu() {
     //  hide for now  (commented by siva)
     {
       label: "News",
-      iconClass: NewsImg,
+      iconClass: nav_newsicon,
       iconStyle: { paddingTop: "2px" },
       link: news,
       subPaths: [news],
@@ -119,7 +126,7 @@ export function SideBarMenu() {
               onClick={() => setMobileList(false)}
             >
               {" "}
-              <i className={`fal fa-chevron-right`} />
+              <i className={`fal fa-chevron-left`} />
             </div>
           </div>
 
@@ -152,7 +159,8 @@ export function SideBarMenu() {
               onClick={() => setMobileList(true)}
             >
               {" "}
-              <i className={`fa fa-bars`} />
+              {/* <i className={`fa fa-bars`} /> */}
+              <img src={mobile_toggler} />
             </div>
           </div>
           {/* Main navigation icons */}
@@ -231,7 +239,7 @@ export function SideBarMenu() {
                 }}
               >
                 <div className={styles.icons}>
-                  <img src={SettingsImg} className="" />
+                  <img src={nav_setting} className="" />
                 </div>
                 <p className={styles.list}>Settings</p>
               </NavLink>
@@ -243,19 +251,22 @@ export function SideBarMenu() {
             >
               <NavLink
                 exact={true}
-                to={pre_profile}
+                to={setting_profile}
+                onClick={() => setMobileList(false)}
                 activeClassName={classnames(
                   !listOpen ? styles.active_open : styles.active_close
                 )}
                 style={{ display: "flex" }}
               >
-                <div className={styles.icons} style={{ marginTop: "5px" }}>
+                {/*  <div className={styles.icons} >
                   <img
                     src="https://www.clipartmax.com/png/small/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png"
                     alt="img"
                   />
-                </div>
-                <p className={styles.list}>Profile Name</p>
+                </div> */}
+                <p className={styles.list}>
+                  {user.given_name} {user.family_name}
+                </p>
               </NavLink>
             </div>
           </div>

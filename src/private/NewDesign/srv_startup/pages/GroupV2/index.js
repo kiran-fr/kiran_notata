@@ -172,245 +172,238 @@ export default function Groups({ history }) {
   }
 
   return (
-    <>
-      <div className="header-routing">
-        <span className="header-routing__highlight">Groups</span>
-        <i className="fal fa-chevron-right header-routing__stilt"></i>
-        <span className="header-routing__name">{`{Startup Name}`}</span>
-      </div>
-      <div className="groups-contianer">
-        <div className="card">
-          <div className="card-heading">Groups</div>
+    <div className="groups-contianer">
+      <div className="card">
+        <div className="card-heading">Groups</div>
 
-          <Tabs value={tab} onChange={setTab}>
-            <Tab label="I am admin of" {...a11yProps(0)} />
-            <Tab label="I am member of" {...a11yProps(1)} />
-          </Tabs>
+        <Tabs value={tab} onChange={setTab}>
+          <Tab label="I am admin of" {...a11yProps(0)} />
+          <Tab label="I am member of" {...a11yProps(1)} />
+        </Tabs>
 
-          <div className="row">
-            <div
-              className="col-sm-5 col-sm-push-0 col-xs-5 col-xs-push-6 sort-by"
-              ref={sortByRef}
-            >
-              Sort by
-              <i
-                class={`sort-by-dropdown-icon fa ${
-                  showSortByDropDown ? "fa-chevron-up" : "fa-chevron-down"
-                }`}
-                aria-hidden="true"
-                onClick={() => setShowSortByDropDown(!showSortByDropDown)}
-              />
-              <i className="fa fa-arrow-up" aria-hidden="true" />
-              <i className="fa fa-arrow-down" aria-hidden="true" />
-              {showSortByDropDown && (
-                <div className="sortby-dropdown">
-                  <div className="sortby-dropdown__item">Name</div>
-                  <div className="sortby-dropdown__item">Members</div>
-                  {/*<div className="sortby-dropdown__item">Starred</div>*/}
-                  <div className="sortby-dropdown__item">Updated</div>
-                </div>
-              )}
-            </div>
-            <div className="col-sm-6 col-xs-6 col-sm-pull-0 col-xs-pull-5 create-group-container">
-              <ButtonWithIcon
-                iconName="add"
-                className="create-new-group"
-                text="CREATE NEW GROUP"
-                iconPosition={ICONPOSITION.START}
-                onClick={() => setCreateGroupModal(true)}
-              />
-            </div>
+        <div className="row">
+          <div
+            className="col-sm-5 col-sm-push-0 col-xs-5 col-xs-push-6 sort-by"
+            ref={sortByRef}
+          >
+            Sort by
+            <i
+              class={`sort-by-dropdown-icon fa ${
+                showSortByDropDown ? "fa-chevron-up" : "fa-chevron-down"
+              }`}
+              aria-hidden="true"
+              onClick={() => setShowSortByDropDown(!showSortByDropDown)}
+            />
+            <i className="fa fa-arrow-up" aria-hidden="true" />
+            <i className="fa fa-arrow-down" aria-hidden="true" />
+            {showSortByDropDown && (
+              <div className="sortby-dropdown">
+                <div className="sortby-dropdown__item">Name</div>
+                <div className="sortby-dropdown__item">Members</div>
+                {/*<div className="sortby-dropdown__item">Starred</div>*/}
+                <div className="sortby-dropdown__item">Updated</div>
+              </div>
+            )}
           </div>
-
-          {
-            /* EACH GROUP LINE */
-            groupArray.map((group, index) => {
-              return (
-                <div key={group.id}>
-                  <div className="row data" id={`row-data-${index}`}>
-                    <div
-                      className="col-sm-5 col-xs-7 data__name"
-                      onClick={() =>
-                        history.push(`${group_dashboard}/${group.id}`)
-                      }
-                    >
-                      {/*<i className="fa fa-star"></i>*/}
-                      {/*<span class="material-icons">lock</span>*/}
-                      {group.name}
-                    </div>
-                    <div className="col-sm-3 col-xs-6 data__members">
-                      {group.members.length} members
-                    </div>
-                    <div className="col-sm-2 col-xs-4  data__startups">
-                      {group.startups.length} startups
-                    </div>
-                    <div className="col-sm-2 col-xs-1 data__browse">
-                      <span
-                        class="material-icons"
-                        onClick={() => {
-                          browseDropDownState === group.id
-                            ? setBrowseDropDownState(undefined)
-                            : setBrowseDropDownState(group.id);
-                        }}
-                      >
-                        more_horiz
-                      </span>
-
-                      {browseDropDownState === group.id && (
-                        <div className="data__browse__drop-dwon">
-                          {
-                            // I AM ADMIN
-                            tab === 0 && (
-                              <>
-                                <div
-                                  className="data__browse__drop-dwon__item"
-                                  onClick={() => setSettingsModal(group)}
-                                >
-                                  <span className="material-icons settings">
-                                    content_copy
-                                  </span>
-                                  <span className="text">SETTINGS</span>
-                                </div>
-
-                                <div
-                                  className="data__browse__drop-dwon__item leave"
-                                  onClick={() => setDeleteModal(group)}
-                                >
-                                  <span className="material-icons leave">
-                                    delete
-                                  </span>
-                                  <span className="text">DELETE GROUP</span>
-                                </div>
-                              </>
-                            )
-                          }
-
-                          {
-                            // I AM NOT ADMIN
-                            tab === 1 && (
-                              <>
-                                {/*<div*/}
-                                {/*  className="data__browse__drop-dwon__item"*/}
-                                {/*  onClick={() => setSettingsModal(group)}*/}
-                                {/*>*/}
-                                {/*  <span className="material-icons settings">*/}
-                                {/*    content_copy*/}
-                                {/*  </span>*/}
-                                {/*  <span className="text">SETTINGS</span>*/}
-                                {/*</div>*/}
-
-                                <div
-                                  className="data__browse__drop-dwon__item leave"
-                                  onClick={() => setLeaveModal(group)}
-                                >
-                                  <span className="material-icons leave">
-                                    logout
-                                  </span>
-                                  <span className="text">LEAVE GROUP</span>
-                                </div>
-                              </>
-                            )
-                          }
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="groups-contianer__separator" />
-                </div>
-              );
-            })
-          }
+          <div className="col-sm-6 col-xs-6 col-sm-pull-0 col-xs-pull-5 create-group-container">
+            <ButtonWithIcon
+              iconName="add"
+              className="create-new-group"
+              text="CREATE NEW GROUP"
+              iconPosition={ICONPOSITION.START}
+              onClick={() => setCreateGroupModal(true)}
+            />
+          </div>
         </div>
 
-        {deleteModal && (
-          <Modal
-            title="Delete group"
-            loading={deleteGroupRes.loading}
-            submit={async () => {
-              if (deleteGroupRes.loading) return;
-              try {
-                await deleteGroup({ variables: { id: deleteModal.id } });
-              } catch (error) {
-                console.log("error", error);
-              }
-              setDeleteModal(undefined);
-            }}
-            close={() => {
-              setDeleteModal(undefined);
-            }}
-            submitTxt="Delete"
-            closeTxt="Cancel"
-            submitButtonStyle="secondary"
-            children={<DeleteGroup group={deleteModal} />}
-          />
-        )}
+        {
+          /* EACH GROUP LINE */
+          groupArray.map((group, index) => {
+            return (
+              <div key={group.id}>
+                <div className="row data" id={`row-data-${index}`}>
+                  <div
+                    className="col-sm-5 col-xs-7 data__name"
+                    onClick={() =>
+                      history.push(`${group_dashboard}/${group.id}`)
+                    }
+                  >
+                    {/*<i className="fa fa-star"></i>*/}
+                    {/*<span class="material-icons">lock</span>*/}
+                    {group.name}
+                  </div>
+                  <div className="col-sm-3 col-xs-6 data__members">
+                    {group.members.length} members
+                  </div>
+                  <div className="col-sm-2 col-xs-4  data__startups">
+                    {group.startups.length} startups
+                  </div>
+                  <div className="col-sm-2 col-xs-1 data__browse">
+                    <span
+                      class="material-icons"
+                      onClick={() => {
+                        browseDropDownState === group.id
+                          ? setBrowseDropDownState(undefined)
+                          : setBrowseDropDownState(group.id);
+                      }}
+                    >
+                      more_horiz
+                    </span>
 
-        {leaveModal && (
-          <Modal
-            title="Leave group"
-            loading={leaveGroupRes.loading}
-            submit={async () => {
-              if (leaveGroupRes.loading) return;
-              try {
-                await leaveGroup({ variables: { id: leaveModal.id } });
-              } catch (error) {
-                console.log("error", error);
-              }
-              setLeaveModal(undefined);
-            }}
-            close={() => {
-              setLeaveModal(undefined);
-            }}
-            submitTxt="Leave"
-            closeTxt="Cancel"
-            submitButtonStyle="secondary"
-            children={<LeaveGroup group={leaveModal} />}
-          />
-        )}
+                    {browseDropDownState === group.id && (
+                      <div className="data__browse__drop-dwon">
+                        {
+                          // I AM ADMIN
+                          tab === 0 && (
+                            <>
+                              <div
+                                className="data__browse__drop-dwon__item"
+                                onClick={() => setSettingsModal(group)}
+                              >
+                                <span className="material-icons settings">
+                                  content_copy
+                                </span>
+                                <span className="text">SETTINGS</span>
+                              </div>
 
-        {settingsModal && (
-          <Modal
-            title="Settings"
-            loading={setSettingsRes.loading}
-            submit={async () => {
-              if (setSettings.loading) return;
-              try {
-                await setSettings({
-                  variables: {
-                    groupId: settingsModal.id,
-                    settings: data.settings,
-                  },
-                });
-              } catch (error) {
-                console.log("error", error);
-              }
-              setSettingsModal(undefined);
-            }}
-            close={() => {
-              setSettingsModal(undefined);
-            }}
-            submitTxt="Save"
-            closeTxt="Cancel"
-            children={
-              <Settings group={settingsModal} data={data} setData={setData} />
-            }
-          />
-        )}
+                              <div
+                                className="data__browse__drop-dwon__item leave"
+                                onClick={() => setDeleteModal(group)}
+                              >
+                                <span className="material-icons leave">
+                                  delete
+                                </span>
+                                <span className="text">DELETE GROUP</span>
+                              </div>
+                            </>
+                          )
+                        }
 
-        {createGroupModal && (
-          <Modal
-            title="Create new group"
-            submit={saveData}
-            loading={isLoading}
-            close={() => {
-              setCreateGroupModal(undefined);
-            }}
-            submitTxt="Create"
-            closeTxt="Cancel"
-            children={<CreateNewGroup data={data} setData={setData} />}
-          />
-        )}
+                        {
+                          // I AM NOT ADMIN
+                          tab === 1 && (
+                            <>
+                              {/*<div*/}
+                              {/*  className="data__browse__drop-dwon__item"*/}
+                              {/*  onClick={() => setSettingsModal(group)}*/}
+                              {/*>*/}
+                              {/*  <span className="material-icons settings">*/}
+                              {/*    content_copy*/}
+                              {/*  </span>*/}
+                              {/*  <span className="text">SETTINGS</span>*/}
+                              {/*</div>*/}
+
+                              <div
+                                className="data__browse__drop-dwon__item leave"
+                                onClick={() => setLeaveModal(group)}
+                              >
+                                <span className="material-icons leave">
+                                  logout
+                                </span>
+                                <span className="text">LEAVE GROUP</span>
+                              </div>
+                            </>
+                          )
+                        }
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="groups-contianer__separator" />
+              </div>
+            );
+          })
+        }
       </div>
-    </>
+
+      {deleteModal && (
+        <Modal
+          title="Delete group"
+          loading={deleteGroupRes.loading}
+          submit={async () => {
+            if (deleteGroupRes.loading) return;
+            try {
+              await deleteGroup({ variables: { id: deleteModal.id } });
+            } catch (error) {
+              console.log("error", error);
+            }
+            setDeleteModal(undefined);
+          }}
+          close={() => {
+            setDeleteModal(undefined);
+          }}
+          submitTxt="Delete"
+          closeTxt="Cancel"
+          submitButtonStyle="secondary"
+          children={<DeleteGroup group={deleteModal} />}
+        />
+      )}
+
+      {leaveModal && (
+        <Modal
+          title="Leave group"
+          loading={leaveGroupRes.loading}
+          submit={async () => {
+            if (leaveGroupRes.loading) return;
+            try {
+              await leaveGroup({ variables: { id: leaveModal.id } });
+            } catch (error) {
+              console.log("error", error);
+            }
+            setLeaveModal(undefined);
+          }}
+          close={() => {
+            setLeaveModal(undefined);
+          }}
+          submitTxt="Leave"
+          closeTxt="Cancel"
+          submitButtonStyle="secondary"
+          children={<LeaveGroup group={leaveModal} />}
+        />
+      )}
+
+      {settingsModal && (
+        <Modal
+          title="Settings"
+          loading={setSettingsRes.loading}
+          submit={async () => {
+            if (setSettings.loading) return;
+            try {
+              await setSettings({
+                variables: {
+                  groupId: settingsModal.id,
+                  settings: data.settings,
+                },
+              });
+            } catch (error) {
+              console.log("error", error);
+            }
+            setSettingsModal(undefined);
+          }}
+          close={() => {
+            setSettingsModal(undefined);
+          }}
+          submitTxt="Save"
+          closeTxt="Cancel"
+          children={
+            <Settings group={settingsModal} data={data} setData={setData} />
+          }
+        />
+      )}
+
+      {createGroupModal && (
+        <Modal
+          title="Create new group"
+          submit={saveData}
+          loading={isLoading}
+          close={() => {
+            setCreateGroupModal(undefined);
+          }}
+          submitTxt="Create"
+          closeTxt="Cancel"
+          children={<CreateNewGroup data={data} setData={setData} />}
+        />
+      )}
+    </div>
   );
 }

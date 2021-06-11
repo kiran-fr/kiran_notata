@@ -45,7 +45,7 @@ export default function EditStartupInfo({ backToInfoPage, connection }) {
               <div className="btn" onClick={() => setInviteStartUpModal(true)}>
                 {connection?.creative?.sharedWithEmail
                   ? "Edit"
-                  : "Invite StartupPage"}
+                  : "Invite Startup"}
               </div>
             </div>
           </div>
@@ -56,6 +56,8 @@ export default function EditStartupInfo({ backToInfoPage, connection }) {
             connectionId={connection?.id}
             backToInfoPage={backToInfoPage}
             saveCreative={async input => {
+              console.log("input", input);
+
               try {
                 let variables = {
                   id: connection?.creative?.id,
