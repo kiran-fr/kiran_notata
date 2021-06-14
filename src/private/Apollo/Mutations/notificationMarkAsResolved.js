@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-  mutation notificationsMarkAllAsSeen {
-    notificationsMarkAllAsSeen {
+  mutation notificationMarkAsResolved($id: ID!) {
+    notificationMarkAsResolved(id: $id) {
       id
       createdAt
       notificationType

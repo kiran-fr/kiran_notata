@@ -410,6 +410,10 @@
         font-size: 14px;
         line-height: 17px;
         color: #6a6a6a;
+        i {
+          cursor: pointer;
+          color: #53cab2;
+        }
       }
       &__submitions {
         font-family: "Proxima Nova";
@@ -484,10 +488,22 @@
     .evaluation-list-container:nth-child(even) {
       background-color: var(--color-gray-pale);
     }
+
+    .requested-evaluations-container {
+      //margin-top: 45px;
+      //margin-left: 45px;
+      //padding-bottom: 50px;
+      padding-left: 45px;
+      padding-right: 40px;
+      @media only screen and(max-width:768px) {
+        margin-left: 5px;
+      }
+    }
+
     .your-evaluations-container {
       margin-top: 45px;
       margin-left: 45px;
-      padding-bottom: 50px;
+      padding-bottom: 30px;
       @media only screen and(max-width:768px) {
         margin-left: 5px;
       }

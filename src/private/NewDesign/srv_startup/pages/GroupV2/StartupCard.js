@@ -20,11 +20,64 @@ import {
 
 import { groupGetV2 } from "../../../../Apollo/Queries";
 
-import { startup_page } from "../../../../../definitions";
+import { evaluate_page, startup_page } from "../../../../../definitions";
 import SharingOptions from "../../../StartupPage/TabPages/Groups/sharing-options";
 import { Modal } from "../../../../../Components/UI_Kits";
 import { useForm } from "react-hook-form";
 import { AddScore } from "private/NewDesign/Startup/DealFlow/addScore";
+
+function RequestedEvaluations({ startup, group, history }) {
+  let connection = startup?.connection;
+
+  let evaluations = connection?.evaluations?.filter(({ isMe }) => isMe) || [];
+
+  let unusedEvaluations = group?.evaluationTemplates?.filter(
+    ({ id }) => !evaluations.some(({ templateId }) => templateId === id)
+  );
+
+  if (!unusedEvaluations.length) {
+    return <span />;
+  }
+
+  return (
+    <div className="row requested-evaluations-container">
+      <div className="col-sm-12">
+        <div className="col-sm-12 your-evaluations-container__details-heading">
+          requested evaluations
+        </div>
+
+        {unusedEvaluations.map(template => {
+          return (
+            <div className="row" key={template.id}>
+              <div className="col-sm-12 your-evaluations-container__record">
+                <div className="col-sm-5 col-xs-7 subjective-score-evaluation-container__name">
+                  {template.name}
+                </div>
+                <div className="col-sm-2 col-xs-6 subjective-score-evaluation-container__submitions">
+                  <span />
+                </div>
+                <div className="col-sm-1 col-xs-5 subjective-score-evaluation-container__score">
+                  <span />
+                </div>
+                <div className="col-md-4 col-sm-6 col-xs-6">
+                  <div
+                    className="your-evaluations-container__record__share-with-group"
+                    onClick={() => {
+                      let path = `${evaluate_page}/${connection?.id}/${template.id}?groupId=${group.id}`;
+                      history.push(path);
+                    }}
+                  >
+                    Evaluate
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function YourEvaluations({ startup, group, history }) {
   let connection = startup?.connection;
@@ -47,9 +100,9 @@ function YourEvaluations({ startup, group, history }) {
 
   let evaluations = connection?.evaluations?.filter(({ isMe }) => isMe) || [];
 
-  let unusedEvaluations = group?.evaluationTemplates?.filter(
-    ({ id }) => !evaluations.some(({ templateId }) => templateId === id)
-  );
+  // let unusedEvaluations = group?.evaluationTemplates?.filter(
+  //   ({ id }) => !evaluations.some(({ templateId }) => templateId === id)
+  // );
 
   let sharedSubjectiveScore = startup?.subjectiveScores?.find(
     ({ isMe }) => isMe
@@ -155,7 +208,14 @@ function YourEvaluations({ startup, group, history }) {
                 <div className="row" key={evaluation.id}>
                   <div className="col-sm-12 your-evaluations-container__record">
                     <div className="col-sm-5 col-xs-7 subjective-score-evaluation-container__name">
-                      {evaluation.template?.name}
+                      {evaluation.template?.name}{" "}
+                      <i
+                        className="fa fa-pen"
+                        onClick={() => {
+                          let path = `${evaluate_page}/${connection?.id}/${evaluation.template?.id}/${evaluation.id}?groupId=${group.id}`;
+                          history.push(path);
+                        }}
+                      />
                     </div>
                     <div className="col-sm-2 col-xs-6 subjective-score-evaluation-container__submitions">
                       {moment(evaluation.createdAt).format("ll")}
@@ -244,42 +304,42 @@ function YourEvaluations({ startup, group, history }) {
         )
       }
 
-      {unusedEvaluations && !!unusedEvaluations.length && (
-        <>
-          <div className="col-sm-12 your-evaluations-container__details-heading">
-            requested evaluations
-          </div>
+      {/*{unusedEvaluations && !!unusedEvaluations.length && (*/}
+      {/*  <>*/}
+      {/*    <div className="col-sm-12 your-evaluations-container__details-heading">*/}
+      {/*      requested evaluations*/}
+      {/*    </div>*/}
 
-          {unusedEvaluations.map(template => {
-            return (
-              <div className="row" key={template.id}>
-                <div className="col-sm-12 your-evaluations-container__record">
-                  <div className="col-sm-5 col-xs-7 subjective-score-evaluation-container__name">
-                    {template.name}
-                  </div>
-                  <div className="col-sm-2 col-xs-6 subjective-score-evaluation-container__submitions">
-                    <span />
-                  </div>
-                  <div className="col-sm-1 col-xs-5 subjective-score-evaluation-container__score">
-                    <span />
-                  </div>
-                  <div className="col-md-4 col-sm-6 col-xs-6">
-                    <div
-                      className="your-evaluations-container__record__share-with-group"
-                      onClick={() => {
-                        let path = `${startup_page}/${connection?.id}/evaluationV2/template/${template.id}`;
-                        history.push(path);
-                      }}
-                    >
-                      Evaluate
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </>
-      )}
+      {/*    {unusedEvaluations.map(template => {*/}
+      {/*      return (*/}
+      {/*        <div className="row" key={template.id}>*/}
+      {/*          <div className="col-sm-12 your-evaluations-container__record">*/}
+      {/*            <div className="col-sm-5 col-xs-7 subjective-score-evaluation-container__name">*/}
+      {/*              {template.name}*/}
+      {/*            </div>*/}
+      {/*            <div className="col-sm-2 col-xs-6 subjective-score-evaluation-container__submitions">*/}
+      {/*              <span />*/}
+      {/*            </div>*/}
+      {/*            <div className="col-sm-1 col-xs-5 subjective-score-evaluation-container__score">*/}
+      {/*              <span />*/}
+      {/*            </div>*/}
+      {/*            <div className="col-md-4 col-sm-6 col-xs-6">*/}
+      {/*              <div*/}
+      {/*                className="your-evaluations-container__record__share-with-group"*/}
+      {/*                onClick={() => {*/}
+      {/*                  let path = `${evaluate_page}/${connection?.id}/${template.id}?groupId=${group.id}`;*/}
+      {/*                  history.push(path);*/}
+      {/*                }}*/}
+      {/*              >*/}
+      {/*                Evaluate*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      );*/}
+      {/*    })}*/}
+      {/*  </>*/}
+      {/*)}*/}
     </>
   );
 }
@@ -790,50 +850,60 @@ export default function StartupCard({
                   history={history}
                 />
               )}
-
-              <div
-                className={`col-md-5 col-sm-12 col-xs-12 your-evaluations-container__comment-section ${
-                  yourEvaluation ? "your-evaluation-open" : ""
-                }`}
-              >
-                <i
-                  className="your-evaluations-container__icon fa fa-comment"
-                  aria-hidden="true"
-                  onClick={() => null}
-                />
-
-                <div className="your-evaluations-container__message-count">
-                  {startup?.log?.length || 0}
-                </div>
-
-                <div className="your-evaluations-container__show-comments">
-                  {!!unreadComments.length && (
-                    <span>{unreadComments.length} unread comments</span>
-                  )}
-                  <i
-                    className={`fa ${
-                      showCommentSection ? "fa-chevron-up" : "fa-chevron-down"
-                    }`}
-                    aria-hidden="true"
-                    onClick={() => {
-                      if (!showCommentSection) {
-                        let variables = {
-                          groupId: group.id,
-                          creativeId: startup.creative.id,
-                        };
-                        markConversationAsSeen({ variables });
-                      }
-                      setShowCommentSection(!showCommentSection);
-                    }}
-                  />
-                </div>
-              </div>
-
-              {showCommentSection && (
-                <CommentSection startup={startup} group={group} />
-              )}
             </div>
           )}
+
+          <RequestedEvaluations
+            startup={startup}
+            group={group}
+            history={history}
+          />
+
+          <div className="row your-evaluations-container">
+            {/*<div className="col-md-4 col-sm-6 col-xs-7">*/}
+            <div
+              className={`col-md-5 col-sm-12 col-xs-12 your-evaluations-container__comment-section ${
+                yourEvaluation ? "your-evaluation-open" : ""
+              }`}
+            >
+              <i
+                className="your-evaluations-container__icon fa fa-comment"
+                aria-hidden="true"
+                onClick={() => null}
+              />
+
+              <div className="your-evaluations-container__message-count">
+                {startup?.log?.length || 0}
+              </div>
+
+              <div className="your-evaluations-container__show-comments">
+                {!!unreadComments.length && (
+                  <span>{unreadComments.length} unread comments</span>
+                )}
+                <i
+                  className={`fa ${
+                    showCommentSection ? "fa-chevron-up" : "fa-chevron-down"
+                  }`}
+                  aria-hidden="true"
+                  onClick={() => {
+                    if (!showCommentSection) {
+                      let variables = {
+                        groupId: group.id,
+                        creativeId: startup.creative.id,
+                      };
+                      markConversationAsSeen({ variables });
+                    }
+                    setShowCommentSection(!showCommentSection);
+                  }}
+                />
+              </div>
+            </div>
+
+            {showCommentSection && (
+              <CommentSection startup={startup} group={group} />
+            )}
+            {/*</div>*/}
+          </div>
         </div>
       </div>
 

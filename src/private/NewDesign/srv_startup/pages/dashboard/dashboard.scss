@@ -1,4 +1,5 @@
 .dashboard-container {
+
   .funnelSpacing {
     margin-left: 3px;
   }
@@ -477,81 +478,6 @@
       }
     }
   }
-  &__notification {
-    height: 590px;
-    padding: 29px 32px;
-    @media only screen and(max-width:768px) {
-      height: auto;
-    }
-    &__heading {
-      font-family: "Proxima Nova";
-      font-style: normal;
-      font-weight: bold;
-      font-size: 20px;
-      line-height: 24px;
-      color: #969ba3;
-      padding-bottom: 22px;
-    }
-    &__notification {
-      display: flex;
-      margin-top: 24px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #f0f0f0;
-      img {
-        height: 24px;
-        width: 24px;
-      }
-      &__text {
-        font-family: "Roboto";
-        font-style: normal;
-        font-size: 13px;
-        line-height: 17px;
-        letter-spacing: 0.03em;
-        color: #969ba3;
-        margin-left: 18px;
-        &__username {
-          font-weight: 500;
-          text-decoration-line: underline;
-        }
-        &__hour-ago {
-          font-family: "Roboto";
-          font-style: normal;
-          font-weight: normal;
-          font-size: 12px;
-          line-height: 14px;
-          letter-spacing: 0.03em;
-          color: #969ba3;
-          margin-top: 10px;
-        }
-        &__comment {
-          font-family: "Roboto";
-          font-style: italic;
-          font-weight: 500;
-          font-size: 13px;
-          line-height: 17px;
-          letter-spacing: 0.03em;
-          color: #6a6a6a;
-          margin-top: 5px;
-        }
-      }
-    }
-    &__more-updates {
-      font-family: "Proxima Nova";
-      font-style: normal;
-      font-weight: bold;
-      font-size: 11px;
-      line-height: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 55px;
-      padding-bottom: 30px;
-      color: #60ceb8;
-      cursor: pointer;
-      i {
-        cursor: pointer;
-      }
-    }
-  }
   &__reports-and-analytics {
     padding: 30px 32px;
     @media only screen and(max-width:768px) {
@@ -646,4 +572,86 @@
       }
     }
   }
+
+
+  &__notification {
+    height: 590px;
+    padding: 29px 32px;
+    @media only screen and(max-width:768px) {
+      height: auto;
+    }
+
+    &__heading {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 24px;
+      color: #969ba3;
+      padding-bottom: 22px;
+    }
+
+    //&__notification {
+    //  display: flex;
+    //  margin-top: 24px;
+    //  padding-bottom: 15px;
+    //  border-bottom: 1px solid #f0f0f0;
+    //  img {
+    //    height: 24px;
+    //    width: 24px;
+    //  }
+    //  &__text {
+    //    font-family: "Roboto";
+    //    font-style: normal;
+    //    font-size: 13px;
+    //    line-height: 17px;
+    //    letter-spacing: 0.03em;
+    //    color: #969ba3;
+    //    margin-left: 18px;
+    //    &__username {
+    //      font-weight: 500;
+    //      text-decoration-line: underline;
+    //    }
+    //    &__hour-ago {
+    //      font-family: "Roboto";
+    //      font-style: normal;
+    //      font-weight: normal;
+    //      font-size: 12px;
+    //      line-height: 14px;
+    //      letter-spacing: 0.03em;
+    //      color: #969ba3;
+    //      margin-top: 10px;
+    //    }
+    //    &__comment {
+    //      font-family: "Roboto";
+    //      font-style: italic;
+    //      font-weight: 500;
+    //      font-size: 13px;
+    //      line-height: 17px;
+    //      letter-spacing: 0.03em;
+    //      color: #6a6a6a;
+    //      margin-top: 5px;
+    //    }
+    //  }
+    //}
+    &__more-updates {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 11px;
+      line-height: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 55px;
+      padding-bottom: 30px;
+      color: #60ceb8;
+      cursor: pointer;
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+
+
+
 }

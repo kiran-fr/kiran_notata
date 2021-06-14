@@ -10,6 +10,8 @@ import { GhostLoader } from "../../../Components/elements";
 import Scrollspy from "react-scrollspy";
 import { GeneralInput } from "../StartupPage/Inputs/GeneralInput";
 import { evaluation_summary_page, startup_page } from "../../../definitions";
+import queryString from "query-string";
+import { groupEvaluationAdd } from "../../Apollo/Mutations";
 
 const transform = obj => {
   if (obj) {
@@ -23,7 +25,7 @@ const transform = obj => {
   }
 };
 
-export default function EvaluatePage({ match, history }) {
+export default function EvaluatePage({ match, history, location }) {
   let { connectionId, templateId, evaluationId } = match?.params;
 
   // States
@@ -39,6 +41,7 @@ export default function EvaluatePage({ match, history }) {
   // Mutations
   const [mutateEvaluationUpdate] = useMutation(evaluationUpdate);
   const [mutateEvaluationCreate] = useMutation(evaluationCreate);
+  const [evaluationAddToGroup] = useMutation(groupEvaluationAdd);
 
   // Maps and reducers
   let connection = connectionRes?.data?.connectionGet;
@@ -85,6 +88,8 @@ export default function EvaluatePage({ match, history }) {
   const save = async () => {
     console.log("save");
 
+    let { groupId } = queryString.parse(location.search);
+
     setLoading(true);
 
     // Create new
@@ -98,11 +103,7 @@ export default function EvaluatePage({ match, history }) {
           answers,
         };
         let res = await mutateEvaluationCreate({ variables });
-        let id = res?.data?.evaluationCreate?.id;
-
-        history.push(
-          `${evaluation_summary_page}/${connectionId}/${templateId}/${id}`
-        );
+        evaluationId = res?.data?.evaluationCreate?.id;
       } catch (error) {
         console.log("error", error);
       }
@@ -120,14 +121,30 @@ export default function EvaluatePage({ match, history }) {
         await mutateEvaluationUpdate({
           variables: updateVariables,
         });
-
-        history.push(
-          `${evaluation_summary_page}/${connectionId}/${templateId}/${evaluationId}`
-        );
       } catch (error) {
         console.log("error", error);
       }
     }
+
+    if (groupId) {
+      // Variables
+      let variables = {
+        evaluationId,
+        groupId,
+        creativeId: connection.creative.id,
+      };
+
+      // Add evaluation
+      try {
+        await evaluationAddToGroup({ variables });
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+
+    history.push(
+      `${evaluation_summary_page}/${connectionId}/${templateId}/${evaluationId}`
+    );
   };
 
   let isLoading =
