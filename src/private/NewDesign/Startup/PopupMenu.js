@@ -29,7 +29,7 @@ export default function PopupMenu({
 
   useEffect(() => {
     const handleGlobalEvent = e =>
-      !e.path.includes(popup.current) && open && isOpen ? close() : null;
+      !e?.path?.includes(popup?.current) && open && isOpen ? close() : null;
 
     window.addEventListener("click", handleGlobalEvent);
 

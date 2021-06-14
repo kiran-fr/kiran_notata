@@ -35,6 +35,10 @@ function RequestedEvaluations({ startup, group, history }) {
     ({ id }) => !evaluations.some(({ templateId }) => templateId === id)
   );
 
+  if (!startup.isInMyDealFlow) {
+    return <span />;
+  }
+
   if (!unusedEvaluations.length) {
     return <span />;
   }

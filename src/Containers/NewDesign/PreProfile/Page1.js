@@ -135,8 +135,8 @@ export default function Page1({ setPage }) {
           label="Company"
           type="text"
           placeholder="Company"
-          required
-          reference={register({ required: true })}
+          // required
+          reference={register}
         />
         <div style={{ visibility: "hidden", display: "none" }}>
           <InputForm
