@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 import Sidebar from "./index";
-// import { Tags } from "Components/UI_Kits/Tags/Tags";
-import TagsModal from "../../private/NewDesign/srv_startup/pages/ui-kits/TagsModal";
-import { Modal } from "../UI_Kits/Modal/Modal";
+import TagsModal from "../../private/Pages/srv_startup/pages/ui-kits/TagsModal";
+import { Modal } from "../UI_Kits";
 import { Loader } from "Components/UI_Kits";
-import { sortArr } from "../../private/NewDesign/CommonFunctions";
+import { sortArr } from "../../private/Pages/CommonFunctions";
+
 // common dynamic funnel img function
-import { DynamicIcons } from "./../../private/NewDesign/CommonFunctions";
+import { DynamicIcons } from "../../private/Pages/CommonFunctions";
 import { CheckBox, Datepicker1 } from "Components/UI_Kits";
+
 // API
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";

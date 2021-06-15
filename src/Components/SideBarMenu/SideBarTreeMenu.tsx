@@ -7,8 +7,8 @@ import { connectionCreate } from "private/Apollo/Mutations";
 
 import { dashboard, group, settings, charts, signOut,settings_new } from "definitions.js";
 import CreateStartupModal from "Components/CreateStartupModal/CreateStartupModal";
-import Groups, { GroupsData } from "private/pages/Groups/Groups";
-import { Connection } from "private/pages/Dashboard/Connections/types";
+import Groups, { GroupsData } from "private/oldPages/Groups/Groups";
+import { Connection } from "private/oldPages/Dashboard/Connections/types";
 import styles from "./SideBarTreeMenu.module.css";
 
 const classnames = require("classnames");
