@@ -69,14 +69,12 @@ export const Kanban = props => {
 
   const { data: accountGet, loading, error } = useQuery(accountGetData);
 
-
-
   let response =
     accountGet?.accountGet?.funnelGroups?.[funnelGroupIndex].funnelTags;
 
   useEffect(() => {
-    setLoadingAPI(true)
-    setGetConnections(false)
+    setLoadingAPI(true);
+    setGetConnections(false);
     setFunnelGroupIndex(props.selectedfunnelGroup);
   }, [props.selectedfunnelGroup]);
 
@@ -150,8 +148,8 @@ export const Kanban = props => {
 
   useEffect(() => {
     if ((loading === false && accountGet) || funnelGroupIndex) {
-      if(funnelGroupIndex) {
-        setLoadingAPI(false)
+      if (funnelGroupIndex) {
+        setLoadingAPI(false);
       }
       const indexSort = sortArr(response);
       setColumns({ ...indexSort });

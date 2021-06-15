@@ -6,7 +6,6 @@ import red_color from "../../../assets/images/red_color.svg";
 import green_color from "../../../assets/images/green_color.svg";
 import yellow_color from "../../../assets/images/yellow_color.svg";
 
-
 import { Modal } from "Components/UI_Kits/Modal/Modal";
 import moment from "moment";
 import { useLazyQuery, useMutation } from "@apollo/client";
@@ -198,17 +197,13 @@ export default function EvaluationSummaryPage({ match, history }) {
 
                     {findAns(question.id) ? (
                       <div className="col-sm-12 answer">
-                        <img src=
-                          {
+                        <img
+                          src={
                             findAns(question.id)?.val === "1"
-                            ?
-                              red_color
-                            : 
-                              findAns(question.id)?.val === "2"
-                              ?
-                                yellow_color
-                              :
-                                green_color
+                              ? red_color
+                              : findAns(question.id)?.val === "2"
+                              ? yellow_color
+                              : green_color
                           }
                           width="20"
                           height="20"

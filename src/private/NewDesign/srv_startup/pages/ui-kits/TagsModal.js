@@ -37,13 +37,10 @@ export default function TagsModal({
   const [filtered, setFiltered] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-
   const removeTag = tagId => {
-    // doubleclick ID logic 
-      const removeTagId = selectedTag.filter(
-        item => item !== tagId
-      );
-      setSelectedTag(removeTagId.length ? removeTagId : []);
+    // doubleclick ID logic
+    const removeTagId = selectedTag.filter(item => item !== tagId);
+    setSelectedTag(removeTagId.length ? removeTagId : []);
 
     if (tagFlag) {
       let filterData = tagSelected.filter(data => data.id !== tagId);
@@ -78,7 +75,6 @@ export default function TagsModal({
   };
 
   const addTags = (connection, tag) => {
-
     setSelectedTag(oldArray => [...oldArray, tag.id]);
     let doubleClick = selectedTag.filter(data => data === tag.id);
 
@@ -132,8 +128,7 @@ export default function TagsModal({
 
   if (error) return <pre>{error.message}</pre>; //if query has issue
 
-
-    return (
+  return (
     <div className="tags-container">
       {loading && !connection?.tags ? (
         /* //query processing with tagset data */
@@ -199,9 +194,13 @@ export default function TagsModal({
                           {!filtered ? (
                             <>
                               {tagGroup.tags.map((tag, index) => {
-                                const tagArr = tagFlag ? tagSelected : connection.tags;
-                                let filterData = tagArr.filter(data => data.id === tag.id);
-                                if(filterData.length === 0) {
+                                const tagArr = tagFlag
+                                  ? tagSelected
+                                  : connection.tags;
+                                let filterData = tagArr.filter(
+                                  data => data.id === tag.id
+                                );
+                                if (filterData.length === 0) {
                                   return (
                                     <div
                                       className="tag suggested-tag"
@@ -227,9 +226,13 @@ export default function TagsModal({
                                     : true
                                 )
                                 .map((tag, index) => {
-                                  const tagArr = tagFlag ? tagSelected : connection.tags;
-                                  let filterData = tagArr.filter(data => data.id === tag.id);
-                                  if(filterData.length === 0) {
+                                  const tagArr = tagFlag
+                                    ? tagSelected
+                                    : connection.tags;
+                                  let filterData = tagArr.filter(
+                                    data => data.id === tag.id
+                                  );
+                                  if (filterData.length === 0) {
                                     return (
                                       <div
                                         className="tag suggested-tag"

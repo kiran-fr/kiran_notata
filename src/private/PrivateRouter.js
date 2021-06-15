@@ -55,6 +55,7 @@ import {
   evaluation_templates_page,
   evaluation_template_page,
   archive_page,
+  reminders,
   evaluate_page,
   evaluation_summary_page,
 } from "../definitions";
@@ -109,7 +110,7 @@ import { Startup } from "./shubham-new-designs/pages/startup/index";
 import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 // import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
-
+import Reminders from "./shubham-new-designs/pages/dashboard/reminders";
 // New Startup Info
 import Reports from "./NewDesign/srv_startup/pages/reports/reports";
 import { StartupPage as StartupInfo } from "./NewDesign/StartupPage/index";
@@ -306,7 +307,7 @@ export const RouterComponent = ({ history }) => {
 
       {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
-
+      <Route eaxct path={reminders} component={Reminders} />
       {/* <Route
         eaxct
         path={`${startup_page}/settings`}

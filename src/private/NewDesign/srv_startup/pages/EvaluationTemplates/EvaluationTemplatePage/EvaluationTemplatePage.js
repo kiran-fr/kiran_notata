@@ -189,141 +189,140 @@ export const EvaluationTemplatePage = ({ match, history }) => {
 
   return (
     <>
-    <div className={`add-section-conatiners`}>
-      <div className={`add-section-conatiner ccard`}>
-        {/* HEADER */}
-        <div className="row">
-          <div className={`col-sm-8 text-container`}>
-            <form className="templateform">
-              <div style={{ display: "flex" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    marginRight: 10,
-                    marginTop: 33,
-                  }}
-                >
-                  <i
-                    className="fa fa-chevron-left"
-                    onClick={() => hist.goBack()}
+      <div className={`add-section-conatiners`}>
+        <div className={`add-section-conatiner ccard`}>
+          {/* HEADER */}
+          <div className="row">
+            <div className={`col-sm-8 text-container`}>
+              <form className="templateform">
+                <div style={{ display: "flex" }}>
+                  <div
                     style={{
-                      color: "#53cab2",
-                      transform: "scale(1.4)",
-                      cursor: "pointer",
+                      display: "flex",
+                      marginRight: 10,
+                      marginTop: 33,
                     }}
-                  ></i>
-                </div>
+                  >
+                    <i
+                      className="fa fa-chevron-left"
+                      onClick={() => hist.goBack()}
+                      style={{
+                        color: "#53cab2",
+                        transform: "scale(1.4)",
+                        cursor: "pointer",
+                      }}
+                    ></i>
+                  </div>
 
-                <div>
-                  <TextBox
-                    name="name"
-                    defaultValue={name}
-                    onChange={e => setName(e.target.value)}
-                    placeholder="Template Name"
-                    onBlur={e => {
-                      updateTemplate({
-                        variables: {
-                          id: template?.id,
-                          input: {
-                            name: e.target.value,
+                  <div>
+                    <TextBox
+                      name="name"
+                      defaultValue={name}
+                      onChange={e => setName(e.target.value)}
+                      placeholder="Template Name"
+                      onBlur={e => {
+                        updateTemplate({
+                          variables: {
+                            id: template?.id,
+                            input: {
+                              name: e.target.value,
+                            },
                           },
-                        },
-                      });
-                    }}
-                  />
-                  <textarea
-                    name="description"
-                    onChange={e => setDescription(e.target.value)}
-                    value={description}
-                    rows="4"
-                    cols="50"
-                    placeholder="Template Description"
-                    onBlur={e => {
-                      updateTemplate({
-                        variables: {
-                          id: template?.id,
-                          input: {
-                            description: e.target.value,
+                        });
+                      }}
+                    />
+                    <textarea
+                      name="description"
+                      onChange={e => setDescription(e.target.value)}
+                      value={description}
+                      rows="4"
+                      cols="50"
+                      placeholder="Template Description"
+                      onBlur={e => {
+                        updateTemplate({
+                          variables: {
+                            id: template?.id,
+                            input: {
+                              description: e.target.value,
+                            },
                           },
-                        },
-                      });
-                    }}
-                  />
+                        });
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            </form>
-         
+              </form>
 
-          <div className="col-sm-4">
-            <div className="row">
-              <div className="col-sm-12 col-xs-6">
-                <ButtonWithIcon
-                  iconName="add"
-                  className="add-new-section-btn"
-                  text="ADD NEW SECTION"
-                  iconPosition={ICONPOSITION.START}
-                  onClick={() => {
-                    onSubmit();
-                    setAddSectionModal(true);
-                  }}
-                />
-              </div>
-              <div className="col-sm-12 col-xs-6">
-                <ButtonWithIcon
-                  className="import-section-btn"
-                  text="Import section"
-                  onClick={() => setImportSectionModal(true)}
-                />
+              <div className="col-sm-4">
+                <div className="row">
+                  <div className="col-sm-12 col-xs-6">
+                    <ButtonWithIcon
+                      iconName="add"
+                      className="add-new-section-btn"
+                      text="ADD NEW SECTION"
+                      iconPosition={ICONPOSITION.START}
+                      onClick={() => {
+                        onSubmit();
+                        setAddSectionModal(true);
+                      }}
+                    />
+                  </div>
+                  <div className="col-sm-12 col-xs-6">
+                    <ButtonWithIcon
+                      className="import-section-btn"
+                      text="Import section"
+                      onClick={() => setImportSectionModal(true)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        </div>
-        <div className="evaluation-templates-container__data-container">
-          {template?.sections?.map(section => {
-            return (
-              <div
-                className="row evaluation-templates-container__data-container__data"
-                key={`row-id-${section.id}`}
-              >
+          <div className="evaluation-templates-container__data-container">
+            {template?.sections?.map(section => {
+              return (
                 <div
-                  className="col-sm-4 col-xs-10 template-name"
-                  onClick={() => {
-                    let path = `${evaluation_template_page}/${id}/section/${section.id}`;
-                    history.push(path);
-                  }}
+                  className="row evaluation-templates-container__data-container__data"
+                  key={`row-id-${section.id}`}
                 >
-                  {section.name}
-                </div>
-                <div className="col-sm-3 col-xs-10 sections">
-                  {section?.questions?.length || 0} questions
-                </div>
-                <div className="col-sm-3 group-name">3 Points</div>
-                <div className="col-sm-2 col-xs-2 browse">
-                  <span
-                    class="material-icons"
+                  <div
+                    className="col-sm-4 col-xs-10 template-name"
                     onClick={() => {
-                      setViewDropdown(
-                        viewDropdown === section.id ? null : section.id
-                      );
+                      let path = `${evaluation_template_page}/${id}/section/${section.id}`;
+                      history.push(path);
                     }}
                   >
-                    more_horiz
-                  </span>
-                  {viewDropdown === section.id && (
-                    <TemplatePopup
-                      reference={popup}
-                      section={section}
-                      setCloneModalForSection={setCloneModalForSection}
-                      setDeleteModalForSection={setDeleteModalForSection}
-                    />
-                  )}
+                    {section.name}
+                  </div>
+                  <div className="col-sm-3 col-xs-10 sections">
+                    {section?.questions?.length || 0} questions
+                  </div>
+                  <div className="col-sm-3 group-name">3 Points</div>
+                  <div className="col-sm-2 col-xs-2 browse">
+                    <span
+                      class="material-icons"
+                      onClick={() => {
+                        setViewDropdown(
+                          viewDropdown === section.id ? null : section.id
+                        );
+                      }}
+                    >
+                      more_horiz
+                    </span>
+                    {viewDropdown === section.id && (
+                      <TemplatePopup
+                        reference={popup}
+                        section={section}
+                        setCloneModalForSection={setCloneModalForSection}
+                        setDeleteModalForSection={setDeleteModalForSection}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
       </div>
 
       {importSectionModal && (
@@ -359,7 +358,6 @@ export const EvaluationTemplatePage = ({ match, history }) => {
           close={() => setCloneModalForSection(undefined)}
         />
       )}
-      
     </>
   );
 };

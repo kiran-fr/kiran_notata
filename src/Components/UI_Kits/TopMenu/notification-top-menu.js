@@ -5,8 +5,7 @@ import NotificationAlarm from "../../../assets/images/notification-alarm.png";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { notificationsGet } from "private/Apollo/Queries";
-import { useHistory } from 'react-router-dom';
-
+import { useHistory } from "react-router-dom";
 
 import { notificationsMarkAllAsSeen } from "private/Apollo/Mutations";
 
@@ -29,8 +28,7 @@ function Notification({ content, notificationCreatedAt }) {
 }
 
 export default function NotificationsDropDown() {
- 
-const hist = useHistory();
+  const hist = useHistory();
   const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
 
   const [allNotifications, setAllNotifications] = useState([]);

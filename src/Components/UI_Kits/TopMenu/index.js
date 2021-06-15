@@ -7,6 +7,7 @@ import {
   signOut,
   setting_profile,
   your_team,
+  reminders,
   notification,
 } from "definitions.js";
 import NotificationsDropDown from "./notification-top-menu";
@@ -61,6 +62,14 @@ export function TopMenu({ history }) {
           </div>
         </div>
       )}
+
+      <span>
+        <i className="fas fa-question-circle"></i>
+      </span>
+
+      <span onClick={() => history.push(reminders)}>
+        <i className="fas fa-alarm-clock"></i>
+      </span>
 
       <span
         onMouseEnter={() => setNotificatonsOpen(true)}

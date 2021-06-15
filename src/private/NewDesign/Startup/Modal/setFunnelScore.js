@@ -8,7 +8,6 @@ export default function SetFunnelScore({
   updateFunnelTag,
   funnelLoad,
 }) {
-
   return (
     <Modal
       title="Set Funnel Stage"
@@ -16,10 +15,7 @@ export default function SetFunnelScore({
       submit={close}
       submitTxt={"OK"}
     >
-      <AddFunnel
-        companyId={connection.id}
-        updateFunnelTag={updateFunnelTag}
-      />
+      <AddFunnel companyId={connection.id} updateFunnelTag={updateFunnelTag} />
     </Modal>
   );
 }

@@ -108,7 +108,7 @@ export const group_dashboard = `${startup_page}/components/ui/navigation1/group/
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
 // export const news = `${startup_page}/components/ui/navigation1/news`;
 export const dashboard_new = `${startup_page}/components/ui/navigation1/dashboard`;
-
+export const reminders = `${startup_page}/components/ui/navigation1/reminders`;
 // export const evaluation_templates = `${startup_page}/templates`;
 // export const evaluation_template = `${evaluation_templates}/edit`;
 // export const evaluation_template_summary = `${evaluation_templates}/summary`;

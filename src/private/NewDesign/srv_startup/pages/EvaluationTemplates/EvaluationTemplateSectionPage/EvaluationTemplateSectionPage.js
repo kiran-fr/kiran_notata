@@ -145,7 +145,6 @@ export const EvaluationTemplateSectionPage = ({ match, history }) => {
 
   return (
     <>
-   
       <div className={`add-section-conatiner `}>
         {/* HEADER: NAME AND DESCRIPTION */}
         <div className="row">
@@ -241,7 +240,6 @@ export const EvaluationTemplateSectionPage = ({ match, history }) => {
           </div>
         </div>
       </div>
-      
     </>
   );
 };

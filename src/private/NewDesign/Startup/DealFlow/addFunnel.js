@@ -32,13 +32,11 @@ export default function AddFunnel(props) {
     setFunnelID("");
   }, [selectedGroupId]);
 
-
   // maintain funnel id and name. trigge the api
   const handleFunnel = value => {
     setFunnelName(value.name);
     setFunnelID(value.id);
     props.updateFunnelTag(value.id, props.companyId);
-  
   };
 
   const FunnelStage = () => {
