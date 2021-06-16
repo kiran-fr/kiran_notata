@@ -1,65 +1,32 @@
 import React, { useEffect, useState } from "react";
+
+// Libraries
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import styles from "./Kanban.module.css";
+
+// API Stuff
 import { useQuery, useMutation } from "@apollo/client";
+import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
+import { appsyncClient } from "../../../awsconfig";
 import {
   accountGet as accountGetData,
   connectionsGet,
 } from "private/Apollo/Queries";
-import { GhostLoader } from "Components/elements";
-
-import { Loader } from "Components/UI_Kits";
-
-import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
-import { appsyncClient } from "../../../awsconfig";
-
-// common dynamic funnel img function
-
-import { DynamicIcons, sortArr } from "../CommonFunctions";
 
 // Components
 import BoardHeader from "./Components/BoardHeader";
 import BoardItem from "./Components/BoardItem";
-import { filter } from "lodash";
+import { Loader } from "Components/UI_Kits";
+import { GhostLoader } from "Components/elements";
 
-const onDragEnd = (result, columns, setColumns, updateFunnelTag) => {
-  if (!result.destination) return;
-  const { source, destination } = result;
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    updateFunnelTag(destColumn.id, result.draggableId);
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems,
-      },
-    });
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    });
-  }
-};
+// Styles
+import styles from "./Kanban.module.css";
 
-export const Kanban = props => {
+// Constants
+import { DynamicIcons, sortArr } from "../CommonFunctions";
+
+// Default Export
+export const Kanban = ({ history, selectedfunnelGroup }) => {
+  // States
   const [filters, setFilter] = useState({});
   const [columns, setColumns] = useState({});
   const [getConnections, setGetConnections] = useState(false);
@@ -67,19 +34,23 @@ export const Kanban = props => {
   const [sortLoad, setSortLoad] = useState(false);
   const [funnelGroupIndex, setFunnelGroupIndex] = useState(0);
 
-  const { data: accountGet, loading, error } = useQuery(accountGetData);
-
+  // Queries
+  const { data: accountGet, loading } = useQuery(accountGetData);
   let response =
     accountGet?.accountGet?.funnelGroups?.[funnelGroupIndex].funnelTags;
+
+  // Mutations
+  const [mutate] = useMutation(connectionFunnelTagAdd);
+
+  // Effects
+  let filterSortDirection = filters && filters.sortDirection;
+  let filterSortBy = filters && filters.sortBy;
 
   useEffect(() => {
     setLoadingAPI(true);
     setGetConnections(false);
-    setFunnelGroupIndex(props.selectedfunnelGroup);
-  }, [props.selectedfunnelGroup]);
-
-  // Mutation updating funnel tag for connection
-  const [mutate] = useMutation(connectionFunnelTagAdd);
+    setFunnelGroupIndex(selectedfunnelGroup);
+  }, [selectedfunnelGroup]);
 
   useEffect(() => {
     if (getConnections) {
@@ -98,8 +69,20 @@ export const Kanban = props => {
         filters.indexNumber
       );
     }
-  }, [filters && filters.sortDirection, filters && filters.sortBy]);
+  }, [filterSortDirection, filterSortBy]);
 
+  useEffect(() => {
+    if ((loading === false && accountGet) || funnelGroupIndex) {
+      if (funnelGroupIndex) {
+        setLoadingAPI(false);
+      }
+      const indexSort = sortArr(response);
+      setColumns({ ...indexSort });
+      setGetConnections(true);
+    }
+  }, [loading, accountGet, funnelGroupIndex, response]);
+
+  // Functions
   const handleFunnels = (dataVal, sortBy, sortDirection, sortingIndex) => {
     let columnsCopy = [];
     let columnsSortObj = {};
@@ -146,31 +129,65 @@ export const Kanban = props => {
     });
   };
 
-  useEffect(() => {
-    if ((loading === false && accountGet) || funnelGroupIndex) {
-      if (funnelGroupIndex) {
-        setLoadingAPI(false);
-      }
-      const indexSort = sortArr(response);
-      setColumns({ ...indexSort });
-      setGetConnections(true);
-    }
-  }, [loading, accountGet, funnelGroupIndex]);
-
   const updateFunnelTag = (funnelTagId, connectionId) => {
     const variables = {
       connectionId,
       funnelTagId,
     };
+
     mutate({
       variables,
     });
   };
 
+  // Handling the event that happens when the user stops dragging the Kanban Item
+  const onDragEnd = (result, columns, setColumns, updateFunnelTag) => {
+    if (!result.destination) return;
+    const { source, destination } = result;
+    if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = columns[source.droppableId];
+      const destColumn = columns[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destItems = [...destColumn.items];
+      const [removed] = sourceItems.splice(source.index, 1);
+
+      destItems.splice(destination.index, 0, removed);
+      updateFunnelTag(destColumn.id, result.draggableId);
+
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...sourceColumn,
+          items: sourceItems,
+        },
+        [destination.droppableId]: {
+          ...destColumn,
+          items: destItems,
+        },
+      });
+    } else {
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+
+      copiedItems.splice(destination.index, 0, removed);
+
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...column,
+          items: copiedItems,
+        },
+      });
+    }
+  };
+
+  // If Loading
   if (!accountGet || loadingAPI) {
     return <GhostLoader />;
   }
 
+  // JSX
   return (
     <div className={styles.boardHolder}>
       <DragDropContext
@@ -227,7 +244,7 @@ export const Kanban = props => {
                                           }}
                                         >
                                           <BoardItem
-                                            history={props.history}
+                                            history={history}
                                             connection={item}
                                           >
                                             {item.content}

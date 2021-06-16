@@ -1,13 +1,18 @@
 import React from "react";
 
-import styles from "../Kanban.module.css";
-import { startup_page } from "definitions";
+// Libraries
+import moment from "moment";
 
+// Styles
+import styles from "../Kanban.module.css";
+
+// Images
 import handleIcon from "../../../../assets/images/handle.svg";
 import companyLogo from "../../../../assets/images/company_logo.png";
-import star from "../../../../assets/images/star.svg";
 import moreIcon from "../../../../assets/images/more.svg";
-import moment from "moment";
+
+// Others
+import { startup_page } from "definitions";
 
 export default function BoardItem(props) {
   const {
@@ -24,6 +29,7 @@ export default function BoardItem(props) {
     history,
   } = props;
 
+  // Functions
   const getTotalScore = arr => {
     if (Array.isArray(arr) && arr.length > 0) {
       return arr?.reduce((acc, obj) => {
@@ -41,6 +47,7 @@ export default function BoardItem(props) {
     history.push(`${startup_page}/company/${id}`);
   };
 
+  // JSX
   return (
     <div className={styles.b_item}>
       <div style={{ width: "100%", textAlign: "center", marginTop: 5 }}>
@@ -59,14 +66,13 @@ export default function BoardItem(props) {
             style={{
               color: starred ? "orange" : "lightgray",
               marginLeft: "auto",
-              // pointer: "cursor"
             }}
             className="fa fa-star"
           ></i>
         </div>
-        {creative.answers.map(items => {
+        {creative.answers.map((items, i) => {
           return (
-            <div>
+            <div key={`id-${i}`}>
               {items.questionId === "q01_section_info" ? (
                 <>
                   <h5>{items.questionName}</h5>
@@ -81,7 +87,9 @@ export default function BoardItem(props) {
         <div className={styles.b_item_column}>
           <div className={styles.b_item_tags}>
             {(tags || []).slice(0, 2).map(tag => (
-              <div className={styles.b_item_tag}>{tag.name}</div>
+              <div key={tag.id} className={styles.b_item_tag}>
+                {tag.name}
+              </div>
             ))}
           </div>
           {tags.length > 0 ? (

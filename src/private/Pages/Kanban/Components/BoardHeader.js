@@ -1,8 +1,14 @@
 import React, { useState } from "react";
+
+// Components
+import SortByPopup from "./SortByPopup";
+
+// Styles
 import styles from "../Kanban.module.css";
+
+// Images
 import DropDown from "../../../../assets/images/DropDown.svg";
 import Sort from "../../../../assets/images/sort.svg";
-import SortByPopup from "./SortByPopup";
 
 export default function BoardHeader({
   children,
@@ -11,10 +17,11 @@ export default function BoardHeader({
   setFilter,
   index,
 }) {
+  // States
   const [popup, setPopup] = useState(false);
-  const [sorting, setSorting] = useState(false);
-  const [name, setName] = useState("Company Name");
+  const [name, setName] = useState("");
 
+  // Functions
   const handleName = name => {
     setName(name);
   };
@@ -50,6 +57,7 @@ export default function BoardHeader({
     }
   };
 
+  // JSX
   return (
     <div className={styles.boardHead}>
       <img src={icon} alt="Bar Icon"></img>
