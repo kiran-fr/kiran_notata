@@ -3,7 +3,6 @@
   margin-top: 40px;
   justify-content: "center";
   height: 100%;
-  /* overflow-x: scroll; */
 }
 
 .board {
@@ -16,7 +15,6 @@
   padding: 10px;
   height: calc(100vh - 200px);
   overflow-y: hidden;
-  /* width: 252px; */
   min-width: 220px;
   margin-right: 15px;
 }
@@ -189,6 +187,12 @@
   font-size: 8px;
 }
 
+.oneLinerTxt {
+  font-size: 12px;
+}
+
+/* Media Queries */
+
 @media only screen and (max-width: 1000px) {
   .boardHolder {
     flex-direction: column;
@@ -203,8 +207,4 @@
   .b_item_tag {
     max-width: 55px;
   }
-}
-
-.oneLinerTxt {
-  font-size: 12px;
 }
