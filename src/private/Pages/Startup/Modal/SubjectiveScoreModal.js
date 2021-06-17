@@ -1,7 +1,6 @@
 import React from "react";
 
-// import Modal from "../DealFlow/modal";
-
+// COMPONENTS
 import { AddScore } from "../DealFlow/addScore";
 import { Modal } from "../../../../Components/UI_Kits";
 

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import styles from "./table.module.css";
-import { startup_page } from "definitions";
+
+import React, { useState } from "react";
+
+// COMPONENTS
 import TableBody from "./tableBody";
 import TableHeader from "./tableHeader";
 import SelectAllPopup from "./SelectAllPopup";
@@ -9,40 +10,16 @@ import AddToGroupModal from "./modals/AddToGroupModal";
 import AddTagsModal from "./modals/AddTagsModal";
 import { Loader } from "Components/UI_Kits";
 
+//ROUTER
+import { startup_page } from "definitions";
+
+// STYLES
+import styles from "./table.module.css";
+
 export default function Table(props) {
+
+  // Constant
   const { data, loading, emptyLabel, history, updateFunnelTag } = props;
-
-  const [preview, setPreview] = useState();
-
-  const [checked, setChecked] = useState({});
-  const [checkAll, setCheckAll] = useState(false);
-
-  const [viewModal, setViewModal] = useState(undefined);
-
-  const [popup, setPopup] = useState(false);
-
-  const showPreview = no => {
-    setPreview(no);
-  };
-
-  const handlePopup = () => {
-    console.log("Changing Popup State: ", popup);
-    setPopup(!popup);
-  };
-
-  const hidePreview = ({ no }) => {
-    setPreview(null);
-  };
-
-  const ButtonGreen = () => (
-    <button className={styles.buttongreen}>
-      <i className="fas fa-plus-circle" />
-    </button>
-  );
-
-  const handleCompany = connection => {
-    history.push(`${startup_page}/company/${connection.id}`);
-  };
 
   const popupItems = [
     {
@@ -60,6 +37,37 @@ export default function Table(props) {
       // nested: ["Tag 1", "Tag 2"],
     },
   ];
+  
+  // States
+  const [preview, setPreview] = useState();
+  const [checked, setChecked] = useState({});
+  const [checkAll, setCheckAll] = useState(false);
+  const [viewModal, setViewModal] = useState(undefined);
+  const [popup, setPopup] = useState(false);
+
+  //Funcation
+  const showPreview = no => {
+    setPreview(no);
+  };
+
+  const handlePopup = () => {
+    setPopup(!popup);
+  };
+
+  const hidePreview = ({ no }) => {
+    setPreview(null);
+  };
+
+  const ButtonGreen = () => (
+    <button className={styles.buttongreen}>
+      <i className="fas fa-plus-circle" />
+    </button>
+  );
+
+  const handleCompany = connection => {
+    history.push(`${startup_page}/company/${connection.id}`);
+  };
+
 
   return (
     <>

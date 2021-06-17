@@ -1,14 +1,20 @@
+import React, { useState } from "react";
+
+// API
 import { useMutation } from "@apollo/client";
 import { groupStartupAdd } from "../../../Apollo/Mutations";
-import React, { useState } from "react";
+
+// COMPONENTS
 import AddGroup from "./addGroup";
 import { Modal } from "Components/UI_Kits/Modal/Modal";
 
 export default function AddToGroupModalNew({ close, success, connection }) {
+
+  // States
+  const [selected, setSelect] = useState(undefined);
+
   // Mutations
   const [addStartup, addStartupRes] = useMutation(groupStartupAdd);
-
-  const [selected, setSelect] = useState(undefined);
 
   return (
     <Modal

@@ -6,7 +6,6 @@ import {
   connectionsGet,
   evaluationTemplatesGet,
   userGet,
-  groupsGetV2,
 } from "private/Apollo/Queries";
 import {
   connectionSetStar,
@@ -15,11 +14,8 @@ import {
 
 // COMPONENTS
 import Filters from "./Filters";
-import SelectTagsForStartup from "./Modal/SelectTagsForStartup";
-
 import { Kanban } from "../Kanban/Kanban";
-
-// Components
+import SelectTagsForStartup from "./Modal/SelectTagsForStartup";
 import Paginator from "./Paginator";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
@@ -50,26 +46,14 @@ function ListOfStartups({
   updateFunnelTag,
   funnelLoad,
 }) {
-  // States (for modal)
+
+  // States
   const [showTagGroupForId, setShowTagGroupForId] = useState();
   const [showStartUpForId, setShowStartUpForId] = useState();
   const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
   const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
 
-  // Fetch more
-  useEffect(() => {
-    let LastEvaluatedId = currentPage && currentPage.LastEvaluatedId;
-    let variables = { LastEvaluatedId };
-    fetchMore({
-      variables,
-      updateQuery: (prev, { fetchMoreResult }) => fetchMoreResult || prev,
-    });
-  }, [currentPage]);
-
-  // Mutations
-  const [setStarMutation] = useMutation(connectionSetStar);
-
-  // Query: Connections
+  // Queries
   const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
@@ -78,9 +62,22 @@ function ListOfStartups({
       LastEvaluatedId: undefined,
     },
   });
+  
+  // Mutations
+  const [setStarMutation] = useMutation(connectionSetStar);
 
-  // define data
+  // Data maps
   const connections = data?.connectionsGet || [];
+
+  // Effects
+  useEffect(() => {
+    let LastEvaluatedId = currentPage && currentPage.LastEvaluatedId;
+    let variables = { LastEvaluatedId };
+    fetchMore({
+      variables,
+      updateQuery: (prev, { fetchMoreResult }) => fetchMoreResult || prev,
+    });
+  }, [currentPage]);
 
   return (
     <div style={{ marginTop: "30px", marginBottom: "30px" }}>
@@ -138,47 +135,16 @@ function ListOfStartups({
 }
 
 export default function Connections({ history }) {
-  const defaultFilters = {
-    // FILTERS
 
+  // Constant
+  const defaultFilters = {
     search: "",
     tags: [],
     funnelTag: [],
     fromDate: null,
     toDate: null,
     starred: false,
-    // limit: 25
-
-    // SORTING
-    // sortBy: 'GROUP',
-    //   // STARRED
-    //   // ALPHA
-    //   // EVALUATION
-    //   // SUBJECTIVE_SCORE
-    //   // TAGS
-    //   // FUNNEL
-    //   // GROUP
-    //   // CREATED_AT
-    //   // UPDATED_AT
-
-    // sortByVal: "groupId",
-    // sortDirection: 'ASC'
   };
-
-  // Query: Account
-  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
-
-  const evaluationTemplates =
-    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
-
-  //Query: User
-  const userQuery = useQuery(userGet);
-
-  // TODO: Column settings
-  // This is saved on user.columnSettings
-
-  // Define data
-  const user = userQuery.data?.userGet || {};
 
   // States
   const [filters, setFilterState] = useState(defaultFilters);
@@ -195,21 +161,25 @@ export default function Connections({ history }) {
     evaluationTemplates: [],
   });
 
+  // Queries
+
+  // Query: Account
+  const evaluationTemplatesQuery = useQuery(evaluationTemplatesGet);
+  //Query: User
+  const userQuery = useQuery(userGet);
+
+  // Mutation
   // Mutation updating funnel tag for connection
   const [mutate] = useMutation(connectionFunnelTagAdd);
 
-  const updateFunnelTag = async (funnelTagId, connectionId) => {
-    setFunnelLoad(true);
-    const variables = {
-      connectionId,
-      funnelTagId,
-    };
-    await mutate({
-      variables,
-    });
-    setFunnelLoad(false);
-  };
+  // Data maps
+  const user = userQuery.data?.userGet || {};
+  // TODO: Column settings
+  // This is saved on user.columnSettings
+  const evaluationTemplates =
+  evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
 
+  // Effects
   // Load filters from local store
   useEffect(() => {
     let f;
@@ -221,12 +191,6 @@ export default function Connections({ history }) {
       setFilterState(f.dateRange ? defaultFilters : f);
     }
   }, []);
-
-  // Setting filters: save to local store
-  function setFilters(filterData) {
-    localStorage.setItem("filters", JSON.stringify(filterData));
-    setFilterState(filterData);
-  }
 
   useEffect(() => {
     if (user.columnSettings) {
@@ -251,7 +215,25 @@ export default function Connections({ history }) {
     }
   }, [evaluationTemplates && user]);
 
-  // manage Column
+
+  // Function
+  // Setting filters: save to local store
+  function setFilters(filterData) {
+    localStorage.setItem("filters", JSON.stringify(filterData));
+    setFilterState(filterData);
+  }
+
+  const updateFunnelTag = async (funnelTagId, connectionId) => {
+    setFunnelLoad(true);
+    const variables = {
+      connectionId,
+      funnelTagId,
+    };
+    await mutate({
+      variables,
+    });
+    setFunnelLoad(false);
+  };
 
   return (
     <>

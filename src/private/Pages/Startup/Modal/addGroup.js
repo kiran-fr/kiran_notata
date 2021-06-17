@@ -1,19 +1,23 @@
 import React from "react";
-import { Dropdown } from "Components/UI_Kits/Dropdown/index";
-import styles from "./modal.module.css";
+
+// API
 import { useQuery } from "@apollo/client";
-import { Loader } from "Components/elements";
 import { groupsGetV2 } from "../../../Apollo/Queries";
 
+// COMPONENTS
+import { Dropdown } from "Components/UI_Kits/Dropdown/index";
+import { Loader } from "Components/elements";
+
+// STYLES
+import styles from "./modal.module.css";
+
 export default function AddGroup({ connection, select }) {
+
   // Queries
   const groupsQuery = useQuery(groupsGetV2);
   let groups = groupsQuery?.data?.groupsGetV2;
 
-  if (!groups) {
-    return <Loader />;
-  }
-
+  // Data maps
   // Get only groups where I am admin
   groups = groups.filter(({ iAmAdmin }) => iAmAdmin);
 
@@ -21,6 +25,10 @@ export default function AddGroup({ connection, select }) {
   groups = groups.filter(
     ({ id }) => !connection.groupSharingInfo.some(info => info.group.id === id)
   );
+
+  if (!groups) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.group}>

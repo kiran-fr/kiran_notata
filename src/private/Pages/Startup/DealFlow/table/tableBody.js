@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
+
+// COMPONENTS
+import { Loader } from "Components/UI_Kits";
+
+// STYLES
 import styles, { activePopup } from "./table.module.css";
+
+//IMG
 import More from "../../../../../assets/images/more.svg";
-import moment from "moment";
-//Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
+
+// OTHER
+import moment from "moment";
 import { subjectiveScore } from "../../../../oldPages/Dashboard/Connections/types";
-
 import classnames from "classnames";
-
 import { sortArr, DynamicIcons } from "../../../CommonFunctions";
 
-import { Loader } from "Components/UI_Kits";
 
 export default function TableBody(props) {
   const {

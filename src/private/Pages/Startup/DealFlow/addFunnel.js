@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown } from "Components/UI_Kits/Dropdown/index";
-import styles from "./modal.module.css";
-import { Loader } from "Components/UI_Kits";
 
-// common dynamic funnel img function
-import { DynamicIcons } from "../../../Pages/CommonFunctions";
-
+// API
 import { useQuery } from "@apollo/client";
 import { funnelGroupGet } from "private/Apollo/Queries";
 
+// COMPONENTS
+import { Dropdown } from "Components/UI_Kits/Dropdown/index";
+import { Loader } from "Components/UI_Kits";
+
+// STYLES
+import styles from "./modal.module.css";
+
+//OTHERS
+import { DynamicIcons } from "../../../Pages/CommonFunctions";
+
+
 export default function AddFunnel(props) {
+
+  // States
   const [selectedGroupId, setSelectedGroupId] = useState("");
   const [funnelGroupArray, setFunnelGroupArray] = useState([]);
   const [funnelName, setFunnelName] = useState("");
-  const [funnelID, setFunnelID] = useState("");
+
+  // Queries
 
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
 
+  // Data maps
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
+
+  // Effect 
 
   // maintain the funnel group (funnels.length >0)
   useEffect(() => {
@@ -29,16 +41,15 @@ export default function AddFunnel(props) {
   // clear the value in state if user choose the new funnel group
   useEffect(() => {
     setFunnelName("");
-    setFunnelID("");
   }, [selectedGroupId]);
 
   // maintain funnel id and name. trigge the api
   const handleFunnel = value => {
     setFunnelName(value.name);
-    setFunnelID(value.id);
     props.updateFunnelTag(value.id, props.companyId);
   };
 
+  // Funcation
   const FunnelStage = () => {
     let filterData = funnelGroupArray.filter(
       data => data.id === selectedGroupId

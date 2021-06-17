@@ -1,11 +1,16 @@
 import React from "react";
-import styles from "./table.module.css";
 
+// COMPONENTS
 import PopupDropdown from "assets/images/PopupDown.svg";
-import { CheckBox } from "../../../../../Components/UI_Kits";
 import InputCheckBox from "../../../srv_startup/pages/ui-kits/check-box";
 
+// STYLES
+import styles from "./table.module.css";
+
+
 export default function TableHeader(props) {
+
+  // Constant
   const {
     evaluationTemplates,
     filters,
