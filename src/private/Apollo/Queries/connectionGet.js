@@ -99,6 +99,7 @@ export default gql`
               questionName
               possibleScore
               score
+              answer
             }
           }
         }
@@ -150,6 +151,7 @@ export default gql`
                 questionName
                 possibleScore
                 score
+                answer
               }
             }
           }

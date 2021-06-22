@@ -23,7 +23,7 @@ import { PreProfile } from "Containers/NewDesign/PreProfile/Profile";
 import { Awaiting } from "Containers/Auth/Awaiting/Awaiting";
 
 // Import Kanban View
-import { KanbanPage } from "./private/NewDesign/Kanban/KanbanPage";
+import { KanbanPage } from "./private/Pages/Kanban/KanbanPage";
 
 // SHARING
 import { LinkBridge } from "Components/Shared/LinkBridge/LinkBridge";

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { userGet } from "private/Apollo/Queries";
-import { useQuery} from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { NavLink, matchPath } from "react-router-dom";
 import nav_group from "../../../assets/images/nav_group.svg";
 import nav_newsicon from "../../../assets/images/nav_newsicon.svg";
@@ -9,8 +9,6 @@ import nav_setting from "../../../assets/images/nav_setting.svg";
 import nav_suitcase from "../../../assets/images/nav_suitcase.svg";
 import nav_bar from "../../../assets/images/nav_bar.svg";
 import mobile_toggler from "../../../assets/images/mobile_toggler.svg";
-
-
 
 //links
 import {
@@ -162,7 +160,7 @@ export function SideBarMenu() {
             >
               {" "}
               {/* <i className={`fa fa-bars`} /> */}
-              <img src={mobile_toggler}/>
+              <img src={mobile_toggler} />
             </div>
           </div>
           {/* Main navigation icons */}
@@ -260,17 +258,15 @@ export function SideBarMenu() {
                 )}
                 style={{ display: "flex" }}
               >
-               
-        
-               {/*  <div className={styles.icons} >
+                {/*  <div className={styles.icons} >
                   <img
                     src="https://www.clipartmax.com/png/small/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png"
                     alt="img"
                   />
                 </div> */}
-                <p className={styles.list}>{user.given_name} {user.family_name}</p>
-               
-                
+                <p className={styles.list}>
+                  {user.given_name} {user.family_name}
+                </p>
               </NavLink>
             </div>
           </div>

@@ -26,7 +26,7 @@ export default function Page3({ setPage, extraInputs, history }) {
         >
           Do you want to be a part of these groups?
         </h1>
-          <Group/>
+        <Group />
         <div className={styles.button_container_justify}>
           <Button
             size="medium"

@@ -1,0 +1,121 @@
+.evaluation-list {
+
+  margin: 20px  15px !important;
+
+  &__header-row {
+
+    margin-bottom: 12px;
+
+    .eval-score-heading {
+      font-family: "Proxima Nova";
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 19px;
+      color: #6a6a6a;
+      margin-top: 10px;
+    }
+
+    .submissions {
+      font-family: "Proxima Nova";
+      font-size: 14px;
+      line-height: 17px;
+      color: #969ba3;
+      margin-top: 10px;
+      @media only screen and(max-width: 576px) {
+        display: none;
+      }
+    }
+
+    .score {
+      font-family: "Proxima Nova";
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 18px;
+      color: #969ba3;
+      text-align: right;
+      padding: 0;
+      position: relative;
+      margin-top: 10px;
+
+      .score-content {
+        margin-right: 60px;
+        color: #6a6a6a;
+        @media only screen and(max-width: 576px) {
+          margin-right: 10px;
+        }
+      }
+
+    }
+
+
+  }
+
+  &__each-row {
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    &__name {
+      font-family: "Proxima Nova";
+      font-size: 16px;
+      line-height: 18px;
+      color: #969ba3;
+      i {
+        font-size: 14px;
+        color: #53cab2;
+        padding-left: 7px;
+        cursor: pointer;
+      }
+    }
+
+    &__date {
+      font-family: "Proxima Nova";
+      font-size: 14px;
+      line-height: 17px;
+      color: #969ba3;
+      @media only screen and(max-width: 576px) {
+        display: none;
+      }
+    }
+
+    &__score {
+      font-family: "Proxima Nova";
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 18px;
+      color: #969ba3;
+      text-align: right;
+      padding: 0;
+      position: relative;
+      //margin-top: 10px;
+      .score-content {
+        margin-right: 60px;
+        @media only screen and(max-width: 576px) {
+          margin-right: 10px;
+        }
+        .action-icons {
+          position: absolute;
+          right: -10px;
+          top: 0;
+          font-size: 14px;
+          color: #53cab2;
+          width: 50px;
+          text-align: left;
+          i {
+            padding-right: 10px;
+            cursor: pointer;
+          }
+          @media only screen and(max-width: 576px) {
+            display: none;
+          }
+        }
+
+      }
+    }
+  }
+
+  &__each-row:nth-child(odd) {
+    background-color: rgb(223 233 245 / 20%);
+  }
+
+}

@@ -55,43 +55,46 @@ import {
   evaluation_templates_page,
   evaluation_template_page,
   archive_page,
+  reminders,
   evaluate_page,
   evaluation_summary_page,
 } from "../definitions";
 
 // Landing page / list
-import StartupSection from "./NewDesign/Startup/StartupPage";
+import StartupSection from "./Pages/Startup/StartupPage";
 
-// import Dashboard from "./pages/Dashboard/DashboardPage";
-import Charts from "./pages/Dashboard/Charts/ChartsPage";
-import Profile from "./pages/Profile/Profile";
-import Tags from "./pages/Tags";
-import Funnels from "./pages/Funnels";
-// import Settings from "./pages/Settings/Settings";
-import Team from "./pages/Team/Team";
-import StartupPage from "./pages/StartupPage/StartupPage";
-import FactsPage from "./pages/StartupPage/Facts/Facts";
-import UI_Components from "./pages/UI_Components";
+// import Dashboard from "./Pages/Dashboard/DashboardPage";
+import Charts from "./oldPages/Dashboard/Charts/ChartsPage.tsx";
+import Profile from "./oldPages/Profile/Profile";
+import Tags from "./oldPages/Tags";
+import Funnels from "./oldPages/Funnels";
+// import Settings from "./Pages/Settings/Settings";
+import Team from "./oldPages/Team/Team";
+import StartupPage from "./oldPages/StartupPage/StartupPage";
+import FactsPage from "./oldPages/StartupPage/Facts/Facts";
+import UI_Components from "./oldPages/UI_Components";
 
 // Evaluation templates
 
-import FactsTemplates from "./pages/FactsTemplates/FactsTemplates/FactsTemplates";
-import FactsTemplate from "./pages/FactsTemplates/FactsTemplate/FactsTemplate";
-import EvaluationV2Page from "./pages/EvaluationV2/";
-import EvaluationSummary from "./pages/EvaluationV2/Summary";
+import FactsTemplates from "./oldPages/FactsTemplates/FactsTemplates/FactsTemplates";
+import FactsTemplate from "./oldPages/FactsTemplates/FactsTemplate/FactsTemplate";
+import EvaluationV2Page from "./Pages/EvaluationV2/";
+import EvaluationSummary from "./Pages/EvaluationV2/Summary";
 
 // Groups
-// import Groups from "./pages/Groups/Groups";
-import Group from "./pages/Groups/Group/Group";
-import GroupConnection from "./pages/Groups/GroupConnection";
-import GroupSettings from "./pages/Groups/GroupSettings";
-// import Groups from "./shubham-new-designs/pages/groups/index";
-import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
-import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
-// import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
-import News from "./NewDesign/news/news";
-import NewsViewOne from "./NewDesign/news/NewsViewOne";
-import NewsEdit from "./NewDesign/news/news-edit";
+// import Groups from "./Pages/Groups/Groups";
+import Group from "./oldPages/Groups/Group/Group";
+import GroupConnection from "./oldPages/Groups/GroupConnection";
+import GroupSettings from "./oldPages/Groups/GroupSettings";
+// import Groups from "./shubham-new-designs/Pages/groups/index";
+
+import Groups from "./Pages/GroupV2/GroupsPage/GroupsPage";
+import GroupPage from "./Pages/GroupV2/GroupPage/GroupPage";
+// import GroupPage from "./shubham-new-designs/Pages/groups/group-dashboard";
+
+import News from "./Pages/news/news";
+import NewsViewOne from "./Pages/news/NewsViewOne";
+import NewsEdit from "./Pages/news/news-edit";
 // import NewsEdit from "./NewDesign/news/news-edit";
 
 // Loader
@@ -100,8 +103,8 @@ import { ErrorBoundary } from "Components/ErrorBoundary";
 
 // Styles
 import { Header } from "Components/Header/Header";
-import ExternalForm from "./pages/ExternalForm/ExternalForm";
-import Navigation from "./pages/UI_Components/Navigation/Navigation";
+import ExternalForm from "./oldPages/ExternalForm/ExternalForm";
+import Navigation from "./oldPages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
 import { Startup } from "./shubham-new-designs/pages/startup/index";
@@ -109,38 +112,36 @@ import { Startup } from "./shubham-new-designs/pages/startup/index";
 import Settings_Home from "./shubham-new-designs/pages/settings/settings";
 // import News from "./shubham-new-designs/pages/news/news";
 import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
-
+import Reminders from "./shubham-new-designs/pages/dashboard/reminders";
 // New Startup Info
-import Reports from "./NewDesign/srv_startup/pages/reports/reports";
-import { StartupPage as StartupInfo } from "./NewDesign/StartupPage/index";
-import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
+import Reports from "./Pages/srv_startup/pages/reports/reports";
+import { StartupPage as StartupInfo } from "./Pages/StartupPage/index";
+import Dashboard from "./Pages/srv_startup/pages/dashboard/dashboard";
 
-// import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
-// import EvaluationTemplate from "./pages/Templates/EvaluationTemplate/EvaluationTemplate";
-// import EvaluationTemplateSection from "./pages/Templates/EvaluationTemplateSection";
-// import EvaluationTemplateSummary from "./pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
+// import EvaluationTemplates from "./Pages/Templates/EvaluationTemplates/EvaluationTemplates";
+// import EvaluationTemplate from "./Pages/Templates/EvaluationTemplate/EvaluationTemplate";
+// import EvaluationTemplateSection from "./Pages/Templates/EvaluationTemplateSection";
+// import EvaluationTemplateSummary from "./Pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
 
-import { EvaluationTemplatesPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
-import { EvaluationTemplatePage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplatePage/EvaluationTemplatePage";
-import { EvaluationTemplateSectionPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluationTemplateSectionPage";
+import { EvaluationTemplatesPage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
+import { EvaluationTemplatePage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplatePage/EvaluationTemplatePage";
+import { EvaluationTemplateSectionPage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluationTemplateSectionPage";
 
 // New Jørgen import
-import NotificationsPage from "./NewDesign/Notifications/notifications";
-// import { SectionPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluatimplateSectionPage";
+import NotificationsPage from "./Pages/Notifications/notifications";
+// import { SectionPage } from "./NewDesign/srv_startup/Pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluatimplateSectionPage";
 
 //settings
-import Settings from "./NewDesign/settings/settings";
-import yourTeam from "./NewDesign/settings/your-team";
-import webForm from "./NewDesign/settings/web-form";
-import TagGroup from "./NewDesign/settings/tags";
-import Funnels1 from "./NewDesign/settings/funnels";
-import Notifications from "./NewDesign/settings/notifications";
-import ProfileSettings from "./NewDesign/settings/profile";
-
-import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
-
-import EvaluatePage from "./NewDesign/Evaluate/EvaluatePage";
-import EvaluationSummaryPage from "./NewDesign/Evaluate/EvaluationSummaryPage";
+import Settings from "./Pages/Settings/settings";
+import yourTeam from "./Pages/Settings/your-team";
+import webForm from "./Pages/Settings/web-form";
+import TagGroup from "./Pages/Settings/tags";
+import Funnels1 from "./Pages/Settings/funnels";
+import Notifications from "./Pages/Settings/notifications";
+import ProfileSettings from "./Pages/Settings/profile";
+import ArchivePage from "./Pages/ArchivePage/ArchivePage.js";
+import EvaluatePage from "./Pages/Evaluate/EvaluatePage";
+import EvaluationSummaryPage from "./Pages/Evaluate/EvaluationSummaryPage";
 
 /* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
@@ -292,11 +293,7 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={startup_company_profile} component={StartupInfo} />
 
       <Route exact path={startup_index} component={Startup} />
-      <Route
-        exact
-        path={`${group_dashboard}/:groupId`}
-        component={GroupDashboard}
-      />
+      <Route exact path={`${group_dashboard}/:groupId`} component={GroupPage} />
 
       {/*<Route*/}
       {/*  exact*/}
@@ -306,7 +303,7 @@ export const RouterComponent = ({ history }) => {
 
       {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
-
+      <Route eaxct path={reminders} component={Reminders} />
       {/* <Route
         eaxct
         path={`${startup_page}/settings`}

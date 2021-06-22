@@ -15,7 +15,7 @@ import Notifications from "./notifications";
 import Tags from "./tags";
 import Funnels from "./funnels";
 
-import { EvaluationTemplatesPage } from "../../../NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
+import { EvaluationTemplatesPage } from "../../../Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
 
 import ProfileSettings from "./profile";
 
