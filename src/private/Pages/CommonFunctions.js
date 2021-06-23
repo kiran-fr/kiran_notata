@@ -53,4 +53,21 @@ export const arrayPositionSort = (arr, index, newItem) => [
   ...arr.slice(index),
 ];
 
-// const result123 = arrayPositionSort(columnsCopy, key, columnUpdatedObj)
+
+export const subjectiveScore = (
+  connection
+) => {
+  let scores = connection?.subjectiveScores || [];
+
+  let avg;
+  if (scores?.length) {
+    let { score: ttl } = scores.reduce(
+      (a, b) =>
+        ({
+          score: a.score + b.score,
+        })
+    );
+    avg = Number((ttl / scores.length).toFixed(1));
+  }
+  return avg;
+};

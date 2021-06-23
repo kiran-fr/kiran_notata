@@ -7,7 +7,6 @@ import InputCheckBox from "../../../srv_startup/pages/ui-kits/check-box";
 // STYLES
 import styles from "./table.module.css";
 
-
 export default function TableHeader(props) {
 
   // Constant
@@ -103,7 +102,7 @@ export default function TableHeader(props) {
         {evaluationTemplates.length
           ? evaluationTemplates.map(({ name, id }) =>
               columnSettings.evaluationTemplates.includes(id) ? (
-                <td>
+                <td key={id}>
                   {name}
                   <i
                     onClick={() => {

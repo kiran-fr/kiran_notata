@@ -13,9 +13,8 @@ import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
 
 // OTHER
 import moment from "moment";
-import { subjectiveScore } from "../../../../oldPages/Dashboard/Connections/types";
 import classnames from "classnames";
-import { sortArr, DynamicIcons } from "../../../CommonFunctions";
+import { sortArr, DynamicIcons, subjectiveScore } from "../../../CommonFunctions";
 
 export default function TableBody(props) {
   //props Value
