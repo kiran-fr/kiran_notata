@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 // COMPONENTS
 import { Loader } from "Components/UI_Kits";
+import { FunnelPopup, StartupPreview } from "./Popups";
 
 // STYLES
 import styles, { activePopup } from "./table.module.css";
@@ -18,7 +19,6 @@ import { sortArr, DynamicIcons } from "../../../CommonFunctions";
 
 export default function TableBody(props) {
   //props Value
-
   const {
     connections,
     evaluationTemplates,
@@ -40,70 +40,10 @@ export default function TableBody(props) {
     funnelLoad,
   } = props;
 
+  //STATE
   const [funnel, setFunnel] = useState();
   const [funnelId, setFunnelId] = useState();
-
   const [showFunnel, setShowFunnel] = useState(false);
-
-  const FunnelPopup = ({ tags, id, index }) => {
-    const updateFunnelTagForConnection = funnelTagId => {
-      updateFunnelTag(funnelTagId, id);
-      setFunnel(false);
-      setShowFunnel(false);
-    };
-
-    const popup = useRef();
-
-    useEffect(() => {
-      const handleGlobalEvent = e =>
-        !e.path.includes(popup.current) ? setShowFunnel(false) : null;
-
-      window.addEventListener("click", handleGlobalEvent);
-
-      return () => {
-        window.removeEventListener("click", handleGlobalEvent);
-      };
-    });
-
-    const tagSort = sortArr(tags);
-
-    return (
-      <div
-        ref={popup}
-        className={styles.funnelPopup}
-        style={{ top: index > 20 ? "-400%" : `50px` }}
-      >
-        <ul>
-          {tagSort?.map((tag, index) => (
-            <li
-              key={tag.id}
-              onClick={() => updateFunnelTagForConnection(tag.id)}
-            >
-              <img src={DynamicIcons(index)} alt="" /> {tag.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
-
-  const StartupPreview = ({ no, companyName, oneLiner, problem }) => (
-    <div className={styles.startupPreview} style={{ top: `${no + 56}px` }}>
-      <h1>{companyName}</h1>
-      {oneLiner && (
-        <>
-          <h3>{oneLiner.questionName}</h3>
-          <p>{oneLiner.val}</p>
-        </>
-      )}
-      {problem && (
-        <>
-          <h3>{problem.questionName}</h3>
-          <p>{problem.val}</p>
-        </>
-      )}
-    </div>
-  );
 
   return (
     <tbody>
@@ -162,7 +102,6 @@ export default function TableBody(props) {
                       />
                       <span className={styles.checkmark} />
                     </label>
-
                     {/*Star*/}
                     <div
                       style={{ marginTop: "-5px" }}
@@ -214,6 +153,7 @@ export default function TableBody(props) {
                       {item.creative.name}
                       {preview === index && (
                         <StartupPreview
+                          styles = {styles}
                           companyName={item.creative.name}
                           oneLiner={oneLiner}
                           problem={problem}
@@ -275,9 +215,15 @@ export default function TableBody(props) {
                           </span>
                           {funnel === index && showFunnel && (
                             <FunnelPopup
+                              styles = {styles}
                               tags={funnelTags?.[0]?.group?.funnelTags || []}
                               id={id}
                               index={index}
+                              setShowFunnel = {setShowFunnel}
+                              setFunnel = {setFunnel} 
+                              updateFunnelTag = {updateFunnelTag}
+                              sortArr = {sortArr}
+                              DynamicIcons = {DynamicIcons}
                             />
                           )}
                         </>
