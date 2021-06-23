@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from "react";
-import styles from "./modal.module.css";
+// COMPONENTS
 import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import Modal from "./modal";
 import Short from "../DealFlow/AddStartUp/Short";
 import Expand from "../DealFlow/AddStartUp/Expand";
 
+//STYLES
+import styles from "./modal.module.css";
+
 export default function AddStartup({ closeModal, history, connections }) {
-  const [activeTab, setActiveTab] = useState();
 
-  useEffect(() => {
-    setActiveTab(tabArr[0]?.value);
-  }, [closeModal]);
-
+  // CONST 
   const tabArr = [
     { value: "short", text: "short" },
     { value: "expand", text: "expand" },
   ];
 
+  // STATES
+  const [activeTab, setActiveTab] = useState();
+
+  // EFFECT 
+  useEffect(() => {
+    setActiveTab(tabArr[0]?.value);
+  }, [closeModal]);
+
+ 
   if (!activeTab) return null;
 
   return (

@@ -19,7 +19,7 @@ import styles from "./table.module.css";
 export default function Table(props) {
 
   // Constant
-  const { data, loading, emptyLabel, history, updateFunnelTag } = props;
+  const { connections, loading, emptyLabel, history, updateFunnelTag } = props;
 
   const popupItems = [
     {
@@ -109,9 +109,9 @@ export default function Table(props) {
             }}
           />
 
-          {!data.length && loading && <Loader />}
+          {!connections.length && loading && <Loader />}
 
-          {!data.length && (
+          {!connections.length && (
             <div className={styles.empty_list}>
               {emptyLabel || "This list is empty"}
             </div>
@@ -121,7 +121,7 @@ export default function Table(props) {
 
       {viewModal === "Archive" && (
         <ArchiveModal
-          ids={checkAll ? data.map(({ id }) => id) : Object.keys(checked)}
+          ids={checkAll ? connections.map(({ id }) => id) : Object.keys(checked)}
           close={() => {
             setCheckAll(false);
             setChecked({});
@@ -132,7 +132,7 @@ export default function Table(props) {
 
       {viewModal === "Add To Group" && (
         <AddToGroupModal
-          connections={data.filter(connection =>
+          connections={connections.filter(connection =>
             checkAll ? true : !!checked[connection.id]
           )}
           close={() => {
@@ -145,7 +145,7 @@ export default function Table(props) {
 
       {viewModal === "Add Tags" && (
         <AddTagsModal
-          ids={checkAll ? data.map(({ id }) => id) : Object.keys(checked)}
+          ids={checkAll ? connections.map(({ id }) => id) : Object.keys(checked)}
           close={() => setViewModal(undefined)}
         />
       )}

@@ -16,10 +16,11 @@ import { subjectiveScore } from "../../../../oldPages/Dashboard/Connections/type
 import classnames from "classnames";
 import { sortArr, DynamicIcons } from "../../../CommonFunctions";
 
-
 export default function TableBody(props) {
+  //props Value
+
   const {
-    data,
+    connections,
     evaluationTemplates,
     setShowTagGroupForId,
     setShowStartUpForId,
@@ -106,8 +107,8 @@ export default function TableBody(props) {
 
   return (
     <tbody>
-      {data &&
-        data
+      {connections &&
+        connections
           .filter(({ creative }) => creative)
           .map((item, index) => {
             let {
