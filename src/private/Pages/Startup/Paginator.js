@@ -4,6 +4,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { connectionPagesGet } from "private/Apollo/Queries";
 
+//STYLES 
 import styles from "./Paginator.module.css";
 
 export default function Paginator({ currentPage, setCurrentPage }) {
