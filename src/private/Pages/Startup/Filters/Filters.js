@@ -1,72 +1,24 @@
 import React, { useState, useEffect } from "react";
-import styles from "./filter.module.css";
-import Filterr from "../../../assets/images/filter.png";
-import Column from "../../../assets/images/column.png";
-import KanbanIcon from "../../../assets/images/KanbanIcon.svg";
-import AddStartup from "./Modal/addStartup";
-import { Tabsection } from "Components/UI_Kits/Tabs/index";
-import FilterSidebar from "Components/secondarySidebar/filter";
-import ColumnSidebar from "Components/secondarySidebar/manage";
 
 //API
 import { funnelGroupGet } from "private/Apollo/Queries";
 import { useQuery } from "@apollo/client";
 
-import PopupMenu from "./PopupMenu";
+// COMPONENTS 
+import AddStartup from "../Modal/addStartup";
+import { Tabsection } from "Components/UI_Kits/Tabs/index";
+import FilterSidebar from "Components/secondarySidebar/filter";
+import ColumnSidebar from "Components/secondarySidebar/manage";
+import {OptionalFilterSidebar, handleclearTxt, tabArrValue} from "./helper.js"
 
+//STYLES
+import styles from "./filter.module.css";
 import {
   container,
   container_mini,
   footer,
   filter_container,
 } from "./Filters.module.scss";
-
-const handleOptional = (setState, filterType, disabled) => {
-  if (disabled === "") {
-    setState(filterType);
-  }
-};
-
-const OptionalFilterSidebar = ({ setOptionalFilter, grayFadeOut }) => {
-  return (
-    <div className={grayFadeOut}>
-      <div className={styles.filterContainer}>
-        <button
-          className={styles.filterButton + " " + styles.manageButton}
-          style={{ marginRight: "10px" }}
-          onClick={() =>
-            handleOptional(setOptionalFilter, "column", grayFadeOut)
-          }
-        >
-          <img src={Column} alt="" /> <span>Manage Columns</span>
-        </button>
-        <button
-          className={styles.filterButton}
-          onClick={() =>
-            handleOptional(setOptionalFilter, "filter", grayFadeOut)
-          }
-        >
-          <img src={Filterr} alt="" /> <span>Filter</span>
-        </button>
-      </div>
-    </div>
-  );
-};
-
-function handleclearTxt(filters) {
-  const hideTxt =
-    (filters.tags && filters.tags.length > 0) ||
-    (filters.funnelTag && filters.funnelTag.length > 0) ||
-    filters.search ||
-    filters.starred ||
-    (filters.fromDate && filters.toDate);
-
-  if (hideTxt) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 export default function Filters({
   history,
@@ -80,6 +32,7 @@ export default function Filters({
   defaultFilters,
   setSelectedfunnelGroup,
 }) {
+  // STATES 
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState();
   const [optionalFilter, setOptionalFilter] = useState();
@@ -90,9 +43,9 @@ export default function Filters({
 
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
-
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
 
+  // EFFECT 
   useEffect(() => {
     setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
@@ -120,58 +73,8 @@ export default function Filters({
     }
   }, [filterValue]);
 
-  const tabArr = [
-    {
-      value: "kanban",
-      text: (
-        <div>
-          <img
-            style={{
-              width: 15,
-              height: 15,
-              marginRight: "4px",
-              transform: "rotateZ(360deg)",
-              opacity: activeTab === "kanban" ? 1 : 0.5,
-            }}
-            src={KanbanIcon}
-            alt=""
-          />
-          <span>KANBAN</span>
-          <i
-            onClick={() => setKanbanPopup(!kanbanPopup)}
-            style={{ marginLeft: "5px" }}
-            className="fas fa-chevron-down"
-          ></i>
-          <PopupMenu
-            title="Kanban"
-            items={kanbanDropDown}
-            isOpen={kanbanPopup}
-            setSelectedfunnelGroup={setSelectedfunnelGroup}
-            setIsOpen={setKanbanPopup}
-          ></PopupMenu>
-        </div>
-      ),
-    },
-    {
-      value: "spreadsheet",
-      text: (
-        <div>
-          <img
-            style={{
-              width: 15,
-              height: 15,
-              marginRight: "4px",
-              opacity: activeTab === "kanban" ? 0.5 : 1,
-            }}
-            src={Column}
-            alt=""
-          />
-          <span>SPREADSHEET</span>
-        </div>
-      ),
-    },
-  ];
-
+  
+  // FUNCTIONS 
   const handleSearch = e => {
     if (activeTab === "spreadsheet") {
       setFilterValue(e.target.value);
@@ -199,6 +102,8 @@ export default function Filters({
       setFilters({ ...filters, search: filterValue });
     }
   };
+
+  const tabArr =  tabArrValue(setKanbanPopup, kanbanPopup, kanbanDropDown, setSelectedfunnelGroup, activeTab);
 
   return (
     <div className={styles.override}>
@@ -270,6 +175,7 @@ export default function Filters({
             >
               <div>
                 <OptionalFilterSidebar
+                  styles = {styles}
                   setOptionalFilter={setOptionalFilter}
                   grayFadeOut={
                     activeTab !== "spreadsheet" ? styles.grayFadeOut : ""

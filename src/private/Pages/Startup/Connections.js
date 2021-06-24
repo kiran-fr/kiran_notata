@@ -7,7 +7,7 @@ import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
 
 // COMPONENTS
 import ListOfStartups from "./ListOfStartups";
-import Filters from "./Filters";
+import Filters from "./Filters/Filters";
 import { Kanban } from "../Kanban/Kanban";
 import Paginator from "./Paginator";
 
