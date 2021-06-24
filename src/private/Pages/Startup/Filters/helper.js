@@ -1,7 +1,7 @@
 import React from "react";
 
 // COMPONENTS 
-import PopupMenu from "../PopupMenu";
+import PopupMenu from "./PopupMenu";
 
 // OTHERS
 import Filterr from "../../../../assets/images/filter.png";

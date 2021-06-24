@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+
+// STYLES 
 import styles from "./PopupMenu.module.css";
 
-import KanbanIcon from "../../../assets/images/KanbanIcon.svg";
+// OTHERS
+import KanbanIcon from "../../../../assets/images/KanbanIcon.svg";
 
 export default function PopupMenu({
   title,
@@ -10,19 +13,13 @@ export default function PopupMenu({
   setIsOpen,
   setSelectedfunnelGroup,
 }) {
-  const [open, setOpen] = useState(false);
-
-  const close = () => {
-    setIsOpen(false);
-    setOpen(false);
-  };
-
-  const handleSelected = (name, index) => {
-    setSelectedfunnelGroup(index);
-  };
-
+  // CONST 
   const popup = useRef();
 
+  //STATES
+  const [open, setOpen] = useState(false);
+
+  //EFFECTS 
   useEffect(() => {
     setOpen(isOpen);
   }, [isOpen]);
@@ -37,6 +34,17 @@ export default function PopupMenu({
       window.removeEventListener("click", handleGlobalEvent);
     };
   });
+
+  // FUNCTIONS 
+  const close = () => {
+    setIsOpen(false);
+    setOpen(false);
+  };
+
+  const handleSelected = (name, index) => {
+    setSelectedfunnelGroup(index);
+  };
+
 
   return (
     <>
