@@ -21,7 +21,7 @@ import {
 import styles from "./Sidebar.module.css";
 
 // OTHERS 
-import menuListArr from "./helpers"
+import {menuListArr} from "./helpers"
 import { NavLink, matchPath } from "react-router-dom";
 import classnames from "classnames";
 import authLogo from "../../../assets/images/auth_logo.png";
