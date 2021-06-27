@@ -1,9 +1,5 @@
 import React from "react";
 
-// import Sharings from "./Sharings";
-// import Invitations from "./Invitations";
-// import { History } from "history";
-
 import { Content } from "Components/elements";
 import Connections from "./Connections";
 
