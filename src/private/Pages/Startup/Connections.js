@@ -9,7 +9,7 @@ import { connectionFunnelTagAdd } from "private/Apollo/Mutations";
 import ListOfStartups from "./ListOfStartups";
 import Filters from "./Filters/Filters";
 import { Kanban } from "../Kanban/Kanban";
-import Paginator from "./Paginator";
+import Paginator from "./Paginator/Paginator";
 
 export default function Connections({ history }) {
 

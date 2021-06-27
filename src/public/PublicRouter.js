@@ -11,7 +11,6 @@ import {
   public_presentation,
   public_evaluation,
   oia_demo_page,
-  public_pages_new,
   public_creative_new,
 } from "../definitions";
 
