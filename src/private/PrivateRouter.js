@@ -17,9 +17,6 @@ import {
   funnels,
   ui_components,
   team,
-  // evaluation_templates,
-  // evaluation_template,
-  // evaluation_template_summary,
   startup_page,
   pre_profile,
   group,
@@ -29,19 +26,11 @@ import {
   navigation,
   startup_index,
   startup_company_profile,
-  startup_info,
   group_new,
-  // evaluation_template_new,
-  // add_section,
   group_dashboard,
-  // evaluation_template_new_dev,
-  // evaluation_template_profile,
-  // add_section_dev,
   reports,
   notifications_page,
   news,
-  dashboard_new,
-  news1,
   news_view_one,
   new_news,
   edit_news,
@@ -63,12 +52,10 @@ import {
 // Landing page / list
 import StartupSection from "./Pages/Startup/StartupPage";
 
-// import Dashboard from "./Pages/Dashboard/DashboardPage";
 import Charts from "./oldPages/Dashboard/Charts/ChartsPage.tsx";
 import Profile from "./oldPages/Profile/Profile";
 import Tags from "./oldPages/Tags";
 import Funnels from "./oldPages/Funnels";
-// import Settings from "./Pages/Settings/Settings";
 import Team from "./oldPages/Team/Team";
 import StartupPage from "./oldPages/StartupPage/StartupPage";
 import FactsPage from "./oldPages/StartupPage/Facts/Facts";
@@ -82,19 +69,15 @@ import EvaluationV2Page from "./Pages/EvaluationV2/";
 import EvaluationSummary from "./Pages/EvaluationV2/Summary";
 
 // Groups
-// import Groups from "./Pages/Groups/Groups";
 import Group from "./oldPages/Groups/Group/Group";
 import GroupConnection from "./oldPages/Groups/GroupConnection";
 import GroupSettings from "./oldPages/Groups/GroupSettings";
-// import Groups from "./shubham-new-designs/Pages/groups/index";
 
 import Groups from "./Pages/GroupV2/index";
 import GroupDashboard from "./Pages/GroupV2/group-dashboard";
-// import GroupDashboard from "./shubham-new-designs/Pages/groups/group-dashboard";
 import News from "./Pages/news/news";
 import NewsViewOne from "./Pages/news/NewsViewOne";
 import NewsEdit from "./Pages/news/news-edit";
-// import NewsEdit from "./NewDesign/news/news-edit";
 
 // Loader
 import { GhostLoader } from "Components/elements";
@@ -107,20 +90,12 @@ import Navigation from "./oldPages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
 import { Startup } from "./shubham-new-designs/pages/startup/index";
-// import Reports from "./shubham-new-designs/pages/reports/reports";
-import Settings_Home from "./shubham-new-designs/pages/settings/settings";
-// import News from "./shubham-new-designs/pages/news/news";
-import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
 import Reminders from "./shubham-new-designs/pages/dashboard/reminders";
 // New Startup Info
 import Reports from "./Pages/srv_startup/pages/reports/reports";
 import { StartupPage as StartupInfo } from "./Pages/StartupPage/index";
 import Dashboard from "./Pages/srv_startup/pages/dashboard/dashboard";
 
-// import EvaluationTemplates from "./Pages/Templates/EvaluationTemplates/EvaluationTemplates";
-// import EvaluationTemplate from "./Pages/Templates/EvaluationTemplate/EvaluationTemplate";
-// import EvaluationTemplateSection from "./Pages/Templates/EvaluationTemplateSection";
-// import EvaluationTemplateSummary from "./Pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
 
 import { EvaluationTemplatesPage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
 import { EvaluationTemplatePage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplatePage/EvaluationTemplatePage";
@@ -128,7 +103,6 @@ import { EvaluationTemplateSectionPage } from "./Pages/srv_startup/pages/Evaluat
 
 // New Jørgen import
 import NotificationsPage from "./Pages/Notifications/notifications";
-// import { SectionPage } from "./NewDesign/srv_startup/Pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluatimplateSectionPage";
 
 //settings
 import Settings from "./Pages/settings/settings";
@@ -142,7 +116,6 @@ import ArchivePage from "./Pages/ArchivePage/ArchivePage.js";
 import EvaluatePage from "./Pages/Evaluate/EvaluatePage";
 import EvaluationSummaryPage from "./Pages/Evaluate/EvaluationSummaryPage";
 
-/* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -220,32 +193,6 @@ export const RouterComponent = ({ history }) => {
         component={EvaluationTemplateSectionPage}
       />
 
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={`${evaluation_template_profile}/:id/:sectionId`}*/}
-      {/*  component={EvaluationTemplatesPage}*/}
-      {/*/>*/}
-      {/*<Route exact path={add_section_dev} component={EvaluationTemplatesPage} />*/}
-      {/*<Route exact path={add_section} component={AddSection} />*/}
-
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={evaluation_template_new}*/}
-      {/*  component={ElevationTemplates}*/}
-      {/*/>*/}
-
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={evaluation_template_new_dev}*/}
-      {/*  component={ElevationTemplatesPage}*/}
-      {/*/>      */}
-
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={`${evaluation_template_summary}/:templateId`}*/}
-      {/*  component={EvaluationTemplateSummary}*/}
-      {/*/>*/}
-
       <Route exact path={`${group}`} component={Groups} />
       <Route exact path={`${group_new}`} component={Groups} />
 
@@ -298,33 +245,8 @@ export const RouterComponent = ({ history }) => {
         component={GroupDashboard}
       />
 
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={`${evaluation_template_profile}/:id`}*/}
-      {/*  component={EvaluationTemplatesPage}*/}
-      {/*/>*/}
-
-      {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
       <Route eaxct path={reminders} component={Reminders} />
-      {/* <Route
-        eaxct
-        path={`${startup_page}/settings`}
-        component={Settings}
-      /> */}
-      {/* <Route eaxct path={dashboard_new} component={DashboardNew} />
-      <Route
-        eaxct
-        path={`${startup_page}/components/company/dashboard`}
-        component={Dashboard}
-      />
- */}
-      {/* <Route
-        eaxct
-        path={`${startup_page}/report/reports`}
-        component={ReportsAdd}
-      /> */}
-
       <Route render={() => <div>404</div>} />
     </Switch>
   );
@@ -358,7 +280,6 @@ const WrapperComponent = ({ ...props }) => {
     <div className="page_container" style={{ display: "flex" }}>
       <Header history={props.history} />
       <Navigation history={props.history} />
-      {/* <SideBarTreeMenu {...props} /> */}
       <div
         className={`logged_in_page_content ${
           matchPath(props.location.pathname, {

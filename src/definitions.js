@@ -15,27 +15,6 @@ export const pre_profile = "/profile";
 export const link_bridge = `/link`;
 // LOGGED IN PAGES
 
-// export const dashboard = "/dashboard";
-// export const charts = `${dashboard}/charts`;
-
-// export const startup_page = `${dashboard}/startup_page`;
-
-// export const profile = `${dashboard}/profile`;
-// export const tags = `${dashboard}/tags`;
-// export const funnels = `${dashboard}/funnels`;
-// export const settings = `${dashboard}/settings`;
-// export const team = `${dashboard}/team`;
-// export const evaluation_templates = `${dashboard}/templates`;
-// export const evaluation_template = `${evaluation_templates}/edit`;
-// export const evaluation_template_summary = `${evaluation_templates}/summary`;
-// export const facts_templates = `${dashboard}/facts_templates`;
-// export const facts_template = `${facts_templates}/edit`;
-// export const group = `${dashboard}/group`;
-// export const external_form = `${dashboard}/external_form`;
-// export const ui_components = `${dashboard}/components/ui`;
-// export const navigation = `${dashboard}/components/ui/navigation`;
-
-// export const dashboard = "/dashboard";
 export const startup_page = "/startup_page";
 
 export const charts = `${startup_page}/charts`;
@@ -99,24 +78,14 @@ export const public_creative = `${public_pages}/creative`;
 export const public_creative_new = `${public_pages}/creative_new`;
 
 export const public_pages_new = `/public_new`;
-// export const public_creative_new = `${public_pages_new}/creative`;
 
 // SHUBHAM ROUTES
 export const startup_index = `${startup_page}/components/ui/navigation1`;
 export const group_dashboard = `${startup_page}/components/ui/navigation1/group/group_dashboard`;
-// export const reports = `${startup_page}/components/ui/navigation1/report`;
 export const settings_new = `${startup_page}/components/ui/navigation1/settings`;
-// export const news = `${startup_page}/components/ui/navigation1/news`;
 export const dashboard_new = `${startup_page}/components/ui/navigation1/dashboard`;
 export const reminders = `${startup_page}/components/ui/navigation1/reminders`;
-// export const evaluation_templates = `${startup_page}/templates`;
-// export const evaluation_template = `${evaluation_templates}/edit`;
-// export const evaluation_template_summary = `${evaluation_templates}/summary`;
 
-// export const add_section = `${startup_page}/components/ui/evaluation-templates/add-section`;
-// export const evaluation_template_new = `${startup_page}/components/ui/evaluation-templates`;
-// export const evaluation_template_new_dev = `${startup_page}/settings/evaluation-templates`;
-// export const evaluation_template_page = `${startup_page}/settings/evaluation-template`;
 
 export const evaluation_templates_page = `${startup_page}/settings/templates`;
 export const evaluation_template_page = `${startup_page}/settings/template`;
