@@ -19,15 +19,9 @@ import {
   DynamicIcons,
   subjectiveScore,
 } from "../../../../CommonFunctions";
-import { Loader } from "Components/UI_Kits";
 import { useMutation } from "@apollo/client";
-import { pong } from "../../../../Apollo/Mutations";
-import {
-  awaiting,
-  group_dashboard,
-  group_new,
-} from "../../../../../definitions";
-import { connectionsGet, creativesGet } from "../../../../Apollo/Queries";
+import { awaiting, group_dashboard, group_new } from "definitions";
+import { connectionsGet, creativesGet } from "../../../../../Apollo/Queries";
 import { useHistory } from "react-router-dom";
 
 export default function TableBody(props) {

@@ -77,59 +77,6 @@ export default function Filters({
     }
   }, [filterValue]);
 
-  // FUNCTIONS
-  const tabArr = [
-    {
-      value: "kanban",
-      text: (
-        <div>
-          <img
-            style={{
-              width: 15,
-              height: 15,
-              marginRight: "4px",
-              transform: "rotateZ(360deg)",
-              opacity: activeTab === "kanban" ? 1 : 0.5,
-            }}
-            src={KanbanIcon}
-            alt=""
-          />
-          <span>KANBAN</span>
-          <i
-            onClick={() => setKanbanPopup(!kanbanPopup)}
-            style={{ marginLeft: "5px" }}
-            className="fas fa-chevron-down"
-          ></i>
-          <PopupMenu
-            title="Kanban"
-            items={kanbanDropDown}
-            isOpen={kanbanPopup}
-            setSelectedfunnelGroup={setSelectedfunnelGroup}
-            setIsOpen={setKanbanPopup}
-          ></PopupMenu>
-        </div>
-      ),
-    },
-    {
-      value: "spreadsheet",
-      text: (
-        <div>
-          <img
-            style={{
-              width: 15,
-              height: 15,
-              marginRight: "4px",
-              opacity: activeTab === "kanban" ? 0.5 : 1,
-            }}
-            src={Column}
-            alt=""
-          />
-          <span>LIST</span>
-        </div>
-      ),
-    },
-  ];
-
   const handleSearch = e => {
     if (activeTab === "spreadsheet") {
       setFilterValue(e.target.value);
