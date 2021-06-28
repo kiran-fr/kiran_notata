@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { newsFragments } from "../../../Apollo/Fragments";
+import { newsFragments } from "../Fragments";
 
 export default gql`
   mutation newsDeleteImage($id: ID!) {

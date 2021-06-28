@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import {} from "Apollo/Fragments";
+import {} from "../Fragments";
 
 export default gql`
   query evaluationTemplateSectionGet($id: ID!) {

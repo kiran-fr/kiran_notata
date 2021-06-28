@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import RadioButton from "../../../../srv_startup/pages/ui-kits/radio-button";
-import InputCheckBox from "../../../../srv_startup/pages/ui-kits/check-box";
+import RadioButton from "../../../../../../Components/UI_Kits/from_srv/radio-button";
+import InputCheckBox from "../../../../../../Components/UI_Kits/from_srv/check-box";
 import { useForm } from "react-hook-form";
 
 const Settings = ({ group, data, setData }) => {

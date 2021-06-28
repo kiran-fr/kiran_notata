@@ -6,7 +6,7 @@ import {
   funnelTagFragments,
   creativeFragments,
   connectionFragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   query groupGetListOfStartups($creativeId: ID) {

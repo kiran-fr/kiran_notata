@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { connectionExtendedFragments } from "Apollo/Fragments";
+import { connectionExtendedFragments } from "../Fragments";
 
 export default gql`
   mutation connectionTagAdd($connectionId: ID!, $tagId: String!) {

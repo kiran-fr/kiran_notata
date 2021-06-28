@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import More from "assets/images/more.svg";
 import { Modal } from "Components/UI_Kits/Modal/Modal";
-import TagsModal from "../../../../srv_startup/pages/ui-kits/TagsModal";
+import TagsModal from "../../../../../../Components/UI_Kits/from_srv/TagsModal";
 
 export default function TagsComp({ connection }) {
   const [showTagsModal, setShowTagsModal] = useState(false);

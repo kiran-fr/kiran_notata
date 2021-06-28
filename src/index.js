@@ -15,8 +15,8 @@ import { setUserAttributes, userLoggedIn, userNotLoggedIn } from "actions/user";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import "core-js/stable";
-import "./styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css";
-import "./styles/fonts/fontawesome-pro-5.13.0-web/css/all.min.css";
+import "./assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css";
+import "./assets/fonts/fontawesome-pro-5.13.0-web/css/all.min.css";
 import "./styles/style.scss";
 import { createMuiTheme } from "@material-ui/core";
 

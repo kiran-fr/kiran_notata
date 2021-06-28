@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
-import SubjectiveScoreModal from "../../../../Startup/Modal/SubjectiveScoreModal";
+import SubjectiveScoreModal from "../../../../MyStartups/Modal/SubjectiveScoreModal";
 
 const getFilteredArray = (scores, isMe) => {
   return scores?.filter(i => i.isMe === isMe) || [];

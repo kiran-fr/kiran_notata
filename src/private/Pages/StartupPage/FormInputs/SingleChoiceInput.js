@@ -1,5 +1,5 @@
 import React from "react";
-import RadioButton from "../../srv_startup/pages/ui-kits/radio-button";
+import RadioButton from "../../../../Components/UI_Kits/from_srv/radio-button";
 import styles from "./input.module.scss";
 
 export default function SingleChoiceInput({

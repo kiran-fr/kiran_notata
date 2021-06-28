@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import Sidebar from "./index";
-import TagsModal from "../../private/Pages/srv_startup/pages/ui-kits/TagsModal";
+import TagsModal from "../UI_Kits/from_srv/TagsModal";
 import { Modal } from "../UI_Kits";
 import { Loader } from "Components/UI_Kits";
-import { sortArr } from "../../private/Pages/CommonFunctions";
+import { sortArr } from "../../private/Pages/commonFunctions";
 
 // common dynamic funnel img function
-import { DynamicIcons } from "../../private/Pages/CommonFunctions";
+import { dynamicIcons } from "../../private/Pages/commonFunctions";
 import { CheckBox, Datepicker1 } from "Components/UI_Kits";
 
 // API
@@ -113,7 +113,7 @@ export default function FilterBar({
                       <p>{data.name}</p>
                     </div>
                     <div className={styles.image}>
-                      <img src={DynamicIcons(index, "filter")} alt="" />
+                      <img src={dynamicIcons(index, "filter")} alt="" />
                     </div>
                   </li>
                 ))}

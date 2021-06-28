@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "../UI_Kits";
 
-import styles from "../../Containers/NewDesign/style.module.css";
+import styles from "../../private/Pages/LoginPages/style.module.css";
 import linkedIn from "../../assets/images/linkedIn.svg";
 import facebook from "../../assets/images/facebook.svg";
 import googlePlus from "../../assets/images/googlePlus.svg";

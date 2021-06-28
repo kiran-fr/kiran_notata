@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./sharing-options.scss";
-import InputCheckBox from "../../../srv_startup/pages/ui-kits/check-box";
+import InputCheckBox from "../../../../../Components/UI_Kits/from_srv/check-box";
 import { useMutation } from "@apollo/client";
 import {
   groupSubjectiveScoreAdd,

@@ -109,7 +109,7 @@ export const InviteStartupModal = ({ connection, close }) => {
 
   return (
     <Modal
-      title={inviteSent ? "Revoke Startup Link" : "Invite Startup"}
+      title={inviteSent ? "Revoke MyStartups Link" : "Invite MyStartups"}
       loading={loading}
       submit={() => (inviteSent ? revoke() : onSubmit())}
       close={close}

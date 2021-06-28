@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import { useQuery, useMutation } from "@apollo/client";
 import { logGet } from "private/Apollo/Queries";
-import TextBox from "../../../../srv_startup/pages/ui-kits/text-box";
+import TextBox from "../../../../../../Components/UI_Kits/from_srv/text-box";
 import { logCreate, logDelete, logUpdate } from "private/Apollo/Mutations";
 
 import styles from "./CommentBox.module.scss";

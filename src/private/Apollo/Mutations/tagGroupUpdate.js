@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { tagGroupFragments } from "Apollo/Fragments";
+import { tagGroupFragments } from "../Fragments";
 
 export default gql`
   mutation tagGroupUpdate($id: ID!, $input: TagGroupInput!) {

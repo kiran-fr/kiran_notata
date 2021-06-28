@@ -5,14 +5,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 
 // PUBLIC
-import { FrontPage } from "Containers/FrontPage/FrontPage";
+import { FrontPage } from "FrontPage/FrontPage";
 
 // USER
-import { Signup } from "Containers/NewDesign/SignUp/SignUp";
-import { Login } from "Containers/NewDesign/Login/Login";
-import { ForgotPassword } from "Containers/NewDesign/ForgotPassword/ForgotPassword";
-import { SignOut } from "Containers/NewDesign/SignOut/SignOut";
-import { PreProfile } from "Containers/NewDesign/PreProfile/Profile";
+import { Signup } from "private/Pages/LoginPages/SignUp/SignUp";
+import { Login } from "private/Pages/LoginPages/Login/Login";
+import { ForgotPassword } from "private/Pages/LoginPages/ForgotPassword/ForgotPassword";
+import { SignOut } from "private/Pages/LoginPages/SignOut/SignOut";
+import { PreProfile } from "private/Pages/LoginPages/PreProfile/Profile";
 
 // import { Signup } from "Containers/Auth/Signup/Signup";
 // import { Login } from "Containers/Auth/Login/Login";
@@ -23,7 +23,7 @@ import { PreProfile } from "Containers/NewDesign/PreProfile/Profile";
 import { Awaiting } from "Containers/Auth/Awaiting/Awaiting";
 
 // Import Kanban View
-import { KanbanPage } from "./private/Pages/Kanban/KanbanPage";
+import { KanbanPage } from "./private/Pages/MyStartups/Kanban/KanbanPage";
 
 // SHARING
 import { LinkBridge } from "Components/Shared/LinkBridge/LinkBridge";

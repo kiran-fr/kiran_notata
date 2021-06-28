@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { evaluationFragments } from "Apollo/Fragments";
+import { evaluationFragments } from "../Fragments";
 
 export default gql`
   mutation evaluationPut(

@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { pageScraperFragments } from "Apollo/Fragments";
+import { pageScraperFragments } from "../Fragments";
 
 export default gql`
   query pageScraper($url: String!) {

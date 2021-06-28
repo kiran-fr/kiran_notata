@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-// API 
+// API
 import { userGet } from "private/Apollo/Queries";
 import { useQuery } from "@apollo/client";
 
@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/client";
 import {
   // startup pages
   startup_page,
-  // settings paths
+  // Settings paths
   tags1,
   funnels1,
   notification,
@@ -20,8 +20,8 @@ import {
 // Styles
 import styles from "./Sidebar.module.css";
 
-// OTHERS 
-import {menuListArr} from "./helpers"
+// OTHERS
+import { menuListArr } from "./helpers";
 import { NavLink, matchPath } from "react-router-dom";
 import classnames from "classnames";
 import authLogo from "../../../assets/images/auth_logo.png";
@@ -33,13 +33,13 @@ export function SideBarMenu() {
   //Const
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
-  let menuList = menuListArr 
+  let menuList = menuListArr;
 
-  // STATES 
+  // STATES
   const [listOpen, setListOpen] = useState(false);
   const [isMobileList, setMobileList] = useState(false);
 
-  // QUERIES 
+  // QUERIES
   const { data } = useQuery(userGet);
   let user = data?.userGet || {};
 
@@ -178,7 +178,6 @@ export function SideBarMenu() {
               </NavLink>
             </div>
             <div
-              className={styles.menu_list}
               className={styles.profile_item}
               style={{ paddingTop: "30px", borderTop: "1px solid #BFBFBF" }}
             >

@@ -45,7 +45,7 @@ export default function EditStartupInfo({ backToInfoPage, connection }) {
               <div className="btn" onClick={() => setInviteStartUpModal(true)}>
                 {connection?.creative?.sharedWithEmail
                   ? "Edit"
-                  : "Invite Startup"}
+                  : "Invite MyStartups"}
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./request-evaluation.scss";
-import TextBox from "../../../srv_startup/pages/ui-kits/text-box";
-import RadioButton from "../../../srv_startup/pages/ui-kits/radio-button";
+import TextBox from "../../../../../Components/UI_Kits/from_srv/text-box";
+import RadioButton from "../../../../../Components/UI_Kits/from_srv/radio-button";
 
 export default function RequestEvaluation() {
   const [shareEmailCount, setShareEmailCount] = useState(1);

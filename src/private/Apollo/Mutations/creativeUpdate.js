@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { creativeFragments } from "Apollo/Fragments";
+import { creativeFragments } from "../Fragments";
 
 export default gql`
   mutation creativeUpdate($id: ID!, $input: CreativeInput!) {

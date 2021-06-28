@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { funnelGroupFragments } from "Apollo/Fragments";
+import { funnelGroupFragments } from "../Fragments";
 
 export default gql`
   mutation funnelGroupPut($id: ID, $input: FunnelGroupInput) {

@@ -3,7 +3,7 @@ import {
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
   evaluationTemplateQuestionFragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   mutation evaluationTemplatePut($id: ID, $input: EvaluationTemplateInput) {

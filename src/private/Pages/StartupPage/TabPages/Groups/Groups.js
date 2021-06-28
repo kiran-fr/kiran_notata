@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Groups.scss";
-import ButtonWithIcon from "../../../srv_startup/pages/ui-kits/button-with-icon";
-import { ICONPOSITION } from "../../../srv_startup/pages/constants";
+import ButtonWithIcon from "../../../../../Components/UI_Kits/from_srv/button-with-icon";
+import { ICONPOSITION } from "../../../constants";
 import { Modal } from "../../../../../Components/UI_Kits";
 import SharingOptions from "./sharing-options";
 import CreateNewGroup from "./create-new-group/create-new-group";
@@ -13,7 +13,7 @@ import {
   groupStartupRemove,
 } from "../../../../Apollo/Mutations";
 import { connectionGet, groupsGetV2 } from "../../../../Apollo/Queries";
-import AddGroup from "../../../Startup/Modal/addGroup";
+import AddGroup from "../../../MyStartups/Modal/addGroup";
 
 export default function Groups({ connection, history }) {
   const [selectedGroup, selectGroup] = useState(undefined);

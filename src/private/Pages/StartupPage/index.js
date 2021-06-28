@@ -19,7 +19,7 @@ import Evaluations from "./TabPages/Evaluations/Evaluations";
 import Groups from "./TabPages/Groups/Groups";
 
 // STYLES
-import "../srv_startup/pages/public.scss";
+import "../public.scss";
 
 // HELPERS
 import queryString from "query-string";

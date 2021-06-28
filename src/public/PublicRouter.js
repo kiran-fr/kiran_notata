@@ -8,8 +8,8 @@ import {
   demo_page,
   public_pages,
   product_demo,
-  public_presentation,
-  public_evaluation,
+  // public_presentation,
+  // public_evaluation,
   oia_demo_page,
   public_creative_new,
 } from "../definitions";
@@ -18,11 +18,10 @@ import { ProductDemo } from "./pages/DemoPages/ProductDemo/ProductDemo";
 import { DemoPage } from "./pages/DemoPages/DemoPage/DemoPage";
 import { OIADemoPage } from "./pages/DemoPages/OIA_DemoPage/OIA_DemoPage";
 
-import { PublicPresentationPage } from "./pages/PublicPresentationPage/PublicPresentationPage";
-import { PublicCompanyInfo } from "./pages/PublicPresentationPage/PublicCompanyInfo";
-import { EvaluationPage } from "./pages/EvaluationPage/EvaluationPage";
+// import { PublicPresentationPage } from "./pages/PublicPresentationPage/PublicPresentationPage";
+// import { PublicCompanyInfo } from "./pages/PublicPresentationPage/PublicCompanyInfo";
+// import { EvaluationPage } from "./pages/EvaluationPage/EvaluationPage";
 import { PublicCreative as ExternalForm } from "./pages/ExternalForm/PublicCreative/PublicCreative";
-
 import { PublicCreativeNew } from "./pages/ExternalFormNew/PublicCreativeNew/PublicCreativeNew";
 
 export const RouterComponent = ({ history }) => {
@@ -32,23 +31,23 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={oia_demo_page} component={OIADemoPage} />
       <Route exact path={product_demo} component={ProductDemo} />
 
-      <Route
-        exact
-        path={`${public_presentation}/:id/:email`}
-        component={PublicPresentationPage}
-      />
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={`${public_presentation}/:id/:email`}*/}
+      {/*  component={PublicPresentationPage}*/}
+      {/*/>*/}
 
-      <Route
-        exact
-        path={`${public_presentation}/:id`}
-        component={PublicCompanyInfo}
-      />
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={`${public_presentation}/:id`}*/}
+      {/*  component={PublicCompanyInfo}*/}
+      {/*/>*/}
 
-      <Route
-        exact
-        path={`${public_evaluation}/:connectionId/:creativeId/:templateId`}
-        component={EvaluationPage}
-      />
+      {/*<Route*/}
+      {/*  exact*/}
+      {/*  path={`${public_evaluation}/:connectionId/:creativeId/:templateId`}*/}
+      {/*  component={EvaluationPage}*/}
+      {/*/>*/}
 
       <Route
         exact

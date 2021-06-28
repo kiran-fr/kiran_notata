@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./evaluation-templates.scss";
-import ButtonWithIcon from "../../../srv_startup/pages/ui-kits/button-with-icon";
-import { ICONPOSITION } from "../../../srv_startup/pages/constants";
+import ButtonWithIcon from "../../../../../Components/UI_Kits/from_srv/button-with-icon";
+import { ICONPOSITION } from "../../../constants";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { evaluation_template_profile } from "../../../../../definitions";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
-import TextBox from "../../../srv_startup/pages/ui-kits/text-box";
+import TextBox from "../../../../../Components/UI_Kits/from_srv/text-box";
 import { useQuery, useMutation } from "@apollo/client";
 import { add_section_dev } from "../../../../../definitions";
 import { accountGet } from "private/Apollo/Queries";

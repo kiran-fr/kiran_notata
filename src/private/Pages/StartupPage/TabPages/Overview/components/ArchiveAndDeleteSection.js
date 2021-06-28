@@ -1,5 +1,5 @@
-import ButtonWithIcon from "../../../../srv_startup/pages/ui-kits/button-with-icon";
-import { ICONPOSITION } from "../../../../srv_startup/pages/constants";
+import ButtonWithIcon from "../../../../../../Components/UI_Kits/from_srv/button-with-icon";
+import { ICONPOSITION } from "../../../../constants";
 import React, { useState } from "react";
 import ArchiveModal from "../modals/ArchiveModal";
 import DeleteModal from "../modals/DeleteModal";

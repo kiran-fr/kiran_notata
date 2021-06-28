@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import TextBox from "../../../../srv_startup/pages/ui-kits/text-box";
+import TextBox from "../../../../../../Components/UI_Kits/from_srv/text-box";
 
 export default function General({ group, data, setData }) {
   useEffect(() => {

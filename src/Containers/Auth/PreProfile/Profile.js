@@ -67,10 +67,10 @@ export default function PreProfile({ history }) {
 // // } catch (error) {
 // //   console.log("error", error);
 // // }
-// // history.push(dashboard);
+// // history.push(Dashboard);
 
 // // API STUFF
 // import { useMutation } from "@apollo/client";
 // import { userUpdate } from "Apollo/Mutations";
-// import { dashboard } from "definitions.js";
+// import { Dashboard } from "definitions.js";
 // import { omit } from "lodash";

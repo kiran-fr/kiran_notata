@@ -9,7 +9,7 @@ import EditEvaluation from "./edit-evaluation";
 import SummaryEvaluation from "./summary-evaluation";
 import { evaluation_templates_page } from "definitions";
 import FullListModal from "./FullListModal";
-import { getEvaluationsByTemplate } from "../../../GroupV2/_helpers";
+import { getEvaluationsByTemplate } from "../../../Group/_helpers";
 import moment from "moment";
 import { evaluate_page } from "../../../../../definitions";
 

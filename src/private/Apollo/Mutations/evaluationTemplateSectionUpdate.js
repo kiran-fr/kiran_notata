@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import {
   evaluationTemplateSectionFragments,
   evaluationTemplateQuestionFragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 export default gql`
   mutation evaluationTemplateSectionUpdate(
     $id: ID!

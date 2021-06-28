@@ -4,7 +4,7 @@ import {
   evaluationTemplateFragments,
   evaluationTemplateSectionFragments,
   evaluationTemplateQuestionFragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   query evaluationTemplateGet($id: ID!) {

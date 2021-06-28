@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { presentationFragments } from "Apollo/Fragments";
+import { presentationFragments } from "../Fragments";
 
 export default gql`
   mutation presentationPut(

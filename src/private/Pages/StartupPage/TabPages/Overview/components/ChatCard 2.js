@@ -1,4 +1,4 @@
-import TextBox from "../../../../srv_startup/pages/ui-kits/text-box";
+import TextBox from "../../../../../../Components/UI_Kits/from_srv/text-box";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";

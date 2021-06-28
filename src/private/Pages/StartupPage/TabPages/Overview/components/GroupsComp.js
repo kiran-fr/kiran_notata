@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { group_dashboard } from "../../../../../../definitions";
-import AddToGroupModalNew from "../../../../Startup/Modal/AddToGroupModalNew";
+import AddToGroupModalNew from "../../../../MyStartups/Modal/AddToGroupModalNew";
 
 export default function GroupsComp({ refetch, connection, goToPath }) {
   const [addToGroupModal, setAddToGroupModal] = useState(false);

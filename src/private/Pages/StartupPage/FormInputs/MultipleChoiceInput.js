@@ -1,5 +1,5 @@
 import React from "react";
-import InputCheckBox from "../../srv_startup/pages/ui-kits/check-box";
+import InputCheckBox from "../../../../Components/UI_Kits/from_srv/check-box";
 import styles from "./input.module.scss";
 
 export default function MultipleChoiceInput({

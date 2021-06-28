@@ -5,7 +5,7 @@ import {
   evaluationTemplateQuestionFragments,
   creativeFragments,
   evaluationV2Fragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   mutation groupUserSetRole($groupId: ID!, $email: String!, $role: Role!) {

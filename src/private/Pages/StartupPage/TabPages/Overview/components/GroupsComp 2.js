@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Dropdown from "../../../../srv_startup/pages/ui-kits/drop-down";
+import Dropdown from "../../../../../../Components/UI_Kits/from_srv/drop-down";
 import CreateNewGroupModal from "../modals/CreateNewGroupModal";
 
 const items = [

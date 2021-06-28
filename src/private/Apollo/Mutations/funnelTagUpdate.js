@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { funnelTagFragments } from "Apollo/Fragments";
+import { funnelTagFragments } from "../Fragments";
 
 export default gql`
   mutation funnelTagUpdate($id: ID!, $input: FunnelTagInput!) {

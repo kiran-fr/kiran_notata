@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SubjectiveScoreModal from "../../../../Startup/Modal/SubjectiveScoreModal";
-import { AddScore } from "../../../../Startup/DealFlow/addScore";
+import SubjectiveScoreModal from "../../../../MyStartups/Modal/SubjectiveScoreModal";
+import { AddScore } from "../../../../MyStartups/DealFlow/addScore";
 
 const getScoreSummaries = scores => {
   if (Array.isArray(scores) && scores.length > 0) {
