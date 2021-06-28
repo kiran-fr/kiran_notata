@@ -2,12 +2,55 @@ import React, { useState } from "react";
 import "./Evaluations.scss";
 import Scrollspy from "react-scrollspy";
 import { Modal } from "Components/UI_Kits/Modal/Modal";
+import RequestEvaluation from "./request-evaluation";
+import SubmissionFullList from "./submission-full-list";
 import EvaluateStartupSelector from "./EvaluateStartupSelector";
+import EditEvaluation from "./edit-evaluation";
+import SummaryEvaluation from "./summary-evaluation";
 import { evaluation_templates_page } from "definitions";
+import FullListModal from "./FullListModal";
 import { getEvaluationsByTemplate } from "../../../GroupV2/_helpers";
 import moment from "moment";
 import { evaluate_page } from "../../../../../definitions";
-import EvaluationListByTemplate from "./EvaluationListByTemplate";
+
+// function EditEvaluationSection({connection, account}) {
+//
+//   return (
+//     <div>
+//       <div style={{ display: saveEvaluation === true ? "block" : "none" }}>
+//         <SummaryEvaluation
+//           companyName={connection?.creative?.name}
+//           accountData={account}
+//           setEditEvaluation={setEditEvaluation}
+//           setSaveEvaluation={setSaveEvaluation}
+//           selectedTemplateToEvaluate={selectedTemplateToEvaluate}
+//           updateEvaluation={type => {
+//             setSaveEvaluation(false);
+//             setUpdateEvaluation(type);
+//           }}
+//           allAnswers={allAnswers}
+//           evaluation={activeEvaluation}
+//         />
+//       </div>
+//       <div style={{ display: saveEvaluation !== true ? "block" : "none" }}>
+//         <EditEvaluation
+//           setEvaluateModal={setEvaluateModal}
+//           companyName={connection.creative.name}
+//           setEditEvaluation={setEditEvaluation}
+//           setSaveEvaluation={setSaveEvaluation}
+//           updateEvaluation={updateEvaluation}
+//           selectedTemplateToEvaluate={selectedTemplateToEvaluate}
+//           setAllAnswers={setAllAnswers}
+//           allAnswers={allAnswers}
+//           connectionId={id}
+//           evaluation={activeEvaluation}
+//           savedAnswers={savedAnswers}
+//           setActiveEvaluation={setActiveEvaluation}
+//         />
+//       </div>
+//     </div>
+//   )
+// }
 
 function NavigationComp() {
   return (
@@ -85,7 +128,7 @@ function MyEvaluations({ connection, setFullListModalObj, history }) {
   );
 }
 
-function MyTeamEvaluations({ connection, history }) {
+function MyTeamEvaluations({ connection, setFullListModalObj, history }) {
   let evaluationsByTemplate = getEvaluationsByTemplate(connection);
 
   return (
@@ -94,20 +137,66 @@ function MyTeamEvaluations({ connection, history }) {
 
       <div>
         {evaluationsByTemplate?.map(({ evaluations, summary }, i) => (
-          <EvaluationListByTemplate
-            key={i}
-            summary={summary}
-            evaluations={evaluations}
-            connection={connection}
-            history={history}
-          />
+          <>
+            <div
+              className={`row ${
+                i === 0 ? "evalations-container__details" : ""
+              }`}
+            >
+              <div className="col-sm-5 col-xs-9 eval-score-heading">
+                {summary?.templateName}
+              </div>
+
+              <div className="col-sm-4 col-xs-9 submitions">
+                {summary?.submissions} Submissions
+              </div>
+
+              <div className="col-sm-3 col-xs-3 score">
+                {summary?.averagePercentageScore}%
+              </div>
+            </div>
+            <div className={`submission-section`}>
+              {evaluations.map(evaluation => (
+                <div key={evaluation.id} className={`row`}>
+                  <div className="col-sm-5 col-xs-9 submitions">
+                    {evaluation?.createdByUser?.given_name}{" "}
+                    {evaluation?.createdByUser?.family_name}
+                    {evaluation?.createdByUser?.isMe && " (you)"}
+                  </div>
+                  <div className="col-sm-4 col-xs-9 submitions">
+                    {moment(evaluation.createdAt).format("ll")}
+                  </div>
+                  <div className="col-sm-3 col-xs-3 score">
+                    {evaluation?.summary?.scorePercent || 0}%
+                    <div className="action-icons">
+                      <i
+                        className="fa fa-eye"
+                        aria-hidden="true"
+                        onClick={() => setFullListModalObj(evaluation)}
+                      />
+                      {evaluation?.createdByUser?.isMe && (
+                        <i
+                          className="fas fa-pen"
+                          onClick={() => {
+                            history.push(
+                              `${evaluate_page}/${connection.id}/${evaluation?.templateId}/${evaluation.id}`
+                            );
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         ))}
       </div>
     </div>
   );
 }
 
-function GroupEvaluations({ connection, history }) {
+function GroupEvaluations({ connection, setFullListModalObj, history }) {
   let sharingInfo = connection?.groupSharingInfo;
   sharingInfo = sharingInfo.filter(
     ({ evaluationSummaries }) => evaluationSummaries.length
@@ -130,26 +219,59 @@ function GroupEvaluations({ connection, history }) {
               {info.group?.name}
             </div>
 
-            {info.evaluationSummaries.map((summary, i) => {
+            {info.evaluationSummaries.map(summary => {
               let evaluations = info?.evaluations?.filter(
                 evaluation => evaluation?.template?.id === summary.templateId
               );
 
               return (
-                <div
-                  style={{
-                    marginLeft: "15px",
-                    marginRight: "15px",
-                  }}
-                  key={i}
-                >
-                  <EvaluationListByTemplate
-                    key={i}
-                    summary={summary}
-                    evaluations={evaluations}
-                    connection={connection}
-                    history={history}
-                  />
+                <div style={{ marginLeft: "15px", marginRight: "15px" }}>
+                  <div className={`row`}>
+                    <div className="col-sm-5 col-xs-9 eval-score-heading">
+                      {summary?.templateName}
+                    </div>
+
+                    <div className="col-sm-4 col-xs-9 submitions">
+                      {summary?.submissions} Submissions
+                    </div>
+
+                    <div className="col-sm-3 col-xs-3 score">
+                      {summary?.averagePercentageScore}%
+                    </div>
+                  </div>
+                  <div className={`submission-section`}>
+                    {evaluations?.map(evaluation => (
+                      <div key={evaluation.id} className={`row`}>
+                        <div className="col-sm-5 col-xs-9 submitions">
+                          {evaluation?.createdByUser?.given_name}{" "}
+                          {evaluation?.createdByUser?.family_name}
+                        </div>
+                        <div className="col-sm-4 col-xs-9 submitions">
+                          {moment(evaluation.createdAt).format("ll")}
+                        </div>
+                        <div className="col-sm-3 col-xs-3 score">
+                          {evaluation?.summary?.scorePercent || 0}%
+                          <div className="action-icons">
+                            <i
+                              className="fa fa-eye"
+                              aria-hidden="true"
+                              onClick={() => setFullListModalObj(evaluation)}
+                            />
+                            {evaluation?.createdByUser?.isMe && (
+                              <i
+                                className="fas fa-pen"
+                                onClick={() => {
+                                  history.push(
+                                    `${evaluate_page}/${connection.id}/${evaluation?.templateId}/${evaluation.id}`
+                                  );
+                                }}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               );
             })}
@@ -187,6 +309,35 @@ function SummarySection({ connection }) {
         </div>
         <div className="col-sm-3 col-xs-2 score">{totalAvgScore}</div>
       </div>
+
+      {/*{*/}
+      {/*  !!connection?.evaluationSummaries?.length && (*/}
+      {/*    <>*/}
+      {/*      <div className="row">*/}
+      {/*        <div className="col-sm-12 eval-section-heading">*/}
+      {/*          Evaluation summaries*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+
+      {/*      {connection?.evaluationSummaries?.map(evaluation => (*/}
+      {/*        <div*/}
+      {/*          className="row"*/}
+      {/*          key={evaluation.id}*/}
+      {/*        >*/}
+      {/*          <div className="col-sm-5 col-xs-9 eval-score-heading">*/}
+      {/*            {evaluation.templateName}*/}
+      {/*          </div>*/}
+      {/*          <div className="col-sm-4 col-xs-9 submitions">*/}
+      {/*            {evaluation.submissions} Submission*/}
+      {/*          </div>*/}
+      {/*          <div className="col-sm-3 col-xs-3 score">*/}
+      {/*            {evaluation.averagePercentageScore || 0}%*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      ))}*/}
+      {/*    </>*/}
+      {/*  )*/}
+      {/*}*/}
     </>
   );
 }
@@ -239,28 +390,49 @@ export default function Evaluations({ connection, account, history }) {
               </div>
 
               {singeAccount && (
-                <MyEvaluations connection={connection} history={history} />
+                <MyEvaluations
+                  connection={connection}
+                  setFullListModalObj={setFullListModalObj}
+                  history={history}
+                />
               )}
 
               {!singeAccount && (
-                <MyTeamEvaluations connection={connection} history={history} />
+                <MyTeamEvaluations
+                  connection={connection}
+                  setFullListModalObj={setFullListModalObj}
+                  history={history}
+                />
               )}
 
+              {/*<div className={`col-sm-12 details`}>*/}
               <div className="col-sm-4 col-xs-12 request-eval">
                 <button onClick={() => setEvaluateModal(true)}>
                   Evaluate startup
                 </button>
               </div>
+              {/*</div>*/}
 
               <div className="col-sm-12" id="group-eval">
                 <div className="separator" />
               </div>
 
               {withGroupEvaluations && (
-                <GroupEvaluations connection={connection} history={history} />
+                <GroupEvaluations
+                  connection={connection}
+                  setFullListModalObj={setFullListModalObj}
+                  history={history}
+                />
               )}
 
               <div className="col-sm-12 text-right">
+                {/*<button*/}
+                {/*  className="evaluation-templates-btn"*/}
+                {/*  onClick={() => history.push(evaluation_templates_page)}*/}
+                {/*>*/}
+                {/*  Evaluations templates*/}
+                {/*</button>*/}
+
                 <div
                   className="evaluation-templates-txt-btn"
                   onClick={() => history.push(evaluation_templates_page)}
@@ -272,6 +444,13 @@ export default function Evaluations({ connection, account, history }) {
           </div>
         </div>
       </div>
+
+      {fullListModalObj && (
+        <FullListModal
+          close={() => setFullListModalObj(undefined)}
+          evaluation={fullListModalObj}
+        />
+      )}
 
       {evaluateModal && (
         <Modal

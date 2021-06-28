@@ -4,10 +4,7 @@ import More from "../../../../../assets/images/more.svg";
 import moment from "moment";
 //Helper
 import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
-import {
-  Creative,
-  subjectiveScore,
-} from "../../../../oldPages/Dashboard/Connections/types";
+import { subjectiveScore } from "../../../../oldPages/Dashboard/Connections/types";
 
 import classnames from "classnames";
 

@@ -2,71 +2,64 @@ import React, { useState } from "react";
 import "./submission-full-list.scss";
 
 export default function SubmissionFullList({ evaluation }) {
-  const [open, setOpen] = useState({});
+  let details = {};
+  let sec = evaluation?.summary?.sections?.map(item => {
+    details[item.sectionId] = "collapse";
+  });
 
+  console.log("details", details);
+  console.log("obj", evaluation);
+
+  const [collapseDetailList, setCollapseDetailList] = useState(details);
   return (
-    <div className="evaluation-modal">
-      <div className="row evaluation-modal__summary">
-        <div className="col-sm-10 col-xs-10 evaluation-modal__summary__title">
-          Summary
-        </div>
-        <div className="col-sm-2 col-xs-2 evaluation-modal__summary__score">
+    <div className="submission-details">
+      <div className="row">
+        <div className="col-sm-10 col-xs-10 summary">Summary</div>
+        <div className="col-sm-2 col-xs-2 score">
           {evaluation?.summary?.scorePercent || 0}%
         </div>
       </div>
-
       {evaluation?.summary?.sections?.map(section => {
         return (
-          <div key={section.sectionId} className="evaluation-modal__section">
-            <div className="row evaluation-modal__section__title-row">
-              <i
-                className={`evaluation-modal__section__title-row__icon ${
-                  open[section.sectionId]
-                    ? "fa fa-chevron-up"
-                    : "fa fa-chevron-down"
-                }`}
-                aria-hidden="true"
-                onClick={() => {
-                  setOpen({
-                    ...open,
-                    [section.sectionId]: !open[section.sectionId],
-                  });
-                }}
-              />
-
-              <div className="col-sm-10 col-xs-10 evaluation-modal__section__title-row__title">
+          <div key={section.sectionId}>
+            <div className="row detail-type">
+              <div className="col-sm-10 col-xs-10 detail-heading">
+                <i
+                  class={`fa ${
+                    collapseDetailList[section.sectionId] === ""
+                      ? "fa-chevron-up"
+                      : "fa-chevron-down"
+                  }`}
+                  aria-hidden="true"
+                  onClick={() => {
+                    let collapseList = { ...collapseDetailList };
+                    collapseList[section.sectionId] =
+                      collapseList[section.sectionId] === "" ? "collapse" : "";
+                    setCollapseDetailList(collapseList);
+                  }}
+                />
                 {section.sectionName}
               </div>
-
-              <div className="col-sm-2 col-xs-2 evaluation-modal__section__title-row__score">
+              <div className="col-sm-2 col-xs-2 score">
                 {section.scorePercent || 0}%
               </div>
             </div>
-
-            {open[section.sectionId] && (
-              <div className={`evaluation-modal__section__list`}>
-                {section?.scorePerAnswer?.map((score, index) => {
-                  return (
-                    <div
-                      className="row evaluation-modal__section__list__row"
-                      key={`${section.sectionId}_${index}`}
-                    >
-                      <div className="col-sm-10 col-xs-10 evaluation-modal__section__list__row__question">
-                        <p>{score.questionName}</p>
-                      </div>
-                      <div className="col-sm-2 col-xs-2 evaluation-modal__section__list__row__score">
-                        {score.score + " of " + score.possibleScore}{" "}
-                        <div>points</div>
-                      </div>
-
-                      <div className="col-sm-12 evaluation-modal__section__list__row__answers">
-                        <span>{score.answer || " "}</span>
-                      </div>
+            <div
+              className={`${collapseDetailList[section.sectionId]} detail-list`}
+            >
+              {section?.scorePerAnswer?.map((score, index) => {
+                return (
+                  <div className="row" key={`${section.sectionId}_${index}`}>
+                    <div className="col-sm-10 col-xs-10 detail">
+                      <p>{score.questionName}</p>
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                    <div className="col-sm-2 col-xs-2 detail-score">
+                      {score.score + "/" + score.possibleScore}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         );
       })}

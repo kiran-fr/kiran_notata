@@ -63,13 +63,13 @@ export function TopMenu({ history }) {
         </div>
       )}
 
-      {/*<span>*/}
-      {/*  <i className="fas fa-question-circle"/>*/}
-      {/*</span>*/}
+      <span>
+        <i className="fas fa-question-circle" />
+      </span>
 
-      {/*<span onClick={() => history.push(reminders)}>*/}
-      {/*  <i className="fas fa-alarm-clock"/>*/}
-      {/*</span>*/}
+      <span onClick={() => history.push(reminders)}>
+        <i className="fas fa-alarm-clock" />
+      </span>
 
       <span
         onMouseEnter={() => setNotificatonsOpen(true)}

@@ -68,7 +68,9 @@ import Charts from "./oldPages/Dashboard/Charts/ChartsPage.tsx";
 import Profile from "./oldPages/Profile/Profile";
 import Tags from "./oldPages/Tags";
 import Funnels from "./oldPages/Funnels";
+
 // import Settings from "./Pages/settings/Settings";
+
 import Team from "./oldPages/Team/Team";
 import StartupPage from "./oldPages/StartupPage/StartupPage";
 import FactsPage from "./oldPages/StartupPage/Facts/Facts";
@@ -90,7 +92,6 @@ import GroupSettings from "./oldPages/Groups/GroupSettings";
 
 import Groups from "./Pages/GroupV2/GroupsPage/GroupsPage";
 import GroupPage from "./Pages/GroupV2/GroupPage/GroupPage";
-// import GroupPage from "./shubham-new-designs/Pages/groups/group-dashboard";
 
 import News from "./Pages/news/news";
 import NewsViewOne from "./Pages/news/NewsViewOne";
@@ -139,6 +140,7 @@ import TagGroup from "./Pages/settings/tags";
 import Funnels1 from "./Pages/settings/funnels";
 import Notifications from "./Pages/settings/notifications";
 import ProfileSettings from "./Pages/settings/profile";
+
 import ArchivePage from "./Pages/ArchivePage/ArchivePage.js";
 import EvaluatePage from "./Pages/Evaluate/EvaluatePage";
 import EvaluationSummaryPage from "./Pages/Evaluate/EvaluationSummaryPage";
