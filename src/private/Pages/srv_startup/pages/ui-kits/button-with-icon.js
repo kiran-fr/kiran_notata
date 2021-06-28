@@ -10,11 +10,19 @@ export default function ButtonWithIcon({
   text,
   iconPosition,
   onClick,
+  loading,
 }) {
   return (
     <Button
       startIcon={
-        ICONPOSITION.START === iconPosition ? <Icon> {iconName} </Icon> : null
+        // <i className="fa fa-spinner fa-spin" />
+        ICONPOSITION.START === iconPosition ? (
+          loading ? (
+            <i className="fa fa-spinner fa-spin" />
+          ) : (
+            <Icon> {iconName} </Icon>
+          )
+        ) : null
       }
       endIcon={
         ICONPOSITION.END === iconPosition ? <Icon> {iconName} </Icon> : null
@@ -23,7 +31,11 @@ export default function ButtonWithIcon({
       onClick={onClick}
     >
       {" "}
-      {text}{" "}
+      {text} {/*{*/}
+      {/*  !loading*/}
+      {/*    ? <i className="fa fa-spinner fa-spin" />*/}
+      {/*    : <span>{" "}{text}{" "}</span>*/}
+      {/*}*/}
     </Button>
   );
 }

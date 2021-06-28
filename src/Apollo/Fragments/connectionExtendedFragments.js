@@ -58,6 +58,7 @@ export default gql`
             possibleScore
             questionId
             questionName
+            answer
           }
         }
         scoreTotal
@@ -120,6 +121,7 @@ export default gql`
                 possibleScore
                 questionId
                 questionName
+                answer
               }
             }
             scoreTotal
@@ -214,6 +216,7 @@ export default gql`
             possibleScore
             questionId
             questionName
+            answer
           }
         }
         scoreTotal

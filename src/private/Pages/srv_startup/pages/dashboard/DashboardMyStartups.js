@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-// API 
+// API
 import { useQuery } from "@apollo/client";
 import { connectionsGet } from "../../../../Apollo/Queries";
-// COMPONENTS 
+// COMPONENTS
 import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Loader } from "../../../../../Components/elements";
 // OTHERS
@@ -22,11 +22,11 @@ export default function DashboardMyStartups({ history }) {
       sortDirection: "DESC",
     },
   };
-  // QUERIES 
+  // QUERIES
   const { data, loading, error } = useQuery(connectionsGet, { variables });
 
-  // DATA MAPS 
-  let startups = data?.connectionsGet || [];
+  // DATA MAPS
+  let connections = data?.connectionsGet || [];
 
   return (
     <div className="card dashboard-container__my-startups">
@@ -49,8 +49,8 @@ export default function DashboardMyStartups({ history }) {
           </div>
         </div>
 
-        {startups.map(startup => {
-          let scores = startup.subjectiveScores;
+        {connections.map(connection => {
+          let scores = connection.subjectiveScores;
           let score = "n/a";
 
           if (scores.length === 1) {
@@ -63,20 +63,27 @@ export default function DashboardMyStartups({ history }) {
             ).toFixed(1);
           }
           let tagSet;
-          if (startup.funnelTags.length) {
-            let highest = startup.funnelTags.reduce(
+          if (connection.funnelTags.length) {
+            let highest = connection.funnelTags.reduce(
               (max, tag) => (tag.index > max ? tag.index : max),
-              startup.funnelTags[0].index
+              connection.funnelTags[0].index
             );
-            tagSet = startup.funnelTags.find(({ index }) => index === highest);
+            tagSet = connection.funnelTags.find(
+              ({ index }) => index === highest
+            );
           }
           return (
             <div
               className="dashboard-container__my-startups__data-container__data-entry"
-              key={startup.id}
+              key={connection.id}
             >
-              <div className="dashboard-container__my-startups__data-container__data-entry__startup-name">
-                {startup?.creative?.name}
+              <div
+                className="dashboard-container__my-startups__data-container__data-entry__startup-name"
+                onClick={() => {
+                  history.push(`${startup_page}/company/${connection.id}`);
+                }}
+              >
+                {connection?.creative?.name}
               </div>
               <div className="dashboard-container__my-startups__data-container__data-entry__funnels">
                 {tagSet ? <img alt="" src={DynamicIcons(tagSet.index)} /> : ""}
@@ -91,7 +98,7 @@ export default function DashboardMyStartups({ history }) {
                 <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score__change">
                   <div
                     className="dashboard-container__my-startups__data-container__data-entry__subjective-score__change__btn"
-                    onClick={() => setEditScoreForConnection(startup)}
+                    onClick={() => setEditScoreForConnection(connection)}
                   >
                     Set
                   </div>

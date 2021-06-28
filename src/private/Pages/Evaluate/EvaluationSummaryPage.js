@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Scrollspy from "react-scrollspy";
-// import "./edit-evaluation.scss";
-// import "./summary-evaluation.scss";
 import red_color from "../../../assets/images/red_color.svg";
 import green_color from "../../../assets/images/green_color.svg";
 import yellow_color from "../../../assets/images/yellow_color.svg";
@@ -17,6 +15,8 @@ import {
 } from "../../Apollo/Queries";
 import { GhostLoader } from "../../../Components/elements";
 import { evaluate_page, startup_page } from "../../../definitions";
+import "./edit-evaluation.scss";
+import "./summary-evaluation.scss";
 
 export default function EvaluationSummaryPage({ match, history }) {
   let { connectionId, templateId, evaluationId } = match?.params;
@@ -81,7 +81,7 @@ export default function EvaluationSummaryPage({ match, history }) {
   };
 
   const findAns = questionId => {
-    return evaluation?.answers?.find(ans => ans.questionId === questionId);
+    return evaluation?.answers?.filter(ans => ans.questionId === questionId);
   };
 
   let isLoading =
@@ -157,7 +157,6 @@ export default function EvaluationSummaryPage({ match, history }) {
           <div className="row section" id={section.name}>
             <div className="col-sm-6 col-xs-7 section-heading">
               <i
-                className={`fa fa-chevron-up`}
                 className={`fa ${
                   collapsed[section.id] ? "fa-chevron-up" : "fa-chevron-down"
                 }`}
@@ -182,6 +181,14 @@ export default function EvaluationSummaryPage({ match, history }) {
               }`}
             >
               {section.questions.map(question => {
+                let answers = evaluation?.answers?.filter(
+                  ({ questionId, inputType }) =>
+                    questionId === question.id &&
+                    inputType === question.inputType
+                );
+
+                let joinedAnswers = answers.map(({ val }) => val).join(",\n");
+
                 return (
                   <>
                     <div
@@ -195,23 +202,28 @@ export default function EvaluationSummaryPage({ match, history }) {
                       {question.name}
                     </div>
 
-                    {findAns(question.id) ? (
-                      <div className="col-sm-12 answer">
-                        <img
-                          src={
-                            findAns(question.id)?.val === "1"
-                              ? red_color
-                              : findAns(question.id)?.val === "2"
-                              ? yellow_color
-                              : green_color
-                          }
-                          width="20"
-                          height="20"
-                        />
-                      </div>
-                    ) : (
+                    {!answers.length && (
                       <div className="col-sm-12 no-answer">Not Answered</div>
                     )}
+
+                    {question.inputType === "TRAFFIC_LIGHT" && (
+                      <img
+                        src={
+                          (answers[0].val === "1" && red_color) ||
+                          (answers[0].val === "2" && yellow_color) ||
+                          (answers[0].val === "3" && green_color)
+                        }
+                        width="20"
+                        height="20"
+                      />
+                    )}
+
+                    {question.inputType !== "TRAFFIC_LIGHT" &&
+                      answers.map(({ val }, i) => (
+                        <div className="col-sm-12 answer" key={`answer-${i}`}>
+                          {val}
+                        </div>
+                      ))}
                   </>
                 );
               })}

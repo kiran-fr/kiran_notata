@@ -11,8 +11,126 @@ import Filters from "./Filters/Filters";
 import { Kanban } from "../Kanban/Kanban";
 import Paginator from "./Paginator/Paginator";
 
-export default function Connections({ history }) {
+// Components
+import Paginator from "./Paginator";
+import SetFunnelScore from "./Modal/setFunnelScore";
+import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
+import Table from "./DealFlow/table/DealflowTable";
+import AddToGroupModalNew from "./Modal/AddToGroupModalNew";
+import { appsyncClient } from "../../../awsconfig";
 
+function getCleanFilterData(filters) {
+  let clean = {};
+  for (let key in filters) {
+    if (
+      (filters[key] && filters[key].length) ||
+      (typeof filters[key] === "boolean" && filters[key])
+    ) {
+      clean[key] = filters[key];
+    }
+  }
+  return clean;
+}
+
+function ListOfStartups({
+  filters,
+  setFilters,
+  currentPage,
+  history,
+  columnSettings,
+  evaluationTemplates,
+  evaluationTemplatesQuery,
+  updateFunnelTag,
+  funnelLoad,
+}) {
+  // States (for modal)
+  const [showTagGroupForId, setShowTagGroupForId] = useState();
+  const [showStartUpForId, setShowStartUpForId] = useState();
+  const [showSubjectiveScoreForId, setShowSubjectiveScoreForId] = useState();
+  const [showFunnelScoreForId, setShowFunnelScoreForId] = useState();
+
+  // Fetch more
+  useEffect(() => {
+    let LastEvaluatedId = currentPage && currentPage.LastEvaluatedId;
+    let variables = { LastEvaluatedId };
+    fetchMore({
+      variables,
+      updateQuery: (prev, { fetchMoreResult }) => fetchMoreResult || prev,
+    });
+  }, [currentPage]);
+
+  // Mutations
+  const [setStarMutation] = useMutation(connectionSetStar);
+
+  // Query: Connections
+  const { data, called, loading, error, fetchMore } = useQuery(connectionsGet, {
+    fetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      filters: getCleanFilterData(filters),
+      LastEvaluatedId: undefined,
+    },
+  });
+
+  // define data
+  const connections = data?.connectionsGet || [];
+
+  return (
+    <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+      <Table
+        setStarMutation={setStarMutation}
+        columnSettings={columnSettings}
+        data={connections}
+        filters={filters}
+        setFilters={setFilters}
+        funnelLoad={funnelLoad}
+        evaluationTemplates={evaluationTemplates}
+        loading={loading || evaluationTemplatesQuery.loading}
+        emptyLabel={"No results."}
+        history={history}
+        setShowFunnelScoreForId={setShowFunnelScoreForId}
+        setShowTagGroupForId={setShowTagGroupForId}
+        setShowStartUpForId={setShowStartUpForId}
+        setShowSubjectiveScoreForId={setShowSubjectiveScoreForId}
+        updateFunnelTag={updateFunnelTag}
+      />
+
+      {showTagGroupForId && (
+        <AddToGroupModalNew
+          connection={connections.find(({ id }) => id === showTagGroupForId)}
+          close={() => setShowTagGroupForId(undefined)}
+        />
+      )}
+
+      {showFunnelScoreForId && (
+        <SetFunnelScore
+          updateFunnelTag={updateFunnelTag}
+          funnelLoad={funnelLoad}
+          connection={connections.find(({ id }) => id === showFunnelScoreForId)}
+          close={() => setShowFunnelScoreForId(undefined)}
+        />
+      )}
+
+      {showStartUpForId && (
+        <SelectTagsForStartup
+          connection={connections.find(({ id }) => id === showStartUpForId)}
+          close={() => setShowStartUpForId(undefined)}
+        />
+      )}
+
+      {showSubjectiveScoreForId && (
+        <SubjectiveScoreModal
+          connection={connections.find(
+            ({ id }) => id === showSubjectiveScoreForId
+          )}
+          close={() => setShowSubjectiveScoreForId(undefined)}
+        />
+      )}
+    </div>
+  );
+}
+
+export default function Connections({ history }) {
   // Constant
   const defaultFilters = {
     search: "",
@@ -54,7 +172,7 @@ export default function Connections({ history }) {
   // TODO: Column settings
   // This is saved on user.columnSettings
   const evaluationTemplates =
-  evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
+    evaluationTemplatesQuery?.data?.accountGet?.evaluationTemplates || [];
 
   // Effects
   // Load filters from local store
@@ -110,6 +228,8 @@ export default function Connections({ history }) {
     });
     setFunnelLoad(false);
   };
+
+  // manage Column
 
   return (
     <>

@@ -14,7 +14,21 @@ import InvisiblePlus from "../../../../../../assets/images/InvisiblePlus.svg";
 // OTHER
 import moment from "moment";
 import classnames from "classnames";
-import { sortArr, DynamicIcons, subjectiveScore } from "../../../../CommonFunctions";
+import {
+  sortArr,
+  DynamicIcons,
+  subjectiveScore,
+} from "../../../../CommonFunctions";
+import { Loader } from "Components/UI_Kits";
+import { useMutation } from "@apollo/client";
+import { pong } from "../../../../Apollo/Mutations";
+import {
+  awaiting,
+  group_dashboard,
+  group_new,
+} from "../../../../../definitions";
+import { connectionsGet, creativesGet } from "../../../../Apollo/Queries";
+import { useHistory } from "react-router-dom";
 
 export default function TableBody(props) {
   //props Value
@@ -40,6 +54,8 @@ export default function TableBody(props) {
   } = props;
 
   //STATE
+  const history = useHistory();
+
   const [funnel, setFunnel] = useState();
   const [funnelId, setFunnelId] = useState();
   const [showFunnel, setShowFunnel] = useState(false);
@@ -152,7 +168,7 @@ export default function TableBody(props) {
                       {item.creative.name}
                       {preview === index && (
                         <StartupPreview
-                          styles = {styles}
+                          styles={styles}
                           companyName={item.creative.name}
                           oneLiner={oneLiner}
                           problem={problem}
@@ -165,19 +181,17 @@ export default function TableBody(props) {
 
                 {columnSettings.groups && (
                   <td>
-                    <ul>
-                      {(groupSharingInfo || []).slice(0, 2).map(({ group }) => (
-                        <li>
-                          {group.name} {groupSharingInfo.length > 1 ? "," : ""}
+                    <ul className={styles.groupList}>
+                      {groupSharingInfo?.map(({ group }) => (
+                        <li
+                          className={styles.groupListItem}
+                          onClick={() => {
+                            history.push(`${group_dashboard}/${group.id}`);
+                          }}
+                        >
+                          {group.name}
                         </li>
-                      ))}{" "}
-                      {groupSharingInfo.length > 2 ? (
-                        <img
-                          onClick={() => setShowTagGroupForId(item.id)}
-                          src={More}
-                          alt=""
-                        />
-                      ) : null}
+                      ))}
                       <li>
                         <button
                           onClick={() => setShowTagGroupForId(item.id)}
@@ -214,15 +228,15 @@ export default function TableBody(props) {
                           </span>
                           {funnel === index && showFunnel && (
                             <FunnelPopup
-                              styles = {styles}
+                              styles={styles}
                               tags={funnelTags?.[0]?.group?.funnelTags || []}
                               id={id}
                               index={index}
-                              setShowFunnel = {setShowFunnel}
-                              setFunnel = {setFunnel} 
-                              updateFunnelTag = {updateFunnelTag}
-                              sortArr = {sortArr}
-                              DynamicIcons = {DynamicIcons}
+                              setShowFunnel={setShowFunnel}
+                              setFunnel={setFunnel}
+                              updateFunnelTag={updateFunnelTag}
+                              sortArr={sortArr}
+                              DynamicIcons={DynamicIcons}
                             />
                           )}
                         </>

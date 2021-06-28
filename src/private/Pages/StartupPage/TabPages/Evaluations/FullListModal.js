@@ -2,10 +2,10 @@ import { Modal } from "../../../../../Components/UI_Kits";
 import SubmissionFullList from "./submission-full-list";
 import React from "react";
 
-export default function FullListModal({ close, evaluation }) {
+export default function FullListModal({ close, title, evaluation }) {
   return (
     <Modal
-      title={`${evaluation?.template?.name} (${evaluation?.createdByUser?.given_name})`}
+      title={title}
       submit={close}
       close={close}
       submitTxt="OK"

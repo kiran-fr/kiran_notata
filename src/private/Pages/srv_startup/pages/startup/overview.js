@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// API 
+// API
 import { useQuery, useMutation } from "@apollo/client";
 import { connectionsGet } from "private/Apollo/Queries";
 import {
@@ -8,7 +8,7 @@ import {
   connectionFunnelTagAdd,
 } from "private/Apollo/Mutations";
 
-// COMPONENTS 
+// COMPONENTS
 import ButtonWithIcon from "../ui-kits/button-with-icon";
 import ShareTemplate from "./share-template";
 import TagsModal from "../ui-kits/TagsModal";
@@ -21,22 +21,20 @@ import ArchiveList from "./archive-list";
 import CreateNewGroup from "../startup/groups-individuals/create-new-group/create-new-group";
 import CommentBox from "../CommentBox";
 
-// STYLES 
+// STYLES
 import "./overview.scss";
 
-// OTHERS 
+// OTHERS
 import moment from "moment";
 import images from "./Images/";
 import { ICONPOSITION, OVERVIEWPAGESTATE } from "../constants";
 import More from "assets/images/more.svg";
 
-
 export default function Overview(props) {
-
-  // STATES 
+  // STATES
   const [createGroupModal, setCreateGroupModal] = useState(false);
 
-  // MUTAIONS 
+  // MUTAIONS
   const [mutateConnectionPut] = useMutation(connectionPut);
   const [mutateConnectionDelete] = useMutation(connectionDelete);
 
@@ -538,7 +536,7 @@ export default function Overview(props) {
           disableFoot={true}
           closeTxt="Cancel"
           children={<TagsModal connection={props.creativity}></TagsModal>}
-        ></Modal>
+        />
       )}
       {archiveModal && (
         <Modal

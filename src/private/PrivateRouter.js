@@ -56,6 +56,8 @@ import Charts from "./oldPages/Dashboard/Charts/ChartsPage.tsx";
 import Profile from "./oldPages/Profile/Profile";
 import Tags from "./oldPages/Tags";
 import Funnels from "./oldPages/Funnels";
+
+// import Settings from "./Pages/settings/Settings";
 import Team from "./oldPages/Team/Team";
 import StartupPage from "./oldPages/StartupPage/StartupPage";
 import FactsPage from "./oldPages/StartupPage/Facts/Facts";
@@ -73,8 +75,9 @@ import Group from "./oldPages/Groups/Group/Group";
 import GroupConnection from "./oldPages/Groups/GroupConnection";
 import GroupSettings from "./oldPages/Groups/GroupSettings";
 
-import Groups from "./Pages/GroupV2/index";
-import GroupDashboard from "./Pages/GroupV2/group-dashboard";
+import Groups from "./Pages/GroupV2/GroupsPage/GroupsPage";
+import GroupPage from "./Pages/GroupV2/GroupPage/GroupPage";
+
 import News from "./Pages/news/news";
 import NewsViewOne from "./Pages/news/NewsViewOne";
 import NewsEdit from "./Pages/news/news-edit";
@@ -96,7 +99,6 @@ import Reports from "./Pages/srv_startup/pages/reports/reports";
 import { StartupPage as StartupInfo } from "./Pages/StartupPage/index";
 import Dashboard from "./Pages/srv_startup/pages/dashboard/dashboard";
 
-
 import { EvaluationTemplatesPage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
 import { EvaluationTemplatePage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplatePage/EvaluationTemplatePage";
 import { EvaluationTemplateSectionPage } from "./Pages/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluationTemplateSectionPage";
@@ -112,10 +114,10 @@ import TagGroup from "./Pages/settings/tags";
 import Funnels1 from "./Pages/settings/funnels";
 import Notifications from "./Pages/settings/notifications";
 import ProfileSettings from "./Pages/settings/profile";
+
 import ArchivePage from "./Pages/ArchivePage/ArchivePage.js";
 import EvaluatePage from "./Pages/Evaluate/EvaluatePage";
 import EvaluationSummaryPage from "./Pages/Evaluate/EvaluationSummaryPage";
-
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -239,11 +241,7 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={startup_company_profile} component={StartupInfo} />
 
       <Route exact path={startup_index} component={Startup} />
-      <Route
-        exact
-        path={`${group_dashboard}/:groupId`}
-        component={GroupDashboard}
-      />
+      <Route exact path={`${group_dashboard}/:groupId`} component={GroupPage} />
 
       <Route eaxct path={news} component={News} />
       <Route eaxct path={reminders} component={Reminders} />

@@ -13,9 +13,6 @@ export default function MainInputCard({
   account,
   history,
 }) {
-  console.log("USER: ", user);
-  console.log("ACCOUNT: ", account);
-  console.log("CONNECTION: ", connection);
   return (
     <div className="card">
       {/*SUBJECTIVE SCORES*/}

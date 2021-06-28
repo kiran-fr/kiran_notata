@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import "./group-dashboard.scss";
+
+import { Modal } from "Components/UI_Kits/Modal/Modal";
+import { ICONPOSITION } from "../constants";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+
 import StartupPerformanceChart from "./startup-performance-chart";
 import CommentsActivities from "./comments-activities";
-import { Modal } from "../../../../Components/UI_Kits/Modal/Modal";
 import AddStartup from "./add-startup";
 import ManageTemplates from "./manage-templates";
 import SubmissionFullList from "../../../StartupPage/TabPages/Evaluations/submission-full-list";
 import InviteMembers from "./invite-members";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
-import { ICONPOSITION } from "../constants";
 import SharingOptions from "../../../StartupPage/TabPages/Groups/sharing-options";
 import GroupMembers from "./group-members";
 import LeaveGroup from "./leave-group-modal";
@@ -22,6 +24,7 @@ function a11yProps(index) {
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
+
 export default function GroupDashboard() {
   const [dropDownState, setDropDownState] = useState(false);
   const [value, setValue] = React.useState(0);
@@ -41,7 +44,6 @@ export default function GroupDashboard() {
   const [groupMemberModal, setGroupMemberModal] = useState(false);
   const [leaveGroupModal, setLeaveGroupModal] = useState(false);
   const [deleteGroupModal, setDeleteGroupModal] = useState(false);
-
   const [fullListModal, setFullListModal] = useState(false);
   const [shareGroupModal, setShareGroupModal] = useState(false);
   const [adminDataVisible, SetAdminDataVisible] = useState(false);

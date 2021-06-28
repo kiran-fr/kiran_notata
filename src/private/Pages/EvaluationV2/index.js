@@ -128,8 +128,6 @@ export default function Evaluation({ match, history, location }) {
         answers: newAnswers || answers,
       };
 
-      console.log("create evaluation", variables);
-
       try {
         let res = await createEvaluation({ variables });
         let { id } = res?.data?.evaluationCreate;

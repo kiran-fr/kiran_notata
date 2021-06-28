@@ -119,6 +119,7 @@ export default gql`
                   questionName
                   possibleScore
                   score
+                  answer
                 }
               }
             }

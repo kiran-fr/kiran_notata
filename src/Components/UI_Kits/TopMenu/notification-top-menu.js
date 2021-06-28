@@ -28,47 +28,35 @@ function Notification({ content, notificationCreatedAt }) {
 }
 
 export default function NotificationsDropDown() {
-  const hist = useHistory();
-  const [markAll, res2] = useMutation(notificationsMarkAllAsSeen);
-
-  const [allNotifications, setAllNotifications] = useState([]);
+  const history = useHistory();
 
   const { data } = useQuery(notificationsGet);
+  const notifications = data?.notificationsGet || [];
 
-  useEffect(() => {
-    if (data?.notificationsGet) {
-      setAllNotifications(data?.notificationsGet);
-      async function markAllAsSeen() {
-        await markAll();
-      }
-      markAllAsSeen();
-    }
-  }, [data]);
   return (
     <div className="notification-menu__dropdown">
       <div className="notifications">
         <div className="notifications">
-          {allNotifications.length <= 0 ? (
+          {notifications.length <= 0 ? (
             <div className="noNotification">No Notification</div>
           ) : (
-            allNotifications
+            notifications
               .slice(0, 3)
-              .map(notif => (
+              .map(notification => (
                 <Notification
-                  key={notif.id}
-                  content={notif.content}
-                  notificationCreatedAt={notif.createdAt}
-                ></Notification>
+                  key={notification.id}
+                  content={notification.content}
+                  notificationCreatedAt={notification.createdAt}
+                />
               ))
           )}
         </div>
       </div>
       <div
         className="notification-menu__dropdown__footer"
-        onClick={() => hist.push(notification)}
+        onClick={() => history.push(notifications)}
       >
-        See full list of notifications{" "}
-        {/* <i class={`fa fa-chevron-down `} aria-hidden="true"></i> */}
+        VIEW NOTIFICATIONS
       </div>
     </div>
   );

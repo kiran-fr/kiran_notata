@@ -4,12 +4,16 @@ import React, { useState, useEffect } from "react";
 import { funnelGroupGet } from "private/Apollo/Queries";
 import { useQuery } from "@apollo/client";
 
-// COMPONENTS 
+// COMPONENTS
 import AddStartup from "../Modal/addStartup";
 import { Tabsection } from "Components/UI_Kits/Tabs/index";
 import FilterSidebar from "Components/secondarySidebar/filter";
 import ColumnSidebar from "Components/secondarySidebar/manage";
-import {OptionalFilterSidebar, handleclearTxt, tabArrValue} from "./helper.js"
+import {
+  OptionalFilterSidebar,
+  handleclearTxt,
+  tabArrValue,
+} from "./helper.js";
 
 //STYLES
 import styles from "./filter.module.css";
@@ -32,7 +36,7 @@ export default function Filters({
   defaultFilters,
   setSelectedfunnelGroup,
 }) {
-  // STATES 
+  // STATES
   const [modal, setModal] = useState(false);
   const [activeTab, setActiveTab] = useState();
   const [optionalFilter, setOptionalFilter] = useState();
@@ -45,7 +49,7 @@ export default function Filters({
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
   const funnelGroup = data ? data.accountGet.funnelGroups : [];
 
-  // EFFECT 
+  // EFFECT
   useEffect(() => {
     setTabValue(tabArr[1].value);
     setActiveTab(tabArr[1].value);
@@ -73,8 +77,59 @@ export default function Filters({
     }
   }, [filterValue]);
 
-  
-  // FUNCTIONS 
+  // FUNCTIONS
+  const tabArr = [
+    {
+      value: "kanban",
+      text: (
+        <div>
+          <img
+            style={{
+              width: 15,
+              height: 15,
+              marginRight: "4px",
+              transform: "rotateZ(360deg)",
+              opacity: activeTab === "kanban" ? 1 : 0.5,
+            }}
+            src={KanbanIcon}
+            alt=""
+          />
+          <span>KANBAN</span>
+          <i
+            onClick={() => setKanbanPopup(!kanbanPopup)}
+            style={{ marginLeft: "5px" }}
+            className="fas fa-chevron-down"
+          ></i>
+          <PopupMenu
+            title="Kanban"
+            items={kanbanDropDown}
+            isOpen={kanbanPopup}
+            setSelectedfunnelGroup={setSelectedfunnelGroup}
+            setIsOpen={setKanbanPopup}
+          ></PopupMenu>
+        </div>
+      ),
+    },
+    {
+      value: "spreadsheet",
+      text: (
+        <div>
+          <img
+            style={{
+              width: 15,
+              height: 15,
+              marginRight: "4px",
+              opacity: activeTab === "kanban" ? 0.5 : 1,
+            }}
+            src={Column}
+            alt=""
+          />
+          <span>LIST</span>
+        </div>
+      ),
+    },
+  ];
+
   const handleSearch = e => {
     if (activeTab === "spreadsheet") {
       setFilterValue(e.target.value);
@@ -103,7 +158,13 @@ export default function Filters({
     }
   };
 
-  const tabArr =  tabArrValue(setKanbanPopup, kanbanPopup, kanbanDropDown, setSelectedfunnelGroup, activeTab);
+  const tabArr = tabArrValue(
+    setKanbanPopup,
+    kanbanPopup,
+    kanbanDropDown,
+    setSelectedfunnelGroup,
+    activeTab
+  );
 
   return (
     <div className={styles.override}>
@@ -175,7 +236,7 @@ export default function Filters({
             >
               <div>
                 <OptionalFilterSidebar
-                  styles = {styles}
+                  styles={styles}
                   setOptionalFilter={setOptionalFilter}
                   grayFadeOut={
                     activeTab !== "spreadsheet" ? styles.grayFadeOut : ""

@@ -12,6 +12,7 @@ import { GeneralInput } from "../StartupPage/Inputs/GeneralInput";
 import { evaluation_summary_page, startup_page } from "../../../definitions";
 import queryString from "query-string";
 import { groupEvaluationAdd } from "../../Apollo/Mutations";
+import "./edit-evaluation.scss";
 
 const transform = obj => {
   if (obj) {
