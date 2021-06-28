@@ -6,8 +6,11 @@ import { useMutation } from "@apollo/client";
 import { connectionCreate } from "../../../../../../Apollo/Mutations";
 import { groupGetV2 } from "../../../../../../Apollo/Queries";
 import SharingOptionsModal from "../../../../modals/SharingOptionsModal";
+import { useHistory } from "react-router-dom";
 
-export default function StartupHeader({ startup, group, history }) {
+export default function StartupHeader({ startup, group }) {
+  const history = useHistory();
+
   const [startupDescription, setStartupDescription] = useState(false);
   const [viewSharingOptions, setViewSharingOptions] = useState();
 
@@ -118,16 +121,6 @@ export default function StartupHeader({ startup, group, history }) {
       </div>
 
       <div className="group-startup-card__sharing-options">
-        {startup.isInMyDealFlow && canShare && (
-          <ButtonWithIcon
-            iconName="share"
-            className="stop-sharing-btn"
-            text="SHARING OPTIONS"
-            iconPosition={ICONPOSITION.START}
-            onClick={() => setViewSharingOptions(true)}
-          />
-        )}
-
         {!startup.isInMyDealFlow && (
           <ButtonWithIcon
             iconName="add"
@@ -148,7 +141,6 @@ export default function StartupHeader({ startup, group, history }) {
           />
         )}
       </div>
-
       {viewSharingOptions && (
         <SharingOptionsModal
           close={() => setViewSharingOptions(false)}

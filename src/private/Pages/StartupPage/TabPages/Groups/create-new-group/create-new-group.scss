@@ -56,70 +56,7 @@
     resize: none;
   }
 }
-.settings-containers {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .header {
-    padding-top: 25px;
-    .material-icons {
-      font-size: 16px !important;
-      color: #b7b7b7;
-    }
-    .heading {
-      font-family: "Proxima Nova";
-      font-style: normal;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 19px;
-      letter-spacing: 0.03em;
-      color: #969ba3;
-      position: absolute;
-      margin-left: 15px;
-    }
-  }
-  .options {
-    margin-left: 30px;
-    .option {
-      font-family: "Proxima Nova";
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 15px;
-      margin-top: 15px;
-      color: #969ba3;
-      i {
-        margin-left: 10px;
-      }
-      span {
-        margin-right: 8px !important;
-      }
-      .option-options {
-        margin-left: 30px;
-      }
-      .radio-button-label {
-        font-family: "Proxima Nova";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 15px;
-        margin-top: 5px;
-        position: absolute;
-        color: #969ba3;
-      }
-      .radio-button-description {
-        font-family: "Proxima Nova";
-        font-style: normal;
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 15px;
-        margin-left: 26px;
-        color: #969ba3;
-        margin-top: 20px;
-      }
-    }
-  }
-}
+
 .startup-container {
   .add-startups {
     @media only screen and(max-width:768px) {

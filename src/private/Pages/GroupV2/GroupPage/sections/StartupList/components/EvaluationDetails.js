@@ -5,14 +5,19 @@ import {
 } from "../../../../_helpers";
 import EvaluationListByTemplate from "../../../../../StartupPage/TabPages/Evaluations/EvaluationListByTemplate";
 import SubjectiveScoreList from "../../../../../StartupPage/TabPages/Evaluations/SubjectiveScoreList";
+import { useHistory } from "react-router-dom";
 
-export default function EvaluationDetails({ startup, history }) {
+export default function EvaluationDetails({ startup, group, adminView }) {
+  const history = useHistory();
+
   const [viewDetails, setViewDetails] = useState(false);
-
   let evaluationsByTemplate = getEvaluationsByTemplate(startup);
   let subjectiveScoreSummary = getSubjectiveScoreSummary(startup);
 
-  if (!subjectiveScoreSummary) {
+  let settings = group?.settings;
+
+  // Return if it's not enabled in settings
+  if (!settings?.showUsers && !adminView) {
     return <span />;
   }
 

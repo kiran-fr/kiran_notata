@@ -4,8 +4,11 @@ import SubjectiveScoreList from "../../../../../StartupPage/TabPages/Evaluations
 import EvaluationListByTemplate from "../../../../../StartupPage/TabPages/Evaluations/EvaluationListByTemplate";
 import ButtonWithIcon from "../../../../../srv_startup/pages/ui-kits/button-with-icon";
 import { ICONPOSITION } from "../../../../../srv_startup/pages/constants";
+import { useHistory } from "react-router-dom";
 
-export default function RequestedEvaluations({ startup, group, history }) {
+export default function RequestedEvaluations({ startup, group }) {
+  const history = useHistory();
+
   const [viewDetails, setViewDetails] = useState(true);
 
   let connection = startup?.connection;

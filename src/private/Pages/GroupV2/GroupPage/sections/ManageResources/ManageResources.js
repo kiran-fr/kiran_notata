@@ -13,7 +13,7 @@ function a11yProps(index) {
   };
 }
 
-export default function ManageResources({ group }) {
+export default function ManageResources({ group, setViewAsMember }) {
   const [value, setValue] = useState(group.iAmAdmin ? 0 : 1);
   const [manageTemplateModal, setManageTemplateModal] = useState(false);
   const [inviteMembersModal, setInviteMembersModal] = useState(false);
@@ -21,6 +21,7 @@ export default function ManageResources({ group }) {
 
   // Set tab value
   const setTab = (event, newValue) => {
+    setViewAsMember(newValue === 1);
     setValue(newValue);
   };
 
@@ -73,22 +74,6 @@ export default function ManageResources({ group }) {
             )}
           </div>
         )}
-
-        {/* admins */}
-        <div className="users-container__user-count">
-          <div className="users-container__user-count__name">
-            {group.members?.filter(({ role }) => role === "ADMIN").length ||
-              "0"}{" "}
-            admins
-          </div>
-          <div className="users-container__user-count__action">
-            <i
-              className={`users-container__user-count__action__icon fa fa-chevron-down`}
-              aria-hidden="true"
-              onClick={() => null}
-            />
-          </div>
-        </div>
 
         {/* startups */}
         <div className="users-container__user-count">

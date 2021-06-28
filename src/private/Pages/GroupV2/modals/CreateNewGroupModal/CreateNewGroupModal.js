@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import "./CreateNewGroupModal.scss";
+import "../GroupSettings.scss";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";

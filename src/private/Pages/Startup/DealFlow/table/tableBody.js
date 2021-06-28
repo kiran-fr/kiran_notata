@@ -16,8 +16,13 @@ import { sortArr, DynamicIcons } from "../../../CommonFunctions";
 import { Loader } from "Components/UI_Kits";
 import { useMutation } from "@apollo/client";
 import { pong } from "../../../../Apollo/Mutations";
-import { awaiting } from "../../../../../definitions";
+import {
+  awaiting,
+  group_dashboard,
+  group_new,
+} from "../../../../../definitions";
 import { connectionsGet, creativesGet } from "../../../../Apollo/Queries";
+import { useHistory } from "react-router-dom";
 
 export default function TableBody(props) {
   const {
@@ -40,6 +45,8 @@ export default function TableBody(props) {
     setChecked,
     funnelLoad,
   } = props;
+
+  const history = useHistory();
 
   const [funnel, setFunnel] = useState();
   const [funnelId, setFunnelId] = useState();
@@ -227,19 +234,17 @@ export default function TableBody(props) {
 
                 {columnSettings.groups && (
                   <td>
-                    <ul>
-                      {(groupSharingInfo || []).slice(0, 2).map(({ group }) => (
-                        <li>
-                          {group.name} {groupSharingInfo.length > 1 ? "," : ""}
+                    <ul className={styles.groupList}>
+                      {groupSharingInfo?.map(({ group }) => (
+                        <li
+                          className={styles.groupListItem}
+                          onClick={() => {
+                            history.push(`${group_dashboard}/${group.id}`);
+                          }}
+                        >
+                          {group.name}
                         </li>
-                      ))}{" "}
-                      {groupSharingInfo.length > 2 ? (
-                        <img
-                          onClick={() => setShowTagGroupForId(item.id)}
-                          src={More}
-                          alt=""
-                        />
-                      ) : null}
+                      ))}
                       <li>
                         <button
                           onClick={() => setShowTagGroupForId(item.id)}

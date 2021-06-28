@@ -149,7 +149,6 @@ export default function StartupComments({ startup, group }) {
   const [showCommentSection, setShowCommentSection] = useState(false);
   const [markConversationAsSeen] = useMutation(groupLogMarkConversationAsSeen);
   let unreadComments = startup?.log?.filter(({ seen }) => !seen);
-
   if (!group?.settings?.chat) {
     return <span />;
   }

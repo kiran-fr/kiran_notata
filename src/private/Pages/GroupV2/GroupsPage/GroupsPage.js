@@ -65,7 +65,7 @@ export default function Groups({ history }) {
                 key={`row-data-${index}`}
               >
                 <div
-                  className="col-sm-5 col-xs-7 data__name"
+                  className="col-sm-6 col-xs-12 data__name"
                   onClick={() => history.push(`${group_dashboard}/${group.id}`)}
                 >
                   {group.iAmAdmin && <i className="fas fa-user-crown" />}
@@ -87,10 +87,10 @@ export default function Groups({ history }) {
                     (<span>{group.members.length} members</span> || <span />)}
                 </div>
 
-                <div className="col-sm-2 col-xs-4  data__startups">
+                <div className="col-sm-3 col-xs-4  data__startups">
                   {group.startups.length} startups
                 </div>
-                <div className="col-sm-2 col-xs-1 data__browse">
+                <div className="data__browse">
                   <span
                     class="material-icons"
                     onClick={() => {

@@ -158,25 +158,38 @@
   }
   .data {
     //padding:15px 10px 0px 70px;
-    padding: 15px 10px 0px 35px;
+    padding: 15px 50px 15px 35px;
+    position: relative;
+    
     &__members,
     &__startups {
       font-family: "Proxima Nova";
       font-style: normal;
       font-weight: normal;
       font-size: 15px;
-      line-height: 18px;
+      //line-height: 18px;
       color: #969ba3;
     }
-    &__browse,
+
+    @media only screen and(max-width:900px) {
+      &__members,
+      &__startups {
+        display: none;
+      }
+    }
+
+
     &__startups {
-      @media only screen and(max-width:768px) {
+      @media only screen and(max-width: 768px) {
         margin-top: -15px;
       }
     }
     &__browse {
       color: #c4c4c4;
       cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 15px;
       &:hover {
         color: #000;
       }
@@ -223,8 +236,8 @@
       font-family: "Proxima Nova";
       font-style: normal;
       font-weight: bold;
-      font-size: 16px;
-      line-height: 16px;
+      font-size: 15px;
+      line-height: 24px;
       text-decoration-line: underline;
       color: #6a6a6a;
       cursor: pointer;
@@ -233,7 +246,7 @@
         color: #c4c4c4;
         font-size: 18px;
         left: -14px;
-        top: -2px;
+        top: 2px;
       }
     }
   }

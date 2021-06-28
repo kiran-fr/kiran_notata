@@ -152,11 +152,11 @@
   font-size: 14px;
 }
 .startupTable td ul {
-  list-style: none;
+  /*list-style: none;*/
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
   box-sizing: border-box;
   padding-top: 3px;
 }
@@ -167,16 +167,14 @@
 
 .startupTable td ul li span {
   background-color: #6a6a6a;
-  padding: 2px 9px;
+  padding: 2px 11px;
   color: #fff;
   border-radius: 15px;
-  font-size: 10px;
+  font-size: 12px;
   text-overflow: ellipsis;
-  max-width: 230px;
   overflow: hidden;
-  display: block;
+  display: inline-block;
   white-space: nowrap;
-  max-width: 110px;
   position: relative;
 }
 
@@ -234,14 +232,11 @@
   cursor: pointer;
 }
 .startupTable .olderThan {
-  background-color: #fcd99e;
-  border-radius: 10px;
-  color: #969ba3;
+  color: #6a6a6a;
   padding: 2px 8px;
-  font-size: 10px;
-  font-family: Roboto;
-  font-style: normal;
+  font-size: 12px;
 }
+
 .startupTable .startupStatus {
   font-size: 14px;
   color: #6a6a6a;
@@ -482,4 +477,19 @@
 .activePopup i {
   color: #53cab2 !important;
   transform: rotate(180deg);
+}
+
+.groupList li {
+  display: inline-block;
+}
+
+.groupListItem {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 1px 7px;
+  background: #fbf1dc;
+  color: #6a6a6a;
+  border-radius: 15px !important;
+  border: 1px solid #ffc244;
+  margin-bottom: 3px !important;
 }

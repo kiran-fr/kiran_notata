@@ -9,26 +9,46 @@ import EvaluationDetails from "./components/EvaluationDetails";
 
 import "./StartupCard.scss";
 
-export default function StartupCard({ group, startup, history }) {
+export default function StartupCard({ group, startup, adminView }) {
   return (
     <div className="row">
       <div className="col-sm-12 col-xs-12">
         <div className="card group-startup-card">
-          <StartupHeader history={history} startup={startup} group={group} />
+          <StartupHeader
+            startup={startup}
+            group={group}
+            adminView={adminView}
+          />
 
-          <EvaluationSummaries startup={startup} history={history} />
+          <EvaluationSummaries
+            startup={startup}
+            group={group}
+            adminView={adminView}
+          />
 
-          <EvaluationDetails startup={startup} history={history} />
+          <EvaluationDetails
+            startup={startup}
+            group={group}
+            adminView={adminView}
+          />
 
-          <YourEvaluations startup={startup} group={group} history={history} />
+          <YourEvaluations
+            startup={startup}
+            group={group}
+            adminView={adminView}
+          />
 
           <RequestedEvaluations
             startup={startup}
             group={group}
-            history={history}
+            adminView={adminView}
           />
 
-          <StartupComments startup={startup} group={group} />
+          <StartupComments
+            startup={startup}
+            group={group}
+            adminView={adminView}
+          />
         </div>
       </div>
     </div>

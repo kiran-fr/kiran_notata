@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { groupGetV2 } from "../../../Apollo/Queries";
 import "./GroupPage.scss";
@@ -9,6 +9,8 @@ import ManageResources from "./sections/ManageResources/ManageResources";
 import StartupList from "./sections/StartupList/StartupList";
 
 export default function GroupPage({ match, history }) {
+  const [viewAsMember, setViewAsMember] = useState(false);
+
   // Queries
   let [groupGet, { data, loading, called, refetch }] = useLazyQuery(groupGetV2);
 
@@ -30,6 +32,8 @@ export default function GroupPage({ match, history }) {
     return <GhostLoader />;
   }
 
+  let adminView = group?.iAmAdmin && !viewAsMember;
+
   return (
     <>
       <div className="group-dashboard-container">
@@ -50,6 +54,7 @@ export default function GroupPage({ match, history }) {
                     group={group}
                     refetch={refetch}
                     history={history}
+                    adminView={adminView}
                   />
                 </div>
               </div>
@@ -57,24 +62,40 @@ export default function GroupPage({ match, history }) {
               {/* Manage resources */}
               <div className="col-sm-12 col-md-5 nopadding-left">
                 <div className="card">
-                  <ManageResources group={group} />
+                  <ManageResources
+                    group={group}
+                    setViewAsMember={setViewAsMember}
+                    adminView={adminView}
+                  />
                 </div>
               </div>
             </div>
 
             {/* Chart */}
-            {(group?.iAmAdmin || group?.settings?.showScores) && (
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="card">
-                    <StartupPerformanceChart group={group} />
+
+            {
+              // || group?.settings?.showScores
+              // You are admin and is not viewing as member
+              adminView && (
+                <div className="row">
+                  <div className="col-sm-12">
+                    <div className="card">
+                      <StartupPerformanceChart
+                        group={group}
+                        adminView={adminView}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )
+            }
 
             {/* Startups */}
-            <StartupList group={group} history={history} />
+            <StartupList
+              group={group}
+              history={history}
+              adminView={adminView}
+            />
           </div>
         </div>
 

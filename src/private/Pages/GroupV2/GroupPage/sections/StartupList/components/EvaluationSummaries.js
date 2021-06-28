@@ -2,11 +2,21 @@ import React, { useState } from "react";
 import { getSubjectiveScoreSummary } from "../../../../_helpers";
 import ScoreSummary from "../../../../generalComponents/ScoreSummary";
 
-export default function EvaluationSummaries({ startup, history }) {
+export default function EvaluationSummaries({ startup, group, adminView }) {
+  // States
   const [viewDetails, setViewDetails] = useState(true);
-  let subjectiveScoreSummary = getSubjectiveScoreSummary(startup);
 
+  // Maps and reducers
+  let subjectiveScoreSummary = getSubjectiveScoreSummary(startup);
+  let settings = group?.settings;
+
+  // Return if there are no scores
   if (!subjectiveScoreSummary) {
+    return <span />;
+  }
+
+  // Return if it's not enabled in settings
+  if (!settings?.showSummaries && !adminView) {
     return <span />;
   }
 

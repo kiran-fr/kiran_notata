@@ -1,7 +1,7 @@
 import React from "react";
 import StartupCard from "./StartupCard";
 
-export default function StartupList({ group, history }) {
+export default function StartupList({ group, adminView, history }) {
   return (
     <>
       {group.startups?.map((startup, i) => (
@@ -10,6 +10,7 @@ export default function StartupList({ group, history }) {
           group={group}
           startup={startup}
           history={history}
+          adminView={adminView}
         />
       ))}
     </>

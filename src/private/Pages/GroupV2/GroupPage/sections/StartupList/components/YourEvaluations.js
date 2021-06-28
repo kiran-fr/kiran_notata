@@ -12,12 +12,15 @@ import { ICONPOSITION } from "../../../../../srv_startup/pages/constants";
 import { evaluate_page } from "../../../../../../../definitions";
 import moment from "moment";
 import SharingOptionsModal from "../../../../modals/SharingOptionsModal";
+import { useHistory } from "react-router-dom";
 
-export default function YourEvaluations({ startup, group, history }) {
+export default function YourEvaluations({ startup, group }) {
+  const history = useHistory();
+
   let connection = startup?.connection;
 
   // States
-  const [openList, setOpenList] = useState(false);
+  const [openList, setOpenList] = useState(true);
   const [viewModal, setViewModal] = useState(false);
   const [subjectiveScoreState, setSubjectiveScoreState] = useState();
   const [loadingStates, setLoadingStates] = useState({});
@@ -77,7 +80,11 @@ export default function YourEvaluations({ startup, group, history }) {
 
             {/* Subjective score chooser */}
             <div className="row">
-              <div className="col-lg-9 col-md-12">
+              <div
+                className={
+                  canShare ? "col-lg-9 col-md-12" : "col-lg-12 col-md-12"
+                }
+              >
                 <div className="group-startup-card__your-evaluations__option-container">
                   {[...Array(10)].map((elementInArray, index) => {
                     return (
@@ -182,7 +189,7 @@ export default function YourEvaluations({ startup, group, history }) {
                             />
                           </div>
 
-                          <div className="col-lg-2 col-sm-5  group-startup-card__your-evaluations__time-stamp">
+                          <div className="col-lg-2 col-sm-5 group-startup-card__your-evaluations__time-stamp">
                             {moment(evaluation.createdAt).format("ll")}
                           </div>
 

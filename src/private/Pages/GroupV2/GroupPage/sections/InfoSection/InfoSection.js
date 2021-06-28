@@ -166,6 +166,7 @@ export default function InfoSection({ group, refetch, history }) {
         <CreateNewGroupModal
           group={group}
           close={() => setCloneGroupModal(false)}
+          history={history}
         />
       )}
 
