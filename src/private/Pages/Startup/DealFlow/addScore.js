@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-
-import classnames from "classnames";
-import styles from "./modal.module.css";
-
 // API Stuff
 import { useMutation } from "@apollo/client";
 import { connectionSubjectiveScorePut } from "private/Apollo/Mutations";
+// STYLES 
+import styles from "./styles.module.css";
+
+// OTHERS 
+import classnames from "classnames";
 
 function getMyScore({ connection }) {
   return connection?.subjectiveScores?.find(({ isMe }) => isMe)?.score;

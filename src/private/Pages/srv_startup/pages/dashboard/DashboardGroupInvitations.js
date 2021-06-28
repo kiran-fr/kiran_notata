@@ -1,4 +1,5 @@
 import React from "react";
+// API 
 import { useMutation, useQuery } from "@apollo/client";
 import {
   groupsPublicGet,
@@ -9,6 +10,7 @@ import {
   groupUserInvitationResponse,
   groupPublicJoin,
 } from "../../../../Apollo/Mutations";
+// COMPONENTS 
 import { Loader } from "../../../../../Components/elements";
 
 function reduceArray(arr, no) {

@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-import "./filter.scss";
+
+// COMPONENTS 
 import InputCheckBox from "../ui-kits/check-box";
 import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import TagsModal from "../ui-kits/TagsModal";
+
+// STYLES 
+import "./filter.scss";
+
+// OTHERS 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Filter({ close }) {
+  // STATES 
   const [showTagsModal, setShowTagsModal] = useState(false);
   const [value, setValue] = useState([null, null]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [isCalendarVisible, setCalendarVisible] = useState(false);
+
   const onChange = dates => {
     const [start, end] = dates;
     setStartDate(start);
@@ -20,7 +29,6 @@ export default function Filter({ close }) {
       setCalendarVisible(false);
     }
   };
-  const [isCalendarVisible, setCalendarVisible] = useState(false);
   return (
     <>
       <div className="filter-container">

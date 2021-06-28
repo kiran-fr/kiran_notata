@@ -1,8 +1,12 @@
-import { useMutation } from "@apollo/client";
 import React from "react";
-import { evaluation_template_page } from "definitions";
-import { Modal } from "../../../../../../../Components/UI_Kits";
+// API 
+import { useMutation } from "@apollo/client";
 import { evaluationTemplateSectionCreate } from "private/Apollo/Mutations";
+// COMPONENTS 
+import { Modal } from "../../../../../../../Components/UI_Kits";
+
+// OTHERS 
+import { evaluation_template_page } from "definitions";
 
 export default function CloneSectionModal({
   templateId,
@@ -10,6 +14,7 @@ export default function CloneSectionModal({
   history,
   close,
 }) {
+  // MUTAIONS 
   const [createSection, createSectionRes] = useMutation(
     evaluationTemplateSectionCreate
   );
@@ -21,6 +26,7 @@ export default function CloneSectionModal({
     newSection.description = section.description;
   }
 
+  // DATA MAPS 
   newSection.questions = section.questions?.map(q => ({
     name: q.name,
     description: q.description,

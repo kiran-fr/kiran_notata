@@ -13,14 +13,12 @@ export const FunnelPopup = ({
   styles
 }) => {
 
-    const updateFunnelTagForConnection = funnelTagId => {
-      updateFunnelTag(funnelTagId, id);
-      setFunnel(false);
-      setShowFunnel(false);
-    };
-
+    // CONST 
     const popup = useRef();
+    const tagSort = sortArr(tags);
 
+
+    // EFFECT 
     useEffect(() => {
       const handleGlobalEvent = e =>
         !e.path.includes(popup.current) ? setShowFunnel(false) : null;
@@ -32,8 +30,13 @@ export const FunnelPopup = ({
       };
     });
 
-    const tagSort = sortArr(tags);
-
+    // FUNCTIONS 
+    const updateFunnelTagForConnection = funnelTagId => {
+      updateFunnelTag(funnelTagId, id);
+      setFunnel(false);
+      setShowFunnel(false);
+    };
+    
     return (
       <div
         ref={popup}

@@ -1,4 +1,5 @@
 import React from "react";
+// COMPONENTS 
 import InputCheckBox from "../../../ui-kits/check-box";
 
 function SingleRow({ removeOption, option, setOption, index }) {

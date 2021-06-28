@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+// STYLES 
 import "./TrafficLights.scss";
 
 export default function TrafficLights({ questions, question, setQuestions }) {
+  // STATES 
   const [redCount, setRedCount] = useState(0);
   const [yellowCount, setYellowCount] = useState(0);
   const [greenCount, setGreenCount] = useState(0);

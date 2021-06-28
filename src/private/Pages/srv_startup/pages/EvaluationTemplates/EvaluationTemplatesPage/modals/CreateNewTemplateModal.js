@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+// API
 import { useMutation } from "@apollo/client";
-import TextBox from "../../../ui-kits/text-box";
 import { evaluationTemplateCreate } from "private/Apollo/Mutations";
-import { evaluation_template_page } from "definitions";
+
+// COMPONENTS 
+import TextBox from "../../../ui-kits/text-box";
 import { Modal } from "../../../../../../../Components/UI_Kits";
+// OTHERS 
+import { evaluation_template_page } from "definitions";
 
 export default function CreateNewTemplateModal({ history, close }) {
+  // STATES 
   const [name, setName] = useState(null);
+  // MUTAIONS 
   const [createTemplate, createTemplateRes] = useMutation(
     evaluationTemplateCreate
   );

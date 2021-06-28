@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import _ from "lodash";
-import { appsyncClient } from "../../../../../awsconfig";
+
 // API STUFF
 import { useMutation } from "@apollo/client";
 import { connectionCreate, creativePut } from "private/Apollo/Mutations";
 import { connectionAutoCompleteName } from "private/Apollo/Queries";
-import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 
 // COMPONENTS
+import { useForm } from "react-hook-form";
+import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
 import { Button, Modal } from "Components/elements";
 
 // DEFINITIONS
 import { startup_page } from "definitions";
+
+//OTHERS
+import _ from "lodash";
+import { appsyncClient } from "../../../../../awsconfig";
 
 // *****************
 // * MAIN FUNCTION *

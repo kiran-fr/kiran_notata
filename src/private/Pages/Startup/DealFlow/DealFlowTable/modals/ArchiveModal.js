@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Modal } from "Components/UI_Kits";
-import { OVERVIEWPAGESTATE } from "../../../../srv_startup/pages/constants";
-import { useMutation } from "@apollo/client";
+// API 
 import { connectionPut } from "../../../../../Apollo/Mutations";
+// COMPONENT 
+import { Modal } from "Components/UI_Kits";
+import { useMutation } from "@apollo/client";
 
 export default function ArchiveModal({ close, ids }) {
+  // STATES 
   const [loading, setLoading] = useState(false);
+  // MUTATION 
   const [archive] = useMutation(connectionPut);
 
   async function archiveConnections() {

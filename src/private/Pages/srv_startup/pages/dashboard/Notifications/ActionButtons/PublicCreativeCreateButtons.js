@@ -1,16 +1,19 @@
 import React from "react";
-import { getVal } from "../helpers/utils";
+// API 
 import { useMutation } from "@apollo/client";
 import {
   connectionCreate,
   creativeDelete,
 } from "../../../../../../Apollo/Mutations";
 import notificationMarkAsResolved from "../../../../../../Apollo/Mutations/notificationMarkAsResolved";
+
+// OTHERS 
 import { startup_page } from "../../../../../../../definitions";
+import { getVal } from "../helpers/utils";
 
 export default function PublicCreativeCreateButtons({ notification, history }) {
   let creativeId = getVal(notification, "creativeId");
-
+  // MUTATIONS 
   const [createConnection, createConnectionRes] = useMutation(connectionCreate);
   const [deleteCreative, deleteCreativeRes] = useMutation(creativeDelete);
   const [markNotification, markNotificationRes] = useMutation(

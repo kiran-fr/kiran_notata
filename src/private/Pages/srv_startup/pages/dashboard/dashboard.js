@@ -1,11 +1,13 @@
 import React from "react";
-import "./dashboard.scss";
+// COMPONENTS 
 import DashboardRecentlyAddedStartups from "./DashboardRecentlyAddedStartups";
 import DashboardGroupInvitations from "./DashboardGroupInvitations";
 import DashboardMyStartups from "./DashboardMyStartups";
 import DashboardNews from "./DashboardNews";
 import DashboardNotifications from "./DashboardNotifications";
 import DashboardAnalytics from "./DashboardAnalytics";
+// STYLES 
+import "./dashboard.scss";
 
 export default function Dashboard({ history }) {
   return (

@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { Modal } from "../../../../../../../Components/UI_Kits";
+
+// API 
 import { useMutation } from "@apollo/client";
 import { userInvitationResponse } from "../../../../../../Apollo/Mutations";
 import { notificationsGet } from "../../../../../../Apollo/Queries";
 import notificationMarkAsResolved from "../../../../../../Apollo/Mutations/notificationMarkAsResolved";
 
+// COMPONENTS 
+import { Modal } from "../../../../../../../Components/UI_Kits";
+
+
 export default function AccountInvitationButtons({ notification }) {
+  // STATES 
   const [rejectModal, setRejectModal] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
 
+  // MUTAIONS 
   const [markResolved] = useMutation(notificationMarkAsResolved, {
     refetchQueries: [{ query: notificationsGet }],
     awaitRefetchQueries: true,

@@ -1,6 +1,8 @@
 import React from "react";
-import "./FreeText.scss";
+// COMPONENTS 
 import TextBox from "../../../ui-kits/text-box";
+// STYLES
+import "./FreeText.scss";
 
 export default function TextLines({ questions, question, setQuestions }) {
   return (

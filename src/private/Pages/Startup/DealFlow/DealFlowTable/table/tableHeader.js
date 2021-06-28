@@ -2,7 +2,7 @@ import React from "react";
 
 // COMPONENTS
 import PopupDropdown from "assets/images/PopupDown.svg";
-import InputCheckBox from "../../../srv_startup/pages/ui-kits/check-box";
+import InputCheckBox from "../../../../srv_startup/pages/ui-kits/check-box";
 
 // STYLES
 import styles from "./table.module.css";

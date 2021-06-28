@@ -1,17 +1,23 @@
 import React, { useState } from "react";
+// API 
 import { useMutation, useQuery } from "@apollo/client";
 import { groupUserInvitationResponse } from "../../../../../../Apollo/Mutations";
 import { groupInvitationsGet, userGet } from "../../../../../../Apollo/Queries";
-import { getVal } from "../helpers/utils";
 import notificationMarkAsResolved from "../../../../../../Apollo/Mutations/notificationMarkAsResolved";
 
+// OTHERS 
+import { getVal } from "../helpers/utils";
+
 export default function GroupInvitationButtons({ notification }) {
+  // STATES 
   const [accepting, setAccepting] = useState(false);
   const [rejecting, setRejecting] = useState(false);
 
+  // QUERIES 
   let { data } = useQuery(userGet);
   let user = data?.userGet;
 
+  // MUTATIONS
   const [respond] = useMutation(groupUserInvitationResponse, {
     refetchQueries: [{ query: groupInvitationsGet }],
   });

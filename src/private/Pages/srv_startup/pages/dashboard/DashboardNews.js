@@ -1,11 +1,15 @@
 import React from "react";
+// API 
 import { useQuery } from "@apollo/client";
 import { newsGet } from "../../../../Apollo/Queries";
+// COMPONENTS
+import { Loader } from "../../../../../Components/elements";
+// OTHERs
 import moment from "moment";
 import { news, news_view_one } from "../../../../../definitions";
-import { Loader } from "../../../../../Components/elements";
 
 export default function DashboardNews({ history }) {
+  // QUERIES 
   const { data, loading } = useQuery(newsGet);
 
   return (

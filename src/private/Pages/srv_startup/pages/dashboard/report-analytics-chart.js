@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+// STYLES
 import "./report-analytics-chart.scss";
+// IMG 
 import ghraphChart from "../../../../../assets/images/bar-graph.png";
 import selectedBarGraphChart from "../../../../../assets/images/selected-bar-graph.png";
 import selectedColumnGraph from "../../../../../assets/images/column-graph-selected.png";
 import pieChart from "../../../../../assets/images/pi-chart.png";
 import selectedPieChart from "../../../../../assets/images/pie-chart-selected.png";
 import columnChart from "../../../../../assets/images/column-chart.png";
+// OTHERS 
 import { REPORTCHARTS } from "../constants";
 import {
   BarChart,
@@ -20,6 +23,7 @@ import {
   Cell,
   Label,
 } from "recharts";
+
 const renderActiveShape = props => {
   const RADIAN = Math.PI / 180;
   const {
@@ -48,6 +52,7 @@ const renderActiveShape = props => {
   );
 };
 export default function ReportAnalyticChart() {
+  // CONST 
   const data = [
     { techValue: 50, startupName: "FINTECH" },
     { techValue: 40, startupName: "PROPTECH" },
@@ -59,6 +64,7 @@ export default function ReportAnalyticChart() {
     { value: 31, color: "url(#gradient2)" },
     { value: 25, color: "url(#gradient3)" },
   ];
+  // STATE 
   const [selectedChart, setSelectedChart] = useState(REPORTCHARTS.PIE);
   return (
     <div className="reports-analytics-chart">

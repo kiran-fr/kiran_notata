@@ -1,8 +1,9 @@
 import React from "react";
+// API 
 import { useMutation } from "@apollo/client";
-import { Modal } from "../../../../../../../Components/UI_Kits";
-
 import { evaluationTemplateDelete } from "private/Apollo/Mutations";
+// COMPONENTS 
+import { Modal } from "../../../../../../../Components/UI_Kits";
 
 export default function DeleteTemplateModal({ close, template }) {
   // Mutations

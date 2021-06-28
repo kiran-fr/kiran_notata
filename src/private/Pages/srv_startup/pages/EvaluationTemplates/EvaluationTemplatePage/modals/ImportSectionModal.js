@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+// API 
 import { useMutation, useQuery } from "@apollo/client";
 import { evaluationTemplatesGet } from "private/Apollo/Queries";
+import { evaluationTemplateSectionCreate } from "private/Apollo/Mutations";
+
+// COMPONENTS 
 import { Loader } from "../../../../../../../Components/elements";
 import DropDown from "../../../ui-kits/drop-down";
 import InputCheckBox from "../../../ui-kits/check-box";
-import { evaluationTemplateSectionCreate } from "private/Apollo/Mutations";
-import { evaluation_template_page } from "definitions";
 import { Modal } from "../../../../../../../Components/UI_Kits";
+// STYLES 
 import "./ImportSectionModal.scss";
+// OTHERS
+import { evaluation_template_page } from "definitions";
 
 export default function ImportSectionModal({ history, templateId, close }) {
   // States

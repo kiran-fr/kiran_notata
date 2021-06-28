@@ -9,7 +9,7 @@ import { connectionSetStar } from "private/Apollo/Mutations";
 import SelectTagsForStartup from "./Modal/SelectTagsForStartup";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
-import Table from "./DealFlow/table/DealflowTable";
+import Table from "./DealFlow/DealFlowTable/table/table";
 import AddToGroupModalNew from "./Modal/AddToGroupModalNew";
 
 function getCleanFilterData(filters) {

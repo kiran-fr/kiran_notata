@@ -23,7 +23,6 @@ import ImportSectionModal from "./modals/ImportSectionModal";
 import AddSectionModal from "./modals/AddSectionModal";
 import DeleteSectionModal from "./modals/DeleteSectionModal";
 import CloneSectionModal from "./modals/CloneSectionModal";
-import { evaluation_templates_page } from "../../../../../../definitions";
 
 import { useHistory } from "react-router-dom";
 

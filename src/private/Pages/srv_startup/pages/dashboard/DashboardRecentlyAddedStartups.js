@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+// API 
 import { useQuery } from "@apollo/client";
 import { groupGetRecentlyAddedStartups } from "../../../../Apollo/Queries";
+// COMPONENTS 
 import { Loader } from "../../../../../Components/elements";
+// OTHERS 
 import { group_dashboard } from "../../../../../definitions";
-import Button from "@material-ui/core/Button";
-import { Modal } from "../../../../../Components/UI_Kits";
-import CreateNewGroup from "../../../StartupPage/TabPages/Groups/create-new-group/create-new-group";
 
 export default function DashboardRecentlyAddedStartups({ history }) {
   const { data, error, loading } = useQuery(groupGetRecentlyAddedStartups);

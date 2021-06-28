@@ -1,5 +1,7 @@
 import React from "react";
+// COMPONETS 
 import Notification from "./Notification";
+// STYLES
 import "./Notitifications.scss";
 
 export default function Notifications({ notifications, history }) {

@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
+
+// STYLES 
 import styles from "./SelectAllPopup.module.css";
 
 export default function SelectAllPopup({ items, isOpen, setSelect }) {
+
+  // CONST 
+  const popup = useRef();
+
+  // STATES 
   const [open, setOpen] = useState(false);
 
+  // EFFECTS 
   useEffect(() => {
     setOpen(isOpen);
   }, [isOpen]);
-
-  const popup = useRef();
 
   useEffect(() => {
     const handleGlobalEvent = e =>

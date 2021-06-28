@@ -1,15 +1,19 @@
 import React from "react";
-// import { notifications_page } from "../../../../../definitions";
-import { notification } from "../../../../../definitions";
+// API 
 import { useQuery } from "@apollo/client";
 import { notificationsGet } from "../../../../Apollo/Queries";
-import moment from "moment";
+// COMPONENTS 
 import { Loader } from "../../../../../Components/elements";
 import Notifications from "./Notifications/Notifications";
 
+// OTHERS
+import { notification } from "../../../../../definitions";
+
 export default function DashboardNotifications({ history }) {
+  // QUERIES 
   const { data, loading } = useQuery(notificationsGet);
 
+  // DATA MAPS 
   let notifications = data?.notificationsGet || [];
 
   return (

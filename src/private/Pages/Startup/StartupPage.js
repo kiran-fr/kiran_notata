@@ -1,5 +1,6 @@
 import React from "react";
 
+// COMPONENT 
 import { Content } from "Components/elements";
 import Connections from "./Connections";
 

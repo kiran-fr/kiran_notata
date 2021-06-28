@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from "react";
-// import { Tags } from "Components/UI_Kits/Tags/Tags";
-import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
-import { Dropdown } from "Components/UI_Kits/Dropdown/index";
-import { AddScore } from "../addScore";
-import AddFunnel from "../addFunnel";
-import TagsModal from "../../../srv_startup/pages/ui-kits/TagsModal";
-import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
-import { useForm } from "react-hook-form";
+
+// API 
 import { useQuery, useMutation } from "@apollo/client";
-// import styles from "../modal.module.css"
-
-import More from "../../../../../assets/images/more.svg";
-
 import {
   groupsGetV2,
   connectionAutoCompleteName,
 } from "private/Apollo/Queries";
-/* import styles from "./Expand.module.css" */
 import {
   connectionCreate,
   creativePut,
@@ -25,6 +14,18 @@ import {
   connectionTagAdd,
   groupStartupAdd,
 } from "private/Apollo/Mutations";
+
+// COMPONENT 
+import { InputForm } from "Components/UI_Kits/InputForm/InputForm";
+import { Dropdown } from "Components/UI_Kits/Dropdown/index";
+import { AddScore } from "../addScore";
+import AddFunnel from "../addFunnel";
+import TagsModal from "../../../srv_startup/pages/ui-kits/TagsModal";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
+import { useForm } from "react-hook-form";
+
+// OTHERS 
+import More from "../../../../../assets/images/more.svg";
 import _ from "lodash";
 import { appsyncClient } from "../../../../../awsconfig";
 
@@ -32,6 +33,9 @@ import { appsyncClient } from "../../../../../awsconfig";
 import { startup_page } from "definitions";
 
 export default function Expand({ closeModal, styles, connections, history }) {
+
+  // States
+  const [existedFlag, setExistedFlag] = useState(undefined);
   const [subScore, setSubScore] = useState();
   const [funnelId, setFunnelId] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -46,8 +50,6 @@ export default function Expand({ closeModal, styles, connections, history }) {
     setSubScore(score);
   };
 
-  // States
-  const [existedFlag, setExistedFlag] = useState(undefined);
 
   // Form
   const { register, handleSubmit, formState } = useForm();

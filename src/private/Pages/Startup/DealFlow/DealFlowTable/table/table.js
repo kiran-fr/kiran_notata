@@ -4,10 +4,10 @@ import React, { useState } from "react";
 // COMPONENTS
 import TableBody from "./tableBody";
 import TableHeader from "./tableHeader";
-import SelectAllPopup from "./SelectAllPopup";
-import ArchiveModal from "./modals/ArchiveModal";
-import AddToGroupModal from "./modals/AddToGroupModal";
-import AddTagsModal from "./modals/AddTagsModal";
+import SelectAllPopup from "../SelectAllPopup/SelectAllPopup";
+import ArchiveModal from "../modals/ArchiveModal";
+import AddToGroupModal from "../modals/AddToGroupModal";
+import AddTagsModal from "../modals/AddTagsModal";
 import { Loader } from "Components/UI_Kits";
 
 //ROUTER

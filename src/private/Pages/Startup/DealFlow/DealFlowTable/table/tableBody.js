@@ -2,19 +2,19 @@ import React, { useState } from "react";
 
 // COMPONENTS
 import { Loader } from "Components/UI_Kits";
-import { FunnelPopup, StartupPreview } from "./Popups";
+import { FunnelPopup, StartupPreview } from "../Popups";
 
 // STYLES
 import styles, { activePopup } from "./table.module.css";
 
 //IMG
-import More from "../../../../../assets/images/more.svg";
-import InvisiblePlus from "../../../../../assets/images/InvisiblePlus.svg";
+import More from "../../../../../../assets/images/more.svg";
+import InvisiblePlus from "../../../../../../assets/images/InvisiblePlus.svg";
 
 // OTHER
 import moment from "moment";
 import classnames from "classnames";
-import { sortArr, DynamicIcons, subjectiveScore } from "../../../CommonFunctions";
+import { sortArr, DynamicIcons, subjectiveScore } from "../../../../CommonFunctions";
 
 export default function TableBody(props) {
   //props Value

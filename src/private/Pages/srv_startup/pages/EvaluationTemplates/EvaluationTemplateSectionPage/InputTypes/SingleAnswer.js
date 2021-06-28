@@ -1,4 +1,5 @@
 import React from "react";
+// COMPONENTS 
 import RadioButton from "../../../ui-kits/radio-button";
 
 function SingleRow({ removeOption, option, setOption, index }) {

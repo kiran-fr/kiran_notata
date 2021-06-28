@@ -1,6 +1,7 @@
+import React from "react";
+// COMPONENTS 
 import ReportAnalyticChart from "./report-analytics-chart";
 import ReportAnalyticFunnel from "./report-analytics-funnel";
-import React from "react";
 
 export default function DashboardAnalytics() {
   return (

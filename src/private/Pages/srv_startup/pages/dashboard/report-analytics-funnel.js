@@ -1,5 +1,7 @@
 import React from "react";
+// STYLES 
 import "./report-analytics-funnel.scss";
+// IMAGES 
 import columnChart from "../../../../../assets/images/column-chart.png";
 import filter from "../../../../../assets/images/filter.png";
 

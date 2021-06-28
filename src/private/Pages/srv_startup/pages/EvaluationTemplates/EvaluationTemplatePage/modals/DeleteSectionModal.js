@@ -1,13 +1,14 @@
+import React from "react";
+// API 
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
-import { Modal } from "../../../../../../../Components/UI_Kits";
 import { evaluationTemplateGet } from "private/Apollo/Queries";
 import { evaluationTemplateSectionDelete } from "private/Apollo/Mutations";
+// COMPONENTS 
+import { Modal } from "../../../../../../../Components/UI_Kits";
 
 export default function DeleteSectionModal({
   templateId,
   section,
-  history,
   close,
 }) {
   let options = {
@@ -21,12 +22,11 @@ export default function DeleteSectionModal({
     ],
   };
 
+  // MUTAIONS  
   const [deleteSection, deleteSectionRes] = useMutation(
     evaluationTemplateSectionDelete,
     options
   );
-
-  console.log("deleteSectionRes", deleteSectionRes);
 
   return (
     <Modal

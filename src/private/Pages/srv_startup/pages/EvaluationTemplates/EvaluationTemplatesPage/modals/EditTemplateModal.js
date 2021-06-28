@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
+// API 
 import { useMutation } from "@apollo/client";
-import TextBox from "../../../ui-kits/text-box";
 import { evaluationTemplateUpdate } from "private/Apollo/Mutations";
+
+// COMPONENTS 
+import TextBox from "../../../ui-kits/text-box";
 import { Modal } from "../../../../../../../Components/UI_Kits";
 
 export default function EditTemplateModal({ close, template }) {
+  // STATES 
   const [name, setName] = useState("");
 
+  // EFFECTS
   useEffect(() => {
     if (template.name) {
       setName(template.name);
     }
   }, [template]);
 
+  // MUTAIONS 
   const [updateTemplate, updateTemplateRes] = useMutation(
     evaluationTemplateUpdate
   );

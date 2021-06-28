@@ -1,16 +1,24 @@
-import { useMutation } from "@apollo/client";
+
 import React, { useState } from "react";
-import { Modal } from "../../../../../../../Components/UI_Kits";
-import TextBox from "../../../ui-kits/text-box";
-import { evaluation_template_page } from "definitions";
+// API 
+import { useMutation } from "@apollo/client";
 import { evaluationTemplateSectionCreate } from "private/Apollo/Mutations";
 
+// COMPONENTS 
+import { Modal } from "../../../../../../../Components/UI_Kits";
+import TextBox from "../../../ui-kits/text-box";
+
+// OTHERS 
+import { evaluation_template_page } from "definitions";
+
 export default function AddSectionModal({ templateId, history, close }) {
+  // STATES 
+  const [name, setName] = useState("");
+
+  // MUTATIONS 
   const [createSection, createSectionRes] = useMutation(
     evaluationTemplateSectionCreate
   );
-
-  const [name, setName] = useState("");
   return (
     <Modal
       title="New Section"

@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
-import "./SectionPage.scss";
-import TextBox from "../ui-kits/text-box";
-import ButtonWithIcon from "../ui-kits/button-with-icon";
-import { ICONPOSITION } from "../constants";
-
-import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
-import ImportSection from "./import-section-modal";
+// API 
 import { useQuery, useMutation } from "@apollo/client";
 import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
 import { evaluationTemplateSectionUpdate } from "private/Apollo/Mutations";
+
+// COMPONENTS 
+import TextBox from "../ui-kits/text-box";
+import { Modal } from "../../../../../Components/UI_Kits/Modal/Modal";
 import { GhostLoader } from "Components/elements";
+import ImportSection from "./import-section-modal";
+import Question from "../../../../pages/Templates/EvaluationTemplateSection/QuestionComp";
+
+// STYLES 
+import "./SectionPage.scss";
+
+// OTHERS 
+import ButtonWithIcon from "../ui-kits/button-with-icon";
+import { ICONPOSITION } from "../constants";
 import { useForm } from "react-hook-form";
 
-import Question from "../../../../pages/Templates/EvaluationTemplateSection/QuestionComp";
 
 export const TemplateSection = props => {
   const {
@@ -20,9 +26,21 @@ export const TemplateSection = props => {
       params: { id, sectionId },
     },
   } = props;
+
+  // STATE 
+  const [importSectionModal, setImportSectionModal] = useState(false);
+  const [questionOption, setQuestionOption] = useState(true);
+  const [sectionDetails, setSectionDetails] = useState(true);
+  const [addSectionModal, setAddSectionModal] = useState(false);
+  const [noOfQuestions, setNoOfQuestions] = useState(1);
+  const [name, setName] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [saveLoader, setSaveLoader] = useState(false);
+
   // Form
-  console.log("props", props);
   const { register, handleSubmit, formState, errors, setValue } = useForm();
+
+  // QUERIS 
   const { data: evaluationTemplateSectionGetData, loading, error } = useQuery(
     evaluationTemplateSectionGet,
     {
@@ -32,24 +50,23 @@ export const TemplateSection = props => {
     }
   );
 
-  console.log("SECTION DATA", evaluationTemplateSectionGetData);
-
+  // DATA MAPS 
   const evaluationTemplateSectionAPIResp =
     evaluationTemplateSectionGetData?.evaluationTemplateSectionGet;
 
+    // MUTAIONS 
   const [mutateEvaluationTemplateSectionUpdate] = useMutation(
     evaluationTemplateSectionUpdate
   );
 
-  const [importSectionModal, setImportSectionModal] = useState(false);
-  const [questionOption, setQuestionOption] = useState(true);
-  const [sectionDetails, setSectionDetails] = useState(true);
-  const [addSectionModal, setAddSectionModal] = useState(false);
-
-  const [noOfQuestions, setNoOfQuestions] = useState(1);
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [saveLoader, setSaveLoader] = useState(false);
+  // EFFECTS 
+  useEffect(() => {
+    if (evaluationTemplateSectionAPIResp) {
+      setDescription(evaluationTemplateSectionAPIResp?.description);
+      setName(evaluationTemplateSectionAPIResp?.name);
+    }
+    console.log("EVALUATION DATA: ", evaluationTemplateSectionAPIResp);
+  }, [evaluationTemplateSectionAPIResp]);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -59,13 +76,6 @@ export const TemplateSection = props => {
       setDescription(value);
     }
   };
-  useEffect(() => {
-    if (evaluationTemplateSectionAPIResp) {
-      setDescription(evaluationTemplateSectionAPIResp?.description);
-      setName(evaluationTemplateSectionAPIResp?.name);
-    }
-    console.log("EVALUATION DATA: ", evaluationTemplateSectionAPIResp);
-  }, [evaluationTemplateSectionAPIResp]);
 
   const save = async () => {
     setSaveLoader(true);

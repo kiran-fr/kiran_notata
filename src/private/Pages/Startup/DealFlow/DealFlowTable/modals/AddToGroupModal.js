@@ -1,20 +1,30 @@
 import React, { useState } from "react";
-import { Modal } from "Components/UI_Kits";
-import DropDown from "../../../../srv_startup/pages/ui-kits/drop-down";
+
+// API 
 import { useMutation, useQuery } from "@apollo/client";
 import { groupsGetV2 } from "../../../../../Apollo/Queries";
-import { Loader } from "../../../../../../Components/elements";
 import { groupStartupAdd } from "../../../../../Apollo/Mutations";
 
+// COMPONENT
+import { Modal } from "Components/UI_Kits";
+import DropDown from "../../../../srv_startup/pages/ui-kits/drop-down";
+import { Loader } from "../../../../../../Components/elements";
+
 export default function AddToGroupModal({ close, connections }) {
+  
   const creativeIds = connections.map(({ creative }) => creative.id);
 
+  // STATES 
   const [isLoading, setLoading] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(false);
 
+  // QUERIES 
   const { data, loading, error } = useQuery(groupsGetV2);
+  
+  // MUTATION 
   const [addToGroupMutation] = useMutation(groupStartupAdd);
 
+  // DATA MAPS 
   let groups = data?.groupsGetV2 || [];
 
   groups = groups.filter(({ iAmAdmin }) => iAmAdmin);

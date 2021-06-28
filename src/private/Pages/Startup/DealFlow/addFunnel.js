@@ -9,7 +9,7 @@ import { Dropdown } from "Components/UI_Kits/Dropdown/index";
 import { Loader } from "Components/UI_Kits";
 
 // STYLES
-import styles from "./modal.module.css";
+import styles from "./styles.module.css";
 
 //OTHERS
 import { DynamicIcons } from "../../../Pages/CommonFunctions";

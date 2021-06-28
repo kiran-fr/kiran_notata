@@ -1,21 +1,29 @@
 import React, { useState } from "react";
-import { Modal } from "Components/UI_Kits";
-import TagsModal from "../../../../srv_startup/pages/ui-kits/TagsModal";
-import { Loader } from "../../../../../../Components/elements";
-import DropDown from "../../../../srv_startup/pages/ui-kits/drop-down";
+
+// API 
 import { useMutation, useQuery } from "@apollo/client";
 import { tagGroupsGet } from "../../../../../Apollo/Queries";
 import { connectionTagAdd } from "../../../../../Apollo/Mutations";
 
+//COMPONENTS
+import { Modal } from "Components/UI_Kits";
+import { Loader } from "../../../../../../Components/elements";
+import DropDown from "../../../../srv_startup/pages/ui-kits/drop-down";
+
 export default function AddTagsModal({ close, ids }) {
+
+  // STATES 
   const [isLoading, setLoading] = useState(false);
   const [selectedTagGroup, setSelectedTagGroup] = useState(false);
   const [selectedTag, setSelectedTag] = useState(false);
 
+  // MUTATION 
   const [addTagMutation] = useMutation(connectionTagAdd);
 
+  // QUERIE
   const { data, loading, error } = useQuery(tagGroupsGet);
 
+  // Data maps
   let tagGroups = data?.tagGroupsGet || [];
 
   async function addTag() {

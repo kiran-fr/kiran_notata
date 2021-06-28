@@ -1,4 +1,5 @@
 import React from "react";
+// STYLES 
 import "./subjective-scores-evaluation.scss";
 
 export default function SubjectiveScoreEvaluation() {

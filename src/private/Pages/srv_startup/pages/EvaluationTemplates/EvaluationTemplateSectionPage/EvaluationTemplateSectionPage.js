@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
-import "../SectionPage.scss";
-import TextBox from "../../ui-kits/text-box";
-import ButtonWithIcon from "../../ui-kits/button-with-icon";
+
+// API 
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { omit } from "lodash";
-import QuestionCard from "./QuestionCard";
 
 import { evaluationTemplateSectionGet } from "private/Apollo/Queries";
 import { evaluationTemplateSectionUpdate } from "private/Apollo/Mutations";
+
+// COMPONENTS 
+import TextBox from "../../ui-kits/text-box";
+import ButtonWithIcon from "../../ui-kits/button-with-icon";
+import QuestionCard from "./QuestionCard";
 import { GhostLoader } from "Components/elements";
+
+// STYLES 
+import "../SectionPage.scss";
+
+// OTHERS 
+import { omit } from "lodash";
 import { evaluation_template_page } from "../../../../../../definitions";
 import { useHistory } from "react-router-dom";
 

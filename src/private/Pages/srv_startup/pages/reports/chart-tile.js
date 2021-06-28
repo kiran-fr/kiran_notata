@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+// STYLES 
 import "./chart-tile.scss";
+
+// OTHERS 
 import { REPORTCHARTS } from "../constants";
 import ghraphChart from "../../../../../assets/images/bar-graph.png";
 import selectedBarGraphChart from "../../../../../assets/images/selected-bar-graph.png";

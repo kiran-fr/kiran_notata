@@ -1,15 +1,21 @@
 import React, { useState } from "react";
+
+// COMPONENTS 
+import SubjectiveScoreEvaluations from "./subjective-scores-evaluation";
+import Filter from "./filter";
+
+// STYLES 
 import "./reports.scss";
+
+// OTHERS 
 import group from "../../../../../assets/images/group.png";
 import business from "../../../../../assets/images/business.png";
-import SubjectiveScoreEvaluations from "./subjective-scores-evaluation";
 import ChartTile from "./chart-tile";
 import { REPORTCHARTS, ICONPOSITION } from "../constants";
 import ButtonWithIcon from "../ui-kits/button-with-icon";
-import Filter from "./filter";
 
 export default function Reports() {
-  const [isFilterVisible, setFilterVisible] = useState(false);
+  // CONST 
   let data = [
     { name: "Business", type: REPORTCHARTS.COLUMN, isDropDown: false },
     { name: "Market", type: REPORTCHARTS.PIE, isDropDown: false },
@@ -18,6 +24,8 @@ export default function Reports() {
     // { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
     // { name: "HQ Country", type: REPORTCHARTS.PIE, isDropDown: true },
   ];
+  // STATES 
+  const [isFilterVisible, setFilterVisible] = useState(false);
   const [chartData, setChartData] = useState(data);
   return (
     <div className="report-container">

@@ -1,10 +1,15 @@
 import React from "react";
+// COMPONENTS 
 import { Modal } from "../../../../../../../Components/UI_Kits";
+// API 
 import { evaluationTemplateCreate } from "private/Apollo/Mutations";
-import { evaluation_template_page } from "definitions";
 import { useMutation } from "@apollo/client";
 
+// OTHERS 
+import { evaluation_template_page } from "definitions";
+
 export default function CloneTemplateModal({ close, template, history }) {
+  // MUTAIONS 
   const [createTemplate, createTemplateRes] = useMutation(
     evaluationTemplateCreate
   );

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+// API 
 import { useQuery } from "@apollo/client";
 import { connectionsGet } from "../../../../Apollo/Queries";
+// COMPONENTS 
 import SubjectiveScoreModal from "../../../Startup/Modal/SubjectiveScoreModal";
 import { Loader } from "../../../../../Components/elements";
+// OTHERS
 import { startup_page } from "../../../../../definitions";
 import { DynamicIcons } from "../../../CommonFunctions";
 
 export default function DashboardMyStartups({ history }) {
+  // STATES
   const [editScoreForConnection, setEditScoreForConnection] = useState(
     undefined
   );
@@ -18,8 +22,10 @@ export default function DashboardMyStartups({ history }) {
       sortDirection: "DESC",
     },
   };
+  // QUERIES 
   const { data, loading, error } = useQuery(connectionsGet, { variables });
 
+  // DATA MAPS 
   let startups = data?.connectionsGet || [];
 
   return (
