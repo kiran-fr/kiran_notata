@@ -222,6 +222,7 @@ export default function Filters({
       ) : (
         optionalFilter === "filter" && (
           <FilterSidebar
+            clearFilterTxt = {clearFilterTxt}
             defaultFilters={defaultFilters}
             close={setOptionalFilter}
             filters={filters}
