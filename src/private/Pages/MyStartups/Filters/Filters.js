@@ -193,7 +193,7 @@ export default function Filters({
             </div>
           </div>
         </div>
-        {activeTab === "spreadsheet" && clearFilterTxt ? (
+        {activeTab === "spreadsheet" && clearFilterTxt && (
           <div
             className={
               styles.clearAllTxt + " " + "text-right" + " " + styles.handCursor
@@ -204,32 +204,31 @@ export default function Filters({
           >
             Clear All Filters
           </div>
-        ) : (
-          ""
         )}
       </div>
 
       {modal === "startup" && (
         <AddStartup history={history} closeModal={setModal} />
       )}
-      {optionalFilter === "column" ? (
+
+      {optionalFilter === "column" && (
         <ColumnSidebar
           evaluationTemplates={evaluationTemplates}
           close={setOptionalFilter}
           manageColValue={manageColValue}
           setManageColValue={setManageColValue}
         />
-      ) : (
-        optionalFilter === "filter" && (
-          <FilterSidebar
-            defaultFilters={defaultFilters}
-            close={setOptionalFilter}
-            filters={filters}
-            handleSearch={handleSearch}
-            filterValue={filterValue}
-            setFilters={setFilters}
-          />
-        )
+      )}
+
+      {optionalFilter === "filter" && (
+        <FilterSidebar
+          defaultFilters={defaultFilters}
+          close={setOptionalFilter}
+          filters={filters}
+          handleSearch={handleSearch}
+          filterValue={filterValue}
+          setFilters={setFilters}
+        />
       )}
     </div>
   );
