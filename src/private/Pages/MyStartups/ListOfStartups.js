@@ -6,11 +6,11 @@ import { connectionsGet } from "private/Apollo/Queries";
 import { connectionSetStar } from "private/Apollo/Mutations";
 
 // COMPONENTS
-import SelectTagsForStartup from "./Modal/SelectTagsForStartup";
 import SetFunnelScore from "./Modal/setFunnelScore";
 import SubjectiveScoreModal from "./Modal/SubjectiveScoreModal";
 import Table from "./DealFlow/DealFlowTable/table/table";
 import AddToGroupModalNew from "./Modal/AddToGroupModalNew";
+import AddTagsForConnectionModal from "../StartupPage/TabPages/Overview/modals/AddTagsForConnectionModal";
 
 function getCleanFilterData(filters) {
   let clean = {};
@@ -105,7 +105,7 @@ export default function ListOfStartups({
       )}
 
       {showStartUpForId && (
-        <SelectTagsForStartup
+        <AddTagsForConnectionModal
           connection={connections.find(({ id }) => id === showStartUpForId)}
           close={() => setShowStartUpForId(undefined)}
         />

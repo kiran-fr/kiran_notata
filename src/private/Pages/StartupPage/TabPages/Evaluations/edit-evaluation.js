@@ -19,9 +19,11 @@ export default function EditEvaluation({
   setActiveEvaluation,
   setEvaluateModal,
 }) {
+  // States
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Effects
   useEffect(() => {
     setAllAnswers(answers);
   }, [answers]);

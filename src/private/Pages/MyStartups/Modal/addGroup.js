@@ -14,7 +14,7 @@ import styles from "./modal.module.css";
 export default function AddGroup({ connection, select }) {
   // Queries
   const groupsQuery = useQuery(groupsGetV2);
-  let groups = groupsQuery?.data?.groupsGetV2;
+  let groups = groupsQuery?.data?.groupsGetV2 || [];
 
   // Data maps
   // Get only groups where I am admin
