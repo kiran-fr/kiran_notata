@@ -23,6 +23,7 @@ export default function EditEvaluation({
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Effects
   useEffect(() => {
     setAllAnswers(answers);
   }, [answers]);
