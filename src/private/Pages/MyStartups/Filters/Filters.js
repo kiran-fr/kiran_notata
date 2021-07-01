@@ -147,6 +147,7 @@ export default function Filters({
                       value={filterValue}
                       onChange={e => handleSearch(e)}
                       onKeyPress={e => searchOnEnter(e)}
+                      autoComplete="off"
                     />
                     <button
                       className={styles.searchButton}
@@ -222,7 +223,7 @@ export default function Filters({
 
       {optionalFilter === "filter" && (
         <FilterSidebar
-          clearFilterTxt = {clearFilterTxt}
+          clearFilterTxt={clearFilterTxt}
           defaultFilters={defaultFilters}
           close={setOptionalFilter}
           filters={filters}

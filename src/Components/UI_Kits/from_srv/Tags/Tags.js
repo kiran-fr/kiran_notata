@@ -54,6 +54,7 @@ export const Tags = ({ onchange }) =>
               onchange(e.target.value);
             }}
             className={styles.tagInput}
+            autoComplete="off"
           ></input>
         </div>
       </div>

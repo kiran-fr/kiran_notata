@@ -11,6 +11,7 @@ function RadioButton({ id, value, label, isSelected, handleChange, name }) {
         name={name}
         value={value}
         checked={isSelected}
+        autoComplete="off"
         onChange={handleChange}
       />
       <span className={styles.checkmark} />

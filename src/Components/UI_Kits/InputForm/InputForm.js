@@ -153,6 +153,7 @@ export function InputForm({
           onFocus={() => setPlaceholderVal("")}
           onChange={handleChange}
           onBlur={handleBlur}
+          autoComplete="off"
         />
 
         {type === "password" && (

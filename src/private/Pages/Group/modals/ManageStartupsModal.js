@@ -112,6 +112,7 @@ export default function ManageStartupsModal({ group, close }) {
                 <input
                   className="search-box"
                   placeholder="Search Startup"
+                  autoComplete="off"
                   type="text"
                   onChange={e => {
                     let search = e.target?.value;

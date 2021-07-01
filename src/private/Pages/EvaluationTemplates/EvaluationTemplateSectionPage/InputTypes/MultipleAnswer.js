@@ -15,6 +15,7 @@ function SingleRow({ removeOption, option, setOption, index }) {
             placeholder={`Option ${index}`}
             className="text-box"
             value={option?.val || ""}
+            autoComplete="off"
             onChange={e => {
               setOption({ ...option, val: e.target.value });
             }}

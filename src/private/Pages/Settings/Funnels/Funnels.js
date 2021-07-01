@@ -187,6 +187,7 @@ function EditFunnel({ funnelGroup, save }) {
                     type="text"
                     maxLength={20}
                     value={tag.name}
+                    autoComplete="off"
                     onChange={e => {
                       updateTag({ ...tag, name: e.target.value });
                     }}
@@ -232,6 +233,7 @@ function EditFunnel({ funnelGroup, save }) {
                 type="text"
                 maxLength={20}
                 value={newFunnel.name}
+                autoComplete="off"
                 onChange={e => {
                   setNewFunnel({
                     ...newFunnel,
@@ -309,6 +311,7 @@ function EditFunnel({ funnelGroup, save }) {
               className="funnels-container__create-new-funnel-text"
               type="text"
               value={funnel.name}
+              autoComplete="off"
               onChange={e =>
                 setFunnel({
                   ...funnel,
@@ -579,6 +582,7 @@ export default function Funnels1({ history }) {
               type="text"
               value={newFunnelVal}
               onChange={e => setNewFunnelVal(e.target.value)}
+              autoComplete="off"
             />
           }
         />
