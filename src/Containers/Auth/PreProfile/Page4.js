@@ -57,6 +57,7 @@ export default function Page4({ setPage, extraInputs, history }) {
                   type="radio"
                   ref={register}
                   id="input.professional"
+                  autoComplete="off"
                   name="input.investor"
                   value="professional"
                 />
@@ -70,6 +71,7 @@ export default function Page4({ setPage, extraInputs, history }) {
                   type="radio"
                   ref={register}
                   id="input.angel"
+                  autoComplete="off"
                   name="input.investor"
                   value="angel"
                 />

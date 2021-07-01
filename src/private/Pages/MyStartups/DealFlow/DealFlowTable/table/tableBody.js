@@ -102,6 +102,7 @@ export default function TableBody(props) {
                       <input
                         type="checkbox"
                         checked={!!checkAll || !!checked[item.id]}
+                        autoComplete="off"
                         onChange={() =>
                           setChecked({
                             ...checked,

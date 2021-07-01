@@ -278,6 +278,7 @@ export default function NewsEdit({ history, match }) {
             className="news-container__create-container__title"
             type="text"
             placeholder="Add news title"
+            autoComplete="off"
             value={data.title || ""}
             onChange={e => {
               setData({

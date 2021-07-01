@@ -147,6 +147,7 @@ function EditTagModal({ tag, setEditTagModal }) {
           type="text"
           value={tagName}
           onChange={e => setTagName(e.target.value)}
+          autoComplete="off"
         />
       }
     />
@@ -198,6 +199,7 @@ function EditTagGroupModal({ tagGroup, setEditTagGroupModal }) {
           type="text"
           value={tagName}
           onChange={e => setTagName(e.target.value)}
+          autoComplete="off"
         />
       }
     />
@@ -293,6 +295,7 @@ function TagGroup({ tagGroup }) {
               type="text"
               value={newTag}
               onChange={e => setNewTag(e.target.value)}
+              autoComplete="off"
             />
             <i
               class="fa fa-plus-circle"
@@ -452,6 +455,7 @@ export default function Tags({ history }) {
               type="text"
               value={newTagGroup}
               onChange={e => setNewTagGroup(e.target.value)}
+              autoComplete="off"
             />
           }
         />

@@ -34,6 +34,7 @@ export default function Paginator({ currentPage, setCurrentPage }) {
       />
       <input
         type="text"
+        autoComplete="off"
         className={styles.paginatorInput}
         value={currentPageNo}
         onFocus={e => e.target.select()}

@@ -7,11 +7,11 @@ import { userUpdate } from "private/Apollo/Mutations";
 // COMPONENTS
 import Sidebar from "./index";
 
-// STYLES 
+// STYLES
 import styles from "./sidebar.module.scss";
 
-// OTHERS 
-import { manageColumn } from "./helpers.js"
+// OTHERS
+import { manageColumn } from "./helpers.js";
 
 export default function ManageSidebar({
   close,
@@ -19,10 +19,9 @@ export default function ManageSidebar({
   manageColValue,
   evaluationTemplates,
 }) {
-
-  // CONST 
+  // CONST
   const allEvaluation =
-  evaluationTemplates.length === manageColValue.evaluationTemplates.length;
+    evaluationTemplates.length === manageColValue.evaluationTemplates.length;
 
   const options = [
     { value: "Groups", name: "groups" },
@@ -39,18 +38,18 @@ export default function ManageSidebar({
     manageColValue.tags &&
     manageColValue.subjectiveScore;
 
-  // STATES 
+  // STATES
   const [render, setRender] = useState(false);
   const [mutate] = useMutation(userUpdate);
 
-  // EFFECTS 
+  // EFFECTS
   // update
   useEffect(() => {
     const input = { columnSettings: manageColValue };
     mutate({ variables: { input } });
   }, [manageColValue]);
 
-  // FUNCTIONS 
+  // FUNCTIONS
   const handleManageSection = (e, evaltionId) => {
     manageColumn(
       e,
@@ -60,7 +59,7 @@ export default function ManageSidebar({
       evaluationTemplates,
       setRender,
       render
-    )
+    );
   };
 
   return (
@@ -73,6 +72,7 @@ export default function ManageSidebar({
                 type="checkbox"
                 checked={showAll}
                 name="showAll"
+                autoComplete="off"
                 onChange={handleManageSection}
               />
               <span class={styles.checkmark}></span>

@@ -65,6 +65,7 @@ export default function TagPage({
         <div className="notata_form">
           <input
             type="text"
+            autoComplete="off"
             value={filter}
             onChange={e => setFilter(e.target.value)}
             placeholder="filter list..."
@@ -127,6 +128,7 @@ export default function TagPage({
                     <input
                       type="checkbox"
                       checked={isChecked}
+                      autoComplete="off"
                       onChange={() => {
                         isChecked ? deleteTag(tag) : addTag(tag);
                       }}

@@ -55,6 +55,7 @@ export default function CommentsActivities() {
                   <input
                     type="text"
                     value="This startup is really well!"
+                    autoComplete="off"
                   ></input>
                 </div>
               ) : (

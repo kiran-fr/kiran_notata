@@ -125,6 +125,7 @@ export default function TagsInput({
               width: "100px",
             }}
             onKeyPress={handleUserEnter}
+            autoComplete="off"
           />
         </div>
       </ul>

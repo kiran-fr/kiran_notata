@@ -132,7 +132,7 @@ function CommentSection({ startup, group }) {
       </div>
       <form onSubmit={handleSubmit(submit)}>
         <div className="commentInput">
-          <input ref={register} name="text" type="text" />
+          <input ref={register} name="text" type="text" autoComplete="off" />
           {!loading && (
             <button type="submit" aria-hidden="true" value="">
               <i className="fa fa-paper-plane" />

@@ -168,6 +168,7 @@ export default function YourTeam({ history }) {
             <input
               type="text"
               placeholder="name@email.com"
+              autoComplete="off"
               className="your-team__pending-invite-container__search-user"
               value={email}
               onChange={e => {

@@ -11,6 +11,7 @@ export function CheckBox({ id, value, label, onSelect, isSelected }) {
         value={value}
         checked={isSelected}
         onChange={onSelect}
+        autoComplete="off"
       />
       <span className={styles.checkmark} />
     </label>

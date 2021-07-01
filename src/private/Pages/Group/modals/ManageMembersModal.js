@@ -197,6 +197,7 @@ export default function ManageMembersModal({ group, close }) {
                     <input
                       className="search-box"
                       placeholder="Type email"
+                      autoComplete="off"
                       type="text"
                       name="email"
                       ref={register}

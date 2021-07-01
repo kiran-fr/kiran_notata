@@ -24,6 +24,7 @@ export default function InputButton({ value, size, loading }) {
           sizeClass
         )}
         value={value}
+        autoComplete="off"
       />
 
       <div className={classnames(styles.input_button_icon, sizeClass)}>

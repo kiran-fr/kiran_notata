@@ -105,6 +105,7 @@ export default function SetReminders() {
           <input
             type="text"
             className="set-reminder-container__when__in__no-of-days"
+            autoComplete="off"
           ></input>
           <div className="set-reminder-container__when__in__no-of-days-dropdown">
             <Dropdown title="" items={items}></Dropdown>

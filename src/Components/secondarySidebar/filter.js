@@ -107,7 +107,7 @@ export default function FilterBar({
   filterValue,
   handleSearch,
   defaultFilters,
-  clearFilterTxt
+  clearFilterTxt,
 }) {
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
@@ -170,6 +170,7 @@ export default function FilterBar({
                         <input
                           type="radio"
                           name={data.name}
+                          autoComplete="off"
                           onChange={() =>
                             setFilters({ ...filters, funnelTag: data.id })
                           }
@@ -202,8 +203,8 @@ export default function FilterBar({
 
   return (
     <Sidebar
-      title={clearFilterTxt
-        ?
+      title={
+        clearFilterTxt ? (
           <button
             className={styles.clearAllButton}
             type="button"
@@ -213,10 +214,9 @@ export default function FilterBar({
           >
             Clear All Filters
           </button>
-        : 
-          <span className={styles.filtersHeading}>
-            Filters
-          </span>
+        ) : (
+          <span className={styles.filtersHeading}>Filters</span>
+        )
       }
       close={close}
     >
@@ -228,6 +228,7 @@ export default function FilterBar({
             onChange={e => {
               filterSearch(e);
             }}
+            autoComplete="off"
           />
           <button
             onClick={() => {
