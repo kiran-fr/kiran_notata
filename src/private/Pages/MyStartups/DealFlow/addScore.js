@@ -32,7 +32,9 @@ export function AddScore({ connection }) {
   // score given by this user or not
   useEffect(() => {
     let yourScore = getMyScore({ connection });
-    setSubjectiveScore(yourScore || "");
+    if(yourScore) {
+      setSubjectiveScore(yourScore || "");
+    }
   }, [connection && !subjectiveScore]);
 
   return (
