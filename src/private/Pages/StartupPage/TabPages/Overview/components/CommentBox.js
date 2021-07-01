@@ -33,6 +33,15 @@ function CommentBoxGeneral({
     setEditChat(true);
   };
 
+  const handleEnter = async event => {
+    if (event.keyCode === 13) {
+      if (!event.shiftKey) {
+        setMessage("");
+        await createComment(message);
+      }
+    }
+  };
+
   return (
     <div className={styles.commentBox}>
       <div className={styles.comments}>
@@ -148,14 +157,15 @@ function CommentBoxGeneral({
         })}
       </div>
       <div className={styles.commentInput}>
-        <input
+        <textarea
           type="input"
           name="message"
           placeholder="Enter Your Comment"
           autoComplete="off"
           value={message}
           onChange={handleMessageChange}
-        />
+          onKeyDown={e => handleEnter(e)}
+        ></textarea>
         <button
           type="button"
           onClick={async () => {

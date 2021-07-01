@@ -156,11 +156,23 @@
   border-radius: 20px;
   border: 1px solid #b5b5b5;
 
-  input {
+  textarea {
     width: 100%;
     background: none;
     outline: none;
     border: none;
+    resize: none;
+    padding-top: 7px;
+  }
+
+  textarea::-webkit-scrollbar {
+    appearance: none;
+    width: 6px;
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    background-color: #53cab2;
+    border-radius: 3px;
   }
 
   button {
