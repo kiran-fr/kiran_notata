@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { grouplogItemFragments } from "Apollo/Fragments";
+import { grouplogItemFragments } from "private/Apollo/Fragments";
 
 interface DataValue {
   key: string;

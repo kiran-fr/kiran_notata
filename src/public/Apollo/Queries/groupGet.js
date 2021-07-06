@@ -1,12 +1,10 @@
 import gql from "graphql-tag";
 
-import {
-  groupFragments,
-  tagFragments,
-  funnelTagFragments,
-  creativeFragments,
-  connectionFragments,
-} from "Apollo/Fragments";
+import groupFragments from "../Fragments/groupFragments";
+import tagFragments from "../Fragments/tagFragments";
+import funnelTagFragments from "../Fragments/funnelTagFragments";
+import creativeFragments from "../Fragments/creativeFragments";
+import connectionFragments from "../Fragments/connectionFragments";
 
 export default gql`
   query groupGet($id: ID!) {

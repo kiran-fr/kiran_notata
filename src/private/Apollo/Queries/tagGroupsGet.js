@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { tagGroupFragments, tagFragments } from "Apollo/Fragments";
+import { tagGroupFragments, tagFragments } from "../Fragments";
 
 export default gql`
   query tagGroupsGet {

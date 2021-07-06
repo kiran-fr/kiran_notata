@@ -8,7 +8,7 @@ import { creativePut } from "public/Apollo/Mutations";
 import { GhostLoader } from "Components/elements";
 import "./PublicCreativeNew.scss";
 
-import EditStartupContent from "../../../../private/NewDesign/StartupPage/TabPages/StartupInfo/subPages/EditStartupContent";
+import EditStartupContent from "../../../../private/Pages/StartupPage/TabPages/StartupInfo/subPages/EditStartupContent";
 import MessageBox from "./MessageBox";
 
 let defaultCreative = {

@@ -1,4 +1,3 @@
-/* sidebar container*/
 .main_sidebar {
   max-width: 206px;
   position: relative;
@@ -50,7 +49,7 @@
 }
 .mobile_togglerInSidebar {
   position: absolute;
-  right: -20px;
+  right: 20px;
   top: 27px;
   display: none;
 }
@@ -382,10 +381,6 @@
   .hide_mobile_container {
     left: 0px !important;
   }
-  .sidebar_container .icons img {
-    height: 25px;
-    width: 25px;
-  }
 }
 @media screen and (max-width: 769px) {
   .menu_listSettings {
@@ -397,10 +392,6 @@
   }
   .sidebar_floating_open {
     display: none;
-  }
-  .sidebar_container .icons img {
-    height: 25px;
-    width: 25px;
   }
 }
 .display_floating_button {

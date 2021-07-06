@@ -1,0 +1,31 @@
+.sync-modal {
+
+  &__title {
+    font-size: 15px;
+    padding: 20px;
+  }
+
+  &__record {
+    position: relative;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 14px;
+    line-height: 22px;
+    i {
+      color: var(--color-primary);
+      position: absolute;
+      left: 8px;
+      top: 8px;
+    }
+    span {
+    }
+  }
+
+  &__record:nth-child(even) {
+    background: rgba(223, 233, 245, 0.2);
+  }
+
+}

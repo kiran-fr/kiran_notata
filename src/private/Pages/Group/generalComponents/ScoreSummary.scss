@@ -1,0 +1,95 @@
+.score-summary {
+  width: 250px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+
+  &__title {
+    font-family: "Proxima Nova";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6a6a6a;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__entries {
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #969ba3;
+  }
+
+
+
+  &__scores-container {
+
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+
+    &__score {
+      font-family: "Proxima Nova";
+      font-style: normal;
+      font-weight: normal;
+      font-size: 44px;
+      line-height: 44px;
+      margin-top: 5px;
+      color: #6a6a6a;
+      padding-right: 15px;
+    }
+
+    &__highest-lowest-score {
+
+      &__record {
+        height: 20px;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        text-align: left;
+      }
+
+      &__score {
+        font-family: "Proxima Nova";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 15px;
+        width: 24%;
+        text-align: right;
+        padding-right: 4px;
+      }
+
+      .highest {
+        color: #53cab2;
+      }
+      .lowest {
+        color: #ff4853;
+      }
+
+      &__type {
+        font-family: Proxima Nova;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 10px;
+        line-height: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #979797;
+        margin-left: 5px;
+        width: 60%;
+      }
+    }
+
+  }
+
+
+
+}

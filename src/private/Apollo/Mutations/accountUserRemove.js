@@ -9,7 +9,7 @@ import {
   tagFragments,
   funnelGroupFragments,
   funnelTagFragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   mutation accountUserRemove($email: String) {

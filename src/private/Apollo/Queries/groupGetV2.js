@@ -5,7 +5,7 @@ import {
   evaluationTemplateQuestionFragments,
   creativeFragments,
   evaluationV2Fragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   query groupGetV2($id: ID!) {
@@ -119,6 +119,7 @@ export default gql`
                   questionName
                   possibleScore
                   score
+                  answer
                 }
               }
             }

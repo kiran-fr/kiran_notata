@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { groupFragments } from "Apollo/Fragments";
+import { groupFragments } from "private/Apollo/Fragments";
 
 interface EvaluationTemplates {
   id: string;

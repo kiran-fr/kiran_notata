@@ -13,6 +13,7 @@ export default function SingleChoiceInput({ style, options, disabled }) {
                   disabled={disabled}
                   checked={checked}
                   onChange={handleOnChange}
+                  autoComplete="off"
                 />
                 {val}
               </label>

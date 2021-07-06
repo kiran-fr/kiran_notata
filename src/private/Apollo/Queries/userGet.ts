@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { userFragments } from "Apollo/Fragments";
+import { userFragments } from "private/Apollo/Fragments";
 
 export interface User {
   cognitoIdentityId: string;

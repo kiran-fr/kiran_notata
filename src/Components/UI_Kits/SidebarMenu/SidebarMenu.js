@@ -1,36 +1,14 @@
 import React, { useState, useRef } from "react";
+
+// API
 import { userGet } from "private/Apollo/Queries";
-import { useQuery} from "@apollo/client";
-import { NavLink, matchPath } from "react-router-dom";
-import nav_group from "../../../assets/images/nav_group.svg";
-import nav_newsicon from "../../../assets/images/nav_newsicon.svg";
-import nav_report from "../../../assets/images/nav_report.svg";
-import nav_setting from "../../../assets/images/nav_setting.svg";
-import nav_suitcase from "../../../assets/images/nav_suitcase.svg";
-import nav_bar from "../../../assets/images/nav_bar.svg";
-import mobile_toggler from "../../../assets/images/mobile_toggler.svg";
-
-
+import { useQuery } from "@apollo/client";
 
 //links
 import {
-  dashboard,
-  // groups sub paths
-  group,
-  group_dashboard,
-  settings,
-  charts,
-  signOut,
   // startup pages
   startup_page,
-  startup_company_profile,
-  pre_profile,
-  reports,
-  settings_new,
-  news,
-  dashboard_new,
-  news1,
-  // settings paths
+  // Settings paths
   tags1,
   funnels1,
   notification,
@@ -41,68 +19,30 @@ import {
 
 // Styles
 import styles from "./Sidebar.module.css";
+
+// OTHERS
+import { menuListArr } from "./helpers";
+import { NavLink, matchPath } from "react-router-dom";
 import classnames from "classnames";
 import authLogo from "../../../assets/images/auth_logo.png";
+import nav_setting from "../../../assets/images/nav_setting.svg";
+import mobile_toggler from "../../../assets/images/mobile_toggler.svg";
 
 // * MAIN FUNCTION *
-
 export function SideBarMenu() {
-  const [listOpen, setListOpen] = useState(false);
-  const [isMobileList, setMobileList] = useState(false);
+  //Const
   const sidebarr = useRef(0);
   const floatingButonn = useRef(0);
+  let menuList = menuListArr;
 
+  // STATES
+  const [listOpen, setListOpen] = useState(false);
+  const [isMobileList, setMobileList] = useState(false);
+
+  // QUERIES
   const { data } = useQuery(userGet);
   let user = data?.userGet || {};
 
-  let menuList = [
-    {
-      label: "Dashboard",
-      iconClass: nav_bar,
-      iconStyle: {},
-      link: `${startup_page}/dashboard`,
-      subPaths: [`${startup_page}/dashboard`],
-    },
-    {
-      label: "My Startups",
-      iconClass: nav_suitcase,
-      iconStyle: { paddingTop: "2px" },
-      link: startup_page,
-      subPaths: [startup_page, startup_company_profile],
-    },
-    {
-      label: "Groups",
-      iconClass: nav_group,
-      iconStyle: {},
-      link: group,
-      subPaths: [group, `${group_dashboard}/:groupId`],
-    },
-    {
-      label: "Reports",
-      iconClass: nav_report,
-      iconStyle: {},
-      link: reports,
-      subPaths: [reports],
-    },
-    //  hide for now  (commented by siva)
-    {
-      label: "News",
-      iconClass: nav_newsicon,
-      iconStyle: { paddingTop: "2px" },
-      link: news,
-      subPaths: [news],
-    },
-  ];
-
-  const openSidebar = () => {
-    sidebarr.current.style.left = "0px";
-    floatingButonn.current.style.display = "none";
-  };
-
-  const closeSidebar = () => {
-    sidebarr.current.style.left = "-290px";
-    floatingButonn.current.style.display = "block";
-  };
   return (
     <div className={styles.main_sidebar}>
       <div
@@ -127,11 +67,9 @@ export function SideBarMenu() {
               className={styles.mobile_togglerInSidebar}
               onClick={() => setMobileList(false)}
             >
-              {" "}
               <i className={`fal fa-chevron-left`} />
             </div>
           </div>
-
           {/* Toggle open/close */}
           <div
             role="button"
@@ -158,11 +96,13 @@ export function SideBarMenu() {
                   : styles.display_floating_button
               )}
               ref={floatingButonn}
-              onClick={() => setMobileList(true)}
+              onClick={() => {
+                setMobileList(true);
+                setListOpen(false);
+              }}
             >
               {" "}
-              {/* <i className={`fa fa-bars`} /> */}
-              <img src={mobile_toggler}/>
+              <img src={mobile_toggler} />
             </div>
           </div>
           {/* Main navigation icons */}
@@ -194,12 +134,6 @@ export function SideBarMenu() {
                     )}
                   >
                     <div className={styles.icons} style={item.iconStyle}>
-                      {/* <i
-                        className={item.iconClass}
-                        style={{
-                          marginLeft: item.label === "Groups" && "-3px",
-                        }}
-                      /> */}
                       <img src={item.iconClass} className="" />
                     </div>
                     <p className={styles.list}>{item.label}</p>
@@ -247,7 +181,6 @@ export function SideBarMenu() {
               </NavLink>
             </div>
             <div
-              className={styles.menu_list}
               className={styles.profile_item}
               style={{ paddingTop: "30px", borderTop: "1px solid #BFBFBF" }}
             >
@@ -260,13 +193,9 @@ export function SideBarMenu() {
                 )}
                 style={{ display: "flex" }}
               >
-                <div className={styles.icons} >
-                  <img
-                    src="https://www.clipartmax.com/png/small/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png"
-                    alt="img"
-                  />
-                </div>
-                <p className={styles.list}>{user.given_name} {user.family_name}</p>
+                <p className={styles.list}>
+                  {user.given_name} {user.family_name}
+                </p>
               </NavLink>
             </div>
           </div>

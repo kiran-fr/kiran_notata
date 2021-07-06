@@ -12,7 +12,6 @@ export default function Floatingloginbuttons() {
   return (
     <div className={styles.floating_loginButtons}>
       <Button
-        buttonStyle="secondary"
         size="small"
         buttonStyle="white"
         onClick={() => handlePush("/login")}
@@ -20,7 +19,6 @@ export default function Floatingloginbuttons() {
         SIGN IN
       </Button>
       <Button
-        buttonStyle="secondary"
         size="small"
         buttonStyle="green"
         onClick={() => handlePush("/signup")}

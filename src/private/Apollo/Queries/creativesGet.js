@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { creativeFragments } from "Apollo/Fragments";
+import { creativeFragments } from "../Fragments";
 
 export default gql`
   query creativesGet {

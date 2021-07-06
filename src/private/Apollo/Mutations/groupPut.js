@@ -1,5 +1,5 @@
 // import gql from "graphql-tag";
-// import { groupFragments } from "Apollo/Fragments";
+// import { groupFragments } from "../Fragments";
 
 // export default gql`
 //   mutation groupPut($id: ID, $input: GroupInput) {
@@ -19,7 +19,7 @@ import {
   creativeFragments,
   connectionFragments,
   evaluationFragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   mutation groupPut($id: ID, $input: GroupInput) {

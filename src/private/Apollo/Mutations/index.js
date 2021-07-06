@@ -94,3 +94,4 @@ export { default as newsDeleteImage } from "./newsDeleteImage";
 
 export { default as groupUserInvitationResponse } from "./groupUserInvitationResponse";
 export { default as groupPublicJoin } from "./groupPublicJoin";
+export { default as pong } from "./pong";

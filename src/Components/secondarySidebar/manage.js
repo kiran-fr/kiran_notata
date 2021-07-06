@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import styles from "./sidebar.module.scss";
-
 // API STUFF
 import { useMutation } from "@apollo/client";
-
 import { userUpdate } from "private/Apollo/Mutations";
 
+// COMPONENTS
 import Sidebar from "./index";
+
+// STYLES
+import styles from "./sidebar.module.scss";
+
+// OTHERS
+import { manageColumn } from "./helpers.js";
 
 export default function ManageSidebar({
   close,
@@ -15,127 +19,7 @@ export default function ManageSidebar({
   manageColValue,
   evaluationTemplates,
 }) {
-  const [render, setRender] = useState(false);
-  const [mutate] = useMutation(userUpdate);
-
-  // update
-  useEffect(() => {
-    const input = { columnSettings: manageColValue };
-    mutate({ variables: { input } });
-  }, [manageColValue]);
-
-  const handleManageSection = (e, evaltionId) => {
-    let checkboxValue = e.target.checked
-    let checked =  e.target.checked
-    let unchecked = !e.target.checked
-    let checkboxName = e.target.name
-    let allEvaluationWithUnCheck = checkboxName === "evaluation" && unchecked
-    let allEvaluationWithCheck =  checkboxName === "evaluation" && checked
-    let showAll = checkboxName === "showAll"
-    let evaltionIDClick = evaltionId 
-
-    // show all check logic 
-    const showAllArr = (checkVal, arr) => {
-      setManageColValue({
-        ...manageColValue,
-        groups: checkVal,
-        funnels: checkVal,
-        tags: checkVal,
-        subjectiveScore: checkVal,
-        evaluationTemplates: arr,
-      })
-    }
-
-    // global evaltion checkbox clik 
-
-    if(allEvaluationWithUnCheck || allEvaluationWithCheck) {
-      switch(allEvaluationWithUnCheck || allEvaluationWithCheck) {
-        case allEvaluationWithUnCheck:
-          return (
-            setManageColValue({
-              ...manageColValue,
-              ["evaluationTemplates"]: [],
-            })
-          )
-        default:
-          const evaluationArr = []
-          evaluationTemplates.forEach(summary => {
-            evaluationArr.push(summary.id)
-          });
-          return (
-            setManageColValue(manageColValue => ({
-              ...manageColValue,
-              ["evaluationTemplates"]: [
-                ...evaluationArr,
-              ],
-            }))
-          )
-      }
-    }
-
-    // show all checkbox clik 
-
-    if(showAll) {
-      switch(showAll) {
-        case unchecked:
-          return (
-            showAllArr(checkboxValue, [])
-          )
-        default:
-          // showAll is checked
-          let newArr = [];
-          evaluationTemplates.forEach(summary => {
-            newArr.push(summary.id);
-          });
-        
-          return (
-            showAllArr(checkboxValue, newArr)
-          )
-      }
-    }
-
-    // evaltion checkbox clik 
-    if(evaltionIDClick) {
-      if(unchecked) {
-        const filteredItems = manageColValue.evaluationTemplates.filter(
-          item => item !== evaltionId
-        );
-        setManageColValue({
-          ...manageColValue,
-          ["evaluationTemplates"]: filteredItems,
-        })
-      } else {
-        var checkedEvaltion = manageColValue.evaluationTemplates
-        .length
-          ?
-            manageColValue.evaluationTemplates
-          :
-            [];
-        checkedEvaltion.push(evaltionId);
-          setManageColValue({
-            ...manageColValue,
-            ["evaluationTemplates"]: checkedEvaltion,
-          })
-      }
-    }
-    
-    // check and unchecked rest
-
-    if( checkboxName !== "evaluation" &&
-      !showAll &&
-      !evaltionIDClick &&
-      (checked || unchecked)
-    ) {
-      setManageColValue({
-        ...manageColValue,
-        [checkboxName]: checkboxValue,
-      });
-    }
-
-    setRender(!render)
-
-  };
-
+  // CONST
   const allEvaluation =
     evaluationTemplates.length === manageColValue.evaluationTemplates.length;
 
@@ -154,6 +38,30 @@ export default function ManageSidebar({
     manageColValue.tags &&
     manageColValue.subjectiveScore;
 
+  // STATES
+  const [render, setRender] = useState(false);
+  const [mutate] = useMutation(userUpdate);
+
+  // EFFECTS
+  // update
+  useEffect(() => {
+    const input = { columnSettings: manageColValue };
+    mutate({ variables: { input } });
+  }, [manageColValue]);
+
+  // FUNCTIONS
+  const handleManageSection = (e, evaltionId) => {
+    manageColumn(
+      e,
+      evaltionId,
+      setManageColValue,
+      manageColValue,
+      evaluationTemplates,
+      setRender,
+      render
+    );
+  };
+
   return (
     <Sidebar title="Manage Columns" close={close}>
       <div className={styles.manage}>
@@ -164,6 +72,7 @@ export default function ManageSidebar({
                 type="checkbox"
                 checked={showAll}
                 name="showAll"
+                autoComplete="off"
                 onChange={handleManageSection}
               />
               <span class={styles.checkmark}></span>

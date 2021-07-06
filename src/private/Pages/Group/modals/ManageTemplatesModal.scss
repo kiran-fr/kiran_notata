@@ -1,0 +1,45 @@
+.manage-template-container{
+  .selected-templates{
+    @media only screen and(max-width:768px) {
+      margin-top:100px;
+    }
+  }
+  .add-tenmplate{
+    @media only screen and(max-width:768px) {
+      position: absolute;
+      max-width:300px;
+    }
+  }
+  .heading{
+    font-family: 'Proxima Nova';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    color: #969BA3;
+    margin-top:25px;
+    margin-bottom:20px;
+  }
+  .group-template{
+    margin-top: 15px;
+    font-family: 'Proxima Nova';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    text-decoration-line: underline;
+    color: #6A6A6A;
+    .fa-times{
+      background-color: #FF937C;
+      border-radius: 50%;
+      height: 18px;
+      width: 18px;
+      text-align: center;
+      font-size: 10px;
+      padding-top: 4px;
+      margin-right:10px;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+  }
+}

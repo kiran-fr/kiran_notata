@@ -98,6 +98,7 @@ export default gql`
                   possibleScore
                   questionId
                   questionName
+                  answer
                 }
               }
               scoreTotal

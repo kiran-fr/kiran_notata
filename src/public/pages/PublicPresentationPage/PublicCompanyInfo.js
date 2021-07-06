@@ -12,7 +12,7 @@ import {
 } from "Components/elements";
 import styles from "./PublicPresentationPage.module.css";
 import AnswerSection from "./AnswerSection";
-import { getDefaultData } from "private/pages/StartupPage/StartupPageComponents/Presentation/PresentationPage";
+import { getDefaultData } from "private/oldPages/StartupPage/StartupPageComponents/Presentation/PresentationPage";
 
 export function PublicCompanyInfo({ match }) {
   let { id } = match.params;

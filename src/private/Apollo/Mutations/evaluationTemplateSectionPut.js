@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import {
   evaluationTemplateSectionFragments,
   evaluationTemplateQuestionFragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   mutation evaluationTemplateSectionPut(
@@ -30,7 +30,7 @@ export default gql`
 //   evaluationTemplateFragments,
 //   evaluationTemplateSectionFragments,
 //   evaluationTemplateQuestionFragments
-// } from "Apollo/Fragments";
+// } from "../Fragments";
 
 // export default gql`
 //   mutation evaluationTemplateSectionPut($id: ID, $templateId: ID, $input: EvaluationTemplateSectionInput) {

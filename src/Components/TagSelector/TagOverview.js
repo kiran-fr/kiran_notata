@@ -41,6 +41,7 @@ export default function TagOverview({
           <input
             type="text"
             value={filter}
+            autoComplete="off"
             onChange={e => setFilter(e.target.value)}
             placeholder="Search for tags"
           />

@@ -11,37 +11,15 @@ import { userGet } from "private/Apollo/Queries";
 import {
   signup,
   dashboard,
-  charts,
-  profile,
-  tags,
-  funnels,
-  ui_components,
-  team,
-  // evaluation_templates,
-  // evaluation_template,
-  // evaluation_template_summary,
   startup_page,
   pre_profile,
   group,
-  external_form,
-  facts_templates,
-  facts_template,
-  navigation,
-  startup_index,
   startup_company_profile,
-  startup_info,
   group_new,
-  // evaluation_template_new,
-  // add_section,
   group_dashboard,
-  // evaluation_template_new_dev,
-  // evaluation_template_profile,
-  // add_section_dev,
   reports,
   notifications_page,
   news,
-  dashboard_new,
-  news1,
   news_view_one,
   new_news,
   edit_news,
@@ -55,44 +33,23 @@ import {
   evaluation_templates_page,
   evaluation_template_page,
   archive_page,
-  evaluate_page,
-  evaluation_summary_page,
+  reminders,
 } from "../definitions";
 
 // Landing page / list
-import StartupSection from "./NewDesign/Startup/StartupPage";
+import StartupSection from "./Pages/MyStartups/StartupPage";
+import Navigation from "../Components/Navigation/Navigation";
 
-// import Dashboard from "./pages/Dashboard/DashboardPage";
-import Charts from "./pages/Dashboard/Charts/ChartsPage";
-import Profile from "./pages/Profile/Profile";
-import Tags from "./pages/Tags";
-import Funnels from "./pages/Funnels";
-// import Settings from "./pages/Settings/Settings";
-import Team from "./pages/Team/Team";
-import StartupPage from "./pages/StartupPage/StartupPage";
-import FactsPage from "./pages/StartupPage/Facts/Facts";
-import UI_Components from "./pages/UI_Components";
-
-// Evaluation templates
-
-import FactsTemplates from "./pages/FactsTemplates/FactsTemplates/FactsTemplates";
-import FactsTemplate from "./pages/FactsTemplates/FactsTemplate/FactsTemplate";
-import EvaluationV2Page from "./pages/EvaluationV2/";
-import EvaluationSummary from "./pages/EvaluationV2/Summary";
+import EvaluationV2Page from "./Pages/Evaluation/";
+import EvaluationSummary from "./Pages/Evaluation/Summary";
 
 // Groups
-// import Groups from "./pages/Groups/Groups";
-import Group from "./pages/Groups/Group/Group";
-import GroupConnection from "./pages/Groups/GroupConnection";
-import GroupSettings from "./pages/Groups/GroupSettings";
-// import Groups from "./shubham-new-designs/pages/groups/index";
-import Groups from "./NewDesign/srv_startup/pages/GroupV2/index";
-import GroupDashboard from "./NewDesign/srv_startup/pages/GroupV2/group-dashboard";
-// import GroupDashboard from "./shubham-new-designs/pages/groups/group-dashboard";
-import News from "./NewDesign/news/news";
-import NewsViewOne from "./NewDesign/news/NewsViewOne";
-import NewsEdit from "./NewDesign/news/news-edit";
-// import NewsEdit from "./NewDesign/news/news-edit";
+import Groups from "./Pages/Group/GroupsPage/GroupsPage";
+import GroupPage from "./Pages/Group/GroupPage/GroupPage";
+
+import News from "./Pages/News/News";
+import NewsViewOne from "./Pages/News/NewsViewOne";
+import NewsEdit from "./Pages/News/NewsEdit";
 
 // Loader
 import { GhostLoader } from "Components/elements";
@@ -100,49 +57,31 @@ import { ErrorBoundary } from "Components/ErrorBoundary";
 
 // Styles
 import { Header } from "Components/Header/Header";
-import ExternalForm from "./pages/ExternalForm/ExternalForm";
-import Navigation from "./pages/UI_Components/Navigation/Navigation";
 
 // Shubham Imports
-import { Startup } from "./shubham-new-designs/pages/startup/index";
-// import Reports from "./shubham-new-designs/pages/reports/reports";
-import Settings_Home from "./shubham-new-designs/pages/settings/settings";
-// import News from "./shubham-new-designs/pages/news/news";
-import DashboardNew from "./shubham-new-designs/pages/dashboard/dashboard";
+import Reminders from "./Pages/Reminders/Reminders";
 
-// New Startup Info
-import Reports from "./NewDesign/srv_startup/pages/reports/reports";
-import { StartupPage as StartupInfo } from "./NewDesign/StartupPage/index";
-import Dashboard from "./NewDesign/srv_startup/pages/dashboard/dashboard";
+// New MyStartups Info
+import Reports from "./Pages/Reports/reports";
+import { StartupPage as StartupInfo } from "./Pages/StartupPage/index";
+import Dashboard from "./Pages/Dashboard/dashboard";
 
-// import EvaluationTemplates from "./pages/Templates/EvaluationTemplates/EvaluationTemplates";
-// import EvaluationTemplate from "./pages/Templates/EvaluationTemplate/EvaluationTemplate";
-// import EvaluationTemplateSection from "./pages/Templates/EvaluationTemplateSection";
-// import EvaluationTemplateSummary from "./pages/Templates/EvaluationTemplateSummary/EvaluationTemplateSummary";
-
-import { EvaluationTemplatesPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
-import { EvaluationTemplatePage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplatePage/EvaluationTemplatePage";
-import { EvaluationTemplateSectionPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluationTemplateSectionPage";
+import { EvaluationTemplatesPage } from "./Pages/EvaluationTemplates/EvaluationTemplatesPage/EvaluationTemplatesPage";
+import { EvaluationTemplatePage } from "./Pages/EvaluationTemplates/EvaluationTemplatePage/EvaluationTemplatePage";
+import { EvaluationTemplateSectionPage } from "./Pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluationTemplateSectionPage";
 
 // New Jørgen import
-import NotificationsPage from "./NewDesign/Notifications/notifications";
-// import { SectionPage } from "./NewDesign/srv_startup/pages/EvaluationTemplates/EvaluationTemplateSectionPage/EvaluatimplateSectionPage";
+import NotificationsPage from "./Pages/Notifications/Notifications";
 
-//settings
-import Settings from "./NewDesign/settings/settings";
-import yourTeam from "./NewDesign/settings/your-team";
-import webForm from "./NewDesign/settings/web-form";
-import TagGroup from "./NewDesign/settings/tags";
-import Funnels1 from "./NewDesign/settings/funnels";
-import Notifications from "./NewDesign/settings/notifications";
-import ProfileSettings from "./NewDesign/settings/profile";
-
-import ArchivePage from "./NewDesign/ArchivePage/ArchivePage";
-
-import EvaluatePage from "./NewDesign/Evaluate/EvaluatePage";
-import EvaluationSummaryPage from "./NewDesign/Evaluate/EvaluationSummaryPage";
-
-/* import SideBarTreeMenu from "../Components/SideBarMenu/SideBarTreeMenu"; */
+//Settings
+import Settings from "./Pages/Settings/Settings";
+import yourTeam from "./Pages/Settings/YourTeam/YourTeam";
+import webForm from "./Pages/Settings/WebForm/WebForm";
+import TagGroup from "./Pages/Settings/Tags/Tags";
+import Funnels1 from "./Pages/Settings/Funnels/Funnels";
+import Notifications from "./Pages/Settings/Notifications/Notifications";
+import ProfileSettings from "./Pages/Settings/Profile/Profile";
+import ArchivePage from "./Pages/ArchivePage/ArchivePage.js";
 
 export const RouterComponent = ({ history }) => {
   return (
@@ -151,21 +90,9 @@ export const RouterComponent = ({ history }) => {
 
       <Route exact path={startup_page} component={StartupSection} />
 
-      <Route exact path={profile} component={Profile} />
-
-      <Route exact path={tags} component={Tags} />
-
-      <Route exact path={team} component={Team} />
-
-      <Route exact path={external_form} component={ExternalForm} />
-
-      <Route exact path={charts} component={Charts} />
-
       <Route eaxct path={notifications_page} component={NotificationsPage} />
 
-      <Route exact path={funnels} component={Funnels} />
-
-      {/* dashboard */}
+      {/* Dashboard */}
       <Route exact path={dashboard} component={Dashboard} />
 
       <Route exact path={settings} component={Settings} />
@@ -175,32 +102,12 @@ export const RouterComponent = ({ history }) => {
       <Route exact path={funnels1} component={Funnels1} />
       <Route exact path={notification} component={Notifications} />
       <Route exact path={setting_profile} component={ProfileSettings} />
-
-      <Route exact path={facts_templates} component={FactsTemplates} />
-
-      <Route exact path={`${facts_template}/:id`} component={FactsTemplate} />
-
       <Route eaxct path={news} component={News} />
       <Route eaxct path={`${news_view_one}/:id`} component={NewsViewOne} />
       <Route eaxct path={new_news} component={NewsEdit} />
 
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
       <Route exact path={archive_page} component={ArchivePage} />
-
-      <Route
-        exact
-        path={[
-          `${evaluate_page}/:connectionId/:templateId/:evaluationId`,
-          `${evaluate_page}/:connectionId/:templateId`,
-        ]}
-        component={EvaluatePage}
-      />
-
-      <Route
-        exact
-        path={`${evaluation_summary_page}/:connectionId/:templateId/:evaluationId`}
-        component={EvaluationSummaryPage}
-      />
 
       <Route
         exact
@@ -220,52 +127,8 @@ export const RouterComponent = ({ history }) => {
         component={EvaluationTemplateSectionPage}
       />
 
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={`${evaluation_template_profile}/:id/:sectionId`}*/}
-      {/*  component={EvaluationTemplatesPage}*/}
-      {/*/>*/}
-      {/*<Route exact path={add_section_dev} component={EvaluationTemplatesPage} />*/}
-      {/*<Route exact path={add_section} component={AddSection} />*/}
-
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={evaluation_template_new}*/}
-      {/*  component={ElevationTemplates}*/}
-      {/*/>*/}
-
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={evaluation_template_new_dev}*/}
-      {/*  component={ElevationTemplatesPage}*/}
-      {/*/>      */}
-
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={`${evaluation_template_summary}/:templateId`}*/}
-      {/*  component={EvaluationTemplateSummary}*/}
-      {/*/>*/}
-
       <Route exact path={`${group}`} component={Groups} />
       <Route exact path={`${group_new}`} component={Groups} />
-
-      <Route exact path={`${group}/:id`} component={Group} />
-
-      <Route exact path={`${group}/:id/settings`} component={GroupSettings} />
-
-      <Route
-        exact
-        path={`${group}/:id/:connectionId`}
-        component={GroupConnection}
-      />
-
-      <Route exact path={`${startup_page}/:id`} component={StartupPage} />
-
-      <Route
-        exact
-        path={`${startup_page}/:id/creative/:creativeId`}
-        component={FactsPage}
-      />
 
       <Route
         exact
@@ -285,46 +148,12 @@ export const RouterComponent = ({ history }) => {
         component={EvaluationSummary}
       />
 
-      <Route exact path={ui_components} component={UI_Components} />
-
-      <Route exact path={navigation} component={Navigation} />
-
       <Route exact path={startup_company_profile} component={StartupInfo} />
 
-      <Route exact path={startup_index} component={Startup} />
-      <Route
-        exact
-        path={`${group_dashboard}/:groupId`}
-        component={GroupDashboard}
-      />
+      <Route exact path={`${group_dashboard}/:groupId`} component={GroupPage} />
 
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path={`${evaluation_template_profile}/:id`}*/}
-      {/*  component={EvaluationTemplatesPage}*/}
-      {/*/>*/}
-
-      {/* <Route eaxct path={settings_new} component={Settings_Home} /> */}
       <Route eaxct path={news} component={News} />
-
-      {/* <Route
-        eaxct
-        path={`${startup_page}/settings`}
-        component={Settings}
-      /> */}
-      {/* <Route eaxct path={dashboard_new} component={DashboardNew} />
-      <Route
-        eaxct
-        path={`${startup_page}/components/company/dashboard`}
-        component={Dashboard}
-      />
- */}
-      {/* <Route
-        eaxct
-        path={`${startup_page}/report/reports`}
-        component={ReportsAdd}
-      /> */}
-
+      <Route eaxct path={reminders} component={Reminders} />
       <Route render={() => <div>404</div>} />
     </Switch>
   );
@@ -358,7 +187,6 @@ const WrapperComponent = ({ ...props }) => {
     <div className="page_container" style={{ display: "flex" }}>
       <Header history={props.history} />
       <Navigation history={props.history} />
-      {/* <SideBarTreeMenu {...props} /> */}
       <div
         className={`logged_in_page_content ${
           matchPath(props.location.pathname, {

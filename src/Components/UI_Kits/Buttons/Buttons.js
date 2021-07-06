@@ -117,7 +117,7 @@ export function Button({
       )}
       style={style || {}}
       onClick={onClick}
-      type = {type1 ? type1 : "sumbit"}
+      type={type1 ? type1 : "sumbit"}
       disabled={disabled}
     >
       {/* check-icon */}

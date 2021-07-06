@@ -5,7 +5,7 @@ import {
   evaluationTemplateQuestionFragments,
   creativeFragments,
   evaluationV2Fragments,
-} from "Apollo/Fragments";
+} from "../Fragments";
 
 export default gql`
   mutation groupUserInvitationRemove($groupId: ID!, $email: String!) {
