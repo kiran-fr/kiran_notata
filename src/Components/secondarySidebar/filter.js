@@ -107,6 +107,7 @@ export default function FilterBar({
   filterValue,
   handleSearch,
   defaultFilters,
+  clearFilterTxt
 }) {
   // Query: getfunnelGroup
   const { data, called, loading, error, fetchMore } = useQuery(funnelGroupGet);
@@ -201,16 +202,21 @@ export default function FilterBar({
 
   return (
     <Sidebar
-      title={
-        <button
-          className={styles.clearAllButton}
-          type="button"
-          onClick={() => {
-            setFilters(defaultFilters);
-          }}
-        >
-          Clear All Filters
-        </button>
+      title={clearFilterTxt
+        ?
+          <button
+            className={styles.clearAllButton}
+            type="button"
+            onClick={() => {
+              setFilters(defaultFilters);
+            }}
+          >
+            Clear All Filters
+          </button>
+        : 
+          <span className={styles.filtersHeading}>
+            Filters
+          </span>
       }
       close={close}
     >
