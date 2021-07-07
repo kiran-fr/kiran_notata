@@ -34,6 +34,8 @@ import {
   evaluation_template_page,
   archive_page,
   reminders,
+  fake_page,
+  documentation,
 } from "../definitions";
 
 // Landing page / list
@@ -83,10 +85,18 @@ import Notifications from "./Pages/Settings/Notifications/Notifications";
 import ProfileSettings from "./Pages/Settings/Profile/Profile";
 import ArchivePage from "./Pages/ArchivePage/ArchivePage.js";
 
+import FakePage from "./Pages/Fake/fake";
+import FakePage2 from "./Pages/Fake/fake2";
+import Documentation from "./Pages/Documentation/Documentation";
+
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
-      <Route eaxct path={reports} component={Reports} />
+      <Route exact path={documentation} component={Documentation} />
+      <Route exact path={fake_page} component={FakePage} />
+      <Route exact path={`${fake_page}/:id`} component={FakePage2} />
+
+      <Route exact path={reports} component={Reports} />
 
       <Route exact path={startup_page} component={StartupSection} />
 

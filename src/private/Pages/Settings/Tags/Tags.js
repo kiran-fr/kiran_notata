@@ -44,7 +44,6 @@ function DeleteTagGroupModal({ tagGroup, setDeleteTagGroupModal }) {
       close={() => {
         setDeleteTagGroupModal(undefined);
       }}
-      loading={deleteTagGroupRes.loading}
       submitTxt="Delete"
       closeTxt="Cancel"
       submitButtonStyle="secondary"
@@ -386,7 +385,7 @@ export default function Tags({ history }) {
 
   const [newTagGroup, setNewTagGroup] = useState("");
   const [createModal, setCreateModal] = useState(false);
-  console.log("sir");
+
   return (
     <div className="tags-container1">
       <div className="card tags-container1__card">

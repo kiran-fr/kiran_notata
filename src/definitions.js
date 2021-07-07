@@ -69,3 +69,7 @@ export const reminders = `${startup_page}/components/ui/navigation1/reminders`;
 
 export const evaluation_templates_page = `${startup_page}/settings/templates`;
 export const evaluation_template_page = `${startup_page}/settings/template`;
+
+export const fake_page = `${startup_page}/fake`;
+
+export const documentation = `${startup_page}/docs`;
