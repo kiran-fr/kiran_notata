@@ -44,7 +44,7 @@ export default function DashboardMyStartups({ history }) {
           <div className="dashboard-container__my-startups__data-container__data-entry__heading">
             Stage
           </div>
-          <div className="dashboard-container__my-startups__data-container__data-entry__heading">
+          <div className="dashboard-container__my-startups__data-container__data-entry__heading hide-tab-design">
             Subjective Score
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function DashboardMyStartups({ history }) {
                   </div>
                 </div>
               </div>
-              <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container">
+              <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container hide-tab-design">
                 <div className="dashboard-container__my-startups__data-container__data-entry__mobile-heading">
                   subjective score
                 </div>
