@@ -25,3 +25,6 @@ export { default as presentationFragments } from "./presentationFragments";
 export { default as pageMetaFragments } from "./pageMetaFragments";
 
 export { default as newsFragments } from "./newsFragments";
+export { default as reportFragments } from "./reportsFragments";
+
+export { default as fakeFragments } from "./fakeFragments";

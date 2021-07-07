@@ -34,6 +34,10 @@ import {
   evaluation_template_page,
   archive_page,
   reminders,
+  fake_page,
+  documentation,
+  evaluate_page,
+  evaluation_summary_page,
 } from "../definitions";
 
 // Landing page / list
@@ -82,11 +86,21 @@ import Funnels1 from "./Pages/Settings/Funnels/Funnels";
 import Notifications from "./Pages/Settings/Notifications/Notifications";
 import ProfileSettings from "./Pages/Settings/Profile/Profile";
 import ArchivePage from "./Pages/ArchivePage/ArchivePage.js";
+import EvaluatePage from "./Pages/EvaluatePage/EvaluatePage";
+import EvaluationSummaryPage from "./Pages/EvaluatePage/EvaluationSummaryPage";
+
+import FakePage from "./Pages/Fake/fake";
+import FakePage2 from "./Pages/Fake/fake2";
+import Documentation from "./Pages/Documentation/Documentation";
 
 export const RouterComponent = ({ history }) => {
   return (
     <Switch>
-      <Route eaxct path={reports} component={Reports} />
+      <Route exact path={documentation} component={Documentation} />
+      <Route exact path={fake_page} component={FakePage} />
+      <Route exact path={`${fake_page}/:id`} component={FakePage2} />
+
+      <Route exact path={reports} component={Reports} />
 
       <Route exact path={startup_page} component={StartupSection} />
 
@@ -108,6 +122,21 @@ export const RouterComponent = ({ history }) => {
 
       <Route eaxct path={`${edit_news}/:id`} component={NewsEdit} />
       <Route exact path={archive_page} component={ArchivePage} />
+
+      <Route
+        exact
+        path={[
+          `${evaluate_page}/:connectionId/:templateId/:evaluationId`,
+          `${evaluate_page}/:connectionId/:templateId`,
+        ]}
+        component={EvaluatePage}
+      />
+
+      <Route
+        exact
+        path={`${evaluation_summary_page}/:connectionId/:templateId/:evaluationId`}
+        component={EvaluationSummaryPage}
+      />
 
       <Route
         exact

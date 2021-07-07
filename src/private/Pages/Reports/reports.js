@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // COMPONENTS
 import SubjectiveScoreEvaluations from "./subjective-scores-evaluation";
@@ -13,8 +13,12 @@ import business from "../../../assets/images/business.png";
 import ChartTile from "./chart-tile";
 import { REPORTCHARTS, ICONPOSITION } from "../constants";
 import ButtonWithIcon from "../../../Components/UI_Kits/from_srv/button-with-icon";
+import { useQuery } from "@apollo/client";
+import { reportsGet } from "../../Apollo/Queries";
 
 export default function Reports() {
+  let reportsQuery = useQuery(reportsGet);
+
   // CONST
   let data = [
     { name: "Business", type: REPORTCHARTS.COLUMN, isDropDown: false },
@@ -29,11 +33,13 @@ export default function Reports() {
   const [chartData, setChartData] = useState(data);
   return (
     <div className="report-container">
-      <div className="coming-soon">
-        <div>Coming soon 🚀</div>
-      </div>
+      {/*<div className="coming-soon">*/}
+      {/*  <div>Coming soon 🚀</div>*/}
+      {/*</div>*/}
 
-      <div className="row hide-and-blur">
+      <div
+      // className="row hide-and-blur"
+      >
         <div className="col-sm-12 text-right">
           <ButtonWithIcon
             iconName="filter_alt"
@@ -53,8 +59,8 @@ export default function Reports() {
                     STAGES
                   </div>
                   <div className="reports-funnels-container__filter__icons">
-                    <i class="fa fa-filter" aria-hidden="true" />
-                    <i class="fa fa-signal" aria-hidden="true" />
+                    <i className="fa fa-filter" aria-hidden="true" />
+                    <i className="fa fa-signal" aria-hidden="true" />
                   </div>
                 </div>
                 <div className="reports-funnels-container__funnels">
@@ -224,6 +230,18 @@ export default function Reports() {
           </div>
         </div>
       </div>
+
+      {reportsQuery?.loading && <div>...loading query</div>}
+
+      {reportsQuery?.error && (
+        <div>
+          ...ERROR
+          <br />
+          {JSON.stringify(reportsQuery.error, null, 2)}
+        </div>
+      )}
+
+      <pre>{JSON.stringify(reportsQuery?.data, null, 2)}</pre>
     </div>
   );
 }

@@ -106,6 +106,7 @@ export default function DashboardMyStartups({ history }) {
                 </div>
               </div>
               <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container hide-tab-design">
+
                 <div className="dashboard-container__my-startups__data-container__data-entry__mobile-heading">
                   subjective score
                 </div>

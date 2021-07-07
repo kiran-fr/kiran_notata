@@ -49,3 +49,9 @@ export { default as newsGetOne } from "./newsGetOne";
 export { default as groupsPublicGet } from "./groupsPublicGet";
 export { default as groupInvitationsGet } from './groupInvitationsGet';
 export { default as groupGetRecentlyAddedStartups } from "./groupGetRecentlyAddedStartups";
+
+export { default as reportsGet } from "./reportsGet";
+
+
+export { default as fakeGet } from './fakeGet';
+export { default as fakesGet } from './fakesGet';

@@ -113,7 +113,7 @@ export const tabArrValue = (
             src={Column}
             alt=""
           />
-          <span>SPREADSHEET</span>
+          <span>LIST</span>
         </div>
       ),
     },

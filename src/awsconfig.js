@@ -103,7 +103,7 @@ Amplify.configure({
 });
 
 const STAGE = "dev2";
-const isLocal = false;
+const isLocal = true;
 
 const GQL = {
   private: {

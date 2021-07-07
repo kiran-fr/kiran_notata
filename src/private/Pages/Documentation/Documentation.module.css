@@ -1,0 +1,49 @@
+.container {
+  padding: 20px;
+  background: white;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 0px;
+}
+
+.header {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.label,
+.table_name_title {
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+.table_name {
+}
+
+.description {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  margin-top: 10px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.sub_header {
+  margin: 20px 0px;
+}
+
+.sub_name {
+}
+
+.sub_title {
+  background: #929292;
+  color: white;
+  display: table;
+  margin: 5px 5px 10px 0px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
