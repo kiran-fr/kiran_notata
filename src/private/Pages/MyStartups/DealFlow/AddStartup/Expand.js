@@ -222,22 +222,22 @@ export default function Expand({ closeModal, styles, connections, history }) {
             <div className={styles.tagsPlaceholder}>
               {tagSelected.length > 0
                 ? tagSelected.slice(0, 2).map(el => (
-                    <span
-                      style={{
-                        height: "100%",
-                        color: "white",
-                        padding: "2px 10px",
-                        backgroundColor: "#555",
-                        borderRadius: 15,
-                        fontSize: 10,
-                        marginTop: 1,
-                        marginRight: 7,
-                      }}
-                      key={el.id}
-                    >
-                      {el.group.name} : {el.name}
-                    </span>
-                  ))
+                  <span
+                    style={{
+                      height: "100%",
+                      color: "white",
+                      padding: "2px 10px",
+                      backgroundColor: "#555",
+                      borderRadius: 15,
+                      fontSize: 10,
+                      marginTop: 1,
+                      marginRight: 7,
+                    }}
+                    key={el.id}
+                  >
+                    {el.group.name} : {el.name}
+                  </span>
+                ))
                 : ""}
               {tagSelected.length > 2 ? <img src={More} alt="" /> : null}
               <i
@@ -276,7 +276,7 @@ export default function Expand({ closeModal, styles, connections, history }) {
             </div>
           </div>
           <div className={styles.inputContainer} style={{ marginTop: "20px" }}>
-            <p style={{ color: "#6A6A6A", letterSpacing: "normal" }}>
+            <p style={{ color: "#6a6a6a", letterSpacing: "normal" }}>
               Invite startup to fill out the info form
             </p>
           </div>

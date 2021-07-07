@@ -18,18 +18,15 @@
 }
 
 .report-container {
-
-
-
   .fillter-btn {
     margin-top: 20px;
-    border: 1px solid #6a6a6a;
+    border: 1px solid var(--ui-color-gray-dark1);
     height: 30px;
-    color: #6a6a6a;
+    color: var(--ui-color-gray-dark1);
     padding: 5px 15px !important;
     margin-left: 15px;
     .MuiButton-label {
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
     }
   }
   &__add-icon-container {
@@ -64,7 +61,7 @@
         line-height: 12px;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #53cab2;
+        color: var(--ui-color-primary-green-dark2);
         padding-top: 7px;
       }
       &__icons {
@@ -96,7 +93,7 @@
           font-size: 14px;
           line-height: 17px;
           letter-spacing: 0.03em;
-          color: #6a6a6a;
+          color: var(--ui-color-gray-dark1);
           text-align: center;
         }
         .funnel-chart {
@@ -125,10 +122,10 @@
           }
           .orange {
             background: linear-gradient(
-                            180deg,
-                            #f5c269 0%,
-                            #ffd898 102.82%,
-                            rgba(229, 232, 255, 0) 110.91%
+              180deg,
+              #f5c269 0%,
+              #ffd898 102.82%,
+              rgba(229, 232, 255, 0) 110.91%
             );
             height: 40%;
             border-radius: 20px;
@@ -148,7 +145,7 @@
           letter-spacing: 0.03em;
           margin-top: 10px;
           text-align: center;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
         }
       }
     }
@@ -167,7 +164,7 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
         margin-right: 20px;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         .no-of-records {
           margin-left: auto;
         }
@@ -192,7 +189,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: 0.03em;
-          color: #6a6a6a;
+          color: var(--ui-color-gray-dark1);
         }
         .funnel-date {
           font-family: "Roboto";
@@ -216,7 +213,7 @@
       font-size: 68px;
       line-height: 83px;
       letter-spacing: -0.04em;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       margin-left: 25px;
       margin-top: 10px;
       width: calc(100% - 135px);
@@ -236,7 +233,7 @@
         line-height: 22px;
       }
       .green {
-        color: #60ceb8;
+        color: var(--ui-color-primary-green-dark4);
       }
       .red {
         color: #ff4853;
@@ -270,12 +267,12 @@
         line-height: 13px;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #60ceb8;
+        color: var(--ui-color-primary-green-dark4);
         display: inline-block;
         cursor: pointer;
       }
       .green {
-        color: #60ceb8;
+        color: var(--ui-color-primary-green-dark4);
         cursor: pointer;
       }
     }
@@ -293,7 +290,7 @@
     line-height: 17px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #6a6a6a;
+    color: var(--ui-color-gray-dark1);
     margin-top: 30px;
     margin-left: 25px;
   }

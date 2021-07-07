@@ -17,7 +17,7 @@
 }
 
 .input_label input {
-  color: #6a6a6a !important;
+  color: var(--ui-color-gray-dark1) !important;
   max-width: 100%;
 }
 
@@ -42,7 +42,7 @@ input::placeholder {
   color: inherit;
   width: 100%;
   background: #ffffff;
-  border: 1px solid #cecece;
+  border: 1px solid var(--ui-color-gray-pale2);
   box-sizing: border-box;
   border-radius: 20px;
   /*font-family: "proxima nova";*/

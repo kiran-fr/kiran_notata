@@ -33,7 +33,7 @@
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   border-bottom: 1px solid #f0f0f0;
   padding-bottom: 17px;
   margin-bottom: 23px;
@@ -54,17 +54,17 @@
 .tableModalInner .footer button:first-child {
   width: 102px;
   height: 40px;
-  border: 1px solid #969ba3;
+  border: 1px solid var(--ui-color-gray-medium);
   box-sizing: border-box;
   border-radius: 20px;
   background-color: transparent;
   margin-right: 10px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 .tableModalInner .footer button:last-child {
   width: 102px;
   height: 40px;
-  background: #53cab2;
+  background: var(--ui-color-primary-green-dark2);
   border-radius: 20px;
   color: #fff;
   border: none;
@@ -100,7 +100,7 @@
   font-size: 16px;
   line-height: 17px;
   letter-spacing: 0.03em;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   margin-bottom: 15px;
 }
 .groupChild ul li {
@@ -109,7 +109,7 @@
   font-weight: normal;
   font-size: 13.5px;
   line-height: 17px;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   margin-top: 16px;
 }
 .groupChild i {
@@ -125,7 +125,7 @@
   appearance: none;
   outline: none;
   width: 100%;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   cursor: pointer;
   position: relative;
   display: grid;
@@ -146,7 +146,7 @@
   flex-wrap: nowrap;
 }
 .groupDropContainer .fa-plus-circle {
-  color: #53cab2;
+  color: var(--ui-color-primary-green-dark2);
   opacity: 0.3;
 }
 .groupDropContainer i {
@@ -175,11 +175,11 @@
 .score .child p {
   width: 40px;
   height: 40px;
-  border: 1px solid #969ba3;
+  border: 1px solid var(--ui-color-gray-medium);
   box-sizing: border-box;
   text-align: center;
   border-radius: 20px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -336,7 +336,7 @@
 
   letter-spacing: 0.03em;
 
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 .startup .doyoumean span {
   font-weight: 500;
@@ -367,7 +367,7 @@
 } */
 
 .tagsPlaceholder i {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border-radius: 50%;
   height: 18px;
   width: 18px;

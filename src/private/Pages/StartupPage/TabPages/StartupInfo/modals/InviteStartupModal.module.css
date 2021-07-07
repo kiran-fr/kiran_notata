@@ -33,7 +33,7 @@
 }
 
 .revokeURL {
-  background-color: #f4f4f4;
+  background-color: var(--ui-color-gray-pale1);
   padding: 20px;
   font-family: Proxima Nova;
   font-size: 13px;

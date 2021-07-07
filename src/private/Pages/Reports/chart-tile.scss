@@ -26,7 +26,7 @@
         line-height: 12px;
         padding-top: 8px;
         padding-bottom: 8px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         cursor: pointer;
       }
     }
@@ -99,7 +99,7 @@
         font-weight: normal;
         font-size: 14px;
         letter-spacing: 0.03em;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
       }
       .legend-count {
         font-family: "Proxima Nova";
@@ -108,7 +108,7 @@
         font-size: 22px;
         line-height: 36px;
         letter-spacing: 0.03em;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
       }
       .max {
         font-size: 47px;
@@ -152,7 +152,7 @@
       font-weight: normal;
       font-size: 10px;
       line-height: 12px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
     .th-country {
       width: 25%;
@@ -174,13 +174,13 @@
         }
         .td-country {
           font-weight: 500;
-          color: #6a6a6a;
+          color: var(--ui-color-gray-dark1);
         }
         .td-startups {
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
         }
         .td-noof-startups {
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           display: flex;
           .bar-container {
             width: 60%;
@@ -190,31 +190,31 @@
             border-radius: 5px;
             .bar-45 {
               width: 45%;
-              background: #53cab2;
+              background: var(--ui-color-primary-green-dark2);
               height: 10px;
               border-radius: 5px;
             }
             .bar-25 {
               width: 25%;
-              background: #53cab2;
+              background: var(--ui-color-primary-green-dark2);
               height: 10px;
               border-radius: 5px;
             }
             .bar-10 {
               width: 10%;
-              background: #53cab2;
+              background: var(--ui-color-primary-green-dark2);
               height: 10px;
               border-radius: 5px;
             }
             .bar-80 {
               width: 80%;
-              background: #53cab2;
+              background: var(--ui-color-primary-green-dark2);
               height: 10px;
               border-radius: 5px;
             }
             .bar-30 {
               width: 30%;
-              background: #53cab2;
+              background: var(--ui-color-primary-green-dark2);
               height: 10px;
               border-radius: 5px;
             }

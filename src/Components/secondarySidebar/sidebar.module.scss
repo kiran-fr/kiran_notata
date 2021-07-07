@@ -32,7 +32,7 @@
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.03);
   border-radius: 4px;
 }
@@ -49,13 +49,13 @@
   line-height: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   margin-top: 15px;
 }
 
 .sidebar .title i {
   margin-right: 5px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 
 /* MANAGE CSS STARTS HERE */
@@ -71,7 +71,7 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 19px;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   margin-bottom: 18px;
 }
 .manage input {
@@ -114,7 +114,7 @@
   width: 15px;
   transform: translateY(-0%);
   border-radius: 3px;
-  border: 1px solid #dadada;
+  border: 1px solid var(--ui-color-gray-dark6);
   margin-top: 2px;
 }
 /* On mouse-over, add a grey background color */
@@ -124,7 +124,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .customCheck input:checked ~ .checkmark {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border: none;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -168,9 +168,9 @@
   width: 100%;
   height: 30px;
   border-radius: 20px;
-  border: 1px solid #cecece;
+  border: 1px solid var(--ui-color-gray-pale2);
   padding: 0 20px;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
 }
 .filter input {
   outline: none;
@@ -184,7 +184,7 @@
 .filter .search button {
   border: none;
   height: 30px;
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   color: #fff;
   border-radius: 20px;
   width: 90px;
@@ -196,7 +196,7 @@
 .clearAllButton {
   border: none;
   height: 28px;
-  background-color: #53cab2 !important;
+  background-color: var(--ui-color-primary-green-dark2) !important;
   color: #fff;
   border-radius: 20px;
   margin-top: -3px;
@@ -258,7 +258,7 @@
 }
 .dateStage div input {
   width: 100%;
-  border: 1px solid #cecece;
+  border: 1px solid var(--ui-color-gray-pale2);
   height: 30px;
   border-radius: 20px;
   color: #c0c0c0;
@@ -296,9 +296,9 @@
   width: 33%;
 }
 .shortDates p {
-  color: #53cab2;
+  color: var(--ui-color-primary-green-dark2);
   font-size: 13px;
-  border-bottom: 1px solid #53cab2;
+  border-bottom: 1px solid var(--ui-color-primary-green-dark2);
   display: inline;
   cursor: pointer;
 }
@@ -308,7 +308,7 @@
 }
 
 .padLeft:hover {
-  color: #53cab2;
+  color: var(--ui-color-primary-green-dark2);
   cursor: pointer;
 }
 
@@ -350,7 +350,7 @@
 }
 
 .funnelUl input[type="radio"]:checked:after {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   content: "";
   display: inline-block;
   position: absolute;
@@ -380,7 +380,7 @@
 }
 
 .tags__placeholder i {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border-radius: 50%;
   height: 18px;
   width: 18px;
@@ -395,9 +395,9 @@
 }
 
 .activePopup:before {
-  color: #53cab2 !important;
+  color: var(--ui-color-primary-green-dark2) !important;
 }
 
 .filtersHeading {
-  color: #53cab2;
+  color: var(--ui-color-primary-green-dark2);
 }

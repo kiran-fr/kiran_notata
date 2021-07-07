@@ -70,7 +70,7 @@ function EditFunnel({ funnelGroup, save }) {
               fontSize: "16px",
               position: "relative",
               paddingLeft: "4px",
-              color: "#53cab2",
+              color: "var(--ui-color-primary-green-dark2)",
               cursor: "pointer",
             }}
             onClick={() => setUpdateModal(true)}

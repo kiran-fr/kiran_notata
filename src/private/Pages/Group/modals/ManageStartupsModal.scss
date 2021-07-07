@@ -1,18 +1,14 @@
 .add-startup-modal {
-  max-width:800px;
-
-
-
-
-
+  max-width: 800px;
 
   .startup-container {
-    padding:20px 25px 35px 25px;
+    padding: 20px 25px 35px 25px;
 
-    .startup-record{
-      margin-top:15px;
-      .icon{
-        color: #FF937C;
+    .startup-record {
+      margin-top: 15px;
+      .icon {
+        color: #ff937c;
+
         margin-top: 2px;
         position: relative;
         left: -4px;
@@ -20,17 +16,17 @@
         cursor: pointer;
       }
     }
-    &__name-container{
+    &__name-container {
       display: flex;
-      .name{
+      .name {
         font-family: "Proxima Nova";
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
         line-height: 17px;
         text-decoration-line: underline;
-        color: #6A6A6A;
-        margin-left:5px;
+        color: var(--ui-color-gray-dark1);
+        margin-left: 5px;
         //text-align: center;
       }
       .name-shared-by {
@@ -40,110 +36,109 @@
         font-size: 11px;
         line-height: 17px;
         //text-decoration-line: underline;
-        color: #6A6A6A;
-        margin-left:5px;
+        color: var(--ui-color-gray-dark1);
+        margin-left: 5px;
       }
 
-      .icon{
-        color:#FF937C;
+      .icon {
+        color: #ff937c;
         margin-top: 2px;
       }
     }
 
-
-    .add-startups{
+    .add-startups {
       @media only screen and(max-width:768px) {
-        height:90px;
+        height: 90px;
       }
       background-color: #c1c1c130;
       margin-left: -30px;
       margin-right: -30px;
       margin-top: 10px;
       padding: 10px;
-      .add-text{
-        font-family: 'Proxima Nova';
+      .add-text {
+        font-family: "Proxima Nova";
         font-style: normal;
         font-weight: 600;
         font-size: 14px;
         line-height: 17px;
         letter-spacing: 0.03em;
-        color: #6A6A6A;
+        color: var(--ui-color-gray-dark1);
         padding-top: 10px;
         padding-left: 25px;
       }
-      .drop-down{
-        width:161px!important;
-        margin-left:25px;
+      .drop-down {
+        width: 161px !important;
+        margin-left: 25px;
         @media only screen and(max-width:768px) {
-          margin-left:0px;
-          margin-top:5px;
+          margin-left: 0px;
+          margin-top: 5px;
         }
       }
     }
-    .search{
-      .material-icons{
+    .search {
+      .material-icons {
         position: relative;
         left: 19px;
-        color: #B7B7B7;
+        color: #b7b7b7;
         top: 7px;
         @media only screen and(max-width:387px) {
-          top:69px;
-          left:0px;
+          top: 69px;
+          left: 0px;
         }
       }
-      .search-box{
+      .search-box {
         margin-top: 35px;
         height: 30px;
-        border: 1px solid #B5B5B5;
+        border: 1px solid #b5b5b5;
         box-sizing: border-box;
         border-radius: 20px;
         width: 100%;
         max-width: 274px;
         padding-left: 30px;
-        margin-left:-10px;
+        margin-left: -10px;
         margin-bottom: 5px;
       }
     }
-    .startup-list{
+    .startup-list {
       margin-left: 15px;
       @media only screen and(max-width:378px) {
         margin-left: 0px;
       }
       margin-bottom: 30px;
-      .startup{
-        margin-top:15px;
+      .startup {
+        margin-top: 15px;
         .name,
-        .email{
-          font-family: 'Proxima Nova';
+        .email {
+          font-family: "Proxima Nova";
           font-style: normal;
           font-weight: normal;
           font-size: 14px;
           line-height: 17px;
           text-decoration-line: underline;
-          color: #6A6A6A;
-          .fa-times{
-            background-color: #FF937C;
+          color: var(--ui-color-gray-dark1);
+          .fa-times {
+            background-color: #ff937c;
             border-radius: 50%;
             height: 18px;
             width: 18px;
             text-align: center;
             font-size: 10px;
             padding-top: 4px;
-            color: #FFFFFF;
+            color: #ffffff;
             margin-right: 6px;
           }
         }
-        .email{
+        .email {
           text-decoration: none;
           font-size: 12px;
           line-height: 15px;
         }
-        .button{
-          height:18px;
-          width:62px;
-          background: #53CAB2;
+        .button {
+          height: 18px;
+          width: 62px;
+          background: #53cab2;
           border-radius: 12px;
-          font-family: 'Proxima Nova';
+          font-family: "Proxima Nova";
           font-style: normal;
           font-weight: bold;
           font-size: 10px;
@@ -153,17 +148,13 @@
           text-align: center;
           letter-spacing: 0.03em;
           text-transform: uppercase;
-          color: #FFFFFF;
+          color: #ffffff;
           cursor: pointer;
         }
-        .invite-button{
-          width:70px;
+        .invite-button {
+          width: 70px;
         }
       }
     }
-
-
-
   }
 }
-

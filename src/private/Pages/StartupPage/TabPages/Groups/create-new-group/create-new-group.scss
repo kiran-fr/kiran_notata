@@ -6,14 +6,14 @@
     line-height: 16px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
   }
   .Mui-selected {
     font-weight: bolder;
     font-family: "proxima_nova_altbold";
   }
   .MuiTabs-indicator {
-    border-bottom: 4px solid #969ba3;
+    border-bottom: 4px solid var(--ui-color-gray-medium);
     border-radius: 2px;
     transform: matrix(-1, 0, 0, 1, 0, 0);
   }
@@ -30,7 +30,7 @@
     font-size: 16px;
     line-height: 19px;
     text-transform: capitalize;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
   }
   .text {
     margin-top: 10px;
@@ -80,7 +80,7 @@
       font-size: 18px;
       line-height: 19px;
       letter-spacing: 0.03em;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       //position: absolute;
       margin-left: 15px;
     }
@@ -94,7 +94,7 @@
       font-size: 16px;
       line-height: 35px;
       margin-top: 15px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       i {
         margin-left: 10px;
       }
@@ -115,7 +115,7 @@
         line-height: 15px;
         margin-top: 5px;
         //position: absolute;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
       }
       //.radio-button-description {
       //  font-family: "Proxima Nova";
@@ -124,7 +124,7 @@
       //  font-size: 12px;
       //  line-height: 15px;
       //  margin-left: 26px;
-      //  color: #969ba3;
+      //  color:  var(--ui-color-gray-medium);
       //  margin-top: 20px;
       //}
     }
@@ -148,7 +148,7 @@
       font-size: 14px;
       line-height: 17px;
       letter-spacing: 0.03em;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       padding-top: 10px;
       padding-left: 25px;
     }
@@ -201,7 +201,7 @@
         font-size: 14px;
         line-height: 17px;
         text-decoration-line: underline;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         .fa-times {
           background-color: #ff937c;
           border-radius: 50%;
@@ -222,7 +222,7 @@
       .button {
         height: 18px;
         width: 62px;
-        background: #53cab2;
+        background: var(--ui-color-primary-green-dark2);
         border-radius: 12px;
         font-family: "Proxima Nova";
         font-style: normal;

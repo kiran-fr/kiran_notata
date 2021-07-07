@@ -27,7 +27,7 @@
     textarea {
       max-width: 652px !important;
       width: 100%;
-      border: 1px solid #cecece;
+      border: 1px solid var(--ui-color-gray-pale2);
       box-sizing: border-box;
       border-radius: 8px;
       background-color: #fff;
@@ -44,7 +44,7 @@
     position: absolute;
     right: 30px;
     top: 10px;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     cursor: pointer;
 
     @media only screen and(min-width:768px) {
@@ -72,7 +72,7 @@
         line-height: 12px;
         padding-top: 8px;
         padding-bottom: 8px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         cursor: pointer;
         .settings,
         .leave {
@@ -108,7 +108,7 @@
       position: absolute;
       top: 60px;
       font-size: 20px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       // right: 0px;
       cursor: pointer;
     }
@@ -127,7 +127,7 @@
   }
   .add-new-section-btn,
   .import-section-btn {
-    background: #53cab2;
+    background: var(--ui-color-primary-green-dark2);
     height: 30px;
     margin-top: 5px;
     width: 187px;
@@ -139,12 +139,12 @@
 
     &:hover,
     &:focus {
-      background: #49b6a0 !important;
+      background: var(--ui-color-primary-green-dark3) !important;
     }
   }
   .new-question-btn {
     margin-top: 15px !important;
-    background: #53cab2;
+    background: var(--ui-color-primary-green-dark2);
     height: 46px;
     margin-top: 5px;
     width: 187px;
@@ -164,21 +164,21 @@
     margin-right: 45px;
     .success-message {
       font-size: 12px;
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
     }
     .cancel-btn {
-      color: #6a6a6a;
-      border: 1px solid #6a6a6a;
+      color: var(--ui-color-gray-dark1);
+      border: 1px solid var(--ui-color-gray-dark1);
       margin-right: 10px;
       .MuiButton-label {
         font-size: 12px;
         line-height: 15px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
       }
       height: 40px;
     }
     .save-btn {
-      background: #53cab2;
+      background: var(--ui-color-primary-green-dark2);
       height: 40px;
       margin-top: 5px;
       width: 187px;
@@ -210,7 +210,7 @@
         font-weight: bold;
         font-size: 14px;
         line-height: 17px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
       }
       &__tabs {
         @media only screen and (max-width: 768px) {
@@ -225,7 +225,7 @@
         .MuiTab-root {
           min-width: 115px;
           .MuiTabs-indicator {
-            background-color: #969ba3;
+            background-color: var(--ui-color-gray-medium);
           }
         }
         .MuiButtonBase-root {
@@ -235,7 +235,7 @@
           line-height: 16px;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
         }
         .Mui-selected {
           font-weight: bolder;
@@ -258,7 +258,7 @@
             font-size: 12px;
             line-height: 15px;
             text-transform: capitalize;
-            color: #969ba3;
+            color: var(--ui-color-gray-medium);
             margin-top: 10px;
           }
         }
@@ -272,7 +272,7 @@
             font-weight: 600;
             font-size: 14px;
             line-height: 17px;
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
             margin-left: 10px;
             margin-right: 10px;
             position: absolute;
@@ -314,17 +314,17 @@
           margin-left: 10px;
           .add-option {
             text-decoration-line: underline;
-            color: #969ba3;
+            color: var(--ui-color-gray-medium);
             cursor: pointer;
           }
           .or {
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
             margin-left: 10px;
             margin-right: 10px;
           }
           .add-other {
             text-decoration-line: underline;
-            color: #53cab2;
+            color: var(--ui-color-primary-green-dark2);
             cursor: pointer;
           }
         }

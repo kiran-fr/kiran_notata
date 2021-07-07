@@ -10,7 +10,7 @@
       font-size: 24px;
       line-height: 29px;
       letter-spacing: 0.03em;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       padding-right: 0px;
     }
     .last-updated {
@@ -24,7 +24,7 @@
       font-size: 12px;
       line-height: 15px;
       text-align: right;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       padding: 0px;
     }
     .total-answers {
@@ -37,7 +37,7 @@
       }
 
       .summary-list:nth-child(odd) {
-        background-color: var(--ui-color-gray-pale1)
+        background-color: var(--ui-color-gray-pale1);
       }
 
       .type-heading,
@@ -49,7 +49,7 @@
         font-size: 16px;
         line-height: 19px;
         text-transform: capitalize;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         margin: 0;
         padding: 0;
       }
@@ -66,7 +66,7 @@
         font-size: 16px;
         line-height: 19px;
         text-transform: capitalize;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         margin-top: 15px;
       }
     }
@@ -82,19 +82,19 @@
         font-size: 18px;
         line-height: 22px;
         letter-spacing: 0.03em;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         margin-left: -31px;
         margin-right: 31px;
 
         i {
-          color: #71d0bd;
+          color: var(--ui-color-primary-green-dark1);
           margin-right: 15px;
           cursor: pointer;
         }
 
         .fa-pencil {
           margin-left: 20px;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
         }
       }
       .question-answers {
@@ -124,7 +124,6 @@
           line-height: 15px;
           color: #bfbfbf;
           margin-top: 5px;
-
         }
       }
     }
@@ -157,7 +156,7 @@
       margin-top: 35px;
       height: 30px;
       width: 208px;
-      background: #71D0BD;
+      background: #71d0bd;
       border-radius: 20px;
       border: none;
       font-family: "Proxima Nova";
@@ -175,7 +174,7 @@
     font-size: 14px;
     line-height: 17px;
     padding: 50px 0px;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     max-width: 300px;
   }
 }

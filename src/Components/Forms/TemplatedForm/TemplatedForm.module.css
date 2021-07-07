@@ -36,7 +36,7 @@
 }
 
 .section_title_icon {
-  color: #71d0bd;
+  color: var(--ui-color-primary-green-dark1);
   position: relative;
   padding-right: 10px;
   top: 2px;
@@ -45,7 +45,7 @@
 
 .section_title {
   font-size: 18px;
-  color: #6a6a6a;
+  color: --ui-color-gray-dark1;
   cursor: pointer;
   font-family: "proxima-nova";
   font-weight: 700;
@@ -54,7 +54,7 @@
 
 .section_description {
   font-size: 13px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 
 .section_question_input {
@@ -72,7 +72,7 @@
   font-size: 14px;
   line-height: 17px;
   letter-spacing: 0.03em;
-  color: #6a6a6a;
+  color: --ui-color-gray-dark1;
 }
 
 .question_description {
@@ -80,14 +80,14 @@
   font-size: 13px;
   line-height: 17px;
   letter-spacing: 0.03em;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   padding-top: 5px;
 }
 
 .question_options {
   font-family: "proxima-nova";
   font-size: 12px;
-  color: #6a6a6a;
+  color: --ui-color-gray-dark1;
   line-height: 30px;
   padding-top: 12px;
 }

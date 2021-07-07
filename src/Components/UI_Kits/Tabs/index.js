@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import "./style.css";
+import "../../../styles/style.scss";
 import { Content } from "Components/elements";
 
 export function Tabsection({ tabValue, tabArr, tabFuc, active }) {
@@ -33,7 +34,7 @@ export function Tabsection({ tabValue, tabArr, tabFuc, active }) {
             value={item.value}
             label={item.text}
             activeTab={index === active ? "active" : null}
-            style={{ color: item.value === tabValue ? "#969BA3" : "#C9CCD1" }}
+            style={{ color: item.value === tabValue ? "#969BA3" : "#c9ccd1" }}
           />
         ))}
     </Tabs>

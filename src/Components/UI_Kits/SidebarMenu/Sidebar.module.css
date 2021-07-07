@@ -164,7 +164,7 @@
   line-height: 23px;
   letter-spacing: 0.08em;
   text-transform: lowercase;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 
 .sidebar_container .menu_lists {
@@ -206,7 +206,7 @@
   border-bottom: 2px #ff8775 solid;
 }
 .active_close i {
-  color: #969ba3 !important;
+  color: var(--ui-color-gray-medium) !important;
 }
 .active_close i:after {
   content: "";
@@ -243,12 +243,12 @@
   font-size: 14px;
   line-height: 16px;
   letter-spacing: 0.02em;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 
 .sidebar_container a {
   text-decoration: none;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 
 .left_icon,
@@ -261,7 +261,7 @@
   position: absolute;
   top: 95px;
   left: 34px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   font-weight: 600;
 }
 
@@ -269,7 +269,7 @@
   position: absolute;
   top: 95px;
   left: 172px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   font-weight: 600;
 }
 

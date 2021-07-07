@@ -10,7 +10,7 @@
     margin-bottom: 100px;
 
     &__header {
-      font-family: 'Proxima Nova';
+      font-family: "Proxima Nova";
       font-style: normal;
       font-weight: normal;
       font-size: 18px;
@@ -18,11 +18,7 @@
       margin: -12px;
       margin-bottom: 30px;
       white-space: pre-wrap;
-      color: #969BA3;
+      color: var(--ui-color-gray-medium);
     }
-
   }
-
-
 }
-

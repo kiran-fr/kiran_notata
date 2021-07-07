@@ -21,21 +21,20 @@
       border-radius: 50%;
     }
 
-
     // .traffic-light.inactive {
     //     filter: grayscale(100%);
     // }
 
     .traffic-light.redActive {
-        background-color: #F36F56;
+      background-color: #f36f56;
     }
 
     .traffic-light.yellowActive {
-        background-color: #FCB148;
+      background-color: #fcb148;
     }
 
     .traffic-light.grenActive {
-        background-color: #63BAA4;
+      background-color: #63baa4;
     }
     .text {
       font-family: "Proxima Nova";
@@ -68,7 +67,7 @@
       font-weight: 600;
       font-size: 14px;
       line-height: 17px;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       margin-left: 10px;
       /* margin-right: 10px; */
       margin-top: 4px;

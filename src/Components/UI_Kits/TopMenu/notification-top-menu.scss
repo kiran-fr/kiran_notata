@@ -10,7 +10,7 @@
     width: 407px;
     right: 138px;
     @media only screen and(max-width:768px) {
-      right:20px;
+      right: 20px;
     }
     height: auto;
     padding-bottom: 50px;
@@ -21,7 +21,7 @@
       }
 
       &::-webkit-scrollbar-thumb {
-        background-color: #53cab2;
+        background-color: var(--ui-color-primary-green-dark2);
         border-radius: 4px;
       }
       padding-right: 12px;
@@ -55,7 +55,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: 0.03em;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-left: 15px;
         }
         &__tags-text {
@@ -65,7 +65,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: 0.03em;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-left: 15px;
         }
         &__text {
@@ -81,9 +81,9 @@
           font-size: 13px;
           line-height: 15px;
           letter-spacing: 0.03em;
-          color: #6a6a6a;
+          color: var(--ui-color-gray-dark1);
           .highlight {
-            color: #53cab2;
+            color: var(--ui-color-primary-green-dark2);
             font-weight: bold;
           }
           &__hour-ago {
@@ -93,7 +93,7 @@
             font-size: 12px;
             line-height: 14px;
             letter-spacing: 0.03em;
-            color: #969ba3;
+            color: var(--ui-color-gray-medium);
             margin-top: 10px;
           }
         }
@@ -103,7 +103,7 @@
         }
         &__decline-btn {
           height: 11px;
-          border: 1px solid #969ba3;
+          border: 1px solid var(--ui-color-gray-medium);
           max-width: 81px;
           margin-left: 8px;
           .MuiButton-label {
@@ -117,12 +117,12 @@
             text-align: center;
             letter-spacing: 0.03em;
             text-transform: uppercase;
-            color: #969ba3;
+            color: var(--ui-color-gray-medium);
           }
         }
         &__join-btn {
           height: 11px;
-          background-color: #53cab2;
+          background-color: var(--ui-color-primary-green-dark2);
           margin-left: 8px;
           max-width: 90px;
           .MuiButton-label {
@@ -152,14 +152,14 @@
       line-height: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
       text-align: right;
       margin-right: 30px;
       margin-top: 20px;
       cursor: pointer;
       i {
         margin-left: 5px !important;
-        color: #60ceb8 !important;
+        color: var(--ui-color-primary-green-dark4) !important;
         font-size: inherit !important;
         cursor: pointer;
       }

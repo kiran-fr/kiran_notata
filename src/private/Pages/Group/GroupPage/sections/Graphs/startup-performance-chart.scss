@@ -1,50 +1,49 @@
-.performance-chart-container{
+.performance-chart-container {
+  overflow-x: auto;
+  &__chart {
+    width: 100%;
+    min-width: 800px;
+    padding-top: 45px;
     overflow-x: auto;
-    &__chart{
-        width: 100%;
-        min-width:800px;
-        padding-top: 45px;
-        overflow-x: auto;
-        height: 380px;
-    }    
-    &__legend-container{
-        .legend{
-            display: flex;
-            align-items: center;
-            margin-left:10px;
-            .symbol{
-                height:6px;
-                width:15px;
-                margin-right: 15px;
-                background-color: #FF725E;
-            }
-        }
+    height: 380px;
+  }
+  &__legend-container {
+    .legend {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      .symbol {
+        height: 6px;
+        width: 15px;
+        margin-right: 15px;
+        background-color: #ff725e;
+      }
     }
-    .recharts-default-legend{
-        @media only screen and(max-width:768px) {
-            text-align: left!important;
-            width:370px;
-        }
-        li{
-            display: inline-block!important;
-            margin-top:30px;           
-            padding:5px;
-            @media only screen and(max-width:768px) {
-                margin-right: 50px;
-                width:175px;
-                position: inherit;
-                padding: 5px 30px 5px 30px;
-                margin-top: 0px;
-            }
-        }
-        
+  }
+  .recharts-default-legend {
+    @media only screen and(max-width:768px) {
+      text-align: left !important;
+      width: 370px;
     }
-    .recharts-legend-item-text{
-        font-family: "Proxima Nova";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 15px;
-        color: #6A6A6A;
+    li {
+      display: inline-block !important;
+      margin-top: 30px;
+      padding: 5px;
+      @media only screen and(max-width:768px) {
+        margin-right: 50px;
+        width: 175px;
+        position: inherit;
+        padding: 5px 30px 5px 30px;
+        margin-top: 0px;
+      }
     }
+  }
+  .recharts-legend-item-text {
+    font-family: "Proxima Nova";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--ui-color-gray-dark1);
+  }
 }

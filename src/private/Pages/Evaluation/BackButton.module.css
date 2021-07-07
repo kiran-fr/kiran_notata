@@ -7,7 +7,7 @@
 }
 
 .icon {
-  color: #71d0bd;
+  color: var(--ui-color-primary-green-dark1);
   position: absolute;
   left: -20px;
   font-size: 18px;
@@ -20,5 +20,5 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }

@@ -18,13 +18,13 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #53cab200;
+      background-color: var(--ui-color-primary-green-dark2)00;
       border-radius: 4px;
     }
 
     &:hover {
       &::-webkit-scrollbar-thumb {
-        background-color: #53cab2;
+        background-color: var(--ui-color-primary-green-dark2);
       }
     }
 
@@ -66,7 +66,7 @@
           .editCancel {
             margin-right: 10px;
             color: rgba(83, 202, 178, 1);
-            border: 1px solid #53cab2;
+            border: 1px solid var(--ui-color-primary-green-dark2);
             background-color: #fff;
           }
         }
@@ -78,7 +78,7 @@
         font-weight: normal;
         font-size: 11px;
         letter-spacing: 0.03em;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         margin-top: 10px;
         margin-left: 29px;
       }
@@ -90,7 +90,7 @@
         font-size: 14px;
         line-height: 17px;
         letter-spacing: 0.03em;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         display: block;
         margin-top: 5px;
         margin-left: 29px;
@@ -108,7 +108,7 @@
           padding-left: 7px;
           letter-spacing: 0.03em;
           text-decoration-line: underline;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
         }
 
         svg {
@@ -135,7 +135,7 @@
           }
 
           i:last-of-type {
-            color: #49b6a0;
+            color: var(--ui-color-primary-green-dark3);
           }
 
           .deleteIcon {
@@ -171,7 +171,7 @@
   }
 
   textarea::-webkit-scrollbar-thumb {
-    background-color: #53cab2;
+    background-color: var(--ui-color-primary-green-dark2);
     border-radius: 3px;
   }
 

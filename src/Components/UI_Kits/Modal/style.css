@@ -24,7 +24,7 @@
 
 .content::-webkit-scrollbar-thumb {
   appearance: none;
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border-radius: 4px;
 }
 
@@ -53,7 +53,7 @@
   font-weight: bold;
   font-size: 16px;
   line-height: 19px;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   padding-bottom: 15px;
 }
 

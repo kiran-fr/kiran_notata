@@ -12,7 +12,7 @@ input {
   width: 100% !important;
   height: 40px;
   background: #ffffff !important;
-  border: 1px solid #cecece;
+  border: 1px solid var(--ui-color-gray-pale2);
   box-sizing: border-box;
   border-radius: 20px !important;
   padding-left: 38px;
@@ -29,7 +29,7 @@ button,
   height: 40px;
   right: 0px;
   top: 0px;
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border-radius: 20px;
   z-index: 3;
   color: #fff;
@@ -59,7 +59,7 @@ button,
 .table_headerChild .addButton {
   width: 173px;
   height: 40px;
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border-radius: 20px;
   color: #fff;
   border: none;
@@ -72,7 +72,7 @@ button,
 .addButton:focus,
 .searchButton:hover,
 .searchButton:focus {
-  background-color: #49b6a0;
+  background-color: var(--ui-color-primary-green-dark3);
 }
 
 .table_headerChild .addButton i {
@@ -82,13 +82,13 @@ button,
 .filterButton {
   width: 105px;
   height: 40px;
-  border: 1px solid #969ba3;
+  border: 1px solid var(--ui-color-gray-medium);
   box-sizing: border-box;
   border-radius: 20px;
   background-color: transparent;
   font-size: 14px;
   font-weight: 600;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   margin-top: 7px;
 }
 .filterButton img {
@@ -220,7 +220,7 @@ button,
   }
 
   .clearAllTxt {
-    color: #53cab2;
+    color: var(--ui-color-primary-green-dark2);
     margin-top: -30px !important;
     width: 100%;
     padding-right: 13px;
@@ -240,12 +240,12 @@ button,
 }
 
 .clearAllTxt {
-  color: #53cab2;
+  color: var(--ui-color-primary-green-dark2);
   margin-top: 15px;
   transition: color 0.1s ease-in;
   font-weight: 600;
 }
 
 .clearAllTxt:hover {
-  color: #49b6a0;
+  color: var(--ui-color-primary-green-dark3);
 }

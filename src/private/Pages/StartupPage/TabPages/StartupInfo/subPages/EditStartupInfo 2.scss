@@ -53,10 +53,10 @@
       height: 110px;
       width: 110px;
       border-radius: 50%;
-      background-color: #f4f4f4;
+      background-color: var(--ui-color-gray-pale1);
       text-align: center;
       padding-top: 47px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       overflow: hidden;
     }
 
@@ -79,7 +79,7 @@
     .delete-btn {
       width: 148px;
       height: 40px;
-      background: #53cab2;
+      background: var(--ui-color-primary-green-dark2);
       border-radius: 20px;
       border: none;
       font-family: "Proxima Nova";
@@ -99,13 +99,13 @@
     .upload-logo-btn {
       &:hover,
       &:focus {
-        background-color: #49b6a0;
+        background-color: var(--ui-color-primary-green-dark3);
       }
     }
     .delete-btn {
-      border: 1px solid #969ba3;
+      border: 1px solid var(--ui-color-gray-medium);
       background-color: #ffffff;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
     .info-separator {
       @media only screen and(max-width:768px) {
@@ -119,9 +119,7 @@
       margin-top: 15px;
       margin-left: 15px;
 
-
       .question {
-
         padding-top: 15px;
 
         .heading-section {
@@ -133,9 +131,9 @@
             line-height: 22px;
             align-items: center;
             letter-spacing: 0.03em;
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
             .fa {
-              color: #71d0bd;
+              color: var(--ui-color-primary-green-dark1);
               margin-right: 13px;
             }
           }
@@ -145,22 +143,18 @@
             font-size: 16px;
             line-height: 30px;
             letter-spacing: 0.03em;
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
             margin-top: 25px;
             padding-left: 0px;
           }
-
         }
-
-
-
 
         .description {
           font-family: "Roboto";
           font-size: 13px;
           line-height: 17px;
           letter-spacing: 0.03em;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-top: 3px;
         }
         .textbox {
@@ -168,7 +162,7 @@
           input,
           textarea {
             background: #ffffff;
-            border: 1px solid #cecece;
+            border: 1px solid var(--ui-color-gray-pale2);
             box-sizing: border-box;
             border-radius: 8px;
             height: 50px;
@@ -216,7 +210,7 @@
             color: #ffffff;
           }
           .fa-plus {
-            background-color: #53cab2;
+            background-color: var(--ui-color-primary-green-dark2);
           }
         }
         .comment {
@@ -224,7 +218,7 @@
           font-size: 12px;
           line-height: 15px;
           text-transform: capitalize;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-top: 12px;
         }
         .comment-text-area {
@@ -243,7 +237,7 @@
           font-size: 14px;
           line-height: 17px;
           text-transform: capitalize;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-top: 12px;
           padding-left: 0px;
         }
@@ -252,8 +246,6 @@
           margin-top: 5px;
         }
       }
-
-
     }
 
     .company-name {
@@ -277,7 +269,7 @@
         line-height: 19px;
         text-transform: capitalize;
         margin-top: 10px;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
       }
       .preview-check-heading {
         font-family: "Roboto";
@@ -295,7 +287,7 @@
       }
       .download-cover {
         padding: 30px 25px 25px 30px;
-        background: #f4f4f4;
+        background: var(--ui-color-gray-pale1);
         border-radius: 8px;
         margin-right: 15px;
         margin-top: 10px;
@@ -311,10 +303,10 @@
         border-radius: 8px;
       }
       .preview_img__selected {
-        border: 2px solid #71d0bd;
+        border: 2px solid var(--ui-color-primary-green-dark1);
       }
       .material-icons {
-        color: #71d0bd;
+        color: var(--ui-color-primary-green-dark1);
         margin-top: 53px;
         position: absolute;
         cursor: pointer;
@@ -330,13 +322,13 @@
         font-size: 13px;
         line-height: 17px;
         letter-spacing: 0.03em;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         margin-left: 15px;
         position: absolute;
       }
       .connect-btn,
       .disconnect-btn {
-        background: #53cab2;
+        background: var(--ui-color-primary-green-dark2);
         border-radius: 12px;
         font-family: "Proxima Nova";
         font-style: normal;
@@ -350,9 +342,9 @@
         border: none;
       }
       .disconnect-btn {
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         background-color: #eff1fa;
-        border: 1px solid #969ba3;
+        border: 1px solid var(--ui-color-gray-medium);
         border-radius: 12px;
         max-width: 110px;
       }
@@ -371,7 +363,7 @@
         font-size: 12px;
         line-height: 17px;
         letter-spacing: 0.03em;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         margin-left: 48px;
         margin-top: -10px;
         overflow: hidden;
@@ -387,7 +379,7 @@
 }
 
 .import-section-btn {
-  background: #53cab2;
+  background: var(--ui-color-primary-green-dark2);
   height: 30px;
   margin-top: 5px;
   width: 187px;
