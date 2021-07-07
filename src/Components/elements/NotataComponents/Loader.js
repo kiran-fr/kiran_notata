@@ -15,7 +15,7 @@ export const Loader = () => {
         justifyContent: "center",
         alignItems: "center",
         fontSize: "20px",
-        color: "#53CAB2",
+        color: "var(--ui-color-primary-green-dark2)",
       }}
     >
       <i className="fa fa-spinner fa-spin" />

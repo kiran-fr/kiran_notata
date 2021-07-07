@@ -16,7 +16,7 @@
     font-weight: bold;
     font-size: 14px;
     line-height: 17px;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     margin-top: 25px;
     margin-bottom: 20px;
   }
@@ -28,7 +28,7 @@
     font-size: 14px;
     line-height: 17px;
     text-decoration-line: underline;
-    color: #6a6a6a;
+    color: var(--ui-color-gray-dark1);
     .fa-times {
       background-color: #ff937c;
       border-radius: 50%;
@@ -45,5 +45,5 @@
 }
 
 .create-template-btn:hover {
-  background: #49b6a0 !important;
+  background: var(--ui-color-primary-green-dark3) !important;
 }

@@ -69,6 +69,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               type="text"
               placeholder="email"
               ref={register({ required: true })}
+              autoComplete="off"
               name="email"
               id="email"
             />
@@ -81,6 +82,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
               type="password"
               placeholder="password"
               ref={register({ required: true })}
+              autoComplete="off"
               name="password"
               id="password"
             />
@@ -88,6 +90,7 @@ function SignupComp({ history, location, userLoggedIn, userIsLoggedIn }) {
             <input
               type="password"
               name="passwordConfirmation"
+              autoComplete="off"
               ref={register({
                 required: true,
               })}

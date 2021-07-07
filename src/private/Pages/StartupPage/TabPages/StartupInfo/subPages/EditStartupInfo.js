@@ -74,7 +74,7 @@ export default function EditStartupInfo({ backToInfoPage, connection }) {
             <div
               style={{
                 fontSize: "12px",
-                color: "#53cab2",
+                color: "var(--ui-color-primary-green-dark2)",
                 paddingRight: "38px",
                 position: "absolute",
                 right: 0,

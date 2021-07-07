@@ -77,30 +77,49 @@ export default function DashboardMyStartups({ history }) {
               className="dashboard-container__my-startups__data-container__data-entry"
               key={connection.id}
             >
-              <div
-                className="dashboard-container__my-startups__data-container__data-entry__startup-name"
-                onClick={() => {
-                  history.push(`${startup_page}/company/${connection.id}`);
-                }}
-              >
-                {connection?.creative?.name}
-              </div>
-              <div className="dashboard-container__my-startups__data-container__data-entry__funnels">
-                {tagSet ? <img alt="" src={dynamicIcons(tagSet.index)} /> : ""}
-                <div className="dashboard-container__my-startups__data-container__data-entry__funnels__funnel-type">
-                  {tagSet ? tagSet.name : "n/a"}
+              <div className="dashboard-container__my-startups__data-container__data-entry__startup">
+                <div className="dashboard-container__my-startups__data-container__data-entry__mobile-heading">
+                  Name
+                </div>
+                <div
+                  className="dashboard-container__my-startups__data-container__data-entry__startup__name"
+                  onClick={() => {
+                    history.push(`${startup_page}/company/${connection.id}`);
+                  }}
+                >
+                  {connection?.creative?.name}
                 </div>
               </div>
-              <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score">
-                <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score__score">
-                  {score ? score : "n/a"}
+              <div className="dashboard-container__my-startups__data-container__data-entry__funnels-entry">
+                <div className="dashboard-container__my-startups__data-container__data-entry__mobile-heading">
+                  stage
                 </div>
-                <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score__change">
-                  <div
-                    className="dashboard-container__my-startups__data-container__data-entry__subjective-score__change__btn"
-                    onClick={() => setEditScoreForConnection(connection)}
-                  >
-                    Set
+                <div className="dashboard-container__my-startups__data-container__data-entry__funnels-entry__data">
+                  {tagSet ? (
+                    <img alt="" src={dynamicIcons(tagSet.index)} />
+                  ) : (
+                    ""
+                  )}
+                  <div className="dashboard-container__my-startups__data-container__data-entry__funnels-entry__data__funnel-type">
+                    {tagSet ? tagSet.name : "n/a"}
+                  </div>
+                </div>
+              </div>
+              <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container">
+                <div className="dashboard-container__my-startups__data-container__data-entry__mobile-heading">
+                  subjective score
+                </div>
+                <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container__data">
+                  <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container__data__score">
+                    {score ? score : "n/a"}
+                  </div>
+                  <div className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container__data__change">
+                    <div
+                      className="dashboard-container__my-startups__data-container__data-entry__subjective-score-container__data__change__btn"
+                      onClick={() => setEditScoreForConnection(connection)}
+                    >
+                      Set
+                    </div>
                   </div>
                 </div>
               </div>

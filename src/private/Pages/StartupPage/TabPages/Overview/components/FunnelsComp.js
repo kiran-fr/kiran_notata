@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { accountGet } from "../../../../../Apollo/Queries";
 import { useMutation, useQuery } from "@apollo/client";
 import { connectionFunnelTagAdd } from "../../../../../Apollo/Mutations";
 import { Loader } from "../../../../../../Components/UI_Kits";
+import { sortArr } from "../../../../commonFunctions";
 
 let colorArray = ["red", "blue", "purple", "orange", "green"];
 
@@ -88,7 +89,8 @@ export default function FunnelsComp({ connection }) {
   const { data, loading } = useQuery(accountGet);
 
   let funnelGroups = data?.accountGet?.funnelGroups || [];
-  let funnelTags = connection?.funnelTags;
+  let funnelTags = sortArr(connection?.funnelTags);
+
 
   return (
     <div className="row funnel-summary-container">

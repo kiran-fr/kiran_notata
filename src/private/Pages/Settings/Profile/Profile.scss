@@ -8,7 +8,7 @@
   }
   &__heading {
     i {
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
       margin-right: 13px;
       cursor: pointer;
     }
@@ -28,13 +28,13 @@
       font-weight: bold;
       font-size: 16px;
       line-height: 17px;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       display: flex;
       align-items: center;
       &__more {
         margin-left: auto;
         margin-right: 30px;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         cursor: pointer;
       }
       &__dropdown {
@@ -55,7 +55,7 @@
           line-height: 12px;
           padding-top: 8px;
           padding-bottom: 8px;
-          color: #6a6a6a;
+          color: var(--ui-color-gray-dark1);
           cursor: pointer;
           .material-icons {
             font-size: 10px;
@@ -74,7 +74,7 @@
       &__tag-name {
         margin-top: 5px;
         display: inline-block;
-        background: #6a6a6a;
+        background: var(--ui-color-gray-dark1);
         color: #fff;
         padding: 5px 10px;
         border-radius: 12px;
@@ -100,20 +100,20 @@
         font-size: 14px;
         line-height: 17px;
         text-transform: capitalize;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
       }
       &__input {
         margin-top: 10px;
         input {
           background: #ffffff;
-          border: 1px solid #cecece;
+          border: 1px solid var(--ui-color-gray-pale2);
           box-sizing: border-box;
           border-radius: 20px;
           height: 30px;
           padding-left: 15px;
         }
         i {
-          color: #53cab2;
+          color: var(--ui-color-primary-green-dark2);
           margin-left: 10px;
           cursor: pointer;
         }
@@ -123,12 +123,12 @@
   &__create-new-tag {
     margin-left: 50px !important;
     margin-top: 50px !important;
-    background: #53cab2 !important;
+    background: var(--ui-color-primary-green-dark2) !important;
     height: 34px;
   }
   &__create-new-tag-group-text {
     background: #ffffff;
-    border: 1px solid #cecece;
+    border: 1px solid var(--ui-color-gray-pale2);
     box-sizing: border-box;
     border-radius: 20px;
     width: 70%;

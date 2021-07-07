@@ -26,7 +26,7 @@
 }
 
 .popup_title {
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   text-transform: uppercase;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .menu_items div {
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   padding: 7px 0;
   text-transform: capitalize;
   font-size: 13px;

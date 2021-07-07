@@ -132,7 +132,7 @@ export default function ReportAnalyticChart() {
                   fontWeight: "bold",
                   letterSpacing: "0.08em",
                   fontFamily: "Proxima Nova",
-                  color: "#969BA3",
+                  color: '#969ba3',
                 }}
                 axisLine={false}
               />
@@ -142,7 +142,7 @@ export default function ReportAnalyticChart() {
                   fontWeight: "bold",
                   letterSpacing: "0.08em",
                   fontFamily: "Proxima Nova",
-                  color: "#969BA3",
+                  color: '#969ba3',
                 }}
                 minTickGap={10}
                 domain={[0, 50]}

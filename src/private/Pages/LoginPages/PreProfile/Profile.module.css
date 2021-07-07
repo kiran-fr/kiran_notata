@@ -85,9 +85,9 @@ label {
 }
 
 .profile_onboard input {
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   font-size: 14px;
-  caret-color: #6a6a6a;
+  caret-color: var(--ui-color-gray-dark1);
 }
 .profile_onboard label {
   font-size: 14px;
@@ -99,7 +99,7 @@ label {
   font-size: 30px;
   line-height: 37px;
   letter-spacing: 0.03em;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
 }
 .profile3 h4 {
   font-weight: bold;

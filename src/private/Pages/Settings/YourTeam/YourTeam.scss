@@ -11,7 +11,7 @@
     padding-left: 50px !important;
     padding-top: 41px !important;
     i {
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
       margin-right: 13px;
       cursor: pointer;
     }
@@ -25,7 +25,7 @@
       font-weight: bold;
       font-size: 16px;
       line-height: 17px;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
     }
     &__members {
       margin-top: 25px;
@@ -38,7 +38,7 @@
         font-weight: normal;
         font-size: 14px;
         line-height: 17px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         i {
           margin-right: 13px;
           color: #ff937c;
@@ -62,7 +62,7 @@
       font-size: 14px;
       line-height: 17px;
       text-transform: capitalize;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       margin-top: 20px;
     }
     &__pending-invite-container {
@@ -72,7 +72,7 @@
       &__search-user {
         height: 30px;
         background: #ffffff;
-        border: 1px solid #cecece;
+        border: 1px solid var(--ui-color-gray-pale2);
         border-radius: 20px;
         max-width: 280px;
         padding-left: 20px;
@@ -82,7 +82,7 @@
         width: 100%;
       }
       &__invite-btn {
-        background: #53cab2;
+        background: var(--ui-color-primary-green-dark2);
         height: 30px;
         margin-left: 15px;
       }
@@ -95,7 +95,7 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   padding-top: 55px;
   padding-left: 20px;
   padding-bottom: 55px;

@@ -65,6 +65,7 @@ export default function MultipleTextInput({
           type="text"
           name="new"
           placeholder="Say something..."
+          autoComplete="off"
           value={newAnswer}
           onChange={e => setnewAnswer(e.target.value)}
           onBlur={e => {

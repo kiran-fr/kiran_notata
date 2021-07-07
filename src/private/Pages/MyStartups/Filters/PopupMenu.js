@@ -63,7 +63,10 @@ export default function PopupMenu({
               {title}
               <i
                 onClick={close}
-                style={{ marginLeft: "5px", color: "#53cab2" }}
+                style={{
+                  marginLeft: "5px",
+                  color: "var(--ui-color-primary-green-dark2)",
+                }}
                 className="fas fa-chevron-up"
               />
             </div>

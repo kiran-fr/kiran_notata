@@ -36,7 +36,7 @@
     align-items: center;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     padding-left: 30px;
     margin-top: 30px;
   }
@@ -50,7 +50,7 @@
         font-family: "Proxima Nova";
         font-size: 14px;
         line-height: 17px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         margin-left: 5px;
       }
       &__funnel-bar-container {
@@ -112,7 +112,7 @@
       margin-right: 20px;
       min-height: 40px;
       i {
-        background-color: #53cab2;
+        background-color: var(--ui-color-primary-green-dark2);
         border-radius: 50%;
         height: 18px;
         width: 18px;
@@ -133,7 +133,7 @@
       font-size: 12px;
       line-height: 14px;
 
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       margin-left: 30px;
       margin-top: 10px;
     }
@@ -151,15 +151,15 @@
       font-weight: 600;
       font-size: 12px;
       line-height: 15px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
     &__datePicker {
       font-family: "Proxima Nova";
       font-size: 12px;
       line-height: 15px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       background: #ffffff;
-      border: 1px solid #cecece;
+      border: 1px solid var(--ui-color-gray-pale2);
       box-sizing: border-box;
       border-radius: 20px;
       height: 30px;
@@ -193,7 +193,7 @@
       font-weight: bold;
       font-size: 14px;
       line-height: 17px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
     &__day-names {
       border-bottom: 1px solid #f0f0f0;
@@ -229,7 +229,7 @@
       color: #737373;
       border-radius: 0px;
       &--selected {
-        background-color: #53cab2 !important;
+        background-color: var(--ui-color-primary-green-dark2) !important;
         color: #ffffff;
         border-radius: 50% !important;
         font-weight: bold;
@@ -251,7 +251,7 @@
       &--range-start,
       &--range-end {
         border-radius: 50%;
-        background-color: #53cab2 !important;
+        background-color: var(--ui-color-primary-green-dark2) !important;
         color: #ffffff;
         font-weight: bold;
         &:hover {
@@ -273,7 +273,7 @@
       line-height: 14px;
       letter-spacing: 0.01em;
       text-decoration-line: underline;
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
       margin-top: 10px;
       margin-right: 20px;
       cursor: pointer;

@@ -94,6 +94,7 @@ const InputButton = ({ value, size, loading }) => {
         type="submit"
         className={classnames(button_container, icon_padding, sizeClass)}
         value={value}
+        autoComplete="off"
       />
 
       <div className={classnames(input_button_icon, sizeClass)}>

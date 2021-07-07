@@ -8,6 +8,7 @@ export default function TextBox({ placeholder, maxWidth, inputval, ...props }) {
       defaultValue={inputval}
       placeholder={placeholder}
       className={maxWidth ? "max-text-box text-box" : "text-box"}
+      autoComplete="off"
       {...props}
     />
   );

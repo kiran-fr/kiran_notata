@@ -41,7 +41,7 @@
   font-size: 16px;
   line-height: 19px;
 
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
 }
 
 .inner {

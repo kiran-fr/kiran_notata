@@ -16,7 +16,7 @@
     }
     padding-top: 41px !important;
     i {
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
       margin-right: 13px;
       cursor: pointer;
     }
@@ -35,13 +35,13 @@
         font-weight: bold;
         font-size: 16px;
         line-height: 17px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         display: flex;
         align-items: center;
         &__more {
           margin-left: auto;
           margin-right: 30px;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           cursor: pointer;
         }
         &__dropdown {
@@ -62,7 +62,7 @@
             line-height: 12px;
             padding-top: 8px;
             padding-bottom: 8px;
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
             cursor: pointer;
             .material-icons {
               font-size: 10px;
@@ -87,7 +87,7 @@
             font-size: 14px;
             line-height: 17px;
             text-transform: capitalize;
-            color: #969ba3;
+            color: var(--ui-color-gray-medium);
             width: 180px;
           }
 
@@ -96,7 +96,11 @@
             display: flex;
             justify-content: center;
             .gray {
-              background: linear-gradient(180deg, #cecece 0%, #ececec 100%);
+              background: linear-gradient(
+                180deg,
+                var(--ui-color-gray-pale2) 0%,
+                #ececec 100%
+              );
               height: 16px;
               border-radius: 10px;
             }
@@ -147,14 +151,14 @@
       font-weight: bold;
       font-size: 16px;
       line-height: 17px;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       display: flex;
       align-items: center;
     }
     &__save {
       margin-left: auto !important;
       margin-right: 30px !important;
-      background: #53cab2 !important;
+      background: var(--ui-color-primary-green-dark2) !important;
       height: 30px;
     }
     .groups {
@@ -165,7 +169,7 @@
         margin-top: 10px;
         flex-flow: wrap;
         .fa-plus-circle {
-          color: #53cab2;
+          color: var(--ui-color-primary-green-dark2);
           margin-left: 5px;
           cursor: pointer;
           @media only screen and(max-width:768px) {
@@ -180,7 +184,7 @@
         &__heading {
           input {
             background: #ffffff;
-            border: 1px solid #cecece;
+            border: 1px solid var(--ui-color-gray-pale2);
             box-sizing: border-box;
             border-radius: 20px;
             padding-left: 15px;
@@ -194,7 +198,7 @@
           font-size: 14px;
           line-height: 17px;
           text-transform: capitalize;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           width: 150px;
         }
         &__funnel {
@@ -248,7 +252,7 @@
   &__create-new-funnel {
     margin-left: 50px !important;
     margin-top: 50px !important;
-    background: #53cab2 !important;
+    background: var(--ui-color-primary-green-dark2) !important;
     height: 34px;
   }
   &__create-new-funnel.disabled {
@@ -258,7 +262,7 @@
   }
   &__create-new-funnel-text {
     background: #ffffff;
-    border: 1px solid #cecece;
+    border: 1px solid var(--ui-color-gray-pale2);
     box-sizing: border-box;
     border-radius: 20px;
     width: 70%;

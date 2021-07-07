@@ -34,7 +34,7 @@
   border: none;
 }
 .buttongreen i {
-  color: #53cab2 !important;
+  color: var(--ui-color-primary-green-dark2) !important;
   cursor: pointer;
   font-size: 14px !important;
 }
@@ -66,7 +66,7 @@
   min-width: 162px;
 }
 .startupTable thead tr td i {
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   transform: matrix(0, 1, 1, 0, 0, 0);
   font-size: 8.5px;
   font-weight: 500;
@@ -104,7 +104,7 @@
 .startupTable tbody td:nth-child(2) {
   font-size: 13.8px;
   font-weight: 600;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
 
   min-height: 55px;
   /* position: relative; */
@@ -134,7 +134,7 @@
   min-width: 120px;
 }
 .startupTable tbody td:nth-child(6) {
-  color: #53cab2;
+  color: var(--ui-color-primary-green-dark2);
   font-size: 14px;
   font-weight: 600;
 }
@@ -166,7 +166,7 @@
 }
 
 .startupTable td ul li span {
-  background-color: #6a6a6a;
+  background-color: var(--ui-color-gray-dark1);
   padding: 2px 11px;
   color: #fff;
   border-radius: 15px;
@@ -180,7 +180,7 @@
 
 .startupTable td span i {
   font-size: 12px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   margin-left: 5px;
   cursor: pointer;
 }
@@ -209,7 +209,7 @@
   width: 15px;
   transform: translateY(-0%);
   border-radius: 3px;
-  border: 1px solid #dadada;
+  border: 1px solid var(--ui-color-gray-dark6);
 }
 /* On mouse-over, add a grey background color */
 .customCheck:hover input ~ .checkmark {
@@ -218,7 +218,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .customCheck input:checked ~ .checkmark {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border: none;
 }
 
@@ -232,14 +232,14 @@
   cursor: pointer;
 }
 .startupTable .olderThan {
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   padding: 2px 8px;
   font-size: 12px;
 }
 
 .startupTable .startupStatus {
   font-size: 14px;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
 }
 .startupTable .startupStatus img {
   height: 11.5px;
@@ -278,13 +278,13 @@
 .startupPreview h1 {
   font-size: 16px;
   border-bottom: 1px solid #f0f0f0;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   padding-bottom: 10px;
   font-weight: 700;
 }
 .startupPreview h3 {
   font-size: 13px;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   margin: 0;
   padding: 0;
   margin-bottom: 6px;
@@ -293,7 +293,7 @@
 .startupPreview p {
   font-size: 13px;
   line-height: 17px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   font-weight: normal;
 }
 
@@ -379,7 +379,7 @@
 }
 
 .funnelPopup ul li:hover {
-  background-color: #f4f4f4;
+  background-color: var(--ui-color-gray-pale1);
 }
 .funnelPopup .floatingArrow {
   position: absolute;
@@ -418,7 +418,7 @@
   height: 15px;
   width: 15px;
   border-radius: 3px;
-  border: 1px solid #dadada;
+  border: 1px solid var(--ui-color-gray-dark6);
 }
 /* On mouse-over, add a grey background color */
 .dealflowColumnHead .customCheck:hover input ~ .checkmark {
@@ -427,7 +427,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .dealflowColumnHead .customCheck input:checked ~ .checkmark {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border: none;
 }
 
@@ -460,7 +460,7 @@
   width: 15px;
   height: 15px;
   border-radius: 3px;
-  border: 1px solid #dadada;
+  border: 1px solid var(--ui-color-gray-dark6);
 }
 
 /* On mouse-over, add a grey background color */
@@ -470,12 +470,12 @@
 
 /* When the checkbox is checked, add a blue background */
 .tableHeaderCheckmark .customCheck input:checked ~ .checkmark {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border: none;
 }
 
 .activePopup i {
-  color: #53cab2 !important;
+  color: var(--ui-color-primary-green-dark2) !important;
   transform: rotate(180deg);
 }
 
@@ -488,7 +488,7 @@
   font-size: 12px;
   padding: 1px 7px;
   background: #fbf1dc;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   border-radius: 15px !important;
   border: 1px solid #ffc244;
   margin-bottom: 3px !important;

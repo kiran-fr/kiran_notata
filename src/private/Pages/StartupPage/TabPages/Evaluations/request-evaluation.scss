@@ -1,52 +1,52 @@
 .modal_header,
-.modal_footer{    
-    .close_modal{
-        color:#B7B7B7;
-    }
+.modal_footer {
+  .close_modal {
+    color: #b7b7b7;
+  }
 }
-.request-modal{
-    &__heading{
-        font-family: 'Proxima Nova';
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 19px;
-        text-transform: capitalize;
-        color: #969BA3;
-        margin-top:10px;        
-    }        
-    .fa-times{
-        @media only screen and(max-width:768px) {
-            margin-left: 5px!important;
-        }
-        margin-left: 25px;
-        background-color: #FF937C;
-        border-radius: 50%;
-        height: 18px;
-        width: 18px;
-        text-align: center;
-        font-size: 10px;
-        margin-top: 15px;
-        position: absolute;
-        padding-top: 4px;
-        color: #FFFFFF;            
+.request-modal {
+  &__heading {
+    font-family: "Proxima Nova";
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    text-transform: capitalize;
+    color: var(--ui-color-gray-medium);
+    margin-top: 10px;
+  }
+  .fa-times {
+    @media only screen and(max-width:768px) {
+      margin-left: 5px !important;
     }
-    .fa-plus{
-        @media only screen and(max-width:768px) {
-            margin-left: 5px!important;
-        }
-        margin-left: 25px;
-        background-color: #53CAB2;
-        border-radius: 50%;
-        height: 18px;
-        width: 18px;
-        text-align: center;
-        font-size: 10px;
-        margin-top: 15px;
-        position: absolute;
-        padding-top: 4px;
-        color: #FFFFFF;       
+    margin-left: 25px;
+    background-color: #ff937c;
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 15px;
+    position: absolute;
+    padding-top: 4px;
+    color: #ffffff;
+  }
+  .fa-plus {
+    @media only screen and(max-width:768px) {
+      margin-left: 5px !important;
     }
-    .radio-button-section{
-        margin-top:15px;
-    }
+    margin-left: 25px;
+    background-color: var(--ui-color-primary-green-dark2);
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 15px;
+    position: absolute;
+    padding-top: 4px;
+    color: #ffffff;
+  }
+  .radio-button-section {
+    margin-top: 15px;
+  }
 }

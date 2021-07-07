@@ -124,7 +124,7 @@ export default function BoardItem(props) {
               style={{
                 fontFamily: "Proxima Nova",
                 fontWeight: 700,
-                color: "#53CAB2",
+                color: "var(--ui-color-primary-green-dark2)",
                 fontSize: 14,
               }}
             >

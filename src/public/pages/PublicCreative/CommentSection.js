@@ -84,12 +84,18 @@ export function CommentSection({ section, question, creative }) {
           name="comment"
           ref={register}
           style={{ resize: "none" }}
+          autoComplete="off"
         />
 
         {creative.id && (
           <div className="comment_submit">
             <i className="fas fa-arrow-alt-circle-up" />
-            <input type="submit" value="" disabled={isSubmitting} />
+            <input
+              type="submit"
+              value=""
+              disabled={isSubmitting}
+              autoComplete="off"
+            />
           </div>
         )}
       </form>

@@ -30,7 +30,7 @@
     font-weight: 600;
     font-size: 15px;
     line-height: 18px;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     padding-left: 0px !important;
     margin-top: 5px;
     padding-right: 0px !important;
@@ -56,7 +56,7 @@
 }
 
 .evaluate-section-btn {
-  background: #53cab2;
+  background: var(--ui-color-primary-green-dark2);
   border-radius: 12px;
   border: 0px;
   padding: 5px;

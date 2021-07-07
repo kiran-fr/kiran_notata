@@ -16,7 +16,7 @@
     }
     padding-top: 41px !important;
     i {
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
       margin-right: 13px;
       cursor: pointer;
     }
@@ -32,7 +32,7 @@
     line-height: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #60ceb8;
+    color: var(--ui-color-primary-green-dark4);
     padding-top: 41px !important;
     margin-left: auto;
     cursor: pointer;
@@ -60,7 +60,7 @@
         line-height: 12px;
         padding-top: 8px;
         padding-bottom: 8px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         cursor: pointer;
         img {
           margin-right: 10px;
@@ -95,7 +95,7 @@
         font-size: 12px;
         line-height: 14px;
         letter-spacing: 0.03em;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         margin-left: 15px;
       }
       &__tags-text {
@@ -105,7 +105,7 @@
         font-size: 12px;
         line-height: 14px;
         letter-spacing: 0.03em;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         margin-left: 15px;
       }
       &__text {
@@ -122,9 +122,9 @@
         font-size: 13px;
         line-height: 15px;
         letter-spacing: 0.03em;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         .highlight {
-          color: #53cab2;
+          color: var(--ui-color-primary-green-dark2);
           font-weight: bold;
         }
         &__hour-ago {
@@ -134,7 +134,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: 0.03em;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-top: 10px;
         }
       }
@@ -144,7 +144,7 @@
         }
 
         height: 11px;
-        border: 1px solid #969ba3;
+        border: 1px solid var(--ui-color-gray-medium);
         @media only screen and(min-width:768px) {
           margin-left: auto;
         }
@@ -161,12 +161,12 @@
           text-align: center;
           letter-spacing: 0.03em;
           text-transform: uppercase;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
         }
       }
       &__join-btn {
         height: 11px;
-        background-color: #53cab2;
+        background-color: var(--ui-color-primary-green-dark2);
         margin-left: 8px;
         max-width: 90px;
         .MuiButton-label {

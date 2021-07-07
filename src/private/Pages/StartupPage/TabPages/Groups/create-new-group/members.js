@@ -80,6 +80,7 @@ export default function Members({ data, setData }) {
           <input
             className="search-box"
             placeholder="Type email"
+            autoComplete="off"
             type="text"
             ref={register}
             name="email"

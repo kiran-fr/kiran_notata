@@ -14,6 +14,7 @@ export default function MultipleChoiceInput({ style, options, disabled }) {
                   disabled={disabled}
                   defaultChecked={checked}
                   onClick={handleOnClick}
+                  autoComplete="off"
                 />
                 {val}
               </label>

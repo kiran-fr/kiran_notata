@@ -1,8 +1,9 @@
+
 <svg width="19" height="11" viewBox="0 0 19 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="1.81813" cy="1.81813" r="1.81813" fill="#C9CCD1"/>
-<circle cx="1.81813" cy="8.18336" r="1.81813" fill="#C9CCD1"/>
-<circle cx="9.08961" cy="1.81813" r="1.81813" fill="#C9CCD1"/>
-<circle cx="9.08961" cy="8.18336" r="1.81813" fill="#C9CCD1"/>
-<circle cx="16.364" cy="1.81813" r="1.81813" fill="#C9CCD1"/>
-<circle cx="16.364" cy="8.18336" r="1.81813" fill="#C9CCD1"/>
+<circle cx="1.81813" cy="1.81813" r="1.81813" fill=var(--ui-color-gray-pale)/>
+<circle cx="1.81813" cy="8.18336" r="1.81813" fill=var(--ui-color-gray-pale)/>
+<circle cx="9.08961" cy="1.81813" r="1.81813" fill=var(--ui-color-gray-pale)/>
+<circle cx="9.08961" cy="8.18336" r="1.81813" fill=var(--ui-color-gray-pale)/>
+<circle cx="16.364" cy="1.81813" r="1.81813" fill=var(--ui-color-gray-pale)/>
+<circle cx="16.364" cy="8.18336" r="1.81813" fill=var(--ui-color-gray-pale)/>
 </svg>

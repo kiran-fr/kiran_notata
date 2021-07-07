@@ -206,7 +206,7 @@ export const EvaluationTemplatePage = ({ match, history }) => {
                       className="fa fa-chevron-left"
                       onClick={() => hist.goBack()}
                       style={{
-                        color: "#53cab2",
+                        color: "var(--ui-color-primary-green-dark2)",
                         transform: "scale(1.4)",
                         cursor: "pointer",
                       }}

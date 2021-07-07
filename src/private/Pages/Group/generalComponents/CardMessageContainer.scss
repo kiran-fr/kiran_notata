@@ -1,76 +1,67 @@
 .card-message {
+  padding: 10px 30px;
+  border-radius: 20px;
 
-    padding: 10px 30px;
-    border-radius: 20px;
+  &__content {
+    border-radius: 5px;
+    padding: 20px;
+    padding-left: 70px;
+    color: var(--ui-color-gray-dark1);
+    position: relative;
 
-    &__content {
+    .icon {
+      position: absolute;
+      left: 18px;
+      font-size: 35px;
+      top: 15px;
+    }
 
-      border-radius: 5px;
-      padding: 20px;
-      padding-left: 70px;
-      color: #6a6a6a;
+    &__title {
+      font-size: 18px;
+      line-height: 24px;
       position: relative;
-
-      .icon {
-        position: absolute;
-        left: 18px;
-        font-size: 35px;
-        top: 15px;
-      }
-
-      &__title {
-        font-size: 18px;
-        line-height: 24px;
-        position: relative;
-        padding-bottom: 15px;
-      }
-
-      &__message {
-        font-size: 14px;
-        line-height: 22px;
-      }
-
-      &__children {
-        padding-top: 15px;
-      }
-
+      padding-bottom: 15px;
     }
 
-    &__content.danger {
-      background: #fff6f6;
-      border: 1px solid #f9cbc8;
-      .icon {
-        color: #f9cbc8;
-      }
+    &__message {
+      font-size: 14px;
+      line-height: 22px;
     }
 
-    &__content.success {
-      background: #f6fff0;
-      border: 1px solid #cfe2c0;
-      .icon {
-        color: #cfe2c0;
-      }
+    &__children {
+      padding-top: 15px;
     }
+  }
 
-    &__content.notice {
-      background: #f1fbfe;
-      border: 1px solid #b9e7f9;
-      .icon {
-        color: #b9e7f9;
-      }
+  &__content.danger {
+    background: #fff6f6;
+    border: 1px solid #f9cbc8;
+    .icon {
+      color: #f9cbc8;
     }
+  }
 
-
-    &__content.regular {
-      background: #fffdee;
-      border: 1px solid #f7deb0;
-      .icon {
-        color: #f7deb0;
-      }
+  &__content.success {
+    background: #f6fff0;
+    border: 1px solid #cfe2c0;
+    .icon {
+      color: #cfe2c0;
     }
+  }
 
+  &__content.notice {
+    background: #f1fbfe;
+    border: 1px solid #b9e7f9;
+    .icon {
+      color: #b9e7f9;
+    }
+  }
 
-
-
-
+  &__content.regular {
+    background: #fffdee;
+    border: 1px solid #f7deb0;
+    .icon {
+      color: #f7deb0;
+    }
+  }
 }

@@ -9,7 +9,7 @@
   color: inherit;
   background: #ffffff;
   box-sizing: border-box;
-  border: 1px solid #cecece;
+  border: 1px solid var(--ui-color-gray-pale2);
   border-radius: 20px;
   font-weight: 400;
   font-size: 14px;

@@ -11,7 +11,7 @@
     line-height: 10px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     margin-left: 19px;
     margin-top: 5px;
   }
@@ -32,7 +32,7 @@
       text-align: right;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
     }
     .date {
       font-family: Roboto;
@@ -66,7 +66,7 @@
       align-items: center;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
     .legend-value {
       font-family: "Roboto";
@@ -74,7 +74,7 @@
       font-weight: normal;
       font-size: 8px;
       line-height: 9px;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       text-align: center;
       margin-bottom: 5px;
     }
@@ -87,7 +87,7 @@
     .legend-icon-5 {
       width: 12.71px;
       height: 12px;
-      background: #97dfd1;
+      background: var(--ui-color-primary-green-medium);
       border-radius: 2px;
     }
     .legend-icon-10 {
@@ -99,7 +99,7 @@
     .legend-icon-15 {
       width: 12.71px;
       height: 12px;
-      background: #53cab2;
+      background: var(--ui-color-primary-green-dark2);
       border-radius: 2px;
     }
     .legend-icon-20 {
@@ -124,7 +124,7 @@
       line-height: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
   }
   &__year {
@@ -141,7 +141,7 @@
         line-height: 12px;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
         margin-top: 7px;
         height: 18px;
       }
@@ -158,13 +158,13 @@
         background: #e6e8ff;
       }
       .days-score-5 {
-        background: #97dfd1;
+        background: var(--ui-color-primary-green-medium);
       }
       .days-score-10 {
         background: #63dfc6;
       }
       .days-score-15 {
-        background: #53cab2;
+        background: var(--ui-color-primary-green-dark2);
       }
       .days-score-20 {
         background: #46a793;

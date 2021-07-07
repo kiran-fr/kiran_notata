@@ -121,6 +121,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                 type="text"
                 placeholder="email"
                 ref={register({ required: true })}
+                autoComplete="off"
                 name="email"
                 id="email"
               />
@@ -133,6 +134,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                 type="password"
                 placeholder="password"
                 ref={register({ required: true })}
+                autoComplete="off"
                 name="password"
                 id="password"
               />
@@ -146,6 +148,7 @@ function LoginComp({ history, location, userLoggedIn, userIsLoggedIn }) {
                 type="text"
                 placeholder="SMS code"
                 ref={register({ required: true })}
+                autoComplete="off"
                 name="code"
                 id="code"
               />

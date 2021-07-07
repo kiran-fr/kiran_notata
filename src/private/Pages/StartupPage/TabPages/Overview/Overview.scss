@@ -23,7 +23,7 @@
     font-size: 16px;
     line-height: 19px;
     display: inline-block;
-    color: #6a6a6a;
+    color: var(--ui-color-gray-dark1);
   }
   &__last-updated {
     font-family: "Proxima Nova";
@@ -31,7 +31,7 @@
     font-weight: normal;
     font-size: 11px;
     line-height: 13px;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     &__date {
       font-family: "Roboto";
       font-style: normal;
@@ -50,7 +50,7 @@
     font-size: 13px;
     line-height: 17px;
     letter-spacing: 0.03em;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     margin-bottom: 35px;
     // margin-left: 0 !important;
     @media only screen and(min-width:1199px) {
@@ -72,7 +72,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       padding-left: 0px !important;
-      color: #53cab2;
+      color: var(--ui-color-primary-green-dark2);
     }
     button {
       height: 18px;
@@ -87,7 +87,7 @@
       letter-spacing: 0.03em;
       text-transform: uppercase;
       color: #ffffff;
-      background: #53cab2;
+      background: var(--ui-color-primary-green-dark2);
       border-radius: 12px;
       margin-top: -5px;
       padding-left: 0px !important;
@@ -104,7 +104,7 @@
       font-weight: bold;
       font-size: 20px;
       line-height: 24px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
 
     &__selector {
@@ -121,7 +121,7 @@
       font-size: 13px;
       line-height: 17px;
       letter-spacing: 0.03em;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       margin-top: 25px;
       padding: 0px;
       .score {
@@ -130,7 +130,7 @@
         font-weight: 300;
         font-size: 50px;
         line-height: 76px;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
       }
       .you {
         @media only screen and (max-width: 768px) {
@@ -138,14 +138,14 @@
         }
       }
       .selected {
-        color: #60ceb8;
+        color: var(--ui-color-primary-green-dark4);
       }
       .highest-score {
         font-family: "Proxima Nova";
         font-weight: 600;
         font-size: 18px;
         line-height: 22px;
-        color: #60ceb8;
+        color: var(--ui-color-primary-green-dark4);
         margin-left: 5px;
         margin-top: -15px;
         @media only screen and (min-width: 768px) {
@@ -206,7 +206,7 @@
       font-weight: bold;
       font-size: 20px;
       line-height: 24px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       letter-spacing: 0.03em;
     }
     &__sub-heading {
@@ -214,7 +214,7 @@
       font-size: 13px;
       line-height: 17px;
       letter-spacing: 0.03em;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
     }
     .img-col {
       padding-left: 0px;
@@ -242,7 +242,7 @@
       font-weight: bold;
       font-size: 20px;
       line-height: 24px;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       letter-spacing: 0.03em;
       margin: 35px 0px 0px 35px;
     }
@@ -251,7 +251,7 @@
       font-size: 13px;
       line-height: 17px;
       letter-spacing: 0.03em;
-      color: #969ba3;
+      color: var(--ui-color-gray-medium);
       margin: 3px 0px 0px 35px;
     }
     &__table-container {
@@ -273,7 +273,7 @@
             line-height: 12px;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: #c9ccd1;
+            color: var(--ui-color-gray-pale);
             padding: 14px 10px 13px 25px;
             min-width: 160px;
             text-align: left;
@@ -289,7 +289,7 @@
               font-family: "Proxima Nova";
               font-weight: 600;
               font-size: 14px;
-              color: #6a6a6a;
+              color: var(--ui-color-gray-dark1);
               height: 30px;
               margin-left: 70px;
               margin-top: 17px;
@@ -321,19 +321,19 @@
             font-weight: bold;
             font-size: 18px;
             line-height: 22px;
-            color: #53cab2;
+            color: var(--ui-color-primary-green-dark2);
           }
           .last-evaluation {
             font-family: "Proxima Nova";
             font-size: 18px;
             line-height: 22px;
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
           }
           .last-eval-description {
             font-family: "Proxima Nova";
             font-size: 10px;
             line-height: 10px;
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
             position: absolute;
             margin-left: 5px;
           }
@@ -346,7 +346,7 @@
             font-size: 9px;
             line-height: 11px;
             letter-spacing: 0.03em;
-            color: #969ba3;
+            color: var(--ui-color-gray-medium);
           }
           .updated-date-tag {
             background: #fcd99e;
@@ -359,14 +359,14 @@
             font-family: "Proxima Nova";
             font-size: 14px;
             line-height: 17px;
-            color: #6a6a6a;
+            color: var(--ui-color-gray-dark1);
           }
           .sent {
             font-family: "Roboto";
             font-size: 9px;
             line-height: 11px;
             letter-spacing: 0.03em;
-            color: #969ba3;
+            color: var(--ui-color-gray-medium);
           }
           .share-same-template {
             background: #c4a9fc;
@@ -410,8 +410,8 @@
       font-size: 9px;
       // line-height: 11px;
       letter-spacing: 0.03em;
-      color: #dadada;
-      background: #6a6a6a;
+      color: var(--ui-color-gray-dark6);
+      background: var(--ui-color-gray-dark1);
       border-radius: 12px;
       padding: 2px 10px;
       margin: 5px;
@@ -424,18 +424,18 @@
     }
   }
   .add-btn {
-    background-color: #53cab2;
+    background-color: var(--ui-color-primary-green-dark2);
     margin: 25px;
   }
 
   .archive-btn {
-    background-color: #53cab2;
+    background-color: var(--ui-color-primary-green-dark2);
     margin: 25px 0px 0px 10px;
     height: 40px;
     font-style: normal !important;
     max-width: 250px;
     &:hover {
-      background-color: #49b6a0 !important;
+      background-color: var(--ui-color-primary-green-dark3) !important;
       border: none;
       .MuiButton-label {
         color: #fff !important;
@@ -467,13 +467,13 @@
     line-height: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #60ceb8;
+    color: var(--ui-color-primary-green-dark4);
     margin-top: 25px;
     cursor: pointer;
     margin-left: 10px !important;
 
     &:hover {
-      color: #49b6a0 !important;
+      color: var(--ui-color-primary-green-dark3) !important;
     }
     @media only screen and(max-width: 768px) {
       margin-left: 40px !important;
@@ -497,14 +497,14 @@
         font-size: 16px;
         line-height: 19px;
         padding: 0 !important;
-        color: #6a6a6a;
+        color: var(--ui-color-gray-dark1);
       }
       &__sub-heading {
         font-family: "Proxima Nova";
         font-size: 11px;
         line-height: 13px;
         margin-top: 7px;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         padding: 0 !important;
       }
       &__disucssions {
@@ -521,7 +521,7 @@
           line-height: 17px;
           letter-spacing: 0.03em;
           text-decoration-line: underline;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-left: 30px;
         }
         &__message {
@@ -530,7 +530,7 @@
           font-size: 13px;
           line-height: 17px;
           letter-spacing: 0.03em;
-          color: #6a6a6a;
+          color: var(--ui-color-gray-dark1);
           margin-left: 30px;
           margin-top: 5px;
         }
@@ -538,7 +538,7 @@
           font-size: 12px;
           line-height: 14px;
           letter-spacing: 0.03em;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
           margin-left: 30px;
           margin-top: 5px;
         }
@@ -590,7 +590,6 @@
     margin: 35px;
   }
   .groups-container {
-
     margin: 35px;
 
     .group-name {
@@ -599,7 +598,7 @@
       font-weight: normal;
       font-size: 16px;
       line-height: 19px;
-      color: #6a6a6a;
+      color: var(--ui-color-gray-dark1);
       margin-top: 5px;
       display: block;
       text-decoration: underline;
@@ -609,7 +608,6 @@
     .group-name:nth-child(even) {
       background: var(--color-gray-pale);
     }
-
 
     .add-startup-container {
       display: inline-flex;
@@ -625,7 +623,7 @@
         font-size: 16px;
         line-height: 17px;
         letter-spacing: 0.03em;
-        color: #969ba3;
+        color: var(--ui-color-gray-medium);
         margin-top: 10px;
         margin-right: 10px;
         @media only screen and(min-width:768px) {
@@ -651,10 +649,9 @@
       }
     }
 
-
     &__add-button {
       i {
-        background-color: #53cab2;
+        background-color: var(--ui-color-primary-green-dark2);
         border-radius: 50%;
         height: 23px;
         width: 23px;
@@ -667,11 +664,6 @@
         cursor: pointer;
       }
     }
-
-
-
-
-
   }
 }
 .archive-modal-description {
@@ -681,7 +673,7 @@
   font-size: 13px;
   line-height: 17px;
   letter-spacing: 0.03em;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   margin-top: 25px;
 }
 .delete-group-modal-container {
@@ -691,7 +683,7 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 19px;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
   .remember {
     font-weight: bold;
     margin-top: 20px;
@@ -725,10 +717,10 @@
   font-size: 9px;
   line-height: 11px;
   letter-spacing: 0.03em;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 .add-startup-container .green_plus i {
-  background-color: #53cab2;
+  background-color: var(--ui-color-primary-green-dark2);
   border-radius: 50%;
   height: 18px;
   width: 18px;
@@ -755,7 +747,6 @@
   margin: 0 !important;
 }
 
-
 .slideDeckContainer,
 .slideDeckContainerBig {
   display: flex;
@@ -764,12 +755,11 @@
   width: 100%;
   padding-right: 60px;
 
-
   .slideDeckButton {
     padding: 0 10px;
     height: 22px;
     overflow: hidden;
-    background-color: #53cab2;
+    background-color: var(--ui-color-primary-green-dark2);
     border-radius: 11px;
     line-height: 22px;
     display: flex;
@@ -779,7 +769,7 @@
 
     &:hover,
     &:focus {
-      background-color: #49b6a0;
+      background-color: var(--ui-color-primary-green-dark3);
     }
 
     svg {
@@ -821,15 +811,11 @@
       &:hover,
       &:focus {
         text-decoration: underline;
-        color: #49b6a0;
+        color: var(--ui-color-primary-green-dark3);
       }
     }
   }
-
-
 }
-
-
 
 // New Code : SRV
 
@@ -886,7 +872,7 @@
           font-weight: bold;
           font-size: 16px;
           display: inline-block;
-          color: #6a6a6a;
+          color: var(--ui-color-gray-dark1);
         }
 
         .companyLastUpdated {
@@ -895,7 +881,7 @@
           font-style: normal;
           font-weight: normal;
           font-size: 11px;
-          color: #969ba3;
+          color: var(--ui-color-gray-medium);
 
           span {
             font-family: "Roboto";
@@ -925,7 +911,7 @@
     font-weight: normal;
     font-size: 13px;
     letter-spacing: 0.03em;
-    color: #969ba3;
+    color: var(--ui-color-gray-medium);
     margin-top: 1rem;
   }
 
@@ -939,7 +925,7 @@
   //  //  padding: 0 10px;
   //  //  height: 22px;
   //  //  overflow: hidden;
-  //  //  background-color: #53cab2;
+  //  //  background-color: var(--ui-color-primary-green-dark2);
   //  //  border-radius: 11px;
   //  //  line-height: 22px;
   //  //  display: flex;
@@ -949,7 +935,7 @@
   //  //
   //  //  &:hover,
   //  //  &:focus {
-  //  //    background-color: #49b6a0;
+  //  //    background-color: var(--ui-color-primary-green-dark3);
   //  //  }
   //  //
   //  //  svg {
@@ -991,7 +977,7 @@
   //  //    &:hover,
   //  //    &:focus {
   //  //      text-decoration: underline;
-  //  //      color: #49b6a0;
+  //  //      color: var(--ui-color-primary-green-dark3);
   //  //    }
   //  //  }
   //  //}
@@ -1035,5 +1021,3 @@
     }
   }
 }
-
-

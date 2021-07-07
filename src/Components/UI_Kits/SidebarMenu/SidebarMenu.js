@@ -96,7 +96,10 @@ export function SideBarMenu() {
                   : styles.display_floating_button
               )}
               ref={floatingButonn}
-              onClick={() => setMobileList(true)}
+              onClick={() => {
+                setMobileList(true);
+                setListOpen(false);
+              }}
             >
               {" "}
               <img src={mobile_toggler} />

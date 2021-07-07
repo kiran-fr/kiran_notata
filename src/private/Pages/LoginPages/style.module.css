@@ -78,7 +78,7 @@
 .logoContainer h1 {
   font-size: 21px;
   font-weight: 600;
-  color: #969ba3;
+  color: var(--ui-color-gray-medium);
 }
 
 /* media Query start  */
@@ -119,9 +119,9 @@
 .auth_structure_left form input {
   margin: auto;
   height: 16px;
-  color: #6a6a6a;
+  color: var(--ui-color-gray-dark1);
   font-size: 14px;
-  caret-color: #6a6a6a;
+  caret-color: var(--ui-color-gray-dark1);
 }
 .auth_structure_right {
   width: 55%;

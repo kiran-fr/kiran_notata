@@ -45,7 +45,7 @@ function LogInput({ submitMutation }: { submitMutation: Function }) {
             <i className="fal fa-spinner fa-spin" />
           )}
 
-          <input type="submit" value="" />
+          <input type="submit" value="" autoComplete="off" />
         </div>
       </form>
     </div>
