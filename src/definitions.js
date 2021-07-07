@@ -28,6 +28,7 @@ export const group_new = `${startup_page}/group_new`;
 export const startup_company_profile = `${startup_page}/company/:id`;
 
 export const evaluate_page = `${startup_page}/evaluate`;
+export const evaluation_summary_page = `${startup_page}/summary`;
 
 export const add_section_dev = `${startup_page}/settings/evaluation-templates/add-section`;
 export const news = `${startup_page}/news`;
